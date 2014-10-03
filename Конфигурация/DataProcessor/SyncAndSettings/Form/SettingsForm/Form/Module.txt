@@ -5,11 +5,12 @@
 &AtServer
 Procedure OnOpenServer()
     
-    Object.Server = Constants.Server.Get();
-    Object.Path = Constants.ServerPath.Get();
-    Object.Password = Constants.Password.Get();
-    Object.SKUFeatures = Constants.SKUFeaturesRegistration.Get();
-    Object.MultiStock = Constants.MultiStock.Get();
+    Object.Server 		= Constants.Server.Get();
+    Object.Path 		= Constants.ServerPath.Get();
+    Object.Password 	= Constants.Password.Get();
+	Object.Port 		= Constants.Port.Get();
+    Object.SKUFeatures 	= Constants.SKUFeaturesRegistration.Get();
+    Object.MultiStock 	= Constants.MultiStock.Get();
     
 EndProcedure
 
@@ -59,6 +60,7 @@ Procedure SaveSettingsServer()
     Constants.Server.Set(Object.Server);
     Constants.ServerPath.Set(Object.Path);
     Constants.Password.Set(Object.Password);
+	Constants.Port.Set(Object.Port);
     
 EndProcedure
 
@@ -68,41 +70,48 @@ EndProcedure
 &AtServer 
 Procedure SyncronizeDataServer(All)
     
-    Message(NStr("en = ""Data upload is in process..""; ru = ""Выгрузка данных в процессе..."""), MessageStatus.Important); 
-    
     UploadComplete = False;
     DownloadComplete = False;
-    
+	
+	Message(NStr("en = ""Data upload is in process..""; ru = ""Выгрузка данных в процессе..."""), MessageStatus.Important);
+	
     DataProcessors.SyncAndSettings.UploadData(All, UploadComplete);
     
     If UploadComplete Then
         
         Message(NStr("en = ""Data upload completed""; ru = ""Выгрузка данных завершена"""));
-        
-        Message(NStr("en = ""Data download is in process""; ru = ""Загрузка данных в процессе..."""));
-        
-        DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
-        
-        If DownloadComplete Then 
-            
-            Message(NStr("en = ""Data download completed""; ru = ""Загрузка данных завершена"""));
-            Message(NStr("en = ""Synchronization was successful""; ru = ""Синхронизация прошла успешно"""));
-            DataProcessors.SyncAndSettings.SaveSyncState(True);
-            
-        Else 
-            
-            Message(NStr("en = ""Data download interrupted""; ru = ""Загрузка данных прервана"""));
-            DataProcessors.SyncAndSettings.SaveSyncState(False);
-            
-        EndIf;
-        
+                   
     Else 
         
         Message(NStr("en = ""Data upload interrupted""; ru = ""Выгрузка данных прервана"""));
-        DataProcessors.SyncAndSettings.SaveSyncState(False);
-        
+                
     EndIf;
-    
+	
+	Message(NStr("en = ""Data download is in process""; ru = ""Загрузка данных в процессе..."""));
+	
+	DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
+        
+    If DownloadComplete Then 
+        
+        Message(NStr("en = ""Data download completed""; ru = ""Загрузка данных завершена"""));
+               
+    Else 
+        
+        Message(NStr("en = ""Data download interrupted""; ru = ""Загрузка данных прервана"""));
+                
+	EndIf;
+	
+	If DownloadComplete And UploadComplete Then
+	
+		Message(NStr("en = ""Synchronization was successful""; ru = ""Синхронизация прошла успешно"""));
+		DataProcessors.SyncAndSettings.SaveSyncState(True);
+		
+	Else 
+		
+		DataProcessors.SyncAndSettings.SaveSyncState(False);
+		
+	EndIf;
+		
 EndProcedure
 
 &AtServer
@@ -251,12 +260,19 @@ Procedure PasswordOnChange(Item)
 EndProcedure
 
 &AtClient
+Procedure PortOnChange(Item)
+	
+	Items.SaveSettings.Enabled = True;
+
+EndProcedure
+
+&AtClient
 Procedure DefaultSettings(Command)
     
     Mode = QuestionDialogMode.OKCancel;
     
     Text = "en = 'Settings will be reset. Continue?';"
-    + "ru = 'Настройки будет презаполнены. Продолжить?'";
+    + "ru = 'Настройки будет перезаполнены. Продолжить?'";
     
     Answer = DoQueryBox(NStr(Text), Mode, 0);
     
@@ -301,8 +317,7 @@ Procedure SyncronizeData(Command)
     
     GetLastSyncInfo(LastDate, LastStatus);
     SetLastSyncInfo(LastDate, LastStatus);
-	
-	Notify("Synchronized");
+    
 EndProcedure
 
 &AtClient
@@ -419,6 +434,10 @@ Procedure SaveDatabaseSettingsServer()
     Constants.SKUFeaturesRegistration.Set(Object.SKUFeatures);
     Constants.MultiStock.Set(Object.MultiStock);
 EndProcedure
+
+
+
+
 
 
 

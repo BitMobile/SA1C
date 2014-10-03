@@ -560,432 +560,377 @@ EndProcedure
 // Upload Data
 
 Procedure UploadData(All, UploadComplete, InFile = False, TempStorageAddress = "") Export 
-    
-    //start QuestionnaireMap actualizing here//
+	
+	//start QuestionnaireMap actualizing here//
     QuestionnaireMapAssign.ActualizeQuestionnaireMap();
-    
-    OrderTable = Undefined;	
-    
-    If NOT All Then 
-        
-        // Получить копию регистра
-        Query = New Query;
-        Query.Text = 
-        "SELECT
-        |	ChangedData.Ref,
-        |	ChangedData.Status,
-        |	ChangedData.Modified
-        |FROM
-        |	InformationRegister.ChangedData AS ChangedData";
-        
-        RegisterCopy = Query.Execute().Unload();
-        
-        OrderTable = GetOrderTable(All, RegisterCopy);
-        
-    Else 
-        
-        // Получить полный перечень объектов в базе
-        Query = New Query;              
-        Query.Text = 
-        "SELECT
-        |	SyncOrder.MetadataObject AS MetadataObject
-        |FROM
-        |	InformationRegister.SyncOrder AS SyncOrder
-        |WHERE
-        |	SyncOrder.Upload = TRUE";
-        
-        QueryResult = Query.Execute().Unload();
-        
-        QueryResult.GroupBy("MetadataObject");
-        
-        QueryAllObject = New Query;              
-        QueryAllObject.Text = GetQueryTextForAllObject(QueryResult);
-        
-        QueryAllObjectResult = QueryAllObject.Execute().Unload();
-        
-        OrderTable = GetOrderTable(All, QueryAllObjectResult);
-        
-    EndIf;
-    
-    // Очистить регистр сведений ChangedData
-    RecordManager = InformationRegisters.ChangedData.CreateRecordSet();
-    RecordManager.Write();
-    
-    If NOT OrderTable = Undefined Then 
-        
-        RequestFileName = GetTempFileName(".xml");
-        
-        // Создать таблицу новых помеченных на удаление объектов
-        If All Then 
-            NewMarkedElementTable = New ValueTable;
-            NewMarkedElementTable.Columns.Add("Reference");
-        EndIf;
-        
-        XMLRecord = New XMLWriter;
-        XMLRecord.OpenFile(RequestFileName, "UTF-8");
-        XMLRecord.WriteXMLDeclaration();
-        
-        XMLRecord.WriteStartElement("Root");
-        
-        XMLRecord.WriteStartElement("Rows");
-        
-        For Each OrderElement in OrderTable Do
-            
-            Type = Metadata.FindByType(TypeOf(OrderElement.Reference)).FullName();
-            
-            XMLRecord.WriteStartElement("Row");
-            
-            // Записать атрибут _Type
-            XMLRecord.WriteAttribute("_Type", Type);
-            
-            // Записать атрибут _RS
-            If All Then
-                
-                If OrderElement.Reference.DeletionMark Then 
-                    InsElement = NewMarkedElementTable.Add();
-                    InsElement.Reference = OrderElement.Reference;
-                EndIf;
-                
-                XMLRecord.WriteAttribute("_RS", "0");
-                
-            Else 
-                
-                StatusValue = RegisterCopy.Find(OrderElement.Reference).Status;
-                
-                RS = "0";
-                
-                If StatusValue = Enums.DataStatus.New Then
-                    
-                    RS = "0";
-                    
-                ElsIf StatusValue = Enums.DataStatus.Modified Then
-                    
-                    If OrderElement.Reference.DeletionMark Then
-                        RS = "3";									
-                    Else
-                        RS = "1";
-                    EndIf;	
-                    
-                EndIf;
-                
-                XMLRecord.WriteAttribute("_RS", RS);
-                
-            EndIf;
-            
-            // Записать стандартные реквизиты
-            For Each Attribute in OrderElement.Reference.Metadata().StandardAttributes Do
-                
-                AttributeValue = OrderElement.Reference[Attribute.Name];
-                
-                FillRow(Attribute, AttributeValue, XMLRecord, True, OrderElement);
-                
-            EndDo;				
-            
-            // Записать прочие реквизиты
-            For Each Attribute in OrderElement.Reference.Metadata().Attributes Do
-                
-                AttributeValue = OrderElement.Reference[Attribute.Name];
-                
-                FillRow(Attribute, AttributeValue, XMLRecord, False);
-                
-            EndDo;
-            
-            // Записать табличные части
-            For Each TabularSection in OrderElement.Reference.Metadata().TabularSections Do
-                
-                XMLRecord.WriteStartElement(TabularSection.Name);
-                
-                For Each TabularSectionRow in OrderElement.Reference[TabularSection.Name] Do 
-                    
-                    XMLRecord.WriteStartElement("Row");
-                    
-                    XMLRecord.WriteAttribute("Id", String(New UUID()));
-                    XMLRecord.WriteAttribute("Ref", String(OrderElement.Reference.UUID()));
-                    
-                    For Each Attribute in TabularSection.StandardAttributes Do
-                        
-                        AttributeValue = TabularSectionRow[Attribute.Name];
-                        
-                        FillRow(Attribute, AttributeValue, XMLRecord, False);
-                        
-                    EndDo;
-                    
-                    For Each Attribute in TabularSection.Attributes Do
-                        
-                        AttributeValue = TabularSectionRow[Attribute.Name];
-                        
-                        FillRow(Attribute, AttributeValue, XMLRecord, False);
-                        
-                    EndDo;
-                    
-                    XMLRecord.WriteEndElement();	
-                    
-                EndDo;
-                
-                XMLRecord.WriteEndElement();	
-                
-            EndDo;
-            
-            XMLRecord.WriteEndElement(); 
-            
-        EndDo;
-        
-        // При полной выгрузке необходимо дополнительно обработать уже помеченные на удаление объекты
-        If All Then 
-            
-            For Each MarkedElement in NewMarkedElementTable Do
-                
-                Type = Metadata.FindByType(TypeOf(MarkedElement.Reference)).FullName();
-                
-                XMLRecord.WriteStartElement("Row");
-                
-                // Записать атрибут _Type
-                XMLRecord.WriteAttribute("_Type", Type);
-                
-                // Записать атрибут _RS
-                XMLRecord.WriteAttribute("_RS", "3");
-                
-                // Записать стандартные реквизиты
-                For Each Attribute in MarkedElement.Reference.Metadata().StandardAttributes Do
-                    
-                    AttributeValue = MarkedElement.Reference[Attribute.Name];
-                    
-                    FillRow(Attribute, AttributeValue, XMLRecord, True, MarkedElement);
-                    
-                EndDo;				
-                
-                // Записать прочие реквизиты
-                For Each Attribute in MarkedElement.Reference.Metadata().Attributes Do
-                    
-                    AttributeValue = MarkedElement.Reference[Attribute.Name];
-                    
-                    FillRow(Attribute, AttributeValue, XMLRecord, False);
-                    
-                EndDo;
-                
-                // Записать табличные части
-                For Each TabularSection in MarkedElement.Reference.Metadata().TabularSections Do
-                    
-                    XMLRecord.WriteStartElement(TabularSection.Name);
-                    
-                    For Each TabularSectionRow in MarkedElement.Reference[TabularSection.Name] Do 
-                        
-                        XMLRecord.WriteStartElement("Row");
-                        
-                        XMLRecord.WriteAttribute("Id", String(New UUID()));
-                        XMLRecord.WriteAttribute("Ref", String(MarkedElement.Reference.UUID()));
-                        
-                        For Each Attribute in TabularSection.StandardAttributes Do
-                            
-                            AttributeValue = TabularSectionRow[Attribute.Name];
-                            
-                            FillRow(Attribute, AttributeValue, XMLRecord, False);
-                            
-                        EndDo;
-                        
-                        For Each Attribute in TabularSection.Attributes Do
-                            
-                            AttributeValue = TabularSectionRow[Attribute.Name];
-                            
-                            FillRow(Attribute, AttributeValue, XMLRecord, False);
-                            
-                        EndDo;
-                        
-                        XMLRecord.WriteEndElement();	
-                        
-                    EndDo;
-                    
-                    XMLRecord.WriteEndElement();	
-                    
-                EndDo;
-                
-                XMLRecord.WriteEndElement(); 
-                
-            EndDo;
-            
-        EndIf;	
-        
-        XMLRecord.WriteEndElement();
-        
-        XMLRecord.WriteEndElement();
-        
-        XMLRecord.Close(); 
-        
-        If NOT InFile Then		
-            
-            // Отправка полученного файла на сервер
-            Try
-                
-                Server = Constants.Server.Get();
-                Path = Constants.ServerPath.Get();
-                Password = Constants.Password.Get();
-                
-                ResultString = SendAndReceiveDocument("UploadData2", Server, Path, Password, RequestFileName);
-                
-                If NOT ResultString = "ok" Then
-                    
-                    Message(ResultString);
-                    WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ResultString);
-                    
-                    If NOT All Then
-                        RollBackChangesInRegister(RegisterCopy);
-                    EndIf;
-                    
-                Else 
-                    
-                    UploadComplete = True;
-                    WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");
-                    
-                EndIf;
-                
-            Except
-                
-                Message(ErrorDescription());
-                WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ErrorDescription());
-                
-                If NOT All Then
-                    RollBackChangesInRegister(RegisterCopy);
-                EndIf;
-                
-            EndTry;
-            
-        Else 
-            
-            TempStorageAddress = PutToTempStorage(New BinaryData(RequestFileName));
-            
-            UploadComplete = True;
-            WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");	
-            
-        EndIf;
-        
-    Else 
-        
-        If NOT All Then
-            RollBackChangesInRegister(RegisterCopy);
-        EndIf;
-        
-    EndIf;
-    
+	
+    RecordSetIO = InformationRegisters.InvalidObjects.CreateRecordSet();
+	RecordSetIO.Read();
+	
+	FoundIO = False;
+	
+	If Not RecordSetIO.Count() = 0 Then 
+		
+		ErrorDesc = "en = 'Register ""Invalid objects"" is filled, data upload is not performed'; ru = 'Регистр ""Объекты с ошибками"" заполнен, выгрузка данных не выполнена'";
+				
+		Message(NStr(ErrorDesc));	
+		
+		FoundIO = True;
+		
+	Else 
+		
+		TableIO = RecordSetIO.Unload();
+		
+	EndIf;
+	
+	If Not FoundIO Then 
+	
+		If NOT All Then 
+	        
+	        // Получить копию регистра
+	        Query = New Query;
+	        Query.Text = 
+	        "SELECT
+	        |	ChangedData.Ref AS Ref,
+	        |	ChangedData.Status AS Status,
+	        |	ChangedData.Modified AS Modified
+	        |FROM
+	        |	InformationRegister.ChangedData AS ChangedData
+	        |
+	        |ORDER BY
+	        |	ChangedData.Position";
+	        
+	        OrderTable = Query.Execute().Unload();
+			       
+	    Else 
+	        
+	        // Получить полный перечень объектов в базе
+	        Query = New Query;              
+	        Query.Text = 
+	        "SELECT
+	        |	SyncOrder.MetadataObject AS MetadataObject
+	        |FROM
+	        |	InformationRegister.SyncOrder AS SyncOrder
+	        |WHERE
+	        |	SyncOrder.Upload = TRUE
+	        |
+	        |ORDER BY
+	        |	SyncOrder.Position";
+	        
+	        QueryResult = Query.Execute().Unload();
+	        
+	        QueryResult.GroupBy("MetadataObject");
+	        
+	        QueryAllObject = New Query;              
+	        QueryAllObject.Text = GetQueryTextForAllObject(QueryResult);
+	        
+	        OrderTable = QueryAllObject.Execute().Unload();
+	               
+	    EndIf;
+	    
+	    // Очистить регистр сведений ChangedData
+	    RecordSet = InformationRegisters.ChangedData.CreateRecordSet();
+	    RecordSet.Write();
+			    
+	    RequestFileName = GetTempFileName(".xml");
+	    
+	    // Создать таблицу новых помеченных на удаление объектов
+	    If All Then 
+	        NewMarkedElementTable = New ValueTable;
+	        NewMarkedElementTable.Columns.Add("Ref");
+	    EndIf;
+	    
+	    XMLRecord = New XMLWriter;
+	    XMLRecord.OpenFile(RequestFileName, "UTF-8");
+	    XMLRecord.WriteXMLDeclaration();
+	    
+	    XMLRecord.WriteStartElement("Root");
+		
+		// Региональные настройки
+		XMLRecord.WriteStartElement("RegionalSettings");
+		
+		DS = Mid("" + 1.1, 2, 1);
+		
+		XMLRecord.WriteAttribute("NumberDecimalSeparator", DS);
+		
+		GS = Mid("" + 1111, 2, 1);
+		
+		If GS = "1" Then 
+			
+			GS = "";
+			
+		EndIf;
+		
+		XMLRecord.WriteAttribute("NumberGroupSeparator", GS);
+		 		
+		XMLRecord.WriteEndElement(); 
+		 
+	    XMLRecord.WriteStartElement("Rows");
+	    
+	    For Each OrderElement in OrderTable Do
+	        
+	        Type = Metadata.FindByType(TypeOf(OrderElement.Ref)).FullName();
+	        
+	        XMLRecord.WriteStartElement("Row");
+	        
+	        // Записать атрибут _Type
+	        XMLRecord.WriteAttribute("_Type", Type);
+	        
+	        // Записать атрибут _RS
+	        If All Then
+	            
+	            If OrderElement.Ref.DeletionMark Then 
+	                InsElement = NewMarkedElementTable.Add();
+	                InsElement.Ref = OrderElement.Ref;
+	            EndIf;
+	            
+	            XMLRecord.WriteAttribute("_RS", "0");
+	            
+	        Else 
+	            
+	            StatusValue = OrderElement.Status;
+	            
+	            RS = "0";
+	            
+	            If StatusValue = Enums.DataStatus.New Then
+	                
+	                RS = "0";
+	                
+	            ElsIf StatusValue = Enums.DataStatus.Modified Then
+	                
+	                If OrderElement.Ref.DeletionMark Then
+	                    RS = "3";									
+	                Else
+	                    RS = "1";
+	                EndIf;	
+	                
+	            EndIf;
+	            
+	            XMLRecord.WriteAttribute("_RS", RS);
+	            
+	        EndIf;
+	        
+	        // Записать стандартные реквизиты
+	        For Each Attribute in OrderElement.Ref.Metadata().StandardAttributes Do
+	            
+	            AttributeValue = OrderElement.Ref[Attribute.Name];
+	            
+	            FillRow(Attribute, AttributeValue, XMLRecord, True, OrderElement, TableIO);
+	            
+	        EndDo;				
+	        
+	        // Записать прочие реквизиты
+	        For Each Attribute in OrderElement.Ref.Metadata().Attributes Do
+	            
+	            AttributeValue = OrderElement.Ref[Attribute.Name];
+	            
+	            FillRow(Attribute, AttributeValue, XMLRecord, False, OrderElement, TableIO);
+	            
+	        EndDo;
+	        
+	        // Записать табличные части
+	        For Each TabularSection in OrderElement.Ref.Metadata().TabularSections Do
+	            
+	            XMLRecord.WriteStartElement(TabularSection.Name);
+	            
+	            For Each TabularSectionRow in OrderElement.Ref[TabularSection.Name] Do 
+	                
+	                XMLRecord.WriteStartElement("Row");
+	                
+	                XMLRecord.WriteAttribute("Id", String(New UUID()));
+	                XMLRecord.WriteAttribute("Ref", String(OrderElement.Ref.UUID()));
+	                
+	                For Each Attribute in TabularSection.StandardAttributes Do
+	                    
+	                    AttributeValue = TabularSectionRow[Attribute.Name];
+	                    
+	                    FillRow(Attribute, AttributeValue, XMLRecord, False, OrderElement, TableIO);
+	                    
+	                EndDo;
+	                
+	                For Each Attribute in TabularSection.Attributes Do
+	                    
+	                    AttributeValue = TabularSectionRow[Attribute.Name];
+	                    
+	                    FillRow(Attribute, AttributeValue, XMLRecord, False, OrderElement, TableIO);
+	                    
+	                EndDo;
+	                
+	                XMLRecord.WriteEndElement();	
+	                
+	            EndDo;
+	            
+	            XMLRecord.WriteEndElement();	
+	            
+	        EndDo;
+	        
+	        XMLRecord.WriteEndElement(); 
+	        
+	    EndDo;
+	    
+	    // При полной выгрузке необходимо дополнительно обработать уже помеченные на удаление объекты
+	    If All Then 
+	        
+	        For Each MarkedElement in NewMarkedElementTable Do
+	            
+	            Type = Metadata.FindByType(TypeOf(MarkedElement.Ref)).FullName();
+	            
+	            XMLRecord.WriteStartElement("Row");
+	            
+	            // Записать атрибут _Type
+	            XMLRecord.WriteAttribute("_Type", Type);
+	            
+	            // Записать атрибут _RS
+	            XMLRecord.WriteAttribute("_RS", "3");
+	            
+	            // Записать стандартные реквизиты
+	            For Each Attribute in MarkedElement.Ref.Metadata().StandardAttributes Do
+	                
+	                AttributeValue = MarkedElement.Ref[Attribute.Name];
+	                
+	                FillRow(Attribute, AttributeValue, XMLRecord, True, MarkedElement, TableIO, True);
+	                
+	            EndDo;				
+	            
+	            // Записать прочие реквизиты
+	            For Each Attribute in MarkedElement.Ref.Metadata().Attributes Do
+	                
+	                AttributeValue = MarkedElement.Ref[Attribute.Name];
+	                
+	                FillRow(Attribute, AttributeValue, XMLRecord, False, MarkedElement, TableIO, True);
+	                
+	            EndDo;
+	            
+	            // Записать табличные части
+	            For Each TabularSection in MarkedElement.Ref.Metadata().TabularSections Do
+	                
+	                XMLRecord.WriteStartElement(TabularSection.Name);
+	                
+	                For Each TabularSectionRow in MarkedElement.Ref[TabularSection.Name] Do 
+	                    
+	                    XMLRecord.WriteStartElement("Row");
+	                    
+	                    XMLRecord.WriteAttribute("Id", String(New UUID()));
+	                    XMLRecord.WriteAttribute("Ref", String(MarkedElement.Ref.UUID()));
+	                    
+	                    For Each Attribute in TabularSection.StandardAttributes Do
+	                        
+	                        AttributeValue = TabularSectionRow[Attribute.Name];
+	                        
+	                        FillRow(Attribute, AttributeValue, XMLRecord, False, MarkedElement, TableIO, True);
+	                        
+	                    EndDo;
+	                    
+	                    For Each Attribute in TabularSection.Attributes Do
+	                        
+	                        AttributeValue = TabularSectionRow[Attribute.Name];
+	                        
+	                        FillRow(Attribute, AttributeValue, XMLRecord, False, MarkedElement, TableIO, True);
+	                        
+	                    EndDo;
+	                    
+	                    XMLRecord.WriteEndElement();	
+	                    
+	                EndDo;
+	                
+	                XMLRecord.WriteEndElement();	
+	                
+	            EndDo;
+	            
+	            XMLRecord.WriteEndElement(); 
+	            
+	        EndDo;
+	        
+	    EndIf;	
+	    
+	    XMLRecord.WriteEndElement();
+	    
+	    XMLRecord.WriteEndElement();
+	    
+	    XMLRecord.Close(); 
+		
+		If Not TableIO.Count() = 0 Then 
+			
+			TableIO.GroupBy("Ref, Description");
+			
+			RecordSetIO = InformationRegisters.InvalidObjects.CreateRecordSet();
+			
+			RecordSetIO.Load(TableIO);
+			
+			RecordSetIO.Write();	
+			
+			ErrorDesc = "en = 'Found objects with errors, data upload is not performed (see register ""Invalid objects"")'; ru = 'Найдены объекты с ошибками, выгрузка данных не выполнена (см. регистр ""Объекты с ошибками"")'";
+		
+			Message(NStr(ErrorDesc));
+	        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Found objects with errors, data upload is not performed (see register ""Invalid objects"")");
+			
+			If NOT All Then
+	            RollBackChangesInRegister(OrderTable);
+	        EndIf;
+			
+		Else 
+		
+			If NOT InFile Then		
+				
+				ZipFileName = GetTempFileName(".zip");
+				
+				ZipFile = New ZipFileWriter(ZipFileName, , , ZIPCompressionMethod.Deflate, ZIPCompressionLevel.Optimal);
+				
+				ZipFile.Add(RequestFileName, ZIPStorePathMode.StoreRelativePath, ZIPSubDirProcessingMode.ProcessRecursively);
+				
+				ZipFile.Write();
+				
+	            // Отправка полученного файла на сервер
+	            Try
+	                
+	                Server 		= Constants.Server.Get();
+	                Path 		= Constants.ServerPath.Get();
+	                Password 	= Constants.Password.Get();
+					Port 		= Constants.Port.Get();
+	                
+	                ResultString = SendAndReceiveDocument("UploadData2", Server, Port, Path, Password, ZipFileName, True, True, True);
+	                
+	                If NOT ResultString = "ok" Then
+	                    
+	                    Message(ResultString);
+	                    WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ResultString);
+	                    
+	                    If NOT All Then
+	                        RollBackChangesInRegister(OrderTable);
+	                    EndIf;
+	                    
+	                Else 
+	                    
+	                    UploadComplete = True;
+	                    WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");
+	                    
+	                EndIf;
+	                
+	            Except
+	                
+	                Message(ErrorDescription());
+	                WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ErrorDescription());
+	                
+	                If NOT All Then
+	                    RollBackChangesInRegister(OrderTable);
+	                EndIf;
+	                
+	            EndTry;
+	            
+	        Else 
+	            
+	            TempStorageAddress = PutToTempStorage(New BinaryData(RequestFileName));
+	            
+	            UploadComplete = True;
+	            WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");	
+	            
+	        EndIf;
+			
+		EndIf;
+		
+	EndIf;	
+	   
 EndProcedure
-
-Function GetOrderTable(All, RegisterCopy)
-    
-    CycleFound = False;
-    
-    RefArray = RegisterCopy.UnloadColumn("Ref");
-    
-    RefTable = RegisterCopy.Copy();
-    RefTable.Columns.Add("Used");
-    RefTable.FillValues(False, "Used");
-    
-    // Получить общую таблицу ссылок
-    OrderTable = FindByRef(RefArray);
-    
-    ContainerTree = New ValueTree;
-    ContainerTree.Columns.Add("Element");
-    
-    StartRefTable = New ValueTable;
-    StartRefTable.Columns.Add("Reference");
-    
-    // Заполнить дерево ссылок по контейнерам
-    For Each StrTable in RefTable Do
-        
-        If NOT CycleFound Then
-            
-            AddBranch = ContainerTree.Rows.Add();
-            AddBranch.Element = StrTable.Ref;
-            
-            StructureSearch = New Structure;
-            StructureSearch.Insert("Data", StrTable.Ref);
-            
-            NextElements = OrderTable.FindRows(StructureSearch);
-            
-            If NOT NextElements.Count() = 0 Then
-                
-                InsStartRef = StartRefTable.Add();
-                InsStartRef.Reference = StrTable.Ref;
-                
-            EndIf;
-            
-            For Each NextElement in NextElements Do
-                
-                FindedElement = RefTable.Find(NextElement.Ref, "Ref");
-                
-                If FindedElement = Undefined 
-                    Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
-                    Continue;
-                EndIf;
-                
-                If All Then 
-                    If NOT FindedElement = Undefined Then
-                        If NOT FindedElement.Used Then
-                            FindedElement.Used = True;
-                        Else 	
-                            Continue;
-                        EndIf;
-                    EndIf;
-                EndIf;
-                
-                FillTree(All, StartRefTable, NextElement, AddBranch, OrderTable, CycleFound, RefTable);
-                
-            EndDo;
-            
-            If NOT CycleFound Then
-                
-                StartRefTable.Clear();
-                
-            EndIf;
-            
-            StrTable.Used = True;
-            
-        EndIf;
-        
-    EndDo;
-    
-    If CycleFound Then 
-        
-        WayString = "";
-        
-        For Each Str in StartRefTable Do
-            
-            WayString = WayString + " " + String(Str.Reference) + " (" + String(TypeOf(Str.Reference)) + ") " + "-->";
-            
-        EndDo;
-        
-        WayString = Left(WayString, StrLen(WayString) - 3);
-        
-        en = "Found a circular reference to " + WayString;
-        ru = "Найдена циклическая ссылка для " + WayString;
-        
-        Message(NStr("en = '" + en + "'; ru = '" + ru + "'"));
-        
-        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + en);
-        
-        Return Undefined;
-        
-    Else 
-        
-        NewOrderTable = New ValueTable;
-        NewOrderTable.Columns.Add("Reference");
-        
-        For Each Level in ContainerTree.Rows Do 
-            
-            If NewOrderTable.Find(Level.Element) = Undefined Then
-                
-                FillTable(Level, NewOrderTable);
-                
-                AddContainer = NewOrderTable.Add();
-                AddContainer.Reference = Level.Element;
-                
-            EndIf;
-            
-        EndDo;
-        
-        Return NewOrderTable;
-        
-    EndIf;
-    
-EndFunction
 
 Function GetQueryTextForAllObject(QueryResult)
     
@@ -999,7 +944,7 @@ Function GetQueryTextForAllObject(QueryResult)
         
         ObjectName = Right(MetadataObject, StrLen(MetadataObject) - DotPos);
         
-        QueryText = QueryText + " SELECT " + ObjectName + ".Ref" + " FROM " + MetadataObject + " AS " + ObjectName + " UNION ALL ";
+        QueryText = QueryText + " SELECT " + ObjectName + ".Ref As Ref" + " FROM " + MetadataObject + " AS " + ObjectName + " UNION ALL ";
         
     EndDo;
     
@@ -1009,99 +954,22 @@ Function GetQueryTextForAllObject(QueryResult)
     
 EndFunction
 
-Procedure FillTree(All, StartRefTable, StrTable, AddBranch, OrderTable, CycleFound, RefTable)
-    
-    CheckRef = StartRefTable.Find(StrTable.Ref);
-    
-    If NOT CheckRef = Undefined Then 
-        
-        CycleFound = True;
-        CycleRef = StrTable.Ref;
-        
-        InsStartRef = StartRefTable.Add();
-        InsStartRef.Reference = StrTable.Ref;
-        
-    EndIf;
-    
-    If NOT CycleFound Then 
-        
-        AddChildBranch = AddBranch.Rows.Add();
-        AddChildBranch.Element = StrTable.Ref;
-        
-        StructureSearch = New Structure;
-        StructureSearch.Insert("Data", StrTable.Ref);
-        
-        NextElements = OrderTable.FindRows(StructureSearch);
-        
-        If NOT NextElements.Count() = 0 Then
-            
-            InsStartRef = StartRefTable.Add();
-            InsStartRef.Reference = StrTable.Ref;
-            
-        EndIf;	
-        
-        For Each NextElement in NextElements Do
-            
-            FindedElement = RefTable.Find(NextElement.Ref, "Ref");
-            
-            If FindedElement = Undefined 
-                Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
-                Continue;
-            EndIf;
-            
-            If All Then 
-                If NOT FindedElement = Undefined Then
-                    If NOT FindedElement.Used Then
-                        FindedElement.Used = True;
-                    Else 	
-                        Continue;
-                    EndIf;
-                EndIf;
-            EndIf;
-            
-            FillTree(All, StartRefTable, NextElement, AddChildBranch, OrderTable, CycleFound, RefTable);
-            
-        EndDo;
-        
-        If NOT NextElements.Count() = 0 Then
-            
-            If NOT CycleFound Then
-                
-                FindedRecord = StartRefTable.Find(StrTable.Ref);
-                
-                If NOT FindedRecord = Undefined Then 
-                    
-                    StartRefTable.Delete(FindedRecord);
-                    
-                EndIf;	
-                
-            EndIf;
-            
-        EndIf;
-        
-    EndIf;
-    
-EndProcedure
-
-Procedure FillTable(Level, NewOrderTable)
-    
-    For Each Row in Level.Rows Do 
-        
-        If NewOrderTable.Find(Row.Element) = Undefined Then
-            
-            FillTable(Row, NewOrderTable);
-            
-            AddContainer = NewOrderTable.Add();
-            AddContainer.Reference = Row.Element;
-            
-        EndIf;
-        
-    EndDo;
-    
-EndProcedure
-
-Procedure FillRow(Attribute, AttributeValue, XMLRecord, IsStandartObjectAttribute, OrderElement = Undefined)
-    
+Procedure FillRow(Attribute, AttributeValue, XMLRecord, IsStandartObjectAttribute, OrderElement, TableIO, MarkDelProcessing = False)
+	
+	If Not MarkDelProcessing Then 
+	
+		If Attribute.FillChecking = FillChecking.ShowError And Not ValueIsFilled(AttributeValue) Then 
+			
+			Desc = "en = 'Attribute " + Attribute.Name + " is empty'; ru = 'Не заполнен реквизит " + Attribute.Name + " '";
+			
+			InsertIO 				= TableIO.Add();
+			InsertIO.Ref 			= OrderElement.Ref;
+			InsertIO.Description 	= NStr(Desc); 
+			
+		EndIf;
+		
+	EndIf;	
+	
     RefType = Metadata.FindByType(TypeOf(AttributeValue));
     
     If RefType = Undefined Then 
@@ -1163,7 +1031,7 @@ Procedure FillRow(Attribute, AttributeValue, XMLRecord, IsStandartObjectAttribut
             If Attribute.Name = "Ref" AND IsStandartObjectAttribute Then
                 XMLRecord.WriteAttribute("Id", String(AttributeValue.UUID()));
             ElsIf Attribute.Name = "Owner" AND IsStandartObjectAttribute Then 
-                If OrderElement.Reference.Metadata().Owners.Count() = 1 Then
+                If OrderElement.Ref.Metadata().Owners.Count() = 1 Then
                     XMLRecord.WriteAttribute("Owner", String(AttributeValue.UUID()));
                 EndIf;
             Else 
@@ -1172,8 +1040,7 @@ Procedure FillRow(Attribute, AttributeValue, XMLRecord, IsStandartObjectAttribut
         EndIf;
         
     EndIf;
-    
-    
+        
 EndProcedure
 
 Procedure RollBackChangesInRegister(RegisterCopy)
@@ -1229,15 +1096,16 @@ Procedure DownloadData(DownloadComplete) Export
     XMLFile.WriteEndElement();
     XMLFile.Close();
     
-    Server = Constants.Server.Get();
-    Path = Constants.ServerPath.Get();
-    Password = Constants.Password.Get();
+    Server 		= Constants.Server.Get();
+    Path 		= Constants.ServerPath.Get();
+    Password 	= Constants.Password.Get();
+	Port 		= Constants.Port.Get();
     
     BeginTransaction();
     
     Try
         
-        Response = SendAndReceiveDocument("DownloadData", Server, Path, Password, Request, False);
+        Response = SendAndReceiveDocument("DownloadData", Server, Port, Path, Password, Request, False);
         
         //ZIPReader = New ZipFileReader(Response);
         //
@@ -1270,7 +1138,7 @@ Procedure DownloadData(DownloadComplete) Export
         XMLFile.WriteEndElement();
         XMLFile.Close();
         
-        ResultString = SendAndReceiveDocument("DownloadDataCommit", Server, Path, Password, Request);
+        ResultString = SendAndReceiveDocument("DownloadDataCommit", Server, Port, Path, Password, Request);
         
         If NOT ResultString = "ok" Then
             Message(ResultString);
@@ -1574,9 +1442,9 @@ Function CreateEnumIDTable()
     
 EndFunction
 
-Function SendAndReceiveDocument(Method, Server, Path, Password, RequestFileName = Undefined, OnlySend = True, Post = True, ZIPout = False, ZIPin = False)	
+Function SendAndReceiveDocument(Method, Server, Port, Path, Password, RequestFileName = Undefined, OnlySend = True, Post = True, ZIPout = False, ZIPin = False)	
     
-    Connection = New HTTPConnection(Server,80,"admin",Password);
+    Connection = New HTTPConnection(Server, Port, "admin", Password);
     PathConnection = Path + Method;	
     
     ResultFileName = GetTempFileName();
@@ -1627,13 +1495,14 @@ EndFunction
 
 Procedure SyncDeletedData(SyncComplete) Export 
     
-    Server = Constants.Server.Get();
-    Path = Constants.ServerPath.Get();
-    Password = Constants.Password.Get();
+    Server 		= Constants.Server.Get();
+    Path 		= Constants.ServerPath.Get();
+    Password 	= Constants.Password.Get();
+	Port 		= Constants.Port.Get();
     
     Try
         
-        Response = SendAndReceiveDocument("DownloadDeleted", Server, Path, Password, Undefined, False, False);
+        Response = SendAndReceiveDocument("DownloadDeleted", Server, Port, Path, Password, Undefined, False, False);
         
         XMLFile = New XMLReader; 
         XMLFile.OpenFile(Response, Undefined, Undefined, "UTF-8");
@@ -1684,7 +1553,7 @@ Procedure SyncDeletedData(SyncComplete) Export
             
             XMLRecord.Close();
             
-            ResultString = SendAndReceiveDocument("UploadData2", Server, Path, Password, RequestFileName);
+            ResultString = SendAndReceiveDocument("UploadData2", Server, Port, Path, Password, RequestFileName);
             
             If NOT ResultString = "ok" Then
                 Message(ResultString);
@@ -1776,157 +1645,191 @@ Procedure FillRecordset() Export  // Default setting for SyncOrder
     ValueTable.Columns.Add("Download");
     ValueTable.Columns.Add("Upload");
     ValueTable.Columns.Add("Filter");
+	ValueTable.Columns.Add("Position");
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.MobileApplicationSettings";
-    Row.Upload = True;
+	Row.Position = 1;
+	Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.ReasonForVisit";
+	Row.Position = 2;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.ReasonForNotOfTakingOrder";
-    Row.Upload = True;
+	Row.Position = 3;
+	Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Positions";
+	Row.Position = 4;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Stock";
-    Row.Upload = True;
+	Row.Position = 5;
+	Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory] Territory ON Territory.Id = S.Ref AND Territory.SR = @UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.User";
-    Row.Upload = True;
+	Row.Position = 6;
+	Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 't.Id=@UserId';";
     
     Row = ValueTable.Add();    
     Row.MetadataObject = "Catalog.Region";
-    Row.Upload = True;
+	Row.Position = 7;
+	Row.Upload = True;
     
     Row = ValueTable.Add();    
     Row.MetadataObject = "Catalog.Distributor";
-    Row.Upload = True;
+	Row.Position = 8;
+	Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.OutletParameter";
-    Row.Upload = True;
+	Row.Position = 9;
+	Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.OutletType";
+	Row.Position = 10;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.OutletClass";
+	Row.Position = 11;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.SKUGroup";
+	Row.Position = 12;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Brands";
+	Row.Position = 13;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.UnitsOfMeasure";
+	Row.Position = 14;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.SKUProperties";
+	Row.Position = 15;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.SKUPropertiesValues";
+	Row.Position = 16;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.SKUFeatures";
+	Row.Position = 17;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.SKU";
+	Row.Position = 18;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 'T.[Owner] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.PriceList";
+	Row.Position = 19;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Prices' FilterText= 'T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)) ';FilterName= 'Header' FilterText= 'T.Id IN (SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory] TT_ ON TT_.Id=TO_.Ref WHERE TT_.SR=@UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Outlet";
+	Row.Position = 20;
     Row.Upload = True;
     Row.Download = True;
     Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Territory";
+	Row.Position = 21;
     Row.Upload = True;
     Row.Download = True;
     Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.QuestionGroup";
+	Row.Position = 22;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Catalog.Question";
+	Row.Position = 23;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Questionnaire";
+	Row.Position = 24;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT QP.[Questionnaire] FROM [Document].[QuestionnaireMap_Positions] QP JOIN [Catalog].[User] U ON QP.[Position]=U.Position AND U.[Id] =@UserId)';";    
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.VisitPlan";
+	Row.Position = 25;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';"; 
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Task";
+	Row.Position = 26;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Visit";
+	Row.Position = 27;
     Row.Download = True;
     Row.Upload = True;
     Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Order";
+	Row.Position = 28;
     Row.Download = True;
     Row.Upload = True;    
     Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.AccountReceivable";
+	Row.Position = 29;
     Row.Upload = True; 
     Row.Filter = "FilterName= 'Header' FilterText= 'T.Outlet IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)';";
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Encashment";
+	Row.Position = 30;
     Row.Upload = True;
     Row.Download = True;
     Row.Filter = "FilterName= 'Header' FilterText= 't.Date > (getDate()-30)';"; 
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.Guestbook";
+	Row.Position = 31;
     Row.Upload = False;
     Row.Download = False; 
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.MobileAppPlanVisit";
+	Row.Position = 32;
     Row.Download = True;
     Row.Upload = True;
     
     Row = ValueTable.Add();
     Row.MetadataObject = "Document.QuestionnaireMap";
+	Row.Position = 33;
     Row.Download = False;
     Row.Upload = True;
     
@@ -1957,6 +1860,216 @@ Procedure FillFTPRecordset() Export
     RecordSet = InformationRegisters.SyncSettingsFTP.CreateRecordSet();
     RecordSet.Load(ValueTable);
     RecordSet.Write();
+    
+EndProcedure
+
+Function GetOrderTable(All, RegisterCopy)
+    
+    CycleFound = False;
+    
+    RefArray = RegisterCopy.UnloadColumn("Ref");
+    
+    RefTable = RegisterCopy.Copy();
+    RefTable.Columns.Add("Used");
+    RefTable.FillValues(False, "Used");
+    
+    // Получить общую таблицу ссылок
+    OrderTable = FindByRef(RefArray);
+    
+    ContainerTree = New ValueTree;
+    ContainerTree.Columns.Add("Element");
+    
+    StartRefTable = New ValueTable;
+    StartRefTable.Columns.Add("Reference");
+    
+    // Заполнить дерево ссылок по контейнерам
+    For Each StrTable in RefTable Do
+        
+        If NOT CycleFound Then
+            
+            AddBranch = ContainerTree.Rows.Add();
+            AddBranch.Element = StrTable.Ref;
+            
+            StructureSearch = New Structure;
+            StructureSearch.Insert("Data", StrTable.Ref);
+            
+            NextElements = OrderTable.FindRows(StructureSearch);
+            
+            If NOT NextElements.Count() = 0 Then
+                
+                InsStartRef = StartRefTable.Add();
+                InsStartRef.Reference = StrTable.Ref;
+                
+            EndIf;
+            
+            For Each NextElement in NextElements Do
+                
+                FindedElement = RefTable.Find(NextElement.Ref, "Ref");
+                
+                If FindedElement = Undefined 
+                    Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
+                    Continue;
+                EndIf;
+                
+                If All Then 
+                    If NOT FindedElement = Undefined Then
+                        If NOT FindedElement.Used Then
+                            FindedElement.Used = True;
+                        Else 	
+                            Continue;
+                        EndIf;
+                    EndIf;
+                EndIf;
+                
+                FillTree(All, StartRefTable, NextElement, AddBranch, OrderTable, CycleFound, RefTable);
+                
+            EndDo;
+            
+            If NOT CycleFound Then
+                
+                StartRefTable.Clear();
+                
+            EndIf;
+            
+            StrTable.Used = True;
+            
+        EndIf;
+        
+    EndDo;
+    
+    If CycleFound Then 
+        
+        WayString = "";
+        
+        For Each Str in StartRefTable Do
+            
+            WayString = WayString + " " + String(Str.Reference) + " (" + String(TypeOf(Str.Reference)) + ") " + "-->";
+            
+        EndDo;
+        
+        WayString = Left(WayString, StrLen(WayString) - 3);
+        
+        en = "Found a circular reference to " + WayString;
+        ru = "Найдена циклическая ссылка для " + WayString;
+        
+        Message(NStr("en = '" + en + "'; ru = '" + ru + "'"));
+        
+        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + en);
+        
+        Return Undefined;
+        
+    Else 
+        
+        NewOrderTable = New ValueTable;
+        NewOrderTable.Columns.Add("Reference");
+        
+        For Each Level in ContainerTree.Rows Do 
+            
+            If NewOrderTable.Find(Level.Element) = Undefined Then
+                
+                FillTable(Level, NewOrderTable);
+                
+                AddContainer = NewOrderTable.Add();
+                AddContainer.Reference = Level.Element;
+                
+            EndIf;
+            
+        EndDo;
+        
+        Return NewOrderTable;
+        
+    EndIf;
+    
+EndFunction
+
+Procedure FillTree(All, StartRefTable, StrTable, AddBranch, OrderTable, CycleFound, RefTable)
+    
+    CheckRef = StartRefTable.Find(StrTable.Ref);
+    
+    If NOT CheckRef = Undefined Then 
+        
+        CycleFound = True;
+        CycleRef = StrTable.Ref;
+        
+        InsStartRef = StartRefTable.Add();
+        InsStartRef.Reference = StrTable.Ref;
+        
+    EndIf;
+    
+    If NOT CycleFound Then 
+        
+        AddChildBranch = AddBranch.Rows.Add();
+        AddChildBranch.Element = StrTable.Ref;
+        
+        StructureSearch = New Structure;
+        StructureSearch.Insert("Data", StrTable.Ref);
+        
+        NextElements = OrderTable.FindRows(StructureSearch);
+        
+        If NOT NextElements.Count() = 0 Then
+            
+            InsStartRef = StartRefTable.Add();
+            InsStartRef.Reference = StrTable.Ref;
+            
+        EndIf;	
+        
+        For Each NextElement in NextElements Do
+            
+            FindedElement = RefTable.Find(NextElement.Ref, "Ref");
+            
+            If FindedElement = Undefined 
+                Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
+                Continue;
+            EndIf;
+            
+            If All Then 
+                If NOT FindedElement = Undefined Then
+                    If NOT FindedElement.Used Then
+                        FindedElement.Used = True;
+                    Else 	
+                        Continue;
+                    EndIf;
+                EndIf;
+            EndIf;
+            
+            FillTree(All, StartRefTable, NextElement, AddChildBranch, OrderTable, CycleFound, RefTable);
+            
+        EndDo;
+        
+        If NOT NextElements.Count() = 0 Then
+            
+            If NOT CycleFound Then
+                
+                FindedRecord = StartRefTable.Find(StrTable.Ref);
+                
+                If NOT FindedRecord = Undefined Then 
+                    
+                    StartRefTable.Delete(FindedRecord);
+                    
+                EndIf;	
+                
+            EndIf;
+            
+        EndIf;
+        
+    EndIf;
+    
+EndProcedure
+
+Procedure FillTable(Level, NewOrderTable)
+    
+    For Each Row in Level.Rows Do 
+        
+        If NewOrderTable.Find(Row.Element) = Undefined Then
+            
+            FillTable(Row, NewOrderTable);
+            
+            AddContainer = NewOrderTable.Add();
+            AddContainer.Reference = Row.Element;
+            
+        EndIf;
+        
+    EndDo;
     
 EndProcedure
 

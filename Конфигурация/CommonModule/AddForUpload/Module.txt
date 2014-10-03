@@ -1,9 +1,9 @@
 ﻿
 Procedure CatalogBeforeWriteHandler(Source, Cancel) Export
 	
-    If Not  IsInRegister(Source) Then
-        Return
-	EndIf;
+    If IsInRegister(Source) = Undefined Then
+    	Return;
+    EndIf;
 	
     Source.AdditionalProperties.Insert("UnmarkDel", Source.Ref.DeletionMark);
     Source.AdditionalProperties.Insert("IsNew", Source.IsNew());
@@ -12,9 +12,9 @@ EndProcedure
 
 Procedure DocumentBeforeWriteHandler(Source, Cancel, WriteMode, PostingMode) Export
 
-    If Not  IsInRegister(Source) Then
-        Return
-	EndIf;
+    If IsInRegister(Source) = Undefined Then
+    	Return;
+    EndIf;
 	
     Source.AdditionalProperties.Insert("UnmarkDel", Source.Ref.DeletionMark);
     Source.AdditionalProperties.Insert("IsNew", Source.IsNew());
@@ -22,8 +22,10 @@ Procedure DocumentBeforeWriteHandler(Source, Cancel, WriteMode, PostingMode) Exp
 EndProcedure
 
 Procedure WriteHandler(Source, Cancel) Export
-    
-    If NOT IsInRegister(Source) Then
+	
+	Position = IsInRegister(Source); 
+	
+    If Position = Undefined Then
     	Return;
     EndIf;
 
@@ -50,6 +52,7 @@ Procedure WriteHandler(Source, Cancel) Export
         
         Record.Modified = CurrentDate();	
         Record.Ref = Source.Ref;
+		Record.Position = Position;
         Record.Write();
 		
     EndIf;
@@ -82,22 +85,25 @@ Function IsInRegister(Source)
 	Query = new Query;
     Query.Text =
 	    "SELECT
-	    |   SyncOrder.MetadataObject,
-	    |   SyncOrder.Upload,
-	    |   SyncOrder.Download,
-	    |   SyncOrder.Filter
+	    |	SyncOrder.MetadataObject,
+	    |	SyncOrder.Upload,
+	    |	SyncOrder.Download,
+	    |	SyncOrder.Filter,
+	    |	SyncOrder.Position
 	    |FROM
-	    |   InformationRegister.SyncOrder AS SyncOrder
+	    |	InformationRegister.SyncOrder AS SyncOrder
 	    |WHERE
-	    |   SyncOrder.MetadataObject = &MetadataObject
-	    |   AND SyncOrder.Upload = TRUE";
+	    |	SyncOrder.MetadataObject = &MetadataObject
+	    |	AND SyncOrder.Upload = TRUE";
 	
 	Query.SetParameter("MetadataObject", Source.Metadata().FullName());
 	
-	If Query.Execute().Unload().Count() > 0 Then
-        Return True
+	Result =  Query.Execute().Unload();
+	
+	If Result.Count() > 0 Then
+        Return Result[0].Position;
     Else
-        Return False
+        Return Undefined;
     EndIf;
 
 EndFunction // IsInRegister()

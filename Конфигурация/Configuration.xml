@@ -184,6 +184,7 @@
 			<Constant>Server</Constant>
 			<Constant>ServerPath</Constant>
 			<Constant>Password</Constant>
+			<Constant>Port</Constant>
 			<Constant>LastSyncDate</Constant>
 			<Constant>LastSyncStatus</Constant>
 			<Constant>LastSyncDeletedDate</Constant>
@@ -192,8 +193,8 @@
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MaxPictureSize</Constant>
 			<Constant>update2_0_0</Constant>
-			<Constant>MultiStock</Constant>
 			<Constant>update_questionnaire</Constant>
+			<Constant>MultiStock</Constant>
 			<CommonForm>ДлительнаяОперация</CommonForm>
 			<CommonForm>Navigation</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
@@ -282,6 +283,7 @@
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
 			<InformationRegister>Selectors</InformationRegister>
+			<InformationRegister>InvalidObjects</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

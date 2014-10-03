@@ -1,0 +1,17 @@
+﻿
+&AtServer
+Procedure CleanRegisterIO()
+	
+	RecordSetIO = InformationRegisters.InvalidObjects.CreateRecordSet();
+	RecordSetIO.Write();
+		
+EndProcedure
+
+&AtClient
+Procedure CleanRegister(Command)
+	
+	CleanRegisterIO();
+	
+	Items.List.Refresh();	
+	
+EndProcedure

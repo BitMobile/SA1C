@@ -28,7 +28,7 @@
 			</ToolTip>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="MainGroupExtendedTooltip" id="128"/>
+			<ExtendedTooltip name="MainGroupExtendedTooltip" id="133"/>
 			<ChildItems>
 				<UsualGroup name="GroupSync" id="45">
 					<Title>
@@ -46,7 +46,7 @@
 					<Group>Horizontal</Group>
 					<Representation>None</Representation>
 					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="GroupSyncExtendedTooltip" id="129"/>
+					<ExtendedTooltip name="GroupSyncExtendedTooltip" id="134"/>
 					<ChildItems>
 						<UsualGroup name="GroupInfo" id="51">
 							<Title>
@@ -68,7 +68,7 @@
 							<Width>55</Width>
 							<Height>4</Height>
 							<Representation>StrongSeparation</Representation>
-							<ExtendedTooltip name="GroupInfoExtendedTooltip" id="130"/>
+							<ExtendedTooltip name="GroupInfoExtendedTooltip" id="135"/>
 							<ChildItems>
 								<LabelField name="LastSyncDate" id="49">
 									<DataPath>LastSyncDate</DataPath>
@@ -85,7 +85,7 @@
 									<TitleTextColor>#805E06</TitleTextColor>
 									<TitleLocation>Left</TitleLocation>
 									<ContextMenu name="LastSyncDateContextMenu" id="50"/>
-									<ExtendedTooltip name="LastSyncDateExtendedTooltip" id="131"/>
+									<ExtendedTooltip name="LastSyncDateExtendedTooltip" id="136"/>
 								</LabelField>
 								<LabelField name="LastSyncDeletedDate" id="56">
 									<DataPath>LastSyncDeletedDate</DataPath>
@@ -101,7 +101,7 @@
 									</Title>
 									<TitleTextColor>#805E06</TitleTextColor>
 									<ContextMenu name="LastSyncDeletedDateContextMenu" id="57"/>
-									<ExtendedTooltip name="LastSyncDeletedDateExtendedTooltip" id="132"/>
+									<ExtendedTooltip name="LastSyncDeletedDateExtendedTooltip" id="137"/>
 								</LabelField>
 							</ChildItems>
 						</UsualGroup>
@@ -125,7 +125,7 @@
 							</ToolTip>
 							<Height>4</Height>
 							<Representation>StrongSeparation</Representation>
-							<ExtendedTooltip name="GroupDataExtendedTooltip" id="133"/>
+							<ExtendedTooltip name="GroupDataExtendedTooltip" id="138"/>
 							<ChildItems>
 								<Button name="SyncronizeData" id="47">
 									<Type>UsualButton</Type>
@@ -146,7 +146,7 @@
 											<v8:content>Синхронизировать данные</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="SyncronizeDataExtendedTooltip" id="134"/>
+									<ExtendedTooltip name="SyncronizeDataExtendedTooltip" id="139"/>
 								</Button>
 								<Button name="SynchronizeDeletedObjects" id="53">
 									<Type>UsualButton</Type>
@@ -172,7 +172,7 @@
 											<v8:content>Синхронизировать удалённые данные</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="SynchronizeDeletedObjectsExtendedTooltip" id="135"/>
+									<ExtendedTooltip name="SynchronizeDeletedObjectsExtendedTooltip" id="140"/>
 								</Button>
 							</ChildItems>
 						</UsualGroup>
@@ -195,7 +195,7 @@
 							</ToolTip>
 							<Height>4</Height>
 							<Representation>StrongSeparation</Representation>
-							<ExtendedTooltip name="GroupPicturesExtendedTooltip" id="136"/>
+							<ExtendedTooltip name="GroupPicturesExtendedTooltip" id="141"/>
 							<ChildItems>
 								<Button name="SyncronizePictures" id="43">
 									<Type>UsualButton</Type>
@@ -216,7 +216,7 @@
 											<v8:content>Синхронизировать картинки</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="SyncronizePicturesExtendedTooltip" id="137"/>
+									<ExtendedTooltip name="SyncronizePicturesExtendedTooltip" id="142"/>
 								</Button>
 								<Button name="UploadAllPictures" id="44">
 									<Type>UsualButton</Type>
@@ -232,7 +232,7 @@
 										<xr:Ref>StdPicture.MoveRight</xr:Ref>
 										<xr:LoadTransparent>true</xr:LoadTransparent>
 									</Picture>
-									<ExtendedTooltip name="UploadAllPicturesExtendedTooltip" id="138"/>
+									<ExtendedTooltip name="UploadAllPicturesExtendedTooltip" id="143"/>
 								</Button>
 							</ChildItems>
 						</UsualGroup>
@@ -263,7 +263,7 @@
 					<HorizontalStretch>true</HorizontalStretch>
 					<VerticalStretch>true</VerticalStretch>
 					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="GroupSettingsExtendedTooltip" id="139"/>
+					<ExtendedTooltip name="GroupSettingsExtendedTooltip" id="144"/>
 					<ChildItems>
 						<Pages name="GroupSettingsSheet" id="74">
 							<Title>
@@ -278,7 +278,7 @@
 									<v8:content>Group settings sheet</v8:content>
 								</v8:item>
 							</ToolTip>
-							<ExtendedTooltip name="GroupSettingsSheetExtendedTooltip" id="140"/>
+							<ExtendedTooltip name="GroupSettingsSheetExtendedTooltip" id="145"/>
 							<ChildItems>
 								<Page name="GroupServerSettings" id="75">
 									<Title>
@@ -297,16 +297,44 @@
 											<v8:content>Group server settings</v8:content>
 										</v8:item>
 									</ToolTip>
-									<ExtendedTooltip name="GroupServerSettingsExtendedTooltip" id="141"/>
+									<ExtendedTooltip name="GroupServerSettingsExtendedTooltip" id="146"/>
 									<ChildItems>
-										<InputField name="Server" id="18">
-											<DataPath>Object.Server</DataPath>
-											<ContextMenu name="ServerContextMenu" id="19"/>
-											<ExtendedTooltip name="ServerExtendedTooltip" id="142"/>
-											<Events>
-												<Event name="OnChange">ServerOnChange</Event>
-											</Events>
-										</InputField>
+										<UsualGroup name="GroupServerPort" id="130">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group server port</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group server port</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Group>Horizontal</Group>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="GroupServerPortExtendedTooltip" id="147"/>
+											<ChildItems>
+												<InputField name="Server" id="18">
+													<DataPath>Object.Server</DataPath>
+													<ContextMenu name="ServerContextMenu" id="19"/>
+													<ExtendedTooltip name="ServerExtendedTooltip" id="148"/>
+													<Events>
+														<Event name="OnChange">ServerOnChange</Event>
+													</Events>
+												</InputField>
+												<InputField name="Port" id="128">
+													<DataPath>Object.Port</DataPath>
+													<ContextMenu name="PortContextMenu" id="129"/>
+													<ExtendedTooltip name="PortExtendedTooltip" id="149"/>
+													<Events>
+														<Event name="OnChange">PortOnChange</Event>
+													</Events>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
 										<InputField name="Path" id="16">
 											<DataPath>Object.Path</DataPath>
 											<Title>
@@ -316,7 +344,7 @@
 												</v8:item>
 											</Title>
 											<ContextMenu name="PathContextMenu" id="17"/>
-											<ExtendedTooltip name="PathExtendedTooltip" id="143"/>
+											<ExtendedTooltip name="PathExtendedTooltip" id="150"/>
 											<Events>
 												<Event name="OnChange">PathOnChange</Event>
 											</Events>
@@ -325,7 +353,7 @@
 											<DataPath>Object.Password</DataPath>
 											<PasswordMode>true</PasswordMode>
 											<ContextMenu name="PasswordContextMenu" id="41"/>
-											<ExtendedTooltip name="PasswordExtendedTooltip" id="144"/>
+											<ExtendedTooltip name="PasswordExtendedTooltip" id="151"/>
 											<Events>
 												<Event name="OnChange">PasswordOnChange</Event>
 											</Events>
@@ -346,12 +374,12 @@
 											<Group>Horizontal</Group>
 											<Representation>None</Representation>
 											<ShowTitle>false</ShowTitle>
-											<ExtendedTooltip name="GroupButtonExtendedTooltip" id="145"/>
+											<ExtendedTooltip name="GroupButtonExtendedTooltip" id="152"/>
 											<ChildItems>
 												<PictureDecoration name="Decoration1" id="113">
 													<HorizontalStretch>true</HorizontalStretch>
 													<ContextMenu name="Decoration1ContextMenu" id="114"/>
-													<ExtendedTooltip name="Decoration1ExtendedTooltip" id="146"/>
+													<ExtendedTooltip name="Decoration1ExtendedTooltip" id="153"/>
 												</PictureDecoration>
 												<Button name="SaveSettings" id="13">
 													<Type>UsualButton</Type>
@@ -360,7 +388,7 @@
 													<Parameter xsi:nil="true"/>
 													<BackColor>style:ButtonBackColor</BackColor>
 													<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-													<ExtendedTooltip name="SaveSettingsExtendedTooltip" id="147"/>
+													<ExtendedTooltip name="SaveSettingsExtendedTooltip" id="154"/>
 												</Button>
 											</ChildItems>
 										</UsualGroup>
@@ -383,7 +411,7 @@
 											<v8:content>Group sync settings</v8:content>
 										</v8:item>
 									</ToolTip>
-									<ExtendedTooltip name="GroupSyncSettingsExtendedTooltip" id="148"/>
+									<ExtendedTooltip name="GroupSyncSettingsExtendedTooltip" id="155"/>
 									<ChildItems>
 										<Table name="SyncSettingsTable" id="58">
 											<Representation>List</Representation>
@@ -420,7 +448,7 @@
 														<Type>CommandBarButton</Type>
 														<CommandName>Form.Item.SyncSettingsTable.StandardCommand.Create</CommandName>
 														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="SyncSettingsTableButtonCreateExtendedTooltip" id="149"/>
+														<ExtendedTooltip name="SyncSettingsTableButtonCreateExtendedTooltip" id="156"/>
 													</Button>
 													<ButtonGroup name="SyncSettingsTableGroupEdit" id="79">
 														<Title>
@@ -435,25 +463,25 @@
 																<v8:content>Sync settings table group edit</v8:content>
 															</v8:item>
 														</ToolTip>
-														<ExtendedTooltip name="SyncSettingsTableGroupEditExtendedTooltip" id="150"/>
+														<ExtendedTooltip name="SyncSettingsTableGroupEditExtendedTooltip" id="157"/>
 														<ChildItems>
 															<Button name="SyncSettingsTableButtonCopy" id="80">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.SyncSettingsTable.StandardCommand.Copy</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="SyncSettingsTableButtonCopyExtendedTooltip" id="151"/>
+																<ExtendedTooltip name="SyncSettingsTableButtonCopyExtendedTooltip" id="158"/>
 															</Button>
 															<Button name="SyncSettingsTableButtonChange" id="81">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.SyncSettingsTable.StandardCommand.Change</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="SyncSettingsTableButtonChangeExtendedTooltip" id="152"/>
+																<ExtendedTooltip name="SyncSettingsTableButtonChangeExtendedTooltip" id="159"/>
 															</Button>
 															<Button name="SyncSettingsTableButtonDelete" id="82">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.SyncSettingsTable.StandardCommand.Delete</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="SyncSettingsTableButtonDeleteExtendedTooltip" id="153"/>
+																<ExtendedTooltip name="SyncSettingsTableButtonDeleteExtendedTooltip" id="160"/>
 															</Button>
 														</ChildItems>
 													</ButtonGroup>
@@ -466,43 +494,48 @@
 															<xr:Ref>StdPicture.RestoreValues</xr:Ref>
 															<xr:LoadTransparent>true</xr:LoadTransparent>
 														</Picture>
-														<ExtendedTooltip name="SyncSettingsTableDefaultSettingsExtendedTooltip" id="154"/>
+														<ExtendedTooltip name="SyncSettingsTableDefaultSettingsExtendedTooltip" id="161"/>
 													</Button>
 												</ChildItems>
 											</AutoCommandBar>
-											<ExtendedTooltip name="SyncSettingsTableExtendedTooltip" id="155"/>
-											<SearchStringAddition name="SyncSettingsTableSearchString" id="156">
+											<ExtendedTooltip name="SyncSettingsTableExtendedTooltip" id="162"/>
+											<SearchStringAddition name="SyncSettingsTableSearchString" id="163">
 												<Source>
 													<lf:elementId>58</lf:elementId>
 													<lf:additionId>0</lf:additionId>
 												</Source>
-												<ContextMenu name="SyncSettingsTableSearchStringContextMenu" id="157"/>
-												<ExtendedTooltip name="SyncSettingsTableSearchStringExtendedTooltip" id="158"/>
+												<ContextMenu name="SyncSettingsTableSearchStringContextMenu" id="164"/>
+												<ExtendedTooltip name="SyncSettingsTableSearchStringExtendedTooltip" id="165"/>
 											</SearchStringAddition>
-											<ViewStatusAddition name="SyncSettingsTableViewStatus" id="159">
+											<ViewStatusAddition name="SyncSettingsTableViewStatus" id="166">
 												<Source>
 													<lf:elementId>58</lf:elementId>
 													<lf:additionId>1</lf:additionId>
 												</Source>
-												<ContextMenu name="SyncSettingsTableViewStatusContextMenu" id="160"/>
-												<ExtendedTooltip name="SyncSettingsTableViewStatusExtendedTooltip" id="161"/>
+												<ContextMenu name="SyncSettingsTableViewStatusContextMenu" id="167"/>
+												<ExtendedTooltip name="SyncSettingsTableViewStatusExtendedTooltip" id="168"/>
 											</ViewStatusAddition>
-											<SearchControlAddition name="SyncSettingsTableSearchControl" id="162">
+											<SearchControlAddition name="SyncSettingsTableSearchControl" id="169">
 												<Source>
 													<lf:elementId>58</lf:elementId>
 													<lf:additionId>2</lf:additionId>
 												</Source>
-												<ContextMenu name="SyncSettingsTableSearchControlContextMenu" id="163"/>
-												<ExtendedTooltip name="SyncSettingsTableSearchControlExtendedTooltip" id="164"/>
+												<ContextMenu name="SyncSettingsTableSearchControlContextMenu" id="170"/>
+												<ExtendedTooltip name="SyncSettingsTableSearchControlExtendedTooltip" id="171"/>
 											</SearchControlAddition>
 											<ChildItems>
+												<LabelField name="SyncSettingsTablePosition" id="131">
+													<DataPath>SyncSettingsTable.Position</DataPath>
+													<ContextMenu name="SyncSettingsTablePositionContextMenu" id="132"/>
+													<ExtendedTooltip name="SyncSettingsTablePositionExtendedTooltip" id="172"/>
+												</LabelField>
 												<InputField name="SyncSettingsTableMetadataObject" id="61">
 													<DataPath>SyncSettingsTable.MetadataObject</DataPath>
 													<EditMode>EnterOnInput</EditMode>
 													<TextEdit>false</TextEdit>
 													<ChoiceListButton>true</ChoiceListButton>
 													<ContextMenu name="SyncSettingsTableMetadataObjectContextMenu" id="62"/>
-													<ExtendedTooltip name="SyncSettingsTableMetadataObjectExtendedTooltip" id="165"/>
+													<ExtendedTooltip name="SyncSettingsTableMetadataObjectExtendedTooltip" id="173"/>
 													<Events>
 														<Event name="StartListChoice">SyncSettingsTableMetadataObjectStartListChoice</Event>
 													</Events>
@@ -512,7 +545,7 @@
 													<EditMode>EnterOnInput</EditMode>
 													<CheckBoxType>Auto</CheckBoxType>
 													<ContextMenu name="SyncSettingsTableSyncUploadContextMenu" id="64"/>
-													<ExtendedTooltip name="SyncSettingsTableSyncUploadExtendedTooltip" id="166"/>
+													<ExtendedTooltip name="SyncSettingsTableSyncUploadExtendedTooltip" id="174"/>
 													<Events>
 														<Event name="OnChange">SyncSettingsTableSyncUploadOnChange</Event>
 													</Events>
@@ -522,7 +555,7 @@
 													<EditMode>EnterOnInput</EditMode>
 													<CheckBoxType>Auto</CheckBoxType>
 													<ContextMenu name="SyncSettingsTableSyncDownloadContextMenu" id="66"/>
-													<ExtendedTooltip name="SyncSettingsTableSyncDownloadExtendedTooltip" id="167"/>
+													<ExtendedTooltip name="SyncSettingsTableSyncDownloadExtendedTooltip" id="175"/>
 													<Events>
 														<Event name="OnChange">SyncSettingsTableSyncDownloadOnChange</Event>
 													</Events>
@@ -533,7 +566,7 @@
 													<OpenButton>true</OpenButton>
 													<TextEdit>false</TextEdit>
 													<ContextMenu name="SyncSettingsTableFilterContextMenu" id="68"/>
-													<ExtendedTooltip name="SyncSettingsTableFilterExtendedTooltip" id="168"/>
+													<ExtendedTooltip name="SyncSettingsTableFilterExtendedTooltip" id="176"/>
 													<Events>
 														<Event name="Opening">SyncSettingsTableFilterOpening</Event>
 													</Events>
@@ -559,7 +592,7 @@
 											<v8:content>Group FTPSync settings</v8:content>
 										</v8:item>
 									</ToolTip>
-									<ExtendedTooltip name="GroupFTPSyncSettingsExtendedTooltip" id="169"/>
+									<ExtendedTooltip name="GroupFTPSyncSettingsExtendedTooltip" id="177"/>
 									<ChildItems>
 										<Table name="FTPSyncSettingsTable" id="84">
 											<Representation>List</Representation>
@@ -592,7 +625,7 @@
 														<Type>CommandBarButton</Type>
 														<CommandName>Form.Item.FTPSyncSettingsTable.StandardCommand.Create</CommandName>
 														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="FTPSyncSettingsTableButtonCreateExtendedTooltip" id="170"/>
+														<ExtendedTooltip name="FTPSyncSettingsTableButtonCreateExtendedTooltip" id="178"/>
 													</Button>
 													<ButtonGroup name="FTPSyncSettingsTableGroupEdit" id="92">
 														<Title>
@@ -607,25 +640,25 @@
 																<v8:content>FTPSync settings table group edit</v8:content>
 															</v8:item>
 														</ToolTip>
-														<ExtendedTooltip name="FTPSyncSettingsTableGroupEditExtendedTooltip" id="171"/>
+														<ExtendedTooltip name="FTPSyncSettingsTableGroupEditExtendedTooltip" id="179"/>
 														<ChildItems>
 															<Button name="FTPSyncSettingsTableButtonCopy" id="93">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.FTPSyncSettingsTable.StandardCommand.Copy</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="FTPSyncSettingsTableButtonCopyExtendedTooltip" id="172"/>
+																<ExtendedTooltip name="FTPSyncSettingsTableButtonCopyExtendedTooltip" id="180"/>
 															</Button>
 															<Button name="FTPSyncSettingsTableButtonChange" id="94">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.FTPSyncSettingsTable.StandardCommand.Change</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="FTPSyncSettingsTableButtonChangeExtendedTooltip" id="173"/>
+																<ExtendedTooltip name="FTPSyncSettingsTableButtonChangeExtendedTooltip" id="181"/>
 															</Button>
 															<Button name="FTPSyncSettingsTableButtonDelete" id="95">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.FTPSyncSettingsTable.StandardCommand.Delete</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="FTPSyncSettingsTableButtonDeleteExtendedTooltip" id="174"/>
+																<ExtendedTooltip name="FTPSyncSettingsTableButtonDeleteExtendedTooltip" id="182"/>
 															</Button>
 														</ChildItems>
 													</ButtonGroup>
@@ -638,34 +671,34 @@
 															<xr:Ref>StdPicture.RestoreValues</xr:Ref>
 															<xr:LoadTransparent>true</xr:LoadTransparent>
 														</Picture>
-														<ExtendedTooltip name="FTPSyncSettingsTableDefaultFTPSettingsExtendedTooltip" id="175"/>
+														<ExtendedTooltip name="FTPSyncSettingsTableDefaultFTPSettingsExtendedTooltip" id="183"/>
 													</Button>
 												</ChildItems>
 											</AutoCommandBar>
-											<ExtendedTooltip name="FTPSyncSettingsTableExtendedTooltip" id="176"/>
-											<SearchStringAddition name="FTPSyncSettingsTableSearchString" id="177">
+											<ExtendedTooltip name="FTPSyncSettingsTableExtendedTooltip" id="184"/>
+											<SearchStringAddition name="FTPSyncSettingsTableSearchString" id="185">
 												<Source>
 													<lf:elementId>84</lf:elementId>
 													<lf:additionId>0</lf:additionId>
 												</Source>
-												<ContextMenu name="FTPSyncSettingsTableSearchStringContextMenu" id="178"/>
-												<ExtendedTooltip name="FTPSyncSettingsTableSearchStringExtendedTooltip" id="179"/>
+												<ContextMenu name="FTPSyncSettingsTableSearchStringContextMenu" id="186"/>
+												<ExtendedTooltip name="FTPSyncSettingsTableSearchStringExtendedTooltip" id="187"/>
 											</SearchStringAddition>
-											<ViewStatusAddition name="FTPSyncSettingsTableViewStatus" id="180">
+											<ViewStatusAddition name="FTPSyncSettingsTableViewStatus" id="188">
 												<Source>
 													<lf:elementId>84</lf:elementId>
 													<lf:additionId>1</lf:additionId>
 												</Source>
-												<ContextMenu name="FTPSyncSettingsTableViewStatusContextMenu" id="181"/>
-												<ExtendedTooltip name="FTPSyncSettingsTableViewStatusExtendedTooltip" id="182"/>
+												<ContextMenu name="FTPSyncSettingsTableViewStatusContextMenu" id="189"/>
+												<ExtendedTooltip name="FTPSyncSettingsTableViewStatusExtendedTooltip" id="190"/>
 											</ViewStatusAddition>
-											<SearchControlAddition name="FTPSyncSettingsTableSearchControl" id="183">
+											<SearchControlAddition name="FTPSyncSettingsTableSearchControl" id="191">
 												<Source>
 													<lf:elementId>84</lf:elementId>
 													<lf:additionId>2</lf:additionId>
 												</Source>
-												<ContextMenu name="FTPSyncSettingsTableSearchControlContextMenu" id="184"/>
-												<ExtendedTooltip name="FTPSyncSettingsTableSearchControlExtendedTooltip" id="185"/>
+												<ContextMenu name="FTPSyncSettingsTableSearchControlContextMenu" id="192"/>
+												<ExtendedTooltip name="FTPSyncSettingsTableSearchControlExtendedTooltip" id="193"/>
 											</SearchControlAddition>
 											<ChildItems>
 												<InputField name="FTPSyncSettingsTableMetadataObject" id="87">
@@ -674,7 +707,7 @@
 													<TextEdit>false</TextEdit>
 													<ChoiceListButton>true</ChoiceListButton>
 													<ContextMenu name="FTPSyncSettingsTableMetadataObjectContextMenu" id="88"/>
-													<ExtendedTooltip name="FTPSyncSettingsTableMetadataObjectExtendedTooltip" id="186"/>
+													<ExtendedTooltip name="FTPSyncSettingsTableMetadataObjectExtendedTooltip" id="194"/>
 													<Events>
 														<Event name="StartListChoice">FTPSettingsTableMetadataObjectStartListChoice</Event>
 													</Events>
@@ -686,7 +719,7 @@
 													<TextEdit>false</TextEdit>
 													<ChoiceListButton>true</ChoiceListButton>
 													<ContextMenu name="FTPSyncSettingsTableSyncDirectionContextMenu" id="90"/>
-													<ExtendedTooltip name="FTPSyncSettingsTableSyncDirectionExtendedTooltip" id="187"/>
+													<ExtendedTooltip name="FTPSyncSettingsTableSyncDirectionExtendedTooltip" id="195"/>
 													<Events>
 														<Event name="StartListChoice">FTPSettingsTableSyncDirectionStartListChoice</Event>
 													</Events>
@@ -712,7 +745,7 @@
 											<v8:content>Group mobile application settings</v8:content>
 										</v8:item>
 									</ToolTip>
-									<ExtendedTooltip name="GroupMobileApplicationSettingsExtendedTooltip" id="188"/>
+									<ExtendedTooltip name="GroupMobileApplicationSettingsExtendedTooltip" id="196"/>
 									<ChildItems>
 										<Table name="MobileAppSettingsTable" id="98">
 											<UseAlternationRowColor>true</UseAlternationRowColor>
@@ -752,7 +785,7 @@
 														<Type>CommandBarButton</Type>
 														<CommandName>Form.Item.MobileAppSettingsTable.StandardCommand.Create</CommandName>
 														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="MobileAppSettingsTableButtonCreateExtendedTooltip" id="189"/>
+														<ExtendedTooltip name="MobileAppSettingsTableButtonCreateExtendedTooltip" id="197"/>
 													</Button>
 													<ButtonGroup name="MobileAppSettingsTableGroupEdit" id="108">
 														<Title>
@@ -767,25 +800,25 @@
 																<v8:content>Mobile app settings table group edit</v8:content>
 															</v8:item>
 														</ToolTip>
-														<ExtendedTooltip name="MobileAppSettingsTableGroupEditExtendedTooltip" id="190"/>
+														<ExtendedTooltip name="MobileAppSettingsTableGroupEditExtendedTooltip" id="198"/>
 														<ChildItems>
 															<Button name="MobileAppSettingsTableButtonCopy" id="110">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.MobileAppSettingsTable.StandardCommand.Copy</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="MobileAppSettingsTableButtonCopyExtendedTooltip" id="191"/>
+																<ExtendedTooltip name="MobileAppSettingsTableButtonCopyExtendedTooltip" id="199"/>
 															</Button>
 															<Button name="MobileAppSettingsTableButtonChange" id="109">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.MobileAppSettingsTable.StandardCommand.Change</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="MobileAppSettingsTableButtonChangeExtendedTooltip" id="192"/>
+																<ExtendedTooltip name="MobileAppSettingsTableButtonChangeExtendedTooltip" id="200"/>
 															</Button>
 															<Button name="MobileAppSettingsTableButtonSetDeletionMark" id="111">
 																<Type>CommandBarButton</Type>
 																<CommandName>Form.Item.MobileAppSettingsTable.StandardCommand.SetDeletionMark</CommandName>
 																<Parameter xsi:nil="true"/>
-																<ExtendedTooltip name="MobileAppSettingsTableButtonSetDeletionMarkExtendedTooltip" id="193"/>
+																<ExtendedTooltip name="MobileAppSettingsTableButtonSetDeletionMarkExtendedTooltip" id="201"/>
 															</Button>
 														</ChildItems>
 													</ButtonGroup>
@@ -793,34 +826,34 @@
 														<Type>CommandBarButton</Type>
 														<CommandName>Form.Command.DefaultMobileSettings</CommandName>
 														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="MobileAppSettingsTableDefaultMobileSettingsExtendedTooltip" id="194"/>
+														<ExtendedTooltip name="MobileAppSettingsTableDefaultMobileSettingsExtendedTooltip" id="202"/>
 													</Button>
 												</ChildItems>
 											</AutoCommandBar>
-											<ExtendedTooltip name="MobileAppSettingsTableExtendedTooltip" id="195"/>
-											<SearchStringAddition name="MobileAppSettingsTableSearchString" id="196">
+											<ExtendedTooltip name="MobileAppSettingsTableExtendedTooltip" id="203"/>
+											<SearchStringAddition name="MobileAppSettingsTableSearchString" id="204">
 												<Source>
 													<lf:elementId>98</lf:elementId>
 													<lf:additionId>0</lf:additionId>
 												</Source>
-												<ContextMenu name="MobileAppSettingsTableSearchStringContextMenu" id="197"/>
-												<ExtendedTooltip name="MobileAppSettingsTableSearchStringExtendedTooltip" id="198"/>
+												<ContextMenu name="MobileAppSettingsTableSearchStringContextMenu" id="205"/>
+												<ExtendedTooltip name="MobileAppSettingsTableSearchStringExtendedTooltip" id="206"/>
 											</SearchStringAddition>
-											<ViewStatusAddition name="MobileAppSettingsTableViewStatus" id="199">
+											<ViewStatusAddition name="MobileAppSettingsTableViewStatus" id="207">
 												<Source>
 													<lf:elementId>98</lf:elementId>
 													<lf:additionId>1</lf:additionId>
 												</Source>
-												<ContextMenu name="MobileAppSettingsTableViewStatusContextMenu" id="200"/>
-												<ExtendedTooltip name="MobileAppSettingsTableViewStatusExtendedTooltip" id="201"/>
+												<ContextMenu name="MobileAppSettingsTableViewStatusContextMenu" id="208"/>
+												<ExtendedTooltip name="MobileAppSettingsTableViewStatusExtendedTooltip" id="209"/>
 											</ViewStatusAddition>
-											<SearchControlAddition name="MobileAppSettingsTableSearchControl" id="202">
+											<SearchControlAddition name="MobileAppSettingsTableSearchControl" id="210">
 												<Source>
 													<lf:elementId>98</lf:elementId>
 													<lf:additionId>2</lf:additionId>
 												</Source>
-												<ContextMenu name="MobileAppSettingsTableSearchControlContextMenu" id="203"/>
-												<ExtendedTooltip name="MobileAppSettingsTableSearchControlExtendedTooltip" id="204"/>
+												<ContextMenu name="MobileAppSettingsTableSearchControlContextMenu" id="211"/>
+												<ExtendedTooltip name="MobileAppSettingsTableSearchControlExtendedTooltip" id="212"/>
 											</SearchControlAddition>
 											<ChildItems>
 												<LabelField name="MobileAppSettingsTableDescription" id="116">
@@ -836,7 +869,7 @@
 														</v8:item>
 													</Title>
 													<ContextMenu name="MobileAppSettingsTableDescriptionContextMenu" id="117"/>
-													<ExtendedTooltip name="MobileAppSettingsTableDescriptionExtendedTooltip" id="205"/>
+													<ExtendedTooltip name="MobileAppSettingsTableDescriptionExtendedTooltip" id="213"/>
 												</LabelField>
 												<CheckBoxField name="MobileAppSettingsTableUse" id="105">
 													<DataPath>MobileAppSettingsTable.Use</DataPath>
@@ -852,7 +885,7 @@
 													</Title>
 													<CheckBoxType>Auto</CheckBoxType>
 													<ContextMenu name="MobileAppSettingsTableUseContextMenu" id="106"/>
-													<ExtendedTooltip name="MobileAppSettingsTableUseExtendedTooltip" id="206"/>
+													<ExtendedTooltip name="MobileAppSettingsTableUseExtendedTooltip" id="214"/>
 												</CheckBoxField>
 											</ChildItems>
 										</Table>
@@ -875,11 +908,11 @@
 											<v8:content>Data base settings</v8:content>
 										</v8:item>
 									</ToolTip>
-									<ExtendedTooltip name="DataBaseSettingsExtendedTooltip" id="207"/>
+									<ExtendedTooltip name="DataBaseSettingsExtendedTooltip" id="215"/>
 									<ChildItems>
 										<UsualGroup name="Group1" id="121">
 											<Representation>None</Representation>
-											<ExtendedTooltip name="Group1ExtendedTooltip" id="208"/>
+											<ExtendedTooltip name="Group1ExtendedTooltip" id="216"/>
 											<ChildItems>
 												<CheckBoxField name="SKUFeatures" id="119">
 													<DataPath>Object.SKUFeatures</DataPath>
@@ -895,7 +928,7 @@
 													</Title>
 													<CheckBoxType>Auto</CheckBoxType>
 													<ContextMenu name="SKUFeaturesContextMenu" id="120"/>
-													<ExtendedTooltip name="SKUFeaturesExtendedTooltip" id="209"/>
+													<ExtendedTooltip name="SKUFeaturesExtendedTooltip" id="217"/>
 													<Events>
 														<Event name="OnChange">SwitchButton</Event>
 													</Events>
@@ -904,7 +937,7 @@
 													<DataPath>Object.MultiStock</DataPath>
 													<CheckBoxType>Auto</CheckBoxType>
 													<ContextMenu name="MultiStockContextMenu" id="127"/>
-													<ExtendedTooltip name="MultiStockExtendedTooltip" id="210"/>
+													<ExtendedTooltip name="MultiStockExtendedTooltip" id="218"/>
 													<Events>
 														<Event name="OnChange">SwitchButton</Event>
 													</Events>
@@ -925,12 +958,12 @@
 													<Group>Horizontal</Group>
 													<Representation>None</Representation>
 													<ShowTitle>false</ShowTitle>
-													<ExtendedTooltip name="GroupButton1ExtendedTooltip" id="211"/>
+													<ExtendedTooltip name="GroupButton1ExtendedTooltip" id="219"/>
 													<ChildItems>
 														<PictureDecoration name="Decoration2" id="124">
 															<HorizontalStretch>true</HorizontalStretch>
 															<ContextMenu name="Decoration2ContextMenu" id="125"/>
-															<ExtendedTooltip name="Decoration2ExtendedTooltip" id="212"/>
+															<ExtendedTooltip name="Decoration2ExtendedTooltip" id="220"/>
 														</PictureDecoration>
 														<Button name="SaveDatabaseSettings" id="122">
 															<Type>UsualButton</Type>
@@ -938,7 +971,7 @@
 															<CommandName>Form.Command.SaveDatabaseSettings</CommandName>
 															<Parameter xsi:nil="true"/>
 															<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-															<ExtendedTooltip name="SaveDatabaseSettingsExtendedTooltip" id="213"/>
+															<ExtendedTooltip name="SaveDatabaseSettingsExtendedTooltip" id="221"/>
 														</Button>
 													</ChildItems>
 												</UsualGroup>
@@ -968,7 +1001,14 @@
 				<ManualQuery>false</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<MainTable>InformationRegister.SyncOrder</MainTable>
-				<ListSettings/>
+				<ListSettings>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemField">
+							<dcsset:field>Position</dcsset:field>
+							<dcsset:orderType>Asc</dcsset:orderType>
+						</dcsset:item>
+					</dcsset:order>
+				</ListSettings>
 			</Settings>
 		</Attribute>
 		<Attribute name="Object" id="4">
