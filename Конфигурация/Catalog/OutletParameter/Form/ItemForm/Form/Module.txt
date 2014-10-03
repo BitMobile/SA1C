@@ -1,0 +1,61 @@
+﻿
+&AtClient
+Procedure DataTypeOnChange()
+    
+    If DataTypeOnChangeServer() Then
+        Items.ValueList.Visible = True;
+    Else
+        If Object.ValueList.Count() <> 0 Then
+            Text = "en = ""The tabular section will be cleaned. 
+            |Are you sure you want to continue?"";
+            |ru = ""Табличная часть будет очищена.
+            |Продолжить?""";
+            If DoQueryBox(NStr(Text), QuestionDialogMode.YesNo, 0) = DialogReturnCode.No Then
+                Return;
+            EndIf;
+            Object.ValueList.Clear();  
+        EndIf;
+        Items.ValueList.Visible = False;
+    EndIf;
+
+EndProcedure
+
+Function  DataTypeOnChangeServer()
+
+    If Object.DataType = Enums.DataType.ValueList Then
+        Return True;
+    Else 
+        Return False;
+    EndIf;
+    
+EndFunction
+
+
+&AtClient
+Procedure OnOpen(Cancel)
+    
+    If Object.ValueList.Count() = 0 Then
+        Items.ValueList.Visible = False;
+    EndIf;
+
+EndProcedure
+
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+    
+    If NotAllowed() Then       
+        Cancel=True;   
+    EndIf; 
+    
+EndProcedure
+
+Function NotAllowed()
+    If Object.DataType=Enums.DataType.ValueList AND Object.ValueList.Count()=0 Then
+        Message(NStr("en = 'Tabular section couldn''t be empty!'; ru = 'Табличная часть не может быть пустой!'"));
+        Return True;
+    EndIf;
+    Return False;
+EndFunction
+
+

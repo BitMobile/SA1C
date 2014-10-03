@@ -1,0 +1,97 @@
+﻿&AtServer
+Function GetStringPresentationOfSchedule(Schedule) Export
+	// ТУТ НАЧИНАЕТСЯ ГОВНОКОД
+	Result = "Анкета будет показываться ";
+	SubstringsArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";");
+	If SubstringsArray[0] = "Day" Then
+		EachDay = ?(+Right(SubstringsArray[1], 1) = 1, "каждый ", "каждые ");
+		Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], "день,дня,дней");
+		If +SubstringsArray[1] = 1 Then
+			Days = "день";
+		Else
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], "день,дня,дней");
+		EndIf;
+		Result = Result + EachDay + Days;
+	ElsIf SubstringsArray[0] = "Week" Then
+		On = "в ";
+		DaysOfWeekArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(SubstringsArray[1], ",");
+		DaysOfWeekString = "";
+		For Day = 1 To 7 Do
+			If +DaysOfWeekArray[Day - 1] = 1 Then        // Если отметка у дня недели стоит
+				DayOfWeek = GetDayOfWeekFromNumber(Day); // Берем текстовое представление дня недели по номеру дня недели
+				If Day = 3 Or Day = 5 Or Day = 6 Then    // Склоняем среду, пятницу и субботу
+					DayOfWeek = Left(DayOfWeek, StrLen(DayOfWeek) - 1) + "у";
+				Endif;
+				DaysOfWeekString = DaysOfWeekString + DayOfWeek + ", ";
+			EndIf;
+		EndDo;
+		DaysOfWeekString = Left(DaysOfWeekString, StrLen(DaysOfWeekString) - 2); // Убираем запятую в конце списка дней недель
+		Result = Result + On + DaysOfWeekString;
+	ElsIf SubstringsArray[0] = "Month" Then
+		If SubstringsArray[1] = "Period" Then
+			Result = Result + "c " + SubstringsArray[2] + " по " + SubstringsArray[3] + " день каждого месяца";
+		Else			
+			If SubstringsArray[1] = "First" Then
+				FirstLast = ?(+SubstringsArray[2] = 1, "первый ", "первые ");
+			ElsIf SubstringsArray[1] = "Last" Then			
+				FirstLast = ?(+SubstringsArray[2] = 1, " последний ", "последние ");
+			EndIf;		
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], "день,дня,дней");
+			Month = " месяца ";
+			Result = Result + FirstLast + Days + Month;
+		EndIf;
+	ElsIf SubstringsArray[0] = "Year" Then
+		If SubstringsArray[1] = "Months" Then
+			EachMonth = "каждый ";
+			MonthsArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(SubstringsArray[2], ",");
+			MonthsString = "";
+			For Month = 1  To 12 Do
+				If +MonthsArray[Month - 1] = 1 Then
+					MonthString = Lower(GetMonthFromNumber(Month));
+					MonthsString = MonthsString + MonthString + ", ";
+				EndIf;
+			EndDo;
+			MonthsString = Left(MonthsString, StrLen(MonthsString) - 2);
+			Result = Result + EachMonth + MonthsString;
+		ElsIf SubstringsArray[1] = "Period" Then
+			Result = Result + "c " + GetNumberWithMonth(+SubstringsArray[2], +SubstringsArray[3]) + " по " + GetNumberWithMonth(+SubstringsArray[4], +SubstringsArray[5]);
+		Else
+			If SubstringsArray[1] = "First" Then
+				FirstLast = ?(+SubstringsArray[2] = 1, "первый ", "первые ");
+			ElsIf SubstringsArray[1] = "Last" Then
+				FirstLast = ?(+SubstringsArray[2] = 1, "последний ", "последние ");
+			EndIf;
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], "день,дня,дней");
+			Year = " года ";
+			Result = Result + FirstLast + Days + Year;
+		EndIf;
+	EndIf;
+	Return Result;
+EndFunction
+
+&AtServer
+Function GetDayOfWeekFromNumber(Number) Export
+	Return Format(Date(2014, 09, Number), "DF=дддд");
+EndFunction
+
+&AtServer
+Function GetMonthFromNumber(Number) Export
+	Return Format(Date(2014, Number, 1), "DF=MMMM");
+EndFunction
+
+&AtServer
+Function GetNumberWithMonth(Number, Month)
+	MonthString = GetMonthFromNumber(Month);
+	If Month = 3 Or Month = 8 Then // Если март или август
+		MonthString = Lower(MonthString) + "а";		
+	Else
+		MonthString = Lower(Left(MonthString, StrLen(MonthString) - 1) + "я");		
+	EndIf;
+	Result = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(Number, MonthString + "," + MonthString + "," + MonthString);
+	Return Result;
+EndFunction
+
+&AtServer
+Function GetEnumValueFromString(Enum, String) Export
+	Return Enums[Enum][String];
+EndFunction

@@ -1,0 +1,146 @@
+﻿
+&AtClient
+Procedure ListOnActivateRow(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtServer
+Procedure ShowPreview()
+	
+	If ValueIsFilled(Items.List.CurrentRow) Then 
+	
+		RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+		
+		FillPropertyValues(RecordManager, Items.List.CurrentRow);
+		
+		RecordManager.Read();
+			
+		Preview = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
+		
+	EndIf;
+		
+EndProcedure
+ 
+&AtClient
+Procedure ShowPreviewOnChange(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	Else 
+		
+		Preview = Undefined;
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtClient
+Procedure TransferFromCatalog(Command)
+	
+	TransferFromCatalogServer();
+	
+	Items.List.Refresh();
+	
+EndProcedure
+
+&AtServer
+Procedure TransferFromCatalogServer()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	StorageAdditionalInformation.Ref,
+		|	StorageAdditionalInformation.DeletionMark,
+		|	StorageAdditionalInformation.Object,
+		|	StorageAdditionalInformation.Storage,
+		|	StorageAdditionalInformation.Extension,
+		|	StorageAdditionalInformation.DefaultPicture
+		|FROM
+		|	Catalog.StorageAdditionalInformation AS StorageAdditionalInformation
+		|WHERE
+		|	StorageAdditionalInformation.DeletionMark = FALSE";
+
+	Query.SetParameter("FALSE", FALSE);
+
+	Result = Query.Execute();
+
+	SelectionDetailRecords = Result.Choose();
+
+	While SelectionDetailRecords.Next() Do
+		
+		SelectionStructure = New Structure("FileName", SelectionDetailRecords.Ref.UUID()); 
+					
+		Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+					
+		If Not Selection.Next() Then
+			
+			ObjectName = SelectionDetailRecords.Object.Metadata().FullName();
+			ObjectName = StrReplace(ObjectName, "Справочник", "Catalog");
+			ObjectName = StrReplace(ObjectName, "Документ", "Document");
+						
+			RecordManager 				= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+			RecordManager.Object 		= SelectionDetailRecords.Object;
+			RecordManager.SyncDirection = Enums.SyncDirections.Shared;
+			RecordManager.Action 		= Enums.SyncAction.AddFile;
+			RecordManager.FileName 		= SelectionDetailRecords.Ref.UUID();
+			RecordManager.Extension 	= Lower(SelectionDetailRecords.Extension);
+			RecordManager.Storage 		= SelectionDetailRecords.Storage;
+			RecordManager.FullFileName 	= "/shared/" + ObjectName + "/" + SelectionDetailRecords.Object.Ref.UUID() + "/" + SelectionDetailRecords.Ref.UUID() + Lower(SelectionDetailRecords.Extension);
+							
+			RecordManager.Write();
+			
+			If SelectionDetailRecords.DefaultPicture And ObjectName = "Catalog.SKU" Then 
+				
+				EditObject = SelectionDetailRecords.Object.GetObject();
+				EditObject.DefaultPicture			= SelectionDetailRecords.Ref.UUID();
+				EditObject.DefaultPictureExtension	= Lower(SelectionDetailRecords.Extension);
+				
+				EditObject.Write();
+				
+			EndIf;
+						
+		EndIf;
+				
+	EndDo;
+    	
+EndProcedure
+
+&AtClient
+Procedure SetSizeOfFiles(Command)
+	
+	SetSizeOfFilesServer();
+	
+	Items.List.Refresh();
+	
+EndProcedure
+
+&AtServer
+Procedure SetSizeOfFilesServer()
+	
+	TempFile 	= GetTempFileName();
+	
+	RecordSet = InformationRegisters.StorageAdditionalInformation.CreateRecordSet();
+	RecordSet.Read();
+	
+	For Each Str in RecordSet Do 
+		
+		BinaryData			= Str.Storage.Get();
+		BinaryData.Write(TempFile);
+		
+		CheckFileSize = New File(TempFile);
+		
+		Str.Size			= CheckFileSize.Size();
+		
+	EndDo;
+	
+	RecordSet.Write();
+	
+EndProcedure

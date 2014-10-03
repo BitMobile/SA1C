@@ -1,0 +1,301 @@
+﻿
+&AtClient
+Procedure OnOpen(Cancel)
+    
+    OnOpenServer();
+    FillTerritories();
+    SetClosingCauseVisibility();
+    
+    n = 0;
+    
+    For Each Str in Object.Parameters Do        
+        Ins = TempParameters.Add();
+        Ins.N = n;
+        Ins.Parameter = Str.Parameter;        
+        If ItsPicture(Str.Parameter) Then             
+            Ins.Value = NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+            Ins.SnapShotUUID = Str.Value;            
+        Else             
+            Ins.Value = Str.Value;            
+        EndIf;        
+        n = n + 1;        
+	EndDo;
+    
+EndProcedure
+
+//status check
+Procedure OnOpenServer()
+       
+    PredefinedItems = New Map;
+    PredefinedItems.Insert("Catalog.OutletType", "Type");
+    PredefinedItems.Insert("Catalog.OutletClass", "Class");
+    PredefinedItems.Insert("Catalog.Distributor", "Distributor");
+    PredefinedItems.Insert("Document.PriceList", "Prices");
+    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+    For Each Item In ItemsCollection Do
+        If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then //TS values processor
+            If Object[Item.Key].Count() = 0 Then
+                NewRow = Object[Item.Key].Add();
+                For Each Attribute In metadata.Catalogs.Outlet.TabularSections[Item.Key].Attributes Do
+                    If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
+                        NewRow[Attribute.Name] = Item.Value;
+                    EndIf;
+                EndDo;
+            EndIf;
+        Else  // common attribute processor
+            Object[Item.Key] = Item.Value;
+        EndIf;
+    EndDo;
+    
+EndProcedure
+
+//Territories tabular section on open form
+Procedure FillTerritories()
+    
+    Territories = GetTerritories();
+    
+    SelectionDetailRecords = Territories.Choose();
+    
+    While SelectionDetailRecords.Next() Do
+        NewRow = TerritoriesList.Add();
+        NewRow.Value = SelectionDetailRecords.Ref;
+        //NewRow.Presentation = SelectionDetailRecords.Ref.Description;
+    EndDo;	
+    
+EndProcedure
+
+//territories query
+Function  GetTerritories()
+    
+    Query = New Query;
+    Query.Text = 
+    "SELECT
+    |   TerritoryOutlets.Ref.Ref
+    |FROM
+    |   Catalog.Territory.Outlets AS TerritoryOutlets
+    |WHERE
+    |   TerritoryOutlets.Outlet.Ref = &Ref";
+    
+    Query.SetParameter("Ref", Object.Ref);
+    
+    Result = Query.Execute();
+    
+    Return Result
+    
+EndFunction
+
+//double add check 
+&AtClient
+Procedure TerritoriesListValueOnChange(Item)
+    
+    //TerritoriesListValueOnChangeServer();
+    //If Object.Ref.IsEmpty() = False Then
+    OutletValue = Items.TerritoriesList.CurrentData.Value;
+    ParametersFilter = New Structure("Value", OutletValue);
+    FoundRows = TerritoriesList.FindRows(ParametersFilter);
+    If FoundRows.count() > 1 Then
+        DoMessageBox(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
+    EndIf;
+    //Else
+    //    DoMessageBox(NStr("en = ""The object need to be saved before adding territories""; ru = ""Объект должен быть сохранен перед добавлением территорий""")); 
+    //	TerritoriesList.Clear();
+    //EndIf;
+    
+    
+EndProcedure
+
+&AtClient
+Procedure AfterWrite(WriteParameters)
+    
+    WriteTerritory();
+    
+EndProcedure
+
+//add positions in territiries.catalog
+Procedure WriteTerritory()
+    
+    WrittenTerritories = GetTerritories().Unload();
+    
+    For Each TerritoryRow In TerritoriesList Do
+        SelectedItem = WrittenTerritories.Find(TerritoryRow.Value.Ref, "Ref");
+        If SelectedItem = Undefined Then
+            TerritoryValue = TerritoryRow.Value;
+            Territory = TerritoryValue.GetObject();
+            Outlets = Territory.Outlets.Unload();
+            NewRow = Outlets.Add();
+            NewRow.Outlet = Object.Ref;
+            Territory.Outlets.Load(Outlets);
+            Territory.Write();
+        EndIf;
+    EndDo;
+    
+EndProcedure
+
+//delets records from territories.catalog
+Procedure DeleteTerritories()
+    
+    Territories = GetTerritories();
+    RecordedTerritories = Territories.Unload();
+    TerritoriesValueTable = TerritoriesList.Unload();
+    For Each Territory In RecordedTerritories Do
+        If TerritoriesValueTable.Find(Territory.Ref, "Value") = Undefined Then
+            TerritoryObject = Territory.Ref.GetObject();
+            Outlets = TerritoryObject.Outlets.Unload();
+            //SelectedRow = Outlets.Find(Object.Ref, "Outlet");
+            Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
+            TerritoryObject.Outlets.Load(Outlets);
+            TerritoryObject.Write();    
+        EndIf;
+    EndDo;
+    
+EndProcedure
+
+&AtClient
+Procedure PricesPriceListOnChange(Item)
+    
+    //requestMap = New Map;
+    
+    
+    requestMap = New Map;
+    requestMap.Insert("pName", "PriceList");
+    requestMap.Insert("checkingItem", Items.Prices.CurrentData);
+    requestMap.Insert("tabularSection", Object.Prices);
+    
+    ClientProcessors.UniqueRows(requestMap);
+    
+EndProcedure
+
+&AtClient
+Procedure PricesPriceListStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing = False;
+    //
+    //  SelectionValue = New Structure("Role", "SRM");
+    //  SelectionParameters = New Structure("Filter", SelectionValue);
+    //  OpenFormModal("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.Manager);
+    
+    OpenFormModal("Document.PriceList.ChoiceForm", , Item);//ThisForm.Items.Prices.CurrentData.PriceList);
+EndProcedure
+
+&AtClient
+Procedure OutletStatusOnChange(Item)
+    SetClosingCauseVisibility();
+EndProcedure
+
+Procedure SetClosingCauseVisibility()
+    ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
+	// TODO: Delete commented; Old; SUPA-514
+	//If Object.OutletStatus=Enums.OutletStatus.Closed Then
+	//    ThisForm.Items.ClosingCause.Visible=True;    	    
+	//EndIf;
+    
+EndProcedure
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+     Cancel = CheckStatus();
+EndProcedure
+
+Function CheckStatus()
+    If Object.OutletStatus=Enums.OutletStatus.Closed AND Object.ClosingCause=Enums.ClosingCause.EmptyRef() Then
+        Message(NStr("en = '""Closing cause"" field couldn''t be empty'; ru = 'Поле ""Причина закрытия"" не может быть пустым'"));
+        Return True;    
+    Else
+        Return False;
+    EndIf;
+EndFunction
+
+
+//--------------------pictures--------------
+
+&AtClient
+Procedure OpenPicture(Command)
+	
+	FileName = Undefined;
+	
+	If ValueIsFilled(PictureAddress) Then 
+		
+		FileName = "picture" + PictureExtension;
+		
+	EndIf;
+		
+	If ValueIsFilled(FileName) Then 
+		
+		GetFile(PictureAddress, FileName, True);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure TempParametersOnActivateRow(Item)
+    If Items.Pages.CurrentPage = Items.ParametersPage Then	
+		If Not Item.CurrentRow = Undefined Then			
+			If ItsPicture(Item.CurrentData.Parameter) Then 
+							
+				SnapShotUUID = New UUID(Item.CurrentData.SnapShotUUID);
+				
+				SetPicture(SnapShotUUID);
+				
+			Else 
+				
+				PictureAddress		= Undefined;
+				PictureExtension    = Undefined;
+			
+			EndIf;
+			
+		Else
+			
+			PictureAddress		= Undefined;
+			PictureExtension    = Undefined;
+
+		EndIf;
+		
+	EndIf;
+
+EndProcedure
+
+&AtServer
+Procedure SetPicture(SnapShotUUID)
+	
+	SelectionStructure = New Structure("FileName");
+	SelectionStructure.FileName = SnapShotUUID;
+					
+	Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+	
+	If Selection.Next() Then 
+		
+		PictureAddress 		= PutToTempStorage(Selection.Storage.Get(), ThisForm.UUID);
+		PictureExtension	= Selection.Extension;
+		
+	EndIf;
+				
+EndProcedure
+
+&AtServer
+Function ItsPicture(parameter)
+	
+	If parameter.DataType = Enums.DataType.Snapshot Then 
+		Return True;
+	Else 
+		Return False;
+	EndIf;
+			
+EndFunction
+
+&AtClient
+Procedure LattitudeOnChange(Item)
+	Object.Lattitude = GetRealLatLng(Object.Lattitude, 90);
+EndProcedure
+
+&AtClient
+Procedure LongitudeOnChange(Item)
+	Object.Longitude = GetRealLatLng(Object.Longitude, 180);
+EndProcedure
+
+&AtClient
+Function GetRealLatLng(LatLng, Limit)
+	Return ?(LatLng > Limit, Limit, ?(LatLng < -Limit, -Limit, LatLng));	
+EndFunction
+
+
+

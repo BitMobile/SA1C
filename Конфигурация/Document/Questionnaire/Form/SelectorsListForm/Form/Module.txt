@@ -1,0 +1,73 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+    StringNumber = Parameters.StringNumber;
+    Selector = Parameters.Selector;
+    DataType = Parameters.DataType;
+    OutletParameter = Parameters.OutletParameter;
+    
+    If TypeOf(Parameters.CurrentValue)=Type("ValueList") Then
+        For Each i in Parameters.CurrentValue Do
+            n = Values.Add();
+            n.ValueRow = i;
+        EndDo;    	    
+    EndIf;
+    
+EndProcedure
+
+
+&AtClient
+Procedure Ok(Command)
+
+    list = new ValueList;
+    For Each i In Values Do
+        list.Add(i.ValueRow);    	    
+    EndDo;
+
+    ReturnStructure = New Structure("StringNumber, List", StringNumber, list);    
+    Notify("ValueListOk", ReturnStructure, ThisForm);
+    Close();
+EndProcedure
+
+
+&AtClient
+Procedure ValuesValueRowStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing = False;
+    If NOT IsOutletParameter(Selector) Then
+        str = StrReplace(Selector, "_", ".");
+        OpenFormModal(str + ".ChoiceForm", , Item); //"Catalog.Territory."    	    
+    Else
+        OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source", 
+                Items.ValuesTable.CurrentData.GetID(), DataType, OutletParameter, "ListForm"));                
+    EndIf;    
+EndProcedure
+
+
+Function IsOutletParameter(value)
+    
+    If value = "Catalog_OutletParameter" Then
+        Return True;
+    Else
+        Return False;    	    
+    EndIf; 
+    
+EndFunction // ()
+
+Function GetParametersList()
+    
+    list = new ValueList;
+    TS = OutletParameter.ValueList.Unload();
+    For Each row In TS Do
+        list.Add(row.Value);    	    
+    EndDo;
+    Return list;
+    
+EndFunction
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+    If EventName = "ListForm" Then                       
+        Items.ValuesTable.CurrentData.ValueRow = Parameter.Str;
+    EndIf;
+EndProcedure
+

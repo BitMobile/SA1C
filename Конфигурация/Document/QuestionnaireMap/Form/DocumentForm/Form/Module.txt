@@ -1,0 +1,13 @@
+﻿
+&AtClient
+Procedure CreateMap(Command)
+    CreateMapOnServer();
+EndProcedure
+
+
+Procedure CreateMapOnServer()
+
+    docObject = FormAttributeToValue("Object");
+    docObject.WriteMap();
+
+EndProcedure

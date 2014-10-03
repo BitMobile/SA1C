@@ -1,0 +1,33 @@
+﻿
+Procedure Sincronize() Export
+	
+	UploadComplete = False;
+	DownloadComplete = False;
+	
+	DataProcessors.SyncAndSettings.UploadData(False, UploadComplete);
+	
+	If UploadComplete Then
+		
+		DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
+				
+		If DownloadComplete Then 
+			
+			DataProcessors.SyncAndSettings.SaveSyncState(True);
+			
+		Else 
+			
+			DataProcessors.SyncAndSettings.SaveSyncState(False);
+			
+		EndIf;
+			
+	Else 
+		
+		DataProcessors.SyncAndSettings.SaveSyncState(False);
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure SynchronizePictures() Export
+	DataProcessors.SyncAndSettings.SyncPicturesOnServer();
+EndProcedure

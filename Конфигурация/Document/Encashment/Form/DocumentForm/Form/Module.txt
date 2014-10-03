@@ -1,0 +1,14 @@
+﻿&AtClient
+Procedure OnOpen(Cancel)
+    
+    OnOpenServer();
+
+EndProcedure
+
+Procedure OnOpenServer()
+
+	If IsInRole("Admin") = False Then
+        ThisForm.ReadOnly = True;
+    EndIf;    
+
+EndProcedure

@@ -1,0 +1,456 @@
+﻿&AtServer
+Var typesMap;
+
+///////////////////////////////////////////////////////////////////////////////
+// FORM EVENTS
+
+&AtClient
+Procedure OnOpen(Cancel)
+	FillSelectors();
+EndProcedure
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+    PredefinedItems = New Map;
+    PredefinedItems.Insert("Catalog.OutletType", "OutletType");
+    PredefinedItems.Insert("Catalog.OutletClass", "OutletClass");
+    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+    For Each Item In ItemsCollection Do
+        Object[Item.Key] = Item.Value;
+	EndDo;
+	
+	If Not ValueIsFilled(Object.Ref) Then 
+		Object.BeginDate = BegOfDay(CurrentDate()) + 60 * 60 * 24;
+		Object.Schedule = "Day;1";
+	EndIf;
+	
+	If Not ValueIsFilled(Object.Schedule) Then
+		Object.Schedule = "Day;1";
+		Modified = True;
+		Message("Для данной анкеты не было заполнено установлено расписание. Поэтому автоматически установлено расписание по умолчанию.");
+	EndIf;
+	Regularity = ?(Object.Single, "Single", "Regular");
+	SetScheduleStringPresentation();
+EndProcedure
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+
+    If EventName = "QuestionnaireForm" Then        
+        Selectors.FindByID(Parameter.StringNumber).Value = Parameter.Str;               
+    EndIf;
+	If EventName = "ScheduleChanged" Then
+		Modified = Parameter.Modified;
+		If Modified Then
+			Object.Schedule = Parameter.Schedule;
+			SetScheduleStringPresentation();			
+		EndIf;
+	EndIf;
+
+    If EventName = "ValueListOk" Then
+        Selectors.FindByID(Parameter.StringNumber).Value = Parameter.List;
+    EndIf;
+    
+EndProcedure
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+    LoadSelectors();
+EndProcedure
+
+///////////////////////////////////////////////////////////////////////////////
+// COMMANDS
+
+&AtClient
+Procedure SetSchedule(Command)
+	PrevSchedule = Object.Schedule;
+	Params = New Structure("Schedule", Object.Schedule);
+	OpenForm("CommonForm.ScheduleForm", Params);
+EndProcedure
+
+&AtClient
+Procedure Select(Command)
+    formParameter = new Structure("CloseOnChoice", False);
+    OpenForm("Catalog.Question.ChoiceForm", formParameter, ThisForm.Items.Questions);
+EndProcedure
+
+&AtClient
+Procedure SelectOutlets(Command)
+
+	SelectOutlets1();
+	
+EndProcedure
+
+&AtClient
+Procedure SelectSKUQuestions(Command)
+	FormParameter = New Structure("CloseOnChoice", False);
+	OpenForm("Catalog.Question.ChoiceForm", FormParameter, ThisForm.Items.SKUQuestions);
+EndProcedure
+
+&AtClient
+Procedure SelectFromGroup(Command)
+	FilterValue = New Structure("Type", GetRegularQuestionGroupType());
+	FormParameters = New Structure;
+	FormParameters.Insert("CloseOnChoice", False);
+	FormParameters.Insert("Filter", FilterValue);
+	OpenForm("Catalog.QuestionGroup.ChoiceForm", FormParameters, ThisForm.Items.Questions);
+EndProcedure
+
+&AtClient
+Procedure SelectSKUQuestionsFromGroup(Command)
+	FilterValue = New Structure("Type", GetSKUQuestionsGroupType()); 
+	FormParameters = New Structure;
+	FormParameters.Insert("CloseOnChoice", False);
+	FormParameters.Insert("Filter", FilterValue);
+	OpenForm("Catalog.QuestionGroup.ChoiceForm", FormParameters, ThisForm.Items.SKUQuestions);
+EndProcedure
+
+///////////////////////////////////////////////////////////////////////////////
+// FORM ITEMS EVENTS
+
+&AtClient
+Procedure SelectorsSelectorRepresentStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing=False;
+    selectedValue=ChooseFromList(GetSelectorList(), Item);
+    CurrentItem.CurrentData.Value = "";
+    If Not selectedValue=Undefined Then
+        CurrentItem.CurrentData.Selector = selectedValue.Value;
+        If Not IsOutletParameter(selectedValue.Value) Then
+            CurrentItem.CurrentData.SelectorRepresent = selectedValue.Presentation;                                                
+        Else
+            d = OpenFormModal("Catalog.OutletParameter.ChoiceForm", , CurrentItem.CurrentData.SelectorRepresent);
+            CurrentItem.CurrentData.SelectorRepresent = d;
+            If Not d = Undefined Then            
+                CurrentItem.CurrentData.AdditionalParameter = GetParameterType(d);                        
+            EndIf;
+        EndIf;
+    EndIf;
+EndProcedure
+
+&AtClient
+Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing=False;
+    If CurrentItem.CurrentData.SelectorRepresent=Undefined OR CurrentItem.CurrentData.Selector=Undefined Then
+        Return;    	    
+    EndIf;
+    If NOT IsList(CurrentItem.CurrentData.ComparisonType) Then 
+        If NOT IsOutletParameter(CurrentItem.CurrentData.Selector) Then
+            str = StrReplace(CurrentItem.CurrentData.Selector, "_", ".");
+            selectedValue = OpenFormModal(str + ".ChoiceForm", , Item); //"Catalog.Territory."    	    
+        Else
+            OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source", Items.SelectorsTable.CurrentData.GetID(), CurrentItem.CurrentData.AdditionalParameter, CurrentItem.CurrentData.SelectorRepresent, "QuestionnaireForm"));                
+        EndIf;
+    Else
+        OpenForm("Document.Questionnaire.Form.SelectorsListForm", New Structure("StringNumber, Selector, DataType, CurrentValue, OutletParameter", Items.SelectorsTable.CurrentData.GetID(), CurrentItem.CurrentData.Selector, CurrentItem.CurrentData.AdditionalParameter, CurrentItem.CurrentData.Value, CurrentItem.CurrentData.SelectorRepresent));
+    EndIf
+
+EndProcedure
+
+&AtClient
+Procedure SelectorsComparisonTypeChoiceProcessing(Item, SelectedValue, StandardProcessing)
+    If CurrentItem.CurrentData.Value <> Undefined 
+        AND CurrentItem.CurrentData.ComparisonType <> SelectedValue Then
+        If IsList(CurrentItem.CurrentData.ComparisonType) Then
+            CurrentItem.CurrentData.Value = CurrentItem.CurrentData.Value[0];
+        EndIf; 
+        If IsList(SelectedValue) Then
+            l = new ValueList;
+        	l.Add(CurrentItem.CurrentData.Value);
+            CurrentItem.CurrentData.Value = l;
+        EndIf; 
+    EndIf;
+EndProcedure
+
+&AtClient
+Procedure SKUQuestionsChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	StandardProcessing = False;
+	AddQuestionsToValueTable(SelectedValue, Object.SKUQuestionsNew);
+EndProcedure
+
+&AtClient
+Procedure QuestionsQuestionOnChange(Item)
+    requestMap = New Map;
+    requestMap.Insert("pName", "Question");
+    requestMap.Insert("checkingItem", Items.Questions.CurrentData);
+    requestMap.Insert("tabularSection", Object.Questions);
+    
+    ClientProcessors.UniqueRows(requestMap);
+EndProcedure
+
+&AtClient
+Procedure QuestionsChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	FilterParameters = New Structure;
+	AddQuestionsToValueTable(SelectedValue, Object.Questions);
+EndProcedure
+
+//-----------------------Selectors---------------------
+
+&AtServer
+Function GetSelectorList()
+
+    list = new ValueList;
+    For Each value In Metadata.Enums.QuestionnaireSelectors.EnumValues Do//selectorMap Do
+        list.Add(value.Name, value.Synonym);    	    
+    EndDo; 
+    Return list;
+
+EndFunction
+
+&AtServer
+Function GetParameterType(parameter)
+
+    Return typesMap.Get(String(parameter.DataType));
+
+EndFunction // ()
+
+&AtServer
+Function IsOutletParameter(value)
+
+	If value="Catalog_OutletParameter" Then
+        Return True;
+    Else
+        Return False;    	    
+    EndIf; 
+
+EndFunction // ()
+
+&AtServer
+Function IsList(value)
+
+	If value = Enums.ComparisonType.InList Then
+        Return True;    	    
+    Else
+        Return False;    	    
+    EndIf;
+
+EndFunction // IsList()
+
+&AtServer
+Procedure SelectOutlets1()
+			
+    t = SelectOutletsOnServer();
+	Object.OutletsSelected = t.Count();
+
+EndProcedure
+
+&AtServer
+Function SelectOutletsOnServer()
+       
+	Return Documents.Questionnaire.SelectOutlets(CreateSelectorsTS(), Object.Ref);
+    
+EndFunction
+
+&AtServer
+Function FillSelectors()
+	
+	query = new Query;
+	query.Text =
+	"SELECT
+	|	Selectors.Key,
+	|	Selectors.Questionnaire,
+	|	Selectors.AdditionalParameter,
+	|	Selectors.ComparisonType,
+	|	Selectors.Selector,
+	|	Selectors.Value
+	|FROM
+	|	InformationRegister.Selectors AS Selectors
+	|WHERE
+	|	Selectors.Questionnaire = &Questionnaire
+	|
+	|	ORDER BY
+	|	ComparisonType,
+	|	Selector";
+	query.SetParameter("Questionnaire", Object.Ref);
+	source = query.Execute().Unload();
+	
+	skip = False;
+	previousSelector = Undefined;
+	vl = new ValueList;
+	newRow = Undefined;
+
+	For Each selector In source Do
+		If skip = False OR DontSkip(selector, previousSelector, vl) Then
+			If selector.ComparisonType <> Enums.ComparisonType.InList Then
+				newRow = Selectors.Add();
+				newRow.Value = selector.Value;
+				WriteSelectorRow(newRow, selector);
+				skip = False;
+			Else
+				vl = new ValueList;
+				vl.Add(selector.Value);
+				previousSelector = selector;
+				skip = True;
+			EndIf;
+		Else
+			vl.Add(selector.Value);
+			If vl.Count() = source.Count() Then
+				newRow = Selectors.Add();
+				WriteSelectorRow(newRow, selector);
+				newRow.Value = vl;
+			EndIf;
+		EndIf;
+	EndDo;
+
+EndFunction // FillSelectors()
+
+&AtServer
+Procedure WriteSelectorRow(newRow, selector)
+	
+	newRow.Selector = selector.Selector;
+	newRow.ComparisonType = selector.ComparisonType;
+	If selector.Selector = "Catalog_OutletParameter" Then
+		newRow.SelectorRepresent = selector.AdditionalParameter;
+		newRow.AdditionalParameter = typesMap.Get(String(selector.AdditionalParameter.DataType));
+	Else
+		newRow.SelectorRepresent = String(Enums.QuestionnaireSelectors[selector.Selector]);
+		newRow.AdditionalParameter = selector.AdditionalParameter;
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Function DontSkip(selector, previousSelector, vl)
+	
+	If selector.ComparisonType <> Enums.ComparisonType.InList OR selector.Selector<>previousSelector.Selector Then
+		newRow = Selectors.Add();
+		newRow.Value = vl;
+		WriteSelectorRow(newRow, previousSelector);
+		Return True;		
+	Else
+		Return False;		
+	EndIf;	
+	
+EndFunction
+
+&AtServer
+Procedure LoadSelectors()     //write selectors into information register 
+	
+	selectorsValueTable = CreateSelectorsTS();
+	recordset = InformationRegisters.Selectors.CreateRecordSet();
+	recordset.Filter.Questionnaire.Set(Object.Ref);
+    For Each row In selectorsValueTable Do
+        newRec = recordset.Add();
+		newRec.Key = new UUID;
+        newRec.AdditionalParameter = row.AdditionalParameter;
+    	newRec.ComparisonType = row.ComparisonType;
+        newRec.Questionnaire = row.Questionnaire;
+        newRec.Selector = row.Selector;
+        newRec.Value = row.Value;
+    EndDo;    
+    recordset.Write();
+
+EndProcedure
+
+&AtServer
+Function  CreateSelectorsTS()
+    
+    TS = new ValueTable();
+    TS.Columns.Add("Questionnaire");
+    TS.Columns.Add("Selector");
+    TS.Columns.Add("ComparisonType");
+    TS.Columns.Add("Value");
+    TS.Columns.Add("AdditionalParameter");
+    For Each item In Selectors Do        
+        If IsList(item.ComparisonType) Then
+            For Each listItem In item.Value Do
+                TS = WriteSRow(item, listItem.Value, TS);
+            EndDo;        	        
+        Else
+            TS = WriteSRow(item, Undefined, TS);        	        
+        EndIf;
+    EndDo;
+	
+	
+    Return TS; 
+    
+EndFunction // CreateSelectorsTS()
+
+&AtServer
+Function WriteSRow(item, listItem, TS)
+    
+    row = TS.Add();
+    row.Selector = item.Selector;
+    row.ComparisonType = item.ComparisonType;
+    row.Questionnaire = Object.Ref;
+    If row.Selector = "Catalog_OutletParameter" Then
+        row.AdditionalParameter = item.SelectorRepresent;                        
+    Else
+        row.AdditionalParameter = "";            
+    EndIf; 
+    If listItem <> Undefined Then
+        row.Value = listItem;        
+    Else
+        row.Value = item.Value;        
+    EndIf;
+    
+    Return TS;
+
+EndFunction
+
+///////////////////////////////////////////////////////////////////////////////
+// HELPERS
+
+&AtServer
+Procedure SetScheduleStringPresentation()
+	Items.ScheduleStringPresentation.Title = GetStringPresentationOfSchedule(Object.Schedule);
+EndProcedure
+
+&AtServer
+Function GetQuestionsFromGroup(Group)
+	Selection = Catalogs.Question.Select(, Group);
+	Array = New Array;
+	While Selection.Next() Do
+		Array.Add(Selection.Ref);
+	EndDo;
+	Return Array;
+EndFunction
+
+&AtServer
+Function GetRegularQuestionGroupType()
+	Return Enums.QuestionGroupTypes.Regular;
+EndFunction
+
+&AtServer
+Function GetSKUQuestionsGroupType()
+	Return Enums.QuestionGroupTypes.SKUQuestionsGroup;
+EndFunction
+
+&AtClient
+Procedure RegularityOnChange(Item)
+	Object.Single = ?(Regularity = "Single", True, False);
+EndProcedure
+
+&AtClient
+Procedure AddQuestionsToValueTable(Questions, ValueTable);
+	If TypeOf(Questions) = Type("CatalogRef.Question") Then
+		Array = New Array;
+		Array.Add(Questions);
+	ElsIf TypeOf(Questions) = Type("Array") Then
+		Array = Questions;
+	ElsIf TypeOf(Questions) = Type("CatalogRef.QuestionGroup") Then
+		Array = GetQuestionsFromGroup(Questions);
+	EndIf;
+	For Each Element In Array Do
+		FilterParameters = New Structure;
+		FilterParameters.Insert("Question", Element);
+		If ValueTable.FindRows(FilterParameters).Count() = 0 Then
+		    n = ValueTable.Add();
+	    	n.Question = Element;
+		EndIf;
+	EndDo;
+	
+EndProcedure
+
+typesMap = new Map();
+typesMap.Insert("String", "String");
+typesMap.Insert("Строка", "String");
+typesMap.Insert("Integer", "Integer");
+typesMap.Insert("Целое число", "Integer");
+typesMap.Insert("Decimal", "Decimal");
+typesMap.Insert("Десятичная дробь", "Decimal");
+typesMap.Insert("Boolean", "Boolean");
+typesMap.Insert("Логический тип", "Boolean");
+typesMap.Insert("Date time", "Date time");
+typesMap.Insert("Дата и время", "Date time");
+typesMap.Insert("Value list", "Value list");
+typesMap.Insert("Список значений", "Value list");

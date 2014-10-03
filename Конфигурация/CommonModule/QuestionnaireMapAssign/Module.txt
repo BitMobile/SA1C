@@ -1,0 +1,58 @@
+﻿
+Procedure ActualizeQuestionnaireMap() Export
+
+	q = new Query();
+    q.Text = "SELECT Ref FROM Document.Questionnaire";
+    questionnaires = q.Execute().Unload();
+    mapDocument = GetMapDocument();
+    mapDocument.Outlets.Clear();
+    mapDocument.Positions.Clear();
+    For Each row In questionnaires Do
+        WriteMap(row.Ref, mapDocument);        
+    EndDo;
+              
+EndProcedure
+
+Procedure WriteMap(quest,mapDocument) Export
+    selectorsVT = Documents.Questionnaire.SelectOutlets(Undefined, quest);
+    //quest.OutletsSelected = selectorsVT.Count();    
+    
+    map = mapDocument.Outlets.Unload();
+    For Each row In selectorsVT Do
+        newRow = map.Add();
+    	newRow.Questionnaire = quest;
+        newRow.Outlet = row.Ref;        
+    EndDo;
+    mapDocument.Outlets.Load(map);    
+    
+    positions = Documents.Questionnaire.SelectPositions(quest);
+    positionsMap = mapDocument.Positions.Unload();
+    For Each row In positions Do
+        newRow = positionsMap.Add();
+    	newRow.Position = row.Ref;
+        newRow.Questionnaire = quest;
+    EndDo;
+    mapDocument.Positions.Load(positionsMap);    
+    
+    mapDocument.Write();
+    
+EndProcedure
+
+Function GetMapDocument()
+    
+    q = new Query();
+    q.Text="SELECT Ref FROM Document.QuestionnaireMap";
+    r = q.Execute().Unload();
+    If r.Count()=0 Then
+        doc = Documents.QuestionnaireMap.CreateDocument();    
+        doc.Date = CurrentDate();
+        Return doc;
+    Else
+        For Each row In r Do
+            Return row.Ref.GetObject();                	        
+        EndDo;    	
+    EndIf;         
+    
+EndFunction // GetMapDocument()
+
+

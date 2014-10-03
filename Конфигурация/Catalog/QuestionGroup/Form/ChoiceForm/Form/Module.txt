@@ -1,0 +1,17 @@
+﻿
+&AtClient
+Procedure ListSelection(Item, SelectedRow, Field, StandardProcessing)
+	StandardProcessing = False;
+	QuestionsInGroup = GetQuestionsInGroup(SelectedRow);
+	NotifyChoice(QuestionsInGroup);
+EndProcedure
+
+&AtServer
+Function GetQuestionsInGroup(Group)
+	Selection = Catalogs.Question.Select(, Group);
+	Array = New Array;
+	While Selection.Next() Do
+		Array.Add(Selection.Ref);
+	EndDo;
+	Return Array;
+EndFunction

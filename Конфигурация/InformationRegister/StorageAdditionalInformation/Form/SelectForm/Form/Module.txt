@@ -1,0 +1,43 @@
+﻿
+&AtClient
+Procedure ListOnActivateRow(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtServer
+Procedure ShowPreview()
+	
+	If ValueIsFilled(Items.List.CurrentRow) Then 
+	
+		RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+		
+		FillPropertyValues(RecordManager, Items.List.CurrentRow);
+		
+		RecordManager.Read();
+			
+		Preview = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
+		
+	EndIf;
+		
+EndProcedure
+ 
+&AtClient
+Procedure ShowPreviewOnChange(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	Else 
+		
+		Preview = Undefined;
+		
+	EndIf;	
+	
+EndProcedure

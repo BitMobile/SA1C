@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoTime>CurrentOrLast</AutoTime>
+	<UsePostingMode>Auto</UsePostingMode>
+	<RepostOnWrite>true</RepostOnWrite>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<ChildItems>
+		<InputField name="Number" id="1">
+			<DataPath>Object.Number</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="NumberContextMenu" id="2"/>
+			<ExtendedTooltip name="NumberExtendedTooltip" id="24"/>
+		</InputField>
+		<InputField name="Date" id="3">
+			<DataPath>Object.Date</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DateContextMenu" id="4"/>
+			<ExtendedTooltip name="DateExtendedTooltip" id="25"/>
+		</InputField>
+		<Table name="Outlets" id="5">
+			<Representation>List</Representation>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Object.Outlets</DataPath>
+			<SearchStringLocation>None</SearchStringLocation>
+			<ViewStatusLocation>None</ViewStatusLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="OutletsContextMenu" id="6"/>
+			<AutoCommandBar name="OutletsCommandBar" id="7">
+				<ChildItems>
+					<Button name="OutletsCreateMap" id="12">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.CreateMap</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="OutletsCreateMapExtendedTooltip" id="26"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="OutletsExtendedTooltip" id="27"/>
+			<SearchStringAddition name="OutletsSearchString" id="28">
+				<Source>
+					<lf:elementId>5</lf:elementId>
+					<lf:additionId>0</lf:additionId>
+				</Source>
+				<ContextMenu name="OutletsSearchStringContextMenu" id="29"/>
+				<ExtendedTooltip name="OutletsSearchStringExtendedTooltip" id="30"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="OutletsViewStatus" id="31">
+				<Source>
+					<lf:elementId>5</lf:elementId>
+					<lf:additionId>1</lf:additionId>
+				</Source>
+				<ContextMenu name="OutletsViewStatusContextMenu" id="32"/>
+				<ExtendedTooltip name="OutletsViewStatusExtendedTooltip" id="33"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="OutletsSearchControl" id="34">
+				<Source>
+					<lf:elementId>5</lf:elementId>
+					<lf:additionId>2</lf:additionId>
+				</Source>
+				<ContextMenu name="OutletsSearchControlContextMenu" id="35"/>
+				<ExtendedTooltip name="OutletsSearchControlExtendedTooltip" id="36"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="OutletsLineNumber" id="8">
+					<DataPath>Object.Outlets.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="OutletsLineNumberContextMenu" id="9"/>
+					<ExtendedTooltip name="OutletsLineNumberExtendedTooltip" id="37"/>
+				</LabelField>
+				<InputField name="OutletsQuestionnaire" id="13">
+					<DataPath>Object.Outlets.Questionnaire</DataPath>
+					<ContextMenu name="OutletsQuestionnaireContextMenu" id="14"/>
+					<ExtendedTooltip name="OutletsQuestionnaireExtendedTooltip" id="38"/>
+				</InputField>
+				<InputField name="OutletsOutlet" id="10">
+					<DataPath>Object.Outlets.Outlet</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="OutletsOutletContextMenu" id="11"/>
+					<ExtendedTooltip name="OutletsOutletExtendedTooltip" id="39"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<Table name="Positions" id="15">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Object.Positions</DataPath>
+			<SearchStringLocation>None</SearchStringLocation>
+			<ViewStatusLocation>None</ViewStatusLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="PositionsContextMenu" id="16"/>
+			<AutoCommandBar name="PositionsCommandBar" id="17"/>
+			<ExtendedTooltip name="PositionsExtendedTooltip" id="40"/>
+			<SearchStringAddition name="PositionsSearchString" id="41">
+				<Source>
+					<lf:elementId>15</lf:elementId>
+					<lf:additionId>0</lf:additionId>
+				</Source>
+				<ContextMenu name="PositionsSearchStringContextMenu" id="42"/>
+				<ExtendedTooltip name="PositionsSearchStringExtendedTooltip" id="43"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="PositionsViewStatus" id="44">
+				<Source>
+					<lf:elementId>15</lf:elementId>
+					<lf:additionId>1</lf:additionId>
+				</Source>
+				<ContextMenu name="PositionsViewStatusContextMenu" id="45"/>
+				<ExtendedTooltip name="PositionsViewStatusExtendedTooltip" id="46"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="PositionsSearchControl" id="47">
+				<Source>
+					<lf:elementId>15</lf:elementId>
+					<lf:additionId>2</lf:additionId>
+				</Source>
+				<ContextMenu name="PositionsSearchControlContextMenu" id="48"/>
+				<ExtendedTooltip name="PositionsSearchControlExtendedTooltip" id="49"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="PositionsLineNumber" id="18">
+					<DataPath>Object.Positions.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PositionsLineNumberContextMenu" id="19"/>
+					<ExtendedTooltip name="PositionsLineNumberExtendedTooltip" id="50"/>
+				</LabelField>
+				<InputField name="PositionsPosition" id="20">
+					<DataPath>Object.Positions.Position</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PositionsPositionContextMenu" id="21"/>
+					<ExtendedTooltip name="PositionsPositionExtendedTooltip" id="51"/>
+				</InputField>
+				<InputField name="PositionsQuestionnaire" id="22">
+					<DataPath>Object.Positions.Questionnaire</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PositionsQuestionnaireContextMenu" id="23"/>
+					<ExtendedTooltip name="PositionsQuestionnaireExtendedTooltip" id="52"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:DocumentObject.QuestionnaireMap</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+			<UseAlways>
+				<Field>Object.RegisterRecords</Field>
+			</UseAlways>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="CreateMap" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Create map</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Create map</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>CreateMap</Action>
+		</Command>
+	</Commands>
+</Form>

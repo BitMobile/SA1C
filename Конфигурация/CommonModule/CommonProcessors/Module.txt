@@ -1,0 +1,88 @@
+﻿Функция GetTerritory(Outlet) Экспорт
+    
+    Query = new Query;
+    
+    Query.SetParameter("Outlet", Outlet);
+    Query.Text = "SELECT TOP 1
+    |	TerritoryOutlets.Ref
+    |FROM
+    |	Catalog.Territory.Outlets AS TerritoryOutlets
+    |WHERE
+    |	TerritoryOutlets.Outlet = &Outlet";
+    
+    Выборка = Query.Execute().Choose();
+    Выборка.Next();
+    
+    Возврат Выборка.Ref;	
+    
+КонецФункции
+
+//get attributes that must be filled; 
+//return map of values, if it's the only value in catalog, document list
+Function GetPredefinedItems(PredefinedItems) Export 
+    
+    ItemsMap = New Map;
+    
+    For Each Row In PredefinedItems Do
+        If Row.Key = "Catalog.User" Then
+            Text =    
+            "SELECT
+            |   User.Ref AS Ref
+            |FROM
+            |   Catalog.User AS User
+            |WHERE
+            |   User.Role = &Role";
+            Query = New Query;
+            Query.Text = Text;
+            Query.SetParameter("Role", "SR");
+        Else
+            Query = New Query;
+            Query.Text = "SELECT Ref FROM " + Row.Key;
+        EndIf;
+        Result = Query.Execute().Unload();
+        If Result.Count() = 1 Then
+            ItemsMap.Insert(Row.Value, Result[0].Ref);
+        EndIf;                      
+        
+    EndDo;
+    
+    Return ItemsMap;
+    
+EndFunction
+
+Procedure StockRefresh(Source, Cancel) Export 
+    
+    If Constants.SKUFeaturesRegistration.Get() Then         
+        If Source.Stocks.Count()=0 Then             
+            n = Source.Stocks.Add();
+            n.Feature = Catalogs.SKUFeatures.FindByCode("000000001");
+            n.StockValue = Source.CommonStock;             
+        EndIf;                   
+    Else
+        //Source.Stocks.Clear();
+        //n = Source.Stocks.Add();
+        //n.Feature = 
+        //n.StockValue = Source.CommonStock;                 
+        For Each row In Source.Stocks Do
+            row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
+        EndDo;         
+    EndIf;
+    
+    TS = Source.Stocks.Unload();
+    Source.CommonStock = 0;
+    For Each Row In TS Do
+        Source.CommonStock = Source.CommonStock + Row.StockValue;
+    EndDo;
+    
+    For Each row In Source.Stocks Do
+        If Constants.MultiStock.Get()=False AND row.Stock = Catalogs.Stock.EmptyRef() Then
+            row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
+        EndIf;    	    
+    EndDo;
+    
+EndProcedure
+
+
+
+
+

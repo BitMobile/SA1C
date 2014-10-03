@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="FormCommandBar" id="-1">
+		<ChildItems>
+			<Button name="FormCommonCommandCreateTasks" id="61">
+				<Type>CommandBarButton</Type>
+				<CommandName>CommonCommand.CreateTasks</CommandName>
+				<Parameter xsi:nil="true"/>
+				<ExtendedTooltip name="FormCommonCommandCreateTasksExtendedTooltip" id="143"/>
+			</Button>
+			<Button name="FormCommonCommandHistoryTask" id="62">
+				<Type>CommandBarButton</Type>
+				<CommandName>CommonCommand.HistoryTask</CommandName>
+				<Parameter xsi:nil="true"/>
+				<ExtendedTooltip name="FormCommonCommandHistoryTaskExtendedTooltip" id="144"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="AfterWrite">AfterWrite</Event>
+		<Event name="OnOpen">OnOpen</Event>
+		<Event name="BeforeWrite">BeforeWrite</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="CodeGroup" id="58">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Code group</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Code group</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<ExtendedTooltip name="CodeGroupExtendedTooltip" id="145"/>
+			<ChildItems>
+				<InputField name="Code" id="1">
+					<DataPath>Object.Code</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="CodeContextMenu" id="2"/>
+					<ExtendedTooltip name="CodeExtendedTooltip" id="146"/>
+				</InputField>
+				<InputField name="OutletStatus" id="121">
+					<DataPath>Object.OutletStatus</DataPath>
+					<ContextMenu name="OutletStatusContextMenu" id="122"/>
+					<ExtendedTooltip name="OutletStatusExtendedTooltip" id="147"/>
+					<Events>
+						<Event name="OnChange">OutletStatusOnChange</Event>
+					</Events>
+				</InputField>
+				<InputField name="ClosingCause" id="123">
+					<DataPath>Object.ClosingCause</DataPath>
+					<Visible>false</Visible>
+					<ContextMenu name="ClosingCauseContextMenu" id="124"/>
+					<ExtendedTooltip name="ClosingCauseExtendedTooltip" id="148"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<InputField name="Description" id="3">
+			<DataPath>Object.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="4"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="149"/>
+		</InputField>
+		<InputField name="Owner" id="5">
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="OwnerContextMenu" id="6"/>
+			<ExtendedTooltip name="OwnerExtendedTooltip" id="150"/>
+		</InputField>
+		<InputField name="Type" id="7">
+			<DataPath>Object.Type</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="TypeContextMenu" id="8"/>
+			<ExtendedTooltip name="TypeExtendedTooltip" id="151"/>
+		</InputField>
+		<InputField name="Class" id="9">
+			<DataPath>Object.Class</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="ClassContextMenu" id="10"/>
+			<ExtendedTooltip name="ClassExtendedTooltip" id="152"/>
+		</InputField>
+		<InputField name="Distributor" id="11">
+			<DataPath>Object.Distributor</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DistributorContextMenu" id="12"/>
+			<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
+		</InputField>
+		<InputField name="Address" id="13">
+			<DataPath>Object.Address</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="AddressContextMenu" id="14"/>
+			<ExtendedTooltip name="AddressExtendedTooltip" id="154"/>
+		</InputField>
+		<InputField name="ReceivableLimit" id="71">
+			<DataPath>Object.ReceivableLimit</DataPath>
+			<ContextMenu name="ReceivableLimitContextMenu" id="72"/>
+			<ExtendedTooltip name="ReceivableLimitExtendedTooltip" id="155"/>
+		</InputField>
+		<UsualGroup name="Positions" id="73">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Positions</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Positions</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="PositionsExtendedTooltip" id="156"/>
+			<ChildItems>
+				<InputField name="Lattitude" id="74">
+					<DataPath>Object.Lattitude</DataPath>
+					<ContextMenu name="LattitudeContextMenu" id="75"/>
+					<ExtendedTooltip name="LattitudeExtendedTooltip" id="157"/>
+					<Events>
+						<Event name="OnChange">LattitudeOnChange</Event>
+					</Events>
+				</InputField>
+				<InputField name="Longitude" id="76">
+					<DataPath>Object.Longitude</DataPath>
+					<ContextMenu name="LongitudeContextMenu" id="77"/>
+					<ExtendedTooltip name="LongitudeExtendedTooltip" id="158"/>
+					<Events>
+						<Event name="OnChange">LongitudeOnChange</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<Pages name="Pages" id="63">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Pages</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Pages</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="PagesExtendedTooltip" id="159"/>
+			<ChildItems>
+				<Page name="ParametersPage" id="64">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Parameters</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Параметры</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Parameters page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="ParametersPageExtendedTooltip" id="160"/>
+					<ChildItems>
+						<UsualGroup name="Param_table" id="129">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Param table</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Param table</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Param_tableExtendedTooltip" id="161"/>
+							<ChildItems>
+								<LabelDecoration name="InfoLabel" id="78">
+									<TextColor>style:FieldSelectionBackColor</TextColor>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Outlet parameters can be edited in mobile application only</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Параметры торговой точки редактируются только через мобильное приложение</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="InfoLabelContextMenu" id="79"/>
+									<ExtendedTooltip name="InfoLabelExtendedTooltip" id="162"/>
+								</LabelDecoration>
+								<Table name="TempParameters" id="130">
+									<Representation>List</Representation>
+									<ReadOnly>true</ReadOnly>
+									<AutoInsertNewRow>true</AutoInsertNewRow>
+									<EnableStartDrag>true</EnableStartDrag>
+									<EnableDrag>true</EnableDrag>
+									<DataPath>TempParameters</DataPath>
+									<SearchStringLocation>None</SearchStringLocation>
+									<ViewStatusLocation>None</ViewStatusLocation>
+									<SearchControlLocation>None</SearchControlLocation>
+									<RowFilter xsi:nil="true"/>
+									<ContextMenu name="TempParametersContextMenu" id="131"/>
+									<AutoCommandBar name="TempParametersCommandBar" id="132"/>
+									<ExtendedTooltip name="TempParametersExtendedTooltip" id="163"/>
+									<SearchStringAddition name="TempParametersSearchString" id="164">
+										<Source>
+											<lf:elementId>130</lf:elementId>
+											<lf:additionId>0</lf:additionId>
+										</Source>
+										<ContextMenu name="TempParametersSearchStringContextMenu" id="165"/>
+										<ExtendedTooltip name="TempParametersSearchStringExtendedTooltip" id="166"/>
+									</SearchStringAddition>
+									<ViewStatusAddition name="TempParametersViewStatus" id="167">
+										<Source>
+											<lf:elementId>130</lf:elementId>
+											<lf:additionId>1</lf:additionId>
+										</Source>
+										<ContextMenu name="TempParametersViewStatusContextMenu" id="168"/>
+										<ExtendedTooltip name="TempParametersViewStatusExtendedTooltip" id="169"/>
+									</ViewStatusAddition>
+									<SearchControlAddition name="TempParametersSearchControl" id="170">
+										<Source>
+											<lf:elementId>130</lf:elementId>
+											<lf:additionId>2</lf:additionId>
+										</Source>
+										<ContextMenu name="TempParametersSearchControlContextMenu" id="171"/>
+										<ExtendedTooltip name="TempParametersSearchControlExtendedTooltip" id="172"/>
+									</SearchControlAddition>
+									<Events>
+										<Event name="OnActivateRow">TempParametersOnActivateRow</Event>
+									</Events>
+									<ChildItems>
+										<InputField name="TempParametersParameter" id="133">
+											<DataPath>TempParameters.Parameter</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempParametersParameterContextMenu" id="134"/>
+											<ExtendedTooltip name="TempParametersParameterExtendedTooltip" id="173"/>
+										</InputField>
+										<InputField name="TempParametersValue" id="135">
+											<DataPath>TempParameters.Value</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempParametersValueContextMenu" id="136"/>
+											<ExtendedTooltip name="TempParametersValueExtendedTooltip" id="174"/>
+										</InputField>
+										<InputField name="TempParametersSnapShotUUID" id="137">
+											<DataPath>TempParameters.SnapShotUUID</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempParametersSnapShotUUIDContextMenu" id="138"/>
+											<ExtendedTooltip name="TempParametersSnapShotUUIDExtendedTooltip" id="175"/>
+										</InputField>
+										<InputField name="TempParametersN" id="139">
+											<DataPath>TempParameters.N</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempParametersNContextMenu" id="140"/>
+											<ExtendedTooltip name="TempParametersNExtendedTooltip" id="176"/>
+										</InputField>
+									</ChildItems>
+								</Table>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Preview" id="125">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Preview</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Предпросмотр</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Preview</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ExtendedTooltip name="PreviewExtendedTooltip" id="177"/>
+							<ChildItems>
+								<PictureField name="PictureAddress" id="127">
+									<DataPath>PictureAddress</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<NonselectedPictureText>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>No image</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Изображение отсутсвует</v8:content>
+										</v8:item>
+									</NonselectedPictureText>
+									<ContextMenu name="PictureAddressContextMenu" id="128"/>
+									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="178"/>
+								</PictureField>
+								<Button name="OpenPicture" id="126">
+									<Type>UsualButton</Type>
+									<Representation>Picture</Representation>
+									<CommandName>Form.Command.OpenPicture</CommandName>
+									<Parameter xsi:nil="true"/>
+									<Picture>
+										<xr:Ref>StdPicture.Magnifier</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="OpenPictureExtendedTooltip" id="179"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="TerritoryPage" id="65">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Territory</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Территории</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Territory page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="TerritoryPageExtendedTooltip" id="180"/>
+					<ChildItems>
+						<Table name="TerritoriesList" id="66">
+							<Representation>List</Representation>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>TerritoriesList</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="TerritoriesListContextMenu" id="67"/>
+							<AutoCommandBar name="TerritoriesListCommandBar" id="68"/>
+							<ExtendedTooltip name="TerritoriesListExtendedTooltip" id="181"/>
+							<SearchStringAddition name="TerritoriesListSearchString" id="182">
+								<Source>
+									<lf:elementId>66</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="TerritoriesListSearchStringContextMenu" id="183"/>
+								<ExtendedTooltip name="TerritoriesListSearchStringExtendedTooltip" id="184"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="TerritoriesListViewStatus" id="185">
+								<Source>
+									<lf:elementId>66</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="TerritoriesListViewStatusContextMenu" id="186"/>
+								<ExtendedTooltip name="TerritoriesListViewStatusExtendedTooltip" id="187"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="TerritoriesListSearchControl" id="188">
+								<Source>
+									<lf:elementId>66</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="TerritoriesListSearchControlContextMenu" id="189"/>
+								<ExtendedTooltip name="TerritoriesListSearchControlExtendedTooltip" id="190"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<InputField name="TerritoriesListValue" id="69">
+									<DataPath>TerritoriesList.Value</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TerritoriesListValueContextMenu" id="70"/>
+									<ExtendedTooltip name="TerritoriesListValueExtendedTooltip" id="191"/>
+									<Events>
+										<Event name="OnChange">TerritoriesListValueOnChange</Event>
+										<Event name="Opening">TerritoriesListValueOpening</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="PriceLists" id="80">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Price lists</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прайс листы</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Price lists</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="PriceListsExtendedTooltip" id="192"/>
+					<ChildItems>
+						<Table name="Prices" id="81">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.Prices</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="PricesContextMenu" id="82"/>
+							<AutoCommandBar name="PricesCommandBar" id="83"/>
+							<ExtendedTooltip name="PricesExtendedTooltip" id="193"/>
+							<SearchStringAddition name="PricesSearchString" id="194">
+								<Source>
+									<lf:elementId>81</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="PricesSearchStringContextMenu" id="195"/>
+								<ExtendedTooltip name="PricesSearchStringExtendedTooltip" id="196"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="PricesViewStatus" id="197">
+								<Source>
+									<lf:elementId>81</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="PricesViewStatusContextMenu" id="198"/>
+								<ExtendedTooltip name="PricesViewStatusExtendedTooltip" id="199"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="PricesSearchControl" id="200">
+								<Source>
+									<lf:elementId>81</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="PricesSearchControlContextMenu" id="201"/>
+								<ExtendedTooltip name="PricesSearchControlExtendedTooltip" id="202"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="PricesLineNumber" id="84">
+									<DataPath>Object.Prices.LineNumber</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="PricesLineNumberContextMenu" id="85"/>
+									<ExtendedTooltip name="PricesLineNumberExtendedTooltip" id="203"/>
+								</LabelField>
+								<InputField name="PricesPriceList" id="86">
+									<DataPath>Object.Prices.PriceList</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="PricesPriceListContextMenu" id="87"/>
+									<ExtendedTooltip name="PricesPriceListExtendedTooltip" id="204"/>
+									<Events>
+										<Event name="OnChange">PricesPriceListOnChange</Event>
+										<Event name="StartChoice">PricesPriceListStartChoice</Event>
+									</Events>
+								</InputField>
+								<LabelField name="PricesPriceListDescription" id="88">
+									<DataPath>Object.Prices.PriceList.Description</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Наименование</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="PricesPriceListDescriptionContextMenu" id="89"/>
+									<ExtendedTooltip name="PricesPriceListDescriptionExtendedTooltip" id="205"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="Details" id="90">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Details</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Реквизиты</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Details</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="DetailsExtendedTooltip" id="206"/>
+					<ChildItems>
+						<InputField name="LegalName" id="91">
+							<DataPath>Object.LegalName</DataPath>
+							<ContextMenu name="LegalNameContextMenu" id="92"/>
+							<ExtendedTooltip name="LegalNameExtendedTooltip" id="207"/>
+						</InputField>
+						<InputField name="LegalAddress" id="93">
+							<DataPath>Object.LegalAddress</DataPath>
+							<ContextMenu name="LegalAddressContextMenu" id="94"/>
+							<ExtendedTooltip name="LegalAddressExtendedTooltip" id="208"/>
+						</InputField>
+						<InputField name="OwnershipType" id="95">
+							<DataPath>Object.OwnershipType</DataPath>
+							<ContextMenu name="OwnershipTypeContextMenu" id="96"/>
+							<ExtendedTooltip name="OwnershipTypeExtendedTooltip" id="209"/>
+						</InputField>
+						<InputField name="INN" id="97">
+							<DataPath>Object.INN</DataPath>
+							<HorizontalAlign>Right</HorizontalAlign>
+							<ContextMenu name="INNContextMenu" id="98"/>
+							<ExtendedTooltip name="INNExtendedTooltip" id="210"/>
+						</InputField>
+						<InputField name="KPP" id="99">
+							<DataPath>Object.KPP</DataPath>
+							<ContextMenu name="KPPContextMenu" id="100"/>
+							<ExtendedTooltip name="KPPExtendedTooltip" id="211"/>
+						</InputField>
+						<InputField name="PhoneNumber" id="101">
+							<DataPath>Object.PhoneNumber</DataPath>
+							<ContextMenu name="PhoneNumberContextMenu" id="102"/>
+							<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="212"/>
+						</InputField>
+						<InputField name="Email" id="103">
+							<DataPath>Object.Email</DataPath>
+							<ContextMenu name="EmailContextMenu" id="104"/>
+							<ExtendedTooltip name="EmailExtendedTooltip" id="213"/>
+						</InputField>
+						<InputField name="WebSite" id="105">
+							<DataPath>Object.WebSite</DataPath>
+							<ContextMenu name="WebSiteContextMenu" id="106"/>
+							<ExtendedTooltip name="WebSiteExtendedTooltip" id="214"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="Contacts" id="107">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Contacts</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Контакты</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Contacts</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ContactsExtendedTooltip" id="215"/>
+					<ChildItems>
+						<Table name="Contacts1" id="108">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.Contacts</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="Contacts1ContextMenu" id="109"/>
+							<AutoCommandBar name="Contacts1CommandBar" id="110"/>
+							<ExtendedTooltip name="Contacts1ExtendedTooltip" id="216"/>
+							<SearchStringAddition name="Contacts1SearchString" id="217">
+								<Source>
+									<lf:elementId>108</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="Contacts1SearchStringContextMenu" id="218"/>
+								<ExtendedTooltip name="Contacts1SearchStringExtendedTooltip" id="219"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="Contacts1ViewStatus" id="220">
+								<Source>
+									<lf:elementId>108</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="Contacts1ViewStatusContextMenu" id="221"/>
+								<ExtendedTooltip name="Contacts1ViewStatusExtendedTooltip" id="222"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="Contacts1SearchControl" id="223">
+								<Source>
+									<lf:elementId>108</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="Contacts1SearchControlContextMenu" id="224"/>
+								<ExtendedTooltip name="Contacts1SearchControlExtendedTooltip" id="225"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="Contacts1LineNumber" id="111">
+									<DataPath>Object.Contacts.LineNumber</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="Contacts1LineNumberContextMenu" id="112"/>
+									<ExtendedTooltip name="Contacts1LineNumberExtendedTooltip" id="226"/>
+								</LabelField>
+								<InputField name="Contacts1ContactName" id="113">
+									<DataPath>Object.Contacts.ContactName</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>21</Width>
+									<ContextMenu name="Contacts1ContactNameContextMenu" id="114"/>
+									<ExtendedTooltip name="Contacts1ContactNameExtendedTooltip" id="227"/>
+								</InputField>
+								<InputField name="Contacts1Position" id="115">
+									<DataPath>Object.Contacts.Position</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>13</Width>
+									<ContextMenu name="Contacts1PositionContextMenu" id="116"/>
+									<ExtendedTooltip name="Contacts1PositionExtendedTooltip" id="228"/>
+								</InputField>
+								<InputField name="Contacts1PhoneNumber" id="117">
+									<DataPath>Object.Contacts.PhoneNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<ContextMenu name="Contacts1PhoneNumberContextMenu" id="118"/>
+									<ExtendedTooltip name="Contacts1PhoneNumberExtendedTooltip" id="229"/>
+								</InputField>
+								<InputField name="Contacts1Email" id="119">
+									<DataPath>Object.Contacts.Email</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>12</Width>
+									<ContextMenu name="Contacts1EmailContextMenu" id="120"/>
+									<ExtendedTooltip name="Contacts1EmailExtendedTooltip" id="230"/>
+								</InputField>
+								<CheckBoxField name="Contacts1NotActual" id="141">
+									<DataPath>Object.Contacts.NotActual</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="Contacts1NotActualContextMenu" id="142"/>
+									<ExtendedTooltip name="Contacts1NotActualExtendedTooltip" id="231"/>
+								</CheckBoxField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.Outlet</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="TerritoriesList" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territories list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Value" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Value</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Значение</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Territory</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="PictureAddress" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picture address</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="PictureExtension" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picture extension</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="TempParameters" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Temp parameters</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Parameter" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Parameter</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.OutletParameter</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Value" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Value</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>100</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="SnapShotUUID" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Snap shot UUID</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="N" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>N</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="OpenPicture" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open picture</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Открыть файл</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open picture</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Открыть файл</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>OpenPicture</Action>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="ref">
+			<Type>
+				<v8:Type>cfg:CatalogRef.Outlet</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
+	<CommandInterface>
+		<NavigationPanel>
+			<Item>
+				<Command>3:6dbe2ff9-443e-4d86-b703-f689e8d3886a</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelGoTo</CommandGroup>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+		</NavigationPanel>
+	</CommandInterface>
+</Form>

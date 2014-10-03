@@ -1,0 +1,12 @@
+﻿
+&AtClient
+Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
+	
+	Если CommandExecuteParameters.Source.FormName  = "Catalog.Outlet.Form.ListForm" Тогда
+		FormParameters = New Structure("Outlet",CommandExecuteParameters.Source.CurrentItem.CurrentRow);
+	Иначе	
+		FormParameters = New Structure("Outlet", CommandExecuteParameters.Source.Object.Ref);
+	КонецЕсли;
+	OpenForm("Document.Task.Form.ListFormHistoryTask", FormParameters, CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window);
+
+EndProcedure

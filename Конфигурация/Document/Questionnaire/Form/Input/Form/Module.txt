@@ -1,0 +1,88 @@
+﻿
+&AtClient
+Procedure ok(Command)
+    
+    If ValueIsFilled(Str) Then     
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, Str);    
+        Notify(Source, ReturnStructure, ThisForm);        
+    EndIf;
+    If ValueIsFilled(Integer) Then
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, Integer);    
+        Notify(Source, ReturnStructure, ThisForm);    	    
+    EndIf;
+    If ValueIsFilled(Decimal) Then
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, Decimal);    
+        Notify(Source, ReturnStructure, ThisForm);    	    
+    EndIf;
+    If ValueIsFilled(Bool) Then
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, Bool);    
+        Notify(Source, ReturnStructure, ThisForm);    	    
+    EndIf;
+    If ValueIsFilled(DateField) Then
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, DateField);    
+        Notify(Source, ReturnStructure, ThisForm);    	    
+    EndIf;
+    If ValueIsFilled(VList) Then
+        ReturnStructure = New Structure("StringNumber, Str", StringNumber, VList);    
+        Notify(Source, ReturnStructure, ThisForm);    	    
+    EndIf;
+    
+    Close();
+
+EndProcedure
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+    
+    StringNumber = Parameters.StringNumber;
+    OutletParameter = Parameters.OutletParameter;
+    Source = Parameters.Source;
+    If Parameters.DataType = "String" Then
+        ThisForm.Items.Str.Visible = True;
+        DataField = "Str";
+    EndIf;     
+    If Parameters.DataType = "Integer" Then
+        ThisForm.Items.Integer.Visible = True;
+        DataField = "Integer";
+    EndIf;     
+    If Parameters.DataType = "Decimal" Then
+        ThisForm.Items.Decimal.Visible = True;
+        DataField = "Decimal";
+    EndIf;     
+    If Parameters.DataType = "Boolean" Then
+        ThisForm.Items.Bool.Visible = True;
+    EndIf;     
+    If Parameters.DataType = "Date time" Then
+        ThisForm.Items.DateField.Visible = True;
+    EndIf;     
+    If Parameters.DataType = "Value list" Then
+        ThisForm.Items.VList.Visible = True;
+    EndIf;     
+
+EndProcedure
+
+&AtClient
+Procedure VListStartListChoice(Item, StandardProcessing)
+    StandardProcessing=False;
+    VList = ChooseFromList(GetParametersList(), Item);
+EndProcedure
+
+Function GetParametersList()
+    
+    list = new ValueList;
+    TS = OutletParameter.ValueList.Unload();
+    For Each row In TS Do
+        list.Add(row.Value);    	    
+    EndDo;
+    Return list;
+    
+EndFunction
+
+&AtClient
+Procedure BoolStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing = False;
+    l = new ValueList;
+    l.Add(NStr("en = 'Yes'; ru = 'Да'"));
+    l.Add(NStr("en = 'No'; ru = 'Нет'"));
+    Bool = ChooseFromList(l, Item);
+EndProcedure

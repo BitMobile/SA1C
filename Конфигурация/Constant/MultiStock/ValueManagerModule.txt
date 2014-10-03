@@ -1,0 +1,31 @@
+﻿
+Procedure OnWrite(Cancel)
+    query = new Query;
+    query.Text =
+    "SELECT
+    |   MobileApplicationSettings.Ref,
+    |   MobileApplicationSettings.Code,
+    |   MobileApplicationSettings.Use,
+    |   MobileApplicationSettings.DeletionMark
+    |FROM
+    |   Catalog.MobileApplicationSettings AS MobileApplicationSettings
+    |WHERE
+    |   MobileApplicationSettings.Code = &Code";
+    query.SetParameter("Code", "MultStck");
+    result = query.Execute();
+    If result.IsEmpty() Then
+        setting = Catalogs.MobileApplicationSettings.CreateItem();
+    	setting.Code = "MultStck";
+        setting.Description = "Многоскладской учет";
+        setting.Use = True;
+        setting.Write();
+    Else
+        row = result.Unload();        
+        //If NOT row[0].Use Then
+            obj = row[0].Ref.GetObject();
+            obj.Use = ThisObject.Value;
+            obj.DeletionMark = False;
+        	obj.Write();        
+        //EndIf;    	    
+    EndIf;
+EndProcedure

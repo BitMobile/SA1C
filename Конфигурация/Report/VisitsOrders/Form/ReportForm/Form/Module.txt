@@ -1,0 +1,86 @@
+﻿&AtClient
+Procedure OnOpen(Cancel)
+    
+	If ValueIsFilled(Report.SR) Then
+		Report.SRList = SROnChangeServer(Report.SR);
+    else
+       Report.SRList = SROnChangeServer(Undefined);
+	EndIf;
+
+EndProcedure
+
+&AtClient
+Procedure SROnChange(Item)
+ //If ValueIsFilled(Report.SR) Then
+ //   	Report.SRList = SROnChangeServer(Report.SR);
+ //   EndIf;
+
+	If ValueIsFilled(Report.SR) Then
+		Report.SRList = SROnChangeServer(Report.SR);
+    else
+       Report.SRList = SROnChangeServer(Undefined);
+	EndIf;
+
+EndProcedure
+
+&AtServer
+ 
+Function SROnChangeServer(SR)
+	СписокПользователей = Новый СписокЗначений;
+    СписокПользователей.Add(SR);
+        
+    If SR = Undefined Then
+        Query = new Query;
+        Query.Text = 
+        	"SELECT
+            |   User.Ref
+            |FROM
+            |   Catalog.User AS User";
+        QueryResult = Query.Execute().Unload();
+        
+        For each Str IN QueryResult Do 
+            СписокПользователей.Add(Str.Ref);
+        EndDo;
+    Else     
+        
+    	Query = Новый Query;
+    	Query.Text = "SELECT
+    	             |	User.Ref AS Пользователь
+    	             |FROM
+    	             |	Catalog.User AS User
+    	             |WHERE
+    	             |	User.Ref = &SR";
+    	Query.SetParameter("SR",SR);
+        	SRMList=Query.Execute().Unload();
+        While  SRMList.Count()>0 Do
+    		Подчиненные = GetSub(SRMList);
+    		SRMList.Clear();
+    		SRMList = Подчиненные;
+    		For each Str IN Подчиненные Do 
+    		СписокПользователей.Add(Str.Пользователь);
+    		EndDo;
+    	EndDo;        
+    EndIf;
+    
+	
+		
+	Return СписокПользователей;
+	
+EndFunction
+
+ &AtServer 
+Function GetSub(SRMList)
+	
+	Query = Новый Query;
+	Query.Text="SELECT
+	             |	User.Ref AS Пользователь
+	             |FROM
+	             |	Catalog.User AS User
+	             |WHERE
+	             |	User.Manager IN(&UsersList)";
+	Query.SetParameter("UsersList",SRMList);
+	
+	UsersList = Query.Execute().Unload();
+    Return UsersList;
+EndFunction
+

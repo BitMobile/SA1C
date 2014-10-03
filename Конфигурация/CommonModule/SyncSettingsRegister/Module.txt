@@ -1,0 +1,48 @@
+﻿Function  IsSet() Export  //checks if the register is been field
+    
+    RecordCollection = InformationRegisters.SyncOrder.CreateRecordSet();
+    RecordCollection.Read();
+        
+    If RecordCollection.Count() = 0 Then
+        IsSet = False;
+    Else 
+         IsSet = True;
+    EndIf;
+    
+    Return IsSet;
+    
+EndFunction
+
+Procedure WriteInRegister(SyncSettingsTable) Export  
+     
+	RecordSet = InformationRegisters.SyncOrder.CreateRecordSet();
+	RecordSet.Load(SyncSettingsTable);
+	RecordSet.Write();
+        
+EndProcedure
+
+Function GetMetadataList() Export 
+	
+	ListOfMetadataObject = New ValueList;
+		
+	// Прочитать список документов
+	For Each DocStr in Metadata.Documents Do
+		
+	   DocName = "Document." + DocStr.Name;
+	   
+	   ListOfMetadataObject.Add(DocName);
+		
+   	EndDo;
+   
+   	// Прочитать список справочников
+	For Each CatStr in Metadata.Catalogs Do
+		
+	    CatName = "Catalog." + CatStr.Name;
+	   
+	   	ListOfMetadataObject.Add(CatName);
+		
+	EndDo;
+   
+    Return ListOfMetadataObject;
+    	
+EndFunction

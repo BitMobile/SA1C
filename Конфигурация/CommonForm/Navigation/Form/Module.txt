@@ -1,0 +1,403 @@
+﻿
+//------------------------------"More" commands------------
+
+
+&AtClient
+Procedure More(Command)
+    
+    MoreServer(Items.More.Name, PictureLib.Document, Items.DocumentsMoreGroup.Name);
+    
+EndProcedure
+
+&AtClient
+ Procedure MoreQuestions(Command)
+     
+    MoreServer(Items.Button1.Name, PictureLib.Catalog, Items.QuestionsMoreGroup.Name);     
+ 
+ EndProcedure
+ 
+&AtClient
+ Procedure MoreOutlets(Command)
+     MoreServer(Items.MoreOutlets.Name, PictureLib.Catalog, Items.OutletsMoreGroup.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure MoreSKU(Command)
+     
+    MoreServer(Items.MoreSKU.Name, PictureLib.More, Items.SKUMoreGroup.Name);       
+ 
+ EndProcedure
+ 
+ &AtClient
+ Procedure MoreUsers(Command)
+     
+     MoreServer(Items.MoreUsers.Name, PictureLib.More, Items.UsersMoreGroup.Name);
+ 
+ EndProcedure
+ 
+ &AtClient
+ Procedure MoreReasons(Command)
+	 MoreServer(Items.MoreReasons.Name, PictureLib.More, Items.ReasonsMoreGroup.Name);
+ EndProcedure
+
+//------------------------------"ShowList" commands---------
+
+//--Documents
+
+ &AtClient
+ Procedure Questions(Command)
+     
+    ShowListServer(Items.QuestionsList.Name);
+  
+ EndProcedure
+ 
+ &AtClient
+ Procedure Documents(Command)
+     
+    ShowListServer(Items.DocumentsCommonList.Name);
+ 
+ EndProcedure
+
+ &AtClient
+ Procedure Questtionaires(Command)
+     ShowListServer(Items.QuesttionaireList.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure VisitPlans(Command)
+     ShowListServer(Items.VisitPlanList.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure Visits(Command)
+     ShowListServer(Items.VisitsList.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure Orders(Command)
+    ShowListServer(Items.OrdersList.Name);  
+ EndProcedure
+
+ &AtClient
+ Procedure Tasks(Command)
+ 
+ ShowListServer(Items.TasksList.Name);
+     
+ EndProcedure
+
+&AtClient
+ Procedure PriceLists(Command)
+    ShowListServer(Items.PriceListsList.Name);  
+ EndProcedure
+
+&AtClient
+ Procedure AccountReceivables(Command)
+     ShowListServer(Items.AccountReceivableList.Name);  
+ EndProcedure
+ 
+ &AtClient
+ Procedure Encashments(Command)
+     ShowListServer(Items.EncasmentsList.Name);  
+ EndProcedure
+
+ &AtClient
+ Procedure Reasons(Command)
+	 MoreServer(Items.MoreReasons.Name, PictureLib.More, Items.ReasonsMoreGroup.Name);
+ EndProcedure
+
+ &AtClient
+ Procedure ReasonsForVisit(Command)
+	 ShowListServer(Items.ReasonForVisitList.Name);
+ EndProcedure
+
+ &AtClient
+ Procedure ReasonsForNotOfTakingOrder(Command)
+	 ShowListServer(Items.ReasonForNotOfTakingOrderList.Name);
+ EndProcedure
+
+
+//--Questions
+ &AtClient
+ Procedure SKUQuestions(Command)
+	 SetQuestionGroupListParameter(False);
+	 CurrentGroup = ?(Items.QuestionGroupList.CurrentData = Undefined, Undefined, 
+	 				  Items.QuestionGroupList.CurrentData.Ref);
+	 SetQuestionListParameter(CurrentGroup);
+     ShowListServer(Items.QuestionsGroup.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure CommonQuestions(Command)
+	 SetQuestionGroupListParameter();
+	 CurrentGroup = ?(Items.QuestionGroupList.CurrentData = Undefined, Undefined, 
+	 				  Items.QuestionGroupList.CurrentData.Ref);	 
+	 SetQuestionListParameter(CurrentGroup);
+	 ShowListServer(Items.QuestionsGroup.Name);
+ EndProcedure
+ 
+//--Outlets
+ &AtClient
+ Procedure Outlets(Command)
+     ShowListServer(Items.OutletsList.Name);
+ EndProcedure
+
+&AtClient
+ Procedure Distributors(Command)
+     
+     ShowListServer(Items.DistributorsList.Name);
+ 
+ EndProcedure
+ 
+ &AtClient
+ Procedure OutletParameters(Command)
+     ShowListServer(Items.OutletParametersList.Name);
+ EndProcedure
+ 
+&AtClient
+ Procedure OutletTypes(Command)
+     ShowListServer(Items.OutletTypesList.Name);
+ EndProcedure
+ 
+&AtClient
+ Procedure OutletClasses(Command)
+     ShowListServer(Items.OutletClassesList.Name);
+ EndProcedure
+
+&AtClient
+ Procedure Territories(Command)
+     ShowListServer(Items.TerritiriesList.Name);
+ EndProcedure
+ 
+&AtClient
+ Procedure Regions(Command)
+     ShowListServer(Items.RegionsList.Name);
+ EndProcedure 
+
+//--SKUs 
+&AtClient
+ Procedure SKUs(Command)
+     
+     ShowListServer(Items.SKUList.Name);
+ 
+ EndProcedure 
+ 
+ &AtClient
+ Procedure Stocks(Command)
+    ShowListServer(Items.StocksList.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure SKUGroups(Command)
+     
+     ShowListServer(Items.SKUGroupsList.Name);
+ 
+ EndProcedure
+
+&AtClient
+ Procedure Brands(Command)
+     
+    ShowListServer(Items.BrandsList.Name);
+ 
+ EndProcedure
+
+ &AtClient
+ Procedure SKUFeatures(Command)
+	 
+	 ShowListServer(Items.SKUFeaturesList.Name);
+	 
+ EndProcedure
+
+//--Users
+ &AtClient
+ Procedure Users(Command)
+     
+     ShowListServer(Items.UsersList.Name);
+ 
+ EndProcedure
+ 
+&AtClient
+ Procedure Positions(Command)
+     
+ ShowListServer(Items.PositionsList.Name);       
+ 
+ EndProcedure 
+ 
+  
+ //------------------------------"Other" commands-----------
+ 
+ &AtClient
+ Procedure Reports(Command)
+     
+    ShowListServer(Items.ReportsGroup.Name);
+     
+ EndProcedure
+
+ &AtClient
+ Procedure ObjectsDeletion(Command)
+     
+     OpenForm("DataProcessor.УдалениеПомеченныхОбъектов.Form.ОсновнаяФорма");
+ 
+ EndProcedure
+ 
+&AtClient
+ Procedure ReportVisits(Command)
+     
+ OpenForm("Report.Visits.Form");    
+ 
+ EndProcedure
+
+&AtClient
+ Procedure ReportOrders(Command)
+     
+ OpenForm("Report.Orders.Form");    
+ 
+ EndProcedure 
+
+ &AtClient
+ Procedure ReportVisitsOrders(Command)
+     
+ OpenForm("Report.VisitsOrders.Form.ReportForm");    
+ 
+ EndProcedure
+ 
+ &AtClient
+ Procedure ReportVisitPlansVisitsOrders(Command)
+     
+ OpenForm("Report.VisitPlansVisitsOrders.Form.ReportForm");    
+ 
+ EndProcedure
+ 
+&AtClient
+ Procedure VisitEfficiency(Command)
+     
+ OpenForm("Report.VisitEfficiency.Form.ReportForm");    
+ 
+ EndProcedure
+
+&AtClient
+ Procedure EncashmentReport(Command)
+     OpenForm("Report.Encashment.Form");
+ EndProcedure
+
+&AtClient
+ Procedure ReportOutletBinding(Command)
+     OpenForm("Report.BindingOutlets.Form");
+ EndProcedure
+
+&AtClient
+ Procedure VisitsMap(Command)
+     OpenForm("DataProcessor.РаботаСКартойGoogle.Form.Форма");
+ EndProcedure
+
+&AtClient
+ Procedure VisitResultsReport(Command)
+     OpenForm("Report.VisitResults.Form");
+ EndProcedure
+
+&AtClient
+ Procedure Report_QuestionnairesStat(Command)
+     OpenForm("Report.QuestionnireStatistics.Form");
+ EndProcedure
+
+&AtClient
+ Procedure Report_VisitsAnalysis(Command)
+     OpenForm("Report.VisitsAnalysis.Form");
+ EndProcedure
+
+ &AtClient
+ Procedure Report_AnalysisOutletParameters(Command)
+     OpenForm("Report.AnalysisOutletParameters.Form");
+ EndProcedure
+ 
+ &AtClient
+ Procedure Report_CompetitorsInTheOutlets(Command)
+     OpenForm("Report.CompetitorsInTheOutlets.Form");
+ EndProcedure
+ 
+ &AtClient
+ Procedure Report_OutletStatus(Command)
+     OpenForm("Report.OutletsStatus.Form");
+ EndProcedure
+ 
+ &AtClient
+ Procedure Report_SKUChange(Command)
+     OpenForm("Report.SkuChangeAnalysis.Form");
+ EndProcedure
+ 
+ &AtClient
+ Procedure Report_NumberOfOutlets(Command)
+     OpenForm("Report.NumberOfOutlets.Form");
+ EndProcedure
+
+//-------------------------------Common handlers----------
+
+
+Procedure MoreServer(SourceButton, DefaultPicture, Sublist)
+ 
+    
+    If Items[Sublist].Visible = True Then
+        Items[SourceButton].Picture = PictureLib.More;//PictureLib.КоллекцияКартинокСопоставлениеОбъектов;
+        Items[Sublist].Visible = False;
+    Else 
+        Items[SourceButton].Picture = PictureLib.КоллекцияКартинокСопоставлениеОбъектов1;	
+        Items[Sublist].Visible = True;
+    EndIf;
+ 
+ EndProcedure
+
+ &AtClient
+ Procedure ShowListServer(ListToShow)
+ 
+    /////closing lists were opened
+    For Each List In Items.ListsGroup.ChildItems Do
+        If List.Name <> ListToShow and List.Visible Then
+            Items[List.Name].Visible = False;
+        EndIf;
+    EndDo;
+    
+    Items[ListToShow].Visible = True;
+    Items.ListsGroup.ShowTitle = True;
+    Items.ListsGroup.Title = Items[ListToShow].Title;
+     
+ EndProcedure
+
+&AtClient
+ Procedure Syncronization(Command)
+     
+     OpenForm("DataProcessor.SyncAndSettings.Form.SettingsForm");
+ 
+ EndProcedure
+
+&AtClient
+ Procedure NotificationProcessing(EventName, Parameter, Source)
+	 If EventName = "Synchronized" Then
+		 For Each List In Items.ListsGroup.ChildItems Do
+			 If List.Visible And TypeOf(List) = Type("FormTable") Then
+				 List.Refresh();
+			 EndIf;
+		 EndDo;
+	 EndIf;
+ EndProcedure
+
+&AtServer
+Procedure SetQuestionGroupListParameter(Regular = True)
+	QuestionGroupList.Parameters.SetParameterValue("Type", ?(Regular, Enums.QuestionGroupTypes.Regular, 
+																	  Enums.QuestionGroupTypes.SKUQuestionsGroup));
+EndProcedure
+
+&AtServer 
+Procedure SetQuestionListParameter(Group)
+	//Group = ?(Group = Undefined, Catalogs.QuestionGroup.EmptyRef(), Group);
+	QuestionsList.Parameters.SetParameterValue("Owner", Group);
+	QuestionsList.Parameters.SetParameterValue("Type", QuestionGroupList.Parameters.FindParameterValue(New DataCompositionParameter("Type")).Value);
+EndProcedure
+
+&AtClient
+Procedure QuestionGroupListOnActivateRow(Item)
+	SetQuestionListParameter(?(Item.CurrentData = Undefined, Undefined, Item.CurrentData.Ref));
+EndProcedure
+
+&AtClient
+Procedure AllQuestions(Command)
+	SetQuestionListParameter(Undefined);
+EndProcedure

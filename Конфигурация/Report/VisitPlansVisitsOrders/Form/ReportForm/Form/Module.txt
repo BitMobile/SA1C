@@ -1,0 +1,55 @@
+﻿
+&НаКлиенте 
+Procedure SRПриИзменении(Элемент)
+	
+	If ValueIsFilled(Report.SR) Then
+		Report.SRList = SROnChangeServer(Report.SR);
+	EndIf;
+	 
+EndProcedure
+
+&НаСервере
+ 
+Function SROnChangeServer(SR)
+	СписокПользователей = Новый СписокЗначений;
+	СписокПользователей.Add(SR);
+	Query = Новый Query;
+	Query.Text = "SELECT
+	             |	User.Ref AS Пользователь
+	             |FROM
+	             |	Catalog.User AS User
+	             |WHERE
+	             |	User.Ref = &SR";
+	Query.SetParameter("SR",SR);
+	SRMList=Query.Execute().Unload();
+
+	While  SRMList.Count()>0 Do
+		Подчиненные = GetSub(SRMList);
+		SRMList.Clear();
+		SRMList = Подчиненные;
+		For each Str IN Подчиненные Do 
+		СписокПользователей.Add(Str.Пользователь);
+		EndDo;
+	EndDo;
+	
+		
+	Return СписокПользователей;
+	
+EndFunction
+
+ &НаСервере 
+Function GetSub(SRMList)
+	
+	Query = Новый Query;
+	Query.Text="SELECT
+	             |	User.Ref AS Пользователь
+	             |FROM
+	             |	Catalog.User AS User
+	             |WHERE
+	             |	User.Manager IN(&UsersList)";
+	Query.SetParameter("UsersList",SRMList);
+	
+	UsersList = Query.Execute().Unload();
+    Return UsersList;
+EndFunction
+

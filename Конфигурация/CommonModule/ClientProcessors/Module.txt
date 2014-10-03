@@ -1,0 +1,35 @@
+﻿    //Example:
+    //requestMap = New Map;
+    //requestMap.Insert("pName", "SKU");
+    //requestMap.Insert("checkingItem", Items.SKU.CurrentData);
+    //requestMap.Insert("tabularSection", Object.Prices);
+&AtClient
+Function UniqueRows(requestMap) Export //return True if all rows are unique
+    
+    ParametersFilter = New Structure(requestMap.Get("pName"), requestMap.Get("checkingItem")[requestMap.Get("pName")]);
+    FoundRows = requestMap.Get("tabularSection").FindRows(ParametersFilter);
+    If FoundRows.count() > 1 Then
+        requestMap.Get("tabularSection").Delete(requestMap.Get("checkingItem").LineNumber - 1);
+        Message(NStr("en = ""Key isnt't unique. Position couldn't be added.""; ru = ""Ключ не уникален. Позиция не может быть добавлена."""));
+        Return False;
+    Else 
+        Return True;
+    EndIf;
+       
+EndFunction // CheckUnique()
+
+Function CheckEmptyTS(CheckMap) Export 
+    
+    CancelMap = New Map;
+    For Each Row In CheckMap Do        
+        If Row.Key = 0 Then
+            Message(NStr("en = ""The tabular section can't be clear.""; ru = ""Табличная часть не может быть пустой"""));
+            CancelMap.Insert("cancelValue", True);
+            CancelMap.Insert("showPage", Row.Value);
+            Return CancelMap;
+        EndIf;        
+    EndDo;
+    CancelMap.Insert("cancelValue", False);
+    Return CancelMap;
+    
+EndFunction

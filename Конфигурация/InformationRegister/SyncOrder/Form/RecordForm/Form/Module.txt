@@ -1,0 +1,85 @@
+﻿
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+	
+	If Not Record.Download And Not Record.Upload Then 
+		
+		Message(NStr("en = 'field ""Download"" and ""Upload"" is not filled'; ru = 'поля ""Загрузка"" и ""Выгрузка"" не заполнены'"));
+		Cancel = True;
+				
+	EndIf;
+			
+EndProcedure
+
+&AtServer
+Function GetObjectNameList(StartValue)
+	
+	CurrentObjectList = New ValueList;
+	
+	If ValueIsFilled(StartValue) Then 
+		CurrentObjectList.Add(StartValue);
+	EndIf;
+	
+	MetadataObjectList = SyncSettingsRegister.GetMetadataList();
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SyncOrder.MetadataObject
+		|FROM
+		|	InformationRegister.SyncOrder AS SyncOrder";
+
+	SyncSettingsTable = Query.Execute().Unload();
+	
+	For Each Str In MetadataObjectList Do 
+				
+		SearchStructure = New Structure("MetadataObject", Str.Value);
+		SearchRows = SyncSettingsTable.FindRows(SearchStructure);
+		
+		If SearchRows.Count() = 0 Then 
+	        	
+			CurrentObjectList.Add(Str.Value);
+				
+		EndIf;
+							
+	EndDo;
+			
+	Return CurrentObjectList;
+	
+EndFunction
+
+&AtClient
+Procedure FilterOpening(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	FormParameters = New Structure("FilterString, ObjectName", Item.EditText, Record.MetadataObject);
+		
+	ExitParam = OpenFormModal("InformationRegister.SyncOrder.Form.FilterForm", FormParameters);
+	
+	If Not ExitParam = Undefined Then 
+		
+		If Not Record.Filter = ExitParam Then 
+			Record.Filter = ExitParam;
+		EndIf;
+				
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure MetadataObjectStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	ListOfMetadataObject = GetObjectNameList(Items.MetadataObject.EditText);
+	
+	CurrentChoise = ChooseFromList(ListOfMetadataObject, Item);
+	
+	If Not CurrentChoise = Undefined And ValueIsFilled(CurrentChoise.Value) Then 
+		If Not Record.MetadataObject = CurrentChoise.Value Then 
+			Record.MetadataObject = CurrentChoise.Value;
+		EndIf;
+	EndIf;
+	
+EndProcedure

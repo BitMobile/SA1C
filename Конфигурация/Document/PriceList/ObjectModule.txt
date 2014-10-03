@@ -1,0 +1,40 @@
+﻿
+Procedure OnWrite(Cancel)
+    
+    //For Each Row In ThisObject.Prices Do
+    //	SKUItem = Row.SKU.GetObject();
+    //    If SKUItem.Price <> Row.Price Or SKUItem.Stock <> Row.Stock  Then
+    //        SKUItem.Price = Row.Price;
+    //        SKUItem.Stock = Row.Stock;
+    //        SKUItem.Write();
+    //    EndIf;
+    //EndDo;
+    
+    //CheckDeletedItems();
+
+EndProcedure
+
+Procedure CheckDeletedItems()
+
+    PricesNew = ThisObject.Prices.Unload();
+    PricesOld = ThisObject.Ref.Prices.Unload();
+    
+    For Each PriceItem In PricesOld Do
+        FoundString = PricesNew.Find(PriceItem.SKU, "SKU");
+    	If FoundString = Undefined Then
+            DeletedRow = PriceItem.SKU.Ref.GetObject();
+            DeletedRow.Price = Undefined;
+            DeletedRow.Stock = Undefined;
+            DeletedRow.Write();
+        EndIf;
+    EndDo;
+
+EndProcedure
+
+Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
+//    CheckDeletedItems();
+EndProcedure
+
+
+
+          

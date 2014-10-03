@@ -1,0 +1,54 @@
+﻿
+Function CheckEntity(Source) Export 
+
+	If TypeOf(Source) = Type("DocumentObject.Order") Then
+        Source = SetStatus(Source);
+    EndIf;
+    If  TypeOf(Source) = Type("CatalogObject.Outlet") Then
+        Source = ClearEmptyRows(Source);
+    EndIf;
+    
+    Return Source;
+
+EndFunction // ()
+
+
+
+
+//-----------------for Document.Order----------------
+
+
+Function SetStatus(Source) 
+
+    If Source.Status=Enums.OrderSatus.New or Source.Status=Enums.OrderSatus.EmptyRef() Then
+        Source.Status=Enums.OrderSatus.Sent;
+    EndIf;
+    For Each Row In Source.SKUs Do
+        Row.Amount = Row.Total*Row.Qty;
+    EndDo;
+        
+    Return Source;
+
+EndFunction // ()
+
+
+
+//---------------Catalog.Outlet-----------------------
+
+ Function ClearEmptyRows(Source)
+ 
+ 	For Each Row In Source.Parameters Do
+        If Row.Value = Undefined or Row.Value = "" Then
+            Source.Parameters.Delete(Row.LineNumber - 1);
+        EndIf;
+    EndDo;
+    
+    Return Source;
+ 
+ EndFunction // ClearEmptyRows()
+ 
+ 
+ 
+
+
+

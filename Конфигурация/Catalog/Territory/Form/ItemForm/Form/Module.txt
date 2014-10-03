@@ -1,0 +1,55 @@
+﻿
+&AtClient
+Procedure OutletsOutletOnChange(Item)
+    
+    requestMap = New Map;
+    requestMap.Insert("pName", "Outlet");
+    requestMap.Insert("checkingItem", Items.Outlets.CurrentData);
+    requestMap.Insert("tabularSection", Object.Outlets);
+    
+    ClientProcessors.UniqueRows(requestMap);
+
+EndProcedure
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+    PredefinedItems = New Map;
+    PredefinedItems.Insert("Catalog.User", "SR");
+    PredefinedItems.Insert("Catalog.Region", "Owner");
+    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+    For Each Item In ItemsCollection Do
+        Object[Item.Key] = Item.Value;
+    EndDo;
+EndProcedure
+
+&AtClient
+Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
+    StandardProcessing = False;
+    SelectionValue = New Structure("Role", "SR");
+    SelectionParameters = New Structure("Filter", SelectionValue);
+    OpenFormModal("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
+EndProcedure
+
+
+&AtClient
+Procedure SKUGroups1SKUGroupOnChange(Item)
+    requestMap = New Map;
+    requestMap.Insert("pName", "SKUGroup");
+    requestMap.Insert("checkingItem", Items.SKUGroups1.CurrentData);
+    requestMap.Insert("tabularSection", Object.SKUGroups);
+    
+    ClientProcessors.UniqueRows(requestMap);
+    
+EndProcedure
+
+
+&AtClient
+Procedure Stocks1StockOnChange(Item)
+    requestMap = New Map;
+    requestMap.Insert("pName", "Stock");
+    requestMap.Insert("checkingItem", Items.Stocks1.CurrentData);
+    requestMap.Insert("tabularSection", Object.Stocks);
+    
+    ClientProcessors.UniqueRows(requestMap);
+EndProcedure
+

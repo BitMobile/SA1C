@@ -1,0 +1,1963 @@
+﻿
+Function IsSet() Export  // Checks if the register is been field
+    
+    RecordCollection = InformationRegisters.SyncOrder.CreateRecordSet();
+    RecordCollection.Read();
+    
+    If RecordCollection.Count() = 0 Then
+        IsSet = False;
+    Else 
+        IsSet = True;
+    EndIf;
+    
+    Return IsSet
+    
+EndFunction
+
+Procedure SaveSyncState(Status) Export
+    
+    Constants.LastSyncDate.Set(CurrentDate());
+    Constants.LastSyncStatus.Set(Status);
+    
+EndProcedure
+
+Procedure SaveSyncDeletedDataState(Status) Export
+    
+    Constants.LastSyncDeletedDate.Set(CurrentDate());
+    Constants.LastSyncDeletedStatus.Set(Status);
+    
+EndProcedure
+
+Function UUIDFromEmunValue(Value)
+    
+    UUID = Mid(ValueToStringInternal(Value), StrLen(ValueToStringInternal(Value))-32,32);
+    UUID = Left(UUID,8) + "-" + Mid(UUID,9,4) + "-" + Mid(UUID,13,4) + "-" + Mid(UUID,17,4) + "-" + Right(UUID,12);
+    Return UUID;	
+    
+EndFunction
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Procedures and functions of synchronisation for pictures
+
+Function GetFilesTable(ActionArray, SyncDirection)
+    
+    Query = New Query;
+    Query.Text = 
+    "SELECT
+    |	StorageAdditionalInformation.Object,
+    |	StorageAdditionalInformation.SyncDirection,
+    |	StorageAdditionalInformation.Action,
+    |	StorageAdditionalInformation.User,
+    |	StorageAdditionalInformation.FullFileName,
+    |	StorageAdditionalInformation.FileName,
+    |	StorageAdditionalInformation.Extension,
+    |	StorageAdditionalInformation.Storage,
+    |	StorageAdditionalInformation.Size
+    |FROM
+    |	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+    |WHERE
+    |	StorageAdditionalInformation.SyncDirection = &SyncDirection
+    |	AND StorageAdditionalInformation.Action IN(&ActionArray)";
+    
+    Query.SetParameter("ActionArray", ActionArray);
+    Query.SetParameter("SyncDirection", SyncDirection);
+    
+    Result = Query.Execute().Unload();
+    
+    Return Result;	
+    
+EndFunction
+
+Function GetFTPAdmin()
+    
+    Path	= Constants.ServerPath.Get();
+    Path 	= Right(Path, StrLen(Path) - 1);
+    Path	= Left(Path, StrLen(Path) - 1);
+    
+    TempName = Path;
+    
+    Slash 	= Find(Path, "/");
+    
+    Path 	= Right(Path, StrLen(Path) - Slash);
+    Path 	= StrReplace(Path, "/", "_");	
+    
+    If Path = "admin" or Path = "Admin" Then 
+        Path 	= StrReplace(TempName, "/", "_");
+    EndIf;
+    
+    Return Path;
+    
+EndFunction
+
+Function GetSettingsTable()
+    
+    Query = New Query;
+    Query.Text = 
+    "SELECT
+    |	SyncSettingsFTP.MetadataObject,
+    |	SyncSettingsFTP.SyncDirection,
+    |	SyncSettingsFTP.AutomaticallyMoveToShared
+    |FROM
+    |	InformationRegister.SyncSettingsFTP AS SyncSettingsFTP";
+    
+    Return Query.Execute().Unload();	
+    
+EndFunction
+
+Function GetObjectData(FullName, Slash)
+    
+    FullName 	= Right(FullName, StrLen(FullName) - Slash);
+    Slash 		= Find(FullName, "/");
+    
+    Return Left(FullName, Slash - 1);	
+    
+EndFunction
+
+Procedure GetPrivateFilesTable(FTP, Directory, PrivateFilesTable, SettingsTable, MoveToShared)
+    
+    FTPArray = FTP.FindFiles(Directory, "*", False);
+    
+    For Each FTPArrayElement in FTPArray Do
+        
+        If FTPArrayElement.IsFile() Then
+            
+            InsFile = PrivateFilesTable.Add();
+            InsFile.FTPFile = FTPArrayElement;
+            InsFile.MoveToShared = MoveToShared;
+            
+        EndIf;
+        
+        If FTPArrayElement.IsDirectory() Then
+            
+            If Find(FTPArrayElement.Name, "Catalog.") > 0
+                Or Find(FTPArrayElement.Name, "Document.") > 0 Then
+                
+                SearchStructure = New Structure("MetadataObject, SyncDirection", 
+                FTPArrayElement.Name, 
+                Enums.SyncDirections.Private);
+                
+                FoundSettings = SettingsTable.FindRows(SearchStructure);
+                
+                If FoundSettings.Count() = 0 Then 
+                    
+                    Continue;
+                    
+                Else
+                    
+                    GetPrivateFilesTable(FTP, FTPArrayElement.FullName, PrivateFilesTable, SettingsTable, FoundSettings[0].AutomaticallyMoveToShared);
+                    
+                EndIf;
+                
+            Else 
+                
+                GetPrivateFilesTable(FTP, FTPArrayElement.FullName, PrivateFilesTable, SettingsTable, MoveToShared);
+                
+            EndIf;
+            
+        EndIf;
+        
+    EndDo;
+    
+EndProcedure
+
+Procedure SyncPicturesOnServer(FullSend = False) Export
+    
+    fileSize = Constants.MaxPictureSize.Get();
+    
+    If FullSend Then 
+        WriteLogEvent("Uploading pictures", EventLogLevel.Information, , , "Uploading pictures is started");
+    Else 
+        WriteLogEvent("Synchronization of pictures", EventLogLevel.Information, , , "Synchronization of pictures is started");
+    EndIf;
+    
+    RemoveError 		= NStr("en = 'Error removing file '; ru = 'Ошибка при удалении файла '");
+    MoveError 			= NStr("en = 'Error moving file '; ru = 'Ошибка при перемещении файла '");
+    PutError 			= NStr("en = 'Error adding file '; ru = 'Ошибка при добавлении файла '");
+    CleanError 			= NStr("en = 'Directory Private is not cleaned '; ru = 'Каталог Private не очищен '");
+    WithError 			= NStr("en = 'with message: '; ru = 'с сообщением: '");
+    RefError 			= NStr("en = 'Not found reference for file '; ru = 'Не найдена ссылка для файла '");
+    UserError 			= NStr("en = 'Not found user for file '; ru = 'Не найден пользователь для файла '");
+    ConnectErrorUpload 	= NStr("en = 'Could not connect to server. Uploading pictures interrupted '; ru = 'Невозможно подключиться к серверу. Выгрузка картинок прервана '");
+    ConnectErrorSync 	= NStr("en = 'Could not connect to server. Synchronization of pictures interrupted '; ru = 'Невозможно подключиться к серверу. Синхронизация картинок прервана '");
+    SizeError 			= NStr("en = 'Exceeding file size (>" + String(fileSize) + "КВ) '; ru = 'Превышен размер файла (>" + String(fileSize) + "КБ) '");
+    
+    FTPAdmin 	= GetFTPAdmin();
+    FTPPassword = Constants.Password.Get();
+    FTPServer 	= StrReplace(Constants.Server.Get(), "localhost", "127.0.0.1");
+    
+    ConnectionEstablished = False;
+    
+    Try
+        FTP = New FTPConnection(FTPServer, , FTPAdmin, FTPPassword, , False, 2000);
+        ConnectionEstablished = True;
+    Except
+        If FullSend Then 
+            Message(ConnectErrorUpload);
+            WriteLogEvent("Uploading pictures", EventLogLevel.Error, , , "Uploading pictures interrupted with error: " + ErrorDescription());
+        Else 
+            Message(ConnectErrorSync);
+            WriteLogEvent("Synchronization of pictures", EventLogLevel.Error, , , "Synchronization of pictures interrupted with error: " + ErrorDescription());
+        EndIf;
+    EndTry;
+    
+    If ConnectionEstablished Then 
+        
+        SettingsTable = GetSettingsTable();
+        
+        If Not FullSend Then
+            
+            // Синхронизировать папку Private
+            PrivateFilesTable = New ValueTable;
+            PrivateFilesTable.Columns.Add("FTPFile");
+            PrivateFilesTable.Columns.Add("MoveToShared");
+            
+            GetPrivateFilesTable(FTP, "/private", PrivateFilesTable, SettingsTable, False);  
+            
+            For Each PrivateStr in PrivateFilesTable Do 
+                
+                ObjectReference = Undefined;
+                UserReference = Undefined;
+                
+                // Получить данные объекта по маске /private/userID/objectName/objectID/filename
+                FullName 	= StrReplace(PrivateStr.FTPFile.FullName, "/private/", "");
+                Slash 		= Find(FullName, "/");
+                UserID 		= Left(FullName, Slash - 1);
+                
+                Try
+                    UserReference = Catalogs.User.GetRef(New UUID(UserID));
+                Except
+                    Message(UserError + PrivateStr.FTPFile.FullName);
+                    WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Not found user for file " + PrivateStr.FTPFile.FullName);
+                    Continue;
+                EndTry;
+                
+                ObjectName 	= GetObjectData(FullName, Slash); 
+                ObjectID 	= GetObjectData(FullName, Slash);
+                
+                MD = Metadata.FindByFullName(ObjectName);
+                
+                If Left(ObjectName,8) = "Catalog." Then
+                    Manager = Catalogs[MD.Name];
+                    Try
+                        ObjectReference = Manager.GetRef(New UUID(ObjectID));
+                    Except
+                        Message(RefError + PrivateStr.FTPFile.FullName);
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Not found reference for file " + PrivateStr.FTPFile.FullName);
+                        Continue;
+                    EndTry;
+                EndIf;
+                
+                If Left(ObjectName,9) = "Document." Then
+                    Manager = Documents[MD.Name];
+                    Try
+                        ObjectReference = Manager.GetRef(New UUID(ObjectID));
+                    Except
+                        Message(RefError + PrivateStr.FTPFile.FullName);
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Not found reference for file " + PrivateStr.FTPFile.FullName);
+                        Continue;	
+                    EndTry;
+                EndIf;
+                
+                If Not ValueIsFilled(ObjectReference) Then
+                    Message(RefError + PrivateStr.FTPFile.FullName);
+                    WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Not found reference for file " + PrivateStr.FTPFile.FullName);
+                    Continue;
+                EndIf;
+                
+                If PrivateStr.MoveToShared Then 
+                    
+                    SelectionStructure = New Structure("FileName", New UUID(PrivateStr.FTPFile.BaseName)); 
+                    
+                    Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+                    
+                    If Selection.Next() Then 
+                        
+                        Try
+                            FTP.Delete(PrivateStr.FTPFile.FullName);
+                        Except
+                            Message(RemoveError + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") " + WithError + ErrorDescription());
+                            WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error removing file " + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") with error: " + ErrorDescription());
+                        EndTry;
+                        
+                    Else
+                        
+                        TempFile = GetTempFileName(PrivateStr.FTPFile.Extension);
+                        
+                        SharedPath = "/shared/" + ObjectName + "/" + ObjectID + "/" + PrivateStr.FTPFile.Name;
+                        
+                        FTP.SetCurrentDirectory("/shared");
+                        
+                        Try
+                            FTP.SetCurrentDirectory(ObjectName);
+                        Except
+                            FTP.CreateDirectory(ObjectName);
+                            FTP.SetCurrentDirectory(ObjectName);
+                        EndTry;
+                        
+                        Try
+                            FTP.SetCurrentDirectory(ObjectID);
+                        Except
+                            FTP.CreateDirectory(ObjectID);
+                        EndTry;
+                        
+                        Try
+                            FTP.Get(PrivateStr.FTPFile.FullName, TempFile);
+                            FTP.Put(TempFile, SharedPath);
+                        Except
+                            Message(MoveError + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") " + WithError + ErrorDescription());
+                            WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error moving file " + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") with error: " + ErrorDescription());
+                            DeleteFiles(TempFile);
+                            Continue;
+                        EndTry;
+                        
+                        BinaryData = New BinaryData(TempFile);
+                        
+                        CheckFileSize = New File(TempFile);
+                        
+                        RecordManager			= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+                        RecordManager.Object 		= ObjectReference;
+                        RecordManager.SyncDirection = Enums.SyncDirections.Shared;
+                        RecordManager.FullFileName 	= SharedPath;
+                        RecordManager.FileName 		= New UUID(PrivateStr.FTPFile.BaseName);
+                        RecordManager.Extension 	= PrivateStr.FTPFile.Extension;
+                        RecordManager.Size			= CheckFileSize.Size();
+                        RecordManager.Storage 		= New ValueStorage(BinaryData);
+                        
+                        RecordManager.Write();
+                        
+                        Try
+                            FTP.Delete(PrivateStr.FTPFile.FullName);
+                        Except
+                            Message(RemoveError + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") " + WithError + ErrorDescription());
+                            WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error removing file " + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") with error: " + ErrorDescription());
+                        EndTry;
+                        
+                        DeleteFiles(TempFile);
+                        
+                    EndIf;
+                    
+                Else
+                    
+                    If Not ValueIsFilled(UserReference) Then 
+                        Message(UserError + PrivateStr.FTPFile.FullName);
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Not found user for file " + PrivateStr.FTPFile.FullName);
+                        Continue;
+                    EndIf;
+                    
+                    SelectionStructure = New Structure("FileName", New UUID(PrivateStr.FTPFile.BaseName)); 
+                    
+                    Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+                    
+                    If Selection.Next() Then 
+                        
+                        Try
+                            FTP.Delete(PrivateStr.FTPFile.FullName);
+                        Except
+                            Message(RemoveError + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") " + WithError + ErrorDescription());
+                            WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error removing file " + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") with error: " + ErrorDescription());
+                        EndTry;
+                        
+                    Else 
+                        
+                        TempFile = GetTempFileName(PrivateStr.FTPFile.Extension);
+                        
+                        FTP.Get(PrivateStr.FTPFile.FullName, TempFile);
+                        
+                        BinaryData = New BinaryData(TempFile);
+                        
+                        CheckFileSize = New File(TempFile);
+                        
+                        RecordManager 				= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+                        RecordManager.Object 		= ObjectReference;
+                        RecordManager.SyncDirection = Enums.SyncDirections.Private;
+                        RecordManager.User			= UserReference;
+                        RecordManager.FullFileName 	= PrivateStr.FTPFile.FullName;
+                        RecordManager.FileName 		= New UUID(PrivateStr.FTPFile.BaseName);
+                        RecordManager.Extension 	= PrivateStr.FTPFile.Extension;
+                        RecordManager.Size			= CheckFileSize.Size();
+                        RecordManager.Storage 		= New ValueStorage(BinaryData);
+                        
+                        RecordManager.Write();
+                        
+                        Try
+                            FTP.Delete(PrivateStr.FTPFile.FullName);
+                        Except
+                            Message(RemoveError + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") " + WithError + ErrorDescription());
+                            WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error removing file " + PrivateStr.FTPFile.FullName + " (" + String(ObjectReference) + ") with error: " + ErrorDescription());
+                        EndTry;	
+                        
+                        DeleteFiles(TempFile);		
+                        
+                    EndIf;
+                    
+                EndIf;
+                
+            EndDo;
+            
+            // Очистить каталог Private
+            //Try
+            //	
+            //	ArrayOfUserDir = FTP.FindFiles("/private", "*", False);
+            //	
+            //	For Each UserDir in ArrayOfUserDir Do 
+            //		
+            //		FTP.Delete(UserDir.FullName, "*");
+            //		
+            //	EndDo;
+            //				
+            //Except
+            //	Message(CleanError + WithError + ErrorDescription());
+            //	WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Directory Private is not cleaned with error: " + ErrorDescription());
+            //EndTry;
+            
+        EndIf;
+        
+        // Синхронизировать папку Shared
+        ActionArray = New Array;
+        ActionArray.Add(Enums.SyncAction.AddFile);
+        ActionArray.Add(Enums.SyncAction.DeleteFile);
+        
+        If FullSend Then 
+            ActionArray.Add(Enums.SyncAction.EmptyRef());
+        EndIf;
+        
+        SharedFilesTable = GetFilesTable(ActionArray, Enums.SyncDirections.Shared);
+        
+        For Each TableStr in SharedFilesTable Do 
+            
+            MetadataObjectName = TableStr.Object.Metadata().FullName();
+            MetadataObjectName = StrReplace(MetadataObjectName, "Справочник", "Catalog");
+            MetadataObjectName = StrReplace(MetadataObjectName, "Документ", "Document");
+            
+            SettingSearchStructure = New Structure;
+            SettingSearchStructure.Insert("MetadataObject", MetadataObjectName);
+            SettingSearchStructure.Insert("SyncDirection", Enums.SyncDirections.Shared);
+            
+            FoundSetting = SettingsTable.FindRows(SettingSearchStructure);
+            
+            If FoundSetting.Count() = 0 Then 
+                Continue;				
+            EndIf;
+            
+            If TableStr.Action = Enums.SyncAction.AddFile Or TableStr.Action = Enums.SyncAction.EmptyRef() Then 
+                
+                TempFile = GetTempFileName(TableStr.Extension);
+                
+                BinaryDataToFTP = TableStr.Storage.Get();
+                BinaryDataToFTP.Write(TempFile);
+                
+                // Проверка файлов на размер, текущее ограничение по константе
+                CheckFileSize = New File(TempFile);
+                
+                If CheckFileSize.Size() > (fileSize*1024) Then 
+                    
+                    Message(SizeError + TableStr.FullFileName + " (" + String(TableStr.Object) + ") ");
+                    
+                    If FullSend Then
+                        WriteLogEvent("Uploading pictures", EventLogLevel.Note, , , "Error adding file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + SizeError);
+                    Else 
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error adding file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + SizeError);
+                    EndIf;
+                    
+                    Continue;
+                    
+                EndIf;
+                
+                FTP.SetCurrentDirectory("/shared");
+                
+                Try
+                    FTP.SetCurrentDirectory(MetadataObjectName);
+                Except
+                    FTP.CreateDirectory(MetadataObjectName);
+                    FTP.SetCurrentDirectory(MetadataObjectName);
+                EndTry;
+                
+                ObjectID = String(TableStr.Object.Ref.UUID());
+                
+                Try
+                    FTP.SetCurrentDirectory(ObjectID);
+                Except
+                    FTP.CreateDirectory(ObjectID);
+                EndTry;
+                
+                Try
+                    FTP.Put(TempFile, TableStr.FullFileName);
+                Except
+                    
+                    Message(PutError + TableStr.FullFileName + " (" + String(TableStr.Object) + ") " + WithError + ErrorDescription());
+                    
+                    If FullSend Then
+                        WriteLogEvent("Uploading pictures", EventLogLevel.Note, , , "Error adding file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + ErrorDescription());
+                    Else 
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error adding file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + ErrorDescription());
+                    EndIf;
+                    
+                    DeleteFiles(TempFile);
+                    Continue;
+                    
+                EndTry;
+                
+                RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+                
+                FillPropertyValues(RecordManager, TableStr);
+                
+                RecordManager.Read();
+                RecordManager.Action = Enums.SyncAction.EmptyRef();
+                RecordManager.Size = CheckFileSize.Size();
+                RecordManager.Write();
+                
+                DeleteFiles(TempFile);
+                
+            ElsIf TableStr.Action = Enums.SyncAction.DeleteFile Then
+                
+                Try
+                    FTP.Delete(TableStr.FullFileName);
+                Except
+                    
+                    Message(RemoveError + TableStr.FullFileName + " (" + String(TableStr.Object) + ") " + WithError + ErrorDescription());
+                    
+                    If FullSend Then
+                        WriteLogEvent("Uploading pictures", EventLogLevel.Note, , , "Error removing file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + ErrorDescription());
+                    Else 
+                        WriteLogEvent("Synchronization of pictures", EventLogLevel.Note, , , "Error removing file " + TableStr.FullFileName + " (" + String(TableStr.Object) + ") with error: " + ErrorDescription());
+                    EndIf;
+                    
+                EndTry;
+                
+                RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+                
+                FillPropertyValues(RecordManager, TableStr);
+                
+                RecordManager.Read();
+                RecordManager.Delete();
+                
+            EndIf;
+            
+        EndDo;
+        
+        If FullSend Then 
+            
+            Message(NStr("en = 'Uploading pictures is complete'; ru = 'Выгрузка картинок завершена'"));
+            WriteLogEvent("Uploading pictures", EventLogLevel.Information, , , "Uploading pictures is complete");
+            
+        Else 
+            
+            Message(NStr("en = 'Synchronization of pictures is complete'; ru = 'Cинхронизация картинок завершена'"));
+            WriteLogEvent("Synchronization of pictures", EventLogLevel.Information, , , "Synchronization of pictures is complete");
+            
+        EndIf;
+        
+    EndIf;
+    
+EndProcedure
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Procedures and functions of synchronisation for data
+
+//////////////////////////////////////////////
+// Upload Data
+
+Procedure UploadData(All, UploadComplete, InFile = False, TempStorageAddress = "") Export 
+    
+    //start QuestionnaireMap actualizing here//
+    QuestionnaireMapAssign.ActualizeQuestionnaireMap();
+    
+    OrderTable = Undefined;	
+    
+    If NOT All Then 
+        
+        // Получить копию регистра
+        Query = New Query;
+        Query.Text = 
+        "SELECT
+        |	ChangedData.Ref,
+        |	ChangedData.Status,
+        |	ChangedData.Modified
+        |FROM
+        |	InformationRegister.ChangedData AS ChangedData";
+        
+        RegisterCopy = Query.Execute().Unload();
+        
+        OrderTable = GetOrderTable(All, RegisterCopy);
+        
+    Else 
+        
+        // Получить полный перечень объектов в базе
+        Query = New Query;              
+        Query.Text = 
+        "SELECT
+        |	SyncOrder.MetadataObject AS MetadataObject
+        |FROM
+        |	InformationRegister.SyncOrder AS SyncOrder
+        |WHERE
+        |	SyncOrder.Upload = TRUE";
+        
+        QueryResult = Query.Execute().Unload();
+        
+        QueryResult.GroupBy("MetadataObject");
+        
+        QueryAllObject = New Query;              
+        QueryAllObject.Text = GetQueryTextForAllObject(QueryResult);
+        
+        QueryAllObjectResult = QueryAllObject.Execute().Unload();
+        
+        OrderTable = GetOrderTable(All, QueryAllObjectResult);
+        
+    EndIf;
+    
+    // Очистить регистр сведений ChangedData
+    RecordManager = InformationRegisters.ChangedData.CreateRecordSet();
+    RecordManager.Write();
+    
+    If NOT OrderTable = Undefined Then 
+        
+        RequestFileName = GetTempFileName(".xml");
+        
+        // Создать таблицу новых помеченных на удаление объектов
+        If All Then 
+            NewMarkedElementTable = New ValueTable;
+            NewMarkedElementTable.Columns.Add("Reference");
+        EndIf;
+        
+        XMLRecord = New XMLWriter;
+        XMLRecord.OpenFile(RequestFileName, "UTF-8");
+        XMLRecord.WriteXMLDeclaration();
+        
+        XMLRecord.WriteStartElement("Root");
+        
+        XMLRecord.WriteStartElement("Rows");
+        
+        For Each OrderElement in OrderTable Do
+            
+            Type = Metadata.FindByType(TypeOf(OrderElement.Reference)).FullName();
+            
+            XMLRecord.WriteStartElement("Row");
+            
+            // Записать атрибут _Type
+            XMLRecord.WriteAttribute("_Type", Type);
+            
+            // Записать атрибут _RS
+            If All Then
+                
+                If OrderElement.Reference.DeletionMark Then 
+                    InsElement = NewMarkedElementTable.Add();
+                    InsElement.Reference = OrderElement.Reference;
+                EndIf;
+                
+                XMLRecord.WriteAttribute("_RS", "0");
+                
+            Else 
+                
+                StatusValue = RegisterCopy.Find(OrderElement.Reference).Status;
+                
+                RS = "0";
+                
+                If StatusValue = Enums.DataStatus.New Then
+                    
+                    RS = "0";
+                    
+                ElsIf StatusValue = Enums.DataStatus.Modified Then
+                    
+                    If OrderElement.Reference.DeletionMark Then
+                        RS = "3";									
+                    Else
+                        RS = "1";
+                    EndIf;	
+                    
+                EndIf;
+                
+                XMLRecord.WriteAttribute("_RS", RS);
+                
+            EndIf;
+            
+            // Записать стандартные реквизиты
+            For Each Attribute in OrderElement.Reference.Metadata().StandardAttributes Do
+                
+                AttributeValue = OrderElement.Reference[Attribute.Name];
+                
+                FillRow(Attribute, AttributeValue, XMLRecord, True, OrderElement);
+                
+            EndDo;				
+            
+            // Записать прочие реквизиты
+            For Each Attribute in OrderElement.Reference.Metadata().Attributes Do
+                
+                AttributeValue = OrderElement.Reference[Attribute.Name];
+                
+                FillRow(Attribute, AttributeValue, XMLRecord, False);
+                
+            EndDo;
+            
+            // Записать табличные части
+            For Each TabularSection in OrderElement.Reference.Metadata().TabularSections Do
+                
+                XMLRecord.WriteStartElement(TabularSection.Name);
+                
+                For Each TabularSectionRow in OrderElement.Reference[TabularSection.Name] Do 
+                    
+                    XMLRecord.WriteStartElement("Row");
+                    
+                    XMLRecord.WriteAttribute("Id", String(New UUID()));
+                    XMLRecord.WriteAttribute("Ref", String(OrderElement.Reference.UUID()));
+                    
+                    For Each Attribute in TabularSection.StandardAttributes Do
+                        
+                        AttributeValue = TabularSectionRow[Attribute.Name];
+                        
+                        FillRow(Attribute, AttributeValue, XMLRecord, False);
+                        
+                    EndDo;
+                    
+                    For Each Attribute in TabularSection.Attributes Do
+                        
+                        AttributeValue = TabularSectionRow[Attribute.Name];
+                        
+                        FillRow(Attribute, AttributeValue, XMLRecord, False);
+                        
+                    EndDo;
+                    
+                    XMLRecord.WriteEndElement();	
+                    
+                EndDo;
+                
+                XMLRecord.WriteEndElement();	
+                
+            EndDo;
+            
+            XMLRecord.WriteEndElement(); 
+            
+        EndDo;
+        
+        // При полной выгрузке необходимо дополнительно обработать уже помеченные на удаление объекты
+        If All Then 
+            
+            For Each MarkedElement in NewMarkedElementTable Do
+                
+                Type = Metadata.FindByType(TypeOf(MarkedElement.Reference)).FullName();
+                
+                XMLRecord.WriteStartElement("Row");
+                
+                // Записать атрибут _Type
+                XMLRecord.WriteAttribute("_Type", Type);
+                
+                // Записать атрибут _RS
+                XMLRecord.WriteAttribute("_RS", "3");
+                
+                // Записать стандартные реквизиты
+                For Each Attribute in MarkedElement.Reference.Metadata().StandardAttributes Do
+                    
+                    AttributeValue = MarkedElement.Reference[Attribute.Name];
+                    
+                    FillRow(Attribute, AttributeValue, XMLRecord, True, MarkedElement);
+                    
+                EndDo;				
+                
+                // Записать прочие реквизиты
+                For Each Attribute in MarkedElement.Reference.Metadata().Attributes Do
+                    
+                    AttributeValue = MarkedElement.Reference[Attribute.Name];
+                    
+                    FillRow(Attribute, AttributeValue, XMLRecord, False);
+                    
+                EndDo;
+                
+                // Записать табличные части
+                For Each TabularSection in MarkedElement.Reference.Metadata().TabularSections Do
+                    
+                    XMLRecord.WriteStartElement(TabularSection.Name);
+                    
+                    For Each TabularSectionRow in MarkedElement.Reference[TabularSection.Name] Do 
+                        
+                        XMLRecord.WriteStartElement("Row");
+                        
+                        XMLRecord.WriteAttribute("Id", String(New UUID()));
+                        XMLRecord.WriteAttribute("Ref", String(MarkedElement.Reference.UUID()));
+                        
+                        For Each Attribute in TabularSection.StandardAttributes Do
+                            
+                            AttributeValue = TabularSectionRow[Attribute.Name];
+                            
+                            FillRow(Attribute, AttributeValue, XMLRecord, False);
+                            
+                        EndDo;
+                        
+                        For Each Attribute in TabularSection.Attributes Do
+                            
+                            AttributeValue = TabularSectionRow[Attribute.Name];
+                            
+                            FillRow(Attribute, AttributeValue, XMLRecord, False);
+                            
+                        EndDo;
+                        
+                        XMLRecord.WriteEndElement();	
+                        
+                    EndDo;
+                    
+                    XMLRecord.WriteEndElement();	
+                    
+                EndDo;
+                
+                XMLRecord.WriteEndElement(); 
+                
+            EndDo;
+            
+        EndIf;	
+        
+        XMLRecord.WriteEndElement();
+        
+        XMLRecord.WriteEndElement();
+        
+        XMLRecord.Close(); 
+        
+        If NOT InFile Then		
+            
+            // Отправка полученного файла на сервер
+            Try
+                
+                Server = Constants.Server.Get();
+                Path = Constants.ServerPath.Get();
+                Password = Constants.Password.Get();
+                
+                ResultString = SendAndReceiveDocument("UploadData2", Server, Path, Password, RequestFileName);
+                
+                If NOT ResultString = "ok" Then
+                    
+                    Message(ResultString);
+                    WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ResultString);
+                    
+                    If NOT All Then
+                        RollBackChangesInRegister(RegisterCopy);
+                    EndIf;
+                    
+                Else 
+                    
+                    UploadComplete = True;
+                    WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");
+                    
+                EndIf;
+                
+            Except
+                
+                Message(ErrorDescription());
+                WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + ErrorDescription());
+                
+                If NOT All Then
+                    RollBackChangesInRegister(RegisterCopy);
+                EndIf;
+                
+            EndTry;
+            
+        Else 
+            
+            TempStorageAddress = PutToTempStorage(New BinaryData(RequestFileName));
+            
+            UploadComplete = True;
+            WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data upload completed");	
+            
+        EndIf;
+        
+    Else 
+        
+        If NOT All Then
+            RollBackChangesInRegister(RegisterCopy);
+        EndIf;
+        
+    EndIf;
+    
+EndProcedure
+
+Function GetOrderTable(All, RegisterCopy)
+    
+    CycleFound = False;
+    
+    RefArray = RegisterCopy.UnloadColumn("Ref");
+    
+    RefTable = RegisterCopy.Copy();
+    RefTable.Columns.Add("Used");
+    RefTable.FillValues(False, "Used");
+    
+    // Получить общую таблицу ссылок
+    OrderTable = FindByRef(RefArray);
+    
+    ContainerTree = New ValueTree;
+    ContainerTree.Columns.Add("Element");
+    
+    StartRefTable = New ValueTable;
+    StartRefTable.Columns.Add("Reference");
+    
+    // Заполнить дерево ссылок по контейнерам
+    For Each StrTable in RefTable Do
+        
+        If NOT CycleFound Then
+            
+            AddBranch = ContainerTree.Rows.Add();
+            AddBranch.Element = StrTable.Ref;
+            
+            StructureSearch = New Structure;
+            StructureSearch.Insert("Data", StrTable.Ref);
+            
+            NextElements = OrderTable.FindRows(StructureSearch);
+            
+            If NOT NextElements.Count() = 0 Then
+                
+                InsStartRef = StartRefTable.Add();
+                InsStartRef.Reference = StrTable.Ref;
+                
+            EndIf;
+            
+            For Each NextElement in NextElements Do
+                
+                FindedElement = RefTable.Find(NextElement.Ref, "Ref");
+                
+                If FindedElement = Undefined 
+                    Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
+                    Continue;
+                EndIf;
+                
+                If All Then 
+                    If NOT FindedElement = Undefined Then
+                        If NOT FindedElement.Used Then
+                            FindedElement.Used = True;
+                        Else 	
+                            Continue;
+                        EndIf;
+                    EndIf;
+                EndIf;
+                
+                FillTree(All, StartRefTable, NextElement, AddBranch, OrderTable, CycleFound, RefTable);
+                
+            EndDo;
+            
+            If NOT CycleFound Then
+                
+                StartRefTable.Clear();
+                
+            EndIf;
+            
+            StrTable.Used = True;
+            
+        EndIf;
+        
+    EndDo;
+    
+    If CycleFound Then 
+        
+        WayString = "";
+        
+        For Each Str in StartRefTable Do
+            
+            WayString = WayString + " " + String(Str.Reference) + " (" + String(TypeOf(Str.Reference)) + ") " + "-->";
+            
+        EndDo;
+        
+        WayString = Left(WayString, StrLen(WayString) - 3);
+        
+        en = "Found a circular reference to " + WayString;
+        ru = "Найдена циклическая ссылка для " + WayString;
+        
+        Message(NStr("en = '" + en + "'; ru = '" + ru + "'"));
+        
+        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data upload interrupted with error: " + en);
+        
+        Return Undefined;
+        
+    Else 
+        
+        NewOrderTable = New ValueTable;
+        NewOrderTable.Columns.Add("Reference");
+        
+        For Each Level in ContainerTree.Rows Do 
+            
+            If NewOrderTable.Find(Level.Element) = Undefined Then
+                
+                FillTable(Level, NewOrderTable);
+                
+                AddContainer = NewOrderTable.Add();
+                AddContainer.Reference = Level.Element;
+                
+            EndIf;
+            
+        EndDo;
+        
+        Return NewOrderTable;
+        
+    EndIf;
+    
+EndFunction
+
+Function GetQueryTextForAllObject(QueryResult)
+    
+    QueryText = "";
+    
+    For Each QueryStr in QueryResult Do
+        
+        MetadataObject = TrimAll(QueryStr.MetadataObject);
+        
+        DotPos = Find(MetadataObject, "."); 
+        
+        ObjectName = Right(MetadataObject, StrLen(MetadataObject) - DotPos);
+        
+        QueryText = QueryText + " SELECT " + ObjectName + ".Ref" + " FROM " + MetadataObject + " AS " + ObjectName + " UNION ALL ";
+        
+    EndDo;
+    
+    QueryText = Left(QueryText, StrLen(QueryText) - 11);
+    
+    Return QueryText;	
+    
+EndFunction
+
+Procedure FillTree(All, StartRefTable, StrTable, AddBranch, OrderTable, CycleFound, RefTable)
+    
+    CheckRef = StartRefTable.Find(StrTable.Ref);
+    
+    If NOT CheckRef = Undefined Then 
+        
+        CycleFound = True;
+        CycleRef = StrTable.Ref;
+        
+        InsStartRef = StartRefTable.Add();
+        InsStartRef.Reference = StrTable.Ref;
+        
+    EndIf;
+    
+    If NOT CycleFound Then 
+        
+        AddChildBranch = AddBranch.Rows.Add();
+        AddChildBranch.Element = StrTable.Ref;
+        
+        StructureSearch = New Structure;
+        StructureSearch.Insert("Data", StrTable.Ref);
+        
+        NextElements = OrderTable.FindRows(StructureSearch);
+        
+        If NOT NextElements.Count() = 0 Then
+            
+            InsStartRef = StartRefTable.Add();
+            InsStartRef.Reference = StrTable.Ref;
+            
+        EndIf;	
+        
+        For Each NextElement in NextElements Do
+            
+            FindedElement = RefTable.Find(NextElement.Ref, "Ref");
+            
+            If FindedElement = Undefined 
+                Or TypeOf(NextElement.Data) = Type("InformationRegisterRecordKey.ChangedData") Then
+                Continue;
+            EndIf;
+            
+            If All Then 
+                If NOT FindedElement = Undefined Then
+                    If NOT FindedElement.Used Then
+                        FindedElement.Used = True;
+                    Else 	
+                        Continue;
+                    EndIf;
+                EndIf;
+            EndIf;
+            
+            FillTree(All, StartRefTable, NextElement, AddChildBranch, OrderTable, CycleFound, RefTable);
+            
+        EndDo;
+        
+        If NOT NextElements.Count() = 0 Then
+            
+            If NOT CycleFound Then
+                
+                FindedRecord = StartRefTable.Find(StrTable.Ref);
+                
+                If NOT FindedRecord = Undefined Then 
+                    
+                    StartRefTable.Delete(FindedRecord);
+                    
+                EndIf;	
+                
+            EndIf;
+            
+        EndIf;
+        
+    EndIf;
+    
+EndProcedure
+
+Procedure FillTable(Level, NewOrderTable)
+    
+    For Each Row in Level.Rows Do 
+        
+        If NewOrderTable.Find(Row.Element) = Undefined Then
+            
+            FillTable(Row, NewOrderTable);
+            
+            AddContainer = NewOrderTable.Add();
+            AddContainer.Reference = Row.Element;
+            
+        EndIf;
+        
+    EndDo;
+    
+EndProcedure
+
+Procedure FillRow(Attribute, AttributeValue, XMLRecord, IsStandartObjectAttribute, OrderElement = Undefined)
+    
+    RefType = Metadata.FindByType(TypeOf(AttributeValue));
+    
+    If RefType = Undefined Then 
+        
+        If TypeOf(AttributeValue) = Type("Boolean") Then
+            
+            If AttributeValue Then
+                XMLRecord.WriteAttribute(Attribute.Name, "True");
+            Else 
+                XMLRecord.WriteAttribute(Attribute.Name, "False");
+            EndIf;
+            
+        ElsIf TypeOf(AttributeValue) = Type("Date") Then
+            
+            If AttributeValue = Date("00010101000000") Then
+                If Attribute.FillChecking = FillChecking.DontCheck Then
+                    XMLRecord.WriteAttribute(Attribute.Name, "null");
+                Else 
+                    XMLRecord.WriteAttribute(Attribute.Name, String(CurrentDate()));
+                EndIf;				
+            Else 
+                XMLRecord.WriteAttribute(Attribute.Name, String(AttributeValue));
+            EndIf;
+            
+        ElsIf TypeOf(AttributeValue) = Type("Number") Then
+            
+            LNumber = String(AttributeValue);
+            LNumber =  StrReplace(LNumber, " ", "");
+            LNumber =  StrReplace(LNumber, Chars.NBSp, "");
+            XMLRecord.WriteAttribute(Attribute.Name, LNumber);
+            
+        ElsIf TypeOf(AttributeValue) = Type("Null") Then 
+            
+            AttributeType =	Attribute.Type.Types()[0];
+            
+            If AttributeType = Type("Boolean") Then 
+                XMLRecord.WriteAttribute(Attribute.Name, "False");
+            ElsIf AttributeType = Type("Date") Then
+                XMLRecord.WriteAttribute(Attribute.Name, String(CurrentDate()));
+            ElsIf AttributeType = Type("Number") Then
+                XMLRecord.WriteAttribute(Attribute.Name, "0");
+            ElsIf AttributeType = Type("String") Then
+                XMLRecord.WriteAttribute(Attribute.Name, "");
+            Else 
+                XMLRecord.WriteAttribute(Attribute.Name, "00000000-0000-0000-0000-000000000000");
+            EndIf;
+            
+        Else 
+            
+            XMLRecord.WriteAttribute(Attribute.Name, String(AttributeValue));	
+            
+        EndIf;
+        
+    Else 
+        
+        If Left(RefType.FullName(), 5) = "Enum." Then
+            XMLRecord.WriteAttribute(Attribute.Name, UUIDFromEmunValue(AttributeValue));
+        Else
+            If Attribute.Name = "Ref" AND IsStandartObjectAttribute Then
+                XMLRecord.WriteAttribute("Id", String(AttributeValue.UUID()));
+            ElsIf Attribute.Name = "Owner" AND IsStandartObjectAttribute Then 
+                If OrderElement.Reference.Metadata().Owners.Count() = 1 Then
+                    XMLRecord.WriteAttribute("Owner", String(AttributeValue.UUID()));
+                EndIf;
+            Else 
+                XMLRecord.WriteAttribute(Attribute.Name, String(AttributeValue.UUID()));
+            EndIf;
+        EndIf;
+        
+    EndIf;
+    
+    
+EndProcedure
+
+Procedure RollBackChangesInRegister(RegisterCopy)
+    
+    For Each CopyStr in RegisterCopy Do
+        
+        RecordManager = InformationRegisters.ChangedData.CreateRecordManager();
+        RecordManager.Ref = CopyStr.Ref;
+        RecordManager.Status = CopyStr.Status;
+        RecordManager.Modified = CopyStr.Modified;
+        
+        RecordManager.Write();
+        
+    EndDo;
+    
+EndProcedure
+
+//////////////////////////////////////////////
+// Download Data
+
+Procedure DownloadData(DownloadComplete) Export
+    
+    // New session
+    SessionId = String(New UUID());
+    Request = GetTempFileName(); 
+    
+    XMLFile = New XMLWriter;
+    XMLFile.OpenFile(Request, "UTF-8");
+    XMLFile.WriteXMLDeclaration();
+    XMLFile.WriteStartElement("Request");
+    XMLFile.WriteAttribute("Session", SessionId);
+    
+    // Query gets metadata collection for download
+    Query = New Query;
+    Query.Text = 
+    "SELECT
+    |	SyncOrder.MetadataObject,
+    |	SyncOrder.Upload,
+    |	SyncOrder.Download
+    |FROM
+    |	InformationRegister.SyncOrder AS SyncOrder
+    |WHERE
+    |	SyncOrder.Download = TRUE";
+    
+    Result = Query.Execute().Unload();
+    
+    For Each Value In Result Do
+        XMLFile.WriteStartElement("Entity");
+        XMLFile.WriteAttribute("Name", Value.MetadataObject);
+        XMLFile.WriteEndElement();
+    EndDo;
+    
+    XMLFile.WriteEndElement();
+    XMLFile.Close();
+    
+    Server = Constants.Server.Get();
+    Path = Constants.ServerPath.Get();
+    Password = Constants.Password.Get();
+    
+    BeginTransaction();
+    
+    Try
+        
+        Response = SendAndReceiveDocument("DownloadData", Server, Path, Password, Request, False);
+        
+        //ZIPReader = New ZipFileReader(Response);
+        //
+        //For Each Item in ZIPReader.Items Do
+        
+        XMLFile = New XMLReader; 
+        XMLFile.OpenFile(Response, Undefined, Undefined, "UTF-8");
+        
+        // Creates value table of IDs and it's Enums
+        EnumIDTable = CreateEnumIDTable();  
+        
+        While XMLFile.Read() Do
+            
+            If XMLFile.NodeType = XMLNodeType.StartElement And XmlFile.Name = "Entity" Then
+                
+                ReadEntities(XmlFile, EnumIDTable);
+                
+            EndIf;
+            
+        EndDo;
+        
+        //EndDo;
+        
+        // Commit session
+        XMLFile = New XMLWriter;
+        XMLFile.OpenFile(Request, "UTF-8");
+        XMLFile.WriteXMLDeclaration();
+        XMLFile.WriteStartElement("Request");
+        XMLFile.WriteAttribute("Session", SessionId);
+        XMLFile.WriteEndElement();
+        XMLFile.Close();
+        
+        ResultString = SendAndReceiveDocument("DownloadDataCommit", Server, Path, Password, Request);
+        
+        If NOT ResultString = "ok" Then
+            Message(ResultString);
+            WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data download interrupted with error: " + ResultString);
+            RollbackTransaction();
+        Else
+            DownloadComplete = True;
+            WriteLogEvent("Syncronization", EventLogLevel.Information, , , "Data download completed");
+            CommitTransaction();
+        EndIf;
+        
+    Except	
+        
+        Message(ErrorDescription());
+        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Data download interrupted with error: " + ErrorDescription());
+        RollbackTransaction();
+        
+    EndTry;
+    
+EndProcedure
+
+Procedure ReadEntities(XmlFile, EnumIDTable)
+    
+    XmlFile.ReadAttribute();
+    EntityName = XmlFile.Value;
+    
+    MD = Metadata.FindByFullName(EntityName);
+    EntityManager = Undefined;
+    
+    If Left(EntityName,8) = "Catalog." Then
+        EntityManager = Catalogs[MD.Name];
+        EntityName = "Catalog";
+    EndIf;
+    
+    If Left(EntityName,9) = "Document." Then
+        EntityManager = Documents[MD.Name];
+        EntityName = "Document";
+    EndIf;
+    
+    If EntityManager = Undefined Then
+        Raise(EntityName + " type is not found.");
+    EndIf;
+    
+    While XMLFile.Read() Do
+        
+        If XMLFile.NodeType = XMLNodeType.EndElement Then
+            Break;
+        EndIf;
+        
+        If XMLFile.NodeType = XMLNodeType.StartElement And XmlFile.Name = "Row" Then
+            ReadEntity(XmlFile,EntityManager, EntityName, EnumIDTable);
+        EndIf;
+        
+    EndDo;
+    
+EndProcedure
+
+Procedure ReadEntity(XmlFile, Manager, EntityName, EnumIDTable)
+    
+    Fields = New ValueList();	
+    
+    While XmlFile.ReadAttribute() Do
+        Fields.Add(XmlFile.Name, XmlFile.Value);
+    EndDo;
+    
+    ObjectRef = Manager.GetRef(New UUID(Fields.FindByValue("Id").Presentation));
+    Object = ObjectRef.GetObject();
+    
+    If Object = Undefined Then
+        
+        If EntityName = "Catalog" Then 
+            CatalogName = Mid(String(Manager), 16);
+            Object = Catalogs[CatalogName].CreateItem();
+            Object.SetNewObjectRef(ObjectRef);
+            Object.AdditionalProperties.Insert("DownloadedNew", True);
+        ElsIf EntityName = "Document" Then 
+            DocumentName = Mid(String(Manager), 17);
+            Object = Documents[DocumentName].CreateDocument();
+            Object.SetNewObjectRef(ObjectRef);
+            Object.AdditionalProperties.Insert("DownloadedNew", True);
+        EndIf;
+        
+    EndIf;
+    
+    Object.AdditionalProperties.Insert("Downloaded", True);
+    
+    ApplyValues(Object, Fields, EnumIDTable, EntityName);
+    
+    While XmlFile.Read() Do
+        
+        If XMLFile.NodeType = XMLNodeType.EndElement Then
+            Break;
+        EndIf;
+        
+        If XMLFile.NodeType = XMLNodeType.StartElement Then
+            
+            TabularSection = XMLFile.Name;
+            Object[TabularSection].Clear();
+            
+            While XmlFile.Read() Do
+                
+                If XMLFile.NodeType = XMLNodeType.EndElement And XmlFile.Name = TabularSection Then
+                    Break;
+                EndIf;
+                
+                If XMLFile.NodeType = XMLNodeType.StartElement And XmlFile.Name = "Row" Then
+                    
+                    TSFields = New ValueList();	
+                    
+                    While XmlFile.ReadAttribute() Do
+                        TSFields.Add(XmlFile.Name, XmlFile.Value);
+                    EndDo;
+                    
+                    TSRow = Object[TabularSection].Add();
+                    
+                    ApplyValues(TSRow, TSFields, EnumIDTable, EntityName, Object, TabularSection);								
+                    
+                    XmlFile.Read();
+                    
+                EndIf;
+                
+            EndDo;
+            
+        EndIf;
+        
+    EndDo;
+    
+    Object = SyncSuperAgent.CheckEntity(Object);
+    
+    Object.Write();	
+    
+EndProcedure
+
+Procedure ApplyValues(Object, Fields, EnumIDTable, EntityName, ObjectRef = Undefined, TabularSection = Undefined)
+    
+    CheckFolder = False;
+    
+    If EntityName = "Catalog" Then
+        
+        FolderAttribute = Fields.FindByValue("IsFolder");
+        
+        If NOT FolderAttribute = Undefined Then 
+            if FolderAttribute.Presentation = "1" Then 
+                CheckFolder = True;
+            EndIf;
+        EndIf;
+        
+    EndIf;
+    
+    For Each Field In Fields Do
+        
+        If Field.Value = "Id" Or Field.Value = "Ref" Or Field.Value = "LineNumber" Or Field.Value = "Code" Or Field.Value = "Number" Then //Or Field.Value = "Date" Then
+            Continue;
+        EndIf;
+        
+        Try
+            TestError = Object[Field.Value];
+        Except
+            Continue;
+        EndTry;
+        
+        If CheckFolder Then 
+            
+            If NOT (Field.Value = "Description" 
+                Or Field.Value = "Parent" 
+                Or Field.Value = "IsFolder" 
+                Or Field.Value = "DeletionMark" 
+                Or Field.Value = "Owner"
+                Or Field.Value = "Predefined") Then
+                
+                Continue;
+                
+            EndIf;
+            
+        EndIf;
+        
+        Type = Metadata.FindByType(TypeOf(Object[Field.Value]));
+        
+        If Type = Undefined Then
+            
+            If TypeOf(Object[Field.Value]) = Type("Date") Then
+                If StrLen(Field.Presentation) = 23 Then
+                    Field.Presentation = Mid(Field.Presentation, 1, 19);
+                EndIf;
+                Object[Field.Value] = Date(StrReplace(StrReplace(StrReplace(Field.Presentation, "-", ""), ":", ""), "T", ""));
+            ElsIf TypeOf(Object[Field.Value]) = Type("Boolean") Then
+                If Field.Presentation = "1" Then
+                    Object[Field.Value] = True;
+                Else
+                    Object[Field.Value] = False;
+                EndIf;
+            ElsIf TypeOf(Object[Field.Value]) = Type("UUID") Then 
+                Object[Field.Value] = new UUID(Field.Presentation);
+            Else
+                Object[Field.Value] = Field.Presentation;
+            EndIf;
+            
+        Else
+            
+            EntityNameValue = Type.FullName();
+            
+            MD = Metadata.FindByFullName(EntityNameValue);
+            EntityManager = Undefined;
+            
+            If Left(EntityNameValue,8) = "Catalog." Then
+                EntityManager = Catalogs[MD.Name];
+            EndIf;
+            
+            If Left(EntityNameValue,9) = "Document." Then
+                EntityManager = Documents[MD.Name];
+            EndIf;
+            
+            If Left(EntityNameValue,5) = "Enum." Then
+                EntityManager = Enums[MD.Name];
+                Object[Field.Value] = EnumIDTable.Find(Lower(Field.Presentation), Lower("Id")).EnRef;
+            EndIf;
+            
+            If EntityManager = Undefined Then
+                Raise(EntityNameValue + " type is not found.");
+            EndIf;
+            
+            If Left(EntityNameValue,5) <> "Enum." Then
+                Ref = EntityManager.GetRef(New UUID(Field.Presentation));
+                Object[Field.Value] = Ref;
+            EndIf;
+            
+        EndIf;			
+        
+    EndDo;
+    
+    // Проверить реквизиты которые не вернулись с сервера
+    If EntityName = "Catalog" Or EntityName = "Document" Then
+        
+        Try
+            
+            For Each Attribute in Object.Metadata().Attributes Do
+                
+                FindedAttribute = Fields.FindByValue(Attribute.Name);
+                
+                If FindedAttribute = Undefined Then 
+                    
+                    If TypeOf(Object[Attribute.Name]) = Type("Date") Then
+                        
+                        Object[Attribute.Name] = Undefined;
+                        
+                    EndIf;
+                    
+                EndIf;	
+                
+            EndDo;
+            
+        Except
+            
+            For Each Attribute in ObjectRef.Metadata().TabularSections[TabularSection].Attributes Do 
+                
+                FindedAttribute = Fields.FindByValue(Attribute.Name);
+                
+                If FindedAttribute = Undefined Then 
+                    
+                    If TypeOf(Object[Attribute.Name]) = Type("Date") Then
+                        
+                        Object[Attribute.Name] = Undefined;
+                        
+                    EndIf;
+                    
+                EndIf;
+                
+            EndDo;
+            
+        EndTry;
+        
+    EndIf;
+    
+EndProcedure
+
+Function CreateEnumIDTable()  
+    
+    EnumIdTable = New ValueTable;
+    EnumIdTable.Columns.Add("EnRef");
+    EnumIdTable.Columns.Add("Id");
+    
+    For Each Enum In Metadata.Enums Do
+        
+        ObjectName = Enum.FullName();
+        
+        Query = New Query;
+        Query.Text = "SELECT Ref FROM " + ObjectName;
+        QueryResult = Query.Execute();
+        Rows = QueryResult.Choose();				
+        
+        While Rows.Next() Do
+            NewRow = EnumIdTable.Add();
+            NewRow.EnRef = Rows.Ref;
+            NewRow.Id = UUIDFromEmunValue(Rows.Ref);
+            
+        EndDo;
+        
+    EndDo;
+    
+    Return EnumIdTable;
+    
+EndFunction
+
+Function SendAndReceiveDocument(Method, Server, Path, Password, RequestFileName = Undefined, OnlySend = True, Post = True, ZIPout = False, ZIPin = False)	
+    
+    Connection = New HTTPConnection(Server,80,"admin",Password);
+    PathConnection = Path + Method;	
+    
+    ResultFileName = GetTempFileName();
+    
+    If Post Then
+        
+        HeaderHTTP = New Map();     
+        
+        If ZIPout Then
+            
+            HeaderHTTP.Insert("Content-Encoding", "deflate");
+            
+        ElsIf ZIPin Then
+            
+            HeaderHTTP.Insert("Accept-Encoding", "deflate");
+            
+        EndIf;
+        
+        Connection.Post(RequestFileName, PathConnection, ResultFileName, HeaderHTTP);
+        
+    Else
+        
+        Connection.Get(PathConnection, ResultFileName);
+        
+    EndIf;	
+    
+    If OnlySend Then 
+        
+        Result = New TextDocument();
+        Result.Read(ResultFileName, TextEncoding.UTF8);
+        ResultString = "";
+        For C = 1 To Result.LineCount() Do
+            ResultString = ResultString + Result.GetLine(C);
+        EndDo;
+        
+        Return ResultString;
+        
+    Else 
+        
+        Return ResultFileName;
+        
+    EndIf;
+    
+EndFunction
+
+//////////////////////////////////////////////
+// Sync Deleted Data
+
+Procedure SyncDeletedData(SyncComplete) Export 
+    
+    Server = Constants.Server.Get();
+    Path = Constants.ServerPath.Get();
+    Password = Constants.Password.Get();
+    
+    Try
+        
+        Response = SendAndReceiveDocument("DownloadDeleted", Server, Path, Password, Undefined, False, False);
+        
+        XMLFile = New XMLReader; 
+        XMLFile.OpenFile(Response, Undefined, Undefined, "UTF-8");
+        
+        TableForDeletion = New ValueTable;
+        TableForDeletion.Columns.Add("Type");
+        TableForDeletion.Columns.Add("ID");
+        
+        While XMLFile.Read() Do
+            
+            If XMLFile.NodeType = XMLNodeType.StartElement And XmlFile.Name = "Entity" Then
+                
+                ReadDeleteEntities(XmlFile, TableForDeletion);
+                
+            EndIf;
+            
+        EndDo;
+        
+        If NOT TableForDeletion.Count() = 0 Then
+            
+            RequestFileName = GetTempFileName();
+            
+            XMLRecord = New XMLWriter;
+            XMLRecord.OpenFile(RequestFileName, "UTF-8");
+            XMLRecord.WriteXMLDeclaration();
+            
+            XMLRecord.WriteStartElement("Root");
+            
+            XMLRecord.WriteStartElement("Rows");
+            
+            For Each ElementForDeletion in TableForDeletion Do
+                
+                XMLRecord.WriteStartElement("Row");
+                
+                XMLRecord.WriteAttribute("_Type", ElementForDeletion.Type);
+                
+                XMLRecord.WriteAttribute("_RS", "2");
+                
+                XMLRecord.WriteAttribute("Id", ElementForDeletion.ID);
+                
+                XMLRecord.WriteEndElement();
+                
+            EndDo;
+            
+            XMLRecord.WriteEndElement();
+            
+            XMLRecord.WriteEndElement();	
+            
+            XMLRecord.Close();
+            
+            ResultString = SendAndReceiveDocument("UploadData2", Server, Path, Password, RequestFileName);
+            
+            If NOT ResultString = "ok" Then
+                Message(ResultString);
+                WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Synchronization deleted data interrupted with error: " + ResultString);
+            Else
+                SyncComplete = True;
+            EndIf;
+            
+        Else 
+            
+            SyncComplete = True;
+            
+        EndIf;
+        
+    Except	
+        
+        Message(ErrorDescription());
+        
+        WriteLogEvent("Synchronization error", EventLogLevel.Error, , , "Synchronization deleted data interrupted with error: " + ErrorDescription());
+        
+    EndTry;
+    
+EndProcedure
+
+Procedure ReadDeleteEntities(XmlFile, TableForDeletion)
+    
+    XmlFile.ReadAttribute();
+    EntityName = XmlFile.Value;
+    
+    MD = Metadata.FindByFullName(EntityName);
+    EntityManager = Undefined;
+    
+    If Left(EntityName,8) = "Catalog." Then
+        EntityManager = Catalogs[MD.Name];
+    EndIf;
+    
+    If Left(EntityName,9) = "Document." Then
+        EntityManager = Documents[MD.Name];
+    EndIf;
+    
+    If EntityManager = Undefined Then
+        Raise(EntityName + " type is not found.");
+    EndIf;
+    
+    While XMLFile.Read() Do
+        
+        If XMLFile.NodeType = XMLNodeType.EndElement AND XmlFile.Name = "Entity" Then
+            Break;
+        EndIf;
+        
+        If XMLFile.NodeType = XMLNodeType.StartElement AND XmlFile.Name = "Row" Then
+            ReadDeleteEntity(XmlFile, EntityManager, EntityName, TableForDeletion);
+        EndIf;
+        
+    EndDo;
+    
+EndProcedure
+
+Procedure ReadDeleteEntity(XmlFile, Manager, EntityName, TableForDeletion)
+    
+    Fields = New ValueList();	
+    
+    While XmlFile.ReadAttribute() Do
+        Fields.Add(XmlFile.Name, XmlFile.Value);
+    EndDo;
+    
+    ID = Fields.FindByValue("Id").Presentation;
+    
+    ObjectRef = Manager.GetRef(New UUID(ID));
+    Object = ObjectRef.GetObject();
+    
+    If Object = Undefined Then
+        
+        InsStr = TableForDeletion.Add();
+        InsStr.Type = EntityName;
+        InsStr.ID = ID;
+        
+    EndIf;
+    
+EndProcedure
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Common procedures and functions
+
+Procedure FillRecordset() Export  // Default setting for SyncOrder 
+    
+    ValueTable = New ValueTable;
+    ValueTable.Columns.Add("MetadataObject");
+    ValueTable.Columns.Add("Download");
+    ValueTable.Columns.Add("Upload");
+    ValueTable.Columns.Add("Filter");
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.MobileApplicationSettings";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.ReasonForVisit";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.ReasonForNotOfTakingOrder";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Positions";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Stock";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory] Territory ON Territory.Id = S.Ref AND Territory.SR = @UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.User";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 't.Id=@UserId';";
+    
+    Row = ValueTable.Add();    
+    Row.MetadataObject = "Catalog.Region";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();    
+    Row.MetadataObject = "Catalog.Distributor";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.OutletParameter";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.OutletType";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.OutletClass";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.SKUGroup";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Brands";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.UnitsOfMeasure";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.SKUProperties";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.SKUPropertiesValues";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.SKUFeatures";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.SKU";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.[Owner] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.PriceList";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Prices' FilterText= 'T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)) ';FilterName= 'Header' FilterText= 'T.Id IN (SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory] TT_ ON TT_.Id=TO_.Ref WHERE TT_.SR=@UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Outlet";
+    Row.Upload = True;
+    Row.Download = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Territory";
+    Row.Upload = True;
+    Row.Download = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.QuestionGroup";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Catalog.Question";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Questionnaire";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT QP.[Questionnaire] FROM [Document].[QuestionnaireMap_Positions] QP JOIN [Catalog].[User] U ON QP.[Position]=U.Position AND U.[Id] =@UserId)';";    
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.VisitPlan";
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';"; 
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Task";
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Visit";
+    Row.Download = True;
+    Row.Upload = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Order";
+    Row.Download = True;
+    Row.Upload = True;    
+    Row.Filter = "FilterName= 'Header' FilterText= 't.SR = @UserId AND t.Date > (getDate()-30)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.AccountReceivable";
+    Row.Upload = True; 
+    Row.Filter = "FilterName= 'Header' FilterText= 'T.Outlet IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)';";
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Encashment";
+    Row.Upload = True;
+    Row.Download = True;
+    Row.Filter = "FilterName= 'Header' FilterText= 't.Date > (getDate()-30)';"; 
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.Guestbook";
+    Row.Upload = False;
+    Row.Download = False; 
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.MobileAppPlanVisit";
+    Row.Download = True;
+    Row.Upload = True;
+    
+    Row = ValueTable.Add();
+    Row.MetadataObject = "Document.QuestionnaireMap";
+    Row.Download = False;
+    Row.Upload = True;
+    
+    RecordSet = InformationRegisters.SyncOrder.CreateRecordSet();
+    RecordSet.Load(ValueTable);
+    RecordSet.Write();	
+    
+EndProcedure
+
+Procedure FillFTPRecordset() Export
+    
+    ValueTable = New ValueTable;
+    ValueTable.Columns.Add("MetadataObject");
+    ValueTable.Columns.Add("SyncDirection");
+    
+    Ins = ValueTable.Add();    
+    Ins.MetadataObject = "Catalog.SKU";
+    Ins.SyncDirection = Enums.SyncDirections.Shared;
+    
+    Ins = ValueTable.Add();    
+    Ins.MetadataObject = "Document.Visit";
+    Ins.SyncDirection = Enums.SyncDirections.Private;
+    
+    Ins = ValueTable.Add();    
+    Ins.MetadataObject = "Catalog.Outlet";
+    Ins.SyncDirection = Enums.SyncDirections.Private;
+    
+    RecordSet = InformationRegisters.SyncSettingsFTP.CreateRecordSet();
+    RecordSet.Load(ValueTable);
+    RecordSet.Write();
+    
+EndProcedure
+
+

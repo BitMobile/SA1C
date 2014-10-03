@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Code" id="1">
+			<DataPath>Object.Code</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="CodeContextMenu" id="2"/>
+			<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="34"/>
+		</InputField>
+		<InputField name="Description" id="3">
+			<DataPath>Object.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="4"/>
+			<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="35"/>
+		</InputField>
+		<InputField name="Owner" id="5">
+			<DataPath>Object.Owner</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="OwnerContextMenu" id="6"/>
+			<ExtendedTooltip name="OwnerРасширеннаяПодсказка" id="36"/>
+		</InputField>
+		<InputField name="SR" id="7">
+			<DataPath>Object.SR</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="SRContextMenu" id="8"/>
+			<ExtendedTooltip name="SRРасширеннаяПодсказка" id="37"/>
+			<Events>
+				<Event name="StartChoice">SRStartChoice</Event>
+			</Events>
+		</InputField>
+		<Pages name="Group1" id="9">
+			<ExtendedTooltip name="Group1РасширеннаяПодсказка" id="38"/>
+			<ChildItems>
+				<Page name="OutletsPage" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Outlets</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Торговые точки</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Outlets page</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="OutletsPageРасширеннаяПодсказка" id="39"/>
+					<ChildItems>
+						<Table name="Outlets" id="11">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.Outlets</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="OutletsContextMenu" id="12"/>
+							<AutoCommandBar name="OutletsCommandBar" id="13"/>
+							<ExtendedTooltip name="OutletsРасширеннаяПодсказка" id="40"/>
+							<SearchStringAddition name="OutletsСтрокаПоиска" id="41">
+								<Source>
+									<lf:elementId>11</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="OutletsСтрокаПоискаКонтекстноеМеню" id="42"/>
+								<ExtendedTooltip name="OutletsСтрокаПоискаРасширеннаяПодсказка" id="43"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="OutletsСостояниеПросмотра" id="44">
+								<Source>
+									<lf:elementId>11</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="OutletsСостояниеПросмотраКонтекстноеМеню" id="45"/>
+								<ExtendedTooltip name="OutletsСостояниеПросмотраРасширеннаяПодсказка" id="46"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="OutletsУправлениеПоиском" id="47">
+								<Source>
+									<lf:elementId>11</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="OutletsУправлениеПоискомКонтекстноеМеню" id="48"/>
+								<ExtendedTooltip name="OutletsУправлениеПоискомРасширеннаяПодсказка" id="49"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="OutletsLineNumber" id="14">
+									<DataPath>Object.Outlets.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="OutletsLineNumberContextMenu" id="15"/>
+									<ExtendedTooltip name="OutletsLineNumberРасширеннаяПодсказка" id="50"/>
+								</LabelField>
+								<InputField name="OutletsOutlet" id="16">
+									<DataPath>Object.Outlets.Outlet</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="OutletsOutletContextMenu" id="17"/>
+									<ExtendedTooltip name="OutletsOutletРасширеннаяПодсказка" id="51"/>
+									<Events>
+										<Event name="OnChange">OutletsOutletOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="SKUGroups" id="18">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SKU Groups</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группы номенклатуры</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SKUGroups</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="SKUGroupsРасширеннаяПодсказка" id="52"/>
+					<ChildItems>
+						<Table name="SKUGroups1" id="19">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.SKUGroups</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="SKUGroups1ContextMenu" id="20"/>
+							<AutoCommandBar name="SKUGroups1CommandBar" id="21"/>
+							<ExtendedTooltip name="SKUGroups1РасширеннаяПодсказка" id="53"/>
+							<SearchStringAddition name="SKUGroups1СтрокаПоиска" id="54">
+								<Source>
+									<lf:elementId>19</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="SKUGroups1СтрокаПоискаКонтекстноеМеню" id="55"/>
+								<ExtendedTooltip name="SKUGroups1СтрокаПоискаРасширеннаяПодсказка" id="56"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="SKUGroups1СостояниеПросмотра" id="57">
+								<Source>
+									<lf:elementId>19</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="SKUGroups1СостояниеПросмотраКонтекстноеМеню" id="58"/>
+								<ExtendedTooltip name="SKUGroups1СостояниеПросмотраРасширеннаяПодсказка" id="59"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="SKUGroups1УправлениеПоиском" id="60">
+								<Source>
+									<lf:elementId>19</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="SKUGroups1УправлениеПоискомКонтекстноеМеню" id="61"/>
+								<ExtendedTooltip name="SKUGroups1УправлениеПоискомРасширеннаяПодсказка" id="62"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="SKUGroups1LineNumber" id="22">
+									<DataPath>Object.SKUGroups.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="SKUGroups1LineNumberContextMenu" id="23"/>
+									<ExtendedTooltip name="SKUGroups1LineNumberРасширеннаяПодсказка" id="63"/>
+								</LabelField>
+								<InputField name="SKUGroups1SKUGroup" id="24">
+									<DataPath>Object.SKUGroups.SKUGroup</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="SKUGroups1SKUGroupContextMenu" id="25"/>
+									<ExtendedTooltip name="SKUGroups1SKUGroupРасширеннаяПодсказка" id="64"/>
+									<Events>
+										<Event name="OnChange">SKUGroups1SKUGroupOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="Stocks" id="26">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Stocks</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Склады</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Stocks</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="StocksРасширеннаяПодсказка" id="65"/>
+					<ChildItems>
+						<Table name="Stocks1" id="27">
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.Stocks</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="Stocks1ContextMenu" id="28"/>
+							<AutoCommandBar name="Stocks1CommandBar" id="29"/>
+							<ExtendedTooltip name="Stocks1РасширеннаяПодсказка" id="66"/>
+							<SearchStringAddition name="Stocks1СтрокаПоиска" id="67">
+								<Source>
+									<lf:elementId>27</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="Stocks1СтрокаПоискаКонтекстноеМеню" id="68"/>
+								<ExtendedTooltip name="Stocks1СтрокаПоискаРасширеннаяПодсказка" id="69"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="Stocks1СостояниеПросмотра" id="70">
+								<Source>
+									<lf:elementId>27</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="Stocks1СостояниеПросмотраКонтекстноеМеню" id="71"/>
+								<ExtendedTooltip name="Stocks1СостояниеПросмотраРасширеннаяПодсказка" id="72"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="Stocks1УправлениеПоиском" id="73">
+								<Source>
+									<lf:elementId>27</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="Stocks1УправлениеПоискомКонтекстноеМеню" id="74"/>
+								<ExtendedTooltip name="Stocks1УправлениеПоискомРасширеннаяПодсказка" id="75"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="Stocks1LineNumber" id="30">
+									<DataPath>Object.Stocks.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="Stocks1LineNumberContextMenu" id="31"/>
+									<ExtendedTooltip name="Stocks1LineNumberРасширеннаяПодсказка" id="76"/>
+								</LabelField>
+								<InputField name="Stocks1Stock" id="32">
+									<DataPath>Object.Stocks.Stock</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="Stocks1StockContextMenu" id="33"/>
+									<ExtendedTooltip name="Stocks1StockРасширеннаяПодсказка" id="77"/>
+									<Events>
+										<Event name="OnChange">Stocks1StockOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.Territory</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+	<CommandInterface>
+		<NavigationPanel>
+			<Item>
+				<Command>4:544137b8-757f-4c88-a6d0-8379331f788c</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0</Command>
+				<Type>Auto</Type>
+				<Index>1</Index>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+		</NavigationPanel>
+	</CommandInterface>
+</Form>

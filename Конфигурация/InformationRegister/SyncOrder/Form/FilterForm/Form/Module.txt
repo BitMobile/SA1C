@@ -1,0 +1,110 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	FilterString = Parameters.FilterString;
+	ObjectName = Parameters.ObjectName;
+	
+	FilterNameList = GetFilterNameList();
+	
+	i = 0;
+	
+	While i = 0 Do 
+		
+		FilterNamePos = Find(FilterString, "FilterName= '");
+        FilterTextPos = Find(FilterString, "' FilterText= '");
+		SeparatorPos = Find(FilterString, "';");
+		
+		FilterName = StrReplace(Mid(FilterString, FilterNamePos, FilterTextPos - FilterNamePos), "FilterName= '", "");
+		FilterText = StrReplace(Mid(FilterString, FilterTextPos, SeparatorPos - FilterTextPos), "' FilterText= '", "");
+				
+		If FilterName = "Header" Or ValueIsFilled(String(FilterNameList.FindByValue(FilterName))) Then 
+			
+			InsertFilter = FilterList.Add();
+			InsertFilter.FilterName = FilterName;
+			InsertFilter.Filter = FilterText;
+			
+		EndIf;
+		
+		FilterString = Right(FilterString, StrLen(FilterString) - (SeparatorPos));
+		
+		If StrLen(FilterString) = 0 or SeparatorPos = 0 Then 
+			
+			i = 1;
+			
+		EndIf;
+				
+	EndDo;
+		
+EndProcedure
+
+&AtServer
+Function GetFilterNameList()
+	
+	FilterNameList = New ValueList;
+	
+	SearchStructure = New Structure("FilterName", "Header");
+	SearchRows = FilterList.FindRows(SearchStructure);
+	
+	If SearchRows.Count() = 0 Then 
+		
+		FilterNameList.Add("Header");
+		
+	EndIf;
+		
+	MD = Metadata.FindByFullName(ObjectName);
+	
+	If Not MD = Undefined Then 
+		
+		For Each TabularSection In MD.TabularSections Do 
+			
+			SearchStructure = New Structure("FilterName", TabularSection.Name);
+			SearchRows = FilterList.FindRows(SearchStructure);
+			
+			If SearchRows.Count() = 0 Then 
+            	
+				FilterNameList.Add(TabularSection.Name);
+				
+			EndIf;
+						
+		EndDo;
+				
+	EndIf;
+	
+	Return FilterNameList;
+	
+EndFunction
+
+&AtClient
+Procedure FilterListFilterNameStartListChoice(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	FilterNameList = GetFilterNameList();
+	
+	CurrentChoise = ChooseFromList(FilterNameList, Item);
+	
+	If Not CurrentChoise = Undefined And ValueIsFilled(CurrentChoise.Value) Then 
+		Items.FilterList.CurrentData.FilterName = CurrentChoise.Value; 
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure Write(Command)
+	
+	NewFilterString = "";
+	
+	For Each Str in FilterList Do
+		
+		If ValueIsFilled(Str.FilterName) Then 
+		
+			NewFilterString = NewFilterString + "FilterName= '" + Str.FilterName + "' FilterText= '" + Str.Filter + "';";
+			
+		EndIf;	
+		
+	EndDo;
+	
+	Close(NewFilterString);
+		
+EndProcedure

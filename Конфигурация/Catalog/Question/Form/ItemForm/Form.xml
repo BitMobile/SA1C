@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="OnOpen">OnOpen</Event>
+		<Event name="BeforeWrite">BeforeWrite</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Code" id="1">
+			<DataPath>Object.Code</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="CodeContextMenu" id="2"/>
+			<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="16"/>
+		</InputField>
+		<InputField name="Description" id="3">
+			<DataPath>Object.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="4"/>
+			<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="17"/>
+		</InputField>
+		<InputField name="Owner" id="5">
+			<DataPath>Object.Owner</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="OwnerContextMenu" id="6"/>
+			<ExtendedTooltip name="OwnerРасширеннаяПодсказка" id="18"/>
+		</InputField>
+		<InputField name="AnswerType" id="7">
+			<DataPath>Object.AnswerType</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="AnswerTypeContextMenu" id="8"/>
+			<ExtendedTooltip name="AnswerTypeРасширеннаяПодсказка" id="19"/>
+			<Events>
+				<Event name="OnChange">AnswerTypeOnChange</Event>
+			</Events>
+		</InputField>
+		<Table name="ValueList" id="9">
+			<Representation>List</Representation>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Object.ValueList</DataPath>
+			<SearchStringLocation>None</SearchStringLocation>
+			<ViewStatusLocation>None</ViewStatusLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ValueListContextMenu" id="10"/>
+			<AutoCommandBar name="ValueListCommandBar" id="11"/>
+			<ExtendedTooltip name="ValueListРасширеннаяПодсказка" id="20"/>
+			<SearchStringAddition name="ValueListСтрокаПоиска" id="21">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>0</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListСтрокаПоискаКонтекстноеМеню" id="22"/>
+				<ExtendedTooltip name="ValueListСтрокаПоискаРасширеннаяПодсказка" id="23"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ValueListСостояниеПросмотра" id="24">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>1</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListСостояниеПросмотраКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="ValueListСостояниеПросмотраРасширеннаяПодсказка" id="26"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ValueListУправлениеПоиском" id="27">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>2</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListУправлениеПоискомКонтекстноеМеню" id="28"/>
+				<ExtendedTooltip name="ValueListУправлениеПоискомРасширеннаяПодсказка" id="29"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="ValueListLineNumber" id="12">
+					<DataPath>Object.ValueList.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ValueListLineNumberContextMenu" id="13"/>
+					<ExtendedTooltip name="ValueListLineNumberРасширеннаяПодсказка" id="30"/>
+				</LabelField>
+				<InputField name="ValueListValue" id="14">
+					<DataPath>Object.ValueList.Value</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ValueListValueContextMenu" id="15"/>
+					<ExtendedTooltip name="ValueListValueРасширеннаяПодсказка" id="31"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.Question</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+</Form>

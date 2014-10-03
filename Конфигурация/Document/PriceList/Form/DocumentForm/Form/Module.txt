@@ -1,0 +1,96 @@
+﻿
+&AtClient
+Procedure FillSKU(Command)
+    
+    FillSKUServer();
+
+EndProcedure
+
+Procedure FillSKUServer()
+
+	Query = New Query;
+    Query.Text = 
+    "SELECT
+    |   SKU.Ref
+    |FROM
+    |   Catalog.SKU AS SKU";
+    Result = Query.Execute().Unload();
+    
+    For Each Value In Result Do
+    
+    	NewRow = Object.Prices.Add();
+        NewRow.SKU = Value.Ref;
+    
+    EndDo;
+    
+
+EndProcedure
+
+&AtClient
+Procedure SKUSKUOnChange(Item)
+   
+    requestMap = New Map;
+    requestMap.Insert("pName", "SKU");
+    requestMap.Insert("checkingItem", Items.SKU.CurrentData);
+    requestMap.Insert("tabularSection", Object.Prices);
+    
+    ClientProcessors.UniqueRows(requestMap); 
+    
+EndProcedure
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+    
+    //Cancel = PriceCheck();
+    
+EndProcedure
+
+
+Function PriceCheck()
+
+	If Object.DeletionMark = False Then
+        
+        Query = New Query;
+        Query.Text = 
+            "SELECT
+            |   PriceListPrices.SKU.Ref AS SKURef,
+            |   PriceListPrices.Ref.Ref
+            |FROM
+            |   Document.PriceList.Prices AS PriceListPrices
+            |WHERE
+            |   PriceListPrices.Ref.Ref <> &Ref
+            |   AND PriceListPrices.Ref.DeletionMark = FALSE
+            |
+            |GROUP BY
+            |   PriceListPrices.SKU.Ref,
+            |   PriceListPrices.Ref.Ref";
+
+        Query.SetParameter("Ref", Object.Ref);
+
+        Result = Query.Execute().Unload();
+        Prices = Object.Prices;
+
+        For Each Row In Prices Do
+            ResultValue = Result.Find(Row.SKU, "SKURef");
+            If ResultValue <> Undefined Then
+                Message(String(NStr("en = ""Line ""; ru = ""Строка """) + Row.LineNumber + NStr("en = ': impossible to set more than one price for a SKU.'; ru = ': для номенклатурной позиции может быть установлена только одна цена.'")));
+                Return True;
+            EndIf;
+        EndDo;	
+        Return False;
+    Else 
+        Return False;
+    EndIf;
+
+
+EndFunction
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+﻿
+Procedure BeforeWrite(Cancel)
+    TransformIntoVisitPlans();
+EndProcedure
+
+Procedure TransformIntoVisitPlans()
+    planDoc = GetPlanDoc();
+    CreatePlan(planDoc);
+    ThisObject.Transformed = True;
+EndProcedure
+
+
+Function GetPlanDoc()
+    
+    query = new Query;
+    query.Text = 
+    "SELECT
+    |   VisitPlan.Ref
+    |FROM
+    |   Document.VisitPlan AS VisitPlan
+    |WHERE
+    |   &Date BETWEEN VisitPlan.DateFrom AND ENDOFPERIOD(VisitPlan.DateTo)
+    |   AND VisitPlan.SR = &SR";
+    query.SetParameter("Date", ThisObject.planDate);
+    query.SetParameter("SR", ThisObject.SR);
+    recordset = query.Execute();
+    If recordset.IsEmpty() Then
+        Return CreatePlanDoc();    	    
+    Else
+        r = recordset.Choose();
+        While r.Next() Do
+            Return r.Ref;
+        EndDo; 
+        
+    EndIf;
+    
+EndFunction // GetPlanDoc()
+
+Function CreatePlanDoc()
+    
+    newDoc = Documents.VisitPlan.CreateDocument();
+    newDoc.Date = CurrentDate();
+    newDoc.DateFrom = BegOfWeek(ThisObject.PlanDate);
+    newDoc.DateTo = EndOfWeek(ThisObject.PlanDate);
+    newDoc.Owner = SessionParameters.ТекущийПользователь;
+    newDoc.SR = ThisObject.SR;
+    newDoc.WeekNumber = WeekOfYear(ThisObject.PlanDate);
+    newDoc.Year = BegOfYear(ThisObject.PlanDate);
+    newDoc.Write();
+    
+    Return newDoc.Ref;
+    
+EndFunction // CreatePlanDoc()
+
+Procedure CreatePlan(planDoc)
+    
+    tabularSection = planDoc.Outlets.Unload();
+    query = New Query();
+    query.Text = "SELECT
+                 |  VisitPlanOutlets.Outlet,
+                 |  VisitPlanOutlets.Date,
+                 |  VisitPlanOutlets.LineNumber
+                 |FROM
+                 |  Document.VisitPlan.Outlets AS VisitPlanOutlets
+                 |WHERE
+                 |  VisitPlanOutlets.Ref = &Ref
+                 |  AND VisitPlanOutlets.Outlet = &Outlet
+                 |  AND BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) = BEGINOFPERIOD(&Date, DAY)";
+                 query.SetParameter("Outlet", Outlet);
+                 query.SetParameter("Ref", planDoc);
+                 query.SetParameter("Date", PlanDate);
+    res = query.Execute();    
+    If res.IsEmpty() Then
+        newRow = tabularSection.Add();
+        newRow.Outlet = ThisObject.Outlet;
+        newRow.Date = ThisObject.PlanDate;
+    Else        
+        row = res.Unload();
+        rowByOutlet = tabularSection.Get(row[0].LineNumber-1);
+        rowByOutlet.Date = ThisObject.PlanDate;    	    
+    EndIf;
+    planDoc = planDoc.GetObject();
+    planDoc.Outlets.Load(tabularSection);
+    planDoc.Write();    
+    
+EndProcedure
+
+
+
+
+
+
+

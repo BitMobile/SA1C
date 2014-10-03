@@ -1,0 +1,9 @@
+﻿
+&AtClient
+Procedure FeaturesValueOnChange(Item)
+    Name = "";
+    For Each FeaturesRow In Object.Features Do
+        Name = ? (Name = "", String(FeaturesRow.Value), (Name + ", " + String(FeaturesRow.Value)));
+    EndDo;
+    Object.Description = Name;
+EndProcedure

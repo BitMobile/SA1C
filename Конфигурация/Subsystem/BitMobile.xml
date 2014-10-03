@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Subsystem uuid="99231b08-a6f2-47fc-b550-c76406168887">
+		<Properties>
+			<Name>BitMobile</Name>
+			<Synonym>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Bit mobile</v8:content>
+				</v8:item>
+			</Synonym>
+			<Comment/>
+			<IncludeHelpInContents>true</IncludeHelpInContents>
+			<IncludeInCommandInterface>true</IncludeInCommandInterface>
+			<Explanation/>
+			<Picture/>
+			<Content>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.AddForUpload</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.ChangedData</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.SyncOrder</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.CatalogOnWrite</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.CatalogBeforeWrite</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentOnWrite</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentBeforeWrite</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.User</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDate</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncStatus</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedDate</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedStatus</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.Server</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.ServerPath</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.Password</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.SyncAndSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.ExportData</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.РегламентныеИФоновыеЗадания</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.НастройкиВыполненияРегламентныхЗаданий</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначения</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначенияВызовСервераПереопределяемый</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначенияКлиент</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначенияКлиентСервер</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначенияПереопределяемый</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначенияПовтИсп</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.Пользователи</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ПользователиКлиентСервер</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ПользователиСлужебный</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.MobileApplicationSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.ReasonForVisit</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.ReasonForNotOfTakingOrder</xr:Item>
+			</Content>
+		</Properties>
+		<ChildObjects/>
+	</Subsystem>
+</MetaDataObject>

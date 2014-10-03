@@ -1,0 +1,28 @@
+﻿
+Procedure BeforeWrite(Cancel)
+	
+	StorageData = Storage.Get();
+	
+	If TypeOf(StorageData) = Type("BinaryData") Then 
+		
+		TempPicture = New Picture(StorageData);
+		TempExtension = TempPicture.Format();
+				
+	ElsIf TypeOf(StorageData) = Type("Picture") Then
+		
+		TempExtension = StorageData.Format();
+		
+	EndIf;
+	
+	If TempExtension = PictureFormat.JPEG Then
+		Extension = ".jpg";
+	ElsIf TempExtension = PictureFormat.PNG Then
+		Extension = ".png";
+	Else 
+		Extension = "";
+		Storage = Undefined;
+	EndIf;
+		
+	LastEdit = CurrentUniversalDate();
+	
+EndProcedure

@@ -1,0 +1,25 @@
+﻿
+Procedure OnWrite(Cancel)
+    query = new Query;
+    query.Text=
+    "SELECT
+    |   OutletStatusHistorySliceLast.Period,
+    |   OutletStatusHistorySliceLast.Outlet,
+    |   OutletStatusHistorySliceLast.Status
+    |FROM
+    |   InformationRegister.OutletStatusHistory.SliceLast AS OutletStatusHistorySliceLast
+    |WHERE
+    |   OutletStatusHistorySliceLast.Outlet = &Outlet
+    |   AND OutletStatusHistorySliceLast.Status <> &Status";
+    query.SetParameter("Outlet", ThisObject.Ref);
+    query.SetParameter("Status", ThisObject.OutletStatus);
+    
+    If NOT query.Execute().IsEmpty() Then
+        Record = InformationRegisters.OutletStatusHistory.CreateRecordManager();
+        Record.Outlet = ThisObject.Ref;
+    	Record.Status = ThisObject.OutletStatus;
+        Record.Period = CurrentDate();
+        Record.Write();
+    EndIf;
+    
+EndProcedure

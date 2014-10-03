@@ -1,0 +1,17 @@
+﻿Procedure WriteMap() Export 
+
+	questionnaires =  GetQuestionnaiers();
+    For Each document In questionnaires Do
+        outl = Documents.Questionnaire.SelectOutlets(document.Ref.Selectors.Unload());    	    
+    EndDo;
+   
+
+EndProcedure
+
+Function GetQuestionnaiers()
+
+    query = new Query();
+    query.Text = "SELECT Ref FROM Document.Questionnaire";
+    Return query.Execute().Unload();
+
+EndFunction
