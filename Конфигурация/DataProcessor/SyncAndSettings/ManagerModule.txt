@@ -647,6 +647,8 @@ Procedure UploadData(All = False, UploadComplete = Undefined, InFile = False, Te
 	
 	If Not FoundIO Then
 		
+		QuestionnaireMapAssign.ActualizeQuestionnaireMap();
+		
 		If NOT All Then
 			
 			Fault = False;
