@@ -1,16 +1,135 @@
 ﻿
 Procedure ActualizeQuestionnaireMap() Export
 
-	q = new Query();
-    q.Text = "SELECT Ref FROM Document.Questionnaire";
-    questionnaires = q.Execute().Unload();
-    mapDocument = GetMapDocument();
-    mapDocument.Outlets.Clear();
-    mapDocument.Positions.Clear();
-    For Each row In questionnaires Do
-        WriteMap(row.Ref, mapDocument);        
-    EndDo;
-              
+//	q = new Query();
+//    q.Text = "SELECT Ref FROM Document.Questionnaire";
+//    questionnaires = q.Execute().Unload();
+//    mapDocument = GetMapDocument();
+//    mapDocument.Outlets.Clear();
+//    mapDocument.Positions.Clear();
+//    For Each row In questionnaires Do
+//        WriteMap(row.Ref, mapDocument);        
+//    EndDo;
+
+	PeriodicityTable = GetPeriodicityTable();
+	MapDocument = GetMapDocument();	
+	For Each Row In PeriodicityTable Do
+		// Вычисляем начало периода расчета для текущего соответствия анкета-ТТ. 
+		// Если начало периода действия анкеты больше текущей даты - тогда начало
+		// периода расчета = начало периода действия анкеты, иначе текущая дата
+		BeginDate = ?(Row.Questionnaire.BeginDate > CurrentDate(), BeginDate, CurrentDate()); 
+		// Вычисляем конец периода расчета для текущего соответствия анкета-ТТ. 
+		Day = 60 * 60 * 24;             
+		Month = Day * 30;               
+		PlusMonth = CurrentDate() + Month;  
+		// В случае когда конец периода действия текущей анкеты не задан считаем 
+		// на месяц вперед от текущей даты, иначе если дата конца действия анкеты
+		// меньше чем текущая дата плюс месяц, тогда считаем до конца действия 
+		// анкеты, иначе до текущей даты плюс месяц.
+		EndDate = ?(ValueIsFilled(Row.Questionnaire.EndDate), ?(Row.Questionnaire.EndDate > PlusMonth, PlusMonth, Row.Questionnaire.EndDate), PlusMonth);
+		
+		// Для недельного и годового расписания по месяцам нам нужно понимать в 
+		// какие дни недели и месяцы года нам нужно показывать анкеты. Для этого
+		// выдергиваем из расписания те дни недели и месяцы года у которых стоят
+		// галки в расписании.
+		Schedule = Row.Questionnaire.Schedule;
+		If Row.Periodicity = Enums.ScheduleTypes.Week Then
+			DaysOfWeek = GetDaysOfWeek(Schedule);
+		ElsIf Row.Periodicity = Enums.ScheduleTypes.Year Then
+			YearScheduleType = GetEnumValueFromString("YearScheduleTypes", GetPeriodicityTypeString(Schedule));
+			If YearScheduleType = Enums.YearScheduleTypes.Months Then
+				MonthsOfYear = GetMonthsOfYear(Schedule);
+			EndIf;
+		EndIf;
+		
+		// В цикле проверяем каждый день с начала периода расчета до конца периода 
+		// расчета нужно ли нам для данной торговой точки выводить данную анкету
+		CurrentDate = BeginDate;
+		While CurrentDate <= EndDate Do
+			Write = False;
+			If Row.Periodicity = Enums.ScheduleTypes.Month Then
+				MonthScheduleType = GetMonthScheduleType(Schedule);
+				If MonthScheduleType = Enums.MonthScheduleTypes.Period Then
+					BeginPeriod = GetMonthBeginPeriod(Schedule);
+					EndPeriod = GetMonthEndPeriod(Schedule);
+				ElsIf MonthScheduleType = Enums.MonthScheduleTypes.First Then
+					BeginPeriod = 1;
+					EndPeriod = GetMonthFirstLastNumber(Schedule);
+				ElsIf MonthScheduleType = Enums.MonthScheduleTypes.Last Then
+					EndPeriod = Day(EndOfMonth(CurrentDate));
+					BeginPeriod = EndPeriod - GetMonthFirstLastNumber(Schedule) + 1;
+				EndIf;
+			ElsIf Row.Periodicity = Enums.ScheduleTypes.Year Then
+				YearScheduleType = GetEnumValueFromString("YearScheduleTypes", GetPeriodicityTypeString(Schedule));
+				If YearScheduleType = Enums.YearScheduleTypes.First Then
+					BeginPeriod = 1;
+					EndPeriod = GetYearFirstLastNumber(Schedule);
+				ElsIf YearScheduleType = Enums.YearScheduleTypes.Last Then
+					EndPeriod = DayOfYear(EndOfYear(CurrentDate));
+					BeginPeriod = EndPeriod - GetYearFirstLastNumber(Schedule);
+				ElsIf YearScheduleType = Enums.YearScheduleTypes.Period Then
+					BeginPeriodDay = GetYearBeginPeriodDay(Schedule);
+					BeginPeriodMonth = GetYearBeginPeriodMonth(Schedule);
+					EndPeriodDay = GetYearEndPeriodDay(Schedule);
+					EndPeriodMonth = GetYearEndPeriodMonth(Schedule);
+					Year = Year(CurrentDate);
+					BeginPeriod = DayOfYear(Date(Year, BeginPeriodMonth, BeginPeriodDay));
+					EndPeriod = DayOfYear(Date(Year, EndPeriodMonth, EndPeriodDay));
+				EndIf;
+			EndIf;			
+			If Row.Periodicity = Enums.ScheduleTypes.Day Then
+				BeginSchedulePeriod = ?(Row.Questionnaire.Single, CurrentDate, '00010101');
+				EndSchedulePeriod = ?(Row.Questionnaire.Single, CurrentDate, '00010101');
+				Difference = (BegOfDay(CurrentDate) - BegOfDay(Row.Questionnaire.BeginDate)) / Day;
+				RepeatEvery = GetDays(Schedule);
+				If Difference % RepeatEvery = 0 Then
+					Write = True;
+				EndIf;
+			ElsIf Row.Periodicity = Enums.ScheduleTypes.Week Then
+				BeginSchedulePeriod = ?(Row.Questionnaire.Single, BegOfWeek(CurrentDate), '00010101');
+				EndSchedulePeriod = ?(Row.Questionnaire.Single, EndOfWeek(CurrentDate), '00010101');
+				WeekDayNumber = WeekDay(CurrentDate) - 1;
+				If DaysOfWeek[WeekDayNumber] = "1" Then
+					Write = True;
+				EndIf;
+			ElsIf Row.Periodicity = Enums.ScheduleTypes.Month Then
+				BeginSchedulePeriod = ?(Row.Questionnaire.Single, BegOfMonth(CurrentDate), '00010101');
+				EndSchedulePeriod = ?(Row.Questionnaire.Single, EndOfMonth(CurrentDate), '00010101');
+				MonthDay = Day(CurrentDate);
+				If MonthDay >= BeginPeriod AND MonthDay <= EndPeriod Then
+					Write = True;
+				EndIf;
+			ElsIf Row.Periodicity = Enums.ScheduleTypes.Year Then
+				BeginSchedulePeriod = ?(Row.Questionnaire.Single, BegOfYear(CurrentDate), '00010101');
+				EndSchedulePeriod = ?(Row.Questionnaire.Single, EndOfYear(CurrentDate), '00010101');
+				YearScheduleType = GetEnumValueFromString("YearScheduleTypes", GetPeriodicityTypeString(Schedule));
+				If YearScheduleType = Enums.YearScheduleTypes.Months Then
+					MonthNumber = Month(CurrentDate) - 1;
+					If MonthsOfYear[MonthNumber] = "1" Then
+						Write = True;
+					EndIf;
+				ElsIf YearScheduleType = Enums.YearScheduleTypes.First 
+					  OR YearScheduleType = Enums.YearScheduleTypes.Last 
+					  OR YearScheduleType = Enums.YearScheduleTypes.Period Then
+					YearDay = DayOfYear(CurrentDate);
+					If YearDay >= BeginPeriod AND YearDay <= EndPeriod Then
+						Write = True;
+					EndIf;					
+				EndIf;
+			EndIf;
+
+			If Write = True Then
+				ResultRow = MapDocument.Outlets.Add();
+				ResultRow.Questionnaire = Row.Questionnaire;
+				ResultRow.Outlet = Row.Outlet;
+				ResultRow.Date = CurrentDate;
+				ResultRow.BeginPeriod = BeginSchedulePeriod;
+				ResultRow.EndPeriod = EndSchedulePeriod;
+			EndIf;
+			CurrentDate = CurrentDate + Day;
+		EndDo;
+	EndDo;
+	MapDocument.Write();
 EndProcedure
 
 Procedure WriteMap(quest,mapDocument) Export
@@ -55,4 +174,127 @@ Function GetMapDocument()
     
 EndFunction // GetMapDocument()
 
+&AtServer
+Function GetPeriodicityTable()
+	Questionnaires = GetQuestionnaires();
+	PeriodicityTable = GetEmptyPeriodicityTable();
+	
+	
+	For Each Questionnaire In Questionnaires Do
+		Outlets = Documents.Questionnaire.SelectOutlets(Undefined, Questionnaire.Ref);
+		For Each Outlet In Outlets Do
+			ResultRow = PeriodicityTable.Add();
+			ResultRow.Questionnaire = Questionnaire.Ref;
+			ResultRow.Outlet = Outlet.Ref;
+			ResultRow.Periodicity = GetPeriodicity(Questionnaire.Ref.Schedule);
+		EndDo;
+	EndDo;
+	
+	Return PeriodicityTable;
+EndFunction
 
+&AtServer
+Function GetEmptyPeriodicityTable()
+    
+    ValueTable = New ValueTable;
+    ValueTable.Columns.Add("Questionnaire");
+    ValueTable.Columns.Add("Outlet");
+    ValueTable.Columns.Add("Periodicity");
+    Return ValueTable;
+
+EndFunction
+
+&AtServer
+Function GetPeriodicity(Schedule)
+	PeriodicityString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[0];
+	Return GetEnumValueFromString("ScheduleTypes", PeriodicityString);
+EndFunction
+
+&AtServer
+Function GetQuestionnaires()
+	
+	Query = New Query(
+	"SELECT
+	|	Questionnaire.Ref AS Ref
+	|FROM
+	|	Document.Questionnaire AS Questionnaire");
+	QueryResult = Query.Execute();
+	Questionnaires = QueryResult.Unload();
+	Return Questionnaires;
+	
+EndFunction
+
+&AtServer
+Function GetPeriodicityTypeString(Schedule)
+	Return ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[1];
+EndFunction
+
+&AtServer
+Function GetDays(Schedule)
+	DaysString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[1];
+	Return Number(DaysString);
+EndFunction
+
+&AtServer
+Function GetDaysOfWeek(Schedule)
+	DaysOfWeekString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[1];
+	DaysOfWeekArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(DaysOfWeekString, ",");
+	Return DaysOfWeekArray;
+EndFunction
+
+&AtServer
+Function GetMonthsOfYear(Schedule)
+	MonthsOfYearString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[2];
+	MonthsOfYearArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(MonthsOfYearString, ",");
+	Return MonthsOfYearArray;
+EndFunction
+
+&AtServer
+Function GetMonthScheduleType(Schedule)
+	MonthScheduleTypeString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[1];
+	Return GetEnumValueFromString("MonthScheduleTypes", MonthScheduleTypeString);
+EndFunction
+
+&AtServer
+Function GetMonthBeginPeriod(Schedule)
+	MonthBeginPeriod = Number(ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[2]);
+	Return MonthBeginPeriod;
+EndFunction
+
+&AtServer 
+Function GetMonthEndPeriod(Schedule)
+	MonthEndPeriod = Number(ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[3]);
+	Return MonthEndPeriod;
+EndFunction
+
+&AtServer 
+Function GetMonthFirstLastNumber(Schedule)
+	MonthFirstLastNumber = Number(Общегоназначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[2]);
+	Return MonthFirstLastNumber;
+EndFunction
+
+&AtServer
+Function GetYearFirstLastNumber(Schedule)
+	YearFirstLastNumber = Number(ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[2]);
+	Return YearFirstLastNumber;
+EndFunction
+
+&AtServer
+Function GetYearBeginPeriodDay(Schedule)
+	Return ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[2];
+EndFunction
+
+&AtServer
+Function GetYearBeginPeriodMonth(Schedule)
+	Return ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[3];
+EndFunction
+
+&AtServer
+Function GetYearEndPeriodDay(Schedule)
+	Return ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[4];
+EndFunction
+
+&AtServer
+Function GetYearEndPeriodMonth(Schedule)
+	Return ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[5];
+EndFunction
