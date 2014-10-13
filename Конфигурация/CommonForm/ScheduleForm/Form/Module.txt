@@ -94,8 +94,12 @@ EndProcedure
 
 &AtClient
 Procedure YearBeginPeriodDayOnChange(Item)
-	Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
-	YearEndPeriodDay = Max(YearBeginPeriodDay, YearEndPeriodDay);
+	If YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value Then
+		Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
+		YearEndPeriodDay = ?(YearEndPeriodDay >= YearBeginPeriodDay, YearEndPeriodDay, YearBeginPeriodDay);
+	Else
+		Items.YearEndPeriodDay.MinValue = 1;
+	EndIf;
 	SetSchedule();
 EndProcedure
 
@@ -120,7 +124,13 @@ Procedure YearBeginPeriodMonthStartChoice(Item, ChoiceData, StandardProcessing)
 		YearBeginPeriodMonth = MList;
 		
 		YearEndPeriodMonth = ?(YearEndPeriodMonth[0].Value < YearBeginPeriodMonth[0].Value, YearBeginPeriodMonth, YearEndPeriodMonth);
-		Items.YearEndPeriodDay.MinValue = ?(YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value, YearBeginPeriodDay, 1);
+		
+		If YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value Then
+			Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
+			YearEndPeriodDay = ?(YearEndPeriodDay >= YearBeginPeriodDay, YearEndPeriodDay, YearBeginPeriodDay);
+		Else
+			Items.YearEndPeriodDay.MinValue = 1;
+		EndIf;
 	EndIf;
 
 	SetSchedule();	
@@ -140,7 +150,14 @@ Procedure YearEndPeriodMonthStartChoice(Item, ChoiceData, StandardProcessing)
 		MList.Add(SelectedValue.Value, SelectedValue.Presentation); 
 		
 		YearEndPeriodMonth = MList;
-		Items.YearEndPeriodDay.MinValue = ?(YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value, YearBeginPeriodDay, 1);
+		
+		If YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value Then
+			Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
+			YearEndPeriodDay = ?(YearEndPeriodDay >= YearBeginPeriodDay, YearEndPeriodDay, YearBeginPeriodDay);
+		Else
+			Items.YearEndPeriodDay.MinValue = 1;
+		EndIf;
+		
 	EndIf;
 	
 	SetSchedule();
@@ -160,10 +177,18 @@ Procedure SetVisibility()
 	SetDefaults();
 	
 	Items.GroupMonthPeriod.Visible = MonthScheduleType = Enums.MonthScheduleTypes.Period;
+	If Items.GroupMonthPeriod.Visible Then
+		Items.MonthEndPeriod.MinValue = MonthBeginPeriod;
+	EndIf;
+	
  	Items.GroupMonthFirst.Visible = MonthScheduleType = Enums.MonthScheduleTypes.First;
 	Items.GroupMonthLast.Visible = MonthScheduleType = Enums.MonthScheduleTypes.Last;
 	
 	Items.GroupYearPeriod.Visible = YearScheduleType = Enums.YearScheduleTypes.Period;
+	If Items.GroupYearPeriod.Visible Then
+		Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
+	EndIf;
+	
 	Items.GroupYearMonths.Visible = YearScheduleType = Enums.YearScheduleTypes.Months;
 	Items.GroupYearFirst.Visible = YearScheduleType = Enums.YearScheduleTypes.First;
 	Items.GroupYearLast.Visible = YearScheduleType = Enums.YearScheduleTypes.Last;
@@ -207,6 +232,14 @@ Procedure SetVisibilityAndSchedule()
 	SetVisibility();
 	SetSchedule();
 EndProcedure
+
+//&AtClient 
+//Procedure SetYearEndPeriodDayMinimum()
+//	If YearBeginPeriodMonth = YearEndPeriodMonth Then
+//		Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
+//		YearEndPeriodDay = Max(YearBeginPeriodDay, YearEndPeriodDay);		
+//	EndIf;	
+//EndProcedure
 
 // HELPER FUNCTIONS
 
