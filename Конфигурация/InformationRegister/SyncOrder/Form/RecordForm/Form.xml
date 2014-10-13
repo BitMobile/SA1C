@@ -31,6 +31,11 @@
 						<Event name="StartChoice">MetadataObjectStartChoice</Event>
 					</Events>
 				</InputField>
+				<InputField name="Position" id="15">
+					<DataPath>Record.Position</DataPath>
+					<ContextMenu name="PositionContextMenu" id="16"/>
+					<ExtendedTooltip name="PositionExtendedTooltip" id="17"/>
+				</InputField>
 				<CheckBoxField name="Upload" id="3">
 					<DataPath>Record.Upload</DataPath>
 					<CheckBoxType>Auto</CheckBoxType>

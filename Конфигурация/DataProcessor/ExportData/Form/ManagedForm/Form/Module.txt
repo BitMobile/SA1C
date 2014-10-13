@@ -9,12 +9,12 @@ Procedure UploadDataInFileServer(All, UploadComplete, TempStorageAddress, FileNa
 	If UploadComplete Then
 		
 		Message(NStr("en = ""Data upload completed. File: " + FileName + """; ru = ""Выгрузка данных завершена. Файл: " + FileName + """"));
-		DataProcessors.SyncAndSettings.SaveSyncState(True);
+		DataProcessors.SyncAndSettings.SaveSyncUploadState(True);
 					
 	Else 
 		
 		Message(NStr("en = ""Data upload interrupted""; ru = ""Выгрузка данных прервана"""));
-		DataProcessors.SyncAndSettings.SaveSyncState(False);
+		DataProcessors.SyncAndSettings.SaveSyncUploadState(False);
 		
 	EndIf;
 	

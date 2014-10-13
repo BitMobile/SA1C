@@ -2,17 +2,89 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Common procedures and functions
 
+
+
 &AtServer
 Procedure OnOpenServer()
     
-    Object.Server 		= Constants.Server.Get();
-    Object.Path 		= Constants.ServerPath.Get();
-    Object.Password 	= Constants.Password.Get();
+    Object.Server = Constants.Server.Get();
+    Object.Path = Constants.ServerPath.Get();
+    Object.Password = Constants.Password.Get();
 	Object.Port 		= Constants.Port.Get();
-    Object.SKUFeatures 	= Constants.SKUFeaturesRegistration.Get();
-    Object.MultiStock 	= Constants.MultiStock.Get();
-    
+    Object.SKUFeatures = Constants.SKUFeaturesRegistration.Get();
+    Object.MultiStock = Constants.MultiStock.Get();
+	
+	Sessions = GetInfoBaseSessions();
+	ThisSessionNumber = InfoBaseSessionNumber();
+	
+	ThisForm.UploadGUID = Constants.UploadGUID.Get();
+			
+	For Each Session in Sessions Do
+		If Session.SessionNumber = ThisSessionNumber Then
+			ThisForm.ThisSessionID = String(Session.SessionNumber)+String(Session.SessionStarted);
+		EndIf;
+	EndDo;
+	
+	CheckSync();
+	
 EndProcedure
+
+&AtServer
+Procedure CheckSync(SyncMayStart = False)
+	
+	Try
+		
+		SyncStarted = Constants.SyncronizationStarted.Get();
+		
+	Except
+		
+		Msg(NStr("en = ""Can't get SyncronizationStarted constant""; ru = ""Не могу получить константу SyncronizationStarted"""), ThisForm.UUID);
+		ThisForm.Items.SyncronizeData.Enabled = False;
+		SyncMayStart = False;
+		Return;
+
+	EndTry;
+			
+	If SyncStarted <> "" Then
+		
+		If SyncStarted = ThisForm.ThisSessionID Then
+			
+			Msg(NStr("en = ""Sync already started by you""; ru = ""Синхронизация уже запущена вами"""), ThisForm.UUID);
+			ThisForm.Items.SyncronizeData.Enabled = False;
+			SyncMayStart = False;
+			Return;
+			
+		Else
+			
+			Sessions = GetInfoBaseSessions();
+			
+			For Each Session In Sessions Do
+				
+				If String(Session.SessionNumber)+String(Session.SessionStarted) = SyncStarted Then
+					
+					Msg(NStr("en = ""Sync already started by user: ""; ru = ""Синхронизация уже запущена пользователем: """) + Session.User, ThisForm.UUID);
+					ThisForm.Items.SyncronizeData.Enabled = False;
+					SyncMayStart = False;
+					Return;
+					
+				EndIf;
+				
+			EndDo;
+			
+		EndIf;//SyncStarted = ThisForm.ThisSessionID
+		
+	EndIf;//SyncStarted <> ""
+	
+	SyncMayStart = True;
+		
+EndProcedure
+
+&AtServer
+Function GetUploadGUID()
+	
+	Return Constants.UploadGUID.Get();
+
+EndFunction
 
 &AtServer
 Procedure DefaultSettingsServer()
@@ -36,10 +108,18 @@ Function LanguageCheck()
 EndFunction // ()
 
 &AtServer
-Function GetLastSyncInfo(LastDate, LastStatus)
+Function GetLastSyncUploadInfo(LastDate, LastStatus)
     
-    LastDate = Constants.LastSyncDate.Get();
-    LastStatus = Constants.LastSyncStatus.Get();
+	LastDate = Constants.LastSyncUploadDate.Get();
+    LastStatus = Constants.LastSyncUploadStatus.Get();
+    
+EndFunction
+
+&AtServer
+Function GetLastSyncDownloadInfo(LastDate, LastStatus)
+    
+    LastDate = Constants.LastSyncDownloadDate.Get();
+    LastStatus = Constants.LastSyncDownloadStatus.Get();
     
 EndFunction
 
@@ -51,6 +131,20 @@ Function GetLastDeletedSyncInfo(LastDate, LastStatus)
     
 EndFunction
 
+&AtServer
+Procedure Msg(Text, FormID = Undefined)
+	
+	If NOT FormID = Undefined Then
+		
+		Message = New UserMessage;
+		Message.Text = Text;
+		Message.TargetID = FormID;
+		Message.Message();
+		
+	EndIf;	
+	
+EndProcedure
+
 //////////////////////////////////////////////
 // Common Settings
 
@@ -61,6 +155,7 @@ Procedure SaveSettingsServer()
     Constants.ServerPath.Set(Object.Path);
     Constants.Password.Set(Object.Password);
 	Constants.Port.Set(Object.Port);
+
     
 EndProcedure
 
@@ -68,50 +163,89 @@ EndProcedure
 // Common Sync
 
 &AtServer 
-Procedure SyncronizeDataServer(All)
-    
-    UploadComplete = False;
-    DownloadComplete = False;
-	
-	Message(NStr("en = ""Data upload is in process..""; ru = ""Выгрузка данных в процессе..."""), MessageStatus.Important);
-	
-    DataProcessors.SyncAndSettings.UploadData(All, UploadComplete);
-    
-    If UploadComplete Then
-        
-        Message(NStr("en = ""Data upload completed""; ru = ""Выгрузка данных завершена"""));
-                   
-    Else 
-        
-        Message(NStr("en = ""Data upload interrupted""; ru = ""Выгрузка данных прервана"""));
-                
-    EndIf;
-	
-	Message(NStr("en = ""Data download is in process""; ru = ""Загрузка данных в процессе..."""));
-	
-	DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
-        
-    If DownloadComplete Then 
-        
-        Message(NStr("en = ""Data download completed""; ru = ""Загрузка данных завершена"""));
-               
-    Else 
-        
-        Message(NStr("en = ""Data download interrupted""; ru = ""Загрузка данных прервана"""));
-                
-	EndIf;
-	
-	If DownloadComplete And UploadComplete Then
-	
-		Message(NStr("en = ""Synchronization was successful""; ru = ""Синхронизация прошла успешно"""));
-		DataProcessors.SyncAndSettings.SaveSyncState(True);
+Procedure SyncronizeDataServer(All = False, FormID = Undefined, UploadComplete = False)
+	SyncMayStart = False;
+	BeginTransaction();//4 Constant.SyncronizationStarted lock
+	Try
 		
-	Else 
+		//Lock SyncStarted Constant
+		DLock = New DataLock;
+		BlockElement = DLock.Add("Constant.SyncronizationStarted");
+		BlockElement.Mode = DataLockMode.Exclusive;
+		Dlock.Lock();	
 		
-		DataProcessors.SyncAndSettings.SaveSyncState(False);
+		CheckSync(SyncMayStart);
 		
-	EndIf;
+	Except
 		
+		Msg(NStr("en = ""Can't lock SyncronizationStarted constant!""; ru = ""Не могу заблокировать константу SyncronizationStarted"""), FormID);
+		SyncMayStart = False;
+		
+	EndTry;
+	
+	If SyncMayStart Then
+		ConstantSet = False;
+		Try 
+			
+			Constants.SyncronizationStarted.Set(ThisForm.ThisSessionID);
+			ConstantSet = True;
+			
+		Except
+			
+			ConstantSet = False;
+			
+		EndTry;
+		
+
+		CommitTransaction();//4 Constant.SyncronizationStarted lock
+		
+		If ConstantSet Then
+			
+			//Download
+			DownloadComplete = False;
+			
+			Msg(NStr("en = ""Data download started""; ru = ""Загрузка данных запущена"""), FormID);
+				
+			DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
+			    
+			If DownloadComplete Then 
+			        
+				Msg(NStr("en = ""Data download completed""; ru = ""Загрузка данных завершена"""), FormID);
+				DataProcessors.SyncAndSettings.SaveSyncDownloadState(True);
+			        
+			Else 
+			        
+				Msg(NStr("en = ""Data download interrupted""; ru = ""Загрузка данных прервана"""), FormID);
+				DataProcessors.SyncAndSettings.SaveSyncDownloadState(False);
+					
+			EndIf;//DowloadComlete
+			
+			//Upload
+			UploadComplete = False;
+			
+			DataProcessors.SyncAndSettings.UploadData(All, UploadComplete);
+			
+			If UploadComplete Then 
+			        
+				Msg(NStr("en = ""Data async upload started""; ru = ""Асинхронная выгрузка данных запущена"""), FormID);
+				ThisForm.Items.SyncronizeData.Enabled = False;
+				        
+			Else 
+			        
+				Msg(NStr("en = ""Data async upload interrupted""; ru = ""Асинхронная выгрузка данных прервана"""), FormID);
+				Constants.SyncronizationStarted.Set("");
+				DataProcessors.SyncAndSettings.SaveSyncUploadState(False);
+					
+			EndIf;//UploadComlete
+					
+		EndIf;//ConstantSet
+		
+	Else
+		
+		CommitTransaction();//4 Constant.SyncronizationStarted lock
+		
+	EndIf;//SyncMayStart
+	
 EndProcedure
 
 &AtServer
@@ -157,30 +291,57 @@ EndProcedure
 // Command interface
 
 &AtClient
-Procedure SetLastSyncInfo(LastDate, LastStatus)
+Procedure SetLastSyncUploadInfo(LastDate, LastStatus)
     
     If ValueIsFilled(LastDate) Then
         
         If LastStatus Then
             
-            Items.LastSyncDate.TextColor = WebColors.Green;
-            LastSyncDate = String(LastDate) + NStr("en = "" (completed)""; ru = "" (выполнена)""");
+            Items.LastSyncUploadDate.TextColor = WebColors.Green;
+            LastSyncUploadDate = String(LastDate) + NStr("en = "" (completed)""; ru = "" (выполнена)""");
             
         Else 
             
-            Items.LastSyncDate.TextColor = WebColors.Red;
-            LastSyncDate = String(LastDate) + NStr("en = "" (failed)""; ru = "" (не выполнена)""");
+            Items.LastSyncUploadDate.TextColor = WebColors.Red;
+            LastSyncUploadDate = String(LastDate) + NStr("en = "" (failed)""; ru = "" (не выполнена)""");
             
         EndIf;
         
     Else
         
-        Items.LastSyncDate.TextColor = WebColors.Red;
-        LastSyncDate = NStr("en = ""No data""; ru = ""Нет данных""");
+        Items.LastSyncUploadDate.TextColor = WebColors.Red;
+        LastSyncUploadDate = NStr("en = ""No data""; ru = ""Нет данных""");
         
     EndIf;
     
 EndProcedure
+
+&AtClient
+Procedure SetLastSyncDownloadInfo(LastDate, LastStatus)
+    
+    If ValueIsFilled(LastDate) Then
+        
+        If LastStatus Then
+            
+            Items.LastSyncDownloadDate.TextColor = WebColors.Green;
+            LastSyncDownloadDate = String(LastDate) + NStr("en = "" (completed)""; ru = "" (выполнена)""");
+            
+        Else 
+            
+            Items.LastSyncDownloadDate.TextColor = WebColors.Red;
+            LastSyncDownloadDate = String(LastDate) + NStr("en = "" (failed)""; ru = "" (не выполнена)""");
+            
+        EndIf;
+        
+    Else
+        
+        Items.LastSyncDownloadDate.TextColor = WebColors.Red;
+        LastSyncDownloadDate = NStr("en = ""No data""; ru = ""Нет данных""");
+        
+    EndIf;
+    
+EndProcedure
+
 
 &AtClient
 Procedure SetLastDeletedSyncInfo(LastDate, LastStatus)
@@ -212,12 +373,30 @@ EndProcedure
 Procedure OnOpen(Cancel)
     
     OnOpenServer();
+	
+	If ThisForm.UploadGUID <> "" Then
+		
+		ThisForm.Items.SyncronizeData.Enabled = False;
+		
+		msg(НСтр("ru = 'Другой пользователь уже запустил синхронизацию и от сервера получен GUID асинхронной выгрузки, проверка статуса...';"
+		     + " en = 'Another user already started async uploading and get her UUID, checking status...'"),UUID);
+			 
+		AttachIdleHandler("SyncronizeDataServerAtClient",20);
+		
+	EndIf;
     
-    LastDate = Undefined;
-    LastStatus = False;
+
+    LastUploadDate = Undefined;
+    LastUploadStatus = False;
+	
+	GetLastSyncUploadInfo(LastUploadDate, LastUploadStatus);
+    SetLastSyncUploadInfo(LastUploadDate, LastUploadStatus);
+	
+	LastDownloadDate = Undefined;
+    LastDownloadStatus = False;
     
-    GetLastSyncInfo(LastDate, LastStatus);
-    SetLastSyncInfo(LastDate, LastStatus);
+    GetLastSyncDownloadInfo(LastDownloadDate, LastDownloadStatus);
+    SetLastSyncDownloadInfo(LastDownloadDate, LastDownloadStatus);
     
     LastDeletedDate = Undefined;
     LastDeletedStatus = False;
@@ -260,19 +439,12 @@ Procedure PasswordOnChange(Item)
 EndProcedure
 
 &AtClient
-Procedure PortOnChange(Item)
-	
-	Items.SaveSettings.Enabled = True;
-
-EndProcedure
-
-&AtClient
 Procedure DefaultSettings(Command)
     
     Mode = QuestionDialogMode.OKCancel;
     
     Text = "en = 'Settings will be reset. Continue?';"
-    + "ru = 'Настройки будет перезаполнены. Продолжить?'";
+    + "ru = 'Настройки будет презаполнены. Продолжить?'";
     
     Answer = DoQueryBox(NStr(Text), Mode, 0);
     
@@ -309,15 +481,80 @@ EndProcedure
 
 &AtClient
 Procedure SyncronizeData(Command)
+	UploadComplete = False;
+    SyncronizeDataServer(,ThisForm.UUID, UploadComplete);
+	If UploadComplete Then
+		UploadGUID = GetUploadGUID();
+		
+		AttachIdleHandler("SyncronizeDataServerAtClient",20);
+		
+	EndIf;
+		
+	UpdateInfo();
+  
+EndProcedure
+
+&AtClient
+Procedure SyncronizeDataServerAtClient()
+	
+	BreakIdle = False;
+	
+	ResultString = CheckAsyncUploadAtServer(ThisForm.UploadGUID);
+	
+	If ResultString = "NothingToCheck" Then
+		
+		BreackIdle = True;
+		
+	ElsIf ResultString = "ok" Then
+		
+		Msg(NStr("en = ""Data async uploading completed""; ru = ""Асинхронная выгрузка данных завершена"""), ThisForm.UUID);
+		BreakIdle = True;
+		
+	ElsIf ResultString = "processing" Then
+		
+		Msg(NStr("en = ""Data async uploading processing...""; ru = ""Асинхронная выгрузка данных в процессе..."""), ThisForm.UUID);	
+		
+	Else
+		
+		Msg(NStr("en = ""Data async uploading interrupted with error: ""; ru = ""Асинхронная выгрузка данных прервана с ошибкой: """) + ResultString, ThisForm.UUID);
+		BreakIdle = True;
+		
+	EndIf;
+	
+	UpdateInfo();
+	
+	If BreakIdle Then
+		DetachIdleHandler("SyncronizeDataServerAtClient");
+		ThisForm.Items.SyncronizeData.Title = "Синхронизировать данные";
+		ThisForm.Items.SyncronizeData.Enabled = True;
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Function CheckAsyncUploadAtServer(UploadGUID)
+	
+	 Return DataProcessors.SyncAndSettings.CheckAsyncUpload(UploadGUID);
+	
+EndFunction
+
+&AtClient
+Procedure UpdateInfo()
     
-    SyncronizeDataServer(False);
+    Var LastDownloadDate, LastDownloadStatus, LastUploadDate, LastUploadStatus;
     
-    LastDate = Undefined;
-    LastStatus = False;
+    LastUploadDate = Undefined;
+    LastUploadStatus = False;
     
-    GetLastSyncInfo(LastDate, LastStatus);
-    SetLastSyncInfo(LastDate, LastStatus);
+    GetLastSyncUploadInfo(LastUploadDate, LastUploadStatus);
+    SetLastSyncUploadInfo(LastUploadDate, LastUploadStatus);
     
+    LastDownloadDate = Undefined;
+    LastDownloadStatus = False;
+    
+    GetLastSyncDownloadInfo(LastDownloadDate, LastDownloadStatus);
+    SetLastSyncDownloadInfo(LastDownloadDate, LastDownloadStatus);
+
 EndProcedure
 
 &AtClient
@@ -435,12 +672,49 @@ Procedure SaveDatabaseSettingsServer()
     Constants.MultiStock.Set(Object.MultiStock);
 EndProcedure
 
+&AtServer
+Function GetLastSyncInfo(LastDate, LastStatus)
+    
+    LastDate = Constants.LastSyncDate.Get();
+    LastStatus = Constants.LastSyncStatus.Get();
+    
+EndFunction
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Command interface
 
+&AtClient
+Procedure SetLastSyncInfo(LastDate, LastStatus)
+    
+    If ValueIsFilled(LastDate) Then
+        
+        If LastStatus Then
+            
+            Items.LastSyncDate.TextColor = WebColors.Green;
+            LastSyncDate = String(LastDate) + NStr("en = "" (completed)""; ru = "" (выполнена)""");
+            
+        Else 
+            
+            Items.LastSyncDate.TextColor = WebColors.Red;
+            LastSyncDate = String(LastDate) + NStr("en = "" (failed)""; ru = "" (не выполнена)""");
+            
+        EndIf;
+        
+    Else
+        
+        Items.LastSyncDate.TextColor = WebColors.Red;
+        LastSyncDate = NStr("en = ""No data""; ru = ""Нет данных""");
+        
+    EndIf;
+    
+EndProcedure
 
+&AtClient
+Procedure PortOnChange(Item)
+	
+	Items.SaveSettings.Enabled = True;
 
-
-
+EndProcedure
 
 
 

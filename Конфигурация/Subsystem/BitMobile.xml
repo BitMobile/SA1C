@@ -23,8 +23,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentOnWrite</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentBeforeWrite</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.User</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDate</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncStatus</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncUploadDate</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncUploadStatus</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedDate</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedStatus</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.Server</xr:Item>

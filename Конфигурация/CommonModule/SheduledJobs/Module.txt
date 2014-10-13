@@ -1,32 +1,113 @@
 ﻿
 Procedure Sincronize() Export
 	
-	UploadComplete = False;
-	DownloadComplete = False;
+	SyncMayStart = False;
 	
-	DataProcessors.SyncAndSettings.UploadData(False, UploadComplete);
+	BeginTransaction();//4 Constant.SyncronizationStarted lock
 	
-	If UploadComplete Then
+	Try
 		
-		DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
+		//Lock SyncStarted Constant
+		DLock = New DataLock;
+		BlockElement = DLock.Add("Constant.SyncronizationStarted");
+		BlockElement.Mode = DataLockMode.Exclusive;
+		Dlock.Lock();	
+		
+		CheckSync(SyncMayStart);
+		
+	Except
+		
+		SyncMayStart = False;
+		
+	EndTry;
+	
+	If SyncMayStart Then
+		
+		ConstantSet = False;
+		Sessions = GetInfoBaseSessions();
+		ThisSessionNumber = InfoBaseSessionNumber();
+			
+		For Each Session in Sessions Do
+			If Session.SessionNumber = ThisSessionNumber Then
+				ThisSessionID = String(Session.SessionNumber)+String(Session.SessionStarted);
 				
-		If DownloadComplete Then 
-			
-			DataProcessors.SyncAndSettings.SaveSyncState(True);
-			
-		Else 
-			
-			DataProcessors.SyncAndSettings.SaveSyncState(False);
-			
-		EndIf;
-			
-	Else 
+				Try
+					
+					Constants.SyncronizationStarted.Set(ThisSessionID);
+					ConstantSet = True;
+					
+				Except
+					
+					ConstantSet = False;
+					
+				EndTry;
+				
+			EndIf;
+		EndDo;
 		
-		DataProcessors.SyncAndSettings.SaveSyncState(False);
+		CommitTransaction();//4 Constant.SyncronizationStarted lock
 		
-	EndIf;
+		If ConstantSet Then
+			
+			//Download
+			DownloadComplete = False;
+				
+			DataProcessors.SyncAndSettings.DownloadData(DownloadComplete);
+			    
+			If DownloadComplete Then 
+			
+				DataProcessors.SyncAndSettings.SaveSyncDownloadState(True);
+			        
+			Else 
+			        
+				DataProcessors.SyncAndSettings.SaveSyncDownloadState(False);
+					
+			EndIf;//DowloadComlete
+			
+			//Upload
+			UploadComplete = False;
+			
+			DataProcessors.SyncAndSettings.UploadData(, UploadComplete);
+			
+			If NOT UploadComplete Then 
+			        			        
+				Constants.SyncronizationStarted.Set("");
+				DataProcessors.SyncAndSettings.SaveSyncUploadState(False);
+					
+			EndIf;//UploadComlete
+					
+		EndIf;//ConstantSet
+		
+	Else
+		
+		CommitTransaction();//4 Constant.SyncronizationStarted lock
+		
+	EndIf;//SyncMayStart
+	
+	//Manar 08.08.2014
+	//DataProcessors.SyncAndSettings.SyncPicturesOnServer();
 	
 EndProcedure
+
+Procedure CheckSync(SyncMayStart = False)
+	
+	SyncStarted = Constants.SyncronizationStarted.Get();
+			
+		
+	UploadGUID = Constants.UploadGUID.Get();
+	
+	ConnectFault = False;
+	
+	ResultString = DataProcessors.SyncAndSettings.CheckAsyncUpload(UploadGUID, ConnectFault);
+	
+	If Not ConnectFault AND Not ResultString = "processing" OR (ResultString = "NothingToCheck" AND SyncStarted = "") Then
+				
+		SyncMayStart = True;
+			
+	EndIf;
+			
+EndProcedure
+
 
 Procedure SynchronizePictures() Export
 	DataProcessors.SyncAndSettings.SyncPicturesOnServer();

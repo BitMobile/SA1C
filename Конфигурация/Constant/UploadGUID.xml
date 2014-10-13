@@ -1,29 +1,33 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<Constant uuid="ca6546e2-f650-4554-8104-b80bc1d5f975">
+	<Constant uuid="bbe3aea3-744f-4522-86fa-c6719dd53b5a">
 		<InternalInfo>
-			<xr:GeneratedType name="ConstantManager.LastSyncStatus" category="Manager">
-				<xr:TypeId>b080cb09-7b75-4496-83f9-385d8fa36b41</xr:TypeId>
-				<xr:ValueId>f06287a6-4651-4d58-9754-7364d87f979d</xr:ValueId>
+			<xr:GeneratedType name="ConstantManager.UploadGUID" category="Manager">
+				<xr:TypeId>900f23da-57a1-4ddf-baa8-c57c93040166</xr:TypeId>
+				<xr:ValueId>83a1fa8c-adf5-4417-bc7e-b40e2031a1c2</xr:ValueId>
 			</xr:GeneratedType>
-			<xr:GeneratedType name="ConstantValueManager.LastSyncStatus" category="ValueManager">
-				<xr:TypeId>c926ed69-b70d-4f57-8332-a06daae1b9d7</xr:TypeId>
-				<xr:ValueId>0da335bc-7c29-477c-b1a6-d1225cf58c99</xr:ValueId>
+			<xr:GeneratedType name="ConstantValueManager.UploadGUID" category="ValueManager">
+				<xr:TypeId>01ff1c92-0226-44cb-a5cc-a4083abb848d</xr:TypeId>
+				<xr:ValueId>742f3791-4bd0-4269-9c35-3fd3e43aa570</xr:ValueId>
 			</xr:GeneratedType>
 		</InternalInfo>
 		<Properties>
-			<Name>LastSyncStatus</Name>
+			<Name>UploadGUID</Name>
 			<Synonym>
 				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Last sync status</v8:content>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Upload GUID</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
 			<Type>
-				<v8:Type>xs:boolean</v8:Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>36</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
 			</Type>
-			<UseStandardCommands>false</UseStandardCommands>
+			<UseStandardCommands>true</UseStandardCommands>
 			<DefaultForm/>
 			<ExtendedPresentation/>
 			<Explanation/>

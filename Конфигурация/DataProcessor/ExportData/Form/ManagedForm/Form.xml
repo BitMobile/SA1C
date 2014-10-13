@@ -11,7 +11,7 @@
 		<UsualGroup name="Group1" id="3">
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="Group1РасширеннаяПодсказка" id="4"/>
+			<ExtendedTooltip name="Group1ExtendedTooltip" id="4"/>
 			<ChildItems>
 				<Button name="FormExportMetadata" id="1">
 					<Type>UsualButton</Type>
@@ -38,7 +38,7 @@
 							<v8:content>Выгрузка метаданных</v8:content>
 						</v8:item>
 					</Title>
-					<ExtendedTooltip name="FormExportMetadataРасширеннаяПодсказка" id="5"/>
+					<ExtendedTooltip name="FormExportMetadataExtendedTooltip" id="5"/>
 				</Button>
 				<Button name="FormExportData" id="2">
 					<Type>UsualButton</Type>
@@ -64,7 +64,7 @@
 							<v8:content>Выгрузка данных</v8:content>
 						</v8:item>
 					</Title>
-					<ExtendedTooltip name="FormExportDataРасширеннаяПодсказка" id="6"/>
+					<ExtendedTooltip name="FormExportDataExtendedTooltip" id="6"/>
 				</Button>
 			</ChildItems>
 		</UsualGroup>

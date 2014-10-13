@@ -11,9 +11,6 @@
     	UpdateDatabase.StartUpdate();
     EndIf;
 	
-	If Not Constants.update_questionnaire.Get() Then
-		UpdateDatabase.StartUpdateQuestionnaire();
-	EndIf;
 КонецПроцедуры
 
 

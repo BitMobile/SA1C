@@ -58,6 +58,11 @@
 				<ExtendedTooltip name="ListУправлениеПоискомРасширеннаяПодсказка" id="21"/>
 			</SearchControlAddition>
 			<ChildItems>
+				<LabelField name="Position" id="26">
+					<DataPath>List.Position</DataPath>
+					<ContextMenu name="PositionContextMenu" id="27"/>
+					<ExtendedTooltip name="PositionExtendedTooltip" id="28"/>
+				</LabelField>
 				<LabelField name="MetadataObject" id="4">
 					<DataPath>List.MetadataObject</DataPath>
 					<DefaultItem>true</DefaultItem>
