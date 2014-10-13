@@ -513,17 +513,7 @@
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
-							<DataPath>Object.SKUQuestions</DataPath>
-							<CommandSet>
-								<ExcludedCommand>Copy</ExcludedCommand>
-								<ExcludedCommand>SortListAsc</ExcludedCommand>
-								<ExcludedCommand>MoveUp</ExcludedCommand>
-								<ExcludedCommand>SortListDesc</ExcludedCommand>
-								<ExcludedCommand>Delete</ExcludedCommand>
-								<ExcludedCommand>Add</ExcludedCommand>
-								<ExcludedCommand>Change</ExcludedCommand>
-								<ExcludedCommand>MoveDown</ExcludedCommand>
-							</CommandSet>
+							<DataPath>Object.SKUQuestionsNew</DataPath>
 							<SearchStringLocation>None</SearchStringLocation>
 							<ViewStatusLocation>None</ViewStatusLocation>
 							<SearchControlLocation>None</SearchControlLocation>
@@ -574,12 +564,11 @@
 								<Event name="ChoiceProcessing">SKUQuestionsChoiceProcessing</Event>
 							</Events>
 							<ChildItems>
-								<LabelField name="SKUQuestionsLineNumber" id="41">
-									<DataPath>Object.SKUQuestions.LineNumber</DataPath>
+								<LabelField name="SKUQuestionsLineNumber" id="229">
+									<DataPath>Object.SKUQuestionsNew.LineNumber</DataPath>
 									<EditMode>EnterOnInput</EditMode>
-									<Width>1</Width>
-									<ContextMenu name="SKUQuestionsLineNumberContextMenu" id="42"/>
-									<ExtendedTooltip name="SKUQuestionsLineNumberExtendedTooltip" id="143"/>
+									<ContextMenu name="SKUQuestionsLineNumberContextMenu" id="230"/>
+									<ExtendedTooltip name="SKUQuestionsLineNumberExtendedTooltip" id="231"/>
 								</LabelField>
 								<InputField name="SKUQuestionsQuestion" id="183">
 									<DataPath>Object.SKUQuestionsNew.Question</DataPath>
@@ -587,20 +576,6 @@
 									<ContextMenu name="SKUQuestionsQuestionContextMenu" id="184"/>
 									<ExtendedTooltip name="SKUQuestionsQuestionExtendedTooltip" id="185"/>
 								</InputField>
-								<InputField name="SKUQuestionsSKUQuestion" id="43">
-									<DataPath>Object.SKUQuestions.SKUQuestion</DataPath>
-									<Enabled>false</Enabled>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="SKUQuestionsSKUQuestionContextMenu" id="44"/>
-									<ExtendedTooltip name="SKUQuestionsSKUQuestionExtendedTooltip" id="144"/>
-								</InputField>
-								<CheckBoxField name="SKUQuestionsUseInQuestionaire" id="45">
-									<DataPath>Object.SKUQuestions.UseInQuestionaire</DataPath>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="SKUQuestionsUseInQuestionaireContextMenu" id="46"/>
-									<ExtendedTooltip name="SKUQuestionsUseInQuestionaireExtendedTooltip" id="145"/>
-								</CheckBoxField>
 							</ChildItems>
 						</Table>
 						<Table name="SKUQuestions1" id="186">
