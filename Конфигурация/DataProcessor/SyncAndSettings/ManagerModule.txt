@@ -2149,7 +2149,7 @@ Procedure FillRecordset() Export  // Default setting for SyncOrder
     Row.MetadataObject = "Document.Questionnaire";
     Row.Position = 24;
     Row.Upload = True;    
-	//Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT QP.[Questionnaire] FROM [Document].[QuestionnaireMap_Positions] QP JOIN [Catalog].[User] U ON QP.[Position]=U.Position AND U.[Id] =@UserId)';";
+	Row.Filter = "FilterName= 'Header' FilterText= 'T.[Id] IN (SELECT QP.[Questionnaire] FROM [Document].[QuestionnaireMap_Positions] QP JOIN [Catalog].[User] U ON QP.[Position]=U.Position AND U.[Id] =@UserId)';";
 
 	
     Row = ValueTable.Add();
@@ -2202,11 +2202,11 @@ Procedure FillRecordset() Export  // Default setting for SyncOrder
     Row.Download = True;
     Row.Upload = True;
     
-	//Row = ValueTable.Add();
-	//Row.MetadataObject = "Document.QuestionnaireMap";
-	//Row.Position = 33;
-	//Row.Download = False;
-	//Row.Upload = True;
+	Row = ValueTable.Add();
+	Row.MetadataObject = "Document.QuestionnaireMap";
+	Row.Position = 33;
+	Row.Download = False;
+	Row.Upload = True;
     
     RecordSet = InformationRegisters.SyncOrder.CreateRecordSet();
     RecordSet.Load(ValueTable);
