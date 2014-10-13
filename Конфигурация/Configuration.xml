@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.2.0.56</Version>
+			<Version>1.3.0.56</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -136,9 +136,11 @@
 			<Role>Admin</Role>
 			<CommonModule>AddForUpload</CommonModule>
 			<CommonModule>ClientProcessors</CommonModule>
-			<CommonModule>SheduledJobs</CommonModule>
+			<CommonModule>CommonProcessors</CommonModule>
 			<CommonModule>QuestionnaireMapAssign</CommonModule>
 			<CommonModule>ScheduleFunctions</CommonModule>
+			<CommonModule>SheduledJobs</CommonModule>
+			<CommonModule>SyncSettingsRegister</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
 			<CommonModule>UpdateDatabase</CommonModule>
 			<CommonModule>ДлительныеОперации</CommonModule>
@@ -153,8 +155,8 @@
 			<CommonModule>Пользователи</CommonModule>
 			<CommonModule>ПользователиКлиентСервер</CommonModule>
 			<CommonModule>ПользователиСлужебный</CommonModule>
-			<CommonModule>CommonProcessors</CommonModule>
-			<CommonModule>SyncSettingsRegister</CommonModule>
+			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
+			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<CommonModule>РегламентныеЗаданияКлиент</CommonModule>
 			<CommonModule>РегламентныеЗаданияСервер</CommonModule>
 			<CommonModule>РегламентныеЗаданияСлужебный</CommonModule>
@@ -164,8 +166,6 @@
 			<CommonModule>СтандартныеПодсистемыПовтИсп</CommonModule>
 			<CommonModule>СтандартныеПодсистемыСервер</CommonModule>
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
-			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
-			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<EventSubscription>CatalogOnWrite</EventSubscription>
 			<EventSubscription>CatalogBeforeWrite</EventSubscription>
 			<EventSubscription>DocumentOnWrite</EventSubscription>
@@ -184,19 +184,19 @@
 			<CommandGroup>CommandGroup3</CommandGroup>
 			<CommandGroup>CommandGroup4</CommandGroup>
 			<Constant>Server</Constant>
-			<Constant>LastSyncUploadDate</Constant>
-			<Constant>Port</Constant>
 			<Constant>ServerPath</Constant>
+			<Constant>Port</Constant>
+			<Constant>Password</Constant>
+			<Constant>LastSyncUploadDate</Constant>
+			<Constant>LastSyncUploadStatus</Constant>
+			<Constant>LastSyncDeletedDate</Constant>
 			<Constant>LastSyncDeletedStatus</Constant>
+			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MaxPictureSize</Constant>
 			<Constant>update2_0_0</Constant>
 			<Constant>MultiStock</Constant>
-			<Constant>Password</Constant>
-			<Constant>LastSyncUploadStatus</Constant>
-			<Constant>LastSyncDeletedDate</Constant>
 			<Constant>update_questionnaire</Constant>
-			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>UploadGUID</Constant>
 			<Constant>LastSyncDownloadDate</Constant>
 			<Constant>LastSyncDownloadStatus</Constant>
@@ -231,14 +231,14 @@
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
+			<Document>MobileAppPlanVisit</Document>
 			<Document>Order</Document>
 			<Document>PriceList</Document>
 			<Document>Questionnaire</Document>
-			<Document>Task</Document>
 			<Document>QuestionnaireMap</Document>
+			<Document>Task</Document>
 			<Document>Visit</Document>
 			<Document>VisitPlan</Document>
-			<Document>MobileAppPlanVisit</Document>
 			<DocumentJournal>CommonJournal</DocumentJournal>
 			<Enum>ClosingCause</Enum>
 			<Enum>ComparisonType</Enum>
