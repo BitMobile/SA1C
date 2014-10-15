@@ -205,6 +205,7 @@
 			<CommonForm>Navigation</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>Settings</CommonForm>
+			<CommonForm>DoQueryBox</CommonForm>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>MobileApplicationSettings</Catalog>
