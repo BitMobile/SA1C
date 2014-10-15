@@ -1,0 +1,14 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	TextField = Parameters.Text;
+	Source = Parameters.Source;
+EndProcedure
+
+&AtClient
+Procedure ОK(Command)
+	Notify(Source);
+	Close();
+EndProcedure
+
+
