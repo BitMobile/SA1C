@@ -5,6 +5,7 @@
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
+		<Event name="NotificationProcessing">NotificationProcessing</Event>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="BeforeWrite">BeforeWrite</Event>
 	</Events>
@@ -13,19 +14,19 @@
 			<DataPath>Object.Code</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="CodeContextMenu" id="2"/>
-			<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="14"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="14"/>
 		</InputField>
 		<InputField name="Description" id="3">
 			<DataPath>Object.Description</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="DescriptionContextMenu" id="4"/>
-			<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="15"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="15"/>
 		</InputField>
 		<InputField name="DataType" id="5">
 			<DataPath>Object.DataType</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="DataTypeContextMenu" id="6"/>
-			<ExtendedTooltip name="DataTypeРасширеннаяПодсказка" id="16"/>
+			<ExtendedTooltip name="DataTypeExtendedTooltip" id="16"/>
 			<Events>
 				<Event name="OnChange">DataTypeOnChange</Event>
 			</Events>
@@ -41,43 +42,43 @@
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ValueListContextMenu" id="8"/>
 			<AutoCommandBar name="ValueListCommandBar" id="9"/>
-			<ExtendedTooltip name="ValueListРасширеннаяПодсказка" id="17"/>
-			<SearchStringAddition name="ValueListСтрокаПоиска" id="18">
+			<ExtendedTooltip name="ValueListExtendedTooltip" id="17"/>
+			<SearchStringAddition name="ValueListSearchString" id="20">
 				<Source>
 					<lf:elementId>7</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueListСтрокаПоискаКонтекстноеМеню" id="19"/>
-				<ExtendedTooltip name="ValueListСтрокаПоискаРасширеннаяПодсказка" id="20"/>
+				<ContextMenu name="ValueListSearchStringContextMenu" id="21"/>
+				<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="22"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="ValueListСостояниеПросмотра" id="21">
+			<ViewStatusAddition name="ValueListViewStatus" id="23">
 				<Source>
 					<lf:elementId>7</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueListСостояниеПросмотраКонтекстноеМеню" id="22"/>
-				<ExtendedTooltip name="ValueListСостояниеПросмотраРасширеннаяПодсказка" id="23"/>
+				<ContextMenu name="ValueListViewStatusContextMenu" id="24"/>
+				<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="25"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="ValueListУправлениеПоиском" id="24">
+			<SearchControlAddition name="ValueListSearchControl" id="26">
 				<Source>
 					<lf:elementId>7</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueListУправлениеПоискомКонтекстноеМеню" id="25"/>
-				<ExtendedTooltip name="ValueListУправлениеПоискомРасширеннаяПодсказка" id="26"/>
+				<ContextMenu name="ValueListSearchControlContextMenu" id="27"/>
+				<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="28"/>
 			</SearchControlAddition>
 			<ChildItems>
 				<LabelField name="ValueListLineNumber" id="10">
 					<DataPath>Object.ValueList.LineNumber</DataPath>
 					<EditMode>EnterOnInput</EditMode>
 					<ContextMenu name="ValueListLineNumberContextMenu" id="11"/>
-					<ExtendedTooltip name="ValueListLineNumberРасширеннаяПодсказка" id="27"/>
+					<ExtendedTooltip name="ValueListLineNumberExtendedTooltip" id="18"/>
 				</LabelField>
 				<InputField name="ValueListValue" id="12">
 					<DataPath>Object.ValueList.Value</DataPath>
 					<EditMode>EnterOnInput</EditMode>
 					<ContextMenu name="ValueListValueContextMenu" id="13"/>
-					<ExtendedTooltip name="ValueListValueРасширеннаяПодсказка" id="28"/>
+					<ExtendedTooltip name="ValueListValueExtendedTooltip" id="19"/>
 				</InputField>
 			</ChildItems>
 		</Table>

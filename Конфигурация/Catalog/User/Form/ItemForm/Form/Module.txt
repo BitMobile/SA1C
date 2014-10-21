@@ -524,7 +524,7 @@ Procedure ManagerStartChoice(Item, ChoiceData, StandardProcessing)
   
     SelectionValue = New Structure("Role", "SRM");
     SelectionParameters = New Structure("Filter", SelectionValue);
-    OpenFormModal("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.Manager);
+    OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.Manager);
 
 EndProcedure
 

@@ -4,6 +4,7 @@
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="NotificationProcessing">NotificationProcessing</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
 		<UsualGroup name="MainGroup" id="19">
@@ -604,6 +605,16 @@
 											</Picture>
 											<ExtendedTooltip name="StocksExtendedTooltip" id="533"/>
 										</Button>
+										<Button name="UnitsOfMeasure" id="1052">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.CommonQuestions</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="UnitsOfMeasureExtendedTooltip" id="1053"/>
+										</Button>
 									</ChildItems>
 								</UsualGroup>
 							</ChildItems>
@@ -836,6 +847,134 @@
 									<Parameter xsi:nil="true"/>
 									<ExtendedTooltip name="ObjectsDeletionExtendedTooltip" id="549"/>
 								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="AdministrationGroup" id="1054">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Administration group</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Administration group</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>NormalSeparation</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="AdministrationGroupExtendedTooltip" id="1055"/>
+							<ChildItems>
+								<UsualGroup name="AdministrationSubGroup" id="1057">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Administration sub group</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Administration sub group</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="AdministrationSubGroupExtendedTooltip" id="1058"/>
+									<ChildItems>
+										<Button name="MoreAdministration" id="1059">
+											<Type>UsualButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.AllQuestions</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.More</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="MoreAdministrationExtendedTooltip" id="1060"/>
+										</Button>
+										<Button name="Administration" id="1061">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.Administration</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<ExtendedTooltip name="AdministrationExtendedTooltip" id="1062"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="AdministrationMoreGroup" id="1063">
+									<Visible>false</Visible>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Administration more group</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Administration more group</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="AdministrationMoreGroupExtendedTooltip" id="1064"/>
+									<ChildItems>
+										<Button name="РегламентныеИФоновыеЗадания" id="1065">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.РегламентныеИФоновыеЗадания</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="РегламентныеИФоновыеЗаданияExtendedTooltip" id="1066"/>
+										</Button>
+										<Button name="УдалениеПомеченныхОбъектов" id="1067">
+											<Type>Hyperlink</Type>
+											<Visible>false</Visible>
+											<CommandName>Form.Command.УдалениеПомеченныхОбъектов</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="УдалениеПомеченныхОбъектовExtendedTooltip" id="1068"/>
+										</Button>
+										<Button name="ChangedData" id="1098">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.ChangedData</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="ChangedDataExtendedTooltip" id="1099"/>
+										</Button>
+										<Button name="СhangedDataBackup" id="1100">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.СhangedDataBackup</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="СhangedDataBackupExtendedTooltip" id="1101"/>
+										</Button>
+										<Button name="InvalidObjects" id="1155">
+											<Type>Hyperlink</Type>
+											<CommandName>Form.Command.InvalidObjects</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="InvalidObjectsExtendedTooltip" id="1156"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
 					</ChildItems>
@@ -3200,6 +3339,16 @@
 									<EnableStartDrag>true</EnableStartDrag>
 									<DataPath>QuestionGroupList</DataPath>
 									<RowPictureDataPath>QuestionGroupList.DefaultPicture</RowPictureDataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Question groups</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группы вопросов</v8:content>
+										</v8:item>
+									</Title>
 									<AutoRefresh>false</AutoRefresh>
 									<AutoRefreshPeriod>60</AutoRefreshPeriod>
 									<Period xsi:type="v8:StandardPeriod">
@@ -3250,6 +3399,16 @@
 											<ContextMenu name="QuestionGroupListRefContextMenu" id="1045"/>
 											<ExtendedTooltip name="QuestionGroupListRefExtendedTooltip" id="1046"/>
 										</LabelField>
+										<LabelField name="QuestionGroupListDescription" id="103">
+											<DataPath>6/4</DataPath>
+											<ContextMenu name="QuestionGroupListDescriptionContextMenu" id="104"/>
+											<ExtendedTooltip name="QuestionGroupListDescriptionExtendedTooltip" id="617"/>
+										</LabelField>
+										<LabelField name="QuestionGroupListCode" id="105">
+											<DataPath>6/1</DataPath>
+											<ContextMenu name="QuestionGroupListCodeContextMenu" id="106"/>
+											<ExtendedTooltip name="QuestionGroupListCodeExtendedTooltip" id="618"/>
+										</LabelField>
 									</ChildItems>
 								</Table>
 								<Table name="QuestionsList" id="27">
@@ -3259,6 +3418,16 @@
 									<EnableStartDrag>true</EnableStartDrag>
 									<DataPath>QuestionsList</DataPath>
 									<RowPictureDataPath>QuestionsList.DefaultPicture</RowPictureDataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Questions</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Вопросы</v8:content>
+										</v8:item>
+									</Title>
 									<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 									<SearchStringLocation>None</SearchStringLocation>
 									<ViewStatusLocation>None</ViewStatusLocation>
@@ -3318,6 +3487,26 @@
 											<ContextMenu name="QuestionsListRefContextMenu" id="1048"/>
 											<ExtendedTooltip name="QuestionsListRefExtendedTooltip" id="1049"/>
 										</LabelField>
+										<LabelField name="QuestionsListDescription" id="30">
+											<DataPath>2/5</DataPath>
+											<ContextMenu name="QuestionsListDescriptionContextMenu" id="31"/>
+											<ExtendedTooltip name="QuestionsListDescriptionExtendedTooltip" id="561"/>
+										</LabelField>
+										<LabelField name="QuestionsListCode" id="32">
+											<DataPath>2/2</DataPath>
+											<ContextMenu name="QuestionsListCodeContextMenu" id="33"/>
+											<ExtendedTooltip name="QuestionsListCodeExtendedTooltip" id="562"/>
+										</LabelField>
+										<LabelField name="QuestionsListOwner" id="34">
+											<DataPath>2/6</DataPath>
+											<ContextMenu name="QuestionsListOwnerContextMenu" id="35"/>
+											<ExtendedTooltip name="QuestionsListOwnerExtendedTooltip" id="563"/>
+										</LabelField>
+										<LabelField name="QuestionsListAnswerType" id="36">
+											<DataPath>QuestionsList.Ref</DataPath>
+											<ContextMenu name="QuestionsListAnswerTypeContextMenu" id="37"/>
+											<ExtendedTooltip name="QuestionsListAnswerTypeExtendedTooltip" id="564"/>
+										</LabelField>
 									</ChildItems>
 								</Table>
 							</ChildItems>
@@ -3332,6 +3521,314 @@
 							<ContextMenu name="Decoration1ContextMenu" id="296"/>
 							<ExtendedTooltip name="Decoration1ExtendedTooltip" id="918"/>
 						</PictureDecoration>
+						<Table name="UnitsOfMeasureList" id="1157">
+							<Visible>false</Visible>
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>UnitsOfMeasureList</DataPath>
+							<RowPictureDataPath>UnitsOfMeasureList.DefaultPicture</RowPictureDataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Units of measure</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Единицы измерения</v8:content>
+								</v8:item>
+							</Title>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period xsi:type="v8:StandardPeriod">
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="UnitsOfMeasureListContextMenu" id="1158"/>
+							<AutoCommandBar name="UnitsOfMeasureListCommandBar" id="1159"/>
+							<ExtendedTooltip name="UnitsOfMeasureListExtendedTooltip" id="1160"/>
+							<SearchStringAddition name="UnitsOfMeasureListSearchString" id="1161">
+								<Source>
+									<lf:elementId>1157</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="UnitsOfMeasureListSearchStringContextMenu" id="1164"/>
+								<ExtendedTooltip name="UnitsOfMeasureListSearchStringExtendedTooltip" id="1165"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="UnitsOfMeasureListViewStatus" id="1166">
+								<Source>
+									<lf:elementId>1157</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="UnitsOfMeasureListViewStatusContextMenu" id="1169"/>
+								<ExtendedTooltip name="UnitsOfMeasureListViewStatusExtendedTooltip" id="1170"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="UnitsOfMeasureListSearchControl" id="1171">
+								<Source>
+									<lf:elementId>1157</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="UnitsOfMeasureListSearchControlContextMenu" id="1174"/>
+								<ExtendedTooltip name="UnitsOfMeasureListSearchControlExtendedTooltip" id="1175"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="UnitsOfMeasureListDescription" id="1176">
+									<DataPath>UnitsOfMeasureList.Description</DataPath>
+									<ContextMenu name="UnitsOfMeasureListDescriptionContextMenu" id="1177"/>
+									<ExtendedTooltip name="UnitsOfMeasureListDescriptionExtendedTooltip" id="1178"/>
+								</LabelField>
+								<LabelField name="UnitsOfMeasureListCode" id="1179">
+									<DataPath>UnitsOfMeasureList.Code</DataPath>
+									<ContextMenu name="UnitsOfMeasureListCodeContextMenu" id="1180"/>
+									<ExtendedTooltip name="UnitsOfMeasureListCodeExtendedTooltip" id="1181"/>
+								</LabelField>
+								<LabelField name="UnitsOfMeasureListFullDescription" id="1182">
+									<DataPath>UnitsOfMeasureList.FullDescription</DataPath>
+									<ContextMenu name="UnitsOfMeasureListFullDescriptionContextMenu" id="1183"/>
+									<ExtendedTooltip name="UnitsOfMeasureListFullDescriptionExtendedTooltip" id="1184"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
+						<Table name="ChangedDataList" id="1185">
+							<Visible>false</Visible>
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>ChangedDataList</DataPath>
+							<RowPictureDataPath>ChangedDataList.DefaultPicture</RowPictureDataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Changed data</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Измененные данные</v8:content>
+								</v8:item>
+							</Title>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period xsi:type="v8:StandardPeriod">
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="ChangedDataListContextMenu" id="1186"/>
+							<AutoCommandBar name="ChangedDataListCommandBar" id="1187"/>
+							<ExtendedTooltip name="ChangedDataListExtendedTooltip" id="1188"/>
+							<SearchStringAddition name="ChangedDataListSearchString" id="1189">
+								<Source>
+									<lf:elementId>1185</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataListSearchStringContextMenu" id="1192"/>
+								<ExtendedTooltip name="ChangedDataListSearchStringExtendedTooltip" id="1193"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ChangedDataListViewStatus" id="1194">
+								<Source>
+									<lf:elementId>1185</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataListViewStatusContextMenu" id="1197"/>
+								<ExtendedTooltip name="ChangedDataListViewStatusExtendedTooltip" id="1198"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ChangedDataListSearchControl" id="1199">
+								<Source>
+									<lf:elementId>1185</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataListSearchControlContextMenu" id="1202"/>
+								<ExtendedTooltip name="ChangedDataListSearchControlExtendedTooltip" id="1203"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="ChangedDataListRef" id="1086">
+									<DataPath>ChangedDataList.Ref</DataPath>
+									<ContextMenu name="ChangedDataListRefContextMenu" id="1087"/>
+									<ExtendedTooltip name="ChangedDataListRefExtendedTooltip" id="1088"/>
+								</LabelField>
+								<LabelField name="ChangedDataListPosition" id="1089">
+									<DataPath>ChangedDataList.Position</DataPath>
+									<ContextMenu name="ChangedDataListPositionContextMenu" id="1090"/>
+									<ExtendedTooltip name="ChangedDataListPositionExtendedTooltip" id="1091"/>
+								</LabelField>
+								<LabelField name="ChangedDataListStatus" id="1092">
+									<DataPath>ChangedDataList.Status</DataPath>
+									<ContextMenu name="ChangedDataListStatusContextMenu" id="1093"/>
+									<ExtendedTooltip name="ChangedDataListStatusExtendedTooltip" id="1094"/>
+								</LabelField>
+								<LabelField name="ChangedDataListModified" id="1095">
+									<DataPath>ChangedDataList.Modified</DataPath>
+									<ContextMenu name="ChangedDataListModifiedContextMenu" id="1096"/>
+									<ExtendedTooltip name="ChangedDataListModifiedExtendedTooltip" id="1097"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
+						<Table name="ChangedDataBackUpList" id="1102">
+							<Visible>false</Visible>
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>ChangedDataBackUpList</DataPath>
+							<RowPictureDataPath>ChangedDataBackUpList.DefaultPicture</RowPictureDataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Changed data (backup)</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Измененные данные (backup)</v8:content>
+								</v8:item>
+							</Title>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period xsi:type="v8:StandardPeriod">
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="ChangedDataBackUpListContextMenu" id="1103"/>
+							<AutoCommandBar name="ChangedDataBackUpListCommandBar" id="1104"/>
+							<ExtendedTooltip name="ChangedDataBackUpListExtendedTooltip" id="1105"/>
+							<SearchStringAddition name="ChangedDataBackUpListSearchString" id="1418">
+								<Source>
+									<lf:elementId>1102</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataBackUpListSearchStringContextMenu" id="1419"/>
+								<ExtendedTooltip name="ChangedDataBackUpListSearchStringExtendedTooltip" id="1420"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ChangedDataBackUpListViewStatus" id="1421">
+								<Source>
+									<lf:elementId>1102</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataBackUpListViewStatusContextMenu" id="1422"/>
+								<ExtendedTooltip name="ChangedDataBackUpListViewStatusExtendedTooltip" id="1423"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ChangedDataBackUpListSearchControl" id="1424">
+								<Source>
+									<lf:elementId>1102</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="ChangedDataBackUpListSearchControlContextMenu" id="1425"/>
+								<ExtendedTooltip name="ChangedDataBackUpListSearchControlExtendedTooltip" id="1426"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="ChangedDataBackUpListRef" id="1121">
+									<DataPath>ChangedDataBackUpList.Ref</DataPath>
+									<ContextMenu name="ChangedDataBackUpListRefContextMenu" id="1122"/>
+									<ExtendedTooltip name="ChangedDataBackUpListRefExtendedTooltip" id="1123"/>
+								</LabelField>
+								<LabelField name="ChangedDataBackUpListStatus" id="1124">
+									<DataPath>ChangedDataBackUpList.Status</DataPath>
+									<ContextMenu name="ChangedDataBackUpListStatusContextMenu" id="1125"/>
+									<ExtendedTooltip name="ChangedDataBackUpListStatusExtendedTooltip" id="1126"/>
+								</LabelField>
+								<LabelField name="ChangedDataBackUpListModified" id="1127">
+									<DataPath>ChangedDataBackUpList.Modified</DataPath>
+									<ContextMenu name="ChangedDataBackUpListModifiedContextMenu" id="1128"/>
+									<ExtendedTooltip name="ChangedDataBackUpListModifiedExtendedTooltip" id="1129"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
+						<Table name="InvalidObjectsList" id="1130">
+							<Visible>false</Visible>
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>InvalidObjectsList</DataPath>
+							<RowPictureDataPath>InvalidObjectsList.DefaultPicture</RowPictureDataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Invalid objects</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Объекты с ошибками</v8:content>
+								</v8:item>
+							</Title>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period xsi:type="v8:StandardPeriod">
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="InvalidObjectsListContextMenu" id="1131"/>
+							<AutoCommandBar name="InvalidObjectsListCommandBar" id="1132"/>
+							<ExtendedTooltip name="InvalidObjectsListExtendedTooltip" id="1133"/>
+							<SearchStringAddition name="InvalidObjectsListSearchString" id="1427">
+								<Source>
+									<lf:elementId>1130</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="InvalidObjectsListSearchStringContextMenu" id="1428"/>
+								<ExtendedTooltip name="InvalidObjectsListSearchStringExtendedTooltip" id="1429"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="InvalidObjectsListViewStatus" id="1430">
+								<Source>
+									<lf:elementId>1130</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="InvalidObjectsListViewStatusContextMenu" id="1431"/>
+								<ExtendedTooltip name="InvalidObjectsListViewStatusExtendedTooltip" id="1432"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="InvalidObjectsListSearchControl" id="1433">
+								<Source>
+									<lf:elementId>1130</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="InvalidObjectsListSearchControlContextMenu" id="1434"/>
+								<ExtendedTooltip name="InvalidObjectsListSearchControlExtendedTooltip" id="1435"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="InvalidObjectsListRef" id="1149">
+									<DataPath>InvalidObjectsList.Ref</DataPath>
+									<ContextMenu name="InvalidObjectsListRefContextMenu" id="1150"/>
+									<ExtendedTooltip name="InvalidObjectsListRefExtendedTooltip" id="1151"/>
+								</LabelField>
+								<LabelField name="InvalidObjectsListDescription" id="1152">
+									<DataPath>InvalidObjectsList.Description</DataPath>
+									<ContextMenu name="InvalidObjectsListDescriptionContextMenu" id="1153"/>
+									<ExtendedTooltip name="InvalidObjectsListDescriptionExtendedTooltip" id="1154"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
 					</ChildItems>
 				</UsualGroup>
 			</ChildItems>
@@ -3837,6 +4334,74 @@ WHERE
 				<ManualQuery>false</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<MainTable>Catalog.ReasonForNotOfTakingOrder</MainTable>
+				<ListSettings/>
+			</Settings>
+		</Attribute>
+		<Attribute name="UnitsOfMeasureList" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Units of measure list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>false</ManualQuery>
+				<DynamicDataRead>false</DynamicDataRead>
+				<MainTable>Catalog.UnitsOfMeasure</MainTable>
+				<ListSettings/>
+			</Settings>
+		</Attribute>
+		<Attribute name="ChangedDataList" id="29">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Changed data list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>false</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<MainTable>InformationRegister.ChangedData</MainTable>
+				<ListSettings/>
+			</Settings>
+		</Attribute>
+		<Attribute name="ChangedDataBackUpList" id="30">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Changed data back up list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>false</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<MainTable>InformationRegister.ChangedDataBackUp</MainTable>
+				<ListSettings/>
+			</Settings>
+		</Attribute>
+		<Attribute name="InvalidObjectsList" id="31">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Invalid objects list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>false</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<MainTable>InformationRegister.InvalidObjects</MainTable>
 				<ListSettings/>
 			</Settings>
 		</Attribute>
@@ -4837,6 +5402,120 @@ WHERE
 				</v8:item>
 			</ToolTip>
 			<Action>AllQuestions</Action>
+		</Command>
+		<Command name="Administration" id="54">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Administration</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Администрирование</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Administration</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Administration</Action>
+		</Command>
+		<Command name="РегламентныеИФоновыеЗадания" id="56">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Регламентные и фоновые задания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регламентные и фоновые задания</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Регламентные и фоновые задания</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>РегламентныеИФоновыеЗадания</Action>
+		</Command>
+		<Command name="УдалениеПомеченныхОбъектов" id="57">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Удаление помеченных объектов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Удаление помеченных объектов</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Удаление помеченных объектов</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>УдалениеПомеченныхОбъектов</Action>
+		</Command>
+		<Command name="ChangedData" id="58">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Changed data</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Измененные данные</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Changed data</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ChangedData</Action>
+		</Command>
+		<Command name="СhangedDataBackup" id="59">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Сhanged data (backup)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Измененные данные (бэкап)</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Сhanged data backup</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СhangedDataBackup</Action>
+		</Command>
+		<Command name="InvalidObjects" id="60">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Invalid objects</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Объекты с ошибками</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Invalid objects</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>InvalidObjects</Action>
 		</Command>
 	</Commands>
 </Form>

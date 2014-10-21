@@ -3,7 +3,7 @@
 Procedure OnOpen(Cancel)
 	
 	Text = "en = 'Editing settings made only through data processor ""Sync and settings""';ru = 'Редактирование настроек производится только через обработку ""Синхронизация и настройки""'";
-	DoMessageBox(NStr(Text));
+	Message(NStr(Text));
 	
     Cancel = True;
 	

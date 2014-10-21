@@ -46,7 +46,7 @@
 				</v8:item>
 			</ToolTip>
 			<PagesRepresentation>None</PagesRepresentation>
-			<ExtendedTooltip name="СтраницыФормыРасширеннаяПодсказка" id="81"/>
+			<ExtendedTooltip name="СтраницыФормыExtendedTooltip" id="81"/>
 			<ChildItems>
 				<Page name="ВыборРежимаУдаления" id="6">
 					<Title>
@@ -61,7 +61,7 @@
 							<v8:content>Выбор режима удаления</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ВыборРежимаУдаленияРасширеннаяПодсказка" id="82"/>
+					<ExtendedTooltip name="ВыборРежимаУдаленияExtendedTooltip" id="82"/>
 					<ChildItems>
 						<RadioButtonField name="DeletionMode" id="15">
 							<DataPath>DeletionMode</DataPath>
@@ -111,7 +111,7 @@
 								</xr:Item>
 							</ChoiceList>
 							<ContextMenu name="DeletionModeContextMenu" id="16"/>
-							<ExtendedTooltip name="DeletionModeРасширеннаяПодсказка" id="83"/>
+							<ExtendedTooltip name="DeletionModeExtendedTooltip" id="83"/>
 							<Events>
 								<Event name="OnChange">РежимУдаленияПриИзменении</Event>
 							</Events>
@@ -131,7 +131,7 @@
 							<v8:content>Помеченные на удаление</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ПомеченныеНаУдалениеРасширеннаяПодсказка" id="84"/>
+					<ExtendedTooltip name="ПомеченныеНаУдалениеExtendedTooltip" id="84"/>
 					<ChildItems>
 						<Table name="MarkedForDeletionList" id="26">
 							<Representation>Tree</Representation>
@@ -179,22 +179,22 @@
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.ИзменитьОбъект</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюИзменитьОбъектРасширеннаяПодсказка" id="85"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюИзменитьОбъектExtendedTooltip" id="85"/>
 									</Button>
 									<ButtonGroup name="СписокПомеченныхНаУдалениеКонтекстноеМенюГруппа" id="75">
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюГруппаРасширеннаяПодсказка" id="86"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюГруппаExtendedTooltip" id="86"/>
 										<ChildItems>
 											<Button name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхУстановитьВсе" id="72">
 												<Type>CommandBarButton</Type>
 												<CommandName>Form.Command.КомандаСписокПомеченныхУстановитьВсе</CommandName>
 												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхУстановитьВсеРасширеннаяПодсказка" id="87"/>
+												<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхУстановитьВсеExtendedTooltip" id="87"/>
 											</Button>
 											<Button name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхСнятьВсе" id="71">
 												<Type>CommandBarButton</Type>
 												<CommandName>Form.Command.КомандаСписокПомеченныхСнятьВсе</CommandName>
 												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхСнятьВсеРасширеннаяПодсказка" id="88"/>
+												<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКомандаСписокПомеченныхСнятьВсеExtendedTooltip" id="88"/>
 											</Button>
 										</ChildItems>
 									</ButtonGroup>
@@ -202,13 +202,13 @@
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Item.MarkedForDeletionList.StandardCommand.CopyToClipboard</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКопироватьВБуферОбменаРасширеннаяПодсказка" id="89"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюКопироватьВБуферОбменаExtendedTooltip" id="89"/>
 									</Button>
 									<Button name="СписокПомеченныхНаУдалениеКонтекстноеМенюВыделитьВсе" id="74">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Item.MarkedForDeletionList.StandardCommand.SelectAll</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюВыделитьВсеРасширеннаяПодсказка" id="90"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеКонтекстноеМенюВыделитьВсеExtendedTooltip" id="90"/>
 									</Button>
 								</ChildItems>
 							</ContextMenu>
@@ -228,7 +228,7 @@
 												<v8:content>Команды выбора</v8:content>
 											</v8:item>
 										</ToolTip>
-										<ExtendedTooltip name="КомандыВыбораРасширеннаяПодсказка" id="91"/>
+										<ExtendedTooltip name="КомандыВыбораExtendedTooltip" id="91"/>
 										<ChildItems>
 											<Button name="КомандаСписокПомеченныхУстановитьВсе" id="37">
 												<Type>CommandBarButton</Type>
@@ -238,7 +238,7 @@
 												<TextColor>style:ButtonTextColor</TextColor>
 												<BackColor>style:ButtonBackColor</BackColor>
 												<BorderColor>style:BorderColor</BorderColor>
-												<ExtendedTooltip name="КомандаСписокПомеченныхУстановитьВсеРасширеннаяПодсказка" id="92"/>
+												<ExtendedTooltip name="КомандаСписокПомеченныхУстановитьВсеExtendedTooltip" id="92"/>
 											</Button>
 											<Button name="КомандаСписокПомеченныхСнятьВсе" id="38">
 												<Type>CommandBarButton</Type>
@@ -248,7 +248,7 @@
 												<TextColor>style:ButtonTextColor</TextColor>
 												<BackColor>style:ButtonBackColor</BackColor>
 												<BorderColor>style:BorderColor</BorderColor>
-												<ExtendedTooltip name="КомандаСписокПомеченныхСнятьВсеРасширеннаяПодсказка" id="93"/>
+												<ExtendedTooltip name="КомандаСписокПомеченныхСнятьВсеExtendedTooltip" id="93"/>
 											</Button>
 										</ChildItems>
 									</ButtonGroup>
@@ -256,46 +256,46 @@
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.ИзменитьОбъект</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеИзменитьОбъектРасширеннаяПодсказка" id="94"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеИзменитьОбъектExtendedTooltip" id="94"/>
 									</Button>
 									<Button name="ОбновитьСписокПомеченныхНаУдаление" id="70">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.ОбновитьСписокПомеченныхНаУдаление</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="ОбновитьСписокПомеченныхНаУдалениеРасширеннаяПодсказка" id="95"/>
+										<ExtendedTooltip name="ОбновитьСписокПомеченныхНаУдалениеExtendedTooltip" id="95"/>
 									</Button>
 									<Button name="СписокПомеченныхНаУдалениеВывестиСписок" id="65">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Item.MarkedForDeletionList.StandardCommand.OutputList</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="СписокПомеченныхНаУдалениеВывестиСписокРасширеннаяПодсказка" id="96"/>
+										<ExtendedTooltip name="СписокПомеченныхНаУдалениеВывестиСписокExtendedTooltip" id="96"/>
 									</Button>
 								</ChildItems>
 							</AutoCommandBar>
-							<ExtendedTooltip name="MarkedForDeletionListРасширеннаяПодсказка" id="97"/>
-							<SearchStringAddition name="MarkedForDeletionListСтрокаПоиска" id="98">
+							<ExtendedTooltip name="MarkedForDeletionListExtendedTooltip" id="97"/>
+							<SearchStringAddition name="MarkedForDeletionListSearchString" id="120">
 								<Source>
 									<lf:elementId>26</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="MarkedForDeletionListСтрокаПоискаКонтекстноеМеню" id="99"/>
-								<ExtendedTooltip name="MarkedForDeletionListСтрокаПоискаРасширеннаяПодсказка" id="100"/>
+								<ContextMenu name="MarkedForDeletionListSearchStringContextMenu" id="121"/>
+								<ExtendedTooltip name="MarkedForDeletionListSearchStringExtendedTooltip" id="122"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="MarkedForDeletionListСостояниеПросмотра" id="101">
+							<ViewStatusAddition name="MarkedForDeletionListViewStatus" id="123">
 								<Source>
 									<lf:elementId>26</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="MarkedForDeletionListСостояниеПросмотраКонтекстноеМеню" id="102"/>
-								<ExtendedTooltip name="MarkedForDeletionListСостояниеПросмотраРасширеннаяПодсказка" id="103"/>
+								<ContextMenu name="MarkedForDeletionListViewStatusContextMenu" id="124"/>
+								<ExtendedTooltip name="MarkedForDeletionListViewStatusExtendedTooltip" id="125"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="MarkedForDeletionListУправлениеПоиском" id="104">
+							<SearchControlAddition name="MarkedForDeletionListSearchControl" id="126">
 								<Source>
 									<lf:elementId>26</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="MarkedForDeletionListУправлениеПоискомКонтекстноеМеню" id="105"/>
-								<ExtendedTooltip name="MarkedForDeletionListУправлениеПоискомРасширеннаяПодсказка" id="106"/>
+								<ContextMenu name="MarkedForDeletionListSearchControlContextMenu" id="127"/>
+								<ExtendedTooltip name="MarkedForDeletionListSearchControlExtendedTooltip" id="128"/>
 							</SearchControlAddition>
 							<Events>
 								<Event name="Selection">СписокПомеченныхНаУдалениеВыбор</Event>
@@ -315,7 +315,7 @@
 										</v8:item>
 									</ToolTip>
 									<Group>InCell</Group>
-									<ExtendedTooltip name="СтрокаСпискаПомеченныхРасширеннаяПодсказка" id="107"/>
+									<ExtendedTooltip name="СтрокаСпискаПомеченныхExtendedTooltip" id="98"/>
 									<ChildItems>
 										<CheckBoxField name="Пометка" id="30">
 											<DataPath>MarkedForDeletionList.Пометка</DataPath>
@@ -323,7 +323,7 @@
 											<ShowInFooter>false</ShowInFooter>
 											<CheckBoxType>Auto</CheckBoxType>
 											<ContextMenu name="ПометкаКонтекстноеМеню" id="31"/>
-											<ExtendedTooltip name="ПометкаРасширеннаяПодсказка" id="108"/>
+											<ExtendedTooltip name="ПометкаExtendedTooltip" id="99"/>
 											<Events>
 												<Event name="OnChange">ПометкаПриИзменении</Event>
 											</Events>
@@ -336,7 +336,7 @@
 											<Wrap>false</Wrap>
 											<BorderColor>style:BorderColor</BorderColor>
 											<ContextMenu name="ПредставлениеКонтекстноеМеню" id="33"/>
-											<ExtendedTooltip name="ПредставлениеРасширеннаяПодсказка" id="109"/>
+											<ExtendedTooltip name="ПредставлениеExtendedTooltip" id="100"/>
 										</InputField>
 									</ChildItems>
 								</ColumnGroup>
@@ -358,7 +358,7 @@
 							<v8:content>Причины невозможности удаления</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ПричиныНевозможностиУдаленияРасширеннаяПодсказка" id="110"/>
+					<ExtendedTooltip name="ПричиныНевозможностиУдаленияExtendedTooltip" id="101"/>
 					<ChildItems>
 						<Table name="ДеревоОставшихсяОбъектов" id="40">
 							<Representation>Tree</Representation>
@@ -407,22 +407,22 @@
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.ИзменитьОбъект</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюИзменитьОбъектРасширеннаяПодсказка" id="111"/>
+										<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюИзменитьОбъектExtendedTooltip" id="102"/>
 									</Button>
 									<ButtonGroup name="ДеревоОставшихсяОбъектовКонтекстноеМенюГруппа" id="80">
-										<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюГруппаРасширеннаяПодсказка" id="112"/>
+										<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюГруппаExtendedTooltip" id="103"/>
 										<ChildItems>
 											<Button name="ДеревоОставшихсяОбъектовКонтекстноеМенюВыделитьВсе" id="78">
 												<Type>CommandBarButton</Type>
 												<CommandName>Form.Item.ДеревоОставшихсяОбъектов.StandardCommand.SelectAll</CommandName>
 												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюВыделитьВсеРасширеннаяПодсказка" id="113"/>
+												<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюВыделитьВсеExtendedTooltip" id="104"/>
 											</Button>
 											<Button name="ДеревоОставшихсяОбъектовКонтекстноеМенюКопироватьВБуферОбмена" id="77">
 												<Type>CommandBarButton</Type>
 												<CommandName>Form.Item.ДеревоОставшихсяОбъектов.StandardCommand.CopyToClipboard</CommandName>
 												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюКопироватьВБуферОбменаРасширеннаяПодсказка" id="114"/>
+												<ExtendedTooltip name="ДеревоОставшихсяОбъектовКонтекстноеМенюКопироватьВБуферОбменаExtendedTooltip" id="105"/>
 											</Button>
 										</ChildItems>
 									</ButtonGroup>
@@ -434,40 +434,40 @@
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.ИзменитьОбъект</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="ДеревоОставшихсяОбъектовИзменитьОбъектРасширеннаяПодсказка" id="115"/>
+										<ExtendedTooltip name="ДеревоОставшихсяОбъектовИзменитьОбъектExtendedTooltip" id="106"/>
 									</Button>
 									<Button name="ДеревоОставшихсяОбъектовВывестиСписок" id="67">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Item.ДеревоОставшихсяОбъектов.StandardCommand.OutputList</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="ДеревоОставшихсяОбъектовВывестиСписокРасширеннаяПодсказка" id="116"/>
+										<ExtendedTooltip name="ДеревоОставшихсяОбъектовВывестиСписокExtendedTooltip" id="107"/>
 									</Button>
 								</ChildItems>
 							</AutoCommandBar>
-							<ExtendedTooltip name="ДеревоОставшихсяОбъектовРасширеннаяПодсказка" id="117"/>
-							<SearchStringAddition name="ДеревоОставшихсяОбъектовСтрокаПоиска" id="118">
+							<ExtendedTooltip name="ДеревоОставшихсяОбъектовExtendedTooltip" id="108"/>
+							<SearchStringAddition name="ДеревоОставшихсяОбъектовSearchString" id="129">
 								<Source>
 									<lf:elementId>40</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="ДеревоОставшихсяОбъектовСтрокаПоискаКонтекстноеМеню" id="119"/>
-								<ExtendedTooltip name="ДеревоОставшихсяОбъектовСтрокаПоискаРасширеннаяПодсказка" id="120"/>
+								<ContextMenu name="ДеревоОставшихсяОбъектовSearchStringContextMenu" id="130"/>
+								<ExtendedTooltip name="ДеревоОставшихсяОбъектовSearchStringExtendedTooltip" id="131"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="ДеревоОставшихсяОбъектовСостояниеПросмотра" id="121">
+							<ViewStatusAddition name="ДеревоОставшихсяОбъектовViewStatus" id="132">
 								<Source>
 									<lf:elementId>40</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="ДеревоОставшихсяОбъектовСостояниеПросмотраКонтекстноеМеню" id="122"/>
-								<ExtendedTooltip name="ДеревоОставшихсяОбъектовСостояниеПросмотраРасширеннаяПодсказка" id="123"/>
+								<ContextMenu name="ДеревоОставшихсяОбъектовViewStatusContextMenu" id="133"/>
+								<ExtendedTooltip name="ДеревоОставшихсяОбъектовViewStatusExtendedTooltip" id="134"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="ДеревоОставшихсяОбъектовУправлениеПоиском" id="124">
+							<SearchControlAddition name="ДеревоОставшихсяОбъектовSearchControl" id="135">
 								<Source>
 									<lf:elementId>40</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="ДеревоОставшихсяОбъектовУправлениеПоискомКонтекстноеМеню" id="125"/>
-								<ExtendedTooltip name="ДеревоОставшихсяОбъектовУправлениеПоискомРасширеннаяПодсказка" id="126"/>
+								<ContextMenu name="ДеревоОставшихсяОбъектовSearchControlContextMenu" id="136"/>
+								<ExtendedTooltip name="ДеревоОставшихсяОбъектовSearchControlExtendedTooltip" id="137"/>
 							</SearchControlAddition>
 							<Events>
 								<Event name="Selection">ДеревоОставшихсяОбъектовВыбор</Event>
@@ -480,7 +480,7 @@
 									<Wrap>false</Wrap>
 									<BorderColor>style:BorderColor</BorderColor>
 									<ContextMenu name="ПредставлениеОставшегосяКонтекстноеМеню" id="44"/>
-									<ExtendedTooltip name="ПредставлениеОставшегосяРасширеннаяПодсказка" id="127"/>
+									<ExtendedTooltip name="ПредставлениеОставшегосяExtendedTooltip" id="109"/>
 								</InputField>
 							</ChildItems>
 						</Table>
@@ -499,7 +499,7 @@
 							<v8:content>Длительная операция</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ДлительнаяОперацияРасширеннаяПодсказка" id="128"/>
+					<ExtendedTooltip name="ДлительнаяОперацияExtendedTooltip" id="110"/>
 					<ChildItems>
 						<UsualGroup name="ОсновнаяГруппаДлительнойОперации" id="62">
 							<Title>
@@ -517,7 +517,7 @@
 							<Group>Horizontal</Group>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ОсновнаяГруппаДлительнойОперацииРасширеннаяПодсказка" id="129"/>
+							<ExtendedTooltip name="ОсновнаяГруппаДлительнойОперацииExtendedTooltip" id="111"/>
 							<ChildItems>
 								<PictureDecoration name="КартинкаДлительнаяОперация" id="60">
 									<Height>3</Height>
@@ -532,7 +532,7 @@
 										<xr:LoadTransparent>false</xr:LoadTransparent>
 									</Picture>
 									<ContextMenu name="КартинкаДлительнаяОперацияКонтекстноеМеню" id="61"/>
-									<ExtendedTooltip name="КартинкаДлительнаяОперацияРасширеннаяПодсказка" id="130"/>
+									<ExtendedTooltip name="КартинкаДлительнаяОперацияExtendedTooltip" id="112"/>
 								</PictureDecoration>
 								<LabelDecoration name="УдалениеПомеченныхОбъектов" id="63">
 									<Height>3</Height>
@@ -543,7 +543,7 @@
 										</v8:item>
 									</Title>
 									<ContextMenu name="УдалениеПомеченныхОбъектовКонтекстноеМеню" id="64"/>
-									<ExtendedTooltip name="УдалениеПомеченныхОбъектовРасширеннаяПодсказка" id="131"/>
+									<ExtendedTooltip name="УдалениеПомеченныхОбъектовExtendedTooltip" id="113"/>
 								</LabelDecoration>
 							</ChildItems>
 						</UsualGroup>
@@ -566,7 +566,7 @@
 				</v8:item>
 			</ToolTip>
 			<HorizontalLocation>Right</HorizontalLocation>
-			<ExtendedTooltip name="КомандыФормыРасширеннаяПодсказка" id="132"/>
+			<ExtendedTooltip name="КомандыФормыExtendedTooltip" id="114"/>
 			<ChildItems>
 				<Button name="CommandBack" id="52">
 					<Type>CommandBarButton</Type>
@@ -580,7 +580,7 @@
 							<v8:content>&lt;&lt; Назад</v8:content>
 						</v8:item>
 					</Title>
-					<ExtendedTooltip name="CommandBackРасширеннаяПодсказка" id="133"/>
+					<ExtendedTooltip name="CommandBackExtendedTooltip" id="115"/>
 				</Button>
 				<Button name="Forward" id="3">
 					<Type>CommandBarButton</Type>
@@ -597,7 +597,7 @@
 							<v8:content>Далее &gt;&gt;</v8:content>
 						</v8:item>
 					</Title>
-					<ExtendedTooltip name="ForwardРасширеннаяПодсказка" id="134"/>
+					<ExtendedTooltip name="ForwardExtendedTooltip" id="116"/>
 				</Button>
 				<Button name="CommandDelete" id="45">
 					<Type>CommandBarButton</Type>
@@ -609,7 +609,7 @@
 					<TextColor>style:ButtonTextColor</TextColor>
 					<BackColor>style:ButtonBackColor</BackColor>
 					<BorderColor>style:BorderColor</BorderColor>
-					<ExtendedTooltip name="CommandDeleteРасширеннаяПодсказка" id="135"/>
+					<ExtendedTooltip name="CommandDeleteExtendedTooltip" id="117"/>
 				</Button>
 				<Button name="Закрыть" id="4">
 					<Type>CommandBarButton</Type>
@@ -627,7 +627,7 @@
 							<v8:content>Закрыть</v8:content>
 						</v8:item>
 					</Title>
-					<ExtendedTooltip name="ЗакрытьРасширеннаяПодсказка" id="136"/>
+					<ExtendedTooltip name="ЗакрытьExtendedTooltip" id="118"/>
 				</Button>
 				<Button name="Справка" id="5">
 					<Type>CommandBarButton</Type>
@@ -637,7 +637,7 @@
 					<TextColor>style:ButtonTextColor</TextColor>
 					<BackColor>style:ButtonBackColor</BackColor>
 					<BorderColor>style:BorderColor</BorderColor>
-					<ExtendedTooltip name="СправкаРасширеннаяПодсказка" id="137"/>
+					<ExtendedTooltip name="СправкаExtendedTooltip" id="119"/>
 				</Button>
 			</ChildItems>
 		</CommandBar>

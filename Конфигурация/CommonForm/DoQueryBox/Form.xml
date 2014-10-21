@@ -13,8 +13,13 @@
 		<LabelField name="TextField" id="4">
 			<DataPath>TextField</DataPath>
 			<TitleLocation>None</TitleLocation>
+			<HorizontalAlign>Center</HorizontalAlign>
+			<VerticalAlign>Center</VerticalAlign>
+			<Height>3</Height>
+			<HorizontalStretch>true</HorizontalStretch>
+			<VerticalStretch>true</VerticalStretch>
 			<ContextMenu name="TextFieldContextMenu" id="5"/>
-			<ExtendedTooltip name="TextFieldExtendedTooltip" id="6"/>
+			<ExtendedTooltip name="TextFieldExtendedTooltip" id="8"/>
 		</LabelField>
 		<UsualGroup name="Buttons" id="3">
 			<Title>
@@ -35,19 +40,25 @@
 			<Representation>None</Representation>
 			<ChildItemsWidth>LeftWide</ChildItemsWidth>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="ButtonsExtendedTooltip" id="7"/>
+			<ExtendedTooltip name="ButtonsExtendedTooltip" id="9"/>
 			<ChildItems>
+				<PictureDecoration name="Decoration1" id="6">
+					<Width>5</Width>
+					<Height>1</Height>
+					<ContextMenu name="Decoration1ContextMenu" id="7"/>
+					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="10"/>
+				</PictureDecoration>
 				<Button name="Ок" id="1">
 					<Type>UsualButton</Type>
 					<CommandName>Form.Command.ОK</CommandName>
 					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="ОкExtendedTooltip" id="8"/>
+					<ExtendedTooltip name="ОкExtendedTooltip" id="11"/>
 				</Button>
 				<Button name="Cancel" id="2">
 					<Type>UsualButton</Type>
 					<CommandName>Form.Command.Cancel</CommandName>
 					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="CancelExtendedTooltip" id="9"/>
+					<ExtendedTooltip name="CancelExtendedTooltip" id="12"/>
 				</Button>
 			</ChildItems>
 		</UsualGroup>
@@ -113,6 +124,7 @@
 					<v8:content>Cancel</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Action>Cancel</Action>
 		</Command>
 	</Commands>
 </Form>

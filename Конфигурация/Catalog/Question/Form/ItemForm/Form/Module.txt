@@ -10,12 +10,10 @@ Procedure AnswerTypeOnChange(Item)
             |Are you sure you want to continue?"";
             |ru = ""Табличная часть будет очищена.
             |Продолжить?""";
-            If DoQueryBox(NStr(Text), QuestionDialogMode.YesNo, 0) = DialogReturnCode.No Then
-                Return;
-            EndIf;
-            Object.ValueList.Clear();  
-        EndIf;
-        Items.ValueList.Visible = False;
+            OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "ClearQuestions"));
+		Else
+			Items.ValueList.Visible = False;
+		EndIf;
     EndIf;
     
 EndProcedure
@@ -55,4 +53,22 @@ Function NotAllowed()
         Return True;
     EndIf;
     Return False;
+EndFunction
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	If EventName="ClearQuestions" AND Parameter = "Ok" Then
+		Object.ValueList.Clear();
+		Items.ValueList.Visible = False;
+	EndIf;
+	If EventName="ClearQuestions" AND Parameter = "Cancel" Then
+		Object.AnswerType=getValueList();
+	EndIf;	
+EndProcedure
+
+
+Function getValueList()
+	
+	Return Enums.DataType.ValueList;
+	
 EndFunction

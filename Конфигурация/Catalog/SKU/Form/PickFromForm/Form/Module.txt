@@ -1,0 +1,23 @@
+﻿
+&AtClient
+Procedure PickFromDisk(Command)
+	Notify("PickFromDisk");
+	Close();
+EndProcedure
+
+&AtClient
+Procedure PickFromPrivate(Command)
+	Notify("PickFromPrivate");
+	Close();
+EndProcedure
+
+&AtClient
+Procedure PickFromShared(Command)
+	Notify("PickFromShared");
+	Close();
+EndProcedure
+
+&AtClient
+Procedure Cancel(Command)
+	Close();
+EndProcedure

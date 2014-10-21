@@ -221,29 +221,29 @@
 									<ContextMenu name="TempParametersContextMenu" id="131"/>
 									<AutoCommandBar name="TempParametersCommandBar" id="132"/>
 									<ExtendedTooltip name="TempParametersExtendedTooltip" id="163"/>
-									<SearchStringAddition name="TempParametersSearchString" id="164">
+									<SearchStringAddition name="TempParametersSearchString" id="196">
 										<Source>
 											<lf:elementId>130</lf:elementId>
 											<lf:additionId>0</lf:additionId>
 										</Source>
-										<ContextMenu name="TempParametersSearchStringContextMenu" id="165"/>
-										<ExtendedTooltip name="TempParametersSearchStringExtendedTooltip" id="166"/>
+										<ContextMenu name="TempParametersSearchStringContextMenu" id="197"/>
+										<ExtendedTooltip name="TempParametersSearchStringExtendedTooltip" id="198"/>
 									</SearchStringAddition>
-									<ViewStatusAddition name="TempParametersViewStatus" id="167">
+									<ViewStatusAddition name="TempParametersViewStatus" id="199">
 										<Source>
 											<lf:elementId>130</lf:elementId>
 											<lf:additionId>1</lf:additionId>
 										</Source>
-										<ContextMenu name="TempParametersViewStatusContextMenu" id="168"/>
-										<ExtendedTooltip name="TempParametersViewStatusExtendedTooltip" id="169"/>
+										<ContextMenu name="TempParametersViewStatusContextMenu" id="200"/>
+										<ExtendedTooltip name="TempParametersViewStatusExtendedTooltip" id="201"/>
 									</ViewStatusAddition>
-									<SearchControlAddition name="TempParametersSearchControl" id="170">
+									<SearchControlAddition name="TempParametersSearchControl" id="202">
 										<Source>
 											<lf:elementId>130</lf:elementId>
 											<lf:additionId>2</lf:additionId>
 										</Source>
-										<ContextMenu name="TempParametersSearchControlContextMenu" id="171"/>
-										<ExtendedTooltip name="TempParametersSearchControlExtendedTooltip" id="172"/>
+										<ContextMenu name="TempParametersSearchControlContextMenu" id="203"/>
+										<ExtendedTooltip name="TempParametersSearchControlExtendedTooltip" id="204"/>
 									</SearchControlAddition>
 									<Events>
 										<Event name="OnActivateRow">TempParametersOnActivateRow</Event>
@@ -253,27 +253,27 @@
 											<DataPath>TempParameters.Parameter</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TempParametersParameterContextMenu" id="134"/>
-											<ExtendedTooltip name="TempParametersParameterExtendedTooltip" id="173"/>
+											<ExtendedTooltip name="TempParametersParameterExtendedTooltip" id="164"/>
 										</InputField>
 										<InputField name="TempParametersValue" id="135">
 											<DataPath>TempParameters.Value</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TempParametersValueContextMenu" id="136"/>
-											<ExtendedTooltip name="TempParametersValueExtendedTooltip" id="174"/>
+											<ExtendedTooltip name="TempParametersValueExtendedTooltip" id="165"/>
 										</InputField>
 										<InputField name="TempParametersSnapShotUUID" id="137">
 											<DataPath>TempParameters.SnapShotUUID</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TempParametersSnapShotUUIDContextMenu" id="138"/>
-											<ExtendedTooltip name="TempParametersSnapShotUUIDExtendedTooltip" id="175"/>
+											<ExtendedTooltip name="TempParametersSnapShotUUIDExtendedTooltip" id="166"/>
 										</InputField>
 										<InputField name="TempParametersN" id="139">
 											<DataPath>TempParameters.N</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TempParametersNContextMenu" id="140"/>
-											<ExtendedTooltip name="TempParametersNExtendedTooltip" id="176"/>
+											<ExtendedTooltip name="TempParametersNExtendedTooltip" id="167"/>
 										</InputField>
 									</ChildItems>
 								</Table>
@@ -298,7 +298,7 @@
 							</ToolTip>
 							<Group>Horizontal</Group>
 							<Representation>None</Representation>
-							<ExtendedTooltip name="PreviewExtendedTooltip" id="177"/>
+							<ExtendedTooltip name="PreviewExtendedTooltip" id="168"/>
 							<ChildItems>
 								<PictureField name="PictureAddress" id="127">
 									<DataPath>PictureAddress</DataPath>
@@ -314,7 +314,7 @@
 										</v8:item>
 									</NonselectedPictureText>
 									<ContextMenu name="PictureAddressContextMenu" id="128"/>
-									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="178"/>
+									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="169"/>
 								</PictureField>
 								<Button name="OpenPicture" id="126">
 									<Type>UsualButton</Type>
@@ -325,7 +325,7 @@
 										<xr:Ref>StdPicture.Magnifier</xr:Ref>
 										<xr:LoadTransparent>true</xr:LoadTransparent>
 									</Picture>
-									<ExtendedTooltip name="OpenPictureExtendedTooltip" id="179"/>
+									<ExtendedTooltip name="OpenPictureExtendedTooltip" id="170"/>
 								</Button>
 							</ChildItems>
 						</UsualGroup>
@@ -348,7 +348,7 @@
 							<v8:content>Territory page</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="TerritoryPageExtendedTooltip" id="180"/>
+					<ExtendedTooltip name="TerritoryPageExtendedTooltip" id="171"/>
 					<ChildItems>
 						<Table name="TerritoriesList" id="66">
 							<Representation>List</Representation>
@@ -362,37 +362,37 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="TerritoriesListContextMenu" id="67"/>
 							<AutoCommandBar name="TerritoriesListCommandBar" id="68"/>
-							<ExtendedTooltip name="TerritoriesListExtendedTooltip" id="181"/>
-							<SearchStringAddition name="TerritoriesListSearchString" id="182">
+							<ExtendedTooltip name="TerritoriesListExtendedTooltip" id="172"/>
+							<SearchStringAddition name="TerritoriesListSearchString" id="205">
 								<Source>
 									<lf:elementId>66</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritoriesListSearchStringContextMenu" id="183"/>
-								<ExtendedTooltip name="TerritoriesListSearchStringExtendedTooltip" id="184"/>
+								<ContextMenu name="TerritoriesListSearchStringContextMenu" id="206"/>
+								<ExtendedTooltip name="TerritoriesListSearchStringExtendedTooltip" id="207"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="TerritoriesListViewStatus" id="185">
+							<ViewStatusAddition name="TerritoriesListViewStatus" id="208">
 								<Source>
 									<lf:elementId>66</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritoriesListViewStatusContextMenu" id="186"/>
-								<ExtendedTooltip name="TerritoriesListViewStatusExtendedTooltip" id="187"/>
+								<ContextMenu name="TerritoriesListViewStatusContextMenu" id="209"/>
+								<ExtendedTooltip name="TerritoriesListViewStatusExtendedTooltip" id="210"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="TerritoriesListSearchControl" id="188">
+							<SearchControlAddition name="TerritoriesListSearchControl" id="211">
 								<Source>
 									<lf:elementId>66</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritoriesListSearchControlContextMenu" id="189"/>
-								<ExtendedTooltip name="TerritoriesListSearchControlExtendedTooltip" id="190"/>
+								<ContextMenu name="TerritoriesListSearchControlContextMenu" id="212"/>
+								<ExtendedTooltip name="TerritoriesListSearchControlExtendedTooltip" id="213"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<InputField name="TerritoriesListValue" id="69">
 									<DataPath>TerritoriesList.Value</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="TerritoriesListValueContextMenu" id="70"/>
-									<ExtendedTooltip name="TerritoriesListValueExtendedTooltip" id="191"/>
+									<ExtendedTooltip name="TerritoriesListValueExtendedTooltip" id="173"/>
 									<Events>
 										<Event name="OnChange">TerritoriesListValueOnChange</Event>
 										<Event name="Opening">TerritoriesListValueOpening</Event>
@@ -419,7 +419,7 @@
 							<v8:content>Price lists</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="PriceListsExtendedTooltip" id="192"/>
+					<ExtendedTooltip name="PriceListsExtendedTooltip" id="174"/>
 					<ChildItems>
 						<Table name="Prices" id="81">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -432,30 +432,30 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="PricesContextMenu" id="82"/>
 							<AutoCommandBar name="PricesCommandBar" id="83"/>
-							<ExtendedTooltip name="PricesExtendedTooltip" id="193"/>
-							<SearchStringAddition name="PricesSearchString" id="194">
+							<ExtendedTooltip name="PricesExtendedTooltip" id="175"/>
+							<SearchStringAddition name="PricesSearchString" id="214">
 								<Source>
 									<lf:elementId>81</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="PricesSearchStringContextMenu" id="195"/>
-								<ExtendedTooltip name="PricesSearchStringExtendedTooltip" id="196"/>
+								<ContextMenu name="PricesSearchStringContextMenu" id="215"/>
+								<ExtendedTooltip name="PricesSearchStringExtendedTooltip" id="216"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="PricesViewStatus" id="197">
+							<ViewStatusAddition name="PricesViewStatus" id="217">
 								<Source>
 									<lf:elementId>81</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="PricesViewStatusContextMenu" id="198"/>
-								<ExtendedTooltip name="PricesViewStatusExtendedTooltip" id="199"/>
+								<ContextMenu name="PricesViewStatusContextMenu" id="218"/>
+								<ExtendedTooltip name="PricesViewStatusExtendedTooltip" id="219"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="PricesSearchControl" id="200">
+							<SearchControlAddition name="PricesSearchControl" id="220">
 								<Source>
 									<lf:elementId>81</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="PricesSearchControlContextMenu" id="201"/>
-								<ExtendedTooltip name="PricesSearchControlExtendedTooltip" id="202"/>
+								<ContextMenu name="PricesSearchControlContextMenu" id="221"/>
+								<ExtendedTooltip name="PricesSearchControlExtendedTooltip" id="222"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="PricesLineNumber" id="84">
@@ -463,13 +463,13 @@
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="PricesLineNumberContextMenu" id="85"/>
-									<ExtendedTooltip name="PricesLineNumberExtendedTooltip" id="203"/>
+									<ExtendedTooltip name="PricesLineNumberExtendedTooltip" id="176"/>
 								</LabelField>
 								<InputField name="PricesPriceList" id="86">
 									<DataPath>Object.Prices.PriceList</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="PricesPriceListContextMenu" id="87"/>
-									<ExtendedTooltip name="PricesPriceListExtendedTooltip" id="204"/>
+									<ExtendedTooltip name="PricesPriceListExtendedTooltip" id="177"/>
 									<Events>
 										<Event name="OnChange">PricesPriceListOnChange</Event>
 										<Event name="StartChoice">PricesPriceListStartChoice</Event>
@@ -485,7 +485,7 @@
 									</Title>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="PricesPriceListDescriptionContextMenu" id="89"/>
-									<ExtendedTooltip name="PricesPriceListDescriptionExtendedTooltip" id="205"/>
+									<ExtendedTooltip name="PricesPriceListDescriptionExtendedTooltip" id="178"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -508,48 +508,48 @@
 							<v8:content>Details</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="DetailsExtendedTooltip" id="206"/>
+					<ExtendedTooltip name="DetailsExtendedTooltip" id="179"/>
 					<ChildItems>
 						<InputField name="LegalName" id="91">
 							<DataPath>Object.LegalName</DataPath>
 							<ContextMenu name="LegalNameContextMenu" id="92"/>
-							<ExtendedTooltip name="LegalNameExtendedTooltip" id="207"/>
+							<ExtendedTooltip name="LegalNameExtendedTooltip" id="180"/>
 						</InputField>
 						<InputField name="LegalAddress" id="93">
 							<DataPath>Object.LegalAddress</DataPath>
 							<ContextMenu name="LegalAddressContextMenu" id="94"/>
-							<ExtendedTooltip name="LegalAddressExtendedTooltip" id="208"/>
+							<ExtendedTooltip name="LegalAddressExtendedTooltip" id="181"/>
 						</InputField>
 						<InputField name="OwnershipType" id="95">
 							<DataPath>Object.OwnershipType</DataPath>
 							<ContextMenu name="OwnershipTypeContextMenu" id="96"/>
-							<ExtendedTooltip name="OwnershipTypeExtendedTooltip" id="209"/>
+							<ExtendedTooltip name="OwnershipTypeExtendedTooltip" id="182"/>
 						</InputField>
 						<InputField name="INN" id="97">
 							<DataPath>Object.INN</DataPath>
 							<HorizontalAlign>Right</HorizontalAlign>
 							<ContextMenu name="INNContextMenu" id="98"/>
-							<ExtendedTooltip name="INNExtendedTooltip" id="210"/>
+							<ExtendedTooltip name="INNExtendedTooltip" id="183"/>
 						</InputField>
 						<InputField name="KPP" id="99">
 							<DataPath>Object.KPP</DataPath>
 							<ContextMenu name="KPPContextMenu" id="100"/>
-							<ExtendedTooltip name="KPPExtendedTooltip" id="211"/>
+							<ExtendedTooltip name="KPPExtendedTooltip" id="184"/>
 						</InputField>
 						<InputField name="PhoneNumber" id="101">
 							<DataPath>Object.PhoneNumber</DataPath>
 							<ContextMenu name="PhoneNumberContextMenu" id="102"/>
-							<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="212"/>
+							<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="185"/>
 						</InputField>
 						<InputField name="Email" id="103">
 							<DataPath>Object.Email</DataPath>
 							<ContextMenu name="EmailContextMenu" id="104"/>
-							<ExtendedTooltip name="EmailExtendedTooltip" id="213"/>
+							<ExtendedTooltip name="EmailExtendedTooltip" id="186"/>
 						</InputField>
 						<InputField name="WebSite" id="105">
 							<DataPath>Object.WebSite</DataPath>
 							<ContextMenu name="WebSiteContextMenu" id="106"/>
-							<ExtendedTooltip name="WebSiteExtendedTooltip" id="214"/>
+							<ExtendedTooltip name="WebSiteExtendedTooltip" id="187"/>
 						</InputField>
 					</ChildItems>
 				</Page>
@@ -570,7 +570,7 @@
 							<v8:content>Contacts</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ContactsExtendedTooltip" id="215"/>
+					<ExtendedTooltip name="ContactsExtendedTooltip" id="188"/>
 					<ChildItems>
 						<Table name="Contacts1" id="108">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -583,30 +583,30 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="Contacts1ContextMenu" id="109"/>
 							<AutoCommandBar name="Contacts1CommandBar" id="110"/>
-							<ExtendedTooltip name="Contacts1ExtendedTooltip" id="216"/>
-							<SearchStringAddition name="Contacts1SearchString" id="217">
+							<ExtendedTooltip name="Contacts1ExtendedTooltip" id="189"/>
+							<SearchStringAddition name="Contacts1SearchString" id="223">
 								<Source>
 									<lf:elementId>108</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="Contacts1SearchStringContextMenu" id="218"/>
-								<ExtendedTooltip name="Contacts1SearchStringExtendedTooltip" id="219"/>
+								<ContextMenu name="Contacts1SearchStringContextMenu" id="224"/>
+								<ExtendedTooltip name="Contacts1SearchStringExtendedTooltip" id="225"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="Contacts1ViewStatus" id="220">
+							<ViewStatusAddition name="Contacts1ViewStatus" id="226">
 								<Source>
 									<lf:elementId>108</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="Contacts1ViewStatusContextMenu" id="221"/>
-								<ExtendedTooltip name="Contacts1ViewStatusExtendedTooltip" id="222"/>
+								<ContextMenu name="Contacts1ViewStatusContextMenu" id="227"/>
+								<ExtendedTooltip name="Contacts1ViewStatusExtendedTooltip" id="228"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="Contacts1SearchControl" id="223">
+							<SearchControlAddition name="Contacts1SearchControl" id="229">
 								<Source>
 									<lf:elementId>108</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="Contacts1SearchControlContextMenu" id="224"/>
-								<ExtendedTooltip name="Contacts1SearchControlExtendedTooltip" id="225"/>
+								<ContextMenu name="Contacts1SearchControlContextMenu" id="230"/>
+								<ExtendedTooltip name="Contacts1SearchControlExtendedTooltip" id="231"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="Contacts1LineNumber" id="111">
@@ -614,42 +614,42 @@
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="Contacts1LineNumberContextMenu" id="112"/>
-									<ExtendedTooltip name="Contacts1LineNumberExtendedTooltip" id="226"/>
+									<ExtendedTooltip name="Contacts1LineNumberExtendedTooltip" id="190"/>
 								</LabelField>
 								<InputField name="Contacts1ContactName" id="113">
 									<DataPath>Object.Contacts.ContactName</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>21</Width>
 									<ContextMenu name="Contacts1ContactNameContextMenu" id="114"/>
-									<ExtendedTooltip name="Contacts1ContactNameExtendedTooltip" id="227"/>
+									<ExtendedTooltip name="Contacts1ContactNameExtendedTooltip" id="191"/>
 								</InputField>
 								<InputField name="Contacts1Position" id="115">
 									<DataPath>Object.Contacts.Position</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>13</Width>
 									<ContextMenu name="Contacts1PositionContextMenu" id="116"/>
-									<ExtendedTooltip name="Contacts1PositionExtendedTooltip" id="228"/>
+									<ExtendedTooltip name="Contacts1PositionExtendedTooltip" id="192"/>
 								</InputField>
 								<InputField name="Contacts1PhoneNumber" id="117">
 									<DataPath>Object.Contacts.PhoneNumber</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>15</Width>
 									<ContextMenu name="Contacts1PhoneNumberContextMenu" id="118"/>
-									<ExtendedTooltip name="Contacts1PhoneNumberExtendedTooltip" id="229"/>
+									<ExtendedTooltip name="Contacts1PhoneNumberExtendedTooltip" id="193"/>
 								</InputField>
 								<InputField name="Contacts1Email" id="119">
 									<DataPath>Object.Contacts.Email</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>12</Width>
 									<ContextMenu name="Contacts1EmailContextMenu" id="120"/>
-									<ExtendedTooltip name="Contacts1EmailExtendedTooltip" id="230"/>
+									<ExtendedTooltip name="Contacts1EmailExtendedTooltip" id="194"/>
 								</InputField>
 								<CheckBoxField name="Contacts1NotActual" id="141">
 									<DataPath>Object.Contacts.NotActual</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="Contacts1NotActualContextMenu" id="142"/>
-									<ExtendedTooltip name="Contacts1NotActualExtendedTooltip" id="231"/>
+									<ExtendedTooltip name="Contacts1NotActualExtendedTooltip" id="195"/>
 								</CheckBoxField>
 							</ChildItems>
 						</Table>

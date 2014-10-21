@@ -27,7 +27,7 @@ Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
     StandardProcessing = False;
     SelectionValue = New Structure("Role", "SR");
     SelectionParameters = New Structure("Filter", SelectionValue);
-    OpenFormModal("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
+    OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
 EndProcedure
 
 

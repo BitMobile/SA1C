@@ -4,7 +4,7 @@ Procedure OnOpen(Cancel)
     
     OnOpenServer();
     FillTerritories();
-    SetClosingCauseVisibility();
+    OutletStatusOnChange(Undefined);
     
     n = 0;
     
@@ -94,7 +94,7 @@ Procedure TerritoriesListValueOnChange(Item)
     ParametersFilter = New Structure("Value", OutletValue);
     FoundRows = TerritoriesList.FindRows(ParametersFilter);
     If FoundRows.count() > 1 Then
-        DoMessageBox(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
+		Message(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
     EndIf;
     //Else
     //    DoMessageBox(NStr("en = ""The object need to be saved before adding territories""; ru = ""Объект должен быть сохранен перед добавлением территорий""")); 
@@ -173,22 +173,26 @@ Procedure PricesPriceListStartChoice(Item, ChoiceData, StandardProcessing)
     //  SelectionParameters = New Structure("Filter", SelectionValue);
     //  OpenFormModal("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.Manager);
     
-    OpenFormModal("Document.PriceList.ChoiceForm", , Item);//ThisForm.Items.Prices.CurrentData.PriceList);
+    OpenForm("Document.PriceList.ChoiceForm", , Item);//ThisForm.Items.Prices.CurrentData.PriceList);
 EndProcedure
 
 &AtClient
 Procedure OutletStatusOnChange(Item)
-    SetClosingCauseVisibility();
+	If IsClosed(Object.OutletStatus) Then
+		ThisForm.Items.ClosingCause.Visible=True;    	    
+	EndIf;
 EndProcedure
 
-Procedure SetClosingCauseVisibility()
-    ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
-	// TODO: Delete commented; Old; SUPA-514
-	//If Object.OutletStatus=Enums.OutletStatus.Closed Then
-	//    ThisForm.Items.ClosingCause.Visible=True;    	    
-	//EndIf;
+
+Function IsClosed(status)
     
-EndProcedure
+    If status=Enums.OutletStatus.Closed Then
+        Return True;
+	Else 
+		Return False;
+    EndIf;
+    
+EndFunction
 
 &AtClient
 Procedure BeforeWrite(Cancel, WriteParameters)
@@ -281,6 +285,15 @@ Function ItsPicture(parameter)
 	EndIf;
 			
 EndFunction
+
+Procedure SetClosingCauseVisibility()
+    ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
+	// TODO: Delete commented; Old; SUPA-514
+	//If Object.OutletStatus=Enums.OutletStatus.Closed Then
+	//    ThisForm.Items.ClosingCause.Visible=True;    	    
+	//EndIf;
+    
+EndProcedure
 
 &AtClient
 Procedure LattitudeOnChange(Item)

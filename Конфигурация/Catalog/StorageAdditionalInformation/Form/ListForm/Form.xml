@@ -35,58 +35,58 @@
 			<AutoCommandBar name="ListCommandBar" id="3">
 				<Autofill>false</Autofill>
 			</AutoCommandBar>
-			<ExtendedTooltip name="ListРасширеннаяПодсказка" id="18"/>
-			<SearchStringAddition name="ListСтрокаПоиска" id="19">
+			<ExtendedTooltip name="ListExtendedTooltip" id="18"/>
+			<SearchStringAddition name="ListSearchString" id="24">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="ListСтрокаПоискаКонтекстноеМеню" id="20"/>
-				<ExtendedTooltip name="ListСтрокаПоискаРасширеннаяПодсказка" id="21"/>
+				<ContextMenu name="ListSearchStringContextMenu" id="25"/>
+				<ExtendedTooltip name="ListSearchStringExtendedTooltip" id="26"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="ListСостояниеПросмотра" id="22">
+			<ViewStatusAddition name="ListViewStatus" id="27">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="ListСостояниеПросмотраКонтекстноеМеню" id="23"/>
-				<ExtendedTooltip name="ListСостояниеПросмотраРасширеннаяПодсказка" id="24"/>
+				<ContextMenu name="ListViewStatusContextMenu" id="28"/>
+				<ExtendedTooltip name="ListViewStatusExtendedTooltip" id="29"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="ListУправлениеПоиском" id="25">
+			<SearchControlAddition name="ListSearchControl" id="30">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="ListУправлениеПоискомКонтекстноеМеню" id="26"/>
-				<ExtendedTooltip name="ListУправлениеПоискомРасширеннаяПодсказка" id="27"/>
+				<ContextMenu name="ListSearchControlContextMenu" id="31"/>
+				<ExtendedTooltip name="ListSearchControlExtendedTooltip" id="32"/>
 			</SearchControlAddition>
 			<ChildItems>
 				<LabelField name="Code" id="6">
 					<DataPath>List.Code</DataPath>
 					<ContextMenu name="CodeContextMenu" id="7"/>
-					<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="28"/>
+					<ExtendedTooltip name="CodeExtendedTooltip" id="19"/>
 				</LabelField>
 				<LabelField name="Description" id="4">
 					<DataPath>List.Description</DataPath>
 					<DefaultItem>true</DefaultItem>
 					<ContextMenu name="DescriptionContextMenu" id="5"/>
-					<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="29"/>
+					<ExtendedTooltip name="DescriptionExtendedTooltip" id="20"/>
 				</LabelField>
 				<CheckBoxField name="DefaultPicture" id="16">
 					<DataPath>List.DefaultPicture</DataPath>
 					<CheckBoxType>Auto</CheckBoxType>
 					<ContextMenu name="DefaultPictureContextMenu" id="17"/>
-					<ExtendedTooltip name="DefaultPictureРасширеннаяПодсказка" id="30"/>
+					<ExtendedTooltip name="DefaultPictureExtendedTooltip" id="21"/>
 				</CheckBoxField>
 				<LabelField name="Extension" id="14">
 					<DataPath>List.Extension</DataPath>
 					<ContextMenu name="ExtensionContextMenu" id="15"/>
-					<ExtendedTooltip name="ExtensionРасширеннаяПодсказка" id="31"/>
+					<ExtendedTooltip name="ExtensionExtendedTooltip" id="22"/>
 				</LabelField>
 				<LabelField name="LastEdit" id="10">
 					<DataPath>List.LastEdit</DataPath>
 					<ContextMenu name="LastEditContextMenu" id="11"/>
-					<ExtendedTooltip name="LastEditРасширеннаяПодсказка" id="32"/>
+					<ExtendedTooltip name="LastEditExtendedTooltip" id="23"/>
 				</LabelField>
 			</ChildItems>
 		</Table>

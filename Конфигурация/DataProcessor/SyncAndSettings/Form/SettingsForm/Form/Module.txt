@@ -1,5 +1,4 @@
-﻿
-/////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////
 // Common procedures and functions
 
 
@@ -378,8 +377,8 @@ Procedure OnOpen(Cancel)
 		
 		ThisForm.Items.SyncronizeData.Enabled = False;
 		
-		msg(НСтр("ru = 'Другой пользователь уже запустил синхронизацию и от сервера получен GUID асинхронной выгрузки, проверка статуса...';"
-		     + " en = 'Another user already started async uploading and get her UUID, checking status...'"),UUID);
+		msg(НСтр("ru = 'От сервера получен GUID асинхронной выгрузки, проверка статуса...';"
+		     + " en = 'Async upload UUID recieved from server, checking status...'"),UUID);
 			 
 		AttachIdleHandler("SyncronizeDataServerAtClient",20);
 		
@@ -445,16 +444,9 @@ Procedure DefaultSettings(Command)
     
     Text = "en = 'Settings will be reset. Continue?';"
     + "ru = 'Настройки будет презаполнены. Продолжить?'";
-    
-    Answer = DoQueryBox(NStr(Text), Mode, 0);
-    
-    If Answer = DialogReturnCode.OK Then
-        
-        DefaultSettingsServer();
-        Items.SyncSettingsTable.Refresh();
-        
-    EndIf;
-    
+	
+	OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "DefaultSettings"));
+    	    
 EndProcedure
 
 &AtClient
@@ -465,14 +457,7 @@ Procedure DefaultFTPSettings(Command)
     Text = "en = 'Settings will be reset. Continue?';"
     + "ru = 'Настройки будет презаполнены. Продолжить?'";
     
-    Answer = DoQueryBox(NStr(Text), Mode, 0);
-    
-    If Answer = DialogReturnCode.OK Then
-        
-        DefaultFTPSettingsServer();
-        Items.FTPSyncSettingsTable.Refresh();
-        
-    EndIf;
+    OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "DefaultFTPSettings"));    
     
 EndProcedure
 
@@ -574,15 +559,7 @@ Procedure UploadAllPictures(Command)
     Text = "en = 'The operation can take a long time. Continue?';"
     + "ru = 'Операция может занять продолжительное время. Продолжить?'";
     
-    Answer = DoQueryBox(NStr(Text), Mode, 0);
-    
-    If Answer = DialogReturnCode.OK Then
-        
-        Message(NStr("en = 'Uploading pictures is started'; ru = 'Выгрузка картинок начата'"));
-        
-        UploadAllPicturesServer();
-        
-    EndIf;
+    OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "UploadPictures"));
     
 EndProcedure
 
@@ -672,13 +649,6 @@ Procedure SaveDatabaseSettingsServer()
     Constants.MultiStock.Set(Object.MultiStock);
 EndProcedure
 
-&AtServer
-Function GetLastSyncInfo(LastDate, LastStatus)
-    
-    LastDate = Constants.LastSyncDate.Get();
-    LastStatus = Constants.LastSyncStatus.Get();
-    
-EndFunction
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Command interface
@@ -714,6 +684,24 @@ Procedure PortOnChange(Item)
 	
 	Items.SaveSettings.Enabled = True;
 
+EndProcedure
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	If EventName="DefaultSettings" Then
+		DefaultSettingsServer();
+        Items.SyncSettingsTable.Refresh();
+	EndIf;
+	
+	If EventName="DefaultFTPSettings" Then       
+        DefaultFTPSettingsServer();
+        Items.FTPSyncSettingsTable.Refresh();        
+	EndIf;
+	
+	If EventName="UploadPictures" Then
+        Message(NStr("en = 'Uploading pictures is started'; ru = 'Выгрузка картинок начата'"));        
+        UploadAllPicturesServer();        
+    EndIf
 EndProcedure
 
 

@@ -2,7 +2,7 @@
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	DoMessageBox(NStr("en = 'Editing images in the list is not available'; ru = 'Редактирование изображений в списке не доступно'"));
+	Message(NStr("en = 'Editing images in the list is not available'; ru = 'Редактирование изображений в списке не доступно'"));
 
 	Cancel = True;
 	

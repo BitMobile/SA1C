@@ -887,6 +887,7 @@
 				</ChildObjects>
 			</TabularSection>
 			<Form>ItemForm</Form>
+			<Form>PickFromForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

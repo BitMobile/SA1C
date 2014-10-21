@@ -8,6 +8,7 @@
 	<Events>
 		<Event name="ChoiceProcessing">ChoiceProcessing</Event>
 		<Event name="AfterWriteAtServer">AfterWriteAtServer</Event>
+		<Event name="NotificationProcessing">NotificationProcessing</Event>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="BeforeWrite">BeforeWrite</Event>
 		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
@@ -77,7 +78,7 @@
 					<TextEdit>false</TextEdit>
 					<MinValue xsi:type="xs:decimal">2000</MinValue>
 					<MaxValue xsi:type="xs:decimal">2051</MaxValue>
-					<ChoiceListButton>true</ChoiceListButton>
+					<ChoiceListButton>false</ChoiceListButton>
 					<ContextMenu name="YearContextMenu" id="225"/>
 					<ExtendedTooltip name="YearExtendedTooltip" id="260"/>
 					<Events>
@@ -223,29 +224,29 @@
 				<Autofill>false</Autofill>
 			</AutoCommandBar>
 			<ExtendedTooltip name="ValueTableOutletsExtendedTooltip" id="270"/>
-			<SearchStringAddition name="ValueTableOutletsSearchString" id="271">
+			<SearchStringAddition name="ValueTableOutletsSearchString" id="294">
 				<Source>
 					<lf:elementId>26</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueTableOutletsSearchStringContextMenu" id="272"/>
-				<ExtendedTooltip name="ValueTableOutletsSearchStringExtendedTooltip" id="273"/>
+				<ContextMenu name="ValueTableOutletsSearchStringContextMenu" id="295"/>
+				<ExtendedTooltip name="ValueTableOutletsSearchStringExtendedTooltip" id="296"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="ValueTableOutletsViewStatus" id="274">
+			<ViewStatusAddition name="ValueTableOutletsViewStatus" id="297">
 				<Source>
 					<lf:elementId>26</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueTableOutletsViewStatusContextMenu" id="275"/>
-				<ExtendedTooltip name="ValueTableOutletsViewStatusExtendedTooltip" id="276"/>
+				<ContextMenu name="ValueTableOutletsViewStatusContextMenu" id="298"/>
+				<ExtendedTooltip name="ValueTableOutletsViewStatusExtendedTooltip" id="299"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="ValueTableOutletsSearchControl" id="277">
+			<SearchControlAddition name="ValueTableOutletsSearchControl" id="300">
 				<Source>
 					<lf:elementId>26</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="ValueTableOutletsSearchControlContextMenu" id="278"/>
-				<ExtendedTooltip name="ValueTableOutletsSearchControlExtendedTooltip" id="279"/>
+				<ContextMenu name="ValueTableOutletsSearchControlContextMenu" id="301"/>
+				<ExtendedTooltip name="ValueTableOutletsSearchControlExtendedTooltip" id="302"/>
 			</SearchControlAddition>
 			<Events>
 				<Event name="OnChange">ValueTableOutletsOnChange</Event>
@@ -260,7 +261,7 @@
 					<HorizontalStretch>false</HorizontalStretch>
 					<VerticalStretch>false</VerticalStretch>
 					<ContextMenu name="ValueTableOutletContextMenu" id="30"/>
-					<ExtendedTooltip name="ValueTableOutletExtendedTooltip" id="280"/>
+					<ExtendedTooltip name="ValueTableOutletExtendedTooltip" id="271"/>
 				</InputField>
 				<ColumnGroup name="Group1" id="233">
 					<Title>
@@ -277,7 +278,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group1ExtendedTooltip" id="281"/>
+					<ExtendedTooltip name="Group1ExtendedTooltip" id="272"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean1" id="31">
 							<DataPath>ValueTableOutlets.DateBoolean1</DataPath>
@@ -291,7 +292,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean1ContextMenu" id="32"/>
-							<ExtendedTooltip name="ValueTableDateBoolean1ExtendedTooltip" id="282"/>
+							<ExtendedTooltip name="ValueTableDateBoolean1ExtendedTooltip" id="273"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean1OnChange</Event>
 							</Events>
@@ -301,7 +302,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime1ContextMenu" id="238"/>
-							<ExtendedTooltip name="ValueTableOutletsTime1ExtendedTooltip" id="283"/>
+							<ExtendedTooltip name="ValueTableOutletsTime1ExtendedTooltip" id="274"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -320,7 +321,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group2ExtendedTooltip" id="284"/>
+					<ExtendedTooltip name="Group2ExtendedTooltip" id="275"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean2" id="33">
 							<DataPath>ValueTableOutlets.DateBoolean2</DataPath>
@@ -334,7 +335,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean2ContextMenu" id="34"/>
-							<ExtendedTooltip name="ValueTableDateBoolean2ExtendedTooltip" id="285"/>
+							<ExtendedTooltip name="ValueTableDateBoolean2ExtendedTooltip" id="276"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean2OnChange</Event>
 							</Events>
@@ -344,7 +345,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime2ContextMenu" id="240"/>
-							<ExtendedTooltip name="ValueTableOutletsTime2ExtendedTooltip" id="286"/>
+							<ExtendedTooltip name="ValueTableOutletsTime2ExtendedTooltip" id="277"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -363,7 +364,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group3ExtendedTooltip" id="287"/>
+					<ExtendedTooltip name="Group3ExtendedTooltip" id="278"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean3" id="35">
 							<DataPath>ValueTableOutlets.DateBoolean3</DataPath>
@@ -377,7 +378,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean3ContextMenu" id="36"/>
-							<ExtendedTooltip name="ValueTableDateBoolean3ExtendedTooltip" id="288"/>
+							<ExtendedTooltip name="ValueTableDateBoolean3ExtendedTooltip" id="279"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean3OnChange</Event>
 							</Events>
@@ -387,7 +388,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime3ContextMenu" id="243"/>
-							<ExtendedTooltip name="ValueTableOutletsTime3ExtendedTooltip" id="289"/>
+							<ExtendedTooltip name="ValueTableOutletsTime3ExtendedTooltip" id="280"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -406,7 +407,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group4ExtendedTooltip" id="290"/>
+					<ExtendedTooltip name="Group4ExtendedTooltip" id="281"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean4" id="37">
 							<DataPath>ValueTableOutlets.DateBoolean4</DataPath>
@@ -420,7 +421,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean4ContextMenu" id="38"/>
-							<ExtendedTooltip name="ValueTableDateBoolean4ExtendedTooltip" id="291"/>
+							<ExtendedTooltip name="ValueTableDateBoolean4ExtendedTooltip" id="282"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean4OnChange</Event>
 							</Events>
@@ -430,7 +431,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime4ContextMenu" id="246"/>
-							<ExtendedTooltip name="ValueTableOutletsTime4ExtendedTooltip" id="292"/>
+							<ExtendedTooltip name="ValueTableOutletsTime4ExtendedTooltip" id="283"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -449,7 +450,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group5ExtendedTooltip" id="293"/>
+					<ExtendedTooltip name="Group5ExtendedTooltip" id="284"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean5" id="39">
 							<DataPath>ValueTableOutlets.DateBoolean5</DataPath>
@@ -463,7 +464,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean5ContextMenu" id="40"/>
-							<ExtendedTooltip name="ValueTableDateBoolean5ExtendedTooltip" id="294"/>
+							<ExtendedTooltip name="ValueTableDateBoolean5ExtendedTooltip" id="285"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean5OnChange</Event>
 							</Events>
@@ -473,7 +474,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime5ContextMenu" id="249"/>
-							<ExtendedTooltip name="ValueTableOutletsTime5ExtendedTooltip" id="295"/>
+							<ExtendedTooltip name="ValueTableOutletsTime5ExtendedTooltip" id="286"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -492,7 +493,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group6ExtendedTooltip" id="296"/>
+					<ExtendedTooltip name="Group6ExtendedTooltip" id="287"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean6" id="41">
 							<DataPath>ValueTableOutlets.DateBoolean6</DataPath>
@@ -506,7 +507,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean6ContextMenu" id="42"/>
-							<ExtendedTooltip name="ValueTableDateBoolean6ExtendedTooltip" id="297"/>
+							<ExtendedTooltip name="ValueTableDateBoolean6ExtendedTooltip" id="288"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean6OnChange</Event>
 							</Events>
@@ -516,7 +517,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime6ContextMenu" id="252"/>
-							<ExtendedTooltip name="ValueTableOutletsTime6ExtendedTooltip" id="298"/>
+							<ExtendedTooltip name="ValueTableOutletsTime6ExtendedTooltip" id="289"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -535,7 +536,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group7ExtendedTooltip" id="299"/>
+					<ExtendedTooltip name="Group7ExtendedTooltip" id="290"/>
 					<ChildItems>
 						<CheckBoxField name="ValueTableDateBoolean7" id="43">
 							<DataPath>ValueTableOutlets.DateBoolean7</DataPath>
@@ -549,7 +550,7 @@
 							<ShowInHeader>false</ShowInHeader>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ValueTableDateBoolean7ContextMenu" id="44"/>
-							<ExtendedTooltip name="ValueTableDateBoolean7ExtendedTooltip" id="300"/>
+							<ExtendedTooltip name="ValueTableDateBoolean7ExtendedTooltip" id="291"/>
 							<Events>
 								<Event name="OnChange">ValueTableDateBoolean7OnChange</Event>
 							</Events>
@@ -559,7 +560,7 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ShowInHeader>false</ShowInHeader>
 							<ContextMenu name="ValueTableOutletsTime7ContextMenu" id="255"/>
-							<ExtendedTooltip name="ValueTableOutletsTime7ExtendedTooltip" id="301"/>
+							<ExtendedTooltip name="ValueTableOutletsTime7ExtendedTooltip" id="292"/>
 						</InputField>
 					</ChildItems>
 				</ColumnGroup>
@@ -574,7 +575,7 @@
 			<OpenButton>false</OpenButton>
 			<ChoiceListButton>false</ChoiceListButton>
 			<ContextMenu name="OwnerContextMenu" id="12"/>
-			<ExtendedTooltip name="OwnerExtendedTooltip" id="302"/>
+			<ExtendedTooltip name="OwnerExtendedTooltip" id="293"/>
 		</InputField>
 	</ChildItems>
 	<Attributes>

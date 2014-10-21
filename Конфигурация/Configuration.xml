@@ -136,11 +136,9 @@
 			<Role>Admin</Role>
 			<CommonModule>AddForUpload</CommonModule>
 			<CommonModule>ClientProcessors</CommonModule>
-			<CommonModule>CommonProcessors</CommonModule>
+			<CommonModule>SheduledJobs</CommonModule>
 			<CommonModule>QuestionnaireMapAssign</CommonModule>
 			<CommonModule>ScheduleFunctions</CommonModule>
-			<CommonModule>SheduledJobs</CommonModule>
-			<CommonModule>SyncSettingsRegister</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
 			<CommonModule>UpdateDatabase</CommonModule>
 			<CommonModule>ДлительныеОперации</CommonModule>
@@ -155,8 +153,8 @@
 			<CommonModule>Пользователи</CommonModule>
 			<CommonModule>ПользователиКлиентСервер</CommonModule>
 			<CommonModule>ПользователиСлужебный</CommonModule>
-			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
-			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
+			<CommonModule>CommonProcessors</CommonModule>
+			<CommonModule>SyncSettingsRegister</CommonModule>
 			<CommonModule>РегламентныеЗаданияКлиент</CommonModule>
 			<CommonModule>РегламентныеЗаданияСервер</CommonModule>
 			<CommonModule>РегламентныеЗаданияСлужебный</CommonModule>
@@ -166,6 +164,8 @@
 			<CommonModule>СтандартныеПодсистемыПовтИсп</CommonModule>
 			<CommonModule>СтандартныеПодсистемыСервер</CommonModule>
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
+			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
+			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<EventSubscription>CatalogOnWrite</EventSubscription>
 			<EventSubscription>CatalogBeforeWrite</EventSubscription>
 			<EventSubscription>DocumentOnWrite</EventSubscription>
@@ -184,18 +184,18 @@
 			<CommandGroup>CommandGroup3</CommandGroup>
 			<CommandGroup>CommandGroup4</CommandGroup>
 			<Constant>Server</Constant>
-			<Constant>ServerPath</Constant>
-			<Constant>Port</Constant>
-			<Constant>Password</Constant>
 			<Constant>LastSyncUploadDate</Constant>
-			<Constant>LastSyncUploadStatus</Constant>
-			<Constant>LastSyncDeletedDate</Constant>
+			<Constant>Port</Constant>
+			<Constant>ServerPath</Constant>
 			<Constant>LastSyncDeletedStatus</Constant>
-			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MaxPictureSize</Constant>
 			<Constant>update2_0_0</Constant>
 			<Constant>MultiStock</Constant>
+			<Constant>Password</Constant>
+			<Constant>LastSyncUploadStatus</Constant>
+			<Constant>LastSyncDeletedDate</Constant>
+			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>update_questionnaire</Constant>
 			<Constant>UploadGUID</Constant>
 			<Constant>LastSyncDownloadDate</Constant>
@@ -206,6 +206,7 @@
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>Settings</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>
+			<CommonForm>ChooseFromListForm</CommonForm>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>MobileApplicationSettings</Catalog>

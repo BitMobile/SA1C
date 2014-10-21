@@ -377,7 +377,12 @@ Procedure MoreServer(SourceButton, DefaultPicture, Sublist)
 			 EndIf;
 		 EndDo;
 	 EndIf;
+//{{MRG[ <-> ]
  EndProcedure
+//}}MRG[ <-> ]
+//{{MRG[ <-> ]
+// EndProcedure   
+//}}MRG[ <-> ]
 
 &AtServer
 Procedure SetQuestionGroupListParameter(Regular = True)
@@ -401,3 +406,64 @@ EndProcedure
 Procedure AllQuestions(Command)
 	SetQuestionListParameter(Undefined);
 EndProcedure
+
+ 
+ &AtClient
+ Procedure MoreAdministration(Command)
+	 MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
+ EndProcedure
+
+
+//--Questions
+ &AtClient
+ Procedure QuestionGroups(Command)
+     ShowListServer(Items.QuestionGroupList.Name);
+ EndProcedure
+
+ &AtClient
+ Procedure UnitsOfMeasure(Command)
+	 ShowListServer(Items.UnitsOfMeasureList.Name);
+ EndProcedure
+ 
+ 
+ //--Administration
+ &AtClient
+ Procedure Administration(Command)
+	 MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
+ EndProcedure
+ 
+ &AtClient
+ Procedure РегламентныеИФоновыеЗадания(Command)
+	 OpenForm("DataProcessor.РегламентныеИФоновыеЗадания.Form.РегламентныеИФоновыеЗадания");
+ EndProcedure
+
+ &AtClient
+ Procedure УдалениеПомеченныхОбъектов(Command)
+	 OpenForm("DataProcessor.УдалениеПомеченныхОбъектов.Form.ОсновнаяФорма");
+ EndProcedure
+
+ &AtClient
+ Procedure ChangedData(Command)
+	 ShowListServer(Items.ChangedDataList.Name);
+ EndProcedure
+
+ &AtClient
+ Procedure СhangedDataBackup(Command)
+	 ShowListServer(Items.ChangedDataBackUpList.Name);
+ EndProcedure
+
+&AtClient
+ Procedure InvalidObjects(Command)
+	 ShowListServer(Items.InvalidObjectsList.Name);
+ EndProcedure
+
+&AtServer
+ Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	 Items.AdministrationGroup.Visible = IsInRole("Admin");
+ EndProcedure
+
+
+
+
+
+

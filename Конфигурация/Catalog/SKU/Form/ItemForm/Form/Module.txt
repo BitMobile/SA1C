@@ -118,78 +118,79 @@ EndProcedure
 &AtClient
 Procedure SelectPicture()
 	
-	Buttons = New ValueList;
-	
-	FromDisk 	 = "ru = ""Выбрать с диска""; "
-     		 	 + "en = ""Pick from disk""";
-			 
-	FromePrivate = "ru = ""Выбрать из раздела 'private'""; "
-     		 	 + "en = ""Pick from the 'private'""";
-				 
-	FromeShared  = "ru = ""Выбрать из раздела 'shared'""; "
-     		 	 + "en = ""Pick from the 'shared'""";
-				 
-	Cancel 		 = "ru = ""Отмена""; "
-     		 	 + "en = ""Cancel""";			 
-				 
-	Buttons.Add("Disk", NStr(FromDisk));
-	Buttons.Add("Private", NStr(FromePrivate));
-	Buttons.Add("Shared", NStr(FromeShared));
-	Buttons.Add("Cancel", NStr(Cancel));
-	
-	Header = "ru = ""Выберите действие:""; "
-     	   + "en = ""Select an action:""";
-	
-	Answer = DoQueryBox(NStr(Header), Buttons, , , , );
-	
-	If Answer = "Disk" Then 
-		
-		SelectPictureFromDisk();
-		
-	ElsIf Answer = "Private" Then
-		
-		Filter = GetFilter(Answer);
-								
-		Params = New Structure("Filter", Filter);
-		
-		SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
-		
-		If ValueIsFilled(SelectedPictureKey) Then
-			
-			Mode = QuestionDialogMode.OKCancel;
-			
-			Header = "ru = ""Изображение будет перенесено в раздел 'shared'. Продолжить?""; "
-     	   		   + "en = ""Picture will be moved to the section 'shared'. Continue?""";
-			
-			Answer = DoQueryBox(NStr(Header), Mode, , , , );
-			
-			If Answer = DialogReturnCode.OK Then 
-				
-				SetPicture(SelectedPictureKey);
-				
-			EndIf;
-						
-		EndIf;
-				
-		Items.PictureAddress.Refresh();
-		
-	ElsIf Answer = "Shared" Then
-		
-		Filter = GetFilter(Answer);
-								
-		Params = New Structure("Filter", Filter);
-		
-		SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
-		
-		If ValueIsFilled(SelectedPictureKey) Then 
-			
-			SetPicture(SelectedPictureKey);
-			
-		EndIf;
-				
-		Items.PictureAddress.Refresh();
-		
-	EndIf;
+	OpenForm("Catalog.SKU.Form.PickFromForm");
+	//Buttons = New ValueList;
+	//
+	//FromDisk 	 = "ru = ""Выбрать с диска""; "
+	// 		 	 + "en = ""Pick from disk""";
+	//		 
+	//FromePrivate = "ru = ""Выбрать из раздела 'private'""; "
+	// 		 	 + "en = ""Pick from the 'private'""";
+	//			 
+	//FromeShared  = "ru = ""Выбрать из раздела 'shared'""; "
+	// 		 	 + "en = ""Pick from the 'shared'""";
+	//			 
+	//Cancel 		 = "ru = ""Отмена""; "
+	// 		 	 + "en = ""Cancel""";			 
+	//			 
+	//Buttons.Add("Disk", NStr(FromDisk));
+	//Buttons.Add("Private", NStr(FromePrivate));
+	//Buttons.Add("Shared", NStr(FromeShared));
+	//Buttons.Add("Cancel", NStr(Cancel));
+	//
+	//Header = "ru = ""Выберите действие:""; "
+	// 	   + "en = ""Select an action:""";
+	//
+	//Answer = DoQueryBox(NStr(Header), Buttons, , , , );
+	//
+	//If Answer = "Disk" Then 
+	//	
+	//	SelectPictureFromDisk();
+	//	
+	//ElsIf Answer = "Private" Then
+	//	
+	//	Filter = GetFilter(Answer);
+	//							
+	//	Params = New Structure("Filter", Filter);
+	//	
+	//	SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
+	//	
+	//	If ValueIsFilled(SelectedPictureKey) Then
+	//		
+	//		Mode = QuestionDialogMode.OKCancel;
+	//		
+	//		Header = "ru = ""Изображение будет перенесено в раздел 'shared'. Продолжить?""; "
+	// 	   		   + "en = ""Picture will be moved to the section 'shared'. Continue?""";
+	//		
+	//		Answer = DoQueryBox(NStr(Header), Mode, , , , );
+	//		
+	//		If Answer = DialogReturnCode.OK Then 
+	//			
+	//			SetPicture(SelectedPictureKey);
+	//			
+	//		EndIf;
+	//					
+	//	EndIf;
+	//			
+	//	Items.PictureAddress.Refresh();
+	//	
+	//ElsIf Answer = "Shared" Then
+	//	
+	//	Filter = GetFilter(Answer);
+	//							
+	//	Params = New Structure("Filter", Filter);
+	//	
+	//	SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
+	//	
+	//	If ValueIsFilled(SelectedPictureKey) Then 
+	//		
+	//		SetPicture(SelectedPictureKey);
+	//		
+	//	EndIf;
+	//			
+	//	Items.PictureAddress.Refresh();
+	//	
+	//EndIf;
 	
 EndProcedure
 
@@ -457,5 +458,49 @@ EndProcedure
 Function GetConstant()
 	Return Constants.SKUFeaturesRegistration.Get();
 EndFunction // ()
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	If EventName = "PickFromDisk" Then
+		SelectPictureFromDisk();
+	ElsIF EventName = "PickFromPrivate" Then
+		Filter = GetFilter("Private");
+								
+		Params = New Structure("Filter", Filter);
+		
+		SelectedPictureKey = OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
+		
+		If ValueIsFilled(SelectedPictureKey) Then
+			
+			
+			Header = "ru = ""Изображение перенесено в раздел 'shared'.""; "
+	 	   		   + "en = ""Picture moved to the section 'shared'.""";
+			
+			Message(NStr(Header));
+				
+			SetPicture(SelectedPictureKey);
+						
+		EndIf;
+				
+		Items.PictureAddress.Refresh();
+		
+	ElsIf EventName = "PickFromShared" Then
+		
+		Filter = GetFilter("Shared");
+								
+		Params = New Structure("Filter", Filter);
+		
+		SelectedPictureKey = OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
+		
+		If ValueIsFilled(SelectedPictureKey) Then 
+			
+			SetPicture(SelectedPictureKey);
+			
+		EndIf;
+				
+		Items.PictureAddress.Refresh();
+		
+	EndIf;
+EndProcedure
 
 

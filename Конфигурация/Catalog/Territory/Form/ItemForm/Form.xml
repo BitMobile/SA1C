@@ -12,31 +12,31 @@
 			<DataPath>Object.Code</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="CodeContextMenu" id="2"/>
-			<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="34"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="34"/>
 		</InputField>
 		<InputField name="Description" id="3">
 			<DataPath>Object.Description</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="DescriptionContextMenu" id="4"/>
-			<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="35"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="35"/>
 		</InputField>
 		<InputField name="Owner" id="5">
 			<DataPath>Object.Owner</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="OwnerContextMenu" id="6"/>
-			<ExtendedTooltip name="OwnerРасширеннаяПодсказка" id="36"/>
+			<ExtendedTooltip name="OwnerExtendedTooltip" id="36"/>
 		</InputField>
 		<InputField name="SR" id="7">
 			<DataPath>Object.SR</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="SRContextMenu" id="8"/>
-			<ExtendedTooltip name="SRРасширеннаяПодсказка" id="37"/>
+			<ExtendedTooltip name="SRExtendedTooltip" id="37"/>
 			<Events>
 				<Event name="StartChoice">SRStartChoice</Event>
 			</Events>
 		</InputField>
 		<Pages name="Group1" id="9">
-			<ExtendedTooltip name="Group1РасширеннаяПодсказка" id="38"/>
+			<ExtendedTooltip name="Group1ExtendedTooltip" id="38"/>
 			<ChildItems>
 				<Page name="OutletsPage" id="10">
 					<Title>
@@ -55,7 +55,7 @@
 							<v8:content>Outlets page</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="OutletsPageРасширеннаяПодсказка" id="39"/>
+					<ExtendedTooltip name="OutletsPageExtendedTooltip" id="39"/>
 					<ChildItems>
 						<Table name="Outlets" id="11">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -68,43 +68,43 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="OutletsContextMenu" id="12"/>
 							<AutoCommandBar name="OutletsCommandBar" id="13"/>
-							<ExtendedTooltip name="OutletsРасширеннаяПодсказка" id="40"/>
-							<SearchStringAddition name="OutletsСтрокаПоиска" id="41">
+							<ExtendedTooltip name="OutletsExtendedTooltip" id="40"/>
+							<SearchStringAddition name="OutletsSearchString" id="51">
 								<Source>
 									<lf:elementId>11</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsСтрокаПоискаКонтекстноеМеню" id="42"/>
-								<ExtendedTooltip name="OutletsСтрокаПоискаРасширеннаяПодсказка" id="43"/>
+								<ContextMenu name="OutletsSearchStringContextMenu" id="52"/>
+								<ExtendedTooltip name="OutletsSearchStringExtendedTooltip" id="53"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OutletsСостояниеПросмотра" id="44">
+							<ViewStatusAddition name="OutletsViewStatus" id="54">
 								<Source>
 									<lf:elementId>11</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsСостояниеПросмотраКонтекстноеМеню" id="45"/>
-								<ExtendedTooltip name="OutletsСостояниеПросмотраРасширеннаяПодсказка" id="46"/>
+								<ContextMenu name="OutletsViewStatusContextMenu" id="55"/>
+								<ExtendedTooltip name="OutletsViewStatusExtendedTooltip" id="56"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OutletsУправлениеПоиском" id="47">
+							<SearchControlAddition name="OutletsSearchControl" id="57">
 								<Source>
 									<lf:elementId>11</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsУправлениеПоискомКонтекстноеМеню" id="48"/>
-								<ExtendedTooltip name="OutletsУправлениеПоискомРасширеннаяПодсказка" id="49"/>
+								<ContextMenu name="OutletsSearchControlContextMenu" id="58"/>
+								<ExtendedTooltip name="OutletsSearchControlExtendedTooltip" id="59"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OutletsLineNumber" id="14">
 									<DataPath>Object.Outlets.LineNumber</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="OutletsLineNumberContextMenu" id="15"/>
-									<ExtendedTooltip name="OutletsLineNumberРасширеннаяПодсказка" id="50"/>
+									<ExtendedTooltip name="OutletsLineNumberExtendedTooltip" id="41"/>
 								</LabelField>
 								<InputField name="OutletsOutlet" id="16">
 									<DataPath>Object.Outlets.Outlet</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="OutletsOutletContextMenu" id="17"/>
-									<ExtendedTooltip name="OutletsOutletРасширеннаяПодсказка" id="51"/>
+									<ExtendedTooltip name="OutletsOutletExtendedTooltip" id="42"/>
 									<Events>
 										<Event name="OnChange">OutletsOutletOnChange</Event>
 									</Events>
@@ -130,7 +130,7 @@
 							<v8:content>SKUGroups</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="SKUGroupsРасширеннаяПодсказка" id="52"/>
+					<ExtendedTooltip name="SKUGroupsExtendedTooltip" id="43"/>
 					<ChildItems>
 						<Table name="SKUGroups1" id="19">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -143,43 +143,43 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="SKUGroups1ContextMenu" id="20"/>
 							<AutoCommandBar name="SKUGroups1CommandBar" id="21"/>
-							<ExtendedTooltip name="SKUGroups1РасширеннаяПодсказка" id="53"/>
-							<SearchStringAddition name="SKUGroups1СтрокаПоиска" id="54">
+							<ExtendedTooltip name="SKUGroups1ExtendedTooltip" id="44"/>
+							<SearchStringAddition name="SKUGroups1SearchString" id="60">
 								<Source>
 									<lf:elementId>19</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroups1СтрокаПоискаКонтекстноеМеню" id="55"/>
-								<ExtendedTooltip name="SKUGroups1СтрокаПоискаРасширеннаяПодсказка" id="56"/>
+								<ContextMenu name="SKUGroups1SearchStringContextMenu" id="61"/>
+								<ExtendedTooltip name="SKUGroups1SearchStringExtendedTooltip" id="62"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="SKUGroups1СостояниеПросмотра" id="57">
+							<ViewStatusAddition name="SKUGroups1ViewStatus" id="63">
 								<Source>
 									<lf:elementId>19</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroups1СостояниеПросмотраКонтекстноеМеню" id="58"/>
-								<ExtendedTooltip name="SKUGroups1СостояниеПросмотраРасширеннаяПодсказка" id="59"/>
+								<ContextMenu name="SKUGroups1ViewStatusContextMenu" id="64"/>
+								<ExtendedTooltip name="SKUGroups1ViewStatusExtendedTooltip" id="65"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="SKUGroups1УправлениеПоиском" id="60">
+							<SearchControlAddition name="SKUGroups1SearchControl" id="66">
 								<Source>
 									<lf:elementId>19</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroups1УправлениеПоискомКонтекстноеМеню" id="61"/>
-								<ExtendedTooltip name="SKUGroups1УправлениеПоискомРасширеннаяПодсказка" id="62"/>
+								<ContextMenu name="SKUGroups1SearchControlContextMenu" id="67"/>
+								<ExtendedTooltip name="SKUGroups1SearchControlExtendedTooltip" id="68"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="SKUGroups1LineNumber" id="22">
 									<DataPath>Object.SKUGroups.LineNumber</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="SKUGroups1LineNumberContextMenu" id="23"/>
-									<ExtendedTooltip name="SKUGroups1LineNumberРасширеннаяПодсказка" id="63"/>
+									<ExtendedTooltip name="SKUGroups1LineNumberExtendedTooltip" id="45"/>
 								</LabelField>
 								<InputField name="SKUGroups1SKUGroup" id="24">
 									<DataPath>Object.SKUGroups.SKUGroup</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="SKUGroups1SKUGroupContextMenu" id="25"/>
-									<ExtendedTooltip name="SKUGroups1SKUGroupРасширеннаяПодсказка" id="64"/>
+									<ExtendedTooltip name="SKUGroups1SKUGroupExtendedTooltip" id="46"/>
 									<Events>
 										<Event name="OnChange">SKUGroups1SKUGroupOnChange</Event>
 									</Events>
@@ -205,7 +205,7 @@
 							<v8:content>Stocks</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="StocksРасширеннаяПодсказка" id="65"/>
+					<ExtendedTooltip name="StocksExtendedTooltip" id="47"/>
 					<ChildItems>
 						<Table name="Stocks1" id="27">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -218,43 +218,43 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="Stocks1ContextMenu" id="28"/>
 							<AutoCommandBar name="Stocks1CommandBar" id="29"/>
-							<ExtendedTooltip name="Stocks1РасширеннаяПодсказка" id="66"/>
-							<SearchStringAddition name="Stocks1СтрокаПоиска" id="67">
+							<ExtendedTooltip name="Stocks1ExtendedTooltip" id="48"/>
+							<SearchStringAddition name="Stocks1SearchString" id="69">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="Stocks1СтрокаПоискаКонтекстноеМеню" id="68"/>
-								<ExtendedTooltip name="Stocks1СтрокаПоискаРасширеннаяПодсказка" id="69"/>
+								<ContextMenu name="Stocks1SearchStringContextMenu" id="70"/>
+								<ExtendedTooltip name="Stocks1SearchStringExtendedTooltip" id="71"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="Stocks1СостояниеПросмотра" id="70">
+							<ViewStatusAddition name="Stocks1ViewStatus" id="72">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="Stocks1СостояниеПросмотраКонтекстноеМеню" id="71"/>
-								<ExtendedTooltip name="Stocks1СостояниеПросмотраРасширеннаяПодсказка" id="72"/>
+								<ContextMenu name="Stocks1ViewStatusContextMenu" id="73"/>
+								<ExtendedTooltip name="Stocks1ViewStatusExtendedTooltip" id="74"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="Stocks1УправлениеПоиском" id="73">
+							<SearchControlAddition name="Stocks1SearchControl" id="75">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="Stocks1УправлениеПоискомКонтекстноеМеню" id="74"/>
-								<ExtendedTooltip name="Stocks1УправлениеПоискомРасширеннаяПодсказка" id="75"/>
+								<ContextMenu name="Stocks1SearchControlContextMenu" id="76"/>
+								<ExtendedTooltip name="Stocks1SearchControlExtendedTooltip" id="77"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="Stocks1LineNumber" id="30">
 									<DataPath>Object.Stocks.LineNumber</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="Stocks1LineNumberContextMenu" id="31"/>
-									<ExtendedTooltip name="Stocks1LineNumberРасширеннаяПодсказка" id="76"/>
+									<ExtendedTooltip name="Stocks1LineNumberExtendedTooltip" id="49"/>
 								</LabelField>
 								<InputField name="Stocks1Stock" id="32">
 									<DataPath>Object.Stocks.Stock</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="Stocks1StockContextMenu" id="33"/>
-									<ExtendedTooltip name="Stocks1StockРасширеннаяПодсказка" id="77"/>
+									<ExtendedTooltip name="Stocks1StockExtendedTooltip" id="50"/>
 									<Events>
 										<Event name="OnChange">Stocks1StockOnChange</Event>
 									</Events>

@@ -35,42 +35,42 @@
 			<AutoCommandBar name="ListCommandBar" id="3">
 				<Autofill>false</Autofill>
 			</AutoCommandBar>
-			<ExtendedTooltip name="ListРасширеннаяПодсказка" id="8"/>
-			<SearchStringAddition name="ListСтрокаПоиска" id="9">
+			<ExtendedTooltip name="ListExtendedTooltip" id="8"/>
+			<SearchStringAddition name="ListSearchString" id="11">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="ListСтрокаПоискаКонтекстноеМеню" id="10"/>
-				<ExtendedTooltip name="ListСтрокаПоискаРасширеннаяПодсказка" id="11"/>
+				<ContextMenu name="ListSearchStringContextMenu" id="12"/>
+				<ExtendedTooltip name="ListSearchStringExtendedTooltip" id="13"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="ListСостояниеПросмотра" id="12">
+			<ViewStatusAddition name="ListViewStatus" id="14">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="ListСостояниеПросмотраКонтекстноеМеню" id="13"/>
-				<ExtendedTooltip name="ListСостояниеПросмотраРасширеннаяПодсказка" id="14"/>
+				<ContextMenu name="ListViewStatusContextMenu" id="15"/>
+				<ExtendedTooltip name="ListViewStatusExtendedTooltip" id="16"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="ListУправлениеПоиском" id="15">
+			<SearchControlAddition name="ListSearchControl" id="17">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="ListУправлениеПоискомКонтекстноеМеню" id="16"/>
-				<ExtendedTooltip name="ListУправлениеПоискомРасширеннаяПодсказка" id="17"/>
+				<ContextMenu name="ListSearchControlContextMenu" id="18"/>
+				<ExtendedTooltip name="ListSearchControlExtendedTooltip" id="19"/>
 			</SearchControlAddition>
 			<ChildItems>
 				<LabelField name="Description" id="4">
 					<DataPath>List.Description</DataPath>
 					<DefaultItem>true</DefaultItem>
 					<ContextMenu name="DescriptionContextMenu" id="5"/>
-					<ExtendedTooltip name="DescriptionРасширеннаяПодсказка" id="18"/>
+					<ExtendedTooltip name="DescriptionExtendedTooltip" id="9"/>
 				</LabelField>
 				<LabelField name="Code" id="6">
 					<DataPath>List.Code</DataPath>
 					<ContextMenu name="CodeContextMenu" id="7"/>
-					<ExtendedTooltip name="CodeРасширеннаяПодсказка" id="19"/>
+					<ExtendedTooltip name="CodeExtendedTooltip" id="10"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
