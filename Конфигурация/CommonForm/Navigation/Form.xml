@@ -600,14 +600,14 @@
 											<CommandName>Form.Command.Stocks</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Picture>
-												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
 											<ExtendedTooltip name="StocksExtendedTooltip" id="533"/>
 										</Button>
 										<Button name="UnitsOfMeasure" id="1052">
 											<Type>Hyperlink</Type>
-											<CommandName>Form.Command.CommonQuestions</CommandName>
+											<CommandName>Form.Command.UnitsOfMeasure</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Picture>
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
@@ -697,7 +697,7 @@
 											<CommandName>Form.Command.CommonQuestions</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Picture>
-												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
+												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
 											<ExtendedTooltip name="CommonQuestionsExtendedTooltip" id="1024"/>
@@ -707,7 +707,7 @@
 											<CommandName>Form.Command.SKUQuestions</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Picture>
-												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
+												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
 											<ExtendedTooltip name="SKUQuestionsExtendedTooltip" id="539"/>
@@ -803,52 +803,6 @@
 								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
-						<UsualGroup name="Other" id="193">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Other</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Other</v8:content>
-								</v8:item>
-							</ToolTip>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="OtherExtendedTooltip" id="546"/>
-							<ChildItems>
-								<Button name="Reports" id="192">
-									<Type>Hyperlink</Type>
-									<Representation>PictureAndText</Representation>
-									<CommandName>Form.Command.Reports</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.Report</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
-									<ExtendedTooltip name="ReportsExtendedTooltip" id="547"/>
-								</Button>
-								<Button name="Syncronization" id="194">
-									<Type>Hyperlink</Type>
-									<CommandName>Form.Command.Syncronization</CommandName>
-									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="SyncronizationExtendedTooltip" id="548"/>
-								</Button>
-								<Button name="ObjectsDeletion" id="195">
-									<Type>Hyperlink</Type>
-									<UserVisible>
-										<xr:Common>true</xr:Common>
-										<xr:Value name="Role.SR">false</xr:Value>
-										<xr:Value name="Role.SRM">false</xr:Value>
-									</UserVisible>
-									<CommandName>Form.Command.ObjectsDeletion</CommandName>
-									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="ObjectsDeletionExtendedTooltip" id="549"/>
-								</Button>
-							</ChildItems>
-						</UsualGroup>
 						<UsualGroup name="AdministrationGroup" id="1054">
 							<Title>
 								<v8:item>
@@ -887,7 +841,7 @@
 										<Button name="MoreAdministration" id="1059">
 											<Type>UsualButton</Type>
 											<Representation>Picture</Representation>
-											<CommandName>Form.Command.AllQuestions</CommandName>
+											<CommandName>Form.Command.MoreAdministration</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Picture>
 												<xr:Ref>CommonPicture.More</xr:Ref>
@@ -932,17 +886,6 @@
 											</Picture>
 											<ExtendedTooltip name="РегламентныеИФоновыеЗаданияExtendedTooltip" id="1066"/>
 										</Button>
-										<Button name="УдалениеПомеченныхОбъектов" id="1067">
-											<Type>Hyperlink</Type>
-											<Visible>false</Visible>
-											<CommandName>Form.Command.УдалениеПомеченныхОбъектов</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="УдалениеПомеченныхОбъектовExtendedTooltip" id="1068"/>
-										</Button>
 										<Button name="ChangedData" id="1098">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.ChangedData</CommandName>
@@ -975,6 +918,52 @@
 										</Button>
 									</ChildItems>
 								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Other" id="193">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Other</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Other</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="OtherExtendedTooltip" id="546"/>
+							<ChildItems>
+								<Button name="Reports" id="192">
+									<Type>Hyperlink</Type>
+									<Representation>PictureAndText</Representation>
+									<CommandName>Form.Command.Reports</CommandName>
+									<Parameter xsi:nil="true"/>
+									<Picture>
+										<xr:Ref>StdPicture.Report</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="ReportsExtendedTooltip" id="547"/>
+								</Button>
+								<Button name="Syncronization" id="194">
+									<Type>Hyperlink</Type>
+									<CommandName>Form.Command.Syncronization</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="SyncronizationExtendedTooltip" id="548"/>
+								</Button>
+								<Button name="ObjectsDeletion" id="195">
+									<Type>Hyperlink</Type>
+									<UserVisible>
+										<xr:Common>true</xr:Common>
+										<xr:Value name="Role.SR">false</xr:Value>
+										<xr:Value name="Role.SRM">false</xr:Value>
+									</UserVisible>
+									<CommandName>Form.Command.ObjectsDeletion</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="ObjectsDeletionExtendedTooltip" id="549"/>
+								</Button>
 							</ChildItems>
 						</UsualGroup>
 					</ChildItems>
@@ -5516,6 +5505,40 @@ WHERE
 				</v8:item>
 			</ToolTip>
 			<Action>InvalidObjects</Action>
+		</Command>
+		<Command name="MoreAdministration" id="55">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>More administration</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>More administration</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>MoreAdministration</Action>
+		</Command>
+		<Command name="UnitsOfMeasure" id="61">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Units of measure</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Единицы измерения</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Units of measure</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UnitsOfMeasure</Action>
 		</Command>
 	</Commands>
 </Form>

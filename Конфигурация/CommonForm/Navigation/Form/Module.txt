@@ -40,6 +40,12 @@ EndProcedure
 	 MoreServer(Items.MoreReasons.Name, PictureLib.More, Items.ReasonsMoreGroup.Name);
  EndProcedure
 
+ &AtClient
+ Procedure MoreAdministration(Command)
+	 MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
+ EndProcedure
+
+
 //------------------------------"ShowList" commands---------
 
 //--Documents
@@ -205,6 +211,11 @@ EndProcedure
 	 
 	 ShowListServer(Items.SKUFeaturesList.Name);
 	 
+ EndProcedure
+
+ &AtClient
+ Procedure UnitsOfMeasure(Command)
+	 ShowListServer(Items.UnitsOfMeasureList.Name);
  EndProcedure
 
 //--Users
@@ -377,12 +388,7 @@ Procedure MoreServer(SourceButton, DefaultPicture, Sublist)
 			 EndIf;
 		 EndDo;
 	 EndIf;
-//{{MRG[ <-> ]
- EndProcedure
-//}}MRG[ <-> ]
-//{{MRG[ <-> ]
-// EndProcedure   
-//}}MRG[ <-> ]
+EndProcedure
 
 &AtServer
 Procedure SetQuestionGroupListParameter(Regular = True)
@@ -407,24 +413,11 @@ Procedure AllQuestions(Command)
 	SetQuestionListParameter(Undefined);
 EndProcedure
 
- 
- &AtClient
- Procedure MoreAdministration(Command)
-	 MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
- EndProcedure
-
-
 //--Questions
  &AtClient
  Procedure QuestionGroups(Command)
      ShowListServer(Items.QuestionGroupList.Name);
  EndProcedure
-
- &AtClient
- Procedure UnitsOfMeasure(Command)
-	 ShowListServer(Items.UnitsOfMeasureList.Name);
- EndProcedure
- 
  
  //--Administration
  &AtClient
