@@ -1,32 +1,34 @@
 ﻿
 Procedure ActualizeQuestionnaireMap() Export
 
-//	q = new Query();
-//    q.Text = "SELECT Ref FROM Document.Questionnaire";
-//    questionnaires = q.Execute().Unload();
-//    mapDocument = GetMapDocument();
-//    mapDocument.Outlets.Clear();
-//    mapDocument.Positions.Clear();
-//    For Each row In questionnaires Do
-//        WriteMap(row.Ref, mapDocument);        
-//    EndDo;
+	//q = new Query();
+	//q.Text = "SELECT Ref FROM Document.Questionnaire";
+	//questionnaires = q.Execute().Unload();
+	//mapDocument = GetMapDocument();
+	//mapDocument.Outlets.Clear();
+	//mapDocument.Positions.Clear();
+	//For Each row In questionnaires Do
+	//    WriteMap(row.Ref, mapDocument);        
+	//EndDo;
 
 	PeriodicityTable = GetPeriodicityTable();
-	MapDocument = GetMapDocument();	
+	//MapDocument = GetMapDocument();	
+	//MapDocument.Periodicity.Clear();
 	For Each Row In PeriodicityTable Do
+		QuestionnairePeriodicityTable = GetEmptyQuestionnairePeriodicityTable();
 		// Вычисляем начало периода расчета для текущего соответствия анкета-ТТ. 
 		// Если начало периода действия анкеты больше текущей даты - тогда начало
 		// периода расчета = начало периода действия анкеты, иначе текущая дата
 		BeginDate = ?(Row.Questionnaire.BeginDate > CurrentDate(), BeginDate, CurrentDate()); 
 		// Вычисляем конец периода расчета для текущего соответствия анкета-ТТ. 
 		Day = 60 * 60 * 24;             
-		Month = Day * 30;               
-		PlusMonth = CurrentDate() + Month;  
+		Week = Day * 7;               
+		PlusWeek = CurrentDate() + Week;  
 		// В случае когда конец периода действия текущей анкеты не задан считаем 
 		// на месяц вперед от текущей даты, иначе если дата конца действия анкеты
 		// меньше чем текущая дата плюс месяц, тогда считаем до конца действия 
 		// анкеты, иначе до текущей даты плюс месяц.
-		EndDate = ?(ValueIsFilled(Row.Questionnaire.EndDate), ?(Row.Questionnaire.EndDate > PlusMonth, PlusMonth, Row.Questionnaire.EndDate), PlusMonth);
+		EndDate = ?(ValueIsFilled(Row.Questionnaire.EndDate), ?(Row.Questionnaire.EndDate > PlusWeek, PlusWeek, Row.Questionnaire.EndDate), PlusWeek);
 		
 		// Для недельного и годового расписания по месяцам нам нужно понимать в 
 		// какие дни недели и месяцы года нам нужно показывать анкеты. Для этого
@@ -119,17 +121,21 @@ Procedure ActualizeQuestionnaireMap() Export
 			EndIf;
 
 			If Write = True Then
-				ResultRow = MapDocument.Outlets.Add();
-				ResultRow.Questionnaire = Row.Questionnaire;
-				ResultRow.Outlet = Row.Outlet;
+				ResultRow = QuestionnairePeriodicityTable.Add();
+				//ResultRow.Questionnaire = Row.Questionnaire;
 				ResultRow.Date = CurrentDate;
 				ResultRow.BeginPeriod = BeginSchedulePeriod;
 				ResultRow.EndPeriod = EndSchedulePeriod;
 			EndIf;
 			CurrentDate = CurrentDate + Day;
 		EndDo;
+		If QuestionnairePeriodicityTable.Count() > 0 Then
+			QuestionnaireObject = Row.Questionnaire.GetObject();
+			QuestionnaireObject.Periodicity.Load(QuestionnairePeriodicityTable);
+			QuestionnaireObject.Write();
+		EndIf;
 	EndDo;
-	MapDocument.Write();
+	//MapDocument.Write();
 EndProcedure
 
 Procedure WriteMap(quest,mapDocument) Export
@@ -181,13 +187,9 @@ Function GetPeriodicityTable()
 	
 	
 	For Each Questionnaire In Questionnaires Do
-		Outlets = Documents.Questionnaire.SelectOutlets(Undefined, Questionnaire.Ref);
-		For Each Outlet In Outlets Do
-			ResultRow = PeriodicityTable.Add();
-			ResultRow.Questionnaire = Questionnaire.Ref;
-			ResultRow.Outlet = Outlet.Ref;
-			ResultRow.Periodicity = GetPeriodicity(Questionnaire.Ref.Schedule);
-		EndDo;
+		ResultRow = PeriodicityTable.Add();
+		ResultRow.Questionnaire = Questionnaire.Ref;
+		ResultRow.Periodicity = GetPeriodicity(Questionnaire.Ref.Schedule);
 	EndDo;
 	
 	Return PeriodicityTable;
@@ -202,6 +204,15 @@ Function GetEmptyPeriodicityTable()
     ValueTable.Columns.Add("Periodicity");
     Return ValueTable;
 
+EndFunction
+
+&AtServer
+Function GetEmptyQuestionnairePeriodicityTable()
+	ValueTable = New ValueTable;
+	ValueTable.Columns.Add("Date");
+	ValueTable.Columns.Add("BeginPeriod");
+	ValueTable.Columns.Add("EndPeriod");
+	Return ValueTable;
 EndFunction
 
 &AtServer

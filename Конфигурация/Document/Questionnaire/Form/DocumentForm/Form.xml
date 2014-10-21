@@ -726,6 +726,66 @@
 			<ContextMenu name="Attribute1ContextMenu" id="79"/>
 			<ExtendedTooltip name="Attribute1ExtendedTooltip" id="87"/>
 		</InputField>
+		<Table name="Periodicity" id="232">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Object.Periodicity</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="PeriodicityContextMenu" id="233"/>
+			<AutoCommandBar name="PeriodicityCommandBar" id="234"/>
+			<ExtendedTooltip name="PeriodicityExtendedTooltip" id="235"/>
+			<SearchStringAddition name="PeriodicitySearchString" id="236">
+				<Source>
+					<lf:elementId>232</lf:elementId>
+					<lf:additionId>0</lf:additionId>
+				</Source>
+				<ContextMenu name="PeriodicitySearchStringContextMenu" id="239"/>
+				<ExtendedTooltip name="PeriodicitySearchStringExtendedTooltip" id="240"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="PeriodicityViewStatus" id="241">
+				<Source>
+					<lf:elementId>232</lf:elementId>
+					<lf:additionId>1</lf:additionId>
+				</Source>
+				<ContextMenu name="PeriodicityViewStatusContextMenu" id="244"/>
+				<ExtendedTooltip name="PeriodicityViewStatusExtendedTooltip" id="245"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="PeriodicitySearchControl" id="246">
+				<Source>
+					<lf:elementId>232</lf:elementId>
+					<lf:additionId>2</lf:additionId>
+				</Source>
+				<ContextMenu name="PeriodicitySearchControlContextMenu" id="249"/>
+				<ExtendedTooltip name="PeriodicitySearchControlExtendedTooltip" id="250"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="PeriodicityLineNumber" id="251">
+					<DataPath>Object.Periodicity.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PeriodicityLineNumberContextMenu" id="252"/>
+					<ExtendedTooltip name="PeriodicityLineNumberExtendedTooltip" id="253"/>
+				</LabelField>
+				<InputField name="PeriodicityDate" id="254">
+					<DataPath>Object.Periodicity.Date</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PeriodicityDateContextMenu" id="255"/>
+					<ExtendedTooltip name="PeriodicityDateExtendedTooltip" id="256"/>
+				</InputField>
+				<InputField name="PeriodicityBeginPeriod" id="257">
+					<DataPath>Object.Periodicity.BeginPeriod</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PeriodicityBeginPeriodContextMenu" id="258"/>
+					<ExtendedTooltip name="PeriodicityBeginPeriodExtendedTooltip" id="259"/>
+				</InputField>
+				<InputField name="PeriodicityEndPeriod" id="260">
+					<DataPath>Object.Periodicity.EndPeriod</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PeriodicityEndPeriodContextMenu" id="261"/>
+					<ExtendedTooltip name="PeriodicityEndPeriodExtendedTooltip" id="262"/>
+				</InputField>
+			</ChildItems>
+		</Table>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
