@@ -213,4 +213,129 @@ Procedure ClearZeroesAtOutlets()
 
 EndProcedure
 
+&AtServer
+Procedure StartUpdateQuestionnaire() Export
+	Message(NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'"));	
+	Try
+		ProcessQuestionnaires();
+		ProcessQuestionGroups();
+		ProcessSKUQuestions();
+		Message(NStr("en = 'Database update processing is finished'; ru = 'Обработка обновления базы данных завершена'"));
+		Constants.update_questionnaire.Set(True);
+	Except
+		Message(NStr("en = 'Database update processing is finished with mistakes'; ru = 'Обработка обновления базы данных завершена c ошибками'"));
+		ИОО = ИнформацияОбОшибке();
+	EndTry;
+EndProcedure
 
+&AtServer
+Procedure ProcessQuestionnaires()
+	Selection = Documents.Questionnaire.Select();
+	While Selection.Next() Do
+		If Not ValueIsFilled(Selection.Schedule) Then
+			Object = Selection.GetObject();
+			Object.BeginDate = Object.Date + 60 * 60 * 24;
+			Object.Schedule = "Day;1";
+			Object.Write();
+		EndIf;
+	EndDo;
+EndProcedure
+
+&AtServer
+Procedure ProcessQuestionGroups()
+	
+	Selection = Catalogs.QuestionGroup.Select();
+	While Selection.Next() Do
+		If Selection.Type = Enums.QuestionGroupTypes.EmptyRef() Then
+			Object = Selection.GetObject();
+			Object.Type = Enums.QuestionGroupTypes.Regular;
+			Object.Write();
+		EndIf;
+	EndDo;
+EndProcedure
+
+&AtServer
+Procedure ProcessSKUQuestions()
+	Query = New Query(
+	"SELECT
+	|	QuestionnaireSKUQuestions1.Ref AS Ref,
+	|	QuestionnaireSKUQuestions1.SKUQuestion
+	|FROM
+	|	Document.Questionnaire.SKUQuestions AS QuestionnaireSKUQuestions1
+	|WHERE
+	|	QuestionnaireSKUQuestions1.UseInQuestionaire
+	|
+	|ORDER BY
+	|	Ref
+	|TOTALS BY
+	|	Ref");
+	SKUQuestions = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
+	
+	SKUQuestionsGroup = GetSKUQuestionsGroup();
+	If SKUQuestions.Rows.Count() > 0 Then
+		For Each QuestionnaireRow In SKUQuestions.Rows Do
+			QuestionnaireObject = QuestionnaireRow.Ref.GetObject();
+			For Each SKUQuestionsRow In QuestionnaireRow.Rows Do
+				NewRow = QuestionnaireObject.SKUQuestionsNew.Add();
+				Question = SKUQuestionsRow.SKUQuestion;
+				NewRow.Question = GetSKUQuestion(Question, SKUQuestionsGroup);
+			EndDo;
+			QuestionnaireObject.Write();
+		EndDo;
+	Else
+		CreateQuestion(NStr("en='Available';ru='Доступность'"), Enums.DataType.Boolean, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='Facing';ru='Фейсинг'"), Enums.DataType.Decimal, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='MarkUp';ru='Наценка'"), Enums.DataType.Decimal, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='OutOfStock';ru='Наличие на складе'"), Enums.DataType.Boolean, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='Price';ru='Цена'"), Enums.DataType.Decimal, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='Stock';ru='Остаток'"), Enums.DataType.Decimal, SKUQuestionsGroup);
+		CreateQuestion(NStr("en='Snapshot';ru='Снимок'"), Enums.DataType.Snapshot, SKUQuestionsGroup);
+	EndIf;
+EndProcedure
+
+&AtServer
+Function GetSKUQuestionsGroup()
+	SKUQuestionsGroupDescription = NStr("en = ""SKU questions (created automaticaly)""; ru = ""Вопросы по номенклатуре (создано автоматически)""");
+	SKUQuestionsGroup = Catalogs.QuestionGroup.FindByDescription(SKUQuestionsGroupDescription);
+	If SKUQuestionsGroup = Catalogs.QuestionGroup.EmptyRef() OR SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.Regular Then
+		SKUQuestionsGroup = Catalogs.QuestionGroup.CreateItem();
+		SKUQuestionsGroup.Description = SKUQuestionsGroupDescription;
+		SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.SKUQuestionsGroup;
+		SKUQuestionsGroup.Write();
+	EndIf;	
+	Return SKUQuestionsGroup.Ref;
+EndFunction
+
+&AtServer
+Function GetSKUQuestion(SKUQuestion, Group)
+	Question = Catalogs.Question.FindByDescription(GetSynonymFromEnumValue("SKUQuestions", SKUQuestion), True);
+	If Question = Catalogs.Question.EmptyRef() OR Not Question.Owner = Group Then
+		Question = Catalogs.Question.CreateItem();
+		Question.Description = SKUQuestion;
+		If SKUQuestion = Enums.SKUQuestions.Available OR SKUQuestion = Enums.SKUQuestions.Stock Then
+			Question.AnswerType = Enums.DataType.Boolean;
+		ElsIf Question = Enums.SKUQuestions.Snapshot Then
+			Question.AnswerType = Enums.DataType.Snapshot;
+		Else
+			Question.AnswerType = Enums.DataType.Decimal;
+		EndIf;
+		Question.Owner = Group;
+		Question.Write();
+	EndIf;
+	Return Question.Ref;
+EndFunction
+
+&AtServer
+Function GetSynonymFromEnumValue(Enum, Value)
+	IndexOfValue = Enums[Enum].IndexOf(Value);
+	Return Metadata.Enums[Enum].EnumValues[IndexOfValue].Synonym;
+EndFunction
+
+&AtServer
+Procedure CreateQuestion(Description, Type, Group)
+	NewQuestion = Catalogs.Question.CreateItem();
+	NewQuestion.Description = Description;
+	NewQuestion.AnswerType = Type;
+	NewQuestion.Owner = Group;
+	NewQuestion.Write();
+EndProcedure
