@@ -2,11 +2,15 @@
 <MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Subsystem uuid="99231b08-a6f2-47fc-b550-c76406168887">
 		<Properties>
-			<Name>BitMobile</Name>
+			<Name>bitmobile</Name>
 			<Synonym>
 				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Bitmobile</v8:content>
+				</v8:item>
+				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Bit mobile</v8:content>
+					<v8:content>Bitmobile</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
@@ -15,23 +19,23 @@
 			<Explanation/>
 			<Picture/>
 			<Content>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.AddForUpload</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.ChangedData</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.SyncOrder</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.CatalogOnWrite</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.CatalogBeforeWrite</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentOnWrite</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.DocumentBeforeWrite</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">00e193fb-27cf-4768-86f2-8622efb41179</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">df092f0a-2b12-45b3-a92d-42d151adbe3c</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">750d2257-b63d-493f-9fdb-26dc270f46cb</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">556f77b0-a48f-4581-b727-f4b185597a12</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">87df7482-a791-4f6e-adad-39312e5f0196</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">4b7560ce-b0d1-46a5-8cff-1f05ddda907b</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">393a730c-4533-4f51-bfeb-75ec66b2203c</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.User</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncUploadDate</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncUploadStatus</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedDate</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.LastSyncDeletedStatus</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.Server</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.ServerPath</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.Password</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.SyncAndSettings</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.ExportData</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">212af870-26bc-4ba1-8b07-8c2d3ea1412a</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ca6546e2-f650-4554-8104-b80bc1d5f975</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">401c711f-8f69-4e31-96f0-a757cb046433</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">649a849a-4864-453b-9e64-9d3782ac7462</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">99dad86c-0f08-4731-a5f9-b2dc7575e459</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">4fd08164-2b59-4dea-8ee1-b61ba6b640f3</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ecb122a3-42d1-4250-bb97-390844ea8758</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">f02a3d2e-af6c-412c-a5b6-62995d307a23</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">7bfe40b9-9a46-4909-9dad-9e2e5a99ee08</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.РегламентныеИФоновыеЗадания</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.НастройкиВыполненияРегламентныхЗаданий</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ОбщегоНазначения</xr:Item>
@@ -43,9 +47,58 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.Пользователи</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ПользователиКлиентСервер</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.ПользователиСлужебный</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Catalog.MobileApplicationSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ee35cd47-7e72-4a28-82cb-6074eab10bdb</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.ReasonForVisit</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.ReasonForNotOfTakingOrder</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">77d15f90-cd9e-4da7-80dc-802d24ded82b</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">e7b51acd-38a8-43d3-a766-e3e6e428fb38</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">527f619b-2d5d-489c-8a05-17d8946392b6</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_Сервер</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПутьНаСервере</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_Пароль</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейВыгрузкиДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейВыгрузкиДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейСинхронизацииУдаленныхДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейСинхронизацииУдаленныхДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.bitmobile_НастройкиСинхронизации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанные</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">24823272-139e-40f2-8d76-bd165dd1241a</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ПерейтиККарте</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИмяКонфигурации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ВерсияКонфигурации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ОтключитьПодпискиНаСобытия</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">755ae034-a2be-40c4-9283-e79f21972767</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.bitmobile_СинхронизацияИНастройки</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_СоответствиеПеречислений</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_КонтролируемыеИзмеренияРегистров</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Информация16</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Информация</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ГруппаЭлемент</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ДобавитьНаКарту</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Клиент</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиОтправкиОтчетов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиСервера</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиКонфигурации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Сервер</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Почта</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_АдресаЭлПочтыДляОтчетов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИспользоватьОтправкуОтчета</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_РазмерПрикрепляемогоФайла</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПрикреплятьФайлДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_АутентификацияSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПарольSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПользовательSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПортSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_АдресСервераSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_Порт</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ОбъектыСОшибками</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияЗапущена</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_IDВыгрузки</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейЗагрузкиДанных</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеподтвержденнаяДатаВыгрузки</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПодтвержденнаяДатаВыгрузки</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.bitmobile_НастройкиМобильныхПриложений</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанныеПриЗагрузке</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

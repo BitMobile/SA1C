@@ -1,9 +1,0 @@
-﻿
-&AtClient
-Procedure OnOpen(Cancel)
-    If Object.Code="MultStck" Then
-        ThisForm.ReadOnly = True;
-    	
-    
-    EndIf;
-EndProcedure

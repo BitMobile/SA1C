@@ -110,7 +110,7 @@
 			<Subsystem>SKUGroup</Subsystem>
 			<Subsystem>UsersGroup</Subsystem>
 			<Subsystem>Administration</Subsystem>
-			<Subsystem>BitMobile</Subsystem>
+			<Subsystem>bitmobile</Subsystem>
 			<StyleItem>ШрифтВажнойНадписи</StyleItem>
 			<StyleItem>ПоясняющийТекст</StyleItem>
 			<CommonPicture>Logo</CommonPicture>
@@ -130,17 +130,26 @@
 			<CommonPicture>ЗапуститьОтдельныйСеансДляВыполненияРегламентныхЗаданий</CommonPicture>
 			<CommonPicture>НастройкаВыполненияРегламентныхЗаданий</CommonPicture>
 			<CommonPicture>ОшибкаВыполненияРегламентныхЗаданий</CommonPicture>
+			<CommonPicture>bitmobile_Информация</CommonPicture>
+			<CommonPicture>bitmobile_Сервер</CommonPicture>
+			<CommonPicture>bitmobile_Клиент</CommonPicture>
+			<CommonPicture>bitmobile_Информация16</CommonPicture>
+			<CommonPicture>bitmobile_Почта</CommonPicture>
+			<CommonPicture>bitmobile_ПерейтиККарте</CommonPicture>
+			<CommonPicture>bitmobile_ДобавитьНаКарту</CommonPicture>
+			<CommonPicture>bitmobile_ГруппаЭлемент</CommonPicture>
 			<SessionParameter>ТекущийПользователь</SessionParameter>
 			<Role>SR</Role>
 			<Role>SRM</Role>
 			<Role>Admin</Role>
-			<CommonModule>AddForUpload</CommonModule>
+			<Role>bitmobile_Администратор</Role>
+			<Role>bitmobile_Пользователь</Role>
 			<CommonModule>ClientProcessors</CommonModule>
-			<CommonModule>SheduledJobs</CommonModule>
-			<CommonModule>QuestionnaireMapAssign</CommonModule>
-			<CommonModule>ScheduleFunctions</CommonModule>
+			<CommonModule>CommonProcessors</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
 			<CommonModule>UpdateDatabase</CommonModule>
+			<CommonModule>QuestionnaireMapAssign</CommonModule>
+			<CommonModule>ScheduleFunctions</CommonModule>
 			<CommonModule>ДлительныеОперации</CommonModule>
 			<CommonModule>ДлительныеОперацииКлиент</CommonModule>
 			<CommonModule>ДлительныеОперацииКлиентПовтИсп</CommonModule>
@@ -153,8 +162,6 @@
 			<CommonModule>Пользователи</CommonModule>
 			<CommonModule>ПользователиКлиентСервер</CommonModule>
 			<CommonModule>ПользователиСлужебный</CommonModule>
-			<CommonModule>CommonProcessors</CommonModule>
-			<CommonModule>SyncSettingsRegister</CommonModule>
 			<CommonModule>РегламентныеЗаданияКлиент</CommonModule>
 			<CommonModule>РегламентныеЗаданияСервер</CommonModule>
 			<CommonModule>РегламентныеЗаданияСлужебный</CommonModule>
@@ -166,13 +173,13 @@
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
 			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
 			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
-			<EventSubscription>CatalogOnWrite</EventSubscription>
-			<EventSubscription>CatalogBeforeWrite</EventSubscription>
-			<EventSubscription>DocumentOnWrite</EventSubscription>
-			<EventSubscription>DocumentBeforeWrite</EventSubscription>
+			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
 			<EventSubscription>SKUOnWrite</EventSubscription>
-			<ScheduledJob>DataSynchronization</ScheduledJob>
-			<ScheduledJob>PicturesSynchronization</ScheduledJob>
+			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
+			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
+			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
+			<ScheduledJob>bitmobile_ОчисткаДанных</ScheduledJob>
+			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<CommonCommand>ObjectsDeletion</CommonCommand>
@@ -183,33 +190,48 @@
 			<CommandGroup>CommandGroup2</CommandGroup>
 			<CommandGroup>CommandGroup3</CommandGroup>
 			<CommandGroup>CommandGroup4</CommandGroup>
-			<Constant>Server</Constant>
-			<Constant>LastSyncUploadDate</Constant>
-			<Constant>Port</Constant>
-			<Constant>ServerPath</Constant>
-			<Constant>LastSyncDeletedStatus</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>
-			<Constant>MaxPictureSize</Constant>
 			<Constant>update2_0_0</Constant>
 			<Constant>MultiStock</Constant>
-			<Constant>Password</Constant>
-			<Constant>LastSyncUploadStatus</Constant>
-			<Constant>LastSyncDeletedDate</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>update_questionnaire</Constant>
-			<Constant>UploadGUID</Constant>
-			<Constant>LastSyncDownloadDate</Constant>
-			<Constant>LastSyncDownloadStatus</Constant>
-			<Constant>SyncronizationStarted</Constant>
-			<CommonForm>ДлительнаяОперация</CommonForm>
+			<Constant>bitmobile_Сервер</Constant>
+			<Constant>bitmobile_ДатаПоследнейСинхронизацииУдаленныхДанных</Constant>
+			<Constant>bitmobile_ИмяКонфигурации</Constant>
+			<Constant>bitmobile_ДатаПоследнейВыгрузкиДанных</Constant>
+			<Constant>bitmobile_Пароль</Constant>
+			<Constant>bitmobile_ОтключитьПодпискиНаСобытия</Constant>
+			<Constant>bitmobile_АдресСервераSMTP</Constant>
+			<Constant>bitmobile_ПортSMTP</Constant>
+			<Constant>bitmobile_ПользовательSMTP</Constant>
+			<Constant>bitmobile_ПарольSMTP</Constant>
+			<Constant>bitmobile_АутентификацияSMTP</Constant>
+			<Constant>bitmobile_ПрикреплятьФайлДанных</Constant>
+			<Constant>bitmobile_РазмерПрикрепляемогоФайла</Constant>
+			<Constant>bitmobile_ИспользоватьОтправкуОтчета</Constant>
+			<Constant>bitmobile_Порт</Constant>
+			<Constant>bitmobile_СтатусПоследнейВыгрузкиДанных</Constant>
+			<Constant>bitmobile_ПутьНаСервере</Constant>
+			<Constant>bitmobile_СтатусПоследнейСинхронизацииУдаленныхДанных</Constant>
+			<Constant>bitmobile_ВерсияКонфигурации</Constant>
+			<Constant>bitmobile_ДатаПоследнейЗагрузкиДанных</Constant>
+			<Constant>bitmobile_СтатусПоследнейЗагрузкиДанных</Constant>
+			<Constant>bitmobile_СинхронизацияЗапущена</Constant>
+			<Constant>bitmobile_IDВыгрузки</Constant>
+			<Constant>bitmobile_НеподтвержденнаяДатаВыгрузки</Constant>
+			<Constant>bitmobile_ПодтвержденнаяДатаВыгрузки</Constant>
+			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<CommonForm>Navigation</CommonForm>
-			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>Settings</CommonForm>
+			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>
 			<CommonForm>ChooseFromListForm</CommonForm>
+			<CommonForm>ДлительнаяОперация</CommonForm>
+			<CommonForm>bitmobile_НастройкиОтправкиОтчетов</CommonForm>
+			<CommonForm>bitmobile_НастройкиСервера</CommonForm>
+			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
-			<Catalog>MobileApplicationSettings</Catalog>
 			<Catalog>Outlet</Catalog>
 			<Catalog>OutletClass</Catalog>
 			<Catalog>OutletParameter</Catalog>
@@ -230,6 +252,8 @@
 			<Catalog>Territory</Catalog>
 			<Catalog>UnitsOfMeasure</Catalog>
 			<Catalog>User</Catalog>
+			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
+			<Catalog>bitmobile_НастройкиМобильныхПриложений</Catalog>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
@@ -261,7 +285,6 @@
 			<Enum>SyncAction</Enum>
 			<Enum>SyncDirections</Enum>
 			<Enum>TypesOfUsers</Enum>
-			<Enum>UploadType</Enum>
 			<Enum>VisitStatus</Enum>
 			<Enum>ScheduleTypes</Enum>
 			<Enum>YearScheduleTypes</Enum>
@@ -281,18 +304,18 @@
 			<Report>SkuChangeAnalysis</Report>
 			<Report>NumberOfOutlets</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
-			<DataProcessor>SyncAndSettings</DataProcessor>
-			<DataProcessor>ExportData</DataProcessor>
 			<DataProcessor>РаботаСКартойGoogle</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
-			<InformationRegister>ChangedData</InformationRegister>
-			<InformationRegister>SyncOrder</InformationRegister>
-			<InformationRegister>SyncSettingsFTP</InformationRegister>
+			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
 			<InformationRegister>Selectors</InformationRegister>
-			<InformationRegister>InvalidObjects</InformationRegister>
-			<InformationRegister>ChangedDataBackUp</InformationRegister>
+			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
+			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
+			<InformationRegister>bitmobile_КонтролируемыеИзмеренияРегистров</InformationRegister>
+			<InformationRegister>bitmobile_АдресаЭлПочтыДляОтчетов</InformationRegister>
+			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
+			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

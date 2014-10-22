@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="bitmobile_ИмяКонфигурации" id="1">
+			<DataPath>НаборКонстант.bitmobile_ИмяКонфигурации</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Имя конфигурации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Configuration name</v8:content>
+				</v8:item>
+			</Title>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="bitmobile_ИмяКонфигурацииКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="bitmobile_ИмяКонфигурацииРасширеннаяПодсказка" id="19"/>
+		</InputField>
+		<InputField name="bitmobile_ВерсияКонфигурации" id="3">
+			<DataPath>НаборКонстант.bitmobile_ВерсияКонфигурации</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Версия конфигурации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Version of the configuration</v8:content>
+				</v8:item>
+			</Title>
+			<EditMode>EnterOnInput</EditMode>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ContextMenu name="bitmobile_ВерсияКонфигурацииКонтекстноеМеню" id="4"/>
+			<ExtendedTooltip name="bitmobile_ВерсияКонфигурацииРасширеннаяПодсказка" id="20"/>
+		</InputField>
+		<CheckBoxField name="bitmobile_ОтключитьПодпискиНаСобытия" id="5">
+			<DataPath>НаборКонстант.bitmobile_ОтключитьПодпискиНаСобытия</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отключить регистрацию изменений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Disable registration changes</v8:content>
+				</v8:item>
+			</Title>
+			<EditMode>EnterOnInput</EditMode>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="bitmobile_ОтключитьПодпискиНаСобытияКонтекстноеМеню" id="6"/>
+			<ExtendedTooltip name="bitmobile_ОтключитьПодпискиНаСобытияРасширеннаяПодсказка" id="21"/>
+		</CheckBoxField>
+		<InputField name="bitmobile_ДопустимыйРазмерФайла" id="13">
+			<DataPath>НаборКонстант.bitmobile_ДопустимыйРазмерФайла</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Допустимый размер файла (КБ)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>File size limit (KB)</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="bitmobile_ДопустимыйРазмерФайлаКонтекстноеМеню" id="14"/>
+			<ExtendedTooltip name="bitmobile_ДопустимыйРазмерФайлаРасширеннаяПодсказка" id="22"/>
+		</InputField>
+		<CheckBoxField name="MultiStock" id="15">
+			<DataPath>НаборКонстант.MultiStock</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="MultiStockКонтекстноеМеню" id="16"/>
+			<ExtendedTooltip name="MultiStockРасширеннаяПодсказка" id="23"/>
+		</CheckBoxField>
+		<CheckBoxField name="SKUFeaturesRegistration" id="17">
+			<DataPath>НаборКонстант.SKUFeaturesRegistration</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="SKUFeaturesRegistrationКонтекстноеМеню" id="18"/>
+			<ExtendedTooltip name="SKUFeaturesRegistrationРасширеннаяПодсказка" id="24"/>
+		</CheckBoxField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="НаборКонстант" id="1">
+			<Type>
+				<v8:Type>cfg:ConstantsSet</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+</Form>

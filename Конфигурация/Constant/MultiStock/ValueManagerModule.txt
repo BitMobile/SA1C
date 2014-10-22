@@ -3,27 +3,27 @@ Procedure OnWrite(Cancel)
     query = new Query;
     query.Text =
     "SELECT
-    |   MobileApplicationSettings.Ref,
-    |   MobileApplicationSettings.Code,
-    |   MobileApplicationSettings.Use,
-    |   MobileApplicationSettings.DeletionMark
+    |   bitmobile_НастройкиМобильныхПриложений.Ref,
+    |   bitmobile_НастройкиМобильныхПриложений.Code,
+    |   bitmobile_НастройкиМобильныхПриложений.Используется,
+    |   bitmobile_НастройкиМобильныхПриложений.DeletionMark
     |FROM
-    |   Catalog.MobileApplicationSettings AS MobileApplicationSettings
+    |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
     |WHERE
-    |   MobileApplicationSettings.Code = &Code";
+    |   bitmobile_НастройкиМобильныхПриложений.Код = &Code";
     query.SetParameter("Code", "MultStck");
     result = query.Execute();
     If result.IsEmpty() Then
-        setting = Catalogs.MobileApplicationSettings.CreateItem();
+        setting = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
     	setting.Code = "MultStck";
         setting.Description = "Многоскладской учет";
-        setting.Use = True;
+        setting.Используется = True;
         setting.Write();
     Else
         row = result.Unload();        
         //If NOT row[0].Use Then
             obj = row[0].Ref.GetObject();
-            obj.Use = ThisObject.Value;
+            obj.Используется = ThisObject.Value;
             obj.DeletionMark = False;
         	obj.Write();        
         //EndIf;    	    

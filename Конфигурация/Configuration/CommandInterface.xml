@@ -21,7 +21,7 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Subsystem>
-		<Subsystem name="Subsystem.BitMobile">
+		<Subsystem name="Subsystem.bitmobile">
 			<Visibility>
 				<xr:Common>false</xr:Common>
 			</Visibility>
@@ -32,6 +32,6 @@
 		<Subsystem>Subsystem.QuestionGroup</Subsystem>
 		<Subsystem>Subsystem.SKUGroup</Subsystem>
 		<Subsystem>Subsystem.UsersGroup</Subsystem>
-		<Subsystem>Subsystem.BitMobile</Subsystem>
+		<Subsystem>Subsystem.bitmobile</Subsystem>
 	</SubsystemsOrder>
 </CommandInterface>

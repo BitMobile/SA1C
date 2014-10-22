@@ -16,7 +16,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>SKUFeatures registration</v8:content>
+					<v8:content>SKU features enable</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать характеристики номенклатуры</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>

@@ -95,11 +95,15 @@
 		<ChildObjects>
 			<EnumValue uuid="9c4c77a9-6151-41f7-97b4-4c85da97be03">
 				<Properties>
-					<Name>ЗАО</Name>
+					<Name>ZAO</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ЗАО</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>ZAO</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -107,11 +111,15 @@
 			</EnumValue>
 			<EnumValue uuid="247c5c7c-fb2a-4fe6-a990-c2a8ba4107f8">
 				<Properties>
-					<Name>ИП</Name>
+					<Name>IP</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ИП</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>IP</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -119,11 +127,15 @@
 			</EnumValue>
 			<EnumValue uuid="a58133cf-4118-4d21-b2a3-e58eaa5d1e3c">
 				<Properties>
-					<Name>НКО</Name>
+					<Name>NKO</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>НКО</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>NKO</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -131,11 +143,15 @@
 			</EnumValue>
 			<EnumValue uuid="1b146c92-1553-4627-a806-05c547b900a2">
 				<Properties>
-					<Name>ОАО</Name>
+					<Name>OAO</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ОАО</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>OAO</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -143,11 +159,15 @@
 			</EnumValue>
 			<EnumValue uuid="054d2e64-0533-4139-a1d6-8e8819584be8">
 				<Properties>
-					<Name>ООО</Name>
+					<Name>OOO</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ООО</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>OOO</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -155,11 +175,15 @@
 			</EnumValue>
 			<EnumValue uuid="8cdaa786-3e74-42db-b0b1-88148aa7948d">
 				<Properties>
-					<Name>ОП</Name>
+					<Name>OP</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ОП</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>OP</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -167,11 +191,15 @@
 			</EnumValue>
 			<EnumValue uuid="f0db48ee-8245-41e3-8cbe-3014d353a6ac">
 				<Properties>
-					<Name>ТСЖ</Name>
+					<Name>TSJ</Name>
 					<Synonym>
 						<v8:item>
-							<v8:lang>en</v8:lang>
+							<v8:lang>ru</v8:lang>
 							<v8:content>ТСЖ</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>TSJ</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>

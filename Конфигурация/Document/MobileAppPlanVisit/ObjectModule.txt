@@ -42,7 +42,7 @@ Function CreatePlanDoc()
     newDoc.Date = CurrentDate();
     newDoc.DateFrom = BegOfWeek(ThisObject.PlanDate);
     newDoc.DateTo = EndOfWeek(ThisObject.PlanDate);
-    newDoc.Owner = SessionParameters.ТекущийПользователь;
+    newDoc.Owner = ThisObject.SR;
     newDoc.SR = ThisObject.SR;
     newDoc.WeekNumber = WeekOfYear(ThisObject.PlanDate);
     newDoc.Year = BegOfYear(ThisObject.PlanDate);
