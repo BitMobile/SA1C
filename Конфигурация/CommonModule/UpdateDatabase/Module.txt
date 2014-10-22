@@ -16,7 +16,7 @@ EndProcedure
 
 Procedure UpdateProcessing() //Actual for release 27
     
-    DataProcessors.SyncAndSettings.FillRecordset();
+	//DataProcessors.SyncAndSettings.FillRecordset();
     CheckOutMobileSettingsAtServer();
     FillInStocks();
     UpdateOutlets();
