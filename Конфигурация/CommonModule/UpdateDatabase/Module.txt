@@ -20,7 +20,7 @@ Procedure UpdateProcessing() //Actual for release 27
     CheckOutMobileSettingsAtServer();
     FillInStocks();
     UpdateOutlets();
-    DataProcessors.SyncAndSettings.FillFTPRecordset();
+    //DataProcessors.SyncAndSettings.FillFTPRecordset();
     ClearZeroesAtOutlets();
     
 EndProcedure
@@ -36,15 +36,15 @@ Procedure CheckOutMobileSettingsAtServer()
         query2 = new Query;
         query2.Text=
         "SELECT
-        |   MobileApplicationSettings.Ref,
-        |   MobileApplicationSettings.Description
+        |   bitmobile_НастройкиМобильныхПриложений.Ref,
+        |   bitmobile_НастройкиМобильныхПриложений.Description
         |FROM
-        |   Catalog.MobileApplicationSettings AS MobileApplicationSettings
+        |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
         |WHERE
-        |   MobileApplicationSettings.Code = &Code";
+        |   bitmobile_НастройкиМобильныхПриложений.Code = &Code";
         query2.SetParameter("Code", newSet.Name);
         If query2.Execute().IsEmpty() Then
-            newItem = Catalogs.MobileApplicationSettings.CreateItem();
+            newItem = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
             newItem.Code = newSet.Name;
             newItem.Description = newSet.Commentary;
             newItem.Write();
