@@ -7,7 +7,7 @@
 				<Type>CommandBarButton</Type>
 				<CommandName>Form.Command.ОчиститьРегистр</CommandName>
 				<Parameter xsi:nil="true"/>
-				<ExtendedTooltip name="ФормаОчиститьРегистрРасширеннаяПодсказка" id="9"/>
+				<ExtendedTooltip name="ФормаОчиститьРегистрExtendedTooltip" id="9"/>
 			</Button>
 		</ChildItems>
 	</AutoCommandBar>
@@ -41,43 +41,43 @@
 			<AutoCommandBar name="СписокКоманднаяПанель" id="3">
 				<Autofill>false</Autofill>
 			</AutoCommandBar>
-			<ExtendedTooltip name="СписокРасширеннаяПодсказка" id="10"/>
-			<SearchStringAddition name="СписокСтрокаПоиска" id="11">
+			<ExtendedTooltip name="СписокExtendedTooltip" id="10"/>
+			<SearchStringAddition name="СписокSearchString" id="11">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="СписокСтрокаПоискаКонтекстноеМеню" id="12"/>
-				<ExtendedTooltip name="СписокСтрокаПоискаРасширеннаяПодсказка" id="13"/>
+				<ContextMenu name="СписокSearchStringContextMenu" id="12"/>
+				<ExtendedTooltip name="СписокSearchStringExtendedTooltip" id="13"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="СписокСостояниеПросмотра" id="14">
+			<ViewStatusAddition name="СписокViewStatus" id="14">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="СписокСостояниеПросмотраКонтекстноеМеню" id="15"/>
-				<ExtendedTooltip name="СписокСостояниеПросмотраРасширеннаяПодсказка" id="16"/>
+				<ContextMenu name="СписокViewStatusContextMenu" id="15"/>
+				<ExtendedTooltip name="СписокViewStatusExtendedTooltip" id="16"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="СписокУправлениеПоиском" id="17">
+			<SearchControlAddition name="СписокSearchControl" id="17">
 				<Source>
 					<lf:elementId>1</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="СписокУправлениеПоискомКонтекстноеМеню" id="18"/>
-				<ExtendedTooltip name="СписокУправлениеПоискомРасширеннаяПодсказка" id="19"/>
+				<ContextMenu name="СписокSearchControlContextMenu" id="18"/>
+				<ExtendedTooltip name="СписокSearchControlExtendedTooltip" id="19"/>
 			</SearchControlAddition>
 			<ChildItems>
 				<LabelField name="Объект" id="4">
 					<DataPath>Список.Объект</DataPath>
 					<DefaultItem>true</DefaultItem>
 					<ContextMenu name="ОбъектКонтекстноеМеню" id="5"/>
-					<ExtendedTooltip name="ОбъектРасширеннаяПодсказка" id="20"/>
+					<ExtendedTooltip name="ОбъектExtendedTooltip" id="20"/>
 				</LabelField>
 				<LabelField name="Описание" id="6">
 					<DataPath>Список.Описание</DataPath>
 					<DefaultItem>true</DefaultItem>
 					<ContextMenu name="ОписаниеКонтекстноеМеню" id="7"/>
-					<ExtendedTooltip name="ОписаниеРасширеннаяПодсказка" id="21"/>
+					<ExtendedTooltip name="ОписаниеExtendedTooltip" id="21"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
@@ -100,11 +100,19 @@
 		<Command name="ОчиститьРегистр" id="1">
 			<Title>
 				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear register</v8:content>
+				</v8:item>
+				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Очистить регистр</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear register</v8:content>
+				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Очистить регистр</v8:content>
