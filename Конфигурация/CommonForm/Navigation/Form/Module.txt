@@ -1,6 +1,5 @@
 ﻿
-//------------------------------"More" commands------------
-
+//------------------------------More commands------------
 
 &AtClient
 Procedure More(Command)
@@ -40,13 +39,13 @@ Procedure MoreReasons(Command)
 	MoreServer(Items.MoreReasons.Name, PictureLib.More, Items.ReasonsMoreGroup.Name);
 EndProcedure
 
-
 &AtClient
 Procedure MoreAdministration(Command)
 	MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
 EndProcedure
 
-//------------------------------"ShowList" commands---------
+
+//------------------------------ShowList commands---------
 
 //--Documents
 
@@ -121,14 +120,15 @@ Procedure ReasonsForNotOfTakingOrder(Command)
 	ShowListServer(Items.ReasonForNotOfTakingOrderList.Name);
 EndProcedure
 
-
 //--Questions
+
 &AtClient
 Procedure QuestionGroups(Command)
 	ShowListServer(Items.QuestionGroupList.Name);
 EndProcedure
 
 //--Outlets
+
 &AtClient
 Procedure Outlets(Command)
 	ShowListServer(Items.OutletsList.Name);
@@ -167,6 +167,7 @@ Procedure Regions(Command)
 EndProcedure 
 
 //--SKUs 
+
 &AtClient
 Procedure SKUs(Command)
 	
@@ -205,8 +206,8 @@ Procedure UnitsOfMeasure(Command)
 	ShowListServer(Items.UnitsOfMeasureList.Name);
 EndProcedure
 
-
 //--Users
+
 &AtClient
 Procedure Users(Command)
 	
@@ -221,8 +222,8 @@ Procedure Positions(Command)
 	
 EndProcedure 
 
-
 //--Administration
+
 &AtClient
 Procedure Administration(Command)
 	MoreServer(Items.MoreAdministration.Name, PictureLib.More, Items.AdministrationMoreGroup.Name);
@@ -254,9 +255,7 @@ Procedure InvalidObjects(Command)
 EndProcedure
 
 
-
-
-//------------------------------"Other" commands-----------
+//------------------------------Other commands-----------
 
 &AtClient
 Procedure Reports(Command)
@@ -362,9 +361,26 @@ Procedure Report_NumberOfOutlets(Command)
 	OpenForm("Report.NumberOfOutlets.Form");
 EndProcedure
 
-//-------------------------------Common handlers----------
+&AtClient
+Procedure ClearErrorRegister(Command)
+	
+	ClearErrorRegisterServer();	
+	
+	Items.InvalidObjectsList.Refresh();
+	
+EndProcedure
 
 
+//------------------------------Common handlers----------
+
+&AtServer
+Procedure ClearErrorRegisterServer()
+	
+	DataProcessors.bitmobile_СинхронизацияИНастройки.ОчиститьРегистрОшибок();	
+	
+EndProcedure
+
+&AtServer
 Procedure MoreServer(SourceButton, DefaultPicture, Sublist)
 	
 	
@@ -416,9 +432,3 @@ EndProcedure
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	Items.AdministrationGroup.Visible = IsInRole("Admin");
 EndProcedure
-
-
-
-
-
-

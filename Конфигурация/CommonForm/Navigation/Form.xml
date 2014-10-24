@@ -23,7 +23,7 @@
 			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="MainGroupExtendedTooltip" id="500"/>
+			<ExtendedTooltip name="MainGroupExtendedTooltip" id="1157"/>
 			<ChildItems>
 				<UsualGroup name="NavigationColumn" id="1">
 					<Title>
@@ -40,7 +40,7 @@
 					</ToolTip>
 					<Representation>StrongSeparation</Representation>
 					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="NavigationColumnExtendedTooltip" id="501"/>
+					<ExtendedTooltip name="NavigationColumnExtendedTooltip" id="1158"/>
 					<ChildItems>
 						<UsualGroup name="DocumentsGroup" id="2">
 							<Title>
@@ -57,7 +57,7 @@
 							</ToolTip>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="DocumentsGroupExtendedTooltip" id="502"/>
+							<ExtendedTooltip name="DocumentsGroupExtendedTooltip" id="1159"/>
 							<ChildItems>
 								<UsualGroup name="DocumentsSubGroup" id="5">
 									<Title>
@@ -75,7 +75,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="DocumentsSubGroupExtendedTooltip" id="503"/>
+									<ExtendedTooltip name="DocumentsSubGroupExtendedTooltip" id="1160"/>
 									<ChildItems>
 										<Button name="More" id="4">
 											<Type>UsualButton</Type>
@@ -86,14 +86,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="MoreExtendedTooltip" id="504"/>
+											<ExtendedTooltip name="MoreExtendedTooltip" id="1161"/>
 										</Button>
 										<Button name="Documents" id="3">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.Documents</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="DocumentsExtendedTooltip" id="505"/>
+											<ExtendedTooltip name="DocumentsExtendedTooltip" id="1162"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -113,7 +113,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="DocumentsMoreGroupExtendedTooltip" id="506"/>
+									<ExtendedTooltip name="DocumentsMoreGroupExtendedTooltip" id="1163"/>
 									<ChildItems>
 										<Button name="VisitPlans" id="8">
 											<Type>Hyperlink</Type>
@@ -124,7 +124,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="VisitPlansExtendedTooltip" id="507"/>
+											<ExtendedTooltip name="VisitPlansExtendedTooltip" id="1164"/>
 										</Button>
 										<Button name="Visits" id="9">
 											<Type>Hyperlink</Type>
@@ -141,7 +141,7 @@
 													<v8:content>Visits</v8:content>
 												</v8:item>
 											</Title>
-											<ExtendedTooltip name="VisitsExtendedTooltip" id="508"/>
+											<ExtendedTooltip name="VisitsExtendedTooltip" id="1165"/>
 										</Button>
 										<Button name="Orders" id="342">
 											<Type>Hyperlink</Type>
@@ -152,7 +152,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="OrdersExtendedTooltip" id="509"/>
+											<ExtendedTooltip name="OrdersExtendedTooltip" id="1166"/>
 										</Button>
 										<Button name="Encashments" id="446">
 											<Type>Hyperlink</Type>
@@ -163,7 +163,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="EncashmentsExtendedTooltip" id="510"/>
+											<ExtendedTooltip name="EncashmentsExtendedTooltip" id="1167"/>
 										</Button>
 										<Button name="AccountReceivables" id="434">
 											<Type>Hyperlink</Type>
@@ -173,7 +173,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="AccountReceivablesExtendedTooltip" id="511"/>
+											<ExtendedTooltip name="AccountReceivablesExtendedTooltip" id="1168"/>
 										</Button>
 										<Button name="PriceLists" id="415">
 											<Type>Hyperlink</Type>
@@ -183,7 +183,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="PriceListsExtendedTooltip" id="512"/>
+											<ExtendedTooltip name="PriceListsExtendedTooltip" id="1169"/>
 										</Button>
 										<Button name="Tasks" id="304">
 											<Type>Hyperlink</Type>
@@ -193,7 +193,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="TasksExtendedTooltip" id="513"/>
+											<ExtendedTooltip name="TasksExtendedTooltip" id="1170"/>
 										</Button>
 										<Button name="Questtionaire" id="7">
 											<Type>Hyperlink</Type>
@@ -209,7 +209,7 @@
 													<v8:content>Questtionaires</v8:content>
 												</v8:item>
 											</Title>
-											<ExtendedTooltip name="QuesttionaireExtendedTooltip" id="514"/>
+											<ExtendedTooltip name="QuesttionaireExtendedTooltip" id="1171"/>
 										</Button>
 										<UsualGroup name="ReasonsGroup" id="946">
 											<Title>
@@ -227,7 +227,7 @@
 											<Group>Horizontal</Group>
 											<Representation>None</Representation>
 											<ShowTitle>false</ShowTitle>
-											<ExtendedTooltip name="ReasonsGroupExtendedTooltip" id="947"/>
+											<ExtendedTooltip name="ReasonsGroupExtendedTooltip" id="1172"/>
 											<ChildItems>
 												<PictureDecoration name="Decoration2" id="952">
 													<Width>2</Width>
@@ -237,7 +237,7 @@
 														<xr:LoadTransparent>true</xr:LoadTransparent>
 													</Picture>
 													<ContextMenu name="Decoration2ContextMenu" id="953"/>
-													<ExtendedTooltip name="Decoration2ExtendedTooltip" id="954"/>
+													<ExtendedTooltip name="Decoration2ExtendedTooltip" id="1173"/>
 												</PictureDecoration>
 												<Button name="MoreReasons" id="948">
 													<Type>UsualButton</Type>
@@ -248,14 +248,14 @@
 														<xr:Ref>CommonPicture.More</xr:Ref>
 														<xr:LoadTransparent>true</xr:LoadTransparent>
 													</Picture>
-													<ExtendedTooltip name="MoreReasonsExtendedTooltip" id="949"/>
+													<ExtendedTooltip name="MoreReasonsExtendedTooltip" id="1174"/>
 												</Button>
 												<Button name="Reasons" id="950">
 													<Type>Hyperlink</Type>
 													<CommandName>Form.Command.Reasons</CommandName>
 													<Parameter xsi:nil="true"/>
 													<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-													<ExtendedTooltip name="ReasonsExtendedTooltip" id="951"/>
+													<ExtendedTooltip name="ReasonsExtendedTooltip" id="1175"/>
 												</Button>
 											</ChildItems>
 										</UsualGroup>
@@ -275,7 +275,7 @@
 											</ToolTip>
 											<Representation>None</Representation>
 											<ShowTitle>false</ShowTitle>
-											<ExtendedTooltip name="ReasonsMoreGroupExtendedTooltip" id="956"/>
+											<ExtendedTooltip name="ReasonsMoreGroupExtendedTooltip" id="1176"/>
 											<ChildItems>
 												<UsualGroup name="ReasonsForVisitGroup" id="962">
 													<Title>
@@ -293,13 +293,13 @@
 													<Group>Horizontal</Group>
 													<Representation>None</Representation>
 													<ShowTitle>false</ShowTitle>
-													<ExtendedTooltip name="ReasonsForVisitGroupExtendedTooltip" id="963"/>
+													<ExtendedTooltip name="ReasonsForVisitGroupExtendedTooltip" id="1177"/>
 													<ChildItems>
 														<PictureDecoration name="Decoration3" id="959">
 															<Width>2</Width>
 															<Height>1</Height>
 															<ContextMenu name="Decoration3ContextMenu" id="960"/>
-															<ExtendedTooltip name="Decoration3ExtendedTooltip" id="961"/>
+															<ExtendedTooltip name="Decoration3ExtendedTooltip" id="1178"/>
 														</PictureDecoration>
 														<Button name="ReasonsForVisit" id="957">
 															<Type>Hyperlink</Type>
@@ -309,7 +309,7 @@
 																<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 																<xr:LoadTransparent>true</xr:LoadTransparent>
 															</Picture>
-															<ExtendedTooltip name="ReasonsForVisitExtendedTooltip" id="958"/>
+															<ExtendedTooltip name="ReasonsForVisitExtendedTooltip" id="1179"/>
 														</Button>
 													</ChildItems>
 												</UsualGroup>
@@ -329,13 +329,13 @@
 													<Group>Horizontal</Group>
 													<Representation>None</Representation>
 													<ShowTitle>false</ShowTitle>
-													<ExtendedTooltip name="ReasonForNotTakingOrderGroupExtendedTooltip" id="965"/>
+													<ExtendedTooltip name="ReasonForNotTakingOrderGroupExtendedTooltip" id="1180"/>
 													<ChildItems>
 														<PictureDecoration name="Decoration4" id="966">
 															<Width>2</Width>
 															<Height>1</Height>
 															<ContextMenu name="Decoration4ContextMenu" id="967"/>
-															<ExtendedTooltip name="Decoration4ExtendedTooltip" id="968"/>
+															<ExtendedTooltip name="Decoration4ExtendedTooltip" id="1181"/>
 														</PictureDecoration>
 														<Button name="ReasonsForNotOfTakingOrder" id="969">
 															<Type>Hyperlink</Type>
@@ -345,7 +345,7 @@
 																<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 																<xr:LoadTransparent>true</xr:LoadTransparent>
 															</Picture>
-															<ExtendedTooltip name="ReasonsForNotOfTakingOrderExtendedTooltip" id="970"/>
+															<ExtendedTooltip name="ReasonsForNotOfTakingOrderExtendedTooltip" id="1182"/>
 														</Button>
 													</ChildItems>
 												</UsualGroup>
@@ -370,7 +370,7 @@
 							</ToolTip>
 							<Representation>NormalSeparation</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="OutletsGroupExtendedTooltip" id="515"/>
+							<ExtendedTooltip name="OutletsGroupExtendedTooltip" id="1183"/>
 							<ChildItems>
 								<UsualGroup name="OutletsSubGroup" id="139">
 									<Title>
@@ -388,7 +388,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="OutletsSubGroupExtendedTooltip" id="516"/>
+									<ExtendedTooltip name="OutletsSubGroupExtendedTooltip" id="1184"/>
 									<ChildItems>
 										<Button name="MoreOutlets" id="141">
 											<Type>UsualButton</Type>
@@ -399,14 +399,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="MoreOutletsExtendedTooltip" id="517"/>
+											<ExtendedTooltip name="MoreOutletsExtendedTooltip" id="1185"/>
 										</Button>
 										<Button name="Outlets" id="142">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.Outlets</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="OutletsExtendedTooltip" id="518"/>
+											<ExtendedTooltip name="OutletsExtendedTooltip" id="1186"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -426,7 +426,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="OutletsMoreGroupExtendedTooltip" id="519"/>
+									<ExtendedTooltip name="OutletsMoreGroupExtendedTooltip" id="1187"/>
 									<ChildItems>
 										<Button name="Distributors" id="252">
 											<Type>Hyperlink</Type>
@@ -436,7 +436,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="DistributorsExtendedTooltip" id="520"/>
+											<ExtendedTooltip name="DistributorsExtendedTooltip" id="1188"/>
 										</Button>
 										<Button name="OutletParameters" id="166">
 											<Type>Hyperlink</Type>
@@ -446,7 +446,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="OutletParametersExtendedTooltip" id="521"/>
+											<ExtendedTooltip name="OutletParametersExtendedTooltip" id="1189"/>
 										</Button>
 										<Button name="OutletTypes" id="176">
 											<Type>Hyperlink</Type>
@@ -456,7 +456,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="OutletTypesExtendedTooltip" id="522"/>
+											<ExtendedTooltip name="OutletTypesExtendedTooltip" id="1190"/>
 										</Button>
 										<Button name="OutletClasses" id="191">
 											<Type>Hyperlink</Type>
@@ -466,7 +466,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="OutletClassesExtendedTooltip" id="523"/>
+											<ExtendedTooltip name="OutletClassesExtendedTooltip" id="1191"/>
 										</Button>
 										<Button name="Territories" id="196">
 											<Type>Hyperlink</Type>
@@ -476,7 +476,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="TerritoriesExtendedTooltip" id="524"/>
+											<ExtendedTooltip name="TerritoriesExtendedTooltip" id="1192"/>
 										</Button>
 										<Button name="Regions" id="218">
 											<Type>Hyperlink</Type>
@@ -486,7 +486,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="RegionsExtendedTooltip" id="525"/>
+											<ExtendedTooltip name="RegionsExtendedTooltip" id="1193"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -507,7 +507,7 @@
 							</ToolTip>
 							<Representation>NormalSeparation</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="SKUGroupExtendedTooltip" id="526"/>
+							<ExtendedTooltip name="SKUGroupExtendedTooltip" id="1194"/>
 							<ChildItems>
 								<UsualGroup name="SKUSubGroup" id="229">
 									<Title>
@@ -525,7 +525,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="SKUSubGroupExtendedTooltip" id="527"/>
+									<ExtendedTooltip name="SKUSubGroupExtendedTooltip" id="1195"/>
 									<ChildItems>
 										<Button name="MoreSKU" id="231">
 											<Type>UsualButton</Type>
@@ -536,14 +536,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="MoreSKUExtendedTooltip" id="528"/>
+											<ExtendedTooltip name="MoreSKUExtendedTooltip" id="1196"/>
 										</Button>
 										<Button name="SKUs" id="232">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.SKUs</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="SKUsExtendedTooltip" id="529"/>
+											<ExtendedTooltip name="SKUsExtendedTooltip" id="1197"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -563,7 +563,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="SKUMoreGroupExtendedTooltip" id="530"/>
+									<ExtendedTooltip name="SKUMoreGroupExtendedTooltip" id="1198"/>
 									<ChildItems>
 										<Button name="SKUGroups" id="233">
 											<Type>Hyperlink</Type>
@@ -573,7 +573,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="SKUGroupsExtendedTooltip" id="531"/>
+											<ExtendedTooltip name="SKUGroupsExtendedTooltip" id="1199"/>
 										</Button>
 										<Button name="SKUFeatures" id="919">
 											<Type>Hyperlink</Type>
@@ -583,7 +583,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="SKUFeaturesExtendedTooltip" id="920"/>
+											<ExtendedTooltip name="SKUFeaturesExtendedTooltip" id="1200"/>
 										</Button>
 										<Button name="Brands" id="332">
 											<Type>Hyperlink</Type>
@@ -593,7 +593,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="BrandsExtendedTooltip" id="532"/>
+											<ExtendedTooltip name="BrandsExtendedTooltip" id="1201"/>
 										</Button>
 										<Button name="Stocks" id="474">
 											<Type>Hyperlink</Type>
@@ -603,7 +603,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="StocksExtendedTooltip" id="533"/>
+											<ExtendedTooltip name="StocksExtendedTooltip" id="1202"/>
 										</Button>
 										<Button name="UnitsOfMeasure" id="1021">
 											<Type>Hyperlink</Type>
@@ -613,7 +613,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="UnitsOfMeasureExtendedTooltip" id="1022"/>
+											<ExtendedTooltip name="UnitsOfMeasureExtendedTooltip" id="1203"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -634,7 +634,7 @@
 							</ToolTip>
 							<Representation>NormalSeparation</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="QuestionsGroupExtendedTooltip" id="534"/>
+							<ExtendedTooltip name="QuestionsGroupExtendedTooltip" id="1204"/>
 							<ChildItems>
 								<UsualGroup name="QuestionsSubGroup" id="23">
 									<Title>
@@ -652,7 +652,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="QuestionsSubGroupExtendedTooltip" id="535"/>
+									<ExtendedTooltip name="QuestionsSubGroupExtendedTooltip" id="1205"/>
 									<ChildItems>
 										<Button name="Button1" id="24">
 											<Type>UsualButton</Type>
@@ -663,14 +663,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="Button1ExtendedTooltip" id="536"/>
+											<ExtendedTooltip name="Button1ExtendedTooltip" id="1206"/>
 										</Button>
 										<Button name="Questions" id="22">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.Questions</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="QuestionsExtendedTooltip" id="537"/>
+											<ExtendedTooltip name="QuestionsExtendedTooltip" id="1207"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -690,7 +690,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="QuestionsMoreGroupExtendedTooltip" id="538"/>
+									<ExtendedTooltip name="QuestionsMoreGroupExtendedTooltip" id="1208"/>
 									<ChildItems>
 										<Button name="QuestionGroups" id="26">
 											<Type>Hyperlink</Type>
@@ -700,7 +700,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="QuestionGroupsExtendedTooltip" id="539"/>
+											<ExtendedTooltip name="QuestionGroupsExtendedTooltip" id="1209"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -721,7 +721,7 @@
 							</ToolTip>
 							<Representation>NormalSeparation</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="UsersGroupExtendedTooltip" id="540"/>
+							<ExtendedTooltip name="UsersGroupExtendedTooltip" id="1210"/>
 							<ChildItems>
 								<UsualGroup name="UsersSubGroup" id="261">
 									<Title>
@@ -739,7 +739,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="UsersSubGroupExtendedTooltip" id="541"/>
+									<ExtendedTooltip name="UsersSubGroupExtendedTooltip" id="1211"/>
 									<ChildItems>
 										<Button name="MoreUsers" id="263">
 											<Type>UsualButton</Type>
@@ -750,14 +750,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="MoreUsersExtendedTooltip" id="542"/>
+											<ExtendedTooltip name="MoreUsersExtendedTooltip" id="1212"/>
 										</Button>
 										<Button name="Users" id="264">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.Users</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="UsersExtendedTooltip" id="543"/>
+											<ExtendedTooltip name="UsersExtendedTooltip" id="1213"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -777,7 +777,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="UsersMoreGroupExtendedTooltip" id="544"/>
+									<ExtendedTooltip name="UsersMoreGroupExtendedTooltip" id="1214"/>
 									<ChildItems>
 										<Button name="Positions" id="265">
 											<Type>Hyperlink</Type>
@@ -787,7 +787,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>false</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="PositionsExtendedTooltip" id="545"/>
+											<ExtendedTooltip name="PositionsExtendedTooltip" id="1215"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -808,7 +808,7 @@
 							</ToolTip>
 							<Representation>NormalSeparation</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="AdministrationGroupExtendedTooltip" id="1052"/>
+							<ExtendedTooltip name="AdministrationGroupExtendedTooltip" id="1216"/>
 							<ChildItems>
 								<UsualGroup name="AdministrationSubGroup" id="1057">
 									<Title>
@@ -826,7 +826,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="AdministrationSubGroupExtendedTooltip" id="1058"/>
+									<ExtendedTooltip name="AdministrationSubGroupExtendedTooltip" id="1217"/>
 									<ChildItems>
 										<Button name="MoreAdministration" id="1053">
 											<Type>UsualButton</Type>
@@ -837,14 +837,14 @@
 												<xr:Ref>CommonPicture.More</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="MoreAdministrationExtendedTooltip" id="1054"/>
+											<ExtendedTooltip name="MoreAdministrationExtendedTooltip" id="1218"/>
 										</Button>
 										<Button name="Administration" id="1059">
 											<Type>Hyperlink</Type>
 											<CommandName>Form.Command.Administration</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-											<ExtendedTooltip name="AdministrationExtendedTooltip" id="1060"/>
+											<ExtendedTooltip name="AdministrationExtendedTooltip" id="1219"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -864,7 +864,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="AdministrationMoreGroupExtendedTooltip" id="1056"/>
+									<ExtendedTooltip name="AdministrationMoreGroupExtendedTooltip" id="1220"/>
 									<ChildItems>
 										<Button name="РегламентныеИФоновыеЗадания" id="1063">
 											<Type>Hyperlink</Type>
@@ -874,7 +874,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="РегламентныеИФоновыеЗаданияExtendedTooltip" id="1064"/>
+											<ExtendedTooltip name="РегламентныеИФоновыеЗаданияExtendedTooltip" id="1221"/>
 										</Button>
 										<Button name="УдалениеПомеченныхОбъектов" id="1065">
 											<Type>Hyperlink</Type>
@@ -885,7 +885,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="УдалениеПомеченныхОбъектовExtendedTooltip" id="1066"/>
+											<ExtendedTooltip name="УдалениеПомеченныхОбъектовExtendedTooltip" id="1222"/>
 										</Button>
 										<Button name="ChangedData" id="1098">
 											<Type>Hyperlink</Type>
@@ -895,7 +895,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПравоНиз</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="ChangedDataExtendedTooltip" id="1099"/>
+											<ExtendedTooltip name="ChangedDataExtendedTooltip" id="1223"/>
 										</Button>
 										<Button name="InvalidObjects" id="1155">
 											<Type>Hyperlink</Type>
@@ -905,7 +905,7 @@
 												<xr:Ref>CommonPicture.КоннекторВерхПраво</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="InvalidObjectsExtendedTooltip" id="1156"/>
+											<ExtendedTooltip name="InvalidObjectsExtendedTooltip" id="1224"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -925,7 +925,7 @@
 								</v8:item>
 							</ToolTip>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="OtherExtendedTooltip" id="546"/>
+							<ExtendedTooltip name="OtherExtendedTooltip" id="1225"/>
 							<ChildItems>
 								<Button name="Reports" id="192">
 									<Type>Hyperlink</Type>
@@ -936,13 +936,13 @@
 										<xr:Ref>StdPicture.Report</xr:Ref>
 										<xr:LoadTransparent>true</xr:LoadTransparent>
 									</Picture>
-									<ExtendedTooltip name="ReportsExtendedTooltip" id="547"/>
+									<ExtendedTooltip name="ReportsExtendedTooltip" id="1226"/>
 								</Button>
 								<Button name="Syncronization" id="194">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Syncronization</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="SyncronizationExtendedTooltip" id="548"/>
+									<ExtendedTooltip name="SyncronizationExtendedTooltip" id="1227"/>
 								</Button>
 								<Button name="ObjectsDeletion" id="195">
 									<Type>Hyperlink</Type>
@@ -953,7 +953,7 @@
 									</UserVisible>
 									<CommandName>Form.Command.ObjectsDeletion</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="ObjectsDeletionExtendedTooltip" id="549"/>
+									<ExtendedTooltip name="ObjectsDeletionExtendedTooltip" id="1228"/>
 								</Button>
 							</ChildItems>
 						</UsualGroup>
@@ -974,7 +974,7 @@
 						</v8:item>
 					</ToolTip>
 					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="ListsGroupExtendedTooltip" id="550"/>
+					<ExtendedTooltip name="ListsGroupExtendedTooltip" id="1229"/>
 					<ChildItems>
 						<Table name="QuestionsList" id="27">
 							<Visible>false</Visible>
@@ -1011,51 +1011,51 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="QuestionsListContextMenu" id="28"/>
 							<AutoCommandBar name="QuestionsListCommandBar" id="29"/>
-							<ExtendedTooltip name="QuestionsListExtendedTooltip" id="551"/>
-							<SearchStringAddition name="QuestionsListSearchString" id="1157">
+							<ExtendedTooltip name="QuestionsListExtendedTooltip" id="1230"/>
+							<SearchStringAddition name="QuestionsListSearchString" id="1231">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionsListSearchStringContextMenu" id="1158"/>
-								<ExtendedTooltip name="QuestionsListSearchStringExtendedTooltip" id="1159"/>
+								<ContextMenu name="QuestionsListSearchStringContextMenu" id="1232"/>
+								<ExtendedTooltip name="QuestionsListSearchStringExtendedTooltip" id="1233"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="QuestionsListViewStatus" id="1160">
+							<ViewStatusAddition name="QuestionsListViewStatus" id="1234">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionsListViewStatusContextMenu" id="1161"/>
-								<ExtendedTooltip name="QuestionsListViewStatusExtendedTooltip" id="1162"/>
+								<ContextMenu name="QuestionsListViewStatusContextMenu" id="1235"/>
+								<ExtendedTooltip name="QuestionsListViewStatusExtendedTooltip" id="1236"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="QuestionsListSearchControl" id="1163">
+							<SearchControlAddition name="QuestionsListSearchControl" id="1237">
 								<Source>
 									<lf:elementId>27</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionsListSearchControlContextMenu" id="1164"/>
-								<ExtendedTooltip name="QuestionsListSearchControlExtendedTooltip" id="1165"/>
+								<ContextMenu name="QuestionsListSearchControlContextMenu" id="1238"/>
+								<ExtendedTooltip name="QuestionsListSearchControlExtendedTooltip" id="1239"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="QuestionsListDescription" id="30">
 									<DataPath>QuestionsList.Description</DataPath>
 									<ContextMenu name="QuestionsListDescriptionContextMenu" id="31"/>
-									<ExtendedTooltip name="QuestionsListDescriptionExtendedTooltip" id="561"/>
+									<ExtendedTooltip name="QuestionsListDescriptionExtendedTooltip" id="1240"/>
 								</LabelField>
 								<LabelField name="QuestionsListCode" id="32">
 									<DataPath>QuestionsList.Code</DataPath>
 									<ContextMenu name="QuestionsListCodeContextMenu" id="33"/>
-									<ExtendedTooltip name="QuestionsListCodeExtendedTooltip" id="562"/>
+									<ExtendedTooltip name="QuestionsListCodeExtendedTooltip" id="1241"/>
 								</LabelField>
 								<LabelField name="QuestionsListOwner" id="34">
 									<DataPath>QuestionsList.Owner</DataPath>
 									<ContextMenu name="QuestionsListOwnerContextMenu" id="35"/>
-									<ExtendedTooltip name="QuestionsListOwnerExtendedTooltip" id="563"/>
+									<ExtendedTooltip name="QuestionsListOwnerExtendedTooltip" id="1242"/>
 								</LabelField>
 								<LabelField name="QuestionsListAnswerType" id="36">
 									<DataPath>QuestionsList.AnswerType</DataPath>
 									<ContextMenu name="QuestionsListAnswerTypeContextMenu" id="37"/>
-									<ExtendedTooltip name="QuestionsListAnswerTypeExtendedTooltip" id="564"/>
+									<ExtendedTooltip name="QuestionsListAnswerTypeExtendedTooltip" id="1243"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1093,30 +1093,30 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="DocumentsCommonListContextMenu" id="39"/>
 							<AutoCommandBar name="DocumentsCommonListCommandBar" id="40"/>
-							<ExtendedTooltip name="DocumentsCommonListExtendedTooltip" id="565"/>
-							<SearchStringAddition name="DocumentsCommonListSearchString" id="1166">
+							<ExtendedTooltip name="DocumentsCommonListExtendedTooltip" id="1244"/>
+							<SearchStringAddition name="DocumentsCommonListSearchString" id="1245">
 								<Source>
 									<lf:elementId>38</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="DocumentsCommonListSearchStringContextMenu" id="1167"/>
-								<ExtendedTooltip name="DocumentsCommonListSearchStringExtendedTooltip" id="1168"/>
+								<ContextMenu name="DocumentsCommonListSearchStringContextMenu" id="1246"/>
+								<ExtendedTooltip name="DocumentsCommonListSearchStringExtendedTooltip" id="1247"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="DocumentsCommonListViewStatus" id="1169">
+							<ViewStatusAddition name="DocumentsCommonListViewStatus" id="1248">
 								<Source>
 									<lf:elementId>38</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="DocumentsCommonListViewStatusContextMenu" id="1170"/>
-								<ExtendedTooltip name="DocumentsCommonListViewStatusExtendedTooltip" id="1171"/>
+								<ContextMenu name="DocumentsCommonListViewStatusContextMenu" id="1249"/>
+								<ExtendedTooltip name="DocumentsCommonListViewStatusExtendedTooltip" id="1250"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="DocumentsCommonListSearchControl" id="1172">
+							<SearchControlAddition name="DocumentsCommonListSearchControl" id="1251">
 								<Source>
 									<lf:elementId>38</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="DocumentsCommonListSearchControlContextMenu" id="1173"/>
-								<ExtendedTooltip name="DocumentsCommonListSearchControlExtendedTooltip" id="1174"/>
+								<ContextMenu name="DocumentsCommonListSearchControlContextMenu" id="1252"/>
+								<ExtendedTooltip name="DocumentsCommonListSearchControlExtendedTooltip" id="1253"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="DocumentsCommonListRef" id="41">
@@ -1128,7 +1128,7 @@
 										</v8:item>
 									</Title>
 									<ContextMenu name="DocumentsCommonListRefContextMenu" id="42"/>
-									<ExtendedTooltip name="DocumentsCommonListRefExtendedTooltip" id="575"/>
+									<ExtendedTooltip name="DocumentsCommonListRefExtendedTooltip" id="1254"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1166,56 +1166,56 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="QuesttionaireListContextMenu" id="44"/>
 							<AutoCommandBar name="QuesttionaireListCommandBar" id="45"/>
-							<ExtendedTooltip name="QuesttionaireListExtendedTooltip" id="576"/>
-							<SearchStringAddition name="QuesttionaireListSearchString" id="1175">
+							<ExtendedTooltip name="QuesttionaireListExtendedTooltip" id="1255"/>
+							<SearchStringAddition name="QuesttionaireListSearchString" id="1256">
 								<Source>
 									<lf:elementId>43</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="QuesttionaireListSearchStringContextMenu" id="1176"/>
-								<ExtendedTooltip name="QuesttionaireListSearchStringExtendedTooltip" id="1177"/>
+								<ContextMenu name="QuesttionaireListSearchStringContextMenu" id="1257"/>
+								<ExtendedTooltip name="QuesttionaireListSearchStringExtendedTooltip" id="1258"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="QuesttionaireListViewStatus" id="1178">
+							<ViewStatusAddition name="QuesttionaireListViewStatus" id="1259">
 								<Source>
 									<lf:elementId>43</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="QuesttionaireListViewStatusContextMenu" id="1179"/>
-								<ExtendedTooltip name="QuesttionaireListViewStatusExtendedTooltip" id="1180"/>
+								<ContextMenu name="QuesttionaireListViewStatusContextMenu" id="1260"/>
+								<ExtendedTooltip name="QuesttionaireListViewStatusExtendedTooltip" id="1261"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="QuesttionaireListSearchControl" id="1181">
+							<SearchControlAddition name="QuesttionaireListSearchControl" id="1262">
 								<Source>
 									<lf:elementId>43</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="QuesttionaireListSearchControlContextMenu" id="1182"/>
-								<ExtendedTooltip name="QuesttionaireListSearchControlExtendedTooltip" id="1183"/>
+								<ContextMenu name="QuesttionaireListSearchControlContextMenu" id="1263"/>
+								<ExtendedTooltip name="QuesttionaireListSearchControlExtendedTooltip" id="1264"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="QuesttionaireListDate" id="46">
 									<DataPath>QuesttionaireList.Date</DataPath>
 									<ContextMenu name="QuesttionaireListDateContextMenu" id="47"/>
-									<ExtendedTooltip name="QuesttionaireListDateExtendedTooltip" id="586"/>
+									<ExtendedTooltip name="QuesttionaireListDateExtendedTooltip" id="1265"/>
 								</LabelField>
 								<LabelField name="QuesttionaireListNumber" id="48">
 									<DataPath>QuesttionaireList.Number</DataPath>
 									<ContextMenu name="QuesttionaireListNumberContextMenu" id="49"/>
-									<ExtendedTooltip name="QuesttionaireListNumberExtendedTooltip" id="587"/>
+									<ExtendedTooltip name="QuesttionaireListNumberExtendedTooltip" id="1266"/>
 								</LabelField>
 								<LabelField name="QuesttionaireListScale" id="466">
 									<DataPath>QuesttionaireList.Scale</DataPath>
 									<ContextMenu name="QuesttionaireListScaleContextMenu" id="467"/>
-									<ExtendedTooltip name="QuesttionaireListScaleExtendedTooltip" id="588"/>
+									<ExtendedTooltip name="QuesttionaireListScaleExtendedTooltip" id="1267"/>
 								</LabelField>
 								<LabelField name="QuesttionaireListOutletType" id="52">
 									<DataPath>QuesttionaireList.OutletType</DataPath>
 									<ContextMenu name="QuesttionaireListOutletTypeContextMenu" id="53"/>
-									<ExtendedTooltip name="QuesttionaireListOutletTypeExtendedTooltip" id="589"/>
+									<ExtendedTooltip name="QuesttionaireListOutletTypeExtendedTooltip" id="1268"/>
 								</LabelField>
 								<LabelField name="QuesttionaireListOutletClass" id="54">
 									<DataPath>QuesttionaireList.OutletClass</DataPath>
 									<ContextMenu name="QuesttionaireListOutletClassContextMenu" id="55"/>
-									<ExtendedTooltip name="QuesttionaireListOutletClassExtendedTooltip" id="590"/>
+									<ExtendedTooltip name="QuesttionaireListOutletClassExtendedTooltip" id="1269"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1253,46 +1253,46 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="VisitPlanListContextMenu" id="57"/>
 							<AutoCommandBar name="VisitPlanListCommandBar" id="58"/>
-							<ExtendedTooltip name="VisitPlanListExtendedTooltip" id="591"/>
-							<SearchStringAddition name="VisitPlanListSearchString" id="1184">
+							<ExtendedTooltip name="VisitPlanListExtendedTooltip" id="1270"/>
+							<SearchStringAddition name="VisitPlanListSearchString" id="1271">
 								<Source>
 									<lf:elementId>56</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitPlanListSearchStringContextMenu" id="1185"/>
-								<ExtendedTooltip name="VisitPlanListSearchStringExtendedTooltip" id="1186"/>
+								<ContextMenu name="VisitPlanListSearchStringContextMenu" id="1272"/>
+								<ExtendedTooltip name="VisitPlanListSearchStringExtendedTooltip" id="1273"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="VisitPlanListViewStatus" id="1187">
+							<ViewStatusAddition name="VisitPlanListViewStatus" id="1274">
 								<Source>
 									<lf:elementId>56</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitPlanListViewStatusContextMenu" id="1188"/>
-								<ExtendedTooltip name="VisitPlanListViewStatusExtendedTooltip" id="1189"/>
+								<ContextMenu name="VisitPlanListViewStatusContextMenu" id="1275"/>
+								<ExtendedTooltip name="VisitPlanListViewStatusExtendedTooltip" id="1276"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="VisitPlanListSearchControl" id="1190">
+							<SearchControlAddition name="VisitPlanListSearchControl" id="1277">
 								<Source>
 									<lf:elementId>56</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitPlanListSearchControlContextMenu" id="1191"/>
-								<ExtendedTooltip name="VisitPlanListSearchControlExtendedTooltip" id="1192"/>
+								<ContextMenu name="VisitPlanListSearchControlContextMenu" id="1278"/>
+								<ExtendedTooltip name="VisitPlanListSearchControlExtendedTooltip" id="1279"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="VisitPlanListDate" id="59">
 									<DataPath>VisitPlanList.Date</DataPath>
 									<ContextMenu name="VisitPlanListDateContextMenu" id="60"/>
-									<ExtendedTooltip name="VisitPlanListDateExtendedTooltip" id="601"/>
+									<ExtendedTooltip name="VisitPlanListDateExtendedTooltip" id="1280"/>
 								</LabelField>
 								<LabelField name="VisitPlanListNumber" id="61">
 									<DataPath>VisitPlanList.Number</DataPath>
 									<ContextMenu name="VisitPlanListNumberContextMenu" id="62"/>
-									<ExtendedTooltip name="VisitPlanListNumberExtendedTooltip" id="602"/>
+									<ExtendedTooltip name="VisitPlanListNumberExtendedTooltip" id="1281"/>
 								</LabelField>
 								<LabelField name="VisitPlanListWeekNumber" id="65">
 									<DataPath>VisitPlanList.WeekNumber</DataPath>
 									<ContextMenu name="VisitPlanListWeekNumberContextMenu" id="66"/>
-									<ExtendedTooltip name="VisitPlanListWeekNumberExtendedTooltip" id="603"/>
+									<ExtendedTooltip name="VisitPlanListWeekNumberExtendedTooltip" id="1282"/>
 								</LabelField>
 								<LabelField name="VisitPlanListDateFrom" id="71">
 									<DataPath>VisitPlanList.DateFrom</DataPath>
@@ -1300,7 +1300,7 @@
 									<TextColor>#413003</TextColor>
 									<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 									<ContextMenu name="VisitPlanListDateFromContextMenu" id="72"/>
-									<ExtendedTooltip name="VisitPlanListDateFromExtendedTooltip" id="604"/>
+									<ExtendedTooltip name="VisitPlanListDateFromExtendedTooltip" id="1283"/>
 								</LabelField>
 								<LabelField name="VisitPlanListDateTo" id="73">
 									<DataPath>VisitPlanList.DateTo</DataPath>
@@ -1308,12 +1308,12 @@
 									<TextColor>#413003</TextColor>
 									<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 									<ContextMenu name="VisitPlanListDateToContextMenu" id="74"/>
-									<ExtendedTooltip name="VisitPlanListDateToExtendedTooltip" id="605"/>
+									<ExtendedTooltip name="VisitPlanListDateToExtendedTooltip" id="1284"/>
 								</LabelField>
 								<LabelField name="VisitPlanListSR" id="67">
 									<DataPath>VisitPlanList.SR</DataPath>
 									<ContextMenu name="VisitPlanListSRContextMenu" id="68"/>
-									<ExtendedTooltip name="VisitPlanListSRExtendedTooltip" id="606"/>
+									<ExtendedTooltip name="VisitPlanListSRExtendedTooltip" id="1285"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1351,41 +1351,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="QuestionGroupListContextMenu" id="101"/>
 							<AutoCommandBar name="QuestionGroupListCommandBar" id="102"/>
-							<ExtendedTooltip name="QuestionGroupListExtendedTooltip" id="607"/>
-							<SearchStringAddition name="QuestionGroupListSearchString" id="1193">
+							<ExtendedTooltip name="QuestionGroupListExtendedTooltip" id="1286"/>
+							<SearchStringAddition name="QuestionGroupListSearchString" id="1287">
 								<Source>
 									<lf:elementId>100</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionGroupListSearchStringContextMenu" id="1194"/>
-								<ExtendedTooltip name="QuestionGroupListSearchStringExtendedTooltip" id="1195"/>
+								<ContextMenu name="QuestionGroupListSearchStringContextMenu" id="1288"/>
+								<ExtendedTooltip name="QuestionGroupListSearchStringExtendedTooltip" id="1289"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="QuestionGroupListViewStatus" id="1196">
+							<ViewStatusAddition name="QuestionGroupListViewStatus" id="1290">
 								<Source>
 									<lf:elementId>100</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionGroupListViewStatusContextMenu" id="1197"/>
-								<ExtendedTooltip name="QuestionGroupListViewStatusExtendedTooltip" id="1198"/>
+								<ContextMenu name="QuestionGroupListViewStatusContextMenu" id="1291"/>
+								<ExtendedTooltip name="QuestionGroupListViewStatusExtendedTooltip" id="1292"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="QuestionGroupListSearchControl" id="1199">
+							<SearchControlAddition name="QuestionGroupListSearchControl" id="1293">
 								<Source>
 									<lf:elementId>100</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="QuestionGroupListSearchControlContextMenu" id="1200"/>
-								<ExtendedTooltip name="QuestionGroupListSearchControlExtendedTooltip" id="1201"/>
+								<ContextMenu name="QuestionGroupListSearchControlContextMenu" id="1294"/>
+								<ExtendedTooltip name="QuestionGroupListSearchControlExtendedTooltip" id="1295"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="QuestionGroupListDescription" id="103">
 									<DataPath>QuestionGroupList.Description</DataPath>
 									<ContextMenu name="QuestionGroupListDescriptionContextMenu" id="104"/>
-									<ExtendedTooltip name="QuestionGroupListDescriptionExtendedTooltip" id="617"/>
+									<ExtendedTooltip name="QuestionGroupListDescriptionExtendedTooltip" id="1296"/>
 								</LabelField>
 								<LabelField name="QuestionGroupListCode" id="105">
 									<DataPath>QuestionGroupList.Code</DataPath>
 									<ContextMenu name="QuestionGroupListCodeContextMenu" id="106"/>
-									<ExtendedTooltip name="QuestionGroupListCodeExtendedTooltip" id="618"/>
+									<ExtendedTooltip name="QuestionGroupListCodeExtendedTooltip" id="1297"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1423,41 +1423,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="DistributorsListContextMenu" id="298"/>
 							<AutoCommandBar name="DistributorsListCommandBar" id="299"/>
-							<ExtendedTooltip name="DistributorsListExtendedTooltip" id="619"/>
-							<SearchStringAddition name="DistributorsListSearchString" id="1202">
+							<ExtendedTooltip name="DistributorsListExtendedTooltip" id="1298"/>
+							<SearchStringAddition name="DistributorsListSearchString" id="1299">
 								<Source>
 									<lf:elementId>297</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="DistributorsListSearchStringContextMenu" id="1203"/>
-								<ExtendedTooltip name="DistributorsListSearchStringExtendedTooltip" id="1204"/>
+								<ContextMenu name="DistributorsListSearchStringContextMenu" id="1300"/>
+								<ExtendedTooltip name="DistributorsListSearchStringExtendedTooltip" id="1301"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="DistributorsListViewStatus" id="1205">
+							<ViewStatusAddition name="DistributorsListViewStatus" id="1302">
 								<Source>
 									<lf:elementId>297</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="DistributorsListViewStatusContextMenu" id="1206"/>
-								<ExtendedTooltip name="DistributorsListViewStatusExtendedTooltip" id="1207"/>
+								<ContextMenu name="DistributorsListViewStatusContextMenu" id="1303"/>
+								<ExtendedTooltip name="DistributorsListViewStatusExtendedTooltip" id="1304"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="DistributorsListSearchControl" id="1208">
+							<SearchControlAddition name="DistributorsListSearchControl" id="1305">
 								<Source>
 									<lf:elementId>297</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="DistributorsListSearchControlContextMenu" id="1209"/>
-								<ExtendedTooltip name="DistributorsListSearchControlExtendedTooltip" id="1210"/>
+								<ContextMenu name="DistributorsListSearchControlContextMenu" id="1306"/>
+								<ExtendedTooltip name="DistributorsListSearchControlExtendedTooltip" id="1307"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="DistributorsListDescription" id="300">
 									<DataPath>DistributorsList.Description</DataPath>
 									<ContextMenu name="DistributorsListDescriptionContextMenu" id="301"/>
-									<ExtendedTooltip name="DistributorsListDescriptionExtendedTooltip" id="629"/>
+									<ExtendedTooltip name="DistributorsListDescriptionExtendedTooltip" id="1308"/>
 								</LabelField>
 								<LabelField name="DistributorsListCode" id="302">
 									<DataPath>DistributorsList.Code</DataPath>
 									<ContextMenu name="DistributorsListCodeContextMenu" id="303"/>
-									<ExtendedTooltip name="DistributorsListCodeExtendedTooltip" id="630"/>
+									<ExtendedTooltip name="DistributorsListCodeExtendedTooltip" id="1309"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1495,81 +1495,81 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="OutletsListContextMenu" id="144"/>
 							<AutoCommandBar name="OutletsListCommandBar" id="145"/>
-							<ExtendedTooltip name="OutletsListExtendedTooltip" id="631"/>
-							<SearchStringAddition name="OutletsListSearchString" id="1211">
+							<ExtendedTooltip name="OutletsListExtendedTooltip" id="1310"/>
+							<SearchStringAddition name="OutletsListSearchString" id="1311">
 								<Source>
 									<lf:elementId>143</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsListSearchStringContextMenu" id="1212"/>
-								<ExtendedTooltip name="OutletsListSearchStringExtendedTooltip" id="1213"/>
+								<ContextMenu name="OutletsListSearchStringContextMenu" id="1312"/>
+								<ExtendedTooltip name="OutletsListSearchStringExtendedTooltip" id="1313"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OutletsListViewStatus" id="1214">
+							<ViewStatusAddition name="OutletsListViewStatus" id="1314">
 								<Source>
 									<lf:elementId>143</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsListViewStatusContextMenu" id="1215"/>
-								<ExtendedTooltip name="OutletsListViewStatusExtendedTooltip" id="1216"/>
+								<ContextMenu name="OutletsListViewStatusContextMenu" id="1315"/>
+								<ExtendedTooltip name="OutletsListViewStatusExtendedTooltip" id="1316"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OutletsListSearchControl" id="1217">
+							<SearchControlAddition name="OutletsListSearchControl" id="1317">
 								<Source>
 									<lf:elementId>143</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletsListSearchControlContextMenu" id="1218"/>
-								<ExtendedTooltip name="OutletsListSearchControlExtendedTooltip" id="1219"/>
+								<ContextMenu name="OutletsListSearchControlContextMenu" id="1318"/>
+								<ExtendedTooltip name="OutletsListSearchControlExtendedTooltip" id="1319"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OutletsListCode" id="148">
 									<DataPath>OutletsList.Code</DataPath>
 									<ContextMenu name="OutletsListCodeContextMenu" id="149"/>
-									<ExtendedTooltip name="OutletsListCodeExtendedTooltip" id="641"/>
+									<ExtendedTooltip name="OutletsListCodeExtendedTooltip" id="1320"/>
 								</LabelField>
 								<LabelField name="OutletsListDescription" id="146">
 									<DataPath>OutletsList.Description</DataPath>
 									<ContextMenu name="OutletsListDescriptionContextMenu" id="147"/>
-									<ExtendedTooltip name="OutletsListDescriptionExtendedTooltip" id="642"/>
+									<ExtendedTooltip name="OutletsListDescriptionExtendedTooltip" id="1321"/>
 								</LabelField>
 								<LabelField name="OutletsListOutletStatus" id="484">
 									<DataPath>OutletsList.OutletStatus</DataPath>
 									<ContextMenu name="OutletsListOutletStatusContextMenu" id="485"/>
-									<ExtendedTooltip name="OutletsListOutletStatusExtendedTooltip" id="643"/>
+									<ExtendedTooltip name="OutletsListOutletStatusExtendedTooltip" id="1322"/>
 								</LabelField>
 								<LabelField name="OutletsListOwner" id="150">
 									<DataPath>8/11</DataPath>
 									<ContextMenu name="OutletsListOwnerContextMenu" id="151"/>
-									<ExtendedTooltip name="OutletsListOwnerExtendedTooltip" id="644"/>
+									<ExtendedTooltip name="OutletsListOwnerExtendedTooltip" id="1323"/>
 								</LabelField>
 								<LabelField name="OutletsListType" id="152">
 									<DataPath>OutletsList.Type</DataPath>
 									<ContextMenu name="OutletsListTypeContextMenu" id="153"/>
-									<ExtendedTooltip name="OutletsListTypeExtendedTooltip" id="645"/>
+									<ExtendedTooltip name="OutletsListTypeExtendedTooltip" id="1324"/>
 								</LabelField>
 								<LabelField name="OutletsListClass" id="154">
 									<DataPath>OutletsList.Class</DataPath>
 									<ContextMenu name="OutletsListClassContextMenu" id="155"/>
-									<ExtendedTooltip name="OutletsListClassExtendedTooltip" id="646"/>
+									<ExtendedTooltip name="OutletsListClassExtendedTooltip" id="1325"/>
 								</LabelField>
 								<LabelField name="OutletsListDistributor" id="156">
 									<DataPath>OutletsList.Distributor</DataPath>
 									<ContextMenu name="OutletsListDistributorContextMenu" id="157"/>
-									<ExtendedTooltip name="OutletsListDistributorExtendedTooltip" id="647"/>
+									<ExtendedTooltip name="OutletsListDistributorExtendedTooltip" id="1326"/>
 								</LabelField>
 								<LabelField name="OutletsListAddress" id="158">
 									<DataPath>OutletsList.Address</DataPath>
 									<ContextMenu name="OutletsListAddressContextMenu" id="159"/>
-									<ExtendedTooltip name="OutletsListAddressExtendedTooltip" id="648"/>
+									<ExtendedTooltip name="OutletsListAddressExtendedTooltip" id="1327"/>
 								</LabelField>
 								<LabelField name="OutletsListLattitude" id="162">
 									<DataPath>OutletsList.Lattitude</DataPath>
 									<ContextMenu name="OutletsListLattitudeContextMenu" id="163"/>
-									<ExtendedTooltip name="OutletsListLattitudeExtendedTooltip" id="649"/>
+									<ExtendedTooltip name="OutletsListLattitudeExtendedTooltip" id="1328"/>
 								</LabelField>
 								<LabelField name="OutletsListLongitude" id="164">
 									<DataPath>OutletsList.Longitude</DataPath>
 									<ContextMenu name="OutletsListLongitudeContextMenu" id="165"/>
-									<ExtendedTooltip name="OutletsListLongitudeExtendedTooltip" id="650"/>
+									<ExtendedTooltip name="OutletsListLongitudeExtendedTooltip" id="1329"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1607,46 +1607,46 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="OutletParametersListContextMenu" id="168"/>
 							<AutoCommandBar name="OutletParametersListCommandBar" id="169"/>
-							<ExtendedTooltip name="OutletParametersListExtendedTooltip" id="651"/>
-							<SearchStringAddition name="OutletParametersListSearchString" id="1220">
+							<ExtendedTooltip name="OutletParametersListExtendedTooltip" id="1330"/>
+							<SearchStringAddition name="OutletParametersListSearchString" id="1331">
 								<Source>
 									<lf:elementId>167</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletParametersListSearchStringContextMenu" id="1221"/>
-								<ExtendedTooltip name="OutletParametersListSearchStringExtendedTooltip" id="1222"/>
+								<ContextMenu name="OutletParametersListSearchStringContextMenu" id="1332"/>
+								<ExtendedTooltip name="OutletParametersListSearchStringExtendedTooltip" id="1333"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OutletParametersListViewStatus" id="1223">
+							<ViewStatusAddition name="OutletParametersListViewStatus" id="1334">
 								<Source>
 									<lf:elementId>167</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletParametersListViewStatusContextMenu" id="1224"/>
-								<ExtendedTooltip name="OutletParametersListViewStatusExtendedTooltip" id="1225"/>
+								<ContextMenu name="OutletParametersListViewStatusContextMenu" id="1335"/>
+								<ExtendedTooltip name="OutletParametersListViewStatusExtendedTooltip" id="1336"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OutletParametersListSearchControl" id="1226">
+							<SearchControlAddition name="OutletParametersListSearchControl" id="1337">
 								<Source>
 									<lf:elementId>167</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletParametersListSearchControlContextMenu" id="1227"/>
-								<ExtendedTooltip name="OutletParametersListSearchControlExtendedTooltip" id="1228"/>
+								<ContextMenu name="OutletParametersListSearchControlContextMenu" id="1338"/>
+								<ExtendedTooltip name="OutletParametersListSearchControlExtendedTooltip" id="1339"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OutletParametersListDescription" id="170">
 									<DataPath>OutletParametersList.Description</DataPath>
 									<ContextMenu name="OutletParametersListDescriptionContextMenu" id="171"/>
-									<ExtendedTooltip name="OutletParametersListDescriptionExtendedTooltip" id="661"/>
+									<ExtendedTooltip name="OutletParametersListDescriptionExtendedTooltip" id="1340"/>
 								</LabelField>
 								<LabelField name="OutletParametersListCode" id="172">
 									<DataPath>OutletParametersList.Code</DataPath>
 									<ContextMenu name="OutletParametersListCodeContextMenu" id="173"/>
-									<ExtendedTooltip name="OutletParametersListCodeExtendedTooltip" id="662"/>
+									<ExtendedTooltip name="OutletParametersListCodeExtendedTooltip" id="1341"/>
 								</LabelField>
 								<LabelField name="OutletParametersListDataType" id="174">
 									<DataPath>OutletParametersList.DataType</DataPath>
 									<ContextMenu name="OutletParametersListDataTypeContextMenu" id="175"/>
-									<ExtendedTooltip name="OutletParametersListDataTypeExtendedTooltip" id="663"/>
+									<ExtendedTooltip name="OutletParametersListDataTypeExtendedTooltip" id="1342"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1684,41 +1684,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="OutletTypesListContextMenu" id="178"/>
 							<AutoCommandBar name="OutletTypesListCommandBar" id="179"/>
-							<ExtendedTooltip name="OutletTypesListExtendedTooltip" id="664"/>
-							<SearchStringAddition name="OutletTypesListSearchString" id="1229">
+							<ExtendedTooltip name="OutletTypesListExtendedTooltip" id="1343"/>
+							<SearchStringAddition name="OutletTypesListSearchString" id="1344">
 								<Source>
 									<lf:elementId>177</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletTypesListSearchStringContextMenu" id="1230"/>
-								<ExtendedTooltip name="OutletTypesListSearchStringExtendedTooltip" id="1231"/>
+								<ContextMenu name="OutletTypesListSearchStringContextMenu" id="1345"/>
+								<ExtendedTooltip name="OutletTypesListSearchStringExtendedTooltip" id="1346"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OutletTypesListViewStatus" id="1232">
+							<ViewStatusAddition name="OutletTypesListViewStatus" id="1347">
 								<Source>
 									<lf:elementId>177</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletTypesListViewStatusContextMenu" id="1233"/>
-								<ExtendedTooltip name="OutletTypesListViewStatusExtendedTooltip" id="1234"/>
+								<ContextMenu name="OutletTypesListViewStatusContextMenu" id="1348"/>
+								<ExtendedTooltip name="OutletTypesListViewStatusExtendedTooltip" id="1349"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OutletTypesListSearchControl" id="1235">
+							<SearchControlAddition name="OutletTypesListSearchControl" id="1350">
 								<Source>
 									<lf:elementId>177</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletTypesListSearchControlContextMenu" id="1236"/>
-								<ExtendedTooltip name="OutletTypesListSearchControlExtendedTooltip" id="1237"/>
+								<ContextMenu name="OutletTypesListSearchControlContextMenu" id="1351"/>
+								<ExtendedTooltip name="OutletTypesListSearchControlExtendedTooltip" id="1352"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OutletTypesListDescription" id="180">
 									<DataPath>OutletTypesList.Description</DataPath>
 									<ContextMenu name="OutletTypesListDescriptionContextMenu" id="181"/>
-									<ExtendedTooltip name="OutletTypesListDescriptionExtendedTooltip" id="674"/>
+									<ExtendedTooltip name="OutletTypesListDescriptionExtendedTooltip" id="1353"/>
 								</LabelField>
 								<LabelField name="OutletTypesListCode" id="182">
 									<DataPath>OutletTypesList.Code</DataPath>
 									<ContextMenu name="OutletTypesListCodeContextMenu" id="183"/>
-									<ExtendedTooltip name="OutletTypesListCodeExtendedTooltip" id="675"/>
+									<ExtendedTooltip name="OutletTypesListCodeExtendedTooltip" id="1354"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1756,41 +1756,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="OutletClassesListContextMenu" id="185"/>
 							<AutoCommandBar name="OutletClassesListCommandBar" id="186"/>
-							<ExtendedTooltip name="OutletClassesListExtendedTooltip" id="676"/>
-							<SearchStringAddition name="OutletClassesListSearchString" id="1238">
+							<ExtendedTooltip name="OutletClassesListExtendedTooltip" id="1355"/>
+							<SearchStringAddition name="OutletClassesListSearchString" id="1356">
 								<Source>
 									<lf:elementId>184</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletClassesListSearchStringContextMenu" id="1239"/>
-								<ExtendedTooltip name="OutletClassesListSearchStringExtendedTooltip" id="1240"/>
+								<ContextMenu name="OutletClassesListSearchStringContextMenu" id="1357"/>
+								<ExtendedTooltip name="OutletClassesListSearchStringExtendedTooltip" id="1358"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OutletClassesListViewStatus" id="1241">
+							<ViewStatusAddition name="OutletClassesListViewStatus" id="1359">
 								<Source>
 									<lf:elementId>184</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletClassesListViewStatusContextMenu" id="1242"/>
-								<ExtendedTooltip name="OutletClassesListViewStatusExtendedTooltip" id="1243"/>
+								<ContextMenu name="OutletClassesListViewStatusContextMenu" id="1360"/>
+								<ExtendedTooltip name="OutletClassesListViewStatusExtendedTooltip" id="1361"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OutletClassesListSearchControl" id="1244">
+							<SearchControlAddition name="OutletClassesListSearchControl" id="1362">
 								<Source>
 									<lf:elementId>184</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OutletClassesListSearchControlContextMenu" id="1245"/>
-								<ExtendedTooltip name="OutletClassesListSearchControlExtendedTooltip" id="1246"/>
+								<ContextMenu name="OutletClassesListSearchControlContextMenu" id="1363"/>
+								<ExtendedTooltip name="OutletClassesListSearchControlExtendedTooltip" id="1364"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OutletClassesListDescription" id="187">
 									<DataPath>OutletClassesList.Description</DataPath>
 									<ContextMenu name="OutletClassesListDescriptionContextMenu" id="188"/>
-									<ExtendedTooltip name="OutletClassesListDescriptionExtendedTooltip" id="686"/>
+									<ExtendedTooltip name="OutletClassesListDescriptionExtendedTooltip" id="1365"/>
 								</LabelField>
 								<LabelField name="OutletClassesListCode" id="189">
 									<DataPath>OutletClassesList.Code</DataPath>
 									<ContextMenu name="OutletClassesListCodeContextMenu" id="190"/>
-									<ExtendedTooltip name="OutletClassesListCodeExtendedTooltip" id="687"/>
+									<ExtendedTooltip name="OutletClassesListCodeExtendedTooltip" id="1366"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1829,41 +1829,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="SKUGroupsListContextMenu" id="246"/>
 							<AutoCommandBar name="SKUGroupsListCommandBar" id="247"/>
-							<ExtendedTooltip name="SKUGroupsListExtendedTooltip" id="688"/>
-							<SearchStringAddition name="SKUGroupsListSearchString" id="1247">
+							<ExtendedTooltip name="SKUGroupsListExtendedTooltip" id="1367"/>
+							<SearchStringAddition name="SKUGroupsListSearchString" id="1368">
 								<Source>
 									<lf:elementId>245</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroupsListSearchStringContextMenu" id="1248"/>
-								<ExtendedTooltip name="SKUGroupsListSearchStringExtendedTooltip" id="1249"/>
+								<ContextMenu name="SKUGroupsListSearchStringContextMenu" id="1369"/>
+								<ExtendedTooltip name="SKUGroupsListSearchStringExtendedTooltip" id="1370"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="SKUGroupsListViewStatus" id="1250">
+							<ViewStatusAddition name="SKUGroupsListViewStatus" id="1371">
 								<Source>
 									<lf:elementId>245</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroupsListViewStatusContextMenu" id="1251"/>
-								<ExtendedTooltip name="SKUGroupsListViewStatusExtendedTooltip" id="1252"/>
+								<ContextMenu name="SKUGroupsListViewStatusContextMenu" id="1372"/>
+								<ExtendedTooltip name="SKUGroupsListViewStatusExtendedTooltip" id="1373"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="SKUGroupsListSearchControl" id="1253">
+							<SearchControlAddition name="SKUGroupsListSearchControl" id="1374">
 								<Source>
 									<lf:elementId>245</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUGroupsListSearchControlContextMenu" id="1254"/>
-								<ExtendedTooltip name="SKUGroupsListSearchControlExtendedTooltip" id="1255"/>
+								<ContextMenu name="SKUGroupsListSearchControlContextMenu" id="1375"/>
+								<ExtendedTooltip name="SKUGroupsListSearchControlExtendedTooltip" id="1376"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="SKUGroupsListDescription" id="248">
 									<DataPath>SKUGroupsList.Description</DataPath>
 									<ContextMenu name="SKUGroupsListDescriptionContextMenu" id="249"/>
-									<ExtendedTooltip name="SKUGroupsListDescriptionExtendedTooltip" id="698"/>
+									<ExtendedTooltip name="SKUGroupsListDescriptionExtendedTooltip" id="1377"/>
 								</LabelField>
 								<LabelField name="SKUGroupsListCode" id="250">
 									<DataPath>SKUGroupsList.Code</DataPath>
 									<ContextMenu name="SKUGroupsListCodeContextMenu" id="251"/>
-									<ExtendedTooltip name="SKUGroupsListCodeExtendedTooltip" id="699"/>
+									<ExtendedTooltip name="SKUGroupsListCodeExtendedTooltip" id="1378"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1902,46 +1902,46 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="RegionsListContextMenu" id="220"/>
 							<AutoCommandBar name="RegionsListCommandBar" id="221"/>
-							<ExtendedTooltip name="RegionsListExtendedTooltip" id="700"/>
-							<SearchStringAddition name="RegionsListSearchString" id="1256">
+							<ExtendedTooltip name="RegionsListExtendedTooltip" id="1379"/>
+							<SearchStringAddition name="RegionsListSearchString" id="1380">
 								<Source>
 									<lf:elementId>219</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="RegionsListSearchStringContextMenu" id="1257"/>
-								<ExtendedTooltip name="RegionsListSearchStringExtendedTooltip" id="1258"/>
+								<ContextMenu name="RegionsListSearchStringContextMenu" id="1381"/>
+								<ExtendedTooltip name="RegionsListSearchStringExtendedTooltip" id="1382"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="RegionsListViewStatus" id="1259">
+							<ViewStatusAddition name="RegionsListViewStatus" id="1383">
 								<Source>
 									<lf:elementId>219</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="RegionsListViewStatusContextMenu" id="1260"/>
-								<ExtendedTooltip name="RegionsListViewStatusExtendedTooltip" id="1261"/>
+								<ContextMenu name="RegionsListViewStatusContextMenu" id="1384"/>
+								<ExtendedTooltip name="RegionsListViewStatusExtendedTooltip" id="1385"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="RegionsListSearchControl" id="1262">
+							<SearchControlAddition name="RegionsListSearchControl" id="1386">
 								<Source>
 									<lf:elementId>219</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="RegionsListSearchControlContextMenu" id="1263"/>
-								<ExtendedTooltip name="RegionsListSearchControlExtendedTooltip" id="1264"/>
+								<ContextMenu name="RegionsListSearchControlContextMenu" id="1387"/>
+								<ExtendedTooltip name="RegionsListSearchControlExtendedTooltip" id="1388"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="RegionsListDescription" id="222">
 									<DataPath>RegionsList.Description</DataPath>
 									<ContextMenu name="RegionsListDescriptionContextMenu" id="223"/>
-									<ExtendedTooltip name="RegionsListDescriptionExtendedTooltip" id="710"/>
+									<ExtendedTooltip name="RegionsListDescriptionExtendedTooltip" id="1389"/>
 								</LabelField>
 								<LabelField name="RegionsListCode" id="224">
 									<DataPath>RegionsList.Code</DataPath>
 									<ContextMenu name="RegionsListCodeContextMenu" id="225"/>
-									<ExtendedTooltip name="RegionsListCodeExtendedTooltip" id="711"/>
+									<ExtendedTooltip name="RegionsListCodeExtendedTooltip" id="1390"/>
 								</LabelField>
 								<LabelField name="RegionsListManager" id="226">
 									<DataPath>RegionsList.Manager</DataPath>
 									<ContextMenu name="RegionsListManagerContextMenu" id="227"/>
-									<ExtendedTooltip name="RegionsListManagerExtendedTooltip" id="712"/>
+									<ExtendedTooltip name="RegionsListManagerExtendedTooltip" id="1391"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -1979,61 +1979,61 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="SKUListContextMenu" id="235"/>
 							<AutoCommandBar name="SKUListCommandBar" id="236"/>
-							<ExtendedTooltip name="SKUListExtendedTooltip" id="713"/>
-							<SearchStringAddition name="SKUListSearchString" id="1265">
+							<ExtendedTooltip name="SKUListExtendedTooltip" id="1392"/>
+							<SearchStringAddition name="SKUListSearchString" id="1393">
 								<Source>
 									<lf:elementId>234</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUListSearchStringContextMenu" id="1266"/>
-								<ExtendedTooltip name="SKUListSearchStringExtendedTooltip" id="1267"/>
+								<ContextMenu name="SKUListSearchStringContextMenu" id="1394"/>
+								<ExtendedTooltip name="SKUListSearchStringExtendedTooltip" id="1395"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="SKUListViewStatus" id="1268">
+							<ViewStatusAddition name="SKUListViewStatus" id="1396">
 								<Source>
 									<lf:elementId>234</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUListViewStatusContextMenu" id="1269"/>
-								<ExtendedTooltip name="SKUListViewStatusExtendedTooltip" id="1270"/>
+								<ContextMenu name="SKUListViewStatusContextMenu" id="1397"/>
+								<ExtendedTooltip name="SKUListViewStatusExtendedTooltip" id="1398"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="SKUListSearchControl" id="1271">
+							<SearchControlAddition name="SKUListSearchControl" id="1399">
 								<Source>
 									<lf:elementId>234</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUListSearchControlContextMenu" id="1272"/>
-								<ExtendedTooltip name="SKUListSearchControlExtendedTooltip" id="1273"/>
+								<ContextMenu name="SKUListSearchControlContextMenu" id="1400"/>
+								<ExtendedTooltip name="SKUListSearchControlExtendedTooltip" id="1401"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="SKUListDescription" id="237">
 									<DataPath>SKUList.Description</DataPath>
 									<ContextMenu name="SKUListDescriptionContextMenu" id="238"/>
-									<ExtendedTooltip name="SKUListDescriptionExtendedTooltip" id="723"/>
+									<ExtendedTooltip name="SKUListDescriptionExtendedTooltip" id="1402"/>
 								</LabelField>
 								<LabelField name="SKUListCode" id="239">
 									<DataPath>SKUList.Code</DataPath>
 									<ContextMenu name="SKUListCodeContextMenu" id="240"/>
-									<ExtendedTooltip name="SKUListCodeExtendedTooltip" id="724"/>
+									<ExtendedTooltip name="SKUListCodeExtendedTooltip" id="1403"/>
 								</LabelField>
 								<LabelField name="SKUListBrand" id="340">
 									<DataPath>SKUList.Brand</DataPath>
 									<ContextMenu name="SKUListBrandContextMenu" id="341"/>
-									<ExtendedTooltip name="SKUListBrandExtendedTooltip" id="725"/>
+									<ExtendedTooltip name="SKUListBrandExtendedTooltip" id="1404"/>
 								</LabelField>
 								<LabelField name="SKUListOwner" id="241">
 									<DataPath>SKUList.Owner</DataPath>
 									<ContextMenu name="SKUListOwnerContextMenu" id="242"/>
-									<ExtendedTooltip name="SKUListOwnerExtendedTooltip" id="726"/>
+									<ExtendedTooltip name="SKUListOwnerExtendedTooltip" id="1405"/>
 								</LabelField>
 								<LabelField name="SKUListBaseUnit" id="448">
 									<DataPath>SKUList.BaseUnit</DataPath>
 									<ContextMenu name="SKUListBaseUnitContextMenu" id="449"/>
-									<ExtendedTooltip name="SKUListBaseUnitExtendedTooltip" id="727"/>
+									<ExtendedTooltip name="SKUListBaseUnitExtendedTooltip" id="1406"/>
 								</LabelField>
 								<LabelField name="SKUListCommonStock" id="464">
 									<DataPath>SKUList.CommonStock</DataPath>
 									<ContextMenu name="SKUListCommonStockContextMenu" id="465"/>
-									<ExtendedTooltip name="SKUListCommonStockExtendedTooltip" id="728"/>
+									<ExtendedTooltip name="SKUListCommonStockExtendedTooltip" id="1407"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2071,41 +2071,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="PositionsListContextMenu" id="286"/>
 							<AutoCommandBar name="PositionsListCommandBar" id="287"/>
-							<ExtendedTooltip name="PositionsListExtendedTooltip" id="729"/>
-							<SearchStringAddition name="PositionsListSearchString" id="1274">
+							<ExtendedTooltip name="PositionsListExtendedTooltip" id="1408"/>
+							<SearchStringAddition name="PositionsListSearchString" id="1409">
 								<Source>
 									<lf:elementId>285</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="PositionsListSearchStringContextMenu" id="1275"/>
-								<ExtendedTooltip name="PositionsListSearchStringExtendedTooltip" id="1276"/>
+								<ContextMenu name="PositionsListSearchStringContextMenu" id="1410"/>
+								<ExtendedTooltip name="PositionsListSearchStringExtendedTooltip" id="1411"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="PositionsListViewStatus" id="1277">
+							<ViewStatusAddition name="PositionsListViewStatus" id="1412">
 								<Source>
 									<lf:elementId>285</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="PositionsListViewStatusContextMenu" id="1278"/>
-								<ExtendedTooltip name="PositionsListViewStatusExtendedTooltip" id="1279"/>
+								<ContextMenu name="PositionsListViewStatusContextMenu" id="1413"/>
+								<ExtendedTooltip name="PositionsListViewStatusExtendedTooltip" id="1414"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="PositionsListSearchControl" id="1280">
+							<SearchControlAddition name="PositionsListSearchControl" id="1415">
 								<Source>
 									<lf:elementId>285</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="PositionsListSearchControlContextMenu" id="1281"/>
-								<ExtendedTooltip name="PositionsListSearchControlExtendedTooltip" id="1282"/>
+								<ContextMenu name="PositionsListSearchControlContextMenu" id="1416"/>
+								<ExtendedTooltip name="PositionsListSearchControlExtendedTooltip" id="1417"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="PositionsListDescription" id="288">
 									<DataPath>PositionsList.Description</DataPath>
 									<ContextMenu name="PositionsListDescriptionContextMenu" id="289"/>
-									<ExtendedTooltip name="PositionsListDescriptionExtendedTooltip" id="739"/>
+									<ExtendedTooltip name="PositionsListDescriptionExtendedTooltip" id="1418"/>
 								</LabelField>
 								<LabelField name="PositionsListCode" id="290">
 									<DataPath>PositionsList.Code</DataPath>
 									<ContextMenu name="PositionsListCodeContextMenu" id="291"/>
-									<ExtendedTooltip name="PositionsListCodeExtendedTooltip" id="740"/>
+									<ExtendedTooltip name="PositionsListCodeExtendedTooltip" id="1419"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2143,76 +2143,76 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="OrdersListContextMenu" id="369"/>
 							<AutoCommandBar name="OrdersListCommandBar" id="370"/>
-							<ExtendedTooltip name="OrdersListExtendedTooltip" id="741"/>
-							<SearchStringAddition name="OrdersListSearchString" id="1283">
+							<ExtendedTooltip name="OrdersListExtendedTooltip" id="1420"/>
+							<SearchStringAddition name="OrdersListSearchString" id="1421">
 								<Source>
 									<lf:elementId>368</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="OrdersListSearchStringContextMenu" id="1284"/>
-								<ExtendedTooltip name="OrdersListSearchStringExtendedTooltip" id="1285"/>
+								<ContextMenu name="OrdersListSearchStringContextMenu" id="1422"/>
+								<ExtendedTooltip name="OrdersListSearchStringExtendedTooltip" id="1423"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="OrdersListViewStatus" id="1286">
+							<ViewStatusAddition name="OrdersListViewStatus" id="1424">
 								<Source>
 									<lf:elementId>368</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="OrdersListViewStatusContextMenu" id="1287"/>
-								<ExtendedTooltip name="OrdersListViewStatusExtendedTooltip" id="1288"/>
+								<ContextMenu name="OrdersListViewStatusContextMenu" id="1425"/>
+								<ExtendedTooltip name="OrdersListViewStatusExtendedTooltip" id="1426"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="OrdersListSearchControl" id="1289">
+							<SearchControlAddition name="OrdersListSearchControl" id="1427">
 								<Source>
 									<lf:elementId>368</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="OrdersListSearchControlContextMenu" id="1290"/>
-								<ExtendedTooltip name="OrdersListSearchControlExtendedTooltip" id="1291"/>
+								<ContextMenu name="OrdersListSearchControlContextMenu" id="1428"/>
+								<ExtendedTooltip name="OrdersListSearchControlExtendedTooltip" id="1429"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="OrdersListDate" id="371">
 									<DataPath>OrdersList.Date</DataPath>
 									<ContextMenu name="OrdersListDateContextMenu" id="372"/>
-									<ExtendedTooltip name="OrdersListDateExtendedTooltip" id="751"/>
+									<ExtendedTooltip name="OrdersListDateExtendedTooltip" id="1430"/>
 								</LabelField>
 								<LabelField name="OrdersListNumber" id="373">
 									<DataPath>OrdersList.Number</DataPath>
 									<ContextMenu name="OrdersListNumberContextMenu" id="374"/>
-									<ExtendedTooltip name="OrdersListNumberExtendedTooltip" id="752"/>
+									<ExtendedTooltip name="OrdersListNumberExtendedTooltip" id="1431"/>
 								</LabelField>
 								<LabelField name="OrdersListStatus" id="423">
 									<DataPath>OrdersList.Status</DataPath>
 									<ContextMenu name="OrdersListStatusContextMenu" id="424"/>
-									<ExtendedTooltip name="OrdersListStatusExtendedTooltip" id="753"/>
+									<ExtendedTooltip name="OrdersListStatusExtendedTooltip" id="1432"/>
 								</LabelField>
 								<LabelField name="OrdersListOutlet" id="375">
 									<DataPath>OrdersList.Outlet</DataPath>
 									<ContextMenu name="OrdersListOutletContextMenu" id="376"/>
-									<ExtendedTooltip name="OrdersListOutletExtendedTooltip" id="754"/>
+									<ExtendedTooltip name="OrdersListOutletExtendedTooltip" id="1433"/>
 								</LabelField>
 								<LabelField name="OrdersListSR" id="377">
 									<DataPath>OrdersList.SR</DataPath>
 									<ContextMenu name="OrdersListSRContextMenu" id="378"/>
-									<ExtendedTooltip name="OrdersListSRExtendedTooltip" id="755"/>
+									<ExtendedTooltip name="OrdersListSRExtendedTooltip" id="1434"/>
 								</LabelField>
 								<LabelField name="OrdersListDeliveryDate" id="379">
 									<DataPath>OrdersList.DeliveryDate</DataPath>
 									<ContextMenu name="OrdersListDeliveryDateContextMenu" id="380"/>
-									<ExtendedTooltip name="OrdersListDeliveryDateExtendedTooltip" id="756"/>
+									<ExtendedTooltip name="OrdersListDeliveryDateExtendedTooltip" id="1435"/>
 								</LabelField>
 								<LabelField name="OrdersListStock" id="482">
 									<DataPath>OrdersList.Stock</DataPath>
 									<ContextMenu name="OrdersListStockContextMenu" id="483"/>
-									<ExtendedTooltip name="OrdersListStockExtendedTooltip" id="757"/>
+									<ExtendedTooltip name="OrdersListStockExtendedTooltip" id="1436"/>
 								</LabelField>
 								<LabelField name="OrdersListCommentary" id="381">
 									<DataPath>OrdersList.Commentary</DataPath>
 									<ContextMenu name="OrdersListCommentaryContextMenu" id="382"/>
-									<ExtendedTooltip name="OrdersListCommentaryExtendedTooltip" id="758"/>
+									<ExtendedTooltip name="OrdersListCommentaryExtendedTooltip" id="1437"/>
 								</LabelField>
 								<LabelField name="OrdersListVisit" id="383">
 									<DataPath>OrdersList.Visit</DataPath>
 									<ContextMenu name="OrdersListVisitContextMenu" id="384"/>
-									<ExtendedTooltip name="OrdersListVisitExtendedTooltip" id="759"/>
+									<ExtendedTooltip name="OrdersListVisitExtendedTooltip" id="1438"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2250,51 +2250,51 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="TerritiriesListContextMenu" id="198"/>
 							<AutoCommandBar name="TerritiriesListCommandBar" id="199"/>
-							<ExtendedTooltip name="TerritiriesListExtendedTooltip" id="760"/>
-							<SearchStringAddition name="TerritiriesListSearchString" id="1292">
+							<ExtendedTooltip name="TerritiriesListExtendedTooltip" id="1439"/>
+							<SearchStringAddition name="TerritiriesListSearchString" id="1440">
 								<Source>
 									<lf:elementId>197</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritiriesListSearchStringContextMenu" id="1293"/>
-								<ExtendedTooltip name="TerritiriesListSearchStringExtendedTooltip" id="1294"/>
+								<ContextMenu name="TerritiriesListSearchStringContextMenu" id="1441"/>
+								<ExtendedTooltip name="TerritiriesListSearchStringExtendedTooltip" id="1442"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="TerritiriesListViewStatus" id="1295">
+							<ViewStatusAddition name="TerritiriesListViewStatus" id="1443">
 								<Source>
 									<lf:elementId>197</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritiriesListViewStatusContextMenu" id="1296"/>
-								<ExtendedTooltip name="TerritiriesListViewStatusExtendedTooltip" id="1297"/>
+								<ContextMenu name="TerritiriesListViewStatusContextMenu" id="1444"/>
+								<ExtendedTooltip name="TerritiriesListViewStatusExtendedTooltip" id="1445"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="TerritiriesListSearchControl" id="1298">
+							<SearchControlAddition name="TerritiriesListSearchControl" id="1446">
 								<Source>
 									<lf:elementId>197</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="TerritiriesListSearchControlContextMenu" id="1299"/>
-								<ExtendedTooltip name="TerritiriesListSearchControlExtendedTooltip" id="1300"/>
+								<ContextMenu name="TerritiriesListSearchControlContextMenu" id="1447"/>
+								<ExtendedTooltip name="TerritiriesListSearchControlExtendedTooltip" id="1448"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="TerritiriesListDescription" id="200">
 									<DataPath>TerritiriesList.Description</DataPath>
 									<ContextMenu name="TerritiriesListDescriptionContextMenu" id="201"/>
-									<ExtendedTooltip name="TerritiriesListDescriptionExtendedTooltip" id="770"/>
+									<ExtendedTooltip name="TerritiriesListDescriptionExtendedTooltip" id="1449"/>
 								</LabelField>
 								<LabelField name="TerritiriesListCode" id="202">
 									<DataPath>TerritiriesList.Code</DataPath>
 									<ContextMenu name="TerritiriesListCodeContextMenu" id="203"/>
-									<ExtendedTooltip name="TerritiriesListCodeExtendedTooltip" id="771"/>
+									<ExtendedTooltip name="TerritiriesListCodeExtendedTooltip" id="1450"/>
 								</LabelField>
 								<LabelField name="TerritiriesListOwner" id="204">
 									<DataPath>TerritiriesList.Owner</DataPath>
 									<ContextMenu name="TerritiriesListOwnerContextMenu" id="205"/>
-									<ExtendedTooltip name="TerritiriesListOwnerExtendedTooltip" id="772"/>
+									<ExtendedTooltip name="TerritiriesListOwnerExtendedTooltip" id="1451"/>
 								</LabelField>
 								<LabelField name="TerritiriesListSR" id="206">
 									<DataPath>TerritiriesList.SR</DataPath>
 									<ContextMenu name="TerritiriesListSRContextMenu" id="207"/>
-									<ExtendedTooltip name="TerritiriesListSRExtendedTooltip" id="773"/>
+									<ExtendedTooltip name="TerritiriesListSRExtendedTooltip" id="1452"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2332,41 +2332,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="BrandsListContextMenu" id="334"/>
 							<AutoCommandBar name="BrandsListCommandBar" id="335"/>
-							<ExtendedTooltip name="BrandsListExtendedTooltip" id="774"/>
-							<SearchStringAddition name="BrandsListSearchString" id="1301">
+							<ExtendedTooltip name="BrandsListExtendedTooltip" id="1453"/>
+							<SearchStringAddition name="BrandsListSearchString" id="1454">
 								<Source>
 									<lf:elementId>333</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="BrandsListSearchStringContextMenu" id="1302"/>
-								<ExtendedTooltip name="BrandsListSearchStringExtendedTooltip" id="1303"/>
+								<ContextMenu name="BrandsListSearchStringContextMenu" id="1455"/>
+								<ExtendedTooltip name="BrandsListSearchStringExtendedTooltip" id="1456"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="BrandsListViewStatus" id="1304">
+							<ViewStatusAddition name="BrandsListViewStatus" id="1457">
 								<Source>
 									<lf:elementId>333</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="BrandsListViewStatusContextMenu" id="1305"/>
-								<ExtendedTooltip name="BrandsListViewStatusExtendedTooltip" id="1306"/>
+								<ContextMenu name="BrandsListViewStatusContextMenu" id="1458"/>
+								<ExtendedTooltip name="BrandsListViewStatusExtendedTooltip" id="1459"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="BrandsListSearchControl" id="1307">
+							<SearchControlAddition name="BrandsListSearchControl" id="1460">
 								<Source>
 									<lf:elementId>333</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="BrandsListSearchControlContextMenu" id="1308"/>
-								<ExtendedTooltip name="BrandsListSearchControlExtendedTooltip" id="1309"/>
+								<ContextMenu name="BrandsListSearchControlContextMenu" id="1461"/>
+								<ExtendedTooltip name="BrandsListSearchControlExtendedTooltip" id="1462"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="BrandsListDescription" id="336">
 									<DataPath>BrandsList.Description</DataPath>
 									<ContextMenu name="BrandsListDescriptionContextMenu" id="337"/>
-									<ExtendedTooltip name="BrandsListDescriptionExtendedTooltip" id="784"/>
+									<ExtendedTooltip name="BrandsListDescriptionExtendedTooltip" id="1463"/>
 								</LabelField>
 								<LabelField name="BrandsListCode" id="338">
 									<DataPath>BrandsList.Code</DataPath>
 									<ContextMenu name="BrandsListCodeContextMenu" id="339"/>
-									<ExtendedTooltip name="BrandsListCodeExtendedTooltip" id="785"/>
+									<ExtendedTooltip name="BrandsListCodeExtendedTooltip" id="1464"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2404,30 +2404,30 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="TasksListContextMenu" id="386"/>
 							<AutoCommandBar name="TasksListCommandBar" id="387"/>
-							<ExtendedTooltip name="TasksListExtendedTooltip" id="786"/>
-							<SearchStringAddition name="TasksListSearchString" id="1310">
+							<ExtendedTooltip name="TasksListExtendedTooltip" id="1465"/>
+							<SearchStringAddition name="TasksListSearchString" id="1466">
 								<Source>
 									<lf:elementId>385</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="TasksListSearchStringContextMenu" id="1311"/>
-								<ExtendedTooltip name="TasksListSearchStringExtendedTooltip" id="1312"/>
+								<ContextMenu name="TasksListSearchStringContextMenu" id="1467"/>
+								<ExtendedTooltip name="TasksListSearchStringExtendedTooltip" id="1468"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="TasksListViewStatus" id="1313">
+							<ViewStatusAddition name="TasksListViewStatus" id="1469">
 								<Source>
 									<lf:elementId>385</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="TasksListViewStatusContextMenu" id="1314"/>
-								<ExtendedTooltip name="TasksListViewStatusExtendedTooltip" id="1315"/>
+								<ContextMenu name="TasksListViewStatusContextMenu" id="1470"/>
+								<ExtendedTooltip name="TasksListViewStatusExtendedTooltip" id="1471"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="TasksListSearchControl" id="1316">
+							<SearchControlAddition name="TasksListSearchControl" id="1472">
 								<Source>
 									<lf:elementId>385</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="TasksListSearchControlContextMenu" id="1317"/>
-								<ExtendedTooltip name="TasksListSearchControlExtendedTooltip" id="1318"/>
+								<ContextMenu name="TasksListSearchControlContextMenu" id="1473"/>
+								<ExtendedTooltip name="TasksListSearchControlExtendedTooltip" id="1474"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="TasksListDate" id="388">
@@ -2439,52 +2439,52 @@
 										</v8:item>
 									</Title>
 									<ContextMenu name="TasksListDateContextMenu" id="389"/>
-									<ExtendedTooltip name="TasksListDateExtendedTooltip" id="796"/>
+									<ExtendedTooltip name="TasksListDateExtendedTooltip" id="1475"/>
 								</LabelField>
 								<LabelField name="TasksListNumber" id="390">
 									<DataPath>TasksList.Number</DataPath>
 									<ContextMenu name="TasksListNumberContextMenu" id="391"/>
-									<ExtendedTooltip name="TasksListNumberExtendedTooltip" id="797"/>
+									<ExtendedTooltip name="TasksListNumberExtendedTooltip" id="1476"/>
 								</LabelField>
 								<LabelField name="TasksListOutlet" id="394">
 									<DataPath>TasksList.Outlet</DataPath>
 									<ContextMenu name="TasksListOutletContextMenu" id="395"/>
-									<ExtendedTooltip name="TasksListOutletExtendedTooltip" id="798"/>
+									<ExtendedTooltip name="TasksListOutletExtendedTooltip" id="1477"/>
 								</LabelField>
 								<LabelField name="TasksListStatusTask" id="396">
 									<DataPath>TasksList.StatusTask</DataPath>
 									<ContextMenu name="TasksListStatusTaskContextMenu" id="397"/>
-									<ExtendedTooltip name="TasksListStatusTaskExtendedTooltip" id="799"/>
+									<ExtendedTooltip name="TasksListStatusTaskExtendedTooltip" id="1478"/>
 								</LabelField>
 								<LabelField name="TasksListTextTask" id="398">
 									<DataPath>TasksList.TextTask</DataPath>
 									<ContextMenu name="TasksListTextTaskContextMenu" id="399"/>
-									<ExtendedTooltip name="TasksListTextTaskExtendedTooltip" id="800"/>
+									<ExtendedTooltip name="TasksListTextTaskExtendedTooltip" id="1479"/>
 								</LabelField>
 								<LabelField name="TasksListVisitPlan" id="400">
 									<DataPath>TasksList.VisitPlan</DataPath>
 									<ContextMenu name="TasksListVisitPlanContextMenu" id="401"/>
-									<ExtendedTooltip name="TasksListVisitPlanExtendedTooltip" id="801"/>
+									<ExtendedTooltip name="TasksListVisitPlanExtendedTooltip" id="1480"/>
 								</LabelField>
 								<LabelField name="TasksListPlanDate" id="402">
 									<DataPath>TasksList.PlanDate</DataPath>
 									<ContextMenu name="TasksListPlanDateContextMenu" id="403"/>
-									<ExtendedTooltip name="TasksListPlanDateExtendedTooltip" id="802"/>
+									<ExtendedTooltip name="TasksListPlanDateExtendedTooltip" id="1481"/>
 								</LabelField>
 								<LabelField name="TasksListTypeOfResultAndGoals" id="404">
 									<DataPath>19/16</DataPath>
 									<ContextMenu name="TasksListTypeOfResultAndGoalsContextMenu" id="405"/>
-									<ExtendedTooltip name="TasksListTypeOfResultAndGoalsExtendedTooltip" id="803"/>
+									<ExtendedTooltip name="TasksListTypeOfResultAndGoalsExtendedTooltip" id="1482"/>
 								</LabelField>
 								<LabelField name="TasksListResult" id="406">
 									<DataPath>TasksList.Result</DataPath>
 									<ContextMenu name="TasksListResultContextMenu" id="407"/>
-									<ExtendedTooltip name="TasksListResultExtendedTooltip" id="804"/>
+									<ExtendedTooltip name="TasksListResultExtendedTooltip" id="1483"/>
 								</LabelField>
 								<LabelField name="TasksListFactDate" id="408">
 									<DataPath>19/20</DataPath>
 									<ContextMenu name="TasksListFactDateContextMenu" id="409"/>
-									<ExtendedTooltip name="TasksListFactDateExtendedTooltip" id="805"/>
+									<ExtendedTooltip name="TasksListFactDateExtendedTooltip" id="1484"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2522,71 +2522,71 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="UsersListContextMenu" id="267"/>
 							<AutoCommandBar name="UsersListCommandBar" id="268"/>
-							<ExtendedTooltip name="UsersListExtendedTooltip" id="806"/>
-							<SearchStringAddition name="UsersListSearchString" id="1319">
+							<ExtendedTooltip name="UsersListExtendedTooltip" id="1485"/>
+							<SearchStringAddition name="UsersListSearchString" id="1486">
 								<Source>
 									<lf:elementId>266</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="UsersListSearchStringContextMenu" id="1320"/>
-								<ExtendedTooltip name="UsersListSearchStringExtendedTooltip" id="1321"/>
+								<ContextMenu name="UsersListSearchStringContextMenu" id="1487"/>
+								<ExtendedTooltip name="UsersListSearchStringExtendedTooltip" id="1488"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="UsersListViewStatus" id="1322">
+							<ViewStatusAddition name="UsersListViewStatus" id="1489">
 								<Source>
 									<lf:elementId>266</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="UsersListViewStatusContextMenu" id="1323"/>
-								<ExtendedTooltip name="UsersListViewStatusExtendedTooltip" id="1324"/>
+								<ContextMenu name="UsersListViewStatusContextMenu" id="1490"/>
+								<ExtendedTooltip name="UsersListViewStatusExtendedTooltip" id="1491"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="UsersListSearchControl" id="1325">
+							<SearchControlAddition name="UsersListSearchControl" id="1492">
 								<Source>
 									<lf:elementId>266</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="UsersListSearchControlContextMenu" id="1326"/>
-								<ExtendedTooltip name="UsersListSearchControlExtendedTooltip" id="1327"/>
+								<ContextMenu name="UsersListSearchControlContextMenu" id="1493"/>
+								<ExtendedTooltip name="UsersListSearchControlExtendedTooltip" id="1494"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="UsersListDescription" id="269">
 									<DataPath>UsersList.Description</DataPath>
 									<ContextMenu name="UsersListDescriptionContextMenu" id="270"/>
-									<ExtendedTooltip name="UsersListDescriptionExtendedTooltip" id="816"/>
+									<ExtendedTooltip name="UsersListDescriptionExtendedTooltip" id="1495"/>
 								</LabelField>
 								<LabelField name="UsersListCode" id="271">
 									<DataPath>UsersList.Code</DataPath>
 									<ContextMenu name="UsersListCodeContextMenu" id="272"/>
-									<ExtendedTooltip name="UsersListCodeExtendedTooltip" id="817"/>
+									<ExtendedTooltip name="UsersListCodeExtendedTooltip" id="1496"/>
 								</LabelField>
 								<LabelField name="UsersListManager" id="273">
 									<DataPath>UsersList.Manager</DataPath>
 									<ContextMenu name="UsersListManagerContextMenu" id="274"/>
-									<ExtendedTooltip name="UsersListManagerExtendedTooltip" id="818"/>
+									<ExtendedTooltip name="UsersListManagerExtendedTooltip" id="1497"/>
 								</LabelField>
 								<LabelField name="UsersListRole" id="279">
 									<DataPath>UsersList.Role</DataPath>
 									<ContextMenu name="UsersListRoleContextMenu" id="280"/>
-									<ExtendedTooltip name="UsersListRoleExtendedTooltip" id="819"/>
+									<ExtendedTooltip name="UsersListRoleExtendedTooltip" id="1498"/>
 								</LabelField>
 								<LabelField name="UsersListPosition" id="283">
 									<DataPath>UsersList.Position</DataPath>
 									<ContextMenu name="UsersListPositionContextMenu" id="284"/>
-									<ExtendedTooltip name="UsersListPositionExtendedTooltip" id="820"/>
+									<ExtendedTooltip name="UsersListPositionExtendedTooltip" id="1499"/>
 								</LabelField>
 								<LabelField name="UsersListEMail" id="275">
 									<DataPath>UsersList.EMail</DataPath>
 									<ContextMenu name="UsersListEMailContextMenu" id="276"/>
-									<ExtendedTooltip name="UsersListEMailExtendedTooltip" id="821"/>
+									<ExtendedTooltip name="UsersListEMailExtendedTooltip" id="1500"/>
 								</LabelField>
 								<LabelField name="UsersListUserName" id="277">
 									<DataPath>UsersList.UserName</DataPath>
 									<ContextMenu name="UsersListUserNameContextMenu" id="278"/>
-									<ExtendedTooltip name="UsersListUserNameExtendedTooltip" id="822"/>
+									<ExtendedTooltip name="UsersListUserNameExtendedTooltip" id="1501"/>
 								</LabelField>
 								<LabelField name="UsersListPassword" id="281">
 									<DataPath>UsersList.Password</DataPath>
 									<ContextMenu name="UsersListPasswordContextMenu" id="282"/>
-									<ExtendedTooltip name="UsersListPasswordExtendedTooltip" id="823"/>
+									<ExtendedTooltip name="UsersListPasswordExtendedTooltip" id="1502"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2624,52 +2624,52 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="PriceListsListContextMenu" id="417"/>
 							<AutoCommandBar name="PriceListsListCommandBar" id="418"/>
-							<ExtendedTooltip name="PriceListsListExtendedTooltip" id="824"/>
-							<SearchStringAddition name="PriceListsListSearchString" id="1328">
+							<ExtendedTooltip name="PriceListsListExtendedTooltip" id="1503"/>
+							<SearchStringAddition name="PriceListsListSearchString" id="1504">
 								<Source>
 									<lf:elementId>416</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="PriceListsListSearchStringContextMenu" id="1329"/>
-								<ExtendedTooltip name="PriceListsListSearchStringExtendedTooltip" id="1330"/>
+								<ContextMenu name="PriceListsListSearchStringContextMenu" id="1505"/>
+								<ExtendedTooltip name="PriceListsListSearchStringExtendedTooltip" id="1506"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="PriceListsListViewStatus" id="1331">
+							<ViewStatusAddition name="PriceListsListViewStatus" id="1507">
 								<Source>
 									<lf:elementId>416</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="PriceListsListViewStatusContextMenu" id="1332"/>
-								<ExtendedTooltip name="PriceListsListViewStatusExtendedTooltip" id="1333"/>
+								<ContextMenu name="PriceListsListViewStatusContextMenu" id="1508"/>
+								<ExtendedTooltip name="PriceListsListViewStatusExtendedTooltip" id="1509"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="PriceListsListSearchControl" id="1334">
+							<SearchControlAddition name="PriceListsListSearchControl" id="1510">
 								<Source>
 									<lf:elementId>416</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="PriceListsListSearchControlContextMenu" id="1335"/>
-								<ExtendedTooltip name="PriceListsListSearchControlExtendedTooltip" id="1336"/>
+								<ContextMenu name="PriceListsListSearchControlContextMenu" id="1511"/>
+								<ExtendedTooltip name="PriceListsListSearchControlExtendedTooltip" id="1512"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="PriceListsListDate" id="419">
 									<DataPath>PriceListsList.Date</DataPath>
 									<ContextMenu name="PriceListsListDateContextMenu" id="420"/>
-									<ExtendedTooltip name="PriceListsListDateExtendedTooltip" id="834"/>
+									<ExtendedTooltip name="PriceListsListDateExtendedTooltip" id="1513"/>
 								</LabelField>
 								<LabelField name="PriceListsListNumber" id="421">
 									<DataPath>PriceListsList.Number</DataPath>
 									<ContextMenu name="PriceListsListNumberContextMenu" id="422"/>
-									<ExtendedTooltip name="PriceListsListNumberExtendedTooltip" id="835"/>
+									<ExtendedTooltip name="PriceListsListNumberExtendedTooltip" id="1514"/>
 								</LabelField>
 								<LabelField name="PriceListsListDescription" id="452">
 									<DataPath>PriceListsList.Description</DataPath>
 									<ContextMenu name="PriceListsListDescriptionContextMenu" id="453"/>
-									<ExtendedTooltip name="PriceListsListDescriptionExtendedTooltip" id="836"/>
+									<ExtendedTooltip name="PriceListsListDescriptionExtendedTooltip" id="1515"/>
 								</LabelField>
 								<CheckBoxField name="PriceListsListDefaultPriceList" id="470">
 									<DataPath>PriceListsList.DefaultPriceList</DataPath>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="PriceListsListDefaultPriceListContextMenu" id="471"/>
-									<ExtendedTooltip name="PriceListsListDefaultPriceListExtendedTooltip" id="837"/>
+									<ExtendedTooltip name="PriceListsListDefaultPriceListExtendedTooltip" id="1516"/>
 								</CheckBoxField>
 							</ChildItems>
 						</Table>
@@ -2707,86 +2707,86 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="VisitsListContextMenu" id="344"/>
 							<AutoCommandBar name="VisitsListCommandBar" id="345"/>
-							<ExtendedTooltip name="VisitsListExtendedTooltip" id="838"/>
-							<SearchStringAddition name="VisitsListSearchString" id="1337">
+							<ExtendedTooltip name="VisitsListExtendedTooltip" id="1517"/>
+							<SearchStringAddition name="VisitsListSearchString" id="1518">
 								<Source>
 									<lf:elementId>343</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitsListSearchStringContextMenu" id="1338"/>
-								<ExtendedTooltip name="VisitsListSearchStringExtendedTooltip" id="1339"/>
+								<ContextMenu name="VisitsListSearchStringContextMenu" id="1519"/>
+								<ExtendedTooltip name="VisitsListSearchStringExtendedTooltip" id="1520"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="VisitsListViewStatus" id="1340">
+							<ViewStatusAddition name="VisitsListViewStatus" id="1521">
 								<Source>
 									<lf:elementId>343</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitsListViewStatusContextMenu" id="1341"/>
-								<ExtendedTooltip name="VisitsListViewStatusExtendedTooltip" id="1342"/>
+								<ContextMenu name="VisitsListViewStatusContextMenu" id="1522"/>
+								<ExtendedTooltip name="VisitsListViewStatusExtendedTooltip" id="1523"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="VisitsListSearchControl" id="1343">
+							<SearchControlAddition name="VisitsListSearchControl" id="1524">
 								<Source>
 									<lf:elementId>343</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="VisitsListSearchControlContextMenu" id="1344"/>
-								<ExtendedTooltip name="VisitsListSearchControlExtendedTooltip" id="1345"/>
+								<ContextMenu name="VisitsListSearchControlContextMenu" id="1525"/>
+								<ExtendedTooltip name="VisitsListSearchControlExtendedTooltip" id="1526"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="VisitsListDate" id="346">
 									<DataPath>VisitsList.Date</DataPath>
 									<ContextMenu name="VisitsListDateContextMenu" id="347"/>
-									<ExtendedTooltip name="VisitsListDateExtendedTooltip" id="848"/>
+									<ExtendedTooltip name="VisitsListDateExtendedTooltip" id="1527"/>
 								</LabelField>
 								<LabelField name="VisitsListNumber" id="348">
 									<DataPath>VisitsList.Number</DataPath>
 									<ContextMenu name="VisitsListNumberContextMenu" id="349"/>
-									<ExtendedTooltip name="VisitsListNumberExtendedTooltip" id="849"/>
+									<ExtendedTooltip name="VisitsListNumberExtendedTooltip" id="1528"/>
 								</LabelField>
 								<LabelField name="VisitsListOutlet" id="350">
 									<DataPath>VisitsList.Outlet</DataPath>
 									<ContextMenu name="VisitsListOutletContextMenu" id="351"/>
-									<ExtendedTooltip name="VisitsListOutletExtendedTooltip" id="850"/>
+									<ExtendedTooltip name="VisitsListOutletExtendedTooltip" id="1529"/>
 								</LabelField>
 								<LabelField name="VisitsListSR" id="352">
 									<DataPath>VisitsList.SR</DataPath>
 									<ContextMenu name="VisitsListSRContextMenu" id="353"/>
-									<ExtendedTooltip name="VisitsListSRExtendedTooltip" id="851"/>
+									<ExtendedTooltip name="VisitsListSRExtendedTooltip" id="1530"/>
 								</LabelField>
 								<LabelField name="VisitsListStatus" id="354">
 									<DataPath>VisitsList.Status</DataPath>
 									<ContextMenu name="VisitsListStatusContextMenu" id="355"/>
-									<ExtendedTooltip name="VisitsListStatusExtendedTooltip" id="852"/>
+									<ExtendedTooltip name="VisitsListStatusExtendedTooltip" id="1531"/>
 								</LabelField>
 								<LabelField name="VisitsListStartTime" id="356">
 									<DataPath>VisitsList.StartTime</DataPath>
 									<ContextMenu name="VisitsListStartTimeContextMenu" id="357"/>
-									<ExtendedTooltip name="VisitsListStartTimeExtendedTooltip" id="853"/>
+									<ExtendedTooltip name="VisitsListStartTimeExtendedTooltip" id="1532"/>
 								</LabelField>
 								<LabelField name="VisitsListEndTime" id="358">
 									<DataPath>VisitsList.EndTime</DataPath>
 									<ContextMenu name="VisitsListEndTimeContextMenu" id="359"/>
-									<ExtendedTooltip name="VisitsListEndTimeExtendedTooltip" id="854"/>
+									<ExtendedTooltip name="VisitsListEndTimeExtendedTooltip" id="1533"/>
 								</LabelField>
 								<LabelField name="VisitsListEncashment" id="360">
 									<DataPath>21/4</DataPath>
 									<ContextMenu name="VisitsListEncashmentContextMenu" id="361"/>
-									<ExtendedTooltip name="VisitsListEncashmentExtendedTooltip" id="855"/>
+									<ExtendedTooltip name="VisitsListEncashmentExtendedTooltip" id="1534"/>
 								</LabelField>
 								<LabelField name="VisitsListPlan" id="362">
 									<DataPath>VisitsList.Plan</DataPath>
 									<ContextMenu name="VisitsListPlanContextMenu" id="363"/>
-									<ExtendedTooltip name="VisitsListPlanExtendedTooltip" id="856"/>
+									<ExtendedTooltip name="VisitsListPlanExtendedTooltip" id="1535"/>
 								</LabelField>
 								<LabelField name="VisitsListLattitude" id="364">
 									<DataPath>VisitsList.Lattitude</DataPath>
 									<ContextMenu name="VisitsListLattitudeContextMenu" id="365"/>
-									<ExtendedTooltip name="VisitsListLattitudeExtendedTooltip" id="857"/>
+									<ExtendedTooltip name="VisitsListLattitudeExtendedTooltip" id="1536"/>
 								</LabelField>
 								<LabelField name="VisitsListLongitude" id="366">
 									<DataPath>VisitsList.Longitude</DataPath>
 									<ContextMenu name="VisitsListLongitudeContextMenu" id="367"/>
-									<ExtendedTooltip name="VisitsListLongitudeExtendedTooltip" id="858"/>
+									<ExtendedTooltip name="VisitsListLongitudeExtendedTooltip" id="1537"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2824,51 +2824,51 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="AccountReceivableListContextMenu" id="426"/>
 							<AutoCommandBar name="AccountReceivableListCommandBar" id="427"/>
-							<ExtendedTooltip name="AccountReceivableListExtendedTooltip" id="859"/>
-							<SearchStringAddition name="AccountReceivableListSearchString" id="1346">
+							<ExtendedTooltip name="AccountReceivableListExtendedTooltip" id="1538"/>
+							<SearchStringAddition name="AccountReceivableListSearchString" id="1539">
 								<Source>
 									<lf:elementId>425</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="AccountReceivableListSearchStringContextMenu" id="1347"/>
-								<ExtendedTooltip name="AccountReceivableListSearchStringExtendedTooltip" id="1348"/>
+								<ContextMenu name="AccountReceivableListSearchStringContextMenu" id="1540"/>
+								<ExtendedTooltip name="AccountReceivableListSearchStringExtendedTooltip" id="1541"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="AccountReceivableListViewStatus" id="1349">
+							<ViewStatusAddition name="AccountReceivableListViewStatus" id="1542">
 								<Source>
 									<lf:elementId>425</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="AccountReceivableListViewStatusContextMenu" id="1350"/>
-								<ExtendedTooltip name="AccountReceivableListViewStatusExtendedTooltip" id="1351"/>
+								<ContextMenu name="AccountReceivableListViewStatusContextMenu" id="1543"/>
+								<ExtendedTooltip name="AccountReceivableListViewStatusExtendedTooltip" id="1544"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="AccountReceivableListSearchControl" id="1352">
+							<SearchControlAddition name="AccountReceivableListSearchControl" id="1545">
 								<Source>
 									<lf:elementId>425</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="AccountReceivableListSearchControlContextMenu" id="1353"/>
-								<ExtendedTooltip name="AccountReceivableListSearchControlExtendedTooltip" id="1354"/>
+								<ContextMenu name="AccountReceivableListSearchControlContextMenu" id="1546"/>
+								<ExtendedTooltip name="AccountReceivableListSearchControlExtendedTooltip" id="1547"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="AccountReceivableListDate" id="428">
 									<DataPath>AccountReceivableList.Date</DataPath>
 									<ContextMenu name="AccountReceivableListDateContextMenu" id="429"/>
-									<ExtendedTooltip name="AccountReceivableListDateExtendedTooltip" id="869"/>
+									<ExtendedTooltip name="AccountReceivableListDateExtendedTooltip" id="1548"/>
 								</LabelField>
 								<LabelField name="AccountReceivableListNumber" id="430">
 									<DataPath>AccountReceivableList.Number</DataPath>
 									<ContextMenu name="AccountReceivableListNumberContextMenu" id="431"/>
-									<ExtendedTooltip name="AccountReceivableListNumberExtendedTooltip" id="870"/>
+									<ExtendedTooltip name="AccountReceivableListNumberExtendedTooltip" id="1549"/>
 								</LabelField>
 								<LabelField name="AccountReceivableListDistributor" id="432">
 									<DataPath>23/4</DataPath>
 									<ContextMenu name="AccountReceivableListDistributorContextMenu" id="433"/>
-									<ExtendedTooltip name="AccountReceivableListDistributorExtendedTooltip" id="871"/>
+									<ExtendedTooltip name="AccountReceivableListDistributorExtendedTooltip" id="1550"/>
 								</LabelField>
 								<LabelField name="AccountReceivableListOutlet" id="435">
 									<DataPath>AccountReceivableList.Outlet</DataPath>
 									<ContextMenu name="AccountReceivableListOutletContextMenu" id="436"/>
-									<ExtendedTooltip name="AccountReceivableListOutletExtendedTooltip" id="872"/>
+									<ExtendedTooltip name="AccountReceivableListOutletExtendedTooltip" id="1551"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2906,51 +2906,51 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="EncasmentsListContextMenu" id="438"/>
 							<AutoCommandBar name="EncasmentsListCommandBar" id="439"/>
-							<ExtendedTooltip name="EncasmentsListExtendedTooltip" id="873"/>
-							<SearchStringAddition name="EncasmentsListSearchString" id="1355">
+							<ExtendedTooltip name="EncasmentsListExtendedTooltip" id="1552"/>
+							<SearchStringAddition name="EncasmentsListSearchString" id="1553">
 								<Source>
 									<lf:elementId>437</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="EncasmentsListSearchStringContextMenu" id="1356"/>
-								<ExtendedTooltip name="EncasmentsListSearchStringExtendedTooltip" id="1357"/>
+								<ContextMenu name="EncasmentsListSearchStringContextMenu" id="1554"/>
+								<ExtendedTooltip name="EncasmentsListSearchStringExtendedTooltip" id="1555"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="EncasmentsListViewStatus" id="1358">
+							<ViewStatusAddition name="EncasmentsListViewStatus" id="1556">
 								<Source>
 									<lf:elementId>437</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="EncasmentsListViewStatusContextMenu" id="1359"/>
-								<ExtendedTooltip name="EncasmentsListViewStatusExtendedTooltip" id="1360"/>
+								<ContextMenu name="EncasmentsListViewStatusContextMenu" id="1557"/>
+								<ExtendedTooltip name="EncasmentsListViewStatusExtendedTooltip" id="1558"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="EncasmentsListSearchControl" id="1361">
+							<SearchControlAddition name="EncasmentsListSearchControl" id="1559">
 								<Source>
 									<lf:elementId>437</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="EncasmentsListSearchControlContextMenu" id="1362"/>
-								<ExtendedTooltip name="EncasmentsListSearchControlExtendedTooltip" id="1363"/>
+								<ContextMenu name="EncasmentsListSearchControlContextMenu" id="1560"/>
+								<ExtendedTooltip name="EncasmentsListSearchControlExtendedTooltip" id="1561"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="EncasmentsListDate" id="440">
 									<DataPath>EncasmentsList.Date</DataPath>
 									<ContextMenu name="EncasmentsListDateContextMenu" id="441"/>
-									<ExtendedTooltip name="EncasmentsListDateExtendedTooltip" id="883"/>
+									<ExtendedTooltip name="EncasmentsListDateExtendedTooltip" id="1562"/>
 								</LabelField>
 								<LabelField name="EncasmentsListNumber" id="442">
 									<DataPath>EncasmentsList.Number</DataPath>
 									<ContextMenu name="EncasmentsListNumberContextMenu" id="443"/>
-									<ExtendedTooltip name="EncasmentsListNumberExtendedTooltip" id="884"/>
+									<ExtendedTooltip name="EncasmentsListNumberExtendedTooltip" id="1563"/>
 								</LabelField>
 								<LabelField name="EncasmentsListEncashmentAmount" id="468">
 									<DataPath>EncasmentsList.EncashmentAmount</DataPath>
 									<ContextMenu name="EncasmentsListEncashmentAmountContextMenu" id="469"/>
-									<ExtendedTooltip name="EncasmentsListEncashmentAmountExtendedTooltip" id="885"/>
+									<ExtendedTooltip name="EncasmentsListEncashmentAmountExtendedTooltip" id="1564"/>
 								</LabelField>
 								<LabelField name="EncasmentsListVisit" id="444">
 									<DataPath>EncasmentsList.Visit</DataPath>
 									<ContextMenu name="EncasmentsListVisitContextMenu" id="445"/>
-									<ExtendedTooltip name="EncasmentsListVisitExtendedTooltip" id="886"/>
+									<ExtendedTooltip name="EncasmentsListVisitExtendedTooltip" id="1565"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -2988,41 +2988,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="StocksListContextMenu" id="476"/>
 							<AutoCommandBar name="StocksListCommandBar" id="477"/>
-							<ExtendedTooltip name="StocksListExtendedTooltip" id="887"/>
-							<SearchStringAddition name="StocksListSearchString" id="1364">
+							<ExtendedTooltip name="StocksListExtendedTooltip" id="1566"/>
+							<SearchStringAddition name="StocksListSearchString" id="1567">
 								<Source>
 									<lf:elementId>475</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="StocksListSearchStringContextMenu" id="1365"/>
-								<ExtendedTooltip name="StocksListSearchStringExtendedTooltip" id="1366"/>
+								<ContextMenu name="StocksListSearchStringContextMenu" id="1568"/>
+								<ExtendedTooltip name="StocksListSearchStringExtendedTooltip" id="1569"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="StocksListViewStatus" id="1367">
+							<ViewStatusAddition name="StocksListViewStatus" id="1570">
 								<Source>
 									<lf:elementId>475</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="StocksListViewStatusContextMenu" id="1368"/>
-								<ExtendedTooltip name="StocksListViewStatusExtendedTooltip" id="1369"/>
+								<ContextMenu name="StocksListViewStatusContextMenu" id="1571"/>
+								<ExtendedTooltip name="StocksListViewStatusExtendedTooltip" id="1572"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="StocksListSearchControl" id="1370">
+							<SearchControlAddition name="StocksListSearchControl" id="1573">
 								<Source>
 									<lf:elementId>475</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="StocksListSearchControlContextMenu" id="1371"/>
-								<ExtendedTooltip name="StocksListSearchControlExtendedTooltip" id="1372"/>
+								<ContextMenu name="StocksListSearchControlContextMenu" id="1574"/>
+								<ExtendedTooltip name="StocksListSearchControlExtendedTooltip" id="1575"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="StocksListDescription" id="478">
 									<DataPath>StocksList.Description</DataPath>
 									<ContextMenu name="StocksListDescriptionContextMenu" id="479"/>
-									<ExtendedTooltip name="StocksListDescriptionExtendedTooltip" id="897"/>
+									<ExtendedTooltip name="StocksListDescriptionExtendedTooltip" id="1576"/>
 								</LabelField>
 								<LabelField name="StocksListCode" id="480">
 									<DataPath>StocksList.Code</DataPath>
 									<ContextMenu name="StocksListCodeContextMenu" id="481"/>
-									<ExtendedTooltip name="StocksListCodeExtendedTooltip" id="898"/>
+									<ExtendedTooltip name="StocksListCodeExtendedTooltip" id="1577"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3060,41 +3060,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="SKUFeaturesListContextMenu" id="922"/>
 							<AutoCommandBar name="SKUFeaturesListCommandBar" id="923"/>
-							<ExtendedTooltip name="SKUFeaturesListExtendedTooltip" id="924"/>
-							<SearchStringAddition name="SKUFeaturesListSearchString" id="1373">
+							<ExtendedTooltip name="SKUFeaturesListExtendedTooltip" id="1578"/>
+							<SearchStringAddition name="SKUFeaturesListSearchString" id="1579">
 								<Source>
 									<lf:elementId>921</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUFeaturesListSearchStringContextMenu" id="1374"/>
-								<ExtendedTooltip name="SKUFeaturesListSearchStringExtendedTooltip" id="1375"/>
+								<ContextMenu name="SKUFeaturesListSearchStringContextMenu" id="1580"/>
+								<ExtendedTooltip name="SKUFeaturesListSearchStringExtendedTooltip" id="1581"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="SKUFeaturesListViewStatus" id="1376">
+							<ViewStatusAddition name="SKUFeaturesListViewStatus" id="1582">
 								<Source>
 									<lf:elementId>921</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUFeaturesListViewStatusContextMenu" id="1377"/>
-								<ExtendedTooltip name="SKUFeaturesListViewStatusExtendedTooltip" id="1378"/>
+								<ContextMenu name="SKUFeaturesListViewStatusContextMenu" id="1583"/>
+								<ExtendedTooltip name="SKUFeaturesListViewStatusExtendedTooltip" id="1584"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="SKUFeaturesListSearchControl" id="1379">
+							<SearchControlAddition name="SKUFeaturesListSearchControl" id="1585">
 								<Source>
 									<lf:elementId>921</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="SKUFeaturesListSearchControlContextMenu" id="1380"/>
-								<ExtendedTooltip name="SKUFeaturesListSearchControlExtendedTooltip" id="1381"/>
+								<ContextMenu name="SKUFeaturesListSearchControlContextMenu" id="1586"/>
+								<ExtendedTooltip name="SKUFeaturesListSearchControlExtendedTooltip" id="1587"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="SKUFeaturesListDescription" id="940">
 									<DataPath>SKUFeaturesList.Description</DataPath>
 									<ContextMenu name="SKUFeaturesListDescriptionContextMenu" id="941"/>
-									<ExtendedTooltip name="SKUFeaturesListDescriptionExtendedTooltip" id="942"/>
+									<ExtendedTooltip name="SKUFeaturesListDescriptionExtendedTooltip" id="1588"/>
 								</LabelField>
 								<LabelField name="SKUFeaturesListCode" id="943">
 									<DataPath>SKUFeaturesList.Code</DataPath>
 									<ContextMenu name="SKUFeaturesListCodeContextMenu" id="944"/>
-									<ExtendedTooltip name="SKUFeaturesListCodeExtendedTooltip" id="945"/>
+									<ExtendedTooltip name="SKUFeaturesListCodeExtendedTooltip" id="1589"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3132,41 +3132,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="ReasonForVisitListContextMenu" id="972"/>
 							<AutoCommandBar name="ReasonForVisitListCommandBar" id="973"/>
-							<ExtendedTooltip name="ReasonForVisitListExtendedTooltip" id="974"/>
-							<SearchStringAddition name="ReasonForVisitListSearchString" id="1382">
+							<ExtendedTooltip name="ReasonForVisitListExtendedTooltip" id="1590"/>
+							<SearchStringAddition name="ReasonForVisitListSearchString" id="1591">
 								<Source>
 									<lf:elementId>971</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForVisitListSearchStringContextMenu" id="1383"/>
-								<ExtendedTooltip name="ReasonForVisitListSearchStringExtendedTooltip" id="1384"/>
+								<ContextMenu name="ReasonForVisitListSearchStringContextMenu" id="1592"/>
+								<ExtendedTooltip name="ReasonForVisitListSearchStringExtendedTooltip" id="1593"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="ReasonForVisitListViewStatus" id="1385">
+							<ViewStatusAddition name="ReasonForVisitListViewStatus" id="1594">
 								<Source>
 									<lf:elementId>971</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForVisitListViewStatusContextMenu" id="1386"/>
-								<ExtendedTooltip name="ReasonForVisitListViewStatusExtendedTooltip" id="1387"/>
+								<ContextMenu name="ReasonForVisitListViewStatusContextMenu" id="1595"/>
+								<ExtendedTooltip name="ReasonForVisitListViewStatusExtendedTooltip" id="1596"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="ReasonForVisitListSearchControl" id="1388">
+							<SearchControlAddition name="ReasonForVisitListSearchControl" id="1597">
 								<Source>
 									<lf:elementId>971</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForVisitListSearchControlContextMenu" id="1389"/>
-								<ExtendedTooltip name="ReasonForVisitListSearchControlExtendedTooltip" id="1390"/>
+								<ContextMenu name="ReasonForVisitListSearchControlContextMenu" id="1598"/>
+								<ExtendedTooltip name="ReasonForVisitListSearchControlExtendedTooltip" id="1599"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="ReasonForVisitDescription" id="990">
 									<DataPath>ReasonForVisit.Description</DataPath>
 									<ContextMenu name="ReasonForVisitDescriptionContextMenu" id="991"/>
-									<ExtendedTooltip name="ReasonForVisitDescriptionExtendedTooltip" id="992"/>
+									<ExtendedTooltip name="ReasonForVisitDescriptionExtendedTooltip" id="1600"/>
 								</LabelField>
 								<LabelField name="ReasonForVisitCode" id="993">
 									<DataPath>ReasonForVisit.Code</DataPath>
 									<ContextMenu name="ReasonForVisitCodeContextMenu" id="994"/>
-									<ExtendedTooltip name="ReasonForVisitCodeExtendedTooltip" id="995"/>
+									<ExtendedTooltip name="ReasonForVisitCodeExtendedTooltip" id="1601"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3204,41 +3204,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="ReasonForNotOfTakingOrderListContextMenu" id="997"/>
 							<AutoCommandBar name="ReasonForNotOfTakingOrderListCommandBar" id="998"/>
-							<ExtendedTooltip name="ReasonForNotOfTakingOrderListExtendedTooltip" id="999"/>
-							<SearchStringAddition name="ReasonForNotOfTakingOrderListSearchString" id="1391">
+							<ExtendedTooltip name="ReasonForNotOfTakingOrderListExtendedTooltip" id="1602"/>
+							<SearchStringAddition name="ReasonForNotOfTakingOrderListSearchString" id="1603">
 								<Source>
 									<lf:elementId>996</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForNotOfTakingOrderListSearchStringContextMenu" id="1392"/>
-								<ExtendedTooltip name="ReasonForNotOfTakingOrderListSearchStringExtendedTooltip" id="1393"/>
+								<ContextMenu name="ReasonForNotOfTakingOrderListSearchStringContextMenu" id="1604"/>
+								<ExtendedTooltip name="ReasonForNotOfTakingOrderListSearchStringExtendedTooltip" id="1605"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="ReasonForNotOfTakingOrderListViewStatus" id="1394">
+							<ViewStatusAddition name="ReasonForNotOfTakingOrderListViewStatus" id="1606">
 								<Source>
 									<lf:elementId>996</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForNotOfTakingOrderListViewStatusContextMenu" id="1395"/>
-								<ExtendedTooltip name="ReasonForNotOfTakingOrderListViewStatusExtendedTooltip" id="1396"/>
+								<ContextMenu name="ReasonForNotOfTakingOrderListViewStatusContextMenu" id="1607"/>
+								<ExtendedTooltip name="ReasonForNotOfTakingOrderListViewStatusExtendedTooltip" id="1608"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="ReasonForNotOfTakingOrderListSearchControl" id="1397">
+							<SearchControlAddition name="ReasonForNotOfTakingOrderListSearchControl" id="1609">
 								<Source>
 									<lf:elementId>996</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="ReasonForNotOfTakingOrderListSearchControlContextMenu" id="1398"/>
-								<ExtendedTooltip name="ReasonForNotOfTakingOrderListSearchControlExtendedTooltip" id="1399"/>
+								<ContextMenu name="ReasonForNotOfTakingOrderListSearchControlContextMenu" id="1610"/>
+								<ExtendedTooltip name="ReasonForNotOfTakingOrderListSearchControlExtendedTooltip" id="1611"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="ReasonForNotOfTakingOrderDescription" id="1015">
 									<DataPath>ReasonForNotOfTakingOrder.Description</DataPath>
 									<ContextMenu name="ReasonForNotOfTakingOrderDescriptionContextMenu" id="1016"/>
-									<ExtendedTooltip name="ReasonForNotOfTakingOrderDescriptionExtendedTooltip" id="1017"/>
+									<ExtendedTooltip name="ReasonForNotOfTakingOrderDescriptionExtendedTooltip" id="1612"/>
 								</LabelField>
 								<LabelField name="ReasonForNotOfTakingOrderCode" id="1018">
 									<DataPath>ReasonForNotOfTakingOrder.Code</DataPath>
 									<ContextMenu name="ReasonForNotOfTakingOrderCodeContextMenu" id="1019"/>
-									<ExtendedTooltip name="ReasonForNotOfTakingOrderCodeExtendedTooltip" id="1020"/>
+									<ExtendedTooltip name="ReasonForNotOfTakingOrderCodeExtendedTooltip" id="1613"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3263,7 +3263,7 @@
 							<Width>50</Width>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ReportsGroupExtendedTooltip" id="899"/>
+							<ExtendedTooltip name="ReportsGroupExtendedTooltip" id="1614"/>
 							<ChildItems>
 								<LabelDecoration name="VisitsDiv" id="492">
 									<Height>2</Height>
@@ -3281,13 +3281,13 @@
 									</Title>
 									<VerticalAlign>Center</VerticalAlign>
 									<ContextMenu name="VisitsDivContextMenu" id="493"/>
-									<ExtendedTooltip name="VisitsDivExtendedTooltip" id="900"/>
+									<ExtendedTooltip name="VisitsDivExtendedTooltip" id="1615"/>
 								</LabelDecoration>
 								<Button name="VisitsMap" id="451">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_VisitsMap</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="VisitsMapExtendedTooltip" id="901"/>
+									<ExtendedTooltip name="VisitsMapExtendedTooltip" id="1616"/>
 								</Button>
 								<Button name="Report_Visits" id="293">
 									<Type>Hyperlink</Type>
@@ -3299,7 +3299,7 @@
 											<v8:content>Visits</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="Report_VisitsExtendedTooltip" id="902"/>
+									<ExtendedTooltip name="Report_VisitsExtendedTooltip" id="1617"/>
 								</Button>
 								<Button name="Report_VisitEfficiency" id="414">
 									<Type>Hyperlink</Type>
@@ -3315,31 +3315,31 @@
 											<v8:content>Эффективность визитов</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="Report_VisitEfficiencyExtendedTooltip" id="903"/>
+									<ExtendedTooltip name="Report_VisitEfficiencyExtendedTooltip" id="1618"/>
 								</Button>
 								<Button name="VisitResultsReport" id="472">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_VisitResults</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="VisitResultsReportExtendedTooltip" id="904"/>
+									<ExtendedTooltip name="VisitResultsReportExtendedTooltip" id="1619"/>
 								</Button>
 								<Button name="EncashmentReport" id="447">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_Encashment</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="EncashmentReportExtendedTooltip" id="905"/>
+									<ExtendedTooltip name="EncashmentReportExtendedTooltip" id="1620"/>
 								</Button>
 								<Button name="Report_QuestionnairesStat" id="473">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_QuestionnairesStat</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_QuestionnairesStatExtendedTooltip" id="906"/>
+									<ExtendedTooltip name="Report_QuestionnairesStatExtendedTooltip" id="1621"/>
 								</Button>
 								<Button name="Report_VisitsAnalysis" id="486">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_VisitsAnalysis</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_VisitsAnalysisExtendedTooltip" id="907"/>
+									<ExtendedTooltip name="Report_VisitsAnalysisExtendedTooltip" id="1622"/>
 								</Button>
 								<LabelDecoration name="OrderDiv" id="496">
 									<Height>2</Height>
@@ -3357,7 +3357,7 @@
 									</Title>
 									<VerticalAlign>Center</VerticalAlign>
 									<ContextMenu name="OrderDivContextMenu" id="497"/>
-									<ExtendedTooltip name="OrderDivExtendedTooltip" id="908"/>
+									<ExtendedTooltip name="OrderDivExtendedTooltip" id="1623"/>
 								</LabelDecoration>
 								<Button name="Report_Orders" id="294">
 									<Type>Hyperlink</Type>
@@ -3369,7 +3369,7 @@
 											<v8:content>Orders</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="Report_OrdersExtendedTooltip" id="909"/>
+									<ExtendedTooltip name="Report_OrdersExtendedTooltip" id="1624"/>
 								</Button>
 								<LabelDecoration name="OutletsDiv" id="494">
 									<Height>2</Height>
@@ -3387,7 +3387,7 @@
 									</Title>
 									<VerticalAlign>Center</VerticalAlign>
 									<ContextMenu name="OutletsDivContextMenu" id="495"/>
-									<ExtendedTooltip name="OutletsDivExtendedTooltip" id="910"/>
+									<ExtendedTooltip name="OutletsDivExtendedTooltip" id="1625"/>
 								</LabelDecoration>
 								<Button name="Report_OutletBinding" id="450">
 									<Type>Hyperlink</Type>
@@ -3403,31 +3403,31 @@
 											<v8:content>Привязка торговых точек к территориям</v8:content>
 										</v8:item>
 									</Title>
-									<ExtendedTooltip name="Report_OutletBindingExtendedTooltip" id="911"/>
+									<ExtendedTooltip name="Report_OutletBindingExtendedTooltip" id="1626"/>
 								</Button>
 								<Button name="Report_AnalysisOutletParameters" id="487">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_AnalysisOutletParameters</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_AnalysisOutletParametersExtendedTooltip" id="912"/>
+									<ExtendedTooltip name="Report_AnalysisOutletParametersExtendedTooltip" id="1627"/>
 								</Button>
 								<Button name="Report_CompetitorsInTheOutlets" id="488">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_CompetitorsInTheOutlets</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_CompetitorsInTheOutletsExtendedTooltip" id="913"/>
+									<ExtendedTooltip name="Report_CompetitorsInTheOutletsExtendedTooltip" id="1628"/>
 								</Button>
 								<Button name="Report_OutletStatus" id="489">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_OutletStatus</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_OutletStatusExtendedTooltip" id="914"/>
+									<ExtendedTooltip name="Report_OutletStatusExtendedTooltip" id="1629"/>
 								</Button>
 								<Button name="Report_NumberOfOutlets" id="491">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_NumberOfOutlets</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_NumberOfOutletsExtendedTooltip" id="915"/>
+									<ExtendedTooltip name="Report_NumberOfOutletsExtendedTooltip" id="1630"/>
 								</Button>
 								<LabelDecoration name="SKUDiv" id="498">
 									<Height>2</Height>
@@ -3445,13 +3445,13 @@
 									</Title>
 									<VerticalAlign>Center</VerticalAlign>
 									<ContextMenu name="SKUDivContextMenu" id="499"/>
-									<ExtendedTooltip name="SKUDivExtendedTooltip" id="916"/>
+									<ExtendedTooltip name="SKUDivExtendedTooltip" id="1631"/>
 								</LabelDecoration>
 								<Button name="Report_SKUChange" id="490">
 									<Type>Hyperlink</Type>
 									<CommandName>Form.Command.Report_SKUChange</CommandName>
 									<Parameter xsi:nil="true"/>
-									<ExtendedTooltip name="Report_SKUChangeExtendedTooltip" id="917"/>
+									<ExtendedTooltip name="Report_SKUChangeExtendedTooltip" id="1632"/>
 								</Button>
 							</ChildItems>
 						</UsualGroup>
@@ -3463,7 +3463,7 @@
 								<xr:LoadTransparent>false</xr:LoadTransparent>
 							</Picture>
 							<ContextMenu name="Decoration1ContextMenu" id="296"/>
-							<ExtendedTooltip name="Decoration1ExtendedTooltip" id="918"/>
+							<ExtendedTooltip name="Decoration1ExtendedTooltip" id="1633"/>
 						</PictureDecoration>
 						<Table name="UnitsOfMeasureList" id="1023">
 							<Visible>false</Visible>
@@ -3499,46 +3499,46 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="UnitsOfMeasureListContextMenu" id="1024"/>
 							<AutoCommandBar name="UnitsOfMeasureListCommandBar" id="1025"/>
-							<ExtendedTooltip name="UnitsOfMeasureListExtendedTooltip" id="1026"/>
-							<SearchStringAddition name="UnitsOfMeasureListSearchString" id="1400">
+							<ExtendedTooltip name="UnitsOfMeasureListExtendedTooltip" id="1634"/>
+							<SearchStringAddition name="UnitsOfMeasureListSearchString" id="1635">
 								<Source>
 									<lf:elementId>1023</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="UnitsOfMeasureListSearchStringContextMenu" id="1401"/>
-								<ExtendedTooltip name="UnitsOfMeasureListSearchStringExtendedTooltip" id="1402"/>
+								<ContextMenu name="UnitsOfMeasureListSearchStringContextMenu" id="1636"/>
+								<ExtendedTooltip name="UnitsOfMeasureListSearchStringExtendedTooltip" id="1637"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="UnitsOfMeasureListViewStatus" id="1403">
+							<ViewStatusAddition name="UnitsOfMeasureListViewStatus" id="1638">
 								<Source>
 									<lf:elementId>1023</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="UnitsOfMeasureListViewStatusContextMenu" id="1404"/>
-								<ExtendedTooltip name="UnitsOfMeasureListViewStatusExtendedTooltip" id="1405"/>
+								<ContextMenu name="UnitsOfMeasureListViewStatusContextMenu" id="1639"/>
+								<ExtendedTooltip name="UnitsOfMeasureListViewStatusExtendedTooltip" id="1640"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="UnitsOfMeasureListSearchControl" id="1406">
+							<SearchControlAddition name="UnitsOfMeasureListSearchControl" id="1641">
 								<Source>
 									<lf:elementId>1023</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="UnitsOfMeasureListSearchControlContextMenu" id="1407"/>
-								<ExtendedTooltip name="UnitsOfMeasureListSearchControlExtendedTooltip" id="1408"/>
+								<ContextMenu name="UnitsOfMeasureListSearchControlContextMenu" id="1642"/>
+								<ExtendedTooltip name="UnitsOfMeasureListSearchControlExtendedTooltip" id="1643"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="UnitsOfMeasureListDescription" id="1042">
 									<DataPath>UnitsOfMeasureList.Description</DataPath>
 									<ContextMenu name="UnitsOfMeasureListDescriptionContextMenu" id="1043"/>
-									<ExtendedTooltip name="UnitsOfMeasureListDescriptionExtendedTooltip" id="1044"/>
+									<ExtendedTooltip name="UnitsOfMeasureListDescriptionExtendedTooltip" id="1644"/>
 								</LabelField>
 								<LabelField name="UnitsOfMeasureListCode" id="1045">
 									<DataPath>UnitsOfMeasureList.Code</DataPath>
 									<ContextMenu name="UnitsOfMeasureListCodeContextMenu" id="1046"/>
-									<ExtendedTooltip name="UnitsOfMeasureListCodeExtendedTooltip" id="1047"/>
+									<ExtendedTooltip name="UnitsOfMeasureListCodeExtendedTooltip" id="1645"/>
 								</LabelField>
 								<LabelField name="UnitsOfMeasureListFullDescription" id="1048">
 									<DataPath>UnitsOfMeasureList.FullDescription</DataPath>
 									<ContextMenu name="UnitsOfMeasureListFullDescriptionContextMenu" id="1049"/>
-									<ExtendedTooltip name="UnitsOfMeasureListFullDescriptionExtendedTooltip" id="1050"/>
+									<ExtendedTooltip name="UnitsOfMeasureListFullDescriptionExtendedTooltip" id="1646"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3576,41 +3576,41 @@
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="ChangedDataListContextMenu" id="1068"/>
 							<AutoCommandBar name="ChangedDataListCommandBar" id="1069"/>
-							<ExtendedTooltip name="ChangedDataListExtendedTooltip" id="1070"/>
-							<SearchStringAddition name="ChangedDataListSearchString" id="1409">
+							<ExtendedTooltip name="ChangedDataListExtendedTooltip" id="1647"/>
+							<SearchStringAddition name="ChangedDataListSearchString" id="1648">
 								<Source>
 									<lf:elementId>1067</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="ChangedDataListSearchStringContextMenu" id="1410"/>
-								<ExtendedTooltip name="ChangedDataListSearchStringExtendedTooltip" id="1411"/>
+								<ContextMenu name="ChangedDataListSearchStringContextMenu" id="1649"/>
+								<ExtendedTooltip name="ChangedDataListSearchStringExtendedTooltip" id="1650"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="ChangedDataListViewStatus" id="1412">
+							<ViewStatusAddition name="ChangedDataListViewStatus" id="1651">
 								<Source>
 									<lf:elementId>1067</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="ChangedDataListViewStatusContextMenu" id="1413"/>
-								<ExtendedTooltip name="ChangedDataListViewStatusExtendedTooltip" id="1414"/>
+								<ContextMenu name="ChangedDataListViewStatusContextMenu" id="1652"/>
+								<ExtendedTooltip name="ChangedDataListViewStatusExtendedTooltip" id="1653"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="ChangedDataListSearchControl" id="1415">
+							<SearchControlAddition name="ChangedDataListSearchControl" id="1654">
 								<Source>
 									<lf:elementId>1067</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="ChangedDataListSearchControlContextMenu" id="1416"/>
-								<ExtendedTooltip name="ChangedDataListSearchControlExtendedTooltip" id="1417"/>
+								<ContextMenu name="ChangedDataListSearchControlContextMenu" id="1655"/>
+								<ExtendedTooltip name="ChangedDataListSearchControlExtendedTooltip" id="1656"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="ChangedDataListPeriod" id="1095">
 									<DataPath>ChangedDataList.Period</DataPath>
 									<ContextMenu name="ChangedDataListPeriodContextMenu" id="1096"/>
-									<ExtendedTooltip name="ChangedDataListPeriodExtendedTooltip" id="1097"/>
+									<ExtendedTooltip name="ChangedDataListPeriodExtendedTooltip" id="1657"/>
 								</LabelField>
 								<LabelField name="ChangedDataListRef" id="1086">
 									<DataPath>ChangedDataList.Ссылка</DataPath>
 									<ContextMenu name="ChangedDataListRefContextMenu" id="1087"/>
-									<ExtendedTooltip name="ChangedDataListRefExtendedTooltip" id="1088"/>
+									<ExtendedTooltip name="ChangedDataListRefExtendedTooltip" id="1658"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -3647,42 +3647,51 @@
 							<AllowRootChoice>false</AllowRootChoice>
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="InvalidObjectsListContextMenu" id="1131"/>
-							<AutoCommandBar name="InvalidObjectsListCommandBar" id="1132"/>
-							<ExtendedTooltip name="InvalidObjectsListExtendedTooltip" id="1133"/>
-							<SearchStringAddition name="InvalidObjectsListSearchString" id="1427">
+							<AutoCommandBar name="InvalidObjectsListCommandBar" id="1132">
+								<ChildItems>
+									<Button name="InvalidObjectsListClearErrorRegister" id="1156">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ClearErrorRegister</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="InvalidObjectsListClearErrorRegisterExtendedTooltip" id="1659"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="InvalidObjectsListExtendedTooltip" id="1660"/>
+							<SearchStringAddition name="InvalidObjectsListSearchString" id="1661">
 								<Source>
 									<lf:elementId>1130</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="InvalidObjectsListSearchStringContextMenu" id="1428"/>
-								<ExtendedTooltip name="InvalidObjectsListSearchStringExtendedTooltip" id="1429"/>
+								<ContextMenu name="InvalidObjectsListSearchStringContextMenu" id="1662"/>
+								<ExtendedTooltip name="InvalidObjectsListSearchStringExtendedTooltip" id="1663"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="InvalidObjectsListViewStatus" id="1430">
+							<ViewStatusAddition name="InvalidObjectsListViewStatus" id="1664">
 								<Source>
 									<lf:elementId>1130</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="InvalidObjectsListViewStatusContextMenu" id="1431"/>
-								<ExtendedTooltip name="InvalidObjectsListViewStatusExtendedTooltip" id="1432"/>
+								<ContextMenu name="InvalidObjectsListViewStatusContextMenu" id="1665"/>
+								<ExtendedTooltip name="InvalidObjectsListViewStatusExtendedTooltip" id="1666"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="InvalidObjectsListSearchControl" id="1433">
+							<SearchControlAddition name="InvalidObjectsListSearchControl" id="1667">
 								<Source>
 									<lf:elementId>1130</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="InvalidObjectsListSearchControlContextMenu" id="1434"/>
-								<ExtendedTooltip name="InvalidObjectsListSearchControlExtendedTooltip" id="1435"/>
+								<ContextMenu name="InvalidObjectsListSearchControlContextMenu" id="1668"/>
+								<ExtendedTooltip name="InvalidObjectsListSearchControlExtendedTooltip" id="1669"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="InvalidObjectsListRef" id="1149">
 									<DataPath>InvalidObjectsList.Объект</DataPath>
 									<ContextMenu name="InvalidObjectsListRefContextMenu" id="1150"/>
-									<ExtendedTooltip name="InvalidObjectsListRefExtendedTooltip" id="1151"/>
+									<ExtendedTooltip name="InvalidObjectsListRefExtendedTooltip" id="1670"/>
 								</LabelField>
 								<LabelField name="InvalidObjectsListDescription" id="1152">
 									<DataPath>InvalidObjectsList.Описание</DataPath>
 									<ContextMenu name="InvalidObjectsListDescriptionContextMenu" id="1153"/>
-									<ExtendedTooltip name="InvalidObjectsListDescriptionExtendedTooltip" id="1154"/>
+									<ExtendedTooltip name="InvalidObjectsListDescriptionExtendedTooltip" id="1671"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
@@ -5303,6 +5312,34 @@
 				</v8:item>
 			</ToolTip>
 			<Action>InvalidObjects</Action>
+		</Command>
+		<Command name="ClearErrorRegister" id="55">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear register</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить регистр</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear register</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить регистр</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Delete</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ClearErrorRegister</Action>
+			<Representation>TextPicture</Representation>
 		</Command>
 	</Commands>
 </Form>
