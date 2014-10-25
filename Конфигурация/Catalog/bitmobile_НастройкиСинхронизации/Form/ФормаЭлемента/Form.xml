@@ -30,7 +30,7 @@
 			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="ГруппаОбщиеНастройкиРасширеннаяПодсказка" id="125"/>
+			<ExtendedTooltip name="ГруппаОбщиеНастройкиExtendedTooltip" id="125"/>
 			<ChildItems>
 				<UsualGroup name="ГруппаСоответствиеОбъектов" id="50">
 					<Title>
@@ -50,7 +50,7 @@
 						</v8:item>
 					</ToolTip>
 					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="ГруппаСоответствиеОбъектовРасширеннаяПодсказка" id="126"/>
+					<ExtendedTooltip name="ГруппаСоответствиеОбъектовExtendedTooltip" id="126"/>
 					<ChildItems>
 						<UsualGroup name="ГруппаФильтрИСоответствиеОбъектов" id="52">
 							<Title>
@@ -67,7 +67,7 @@
 							</ToolTip>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаФильтрИСоответствиеОбъектовРасширеннаяПодсказка" id="127"/>
+							<ExtendedTooltip name="ГруппаФильтрИСоответствиеОбъектовExtendedTooltip" id="127"/>
 							<ChildItems>
 								<UsualGroup name="ГруппаОбъектBitmobile" id="63">
 									<Title>
@@ -85,7 +85,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаОбъектBitmobileРасширеннаяПодсказка" id="128"/>
+									<ExtendedTooltip name="ГруппаОбъектBitmobileExtendedTooltip" id="128"/>
 									<ChildItems>
 										<InputField name="ВидОбъектаBitmobile" id="61">
 											<DataPath>Объект.ВидОбъектаBitmobile</DataPath>
@@ -130,7 +130,7 @@
 												</xr:Item>
 											</ChoiceList>
 											<ContextMenu name="ВидОбъектаBitmobileКонтекстноеМеню" id="62"/>
-											<ExtendedTooltip name="ВидОбъектаBitmobileРасширеннаяПодсказка" id="129"/>
+											<ExtendedTooltip name="ВидОбъектаBitmobileExtendedTooltip" id="129"/>
 											<Events>
 												<Event name="OnChange">ВидОбъектаBitmobileПриИзменении</Event>
 											</Events>
@@ -147,7 +147,7 @@
 											<EditMode>EnterOnInput</EditMode>
 											<Width>1</Width>
 											<ContextMenu name="ОбъектBitmobileКонтекстноеМеню" id="4"/>
-											<ExtendedTooltip name="ОбъектBitmobileРасширеннаяПодсказка" id="130"/>
+											<ExtendedTooltip name="ОбъектBitmobileExtendedTooltip" id="130"/>
 											<Events>
 												<Event name="TextEditEnd">ОбъектBitmobileОкончаниеВводаТекста</Event>
 											</Events>
@@ -170,7 +170,7 @@
 									<Group>Horizontal</Group>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаОбъектКонфинурацииРасширеннаяПодсказка" id="131"/>
+									<ExtendedTooltip name="ГруппаОбъектКонфинурацииExtendedTooltip" id="131"/>
 									<ChildItems>
 										<InputField name="ОбъектКонфигурации" id="5">
 											<DataPath>Объект.ОбъектКонфигурации</DataPath>
@@ -180,7 +180,7 @@
 											<AutoMarkIncomplete>true</AutoMarkIncomplete>
 											<TextEdit>false</TextEdit>
 											<ContextMenu name="ОбъектКонфигурацииКонтекстноеМеню" id="6"/>
-											<ExtendedTooltip name="ОбъектКонфигурацииРасширеннаяПодсказка" id="132"/>
+											<ExtendedTooltip name="ОбъектКонфигурацииExtendedTooltip" id="132"/>
 											<Events>
 												<Event name="StartChoice">ОбъектКонфигурацииНачалоВыбора</Event>
 											</Events>
@@ -194,7 +194,7 @@
 												<xr:Ref>StdPicture.Refresh</xr:Ref>
 												<xr:LoadTransparent>true</xr:LoadTransparent>
 											</Picture>
-											<ExtendedTooltip name="ОбновитьДанныеОбъектаРасширеннаяПодсказка" id="133"/>
+											<ExtendedTooltip name="ОбновитьДанныеОбъектаExtendedTooltip" id="133"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
@@ -221,7 +221,7 @@
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="ГруппаСинхронизацияРасширеннаяПодсказка" id="134"/>
+					<ExtendedTooltip name="ГруппаСинхронизацияExtendedTooltip" id="134"/>
 					<ChildItems>
 						<UsualGroup name="ГруппаДанные" id="69">
 							<Title>
@@ -238,7 +238,7 @@
 							</ToolTip>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаДанныеРасширеннаяПодсказка" id="135"/>
+							<ExtendedTooltip name="ГруппаДанныеExtendedTooltip" id="135"/>
 							<ChildItems>
 								<CheckBoxField name="Выгрузка" id="7">
 									<DataPath>Объект.ВыгрузкаДанных</DataPath>
@@ -246,7 +246,7 @@
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="ВыгрузкаКонтекстноеМеню" id="8"/>
-									<ExtendedTooltip name="ВыгрузкаРасширеннаяПодсказка" id="136"/>
+									<ExtendedTooltip name="ВыгрузкаExtendedTooltip" id="136"/>
 								</CheckBoxField>
 								<CheckBoxField name="Загрузка" id="9">
 									<DataPath>Объект.ЗагрузкаДанных</DataPath>
@@ -254,7 +254,7 @@
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
-									<ExtendedTooltip name="ЗагрузкаРасширеннаяПодсказка" id="137"/>
+									<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
 								</CheckBoxField>
 							</ChildItems>
 						</UsualGroup>
@@ -273,21 +273,21 @@
 							</ToolTip>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаФайлыРасширеннаяПодсказка" id="138"/>
+							<ExtendedTooltip name="ГруппаФайлыExtendedTooltip" id="138"/>
 							<ChildItems>
 								<CheckBoxField name="ВыгрузкаФайловShared" id="64">
 									<DataPath>Объект.ВыгрузкаФайловShared</DataPath>
 									<TitleLocation>Right</TitleLocation>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="ВыгрузкаФайловSharedКонтекстноеМеню" id="65"/>
-									<ExtendedTooltip name="ВыгрузкаФайловSharedРасширеннаяПодсказка" id="139"/>
+									<ExtendedTooltip name="ВыгрузкаФайловSharedExtendedTooltip" id="139"/>
 								</CheckBoxField>
 								<CheckBoxField name="ЗагрузкаФайловPrivate" id="66">
 									<DataPath>Объект.ЗагрузкаФайловPrivate</DataPath>
 									<TitleLocation>Right</TitleLocation>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="ЗагрузкаФайловPrivateКонтекстноеМеню" id="67"/>
-									<ExtendedTooltip name="ЗагрузкаФайловPrivateРасширеннаяПодсказка" id="140"/>
+									<ExtendedTooltip name="ЗагрузкаФайловPrivateExtendedTooltip" id="140"/>
 								</CheckBoxField>
 							</ChildItems>
 						</UsualGroup>
@@ -308,7 +308,7 @@
 					<v8:content>Группа страницы</v8:content>
 				</v8:item>
 			</ToolTip>
-			<ExtendedTooltip name="ГруппаСтраницыРасширеннаяПодсказка" id="141"/>
+			<ExtendedTooltip name="ГруппаСтраницыExtendedTooltip" id="141"/>
 			<ChildItems>
 				<Page name="ГруппаСоответствиеРеквизитовШапки" id="54">
 					<Title>
@@ -327,7 +327,7 @@
 							<v8:content>Группа соответствие реквизитов шапки</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ГруппаСоответствиеРеквизитовШапкиРасширеннаяПодсказка" id="142"/>
+					<ExtendedTooltip name="ГруппаСоответствиеРеквизитовШапкиExtendedTooltip" id="142"/>
 					<ChildItems>
 						<Table name="РеквизитыШапки" id="17">
 							<Representation>List</Representation>
@@ -360,30 +360,30 @@
 							<AutoCommandBar name="РеквизитыШапкиКоманднаяПанель" id="19">
 								<Autofill>false</Autofill>
 							</AutoCommandBar>
-							<ExtendedTooltip name="РеквизитыШапкиРасширеннаяПодсказка" id="143"/>
-							<SearchStringAddition name="РеквизитыШапкиСтрокаПоиска" id="144">
+							<ExtendedTooltip name="РеквизитыШапкиExtendedTooltip" id="143"/>
+							<SearchStringAddition name="РеквизитыШапкиSearchString" id="144">
 								<Source>
 									<lf:elementId>17</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыШапкиСтрокаПоискаКонтекстноеМеню" id="145"/>
-								<ExtendedTooltip name="РеквизитыШапкиСтрокаПоискаРасширеннаяПодсказка" id="146"/>
+								<ContextMenu name="РеквизитыШапкиSearchStringContextMenu" id="145"/>
+								<ExtendedTooltip name="РеквизитыШапкиSearchStringExtendedTooltip" id="146"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="РеквизитыШапкиСостояниеПросмотра" id="147">
+							<ViewStatusAddition name="РеквизитыШапкиViewStatus" id="147">
 								<Source>
 									<lf:elementId>17</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыШапкиСостояниеПросмотраКонтекстноеМеню" id="148"/>
-								<ExtendedTooltip name="РеквизитыШапкиСостояниеПросмотраРасширеннаяПодсказка" id="149"/>
+								<ContextMenu name="РеквизитыШапкиViewStatusContextMenu" id="148"/>
+								<ExtendedTooltip name="РеквизитыШапкиViewStatusExtendedTooltip" id="149"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="РеквизитыШапкиУправлениеПоиском" id="150">
+							<SearchControlAddition name="РеквизитыШапкиSearchControl" id="150">
 								<Source>
 									<lf:elementId>17</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыШапкиУправлениеПоискомКонтекстноеМеню" id="151"/>
-								<ExtendedTooltip name="РеквизитыШапкиУправлениеПоискомРасширеннаяПодсказка" id="152"/>
+								<ContextMenu name="РеквизитыШапкиSearchControlContextMenu" id="151"/>
+								<ExtendedTooltip name="РеквизитыШапкиSearchControlExtendedTooltip" id="152"/>
 							</SearchControlAddition>
 							<Events>
 								<Event name="BeforeEditEnd">РеквизитыШапкиПередОкончаниемРедактирования</Event>
@@ -394,7 +394,7 @@
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="РеквизитыШапкиНомерСтрокиКонтекстноеМеню" id="21"/>
-									<ExtendedTooltip name="РеквизитыШапкиНомерСтрокиРасширеннаяПодсказка" id="153"/>
+									<ExtendedTooltip name="РеквизитыШапкиНомерСтрокиExtendedTooltip" id="153"/>
 								</LabelField>
 								<CheckBoxField name="РеквизитыШапкиПриводитьКСтроке" id="115">
 									<DataPath>Объект.РеквизитыШапки.ПриводитьКСтроке</DataPath>
@@ -408,7 +408,7 @@
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="РеквизитыШапкиПриводитьКСтрокеКонтекстноеМеню" id="116"/>
-									<ExtendedTooltip name="РеквизитыШапкиПриводитьКСтрокеРасширеннаяПодсказка" id="154"/>
+									<ExtendedTooltip name="РеквизитыШапкиПриводитьКСтрокеExtendedTooltip" id="154"/>
 									<Events>
 										<Event name="OnChange">РеквизитыШапкиПриводитьКСтрокеПриИзменении</Event>
 									</Events>
@@ -418,13 +418,13 @@
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="РеквизитыШапкиРеквизитОбъектаКонфигурацииКонтекстноеМеню" id="25"/>
-									<ExtendedTooltip name="РеквизитыШапкиРеквизитОбъектаКонфигурацииРасширеннаяПодсказка" id="155"/>
+									<ExtendedTooltip name="РеквизитыШапкиРеквизитОбъектаКонфигурацииExtendedTooltip" id="155"/>
 								</InputField>
 								<InputField name="РеквизитыШапкиРеквизитОбъектаBitmobile" id="22">
 									<DataPath>Объект.РеквизитыШапки.РеквизитОбъектаBitmobile</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="РеквизитыШапкиРеквизитОбъектаBitmobileКонтекстноеМеню" id="23"/>
-									<ExtendedTooltip name="РеквизитыШапкиРеквизитОбъектаBitmobileРасширеннаяПодсказка" id="156"/>
+									<ExtendedTooltip name="РеквизитыШапкиРеквизитОбъектаBitmobileExtendedTooltip" id="156"/>
 								</InputField>
 							</ChildItems>
 						</Table>
@@ -447,7 +447,7 @@
 							<v8:content>Группа соответствие табличных частей</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ГруппаСоответствиеТабличныхЧастейРасширеннаяПодсказка" id="157"/>
+					<ExtendedTooltip name="ГруппаСоответствиеТабличныхЧастейExtendedTooltip" id="157"/>
 					<ChildItems>
 						<UsualGroup name="ГруппаТабличныеЧасти" id="74">
 							<Title>
@@ -465,7 +465,7 @@
 							<Group>Horizontal</Group>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаТабличныеЧастиРасширеннаяПодсказка" id="158"/>
+							<ExtendedTooltip name="ГруппаТабличныеЧастиExtendedTooltip" id="158"/>
 							<ChildItems>
 								<Table name="ТабличныеЧасти" id="27">
 									<Representation>List</Representation>
@@ -497,30 +497,30 @@
 									<AutoCommandBar name="ТабличныеЧастиКоманднаяПанель" id="29">
 										<Autofill>false</Autofill>
 									</AutoCommandBar>
-									<ExtendedTooltip name="ТабличныеЧастиРасширеннаяПодсказка" id="159"/>
-									<SearchStringAddition name="ТабличныеЧастиСтрокаПоиска" id="160">
+									<ExtendedTooltip name="ТабличныеЧастиExtendedTooltip" id="159"/>
+									<SearchStringAddition name="ТабличныеЧастиSearchString" id="160">
 										<Source>
 											<lf:elementId>27</lf:elementId>
 											<lf:additionId>0</lf:additionId>
 										</Source>
-										<ContextMenu name="ТабличныеЧастиСтрокаПоискаКонтекстноеМеню" id="161"/>
-										<ExtendedTooltip name="ТабличныеЧастиСтрокаПоискаРасширеннаяПодсказка" id="162"/>
+										<ContextMenu name="ТабличныеЧастиSearchStringContextMenu" id="161"/>
+										<ExtendedTooltip name="ТабличныеЧастиSearchStringExtendedTooltip" id="162"/>
 									</SearchStringAddition>
-									<ViewStatusAddition name="ТабличныеЧастиСостояниеПросмотра" id="163">
+									<ViewStatusAddition name="ТабличныеЧастиViewStatus" id="163">
 										<Source>
 											<lf:elementId>27</lf:elementId>
 											<lf:additionId>1</lf:additionId>
 										</Source>
-										<ContextMenu name="ТабличныеЧастиСостояниеПросмотраКонтекстноеМеню" id="164"/>
-										<ExtendedTooltip name="ТабличныеЧастиСостояниеПросмотраРасширеннаяПодсказка" id="165"/>
+										<ContextMenu name="ТабличныеЧастиViewStatusContextMenu" id="164"/>
+										<ExtendedTooltip name="ТабличныеЧастиViewStatusExtendedTooltip" id="165"/>
 									</ViewStatusAddition>
-									<SearchControlAddition name="ТабличныеЧастиУправлениеПоиском" id="166">
+									<SearchControlAddition name="ТабличныеЧастиSearchControl" id="166">
 										<Source>
 											<lf:elementId>27</lf:elementId>
 											<lf:additionId>2</lf:additionId>
 										</Source>
-										<ContextMenu name="ТабличныеЧастиУправлениеПоискомКонтекстноеМеню" id="167"/>
-										<ExtendedTooltip name="ТабличныеЧастиУправлениеПоискомРасширеннаяПодсказка" id="168"/>
+										<ContextMenu name="ТабличныеЧастиSearchControlContextMenu" id="167"/>
+										<ExtendedTooltip name="ТабличныеЧастиSearchControlExtendedTooltip" id="168"/>
 									</SearchControlAddition>
 									<Events>
 										<Event name="BeforeAddRow">ТабличныеЧастиПередНачаломДобавления</Event>
@@ -535,7 +535,7 @@
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="ТабличныеЧастиНомерСтрокиКонтекстноеМеню" id="31"/>
-											<ExtendedTooltip name="ТабличныеЧастиНомерСтрокиРасширеннаяПодсказка" id="169"/>
+											<ExtendedTooltip name="ТабличныеЧастиНомерСтрокиExtendedTooltip" id="169"/>
 										</LabelField>
 										<InputField name="ТабличныеЧастиТабличнаяЧастьОбъектаКонфигурации" id="34">
 											<DataPath>Объект.ТабличныеЧасти.ТабличнаяЧастьОбъектаКонфигурации</DataPath>
@@ -543,34 +543,34 @@
 											<EditMode>EnterOnInput</EditMode>
 											<Width>35</Width>
 											<ContextMenu name="ТабличныеЧастиТабличнаяЧастьОбъектаКонфигурацииКонтекстноеМеню" id="35"/>
-											<ExtendedTooltip name="ТабличныеЧастиТабличнаяЧастьОбъектаКонфигурацииРасширеннаяПодсказка" id="170"/>
+											<ExtendedTooltip name="ТабличныеЧастиТабличнаяЧастьОбъектаКонфигурацииExtendedTooltip" id="170"/>
 										</InputField>
 										<InputField name="ТабличныеЧастиТабличнаяЧастьОбъектаBitmobile" id="32">
 											<DataPath>Объект.ТабличныеЧасти.ТабличнаяЧастьОбъектаBitmobile</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="ТабличныеЧастиТабличнаяЧастьОбъектаBitmobileКонтекстноеМеню" id="33"/>
-											<ExtendedTooltip name="ТабличныеЧастиТабличнаяЧастьОбъектаBitmobileРасширеннаяПодсказка" id="171"/>
+											<ExtendedTooltip name="ТабличныеЧастиТабличнаяЧастьОбъектаBitmobileExtendedTooltip" id="171"/>
 										</InputField>
 										<InputField name="ТабличныеЧастиФильтр" id="38">
 											<DataPath>Объект.ТабличныеЧасти.Фильтр</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="ТабличныеЧастиФильтрКонтекстноеМеню" id="39"/>
-											<ExtendedTooltip name="ТабличныеЧастиФильтрРасширеннаяПодсказка" id="172"/>
+											<ExtendedTooltip name="ТабличныеЧастиФильтрExtendedTooltip" id="172"/>
 										</InputField>
 										<InputField name="ТабличныеЧастиКлюч" id="123">
 											<DataPath>Объект.ТабличныеЧасти.Ключ</DataPath>
 											<ReadOnly>true</ReadOnly>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="ТабличныеЧастиКлючКонтекстноеМеню" id="124"/>
-											<ExtendedTooltip name="ТабличныеЧастиКлючРасширеннаяПодсказка" id="173"/>
+											<ExtendedTooltip name="ТабличныеЧастиКлючExtendedTooltip" id="173"/>
 										</InputField>
 										<InputField name="ТабличныеЧастиТекстЗапроса" id="36">
 											<DataPath>Объект.ТабличныеЧасти.ТекстЗапроса</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="ТабличныеЧастиТекстЗапросаКонтекстноеМеню" id="37"/>
-											<ExtendedTooltip name="ТабличныеЧастиТекстЗапросаРасширеннаяПодсказка" id="174"/>
+											<ExtendedTooltip name="ТабличныеЧастиТекстЗапросаExtendedTooltip" id="174"/>
 										</InputField>
 									</ChildItems>
 								</Table>
@@ -589,7 +589,7 @@
 									</ToolTip>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаЗапросИФильтрРасширеннаяПодсказка" id="175"/>
+									<ExtendedTooltip name="ГруппаЗапросИФильтрExtendedTooltip" id="175"/>
 									<ChildItems>
 										<CommandBar name="ГруппаСохранение" id="80">
 											<Title>
@@ -604,20 +604,20 @@
 													<v8:content>Группа сохранение</v8:content>
 												</v8:item>
 											</ToolTip>
-											<ExtendedTooltip name="ГруппаСохранениеРасширеннаяПодсказка" id="176"/>
+											<ExtendedTooltip name="ГруппаСохранениеExtendedTooltip" id="176"/>
 											<ChildItems>
 												<Button name="СохранитьЗапросИФильтр" id="81">
 													<Type>CommandBarButton</Type>
 													<CommandName>Form.Command.СохранитьЗапросИФильтр</CommandName>
 													<Parameter xsi:nil="true"/>
-													<ExtendedTooltip name="СохранитьЗапросИФильтрРасширеннаяПодсказка" id="177"/>
+													<ExtendedTooltip name="СохранитьЗапросИФильтрExtendedTooltip" id="177"/>
 												</Button>
 												<Button name="ОткрытьКонструктор" id="82">
 													<Type>CommandBarButton</Type>
 													<Enabled>false</Enabled>
 													<CommandName>Form.Command.ОткрытьКонструктор</CommandName>
 													<Parameter xsi:nil="true"/>
-													<ExtendedTooltip name="ОткрытьКонструкторРасширеннаяПодсказка" id="178"/>
+													<ExtendedTooltip name="ОткрытьКонструкторExtendedTooltip" id="178"/>
 												</Button>
 											</ChildItems>
 										</CommandBar>
@@ -642,11 +642,11 @@
 														<Type>CommandBarButton</Type>
 														<CommandName>Form.Command.ОткрытьКонструктор</CommandName>
 														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="ТекстЗапросаКонтекстноеМенюОткрытьКонструкторРасширеннаяПодсказка" id="179"/>
+														<ExtendedTooltip name="ТекстЗапросаКонтекстноеМенюОткрытьКонструкторExtendedTooltip" id="179"/>
 													</Button>
 												</ChildItems>
 											</ContextMenu>
-											<ExtendedTooltip name="ТекстЗапросаРасширеннаяПодсказка" id="180"/>
+											<ExtendedTooltip name="ТекстЗапросаExtendedTooltip" id="180"/>
 										</TextDocumentField>
 										<InputField name="ФильтрТЧ" id="78">
 											<DataPath>ФильтрТЧ</DataPath>
@@ -665,7 +665,7 @@
 											<VerticalStretch>false</VerticalStretch>
 											<MultiLine>true</MultiLine>
 											<ContextMenu name="ФильтрТЧКонтекстноеМеню" id="79"/>
-											<ExtendedTooltip name="ФильтрТЧРасширеннаяПодсказка" id="181"/>
+											<ExtendedTooltip name="ФильтрТЧExtendedTooltip" id="181"/>
 										</InputField>
 									</ChildItems>
 								</UsualGroup>
@@ -702,30 +702,30 @@
 							<AutoCommandBar name="РеквизитыТабличныхЧастейКоманднаяПанель" id="43">
 								<Autofill>false</Autofill>
 							</AutoCommandBar>
-							<ExtendedTooltip name="РеквизитыТабличныхЧастейРасширеннаяПодсказка" id="182"/>
-							<SearchStringAddition name="РеквизитыТабличныхЧастейСтрокаПоиска" id="183">
+							<ExtendedTooltip name="РеквизитыТабличныхЧастейExtendedTooltip" id="182"/>
+							<SearchStringAddition name="РеквизитыТабличныхЧастейSearchString" id="183">
 								<Source>
 									<lf:elementId>41</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыТабличныхЧастейСтрокаПоискаКонтекстноеМеню" id="184"/>
-								<ExtendedTooltip name="РеквизитыТабличныхЧастейСтрокаПоискаРасширеннаяПодсказка" id="185"/>
+								<ContextMenu name="РеквизитыТабличныхЧастейSearchStringContextMenu" id="184"/>
+								<ExtendedTooltip name="РеквизитыТабличныхЧастейSearchStringExtendedTooltip" id="185"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="РеквизитыТабличныхЧастейСостояниеПросмотра" id="186">
+							<ViewStatusAddition name="РеквизитыТабличныхЧастейViewStatus" id="186">
 								<Source>
 									<lf:elementId>41</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыТабличныхЧастейСостояниеПросмотраКонтекстноеМеню" id="187"/>
-								<ExtendedTooltip name="РеквизитыТабличныхЧастейСостояниеПросмотраРасширеннаяПодсказка" id="188"/>
+								<ContextMenu name="РеквизитыТабличныхЧастейViewStatusContextMenu" id="187"/>
+								<ExtendedTooltip name="РеквизитыТабличныхЧастейViewStatusExtendedTooltip" id="188"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="РеквизитыТабличныхЧастейУправлениеПоиском" id="189">
+							<SearchControlAddition name="РеквизитыТабличныхЧастейSearchControl" id="189">
 								<Source>
 									<lf:elementId>41</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="РеквизитыТабличныхЧастейУправлениеПоискомКонтекстноеМеню" id="190"/>
-								<ExtendedTooltip name="РеквизитыТабличныхЧастейУправлениеПоискомРасширеннаяПодсказка" id="191"/>
+								<ContextMenu name="РеквизитыТабличныхЧастейSearchControlContextMenu" id="190"/>
+								<ExtendedTooltip name="РеквизитыТабличныхЧастейSearchControlExtendedTooltip" id="191"/>
 							</SearchControlAddition>
 							<Events>
 								<Event name="OnEditEnd">РеквизитыТабличныхЧастейПриОкончанииРедактирования</Event>
@@ -737,7 +737,7 @@
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="РеквизитыТабличныхЧастейНомерСтрокиКонтекстноеМеню" id="45"/>
-									<ExtendedTooltip name="РеквизитыТабличныхЧастейНомерСтрокиРасширеннаяПодсказка" id="192"/>
+									<ExtendedTooltip name="РеквизитыТабличныхЧастейНомерСтрокиExtendedTooltip" id="192"/>
 								</LabelField>
 								<ColumnGroup name="РеквизитыТабличныхЧастейГруппаПриводитьКСтроке" id="119">
 									<ToolTip>
@@ -747,7 +747,7 @@
 										</v8:item>
 									</ToolTip>
 									<ShowInHeader>true</ShowInHeader>
-									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаПриводитьКСтрокеРасширеннаяПодсказка" id="193"/>
+									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаПриводитьКСтрокеExtendedTooltip" id="193"/>
 									<ChildItems>
 										<CheckBoxField name="РеквизитыТабличныхЧастейПриводитьКСтроке" id="117">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.ПриводитьКСтроке</DataPath>
@@ -761,7 +761,7 @@
 											<ShowInHeader>false</ShowInHeader>
 											<CheckBoxType>Auto</CheckBoxType>
 											<ContextMenu name="РеквизитыТабличныхЧастейПриводитьКСтрокеКонтекстноеМеню" id="118"/>
-											<ExtendedTooltip name="РеквизитыТабличныхЧастейПриводитьКСтрокеРасширеннаяПодсказка" id="194"/>
+											<ExtendedTooltip name="РеквизитыТабличныхЧастейПриводитьКСтрокеExtendedTooltip" id="194"/>
 											<Events>
 												<Event name="OnChange">РеквизитыТабличныхЧастейПриводитьКСтрокеПриИзменении</Event>
 											</Events>
@@ -780,7 +780,7 @@
 										</v8:item>
 									</ToolTip>
 									<ShowInHeader>true</ShowInHeader>
-									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаКлючевоеПолеРасширеннаяПодсказка" id="195"/>
+									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаКлючевоеПолеExtendedTooltip" id="195"/>
 									<ChildItems>
 										<CheckBoxField name="РеквизитыТабличныхЧастейКлючевоеПоле" id="120">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.КлючевоеПоле</DataPath>
@@ -794,7 +794,7 @@
 											<ShowInHeader>false</ShowInHeader>
 											<CheckBoxType>Auto</CheckBoxType>
 											<ContextMenu name="РеквизитыТабличныхЧастейКлючевоеПолеКонтекстноеМеню" id="121"/>
-											<ExtendedTooltip name="РеквизитыТабличныхЧастейКлючевоеПолеРасширеннаяПодсказка" id="196"/>
+											<ExtendedTooltip name="РеквизитыТабличныхЧастейКлючевоеПолеExtendedTooltip" id="196"/>
 											<Events>
 												<Event name="OnChange">РеквизитыТабличныхЧастейКлючевоеПолеПриИзменении</Event>
 											</Events>
@@ -819,7 +819,7 @@
 										</v8:item>
 									</ToolTip>
 									<ShowInHeader>true</ShowInHeader>
-									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаРеквизитОбъектаКонфигурацииРасширеннаяПодсказка" id="197"/>
+									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаРеквизитОбъектаКонфигурацииExtendedTooltip" id="197"/>
 									<ChildItems>
 										<InputField name="РеквизитыТабличныхЧастейРеквизитОбъектаКонфигурации" id="48">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.РеквизитОбъектаКонфигурации</DataPath>
@@ -827,7 +827,7 @@
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
 											<ContextMenu name="РеквизитыТабличныхЧастейРеквизитОбъектаКонфигурацииКонтекстноеМеню" id="49"/>
-											<ExtendedTooltip name="РеквизитыТабличныхЧастейРеквизитОбъектаКонфигурацииРасширеннаяПодсказка" id="198"/>
+											<ExtendedTooltip name="РеквизитыТабличныхЧастейРеквизитОбъектаКонфигурацииExtendedTooltip" id="198"/>
 										</InputField>
 									</ChildItems>
 								</ColumnGroup>
@@ -849,14 +849,14 @@
 										</v8:item>
 									</ToolTip>
 									<ShowInHeader>true</ShowInHeader>
-									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаРеквизитОбъектаBitmobileРасширеннаяПодсказка" id="199"/>
+									<ExtendedTooltip name="РеквизитыТабличныхЧастейГруппаРеквизитОбъектаBitmobileExtendedTooltip" id="199"/>
 									<ChildItems>
 										<InputField name="РеквизитыТабличныхЧастейРеквизитОбъектаBitmobile" id="46">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.РеквизитОбъектаBitmobile</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
 											<ContextMenu name="РеквизитыТабличныхЧастейРеквизитОбъектаBitmobileКонтекстноеМеню" id="47"/>
-											<ExtendedTooltip name="РеквизитыТабличныхЧастейРеквизитОбъектаBitmobileРасширеннаяПодсказка" id="200"/>
+											<ExtendedTooltip name="РеквизитыТабличныхЧастейРеквизитОбъектаBitmobileExtendedTooltip" id="200"/>
 										</InputField>
 									</ChildItems>
 								</ColumnGroup>
@@ -881,7 +881,7 @@
 							<v8:content>Группа связанные данные</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ГруппаСвязанныеДанныеРасширеннаяПодсказка" id="201"/>
+					<ExtendedTooltip name="ГруппаСвязанныеДанныеExtendedTooltip" id="201"/>
 					<ChildItems>
 						<Table name="СвязанныеДанные" id="98">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -894,30 +894,30 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="СвязанныеДанныеКонтекстноеМеню" id="99"/>
 							<AutoCommandBar name="СвязанныеДанныеКоманднаяПанель" id="100"/>
-							<ExtendedTooltip name="СвязанныеДанныеРасширеннаяПодсказка" id="202"/>
-							<SearchStringAddition name="СвязанныеДанныеСтрокаПоиска" id="203">
+							<ExtendedTooltip name="СвязанныеДанныеExtendedTooltip" id="202"/>
+							<SearchStringAddition name="СвязанныеДанныеSearchString" id="203">
 								<Source>
 									<lf:elementId>98</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="СвязанныеДанныеСтрокаПоискаКонтекстноеМеню" id="204"/>
-								<ExtendedTooltip name="СвязанныеДанныеСтрокаПоискаРасширеннаяПодсказка" id="205"/>
+								<ContextMenu name="СвязанныеДанныеSearchStringContextMenu" id="204"/>
+								<ExtendedTooltip name="СвязанныеДанныеSearchStringExtendedTooltip" id="205"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="СвязанныеДанныеСостояниеПросмотра" id="206">
+							<ViewStatusAddition name="СвязанныеДанныеViewStatus" id="206">
 								<Source>
 									<lf:elementId>98</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="СвязанныеДанныеСостояниеПросмотраКонтекстноеМеню" id="207"/>
-								<ExtendedTooltip name="СвязанныеДанныеСостояниеПросмотраРасширеннаяПодсказка" id="208"/>
+								<ContextMenu name="СвязанныеДанныеViewStatusContextMenu" id="207"/>
+								<ExtendedTooltip name="СвязанныеДанныеViewStatusExtendedTooltip" id="208"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="СвязанныеДанныеУправлениеПоиском" id="209">
+							<SearchControlAddition name="СвязанныеДанныеSearchControl" id="209">
 								<Source>
 									<lf:elementId>98</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="СвязанныеДанныеУправлениеПоискомКонтекстноеМеню" id="210"/>
-								<ExtendedTooltip name="СвязанныеДанныеУправлениеПоискомРасширеннаяПодсказка" id="211"/>
+								<ContextMenu name="СвязанныеДанныеSearchControlContextMenu" id="210"/>
+								<ExtendedTooltip name="СвязанныеДанныеSearchControlExtendedTooltip" id="211"/>
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="СвязанныеДанныеНомерСтроки" id="101">
@@ -925,7 +925,7 @@
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="СвязанныеДанныеНомерСтрокиКонтекстноеМеню" id="102"/>
-									<ExtendedTooltip name="СвязанныеДанныеНомерСтрокиРасширеннаяПодсказка" id="212"/>
+									<ExtendedTooltip name="СвязанныеДанныеНомерСтрокиExtendedTooltip" id="212"/>
 								</LabelField>
 								<InputField name="СвязанныеДанныеИмяТЧ" id="109">
 									<DataPath>Объект.СвязанныеДанные.ИмяТЧ</DataPath>
@@ -943,7 +943,7 @@
 									<ChoiceButton>true</ChoiceButton>
 									<TextEdit>false</TextEdit>
 									<ContextMenu name="СвязанныеДанныеИмяТЧКонтекстноеМеню" id="110"/>
-									<ExtendedTooltip name="СвязанныеДанныеИмяТЧРасширеннаяПодсказка" id="213"/>
+									<ExtendedTooltip name="СвязанныеДанныеИмяТЧExtendedTooltip" id="213"/>
 									<Events>
 										<Event name="StartChoice">СвязанныеДанныеИмяТЧНачалоВыбора</Event>
 									</Events>
@@ -954,7 +954,7 @@
 									<ChoiceButton>true</ChoiceButton>
 									<TextEdit>false</TextEdit>
 									<ContextMenu name="СвязанныеДанныеИмяРеквизитаКонтекстноеМеню" id="112"/>
-									<ExtendedTooltip name="СвязанныеДанныеИмяРеквизитаРасширеннаяПодсказка" id="214"/>
+									<ExtendedTooltip name="СвязанныеДанныеИмяРеквизитаExtendedTooltip" id="214"/>
 									<Events>
 										<Event name="StartChoice">СвязанныеДанныеИмяРеквизитаНачалоВыбора</Event>
 									</Events>
@@ -964,7 +964,7 @@
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="СвязанныеДанныеНастройкаКонтекстноеМеню" id="106"/>
-									<ExtendedTooltip name="СвязанныеДанныеНастройкаРасширеннаяПодсказка" id="215"/>
+									<ExtendedTooltip name="СвязанныеДанныеНастройкаExtendedTooltip" id="215"/>
 								</InputField>
 							</ChildItems>
 						</Table>
@@ -987,14 +987,14 @@
 							<v8:content>Группа фильтр конфигурации</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ГруппаФильтрКонфигурацииРасширеннаяПодсказка" id="216"/>
+					<ExtendedTooltip name="ГруппаФильтрКонфигурацииExtendedTooltip" id="216"/>
 					<ChildItems>
 						<CheckBoxField name="БлокироватьПриПолнойВыгрузке" id="113">
 							<DataPath>Объект.БлокироватьПриПолнойВыгрузкеДанных</DataPath>
 							<TitleLocation>Right</TitleLocation>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="БлокироватьПриПолнойВыгрузкеКонтекстноеМеню" id="114"/>
-							<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеРасширеннаяПодсказка" id="217"/>
+							<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеExtendedTooltip" id="217"/>
 						</CheckBoxField>
 						<Table name="КомпоновщикНастройкиОтбор" id="87">
 							<Representation>Tree</Representation>
@@ -1013,30 +1013,30 @@
 							<SettingsNamedItemDetailedRepresentation>false</SettingsNamedItemDetailedRepresentation>
 							<ContextMenu name="КомпоновщикНастройкиОтборКонтекстноеМеню" id="88"/>
 							<AutoCommandBar name="КомпоновщикНастройкиОтборКоманднаяПанель" id="89"/>
-							<ExtendedTooltip name="КомпоновщикНастройкиОтборРасширеннаяПодсказка" id="218"/>
-							<SearchStringAddition name="КомпоновщикНастройкиОтборСтрокаПоиска" id="219">
+							<ExtendedTooltip name="КомпоновщикНастройкиОтборExtendedTooltip" id="218"/>
+							<SearchStringAddition name="КомпоновщикНастройкиОтборSearchString" id="219">
 								<Source>
 									<lf:elementId>87</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="КомпоновщикНастройкиОтборСтрокаПоискаКонтекстноеМеню" id="220"/>
-								<ExtendedTooltip name="КомпоновщикНастройкиОтборСтрокаПоискаРасширеннаяПодсказка" id="221"/>
+								<ContextMenu name="КомпоновщикНастройкиОтборSearchStringContextMenu" id="220"/>
+								<ExtendedTooltip name="КомпоновщикНастройкиОтборSearchStringExtendedTooltip" id="221"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="КомпоновщикНастройкиОтборСостояниеПросмотра" id="222">
+							<ViewStatusAddition name="КомпоновщикНастройкиОтборViewStatus" id="222">
 								<Source>
 									<lf:elementId>87</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="КомпоновщикНастройкиОтборСостояниеПросмотраКонтекстноеМеню" id="223"/>
-								<ExtendedTooltip name="КомпоновщикНастройкиОтборСостояниеПросмотраРасширеннаяПодсказка" id="224"/>
+								<ContextMenu name="КомпоновщикНастройкиОтборViewStatusContextMenu" id="223"/>
+								<ExtendedTooltip name="КомпоновщикНастройкиОтборViewStatusExtendedTooltip" id="224"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="КомпоновщикНастройкиОтборУправлениеПоиском" id="225">
+							<SearchControlAddition name="КомпоновщикНастройкиОтборSearchControl" id="225">
 								<Source>
 									<lf:elementId>87</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="КомпоновщикНастройкиОтборУправлениеПоискомКонтекстноеМеню" id="226"/>
-								<ExtendedTooltip name="КомпоновщикНастройкиОтборУправлениеПоискомРасширеннаяПодсказка" id="227"/>
+								<ContextMenu name="КомпоновщикНастройкиОтборSearchControlContextMenu" id="226"/>
+								<ExtendedTooltip name="КомпоновщикНастройкиОтборSearchControlExtendedTooltip" id="227"/>
 							</SearchControlAddition>
 						</Table>
 					</ChildItems>
@@ -1058,7 +1058,7 @@
 							<v8:content>Группа фильтр bitmobile</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ГруппаФильтрBitmobileРасширеннаяПодсказка" id="228"/>
+					<ExtendedTooltip name="ГруппаФильтрBitmobileExtendedTooltip" id="228"/>
 					<ChildItems>
 						<InputField name="ФильтрВBitmobile" id="90">
 							<DataPath>Объект.ФильтрВBitmobile</DataPath>
@@ -1066,7 +1066,7 @@
 							<HorizontalStretch>true</HorizontalStretch>
 							<MultiLine>true</MultiLine>
 							<ContextMenu name="ФильтрВBitmobileКонтекстноеМеню" id="91"/>
-							<ExtendedTooltip name="ФильтрВBitmobileРасширеннаяПодсказка" id="229"/>
+							<ExtendedTooltip name="ФильтрВBitmobileExtendedTooltip" id="229"/>
 						</InputField>
 					</ChildItems>
 				</Page>
