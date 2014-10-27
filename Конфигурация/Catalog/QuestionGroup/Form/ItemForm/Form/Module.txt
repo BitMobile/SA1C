@@ -1,0 +1,5 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	ThisForm.Items.Type.Enabled = ValueIsFilled(Object.Ref) AND Not Catalogs.QuestionGroup.HasQuestions(Object.Ref);
+EndProcedure

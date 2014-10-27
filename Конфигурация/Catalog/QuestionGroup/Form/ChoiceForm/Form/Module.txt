@@ -1,9 +1,14 @@
 ﻿
 &AtClient
 Procedure ListSelection(Item, SelectedRow, Field, StandardProcessing)
-	StandardProcessing = False;
+	//StandardProcessing = False;
 	QuestionsInGroup = GetQuestionsInGroup(SelectedRow);
-	NotifyChoice(QuestionsInGroup);
+	If TypeOf(ThisForm.FormOwner) = Type("FormTable") Then
+		NotifyChoice(QuestionsInGroup);
+	ElsIf TypeOf(ThisForm.FormOwner) = Type("FormField") Then
+		NotifyChoice(Item.CurrentRow);
+	EndIf;
+
 EndProcedure
 
 &AtServer
