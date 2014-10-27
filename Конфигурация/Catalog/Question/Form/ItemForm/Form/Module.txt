@@ -36,6 +36,7 @@ Procedure OnOpen(Cancel)
         Items.ValueList.Visible = False;
     EndIf;
 
+	//If ValueIsFilled(
 EndProcedure
 
 &AtClient
@@ -72,3 +73,13 @@ Function getValueList()
 	Return Enums.DataType.ValueList;
 	
 EndFunction
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+EndProcedure
+
+&AtServer
+Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
+	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+EndProcedure
