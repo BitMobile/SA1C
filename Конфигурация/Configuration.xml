@@ -268,7 +268,6 @@
 			<DocumentJournal>CommonJournal</DocumentJournal>
 			<Enum>ClosingCause</Enum>
 			<Enum>ComparisonType</Enum>
-			<Enum>DataStatus</Enum>
 			<Enum>DataType</Enum>
 			<Enum>LogicAnswers</Enum>
 			<Enum>MonthScheduleTypes</Enum>
@@ -287,7 +286,9 @@
 			<Enum>TypesOfUsers</Enum>
 			<Enum>VisitStatus</Enum>
 			<Enum>ScheduleTypes</Enum>
+			<Enum>DataStatus</Enum>
 			<Enum>YearScheduleTypes</Enum>
+			<Enum>ValueTableRowStatuses</Enum>
 			<Report>VisitsOrders</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>Visits</Report>
@@ -310,12 +311,18 @@
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
 			<InformationRegister>Selectors</InformationRegister>
-			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
-			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
 			<InformationRegister>bitmobile_КонтролируемыеИзмеренияРегистров</InformationRegister>
 			<InformationRegister>bitmobile_АдресаЭлПочтыДляОтчетов</InformationRegister>
+			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
+			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
+			<InformationRegister>QuestionsInQuestionnaires</InformationRegister>
+			<InformationRegister>QuestionnairesInOutlets</InformationRegister>
+			<InformationRegister>QuestionnairessForPositions</InformationRegister>
+			<InformationRegister>QuestionnairesSchedule</InformationRegister>
+			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
+			<InformationRegister>AnsweredQuestions</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>
