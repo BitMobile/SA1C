@@ -216,6 +216,64 @@ Function CreateOutletParametersMap()
 	
 EndFunction // CreateOutletParametersMap()
 
+Function SelectPositions(ref) Export 
+
+  q = new Query();
+  q.Text = "SELECT
+           |    Selectors.Questionnaire,
+           |    Selectors.ComparisonType AS ComparisonType,
+           |    Selectors.Selector,
+           |    Selectors.Value
+           |FROM
+           |    InformationRegister.Selectors AS Selectors
+           |WHERE
+           |    Selectors.Questionnaire = &Questionnaire
+           |    AND Selectors.Selector = &Selector
+           |
+           |ORDER BY
+           |    ComparisonType";
+    q.SetParameter("Questionnaire", ref);
+    q.SetParameter("Selector", "Catalog_Positions");
+    positions = q.Execute().Unload();
+    
+    qPositions = new Query;
+    string = ?(positions.Count()=0, "", " WHERE ");
+    i = 0;
+    skip = False;
+    For Each row In positions Do
+        
+        If skip = False Then
+            If row.ComparisonType<>Enums.ComparisonType.InList Then
+                c = ?(row.ComparisonType=Enums.ComparisonType.Equal, " = ", " <> ");
+                string = string + " Ref " + c +  " &Ref" + i;
+                qPositions.SetParameter(String("Ref" + String(i)), row.Value);        
+            Else
+                string = string + " Ref IN(";
+                listTable = positions.FindRows(new Structure("ComparisonType", Enums.ComparisonType.InList));
+                cs = 1;
+                For Each listItem In listTable Do
+                    string = string + "&Ref" + i + String(cs) + ?(cs=listTable.Count(), ") ", ", ");
+                    qPositions.SetParameter(String("Ref" + i + String(cs)), listItem.Value);
+                    cs = cs+1;
+                EndDo;
+                endOfList = listItem;
+                skip = True;
+            EndIf;
+        EndIf;
+        
+        if row = endOfList Then
+            skip = False;
+        EndIf;        
+         
+        i = i + 1;
+            
+    EndDo;
+    qPositions.Text = "SELECT Ref FROM Catalog.Positions " + string;
+
+    Return qPositions.Execute().Unload();
+    
+EndFunction
+
 
 
 
