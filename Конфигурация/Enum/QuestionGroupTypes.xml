@@ -107,11 +107,11 @@
 			</EnumValue>
 			<EnumValue uuid="96da75df-62c7-44a7-8dc6-c3f77c2d5346">
 				<Properties>
-					<Name>SKUQuestionsGroup</Name>
+					<Name>SKUQuestions</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>SKUQuestions group</v8:content>
+							<v8:content>SKUQuestions</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>

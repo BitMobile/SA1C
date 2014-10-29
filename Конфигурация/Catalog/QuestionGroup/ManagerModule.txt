@@ -7,6 +7,6 @@
 	|WHERE
 	|	Question.Owner = &Owner");
 	Query.SetParameter("Owner", QuestionGroupRef);
-	QuestionsInGroupQty = Query.Execute().Select().Count();	
+	QuestionsInGroupQty = Query.Execute().Choose().Count();	
 	Return QuestionsInGroupQty > 0;
 EndFunction

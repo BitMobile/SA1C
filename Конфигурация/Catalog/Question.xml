@@ -36,8 +36,8 @@
 				</v8:item>
 			</Synonym>
 			<Comment/>
-			<Hierarchical>true</Hierarchical>
-			<HierarchyType>HierarchyFoldersAndItems</HierarchyType>
+			<Hierarchical>false</Hierarchical>
+			<HierarchyType>HierarchyOfItems</HierarchyType>
 			<LimitLevelCount>true</LimitLevelCount>
 			<LevelCount>2</LevelCount>
 			<FoldersOnTop>true</FoldersOnTop>
@@ -225,14 +225,8 @@
 					<xr:Synonym/>
 					<xr:Comment/>
 					<xr:FullTextSearch>Use</xr:FullTextSearch>
-					<xr:ChoiceParameterLinks>
-						<xr:Link>
-							<xr:Name>Filter.Owner</xr:Name>
-							<xr:DataPath xsi:type="xs:string">Catalog.Question.StandardAttribute.Owner</xr:DataPath>
-							<xr:ValueChange>Clear</xr:ValueChange>
-						</xr:Link>
-					</xr:ChoiceParameterLinks>
-					<xr:FillValue xsi:nil="true"/>
+					<xr:ChoiceParameterLinks/>
+					<xr:FillValue xsi:type="xr:DesignTimeRef">Catalog.Question.EmptyRef</xr:FillValue>
 					<xr:Mask/>
 					<xr:ChoiceParameters/>
 				</xr:StandardAttribute>
@@ -302,7 +296,7 @@
 			<DefaultObjectForm>Catalog.Question.Form.ItemForm</DefaultObjectForm>
 			<DefaultFolderForm/>
 			<DefaultListForm/>
-			<DefaultChoiceForm/>
+			<DefaultChoiceForm>Catalog.Question.Form.ChoiceForm</DefaultChoiceForm>
 			<DefaultFolderChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryFolderForm/>
@@ -483,6 +477,7 @@
 				</ChildObjects>
 			</TabularSection>
 			<Form>ItemForm</Form>
+			<Form>ChoiceForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

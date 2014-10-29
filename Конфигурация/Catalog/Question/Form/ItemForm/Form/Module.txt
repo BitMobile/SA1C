@@ -1,85 +1,128 @@
 ﻿
-&AtClient
-Procedure AnswerTypeOnChange(Item)
-     
-    If AnswerTypeOnChangeServer() Then
-        Items.ValueList.Visible = True;
-    Else
-        If Object.ValueList.Count() <> 0 Then
-            Text = "en = ""The tabular section will be cleaned. 
-            |Are you sure you want to continue?"";
-            |ru = ""Табличная часть будет очищена.
-            |Продолжить?""";
-            OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "ClearQuestions"));
-		Else
-			Items.ValueList.Visible = False;
-		EndIf;
-    EndIf;
-    
+///////////////////////////////////////////////////////
+// Common procedure and functions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+	
 EndProcedure
 
-Function  AnswerTypeOnChangeServer()
+&AtServer
+Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
+	
+	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+	
+EndProcedure
+
+&AtServer
+Function AnswerTypeOnChangeServer()
 
     If Object.AnswerType = Enums.DataType.ValueList Then
-        Return True;
-    Else 
-        Return False;
-    EndIf;
-    
-EndFunction
-
-
-&AtClient
-Procedure OnOpen(Cancel)
-    
-    If Object.ValueList.Count() = 0 Then
-        Items.ValueList.Visible = False;
-    EndIf;
-
-	//If ValueIsFilled(
-EndProcedure
-
-&AtClient
-Procedure BeforeWrite(Cancel, WriteParameters)
-    
-    If NotAllowed() Then       
-        Cancel=True;   
-    EndIf; 
-    
-EndProcedure
-
-Function NotAllowed()
-    If Object.AnswerType=Enums.DataType.ValueList AND Object.ValueList.Count()=0 Then
-        Message(NStr("en = 'Tabular section couldn''t be empty!'; ru = 'Табличная часть не может быть пустой!'"));
-        Return True;
-    EndIf;
-    Return False;
-EndFunction
-
-&AtClient
-Procedure NotificationProcessing(EventName, Parameter, Source)
-	If EventName="ClearQuestions" AND Parameter = "Ok" Then
-		Object.ValueList.Clear();
-		Items.ValueList.Visible = False;
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
 	EndIf;
-	If EventName="ClearQuestions" AND Parameter = "Cancel" Then
-		Object.AnswerType=getValueList();
-	EndIf;	
-EndProcedure
+    
+EndFunction
 
+&AtServer
+Function NotAllowed()
+	
+	If Object.AnswerType = Enums.DataType.ValueList And Object.ValueList.Count() = 0 Then
+		
+		Message(NStr("en = 'Tabular section couldn''t be empty!'; ru = 'Табличная часть не может быть пустой!'"));
+		
+		Return True;
+		
+	EndIf;
+	
+	Return False;
+	
+EndFunction
 
-Function getValueList()
+&AtServer
+Function GetValueList()
 	
 	Return Enums.DataType.ValueList;
 	
 EndFunction
 
-&AtServer
-Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+    
+    If NotAllowed() Then       
+		
+		Cancel = True;   
+		
+	EndIf; 
+    
 EndProcedure
 
-&AtServer
-Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
-	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+
+///////////////////////////////////////////////////////
+// User interface
+
+&AtClient
+Procedure OnOpen(Cancel)
+    
+    If Object.ValueList.Count() = 0 Then
+		
+		Items.ValueList.Enabled = False;
+		
+	EndIf;
+    	
 EndProcedure
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	
+	If EventName = "ClearQuestions" And Parameter = "Ok" Then
+		
+		Object.ValueList.Clear();
+		
+		Items.ValueList.Enabled = False;
+		
+	EndIf;
+	
+	If EventName = "ClearQuestions" And Parameter = "Cancel" Then
+		
+		Object.AnswerType = getValueList();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure AnswerTypeOnChange(Item)
+     
+    If AnswerTypeOnChangeServer() Then
+		
+		Items.ValueList.Enabled = True;
+		
+	Else
+		
+		If Not Object.ValueList.Count() = 0 Then
+			
+			Text = "en = ""The tabular section will be cleaned. 
+            |Are you sure you want to continue?"";
+            |ru = ""Табличная часть будет очищена.
+            |Продолжить?""";
+			
+			OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "ClearQuestions"));
+			
+		Else
+			
+			Items.ValueList.Enabled = False;
+			
+		EndIf;
+		
+	EndIf;
+    
+EndProcedure
+

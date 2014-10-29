@@ -1,26 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Title>
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>Select value:</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Выберите значение:</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<Customizable>false</Customizable>
+	<CommandBarLocation>None</CommandBarLocation>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<CommandSet>
+		<ExcludedCommand>No</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>Close</ExcludedCommand>
+		<ExcludedCommand>Help</ExcludedCommand>
+		<ExcludedCommand>Abort</ExcludedCommand>
+		<ExcludedCommand>Retry</ExcludedCommand>
+		<ExcludedCommand>Yes</ExcludedCommand>
+		<ExcludedCommand>Cancel</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>Ignore</ExcludedCommand>
+		<ExcludedCommand>OK</ExcludedCommand>
+	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<LabelDecoration name="Decoration1" id="12">
-			<Title formatted="false">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Insert value:</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Введите значение:
-</v8:content>
-				</v8:item>
-			</Title>
-			<ContextMenu name="Decoration1ContextMenu" id="13"/>
-			<ExtendedTooltip name="Decoration1ExtendedTooltip" id="22"/>
-		</LabelDecoration>
 		<InputField name="Str" id="1">
 			<DataPath>Str</DataPath>
 			<Visible>false</Visible>
@@ -31,6 +42,7 @@
 		<InputField name="Bool" id="20">
 			<DataPath>Bool</DataPath>
 			<Visible>false</Visible>
+			<TitleLocation>None</TitleLocation>
 			<ChoiceButton>true</ChoiceButton>
 			<ContextMenu name="BoolContextMenu" id="21"/>
 			<ExtendedTooltip name="BoolExtendedTooltip" id="24"/>
@@ -68,15 +80,44 @@
 		<InputField name="DateField" id="18">
 			<DataPath>DateField</DataPath>
 			<Visible>false</Visible>
+			<TitleLocation>None</TitleLocation>
 			<ContextMenu name="DateFieldContextMenu" id="19"/>
 			<ExtendedTooltip name="DateFieldExtendedTooltip" id="28"/>
 		</InputField>
-		<Button name="ok" id="3">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.ok</CommandName>
-			<Parameter xsi:nil="true"/>
-			<ExtendedTooltip name="okExtendedTooltip" id="29"/>
-		</Button>
+		<UsualGroup name="GroupOk" id="30">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group ok</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group ok</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupOkExtendedTooltip" id="31"/>
+			<ChildItems>
+				<LabelDecoration name="Decoration1" id="32">
+					<HorizontalStretch>true</HorizontalStretch>
+					<ContextMenu name="Decoration1ContextMenu" id="33"/>
+					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="34"/>
+				</LabelDecoration>
+				<Button name="Ok" id="3">
+					<Type>UsualButton</Type>
+					<DefaultButton>true</DefaultButton>
+					<Width>10</Width>
+					<CommandName>Form.Command.Ok</CommandName>
+					<Parameter xsi:nil="true"/>
+					<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+					<ExtendedTooltip name="OkExtendedTooltip" id="29"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Str" id="1">
@@ -223,7 +264,7 @@
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="ok" id="1">
+		<Command name="Ok" id="1">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>

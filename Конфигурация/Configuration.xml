@@ -148,7 +148,6 @@
 			<CommonModule>CommonProcessors</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
 			<CommonModule>UpdateDatabase</CommonModule>
-			<CommonModule>QuestionnaireMapAssign</CommonModule>
 			<CommonModule>ScheduleFunctions</CommonModule>
 			<CommonModule>ДлительныеОперации</CommonModule>
 			<CommonModule>ДлительныеОперацииКлиент</CommonModule>
@@ -261,7 +260,6 @@
 			<Document>Order</Document>
 			<Document>PriceList</Document>
 			<Document>Questionnaire</Document>
-			<Document>QuestionnaireMap</Document>
 			<Document>Task</Document>
 			<Document>Visit</Document>
 			<Document>VisitPlan</Document>

@@ -339,3 +339,101 @@ Procedure CreateQuestion(Description, Type, Group)
 	NewQuestion.Owner = Group;
 	NewQuestion.Write();
 EndProcedure
+
+&AtServer
+Procedure ProcessSKUs()
+	
+	Query = New Query(
+	"SELECT
+	|	QuestionnaireSKUs.Ref.Date AS Period,
+	|	QuestionnaireSKUs.Ref AS Questionnaire,
+	|	QuestionnaireSKUs.SKU,
+	|	QuestionnaireSKUs.SKU AS Source,
+	|	VALUE(Enum.ValueTableRowStatuses.Added) AS Status
+	|FROM
+	|	Document.Questionnaire.SKUs AS QuestionnaireSKUs");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		RecordManager = InformationRegisters.SKUsInQuestionnaires.CreateRecordManager();
+		FillPropertyValues(RecordManager, Line);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure ProcessSelectors()
+	
+	Query = New Query(
+	"SELECT
+	|	Territories.Ref AS Questionnaire,
+	|	Territories.Territory AS Value,
+	|	""Catalog_Territory"" AS Selector
+	|INTO SelectorValues
+	|FROM
+	|	Document.Questionnaire.Territories AS Territories
+	|WHERE
+	|	Territories.Ref.Scale = VALUE(Enum.QuestionnaireScale.Territory)
+	|
+	|UNION ALL
+	|
+	|SELECT
+	|	Regions.Ref,
+	|	Regions.Territory.Owner,
+	|	""Catalog_Region""
+	|FROM
+	|	Document.Questionnaire.Territories AS Regions
+	|WHERE
+	|	Regions.Ref.Scale = VALUE(Enum.QuestionnaireScale.Region)
+	|
+	|GROUP BY
+	|	Regions.Ref,
+	|	Regions.Territory.Owner
+	|
+	|UNION ALL
+	|
+	|SELECT
+	|	Questionnaire.Ref,
+	|	Questionnaire.OutletType,
+	|	""Catalog_OutletType""
+	|FROM
+	|	Document.Questionnaire AS Questionnaire
+	|
+	|UNION ALL
+	|
+	|SELECT
+	|	Questionnaire.Ref,
+	|	Questionnaire.OutletClass,
+	|	""Catalog_OutletClass""
+	|FROM
+	|	Document.Questionnaire AS Questionnaire
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	SelectorValues.Questionnaire AS Questionnaire,
+	|	SelectorValues.Value,
+	|	VALUE(Enum.ComparisonType.Equal) AS ComparisonType,
+	|	SelectorValues.Selector
+	|FROM
+	|	SelectorValues AS SelectorValues
+	|
+	|ORDER BY
+	|	Questionnaire");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		RecordManager = InformationRegisters.Selectors.CreateRecordManager();
+		RecordManager.Key = New UUID;
+		FillPropertyValues(RecordManager, Line);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure

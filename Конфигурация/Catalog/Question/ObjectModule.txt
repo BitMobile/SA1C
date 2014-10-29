@@ -1,11 +1,2 @@
 ﻿
-Procedure BeforeWrite(Cancel)
-	
-	If ThisObject.IsFolder Then
-		If ThisObject.Level() > 0 Then
-			Cancel = True;
-			Message(NStr("en = 'Parent question cannot be child question'; ru = 'Родительский вопрос не может быть дочерним'"));
-		EndIf;
-	EndIf;
-	
-EndProcedure
+

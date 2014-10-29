@@ -16,86 +16,107 @@
 			<DataPath>Object.Code</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="CodeContextMenu" id="2"/>
-			<ExtendedTooltip name="CodeExtendedTooltip" id="16"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="35"/>
 		</InputField>
 		<InputField name="Description" id="3">
 			<DataPath>Object.Description</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="DescriptionContextMenu" id="4"/>
-			<ExtendedTooltip name="DescriptionExtendedTooltip" id="17"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="36"/>
 		</InputField>
 		<InputField name="Owner" id="5">
 			<DataPath>Object.Owner</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="OwnerContextMenu" id="6"/>
-			<ExtendedTooltip name="OwnerExtendedTooltip" id="18"/>
+			<ExtendedTooltip name="OwnerExtendedTooltip" id="37"/>
 		</InputField>
 		<InputField name="Parent" id="32">
-			<DataPath>Object.Parent</DataPath>
 			<ContextMenu name="ParentContextMenu" id="33"/>
-			<ExtendedTooltip name="ParentExtendedTooltip" id="34"/>
+			<ExtendedTooltip name="ParentExtendedTooltip" id="38"/>
 		</InputField>
 		<InputField name="AnswerType" id="7">
 			<DataPath>Object.AnswerType</DataPath>
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="AnswerTypeContextMenu" id="8"/>
-			<ExtendedTooltip name="AnswerTypeExtendedTooltip" id="19"/>
+			<ExtendedTooltip name="AnswerTypeExtendedTooltip" id="39"/>
 			<Events>
 				<Event name="OnChange">AnswerTypeOnChange</Event>
 			</Events>
 		</InputField>
-		<Table name="ValueList" id="9">
-			<Representation>List</Representation>
-			<AutoInsertNewRow>true</AutoInsertNewRow>
-			<EnableStartDrag>true</EnableStartDrag>
-			<EnableDrag>true</EnableDrag>
-			<DataPath>Object.ValueList</DataPath>
-			<SearchStringLocation>None</SearchStringLocation>
-			<ViewStatusLocation>None</ViewStatusLocation>
-			<SearchControlLocation>None</SearchControlLocation>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="ValueListContextMenu" id="10"/>
-			<AutoCommandBar name="ValueListCommandBar" id="11"/>
-			<ExtendedTooltip name="ValueListExtendedTooltip" id="20"/>
-			<SearchStringAddition name="ValueListSearchString" id="23">
-				<Source>
-					<lf:elementId>9</lf:elementId>
-					<lf:additionId>0</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueListSearchStringContextMenu" id="24"/>
-				<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="25"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="ValueListViewStatus" id="26">
-				<Source>
-					<lf:elementId>9</lf:elementId>
-					<lf:additionId>1</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueListViewStatusContextMenu" id="27"/>
-				<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="28"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="ValueListSearchControl" id="29">
-				<Source>
-					<lf:elementId>9</lf:elementId>
-					<lf:additionId>2</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueListSearchControlContextMenu" id="30"/>
-				<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="31"/>
-			</SearchControlAddition>
+		<UsualGroup name="GroupValueList" id="34">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value list</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Список значений</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group value list</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Representation>StrongSeparation</Representation>
+			<ExtendedTooltip name="GroupValueListExtendedTooltip" id="40"/>
 			<ChildItems>
-				<LabelField name="ValueListLineNumber" id="12">
-					<DataPath>Object.ValueList.LineNumber</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="ValueListLineNumberContextMenu" id="13"/>
-					<ExtendedTooltip name="ValueListLineNumberExtendedTooltip" id="21"/>
-				</LabelField>
-				<InputField name="ValueListValue" id="14">
-					<DataPath>Object.ValueList.Value</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="ValueListValueContextMenu" id="15"/>
-					<ExtendedTooltip name="ValueListValueExtendedTooltip" id="22"/>
-				</InputField>
+				<Table name="ValueList" id="9">
+					<Representation>List</Representation>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<DataPath>Object.ValueList</DataPath>
+					<SearchStringLocation>None</SearchStringLocation>
+					<ViewStatusLocation>None</ViewStatusLocation>
+					<SearchControlLocation>None</SearchControlLocation>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="ValueListContextMenu" id="10"/>
+					<AutoCommandBar name="ValueListCommandBar" id="11"/>
+					<ExtendedTooltip name="ValueListExtendedTooltip" id="41"/>
+					<SearchStringAddition name="ValueListSearchString" id="42">
+						<Source>
+							<lf:elementId>9</lf:elementId>
+							<lf:additionId>0</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListSearchStringContextMenu" id="43"/>
+						<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="44"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ValueListViewStatus" id="45">
+						<Source>
+							<lf:elementId>9</lf:elementId>
+							<lf:additionId>1</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListViewStatusContextMenu" id="46"/>
+						<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="47"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ValueListSearchControl" id="48">
+						<Source>
+							<lf:elementId>9</lf:elementId>
+							<lf:additionId>2</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListSearchControlContextMenu" id="49"/>
+						<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="50"/>
+					</SearchControlAddition>
+					<ChildItems>
+						<LabelField name="ValueListLineNumber" id="12">
+							<DataPath>Object.ValueList.LineNumber</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ValueListLineNumberContextMenu" id="13"/>
+							<ExtendedTooltip name="ValueListLineNumberExtendedTooltip" id="51"/>
+						</LabelField>
+						<InputField name="ValueListValue" id="14">
+							<DataPath>Object.ValueList.Value</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ValueListValueContextMenu" id="15"/>
+							<ExtendedTooltip name="ValueListValueExtendedTooltip" id="52"/>
+						</InputField>
+					</ChildItems>
+				</Table>
 			</ChildItems>
-		</Table>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
