@@ -516,24 +516,6 @@
 											<ContextMenu name="TempSKUsSKUContextMenu" id="109"/>
 											<ExtendedTooltip name="TempSKUsSKUExtendedTooltip" id="199"/>
 										</InputField>
-										<InputField name="TempSKUsAvailable" id="110">
-											<DataPath>TempSKUs.Available</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsAvailableContextMenu" id="111"/>
-											<ExtendedTooltip name="TempSKUsAvailableExtendedTooltip" id="200"/>
-										</InputField>
-										<InputField name="TempSKUsFacing" id="112">
-											<DataPath>TempSKUs.Facing</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsFacingContextMenu" id="113"/>
-											<ExtendedTooltip name="TempSKUsFacingExtendedTooltip" id="201"/>
-										</InputField>
-										<InputField name="TempSKUsStock" id="114">
-											<DataPath>TempSKUs.Stock</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsStockContextMenu" id="115"/>
-											<ExtendedTooltip name="TempSKUsStockExtendedTooltip" id="202"/>
-										</InputField>
 										<InputField name="TempSKUs1" id="128">
 											<DataPath>TempSKUs.N</DataPath>
 											<Visible>false</Visible>
@@ -541,36 +523,24 @@
 											<ContextMenu name="TempSKUs1ContextMenu" id="129"/>
 											<ExtendedTooltip name="TempSKUs1ExtendedTooltip" id="203"/>
 										</InputField>
-										<InputField name="TempSKUsPrice" id="116">
-											<DataPath>TempSKUs.Price</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsPriceContextMenu" id="117"/>
-											<ExtendedTooltip name="TempSKUsPriceExtendedTooltip" id="204"/>
-										</InputField>
-										<InputField name="TempSKUsMarkUp" id="118">
-											<DataPath>TempSKUs.MarkUp</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsMarkUpContextMenu" id="119"/>
-											<ExtendedTooltip name="TempSKUsMarkUpExtendedTooltip" id="205"/>
-										</InputField>
-										<InputField name="TempSKUsOutOfStock" id="120">
-											<DataPath>TempSKUs.OutOfStock</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsOutOfStockContextMenu" id="121"/>
-											<ExtendedTooltip name="TempSKUsOutOfStockExtendedTooltip" id="206"/>
-										</InputField>
-										<InputField name="TempSKUsSnapshot" id="122">
-											<DataPath>TempSKUs.Snapshot</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsSnapshotContextMenu" id="123"/>
-											<ExtendedTooltip name="TempSKUsSnapshotExtendedTooltip" id="207"/>
-										</InputField>
 										<InputField name="TempSKUsSKUSnapShotUUID" id="126">
 											<DataPath>TempSKUs.SKUSnapShotUUID</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TempSKUsSKUSnapShotUUIDContextMenu" id="127"/>
 											<ExtendedTooltip name="TempSKUsSKUSnapShotUUIDExtendedTooltip" id="208"/>
+										</InputField>
+										<InputField name="TempSKUsQuestion" id="255">
+											<DataPath>TempSKUs.Question</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempSKUsQuestionContextMenu" id="256"/>
+											<ExtendedTooltip name="TempSKUsQuestionExtendedTooltip" id="257"/>
+										</InputField>
+										<InputField name="TempSKUsAnswer" id="258">
+											<DataPath>TempSKUs.Answer</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TempSKUsAnswerContextMenu" id="259"/>
+											<ExtendedTooltip name="TempSKUsAnswerExtendedTooltip" id="260"/>
 										</InputField>
 									</ChildItems>
 								</Table>
@@ -993,139 +963,6 @@
 						<v8:Type>cfg:CatalogRef.SKU</v8:Type>
 					</Type>
 				</Column>
-				<Column name="Available" id="2">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Available</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Доступность</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="Facing" id="3">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Facing</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Фейсинг</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="Stock" id="4">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Stock</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Остатки</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="Price" id="5">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Price</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Цена</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="MarkUp" id="6">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Mark up</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Наценка</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="OutOfStock" id="7">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Out of stock</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Наличие на складе</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-				<Column name="Snapshot" id="8">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Snapshot</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Фотоснимок</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
 				<Column name="N" id="9">
 					<Title>
 						<v8:item>
@@ -1147,6 +984,40 @@
 						<v8:item>
 							<v8:lang>en</v8:lang>
 							<v8:content>SKUSnap shot UUID</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Question" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Question</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вопросы</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Question</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Answer" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Answer</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ответ</v8:content>
 						</v8:item>
 					</Title>
 					<Type>

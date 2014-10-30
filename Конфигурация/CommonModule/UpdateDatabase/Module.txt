@@ -16,6 +16,7 @@ EndProcedure
 
 Procedure UpdateProcessing() //Actual for release 27
     
+    UpdateVisitSKU();
 	//DataProcessors.SyncAndSettings.FillRecordset();
     CheckOutMobileSettingsAtServer();
     FillInStocks();
@@ -25,57 +26,75 @@ Procedure UpdateProcessing() //Actual for release 27
     
 EndProcedure
 
-&AtServer
-Procedure CheckOutMobileSettingsAtServer() 
-    ////Update mobile settings
-    array = new Array;
-    array.Add(New Structure("Name, Commentary", "NoStkEnbl", "Номенклатура с нулевым остатком доступна для заказа"));
-    array.Add(New Structure("Name, Commentary", "PlanEnbl", "Доступно создание планового визита из мобильного приложения"));
+Procedure UpdateVisitSKU()
     
-    For Each newSet In array Do
-        query2 = new Query;
-        query2.Text=
-        "SELECT
-        |   bitmobile_НастройкиМобильныхПриложений.Ref,
-        |   bitmobile_НастройкиМобильныхПриложений.Description
-        |FROM
-        |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
-        |WHERE
-        |   bitmobile_НастройкиМобильныхПриложений.Code = &Code";
-        query2.SetParameter("Code", newSet.Name);
-        If query2.Execute().IsEmpty() Then
-            newItem = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
-            newItem.Code = newSet.Name;
-            newItem.Description = newSet.Commentary;
-            newItem.Write();
-        EndIf;
-    EndDo;    
-EndProcedure
-
-
-Procedure FillInStocks()
-    Query = New Query;
-    Query.Text = 
+    query =new Query();
+    query.Text = 
     "SELECT
-    |   SKU.Ref
+    |   Visit.Ref
     |FROM
-    |   Catalog.SKU AS SKU";
+    |   Document.Visit AS Visit";
+    recordset = query.Execute().Unload();
     
-    Result = Query.Execute().Unload();
-    
-    For Each SelectionDetailRecords In Result Do      	  
-        obj = SelectionDetailRecords.Ref.GetObject();
-        TS = obj.Stocks.Unload();
-        For Each row In TS Do
-            If row.Stock=Catalogs.Stock.EmptyRef() Then
-                row.Stock = Catalogs.Stock.FindByCode("000000001");                	                
-            EndIf;            	            
-        EndDo;
-        obj.Stocks.Load(TS);
-        obj.Write();
+    For Each row In recordset Do
+        
+        //visitObj = row.Ref.GetObject();
+        If row.Ref.SKUs.Count() > 0 Then
+            visitObj = row.Ref.GetObject();
+            VT = visitObj.SKUs.Unload();
+            NewTable = visitObj.SKUs.Unload();
+            NewTable.Clear();
+            For Each VTrow In VT Do
+                If NOT IsBlankString(VTrow.Available) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Доступность");
+                    newRow.Answer = VTrow.Available;
+                EndIf;
+                If NOT IsBlankString(VTrow.Facing) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Фейсинг");
+                    newRow.Answer = VTrow.Facing;
+                EndIf;
+                If NOT IsBlankString(VTrow.Stock) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Остаток");
+                    newRow.Answer = VTrow.Stock;
+                EndIf;
+                If NOT IsBlankString(VTrow.Price) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Цена");
+                    newRow.Answer = VTrow.Price;
+                EndIf;
+                If NOT IsBlankString(VTrow.MarkUp) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Наценка");
+                    newRow.Answer = VTrow.MarkUp;
+                EndIf;
+                If NOT IsBlankString(VTrow.OutOfStock) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Наличие на складе");
+                    newRow.Answer = VTrow.OutOfStock;
+                EndIf;
+                If NOT IsBlankString(VTrow.Snapshot) Then
+                    newRow = NewTable.Add();
+                    newRow.SKU = VTrow.SKU;
+                    newRow.Question = Catalogs.Question.FindByDescription("Фотоснимок");
+                    newRow.Answer = VTrow.Snapshot;
+                EndIf;                
+            EndDo;
+            
+            visitObj.SKUs.Load(NewTable);
+            visitObj.Write();
+            
+        EndIf; 
+                
     EndDo;
-    
-    
     
 EndProcedure
 
@@ -161,6 +180,60 @@ Function AddInValueTable(EntityElements, Entity, Value)
     Return EntityElements;
     
 EndFunction 
+
+&AtServer
+Procedure CheckOutMobileSettingsAtServer() 
+    ////Update mobile settings
+    array = new Array;
+    array.Add(New Structure("Name, Commentary", "NoStkEnbl", "Номенклатура с нулевым остатком доступна для заказа"));
+    array.Add(New Structure("Name, Commentary", "PlanEnbl", "Доступно создание планового визита из мобильного приложения"));
+    
+    For Each newSet In array Do
+        query2 = new Query;
+        query2.Text=
+        "SELECT
+        |   bitmobile_НастройкиМобильныхПриложений.Ref,
+        |   bitmobile_НастройкиМобильныхПриложений.Description
+        |FROM
+        |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
+        |WHERE
+        |   bitmobile_НастройкиМобильныхПриложений.Code = &Code";
+        query2.SetParameter("Code", newSet.Name);
+        If query2.Execute().IsEmpty() Then
+            newItem = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
+            newItem.Code = newSet.Name;
+            newItem.Description = newSet.Commentary;
+            newItem.Write();
+        EndIf;
+    EndDo;    
+EndProcedure
+
+
+Procedure FillInStocks()
+    Query = New Query;
+    Query.Text = 
+    "SELECT
+    |   SKU.Ref
+    |FROM
+    |   Catalog.SKU AS SKU";
+    
+    Result = Query.Execute().Unload();
+    
+    For Each SelectionDetailRecords In Result Do      	  
+        obj = SelectionDetailRecords.Ref.GetObject();
+        TS = obj.Stocks.Unload();
+        For Each row In TS Do
+            If row.Stock=Catalogs.Stock.EmptyRef() Then
+                row.Stock = Catalogs.Stock.FindByCode("000000001");                	                
+            EndIf;            	            
+        EndDo;
+        obj.Stocks.Load(TS);
+        obj.Write();
+    EndDo;
+    
+    
+    
+EndProcedure
 
 Procedure UpdateOutlets()
     

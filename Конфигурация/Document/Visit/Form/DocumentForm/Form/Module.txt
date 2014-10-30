@@ -42,21 +42,30 @@ Procedure OnOpen(Cancel)
     
     n = 0;
     For Each Str In Object.SKUs Do
-    
-    	Ins = TempSKUs.Add();
+        
+        Ins = TempSKUs.Add();
         Ins.N = n;
         Ins.SKU = Str.SKU;
-        Ins.Available = Str.Available;
-        Ins.Facing = ?(Str.Facing<>0, Str.Facing, "");
-        Ins.Stock = ?(Str.Stock<>0, Str.Stock, ""); 
-        Ins.Price = ?(Str.Price<>0, Str.Price, ""); 
-        Ins.MarkUp = ?(Str.MarkUp<>0, Str.MarkUp, ""); 
-        Ins.OutOfStock = Str.OutOfStock;
-        If Not  IsBlankString(Str.Snapshot) Then
-            Ins.SKUSnapShotUUID = Str.Snapshot;
-            Ins.Snapshot = NStr("en = 'Snapshot'; ru = 'Фотоснимок'");        	
+        Ins.Question = Str.Question;
+        
+        If ItsPicture(Str.Question) Then
+            Try
+                SnapShotUUID = new UUID(Str.Answer);            	            
+            Except
+            EndTry;
+            If PictureExists(SnapShotUUID) Then
+                Ins.Answer = NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+                Ins.SKUSnapShotUUID = Str.Answer;                	                
+            Else
+                Ins.Answer = NStr("en = ""Picture not found on server""; ru = ""Изображение не найдено на сервере""");
+                Ins.SKUSnapShotUUID = Str.Answer;                
+            EndIf;            
+        Else
+            Ins.Answer = Str.Answer;        	        
         EndIf;
+
         n = n + 1 ;
+        
     EndDo;
 	 
 EndProcedure
@@ -67,11 +76,7 @@ Procedure OnOpenServer()
 	If IsInRole("Admin") = False Then
         ThisForm.ReadOnly = True;
 	EndIf; 
-	
-	Questionnaires.Parameters.SetParameterValue("Territories", GetTerritories());
-	Questionnaires.Parameters.SetParameterValue("OutletType", Object.Outlet.Type);
-	Questionnaires.Parameters.SetParameterValue("OutletClass", Object.Outlet.Class);
-	
+		
 EndProcedure
 
 &AtClient
