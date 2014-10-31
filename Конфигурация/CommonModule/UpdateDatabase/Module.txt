@@ -510,3 +510,72 @@ Procedure ProcessSelectors()
 	EndDo;
 	
 EndProcedure
+
+&AtServer
+Procedure ProcessQuestions() 
+	
+	Query = New Query(
+	"SELECT
+	|	QuestionnaireSKUQuestionsNew.Ref AS Questionnaire,
+	|	QuestionnaireSKUQuestionsNew.Question AS ChildQuestion,
+	|	VALUE(Enum.QuestionGroupTypes.SKUQuestions) AS QuestionType,
+	|	QuestionnaireSKUQuestionsNew.LineNumber AS Order,
+	|	QuestionnaireSKUQuestionsNew.Ref.Date AS Period
+	|INTO Questions
+	|FROM
+	|	Document.Questionnaire.SKUQuestionsNew AS QuestionnaireSKUQuestionsNew
+	|
+	|UNION ALL
+	|
+	|SELECT
+	|	QuestionnaireQuestions.Ref,
+	|	QuestionnaireQuestions.Question,
+	|	VALUE(Enum.QuestionGroupTypes.Regular),
+	|	QuestionnaireQuestions.LineNumber,
+	|	QuestionnaireQuestions.Ref.Date
+	|FROM
+	|	Document.Questionnaire.Questions AS QuestionnaireQuestions
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	Questions.Questionnaire,
+	|	Questions.ChildQuestion,
+	|	Questions.QuestionType,
+	|	FALSE AS Obligatoriness,
+	|	VALUE(Enum.ValueTableRowStatuses.Added) AS Status,
+	|	Questions.Order,
+	|	Questions.Period
+	|FROM
+	|	Questions AS Questions");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		RecordManager = InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+		FillPropertyValues(RecordManager, Line);
+		RecordManager.Write();
+		
+	EndDo;
+
+	
+EndProcedure
+
+&AtServer
+Procedure ProcessQuestionnairesStatusAndBeginDate()
+	
+	Select = Documents.Questionnaire.Select();
+	
+	While Select.Next() Do
+		
+		Object = Select.GetObject();
+		Object.BeginDate = Object.Date;
+		Object.Status = Enums.QuestionnareStatus.Active;
+		Object.Single = True;
+		Object.FillPeriod = Enums.QuestionsSaveIntervals.ScheduleInterval;
+		Object.Write();
+		
+	EndDo;
+	
+EndProcedure

@@ -49,6 +49,107 @@ EndFunction // ()
  
  
  
+Procedure SetStatusOfQuestionnaires() Export
+	
+	// В первом запросе выбираются все анкеты со статусом "Готова" у которых
+	// дата начала действия анкеты меньше текущей даты. У этих анкет новый статус
+	// будет "Активна".
+	Query = New Query(
+	"SELECT
+	|	Questionnaire.Ref AS Questionnaire,
+	|	VALUE(Enum.QuestionnareStatus.Active) AS NewStatus
+	|FROM
+	|	Document.Questionnaire AS Questionnaire
+	|WHERE
+	|	Questionnaire.Status = VALUE(Enum.QuestionnareStatus.Ready)
+	|	AND Questionnaire.BeginDate <= &CurrentDate");
+	
+	Query.SetParameter("CurrentDate", BegOfDay(CurrentDate()));
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		QuestionnaireObject = Line.Questionnaire.GetObject();
+		QuestionnaireObject.Status = Line.NewStatus;
+		QuestionnaireObject.Write();
+		
+	EndDo;
+	
+	// Во втором запросе выбираются все анкеты со статусом "Активна" у 
+	// которых дата конца действия анкеты меньше текущей даты. У этих анкет новый
+	// статус будет "Неактивна".
+	Query.Text = 
+	"SELECT
+	|	Questionnaire.Ref AS Questionnaire,
+	|	VALUE(Enum.QuestionnareStatus.Inactive) AS NewStatus
+	|FROM
+	|	Document.Questionnaire AS Questionnaire
+	|WHERE
+	|	Questionnaire.Status = VALUE(Enum.QuestionnareStatus.Active)
+	|	AND Questionnaire.EndDate < &CurrentDate
+	|	AND Questionnaire.EndDate <> DATETIME(1, 1, 1)";
+	
+		QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		QuestionnaireObject = Line.Questionnaire.GetObject();
+		QuestionnaireObject.Status = Line.NewStatus;
+		QuestionnaireObject.Write();
+		
+	EndDo;
+	
+	// Сделано в два запроса для того чтобы если дата начала действия анкеты и 
+	// дата конца действия анкеты равны и именно в этот день пересчет статусов
+	// не происходил. Если выбирать анкеты одним запросом, то в таком случае 
+	// анкета не станет неактивной. А в случае двух запросов анкета сначала станет
+	// активной, а потом сразу же станет неактивной. Да, она не покажется 
+	// пользователям, но кому нужна анкета которая должна показаться только один 
+	// день и кто не проследил что именно в этот день ни разу не произошла 
+	// синхронизация? В общем, я решил именно так обработать эту редкую ситуацию.
+	// Хотя можно было бы этого не делать, в таком случае если бы был один запрос,
+	// то сначала при первой синхронизации анкета стала бы активной, выгрузилась 
+	// бы на сервер, а при второй стала бы неактивной и эта информация тоже ушла 
+	// бы на сервер. Но непонятно зачем грузить на сервер анкету, если дата когда
+	// её нужно было показывать всё равно уже в прошлом и никому эта анкета уже 
+	// не покажется никогда. В общем на всякий случай - код расчета статусов анкет 
+	// в один запрос:
 
+	//Query = New Query(
+	//"SELECT
+	//|	Questionnaire.Ref AS Questionnaire,
+	//|	VALUE(Enum.QuestionnareStatus.Active) AS NewStatus
+	//|FROM
+	//|	Document.Questionnaire AS Questionnaire
+	//|WHERE
+	//|	Questionnaire.Status = VALUE(Enum.QuestionnareStatus.Ready)
+	//|	AND Questionnaire.BeginDate <= &CurrentDate
+	//|
+	//|UNION ALL
+	//|
+	//|SELECT
+	//|	Questionnaire.Ref,
+	//|	VALUE(Enum.QuestionnareStatus.Inactive)
+	//|FROM
+	//|	Document.Questionnaire AS Questionnaire
+	//|WHERE
+	//|	Questionnaire.Status = VALUE(Enum.QuestionnareStatus.Active)
+	//|	AND Questionnaire.EndDate < &CurrentDate
+	//|	AND Questionnaire.EndDate <> DATETIME(1, 1, 1)");
+	//
+	//Query.SetParameter("CurrentDate", BegOfDay(CurrentDate()));
+	//
+	//QueryResult = Query.Execute().Unload();
+	//
+	//For Each Line In QueryResult Do
+	//	
+	//	QuestionnaireObject = Line.Questionnaire.GetObject();
+	//	QuestionnaireObject.Status = Line.NewStatus;
+	//	QuestionnaireObject.Write();
+	//	
+	//EndDo;
+	
+EndProcedure
 
 

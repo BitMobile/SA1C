@@ -47,58 +47,14 @@
 					<ContextMenu name="DateContextMenu" id="4"/>
 					<ExtendedTooltip name="DateExtendedTooltip" id="289"/>
 				</InputField>
-				<InputField name="Regularity" id="159">
-					<DataPath>Regularity</DataPath>
-					<ClearButton>false</ClearButton>
-					<ListChoiceMode>true</ListChoiceMode>
-					<ChooseType>false</ChooseType>
-					<TextEdit>false</TextEdit>
-					<ChoiceList>
-						<xr:Item>
-							<xr:Presentation/>
-							<xr:CheckState>0</xr:CheckState>
-							<xr:Value xsi:type="FormChoiceListDesTimeValue">
-								<Presentation>
-									<v8:item>
-										<v8:lang>en</v8:lang>
-										<v8:content>Single</v8:content>
-									</v8:item>
-									<v8:item>
-										<v8:lang>ru</v8:lang>
-										<v8:content>Одноразовая</v8:content>
-									</v8:item>
-								</Presentation>
-								<Value xsi:type="xs:string">Single</Value>
-							</xr:Value>
-						</xr:Item>
-						<xr:Item>
-							<xr:Presentation/>
-							<xr:CheckState>0</xr:CheckState>
-							<xr:Value xsi:type="FormChoiceListDesTimeValue">
-								<Presentation>
-									<v8:item>
-										<v8:lang>en</v8:lang>
-										<v8:content>Regular</v8:content>
-									</v8:item>
-									<v8:item>
-										<v8:lang>ru</v8:lang>
-										<v8:content>Регулярная</v8:content>
-									</v8:item>
-								</Presentation>
-								<Value xsi:type="xs:string">Regular</Value>
-							</xr:Value>
-						</xr:Item>
-					</ChoiceList>
-					<ContextMenu name="RegularityContextMenu" id="160"/>
-					<ExtendedTooltip name="RegularityExtendedTooltip" id="291"/>
-					<Events>
-						<Event name="OnChange">RegularityOnChange</Event>
-					</Events>
-				</InputField>
 				<InputField name="Status" id="75">
 					<DataPath>Object.Status</DataPath>
 					<ContextMenu name="StatusContextMenu" id="76"/>
 					<ExtendedTooltip name="StatusExtendedTooltip" id="290"/>
+					<Events>
+						<Event name="OnChange">StatusOnChange</Event>
+						<Event name="StartChoice">StatusStartChoice</Event>
+					</Events>
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
@@ -184,48 +140,143 @@
 					<v8:content>Group period</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Group>Horizontal</Group>
 			<Representation>StrongSeparation</Representation>
 			<ExtendedTooltip name="GroupPeriodExtendedTooltip" id="292"/>
 			<ChildItems>
-				<InputField name="BeginDate" id="216">
-					<DataPath>Object.BeginDate</DataPath>
+				<UsualGroup name="IntervalScheduleGroup" id="440">
 					<Title>
 						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Анкета действует с</v8:content>
+							<v8:lang>en</v8:lang>
+							<v8:content>Interval schedule group</v8:content>
 						</v8:item>
 					</Title>
-					<ContextMenu name="BeginDateContextMenu" id="217"/>
-					<ExtendedTooltip name="BeginDateExtendedTooltip" id="293"/>
-				</InputField>
-				<InputField name="EndDate" id="219">
-					<DataPath>Object.EndDate</DataPath>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Interval schedule group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="IntervalScheduleGroupExtendedTooltip" id="441"/>
+					<ChildItems>
+						<InputField name="BeginDate" id="216">
+							<DataPath>Object.BeginDate</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Анкета действует с</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="BeginDateContextMenu" id="217"/>
+							<ExtendedTooltip name="BeginDateExtendedTooltip" id="293"/>
+						</InputField>
+						<InputField name="EndDate" id="219">
+							<DataPath>Object.EndDate</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>по</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="EndDateContextMenu" id="220"/>
+							<ExtendedTooltip name="EndDateExtendedTooltip" id="294"/>
+							<Events>
+								<Event name="OnChange">EndDateOnChange</Event>
+							</Events>
+						</InputField>
+						<Button name="SetSchedule" id="227">
+							<Type>UsualButton</Type>
+							<Representation>PictureAndText</Representation>
+							<CommandName>Form.Command.SetSchedule</CommandName>
+							<Parameter xsi:nil="true"/>
+							<Picture>
+								<xr:Ref>StdPicture.ScheduledJob</xr:Ref>
+								<xr:LoadTransparent>true</xr:LoadTransparent>
+							</Picture>
+							<ExtendedTooltip name="SetScheduleExtendedTooltip" id="297"/>
+						</Button>
+						<LabelDecoration name="ScheduleStringPresentation" id="224">
+							<HorizontalStretch>true</HorizontalStretch>
+							<ContextMenu name="ScheduleStringPresentationContextMenu" id="225"/>
+							<ExtendedTooltip name="ScheduleStringPresentationExtendedTooltip" id="296"/>
+						</LabelDecoration>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="RegularityGroup" id="442">
 					<Title>
 						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>по</v8:content>
+							<v8:lang>en</v8:lang>
+							<v8:content>Regularity group</v8:content>
 						</v8:item>
 					</Title>
-					<ContextMenu name="EndDateContextMenu" id="220"/>
-					<ExtendedTooltip name="EndDateExtendedTooltip" id="294"/>
-				</InputField>
-				<Button name="SetSchedule" id="227">
-					<Type>UsualButton</Type>
-					<Representation>PictureAndText</Representation>
-					<CommandName>Form.Command.SetSchedule</CommandName>
-					<Parameter xsi:nil="true"/>
-					<Picture>
-						<xr:Ref>StdPicture.ScheduledJob</xr:Ref>
-						<xr:LoadTransparent>true</xr:LoadTransparent>
-					</Picture>
-					<ExtendedTooltip name="SetScheduleExtendedTooltip" id="297"/>
-				</Button>
-				<LabelDecoration name="ScheduleStringPresentation" id="224">
-					<HorizontalStretch>true</HorizontalStretch>
-					<ContextMenu name="ScheduleStringPresentationContextMenu" id="225"/>
-					<ExtendedTooltip name="ScheduleStringPresentationExtendedTooltip" id="296"/>
-				</LabelDecoration>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Regularity group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="RegularityGroupExtendedTooltip" id="443"/>
+					<ChildItems>
+						<InputField name="Regularity" id="159">
+							<DataPath>Regularity</DataPath>
+							<ClearButton>false</ClearButton>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ChooseType>false</ChooseType>
+							<TextEdit>false</TextEdit>
+							<ChoiceList>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Single</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Анкета дозаполняется в течение периода</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:string">Single</Value>
+									</xr:Value>
+								</xr:Item>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Regular</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Анкета заполняется каждый визит заново</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:string">Regular</Value>
+									</xr:Value>
+								</xr:Item>
+							</ChoiceList>
+							<ContextMenu name="RegularityContextMenu" id="160"/>
+							<ExtendedTooltip name="RegularityExtendedTooltip" id="291"/>
+							<Events>
+								<Event name="OnChange">RegularityOnChange</Event>
+							</Events>
+						</InputField>
+						<InputField name="FillPeriod" id="444">
+							<DataPath>Object.FillPeriod</DataPath>
+							<ContextMenu name="FillPeriodContextMenu" id="445"/>
+							<ExtendedTooltip name="FillPeriodExtendedTooltip" id="446"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
 		<UsualGroup name="GroupSchedule" id="222">

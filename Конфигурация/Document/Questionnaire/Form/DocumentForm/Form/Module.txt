@@ -4,6 +4,12 @@ Var TypesMap;
 &AtClient
 Var OldSKUSourceType;
 
+&AtClient
+Var OldStatus;
+
+&AtClient
+Var AvailableStatuses;
+
 ///////////////////////////////////////////////////////
 // Common procedure and functions
 
@@ -38,6 +44,14 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 			
 		EndIf;	
 		
+		Object.Status = Enums.QuestionnareStatus.Planning;
+		
+		// Новая анкета регулярная. То есть ответы заполняются заново каждый визит.
+		Object.Single = False;
+		
+		// Новая анкета заполняется исходя из 
+		Object.FillPeriod = Enums.QuestionsSaveIntervals.ScheduleInterval;
+		
 	EndIf;
 	
 	If Not ValueIsFilled(Object.Schedule) Then
@@ -59,7 +73,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
 	
 	// Заполнить SKU
-	FillSKUs();
+	FillSKUs();	
+	
+	// Разблокировать/заблокировать элементы в зависимости от статуса
+	DisableFormElements();					  
 	
 EndProcedure
 
@@ -79,6 +96,9 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	FillQuestionsTree(Enums.QuestionGroupTypes.Regular);
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
 	
+	// Разблокировать/заблокировать элементы в зависимости от статуса
+	DisableFormElements();
+	
 EndProcedure
 
 &AtClient
@@ -93,6 +113,8 @@ Procedure AfterWrite(WriteParameters)
 	
 	Items.Questions.Expand(Questions.GetItems()[0].GetID());
 	Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
+	
+	FillAvailableStatuses(Object.Status);
 	
 EndProcedure
 
@@ -1027,6 +1049,8 @@ Procedure OnOpen(Cancel)
 	Items.Questions.Expand(Questions.GetItems()[0].GetID());
 	Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
 	
+	FillAvailableStatuses(Object.Status);
+	
 EndProcedure
 
 &AtClient
@@ -1059,15 +1083,330 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
     
 EndProcedure
 
+// Status
+
+&AtClient
+Procedure StatusStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	OldStatus = Object.Status;
+	
+	ShowChooseFromList(New NotifyDescription("StatusChooseFromListProcessing", ThisForm), 
+					   AvailableStatuses,
+					   Item,
+					   AvailableStatuses.FindByValue(OldStatus));
+					   
+EndProcedure
+
+&AtClient
+Procedure StatusChooseFromListProcessing(Result, Parameters) Export
+	
+	If Not Result = Undefined Then
+		
+		Object.Status = Result.Value;
+		StatusOnChange(Items.Status);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure StatusOnChange(Item)
+	
+	NewStatus = Object.Status;
+	
+	// Если статус был изменен
+	If Not OldStatus = NewStatus Then
+		
+		// Если новый статус "Готова к работе"
+		If StatusIs("Ready") Then
+			
+			// Если текущая дата позже чем дата начала периода действия анкеты
+			If CurrentDate() >= Object.BeginDate Then
+				
+				// Спрашиваем пользователя хочет ли он сразу сменить статус на "Активна".
+				// Если да, то меняется статус на активна, дата начала действия анкеты
+				// устанавливается равной текущей дате и записывается документ, из-за чего
+				// блокируется шапка.
+				// Если нет, устанавливаем статус обратно в значение "Черновик".
+				ShowQueryBox(New NotifyDescription("StatusChangeFromPlanningToActiveProcessing", ThisForm),
+							 NStr("en = 'Current date is after begin date of questionnaire. 
+                                   |Questionnaire status will be automatically set to ""Active"", 
+								   |begin date of period will be set to current date, document 
+								   |will be written and header (periodicity, period and 
+                                   |schedule, selectors) will be blocked. Continue?'; 
+								   |ru = 'Текущая дата больше даты начала действия анкеты. Анкета будет 
+                                   |автоматически переведена в статус ""Активна"", дата начала действия 
+								   |анкеты будет установлена равной текущей дате, документ будет 
+                                   |записан и шапка (регулярность, период и расписание, селекторы) 
+                                   |будет заблокирована. Продолжить?'"), 
+							 QuestionDialogMode.YesNo,
+							 0,
+							 DialogReturnCode.No,
+							 NStr("en = 'Change status to ""Active""?'; 
+							 	  |ru = 'Изменить статус на ""Активна""?'"));							 
+								 
+			EndIf;
+			
+		// Если новый статус "Активна"	
+		ElsIf StatusIs("Active") Then
+			
+			// Спрашиваем пользователя хочет ли он сменить дату начала действия анкеты
+			// на текущую и записать документ.
+			// Если да, меняем статус, меняем дату, записываем документ.
+			// Если нет, устанавливаем статус обратно в значение "Готова к работе".
+			ShowQueryBox(New NotifyDescription("StatusChangeFromReadyToActiveProcessing", ThisForm),
+						 NStr("en = 'Begin date of this questionnaire will be changed to current 
+							  |date. This document will be written and uploaded to server on next 
+							  |synchronization. Document header (periodicity, period and schedule, 
+							  |selectors) will be blocked for changing. Continue?'; 
+							  |ru = 'Дата начала действия данной анкеты будет изменена на текущую 
+							  |дату. Документ будет записан и выгружен на сервер при следующей 
+							  |синхронизации. Шапка документа (регулярность, период и расписание, 
+							  |селекторы) будет заблокирована для изменения. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 0,
+						 DialogReturnCode.No,
+						 NStr("en = 'Change status to ""Active""?'; 
+						      |ru = 'Изменить статус на ""Активна""?'"));
+			      
+		// Если новый статус "Неактивна"
+		ElsIf StatusIs("Inactive") Then
+			
+			// Спрашиваем пользователя хочет ли он сменить дату конца действия анкеты
+			// на текущую и записать документ.
+			// Если да, меняем статус, меняем дату, записываем документ.
+			// Если нет, устанавливаем статус обратно в значение "Активна".
+			ShowQueryBox(New NotifyDescription("StatusChangeFromActiveToInactiveProcessing", ThisForm),
+						 NStr("en = 'End date of this questionnaire will be changed to current 
+						 	  |date. This document will be saved and blocked for changing. 
+							  |Continue?'; 
+							  |ru = 'Дата конца периода действия данной анкеты будет изменена на 
+							  |текущую дату. Этот документ будет записан и заблокирован для 
+							  |изменения. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 0,
+						 DialogReturnCode.No,
+						 NStr("en = 'Change status to ""Inactive""'; 
+						      |ru = 'Изменить статус на ""Неактивна""'"));
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure StatusChangeFromPlanningToActiveProcessing(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		SetStatusTo("Active");
+		
+		Object.BeginDate = BegOfDay(CurrentDate());
+		
+		WriteParameters = GetWriteParameters();
+
+		
+		ThisForm.Write(WriteParameters);
+		
+	ElsIf Result = DialogReturnCode.No Then
+		
+		SetStatusTo("Planning");
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure StatusChangeFromReadyToActiveProcessing(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		SetStatusTo("Active");
+		
+		Object.BeginDate = BegOfDay(CurrentDate());
+		
+		WriteParameters = GetWriteParameters();
+		
+		ThisForm.Write(WriteParameters);
+	
+	ElsIf Result = DialogReturnCode.No Then
+		
+		SetStatusTo("Ready");
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure StatusChangeFromActiveToInactiveProcessing(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		SetStatusTo("Inactive");
+		
+		Object.EndDate = EndOfDay(CurrentDate());
+		
+		WriteParameters = GetWriteParameters();
+		
+		ThisForm.Write(WriteParameters);
+		
+	ElsIf Result = DialogReturnCode.No Then
+		
+		SetStatusTo("Active");
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Function GetWriteParameters()    
+	
+	WriteParameters = New Structure;
+    WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
+	WriteParameters.Insert("PostingMode", DocumentPostingMode.Regular);
+    Return WriteParameters;
+
+EndFunction
+
+&AtClient
+Procedure FillAvailableStatuses(Status)
+	
+	AvailableStatuses = GetAvailableStatuses(Status);
+
+EndProcedure
+
+&AtServer
+Procedure SetStatusTo(EnumValueName)
+	
+	Object.Status = Enums["QuestionnareStatus"][EnumValueName];
+	
+EndProcedure
+
+&AtServer
+Function StatusIs(EnumValueName) 
+	
+	Return Object.Status = Enums["QuestionnareStatus"][EnumValueName];
+	
+EndFunction
+
+&AtServer
+Function GetAvailableStatuses(Status)
+	
+	AvailableStatuses = New ValueList;
+	
+	If Status = Enums.QuestionnareStatus.Planning Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Planning, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+		
+	ElsIf Status = Enums.QuestionnareStatus.Ready Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+		
+	ElsIf Status = Enums.QuestionnareStatus.Active Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+							  
+	ElsIf Status = Enums.QuestionnareStatus.Inactive Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+		                                     
+	EndIf;
+						  
+	Return AvailableStatuses;
+						  
+EndFunction
+
+// End date
+
+&AtClient
+Procedure EndDateOnChange(Item)
+	
+	// Если новая дата конца действия анкеты раньше даты начала действия анкеты
+	// Ставим новую дату конца действия анкеты равной датей начала действия анкеты
+	Object.EndDate = ?(EndOfDay(Object.EndDate) >= EndOfDay(Object.BeginDate),
+					   Object.EndDate, 
+					   Object.BeginDate);
+	
+	
+	// Если новая дата окончания действия анкеты меньше чем текущая дата
+	If EndOfDay(Object.EndDate) < EndOfDay(CurrentDate()) Then
+		
+		// Устанавливаем дату окончания действия анкеты равной текущей дате
+		Object.EndDate = CurrentDate();
+		
+		// Если анкета активна
+		If StatusIs("Active") Then
+			
+			// Спрашиваем у пользователя хочет ли он сменить статус анкеты на "Неактивна".
+			// Если да, то меняем статус, записываем документ.
+			// Если нет, то оставляем статус старым, дату конца периода действия анкеты
+			// устанавливаем равной старой дате (та что записана в объекте).
+			ShowQueryBox(New NotifyDescription("ChangeEndDateInActiveStatus", ThisForm),
+						 NStr("en = 'New end period date of questionnaire is before current date. 
+                               |Status will be automatically set to value ""Inactive"". End period date 
+							   |of questionnaire will be set to current date.
+                               |Questionnaire will be rewritten and blocked for changing. 
+                               |Continue?'; ru = 'Новая дата конца действия анкеты меньше чем текущая дата. 
+                               |Статус будет автоматически установлен в значение ""Неактивна"", Дата конца 
+                               |действия анкеты будет установлена соответствующей текущей дате.
+                               |Анкета будет перезаписана и заблокирована для изменения. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 0,
+						 DialogReturnCode.No,
+						 NStr("en = 'Change status to ""Inactive""?'; 
+						      |ru = 'Изменить статус на ""Неактивна""?'"));
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ChangeEndDateInActiveStatus(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		SetStatusTo("Inactive");
+		
+		WriteParameters = New Structure;
+		WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
+		
+		ThisForm.Write(WriteParameters);
+		
+	ElsIf Result = DialogReturnCode.No Then
+		
+		Object.EndDate = Object.Ref.EndDate;
+		
+	EndIf;
+	
+EndProcedure
 
 // SKUs
 
 &AtClient
 Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
 	
-	ID = Item.CurrentRow;                
-	Row = SKUsValueTable.FindByID(ID);
-	Row.SourceType = TypeOf(Row.SKU);
+	If Not Item.CurrentRow = Undefined Then
+		
+		ID = Item.CurrentRow;                
+		Row = SKUsValueTable.FindByID(ID);
+		Row.SourceType = TypeOf(Row.SKU);
+		
+	EndIf;
 		
 EndProcedure
 
@@ -1099,7 +1438,7 @@ Procedure SKUSourceTypeOnChange(Item)
 	
 	If Not OldSKUSourceType.Value = SKUSourceType Then
 	
-		If Not OldSKUSourceType.Value = NStr("en = 'SKU'; ru = 'Номенклатура'") Then
+		If Not OldSKUSourceType.Value = "SKU" Then
 			
 			FilterParameters = New Structure;
 			FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
@@ -1133,7 +1472,7 @@ Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	OldSKUSourceType = Items.SKUSourceType.ChoiceList.FindByValue(SKUSourceType);
 	
-	If SKUsValueTable.Count() = 0 Then
+	If SKUsValueTable.Count() = 0 OR OldSKUSourceType.Presentation = NStr("en = 'SKU'; ru = 'Номенклатура'") Then
 		
 		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
 		
@@ -1168,6 +1507,8 @@ EndProcedure
 Procedure RegularityOnChange(Item)
 	
 	Object.Single = ?(Regularity = "Single", True, False);
+	
+	Items.FillPeriod.Enabled = Object.Single;
 	
 EndProcedure
 
@@ -1652,6 +1993,35 @@ Procedure DiscardСhanges(Command)
 		
 	EndIf;
 		
+EndProcedure
+
+&AtServer
+Procedure DisableFormElements()
+	
+	// Блокировка элементов в зависимости от статуса анкеты
+    IsActive = Object.Status = Enums.QuestionnareStatus.Active;
+    IsInactive = Object.Status = Enums.QuestionnareStatus.Inactive;
+	
+    Items.Regularity.Enabled = Not (IsActive Or IsInactive);
+    Items.BeginDate.Enabled = Not (IsActive Or IsInactive);
+    Items.SelectorsTable.Enabled = Not (IsActive Or IsInactive);
+	Items.FillPeriod.Enabled = Not (IsActive Or IsInactive) And Object.Single;
+    
+    Items.SetSchedule.Enabled = Not (IsActive Or IsInactive);
+    
+    Items.Status.Enabled = Not IsInactive;
+    Items.EndDate.Enabled = Not IsInactive;
+    
+    Items.Questions.ReadOnly = IsInactive;
+    Items.Questions.CommandBar.Enabled = Not IsInactive;
+    
+    Items.SKUQuestions.ReadOnly = IsInactive;
+    Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
+    
+    Items.SKUSourceType.Enabled = Not IsInactive;
+    Items.SKUsValueTable.ReadOnly = IsInactive;
+    Items.SKUsValueTable.CommandBar.Enabled = Not IsInactive;
+
 EndProcedure
 
 

@@ -173,6 +173,7 @@
 			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
 			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
+			<CommonModule>PeriodicityProcessors</CommonModule>
 			<EventSubscription>SKUOnWrite</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
@@ -287,6 +288,7 @@
 			<Enum>DataStatus</Enum>
 			<Enum>YearScheduleTypes</Enum>
 			<Enum>ValueTableRowStatuses</Enum>
+			<Enum>QuestionsSaveIntervals</Enum>
 			<Report>VisitsOrders</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>Visits</Report>
