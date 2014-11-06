@@ -29,6 +29,9 @@
 			<EditMode>EnterOnInput</EditMode>
 			<ContextMenu name="OwnerContextMenu" id="6"/>
 			<ExtendedTooltip name="OwnerExtendedTooltip" id="37"/>
+			<Events>
+				<Event name="OnChange">OwnerOnChange</Event>
+			</Events>
 		</InputField>
 		<InputField name="Parent" id="32">
 			<ContextMenu name="ParentContextMenu" id="33"/>
@@ -41,6 +44,14 @@
 			<ExtendedTooltip name="AnswerTypeExtendedTooltip" id="39"/>
 			<Events>
 				<Event name="OnChange">AnswerTypeOnChange</Event>
+			</Events>
+		</InputField>
+		<InputField name="Assignment" id="53">
+			<DataPath>Object.Assignment</DataPath>
+			<ContextMenu name="AssignmentContextMenu" id="54"/>
+			<ExtendedTooltip name="AssignmentExtendedTooltip" id="55"/>
+			<Events>
+				<Event name="StartChoice">AssignmentStartChoice</Event>
 			</Events>
 		</InputField>
 		<UsualGroup name="GroupValueList" id="34">

@@ -7,6 +7,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
 	
+	OwnerOnChangeAtServer();
+	
 EndProcedure
 
 &AtServer
@@ -64,6 +66,80 @@ Procedure BeforeWrite(Cancel, WriteParameters)
     
 EndProcedure
 
+&AtServer
+Procedure OwnerOnChangeAtServer()
+	
+	If Object.Owner = Catalogs.QuestionGroup.EmptyRef() Or Object.Owner.Type = Enums.QuestionGroupTypes.Regular Then 
+		
+		Items.Assignment.Enabled = False;
+		
+		Object.Assignment = Undefined;
+		
+	Else 
+		
+		Items.Assignment.Enabled = True;
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtServer
+Function GetAssignmentList(AnswerType)
+	
+	ValueList = New ValueList;
+	
+	If AnswerType = Enums.DataType.Snapshot Then
+		
+		ValueList.Add(Enums.SKUQuestions.Snapshot);
+		
+	EndIf;
+	
+	If AnswerType = Enums.DataType.Boolean Then 
+		
+		ValueList.Add(Enums.SKUQuestions.OutOfStock);
+		ValueList.Add(Enums.SKUQuestions.Available);
+		
+	EndIf;
+	
+	If AnswerType = Enums.DataType.Decimal Then 
+		
+		ValueList.Add(Enums.SKUQuestions.Facing);
+		ValueList.Add(Enums.SKUQuestions.MarkUp);
+		ValueList.Add(Enums.SKUQuestions.Price);
+		ValueList.Add(Enums.SKUQuestions.Stock);
+		
+	EndIf; 
+	
+	Return ValueList;
+	
+EndFunction
+
+&AtServer
+Procedure CheckAssignment()
+	
+	If Object.AnswerType = Enums.DataType.Snapshot And Not Object.Assignment = Enums.SKUQuestions.Snapshot Then
+		
+		Object.Assignment = Undefined;
+		
+	ElsIf Object.AnswerType = Enums.DataType.Boolean And Not (Object.Assignment = Enums.SKUQuestions.OutOfStock Or Object.Assignment = Enums.SKUQuestions.Available) Then 
+		
+		Object.Assignment = Undefined;
+		
+	ElsIf Object.AnswerType = Enums.DataType.Decimal And Not (Object.Assignment = Enums.SKUQuestions.Facing Or
+													Object.Assignment = Enums.SKUQuestions.MarkUp Or 
+													Object.Assignment = Enums.SKUQuestions.Price Or 
+													Object.Assignment = Enums.SKUQuestions.Stock) Then 
+		
+		Object.Assignment = Undefined;
+		
+	ElsIf Not (Object.AnswerType = Enums.DataType.Snapshot Or Object.AnswerType = Enums.DataType.Boolean Or Object.AnswerType = Enums.DataType.Decimal) Then  
+		
+		Object.Assignment = Undefined;
+		
+	EndIf; 
+	
+EndProcedure
+
 
 ///////////////////////////////////////////////////////
 // User interface
@@ -92,7 +168,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	
 	If EventName = "ClearQuestions" And Parameter = "Cancel" Then
 		
-		Object.AnswerType = getValueList();
+		Object.AnswerType = GetValueList();
 		
 	EndIf;
 	
@@ -123,6 +199,39 @@ Procedure AnswerTypeOnChange(Item)
 		EndIf;
 		
 	EndIf;
-    
+	
+	// Проверить соответствие назначения и типа ответа
+	CheckAssignment();
+	
 EndProcedure
+
+&AtClient
+Procedure OwnerOnChange(Item)
+	
+	OwnerOnChangeAtServer();
+	
+EndProcedure
+
+&AtClient
+Procedure AssignmentStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	ValueList = GetAssignmentList(Object.AnswerType);
+	
+	ShowChooseFromList(New NotifyDescription("ChooseAssignmentProcessing", ThisForm), ValueList, Item);
+	
+EndProcedure
+
+&AtClient
+Procedure ChooseAssignmentProcessing(Result, Parameters) Export
+	
+	If Not Result = Undefined Then
+
+		Object.Assignment = Result.Value;
+				
+	EndIf;
+	
+EndProcedure
+
 

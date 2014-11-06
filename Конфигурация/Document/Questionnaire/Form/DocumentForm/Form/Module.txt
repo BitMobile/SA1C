@@ -116,10 +116,173 @@ Procedure AfterWrite(WriteParameters)
 	
 	FillAvailableStatuses(Object.Status);
 	
+	CheckSelectorsForSKUs(Items.QuestionsCheckSelectorsForSKUs);
+	
 EndProcedure
+
+// Status
+
+&AtServer
+Procedure DisableFormElements()
+	
+	// Блокировка элементов в зависимости от статуса анкеты
+    IsActive = Object.Status = Enums.QuestionnareStatus.Active;
+    IsInactive = Object.Status = Enums.QuestionnareStatus.Inactive;
+	
+    Items.Regularity.Enabled = Not (IsActive Or IsInactive);
+    Items.BeginDate.Enabled = Not (IsActive Or IsInactive);
+    Items.SelectorsTable.Enabled = Not (IsActive Or IsInactive);
+	Items.FillPeriod.Enabled = Not (IsActive Or IsInactive) And Object.Single;
+    
+    Items.SetSchedule.Enabled = Not (IsActive Or IsInactive);
+    
+    Items.Status.Enabled = Not IsInactive;
+    Items.EndDate.Enabled = Not IsInactive;
+    
+    Items.Questions.ReadOnly = IsInactive;
+    Items.Questions.CommandBar.Enabled = Not IsInactive;
+    
+    Items.SKUQuestions.ReadOnly = IsInactive;
+    Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
+    
+    Items.SKUSourceType.Enabled = Not IsInactive;
+    Items.SKUsValueTable.ReadOnly = IsInactive;
+    Items.SKUsValueTable.CommandBar.Enabled = Not IsInactive;
+
+EndProcedure
+
+&AtServer
+Procedure SetStatusTo(EnumValueName)
+	
+	Object.Status = Enums["QuestionnareStatus"][EnumValueName];
+	
+EndProcedure
+
+&AtServer
+Function StatusIs(EnumValueName) 
+	
+	Return Object.Status = Enums["QuestionnareStatus"][EnumValueName];
+	
+EndFunction
+
+&AtServer
+Function GetAvailableStatuses(Status)
+	
+	AvailableStatuses = New ValueList;
+	
+	If Status = Enums.QuestionnareStatus.Planning Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Planning, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+		
+	ElsIf Status = Enums.QuestionnareStatus.Ready Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+		
+	ElsIf Status = Enums.QuestionnareStatus.Active Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+							  
+	ElsIf Status = Enums.QuestionnareStatus.Inactive Then
+		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
+							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+		                                     
+	EndIf;
+						  
+	Return AvailableStatuses;
+						  
+EndFunction
 
 
 // SKUs
+
+&AtServerNoContext
+Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
+	
+	// Объявляем схему
+	DCS = New DataCompositionSchema;
+      
+	DataSource 						= DCS.DataSources.Add();
+	DataSource.Name 				= "DataSource1";
+	DataSource.DataSourceType	 	= "Local";
+	DataSource.ConnectionString  	= "";
+	
+	DataSet 						= DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
+	DataSet.Name 					= "DataSet1";
+	DataSet.Query					= "Select Ref AS Ref From " + ObjectName;
+	DataSet.DataSource 				= "DataSource1";
+	DataSet.AutoFillAvailableFields	= True;
+	
+	RefField 			= DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
+	RefField.Field 		= "Ref";
+	RefField.DataPath 	= "Ref";
+	RefField.Title 		= "Ref";
+	
+	DCGroup = DCS.DefaultSettings.Structure.Add(Type("DataCompositionGroup"));
+	DCGroup.Selection.Items.Add(Type("DataCompositionAutoSelectedField"));
+	DCGroup.Use = True;
+	
+	SelectField 		= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
+	SelectField.Field 	= New DataCompositionField("Ref");
+	SelectField.Use 	= True;	
+	
+	For Each FilterItem In Filter.Items Do 
+		
+		RefField = DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
+  		RefField.Field 		= String(FilterItem.LeftValue);
+  		RefField.DataPath 	= String(FilterItem.LeftValue);
+		RefField.Title 		= String(FilterItem.LeftValue);
+		
+		SelectField 		= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
+		SelectField.Field 	= FilterItem.LeftValue;
+		SelectField.Use 	= True;
+				
+		NewFilterItem = DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+		
+		FillPropertyValues(NewFilterItem, FilterItem);				
+		
+	EndDo;
+	
+	NewFilterItem = DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	NewFilterItem.LeftValue 		= New DataCompositionField("Ref");
+	NewFilterItem.Use 				= True;
+	NewFilterItem.ComparisonType 	= DataCompositionComparisonType.InList;
+	NewFilterItem.RightValue 		= RefArray;
+		
+	TemplateComposer = New DataCompositionTemplateComposer;
+	                                                                      
+	Template = TemplateComposer.Execute(DCS, DCS.DefaultSettings, , , Type("DataCompositionValueCollectionTemplateGenerator"));
+
+    Processor = New DataCompositionProcessor;
+    Processor.Initialize(Template);
+
+    ResultTable = New ValueTable;
+	
+	OutputProcessor = New DataCompositionResultValueCollectionOutputProcessor;
+
+    OutputProcessor.SetObject(ResultTable);
+    OutputProcessor.Output(Processor);
+	
+	If Not ResultTable.Count() = 0 Then 
+		
+		Return ResultTable.UnloadColumn("Ref");
+		
+	Else 
+		
+		Return Undefined;
+		
+	EndIf;	
+				
+EndFunction
 
 &AtServer
 Procedure FillSKUs()
@@ -331,6 +494,105 @@ Procedure ChooseFromListProcessing(Result, Parameters) Export
 	
 EndProcedure
 
+&AtClient
+Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
+	
+	FilterOfList = New DataCompositionFilter;
+	
+	For Each Item In Selectors Do        
+				
+		FieldName = Undefined;
+		
+		If Item.Selector = "Catalog_Region" Then 
+			
+			If ResultValue = "Catalog.SKU" Then 
+			
+				FieldName = AdditionalText + "Owner.Territories.Territory.Owner";
+				
+			Else 
+				
+				FieldName = AdditionalText + "Territories.Territory.Owner";
+				
+			EndIf;
+								
+		ElsIf Item.Selector = "Catalog_Territory" Then
+			
+			If ResultValue = "Catalog.SKU" Then 
+			
+				FieldName = AdditionalText + "Owner.Territories.Territory";
+				
+			Else 
+				
+				FieldName = AdditionalText + "Territories.Territory";
+				
+			EndIf;
+								
+		EndIf;	
+		
+		If Not FieldName = Undefined Then 
+		
+			If IsList(Item.ComparisonType) Then
+			
+				For Each ListItem In Item.Value Do
+					
+					FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+					FilterElement.LeftValue 		= New DataCompositionField(FieldName);
+					FilterElement.Use 				= True;
+					FilterElement.ComparisonType 	= DataCompositionComparisonType.InHierarchy;
+					FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+					FilterElement.RightValue 		= ListItem.Value;	
+					
+				EndDo;        	        
+				
+			ElsIf IsEqual(Item.ComparisonType) Then  
+				
+				FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+				FilterElement.LeftValue 		= New DataCompositionField(FieldName);
+				FilterElement.Use 				= True;
+				
+				If Item.Selector = "Catalog_Region" Then 
+				
+					FilterElement.ComparisonType 	= DataCompositionComparisonType.InHierarchy;
+					
+				Else 
+					
+					FilterElement.ComparisonType 	= DataCompositionComparisonType.Equal;
+					
+				EndIf;						
+				
+				FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+				FilterElement.RightValue 		= Item.Value;
+				
+			ElsIf IsNotEqual(Item.ComparisonType) Then
+				
+				FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+				FilterElement.LeftValue 		= New DataCompositionField(FieldName);
+				FilterElement.Use 				= True;
+				
+				If Item.Selector = "Catalog_Region" Then 
+				
+					FilterElement.ComparisonType 	= DataCompositionComparisonType.NotInHierarchy;
+					
+				Else 
+					
+					FilterElement.ComparisonType 	= DataCompositionComparisonType.NotEqual;
+					
+				EndIf;
+				
+				FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+				FilterElement.RightValue 		= Item.Value;
+				
+			EndIf;	
+							
+		EndIf;	
+						
+	EndDo;
+	
+	Return FilterOfList;
+	
+EndFunction
+
+
 // Schedule
 
 &AtServer
@@ -342,6 +604,99 @@ EndProcedure
 
 
 // Questions
+
+&AtServer
+Function IsNotEqual(Value)
+
+	If Value = Enums.ComparisonType.NotEqual Then
+		
+		Return True;    	    
+		
+	Else
+		
+		Return False;    	    
+		
+	EndIf;
+
+EndFunction
+
+&AtServer
+Function IsEqual(Value)
+
+	If Value = Enums.ComparisonType.Equal Then
+		
+		Return True;    	    
+		
+	Else
+		
+		Return False;    	    
+		
+	EndIf;
+
+EndFunction
+
+&AtServerNoContext
+Function GUIDFromEnumValue(Value) 
+	
+	GUID = Mid(ValueToStringInternal(Value), StrLen(ValueToStringInternal(Value))-32,32);
+	GUID = Left(GUID,8) + "-" + Mid(GUID,9,4) + "-" + Mid(GUID,13,4) + "-" + Mid(GUID,17,4) + "-" + Right(GUID,12);
+	
+	Return GUID;	
+	
+EndFunction
+
+&AtServerNoContext
+Function GetStringDate(Date)
+
+	Return Format(Date, "DF=ггггММддЧЧмм");
+		
+EndFunction
+
+&AtServerNoContext
+Function GetStringFromValue(Value) 
+	
+	TypeOfValue = TypeOf(Value);
+	
+	If TypeOfValue = Type("Boolean") Then  
+				
+		If Value Then
+				
+	    	Return "True";
+				
+		Else   
+				
+			Return "False";
+				
+		EndIf;
+				
+	ElsIf TypeOfValue = Type("Date") Then 
+				
+		Return GetStringDate(Value);
+						
+	ElsIf TypeOfValue = Type("Number") Then 
+				
+	    Value = Строка(Value);
+        Value = StrReplace(Value, " ", "");
+        Value = StrReplace(Value, Chars.NBSp, "");
+		Value = StrReplace(Value, ",", ".");
+		
+		Return Value;
+				
+	ElsIf Enums.AllRefsType().ContainsType(TypeOfValue) Then 
+			
+		Return GUIDFromEnumValue(Value);
+			
+	ElsIf Catalogs.AllRefsType().ContainsType(TypeOfValue) Or Документы.AllRefsType().ContainsType(TypeOfValue) Then  
+		
+		Return String(Value.UUID());
+						
+	Else   
+			
+		Return String(Value);	
+				
+	EndIf;	    
+	
+EndFunction
 
 &AtServerNoContext
 Function GetQuestionGroupType(TypeString = "SKUQuestions")
@@ -845,27 +1200,7 @@ EndFunction
 &AtServer
 Function FillSelectors()
 	
-	Query = new Query;
-	Query.Text =
-		"SELECT
-		|	Selectors.Key,
-		|	Selectors.Questionnaire,
-		|	Selectors.AdditionalParameter,
-		|	Selectors.ComparisonType,
-		|	Selectors.Selector,
-		|	Selectors.Value
-		|FROM
-		|	InformationRegister.Selectors AS Selectors
-		|WHERE
-		|	Selectors.Questionnaire = &Questionnaire
-		|
-		|	ORDER BY
-		|	ComparisonType,
-		|	Selector";
-		
-	Query.SetParameter("Questionnaire", Object.Ref);
-	
-	Source = Query.Execute().Unload();
+	Source = Object.Selectors;
 	
 	Skip 				= False;
 	PreviousSelector 	= Undefined;
@@ -876,7 +1211,7 @@ Function FillSelectors()
 		
 		If Not Skip Or DontSkip(Selector, PreviousSelector, ListOfValues) Then
 			
-			If Selector.ComparisonType <> Enums.ComparisonType.InList Then
+			If Not Selector.ComparisonType = Enums.ComparisonType.InList Then
 				
 				NewRow 			= Selectors.Add();
 				NewRow.Value 	= Selector.Value;
@@ -920,7 +1255,6 @@ EndFunction
 Function CreateSelectorsTable()
     
     SelectorsTable = new ValueTable();
-    SelectorsTable.Columns.Add("Questionnaire");
     SelectorsTable.Columns.Add("Selector");
     SelectorsTable.Columns.Add("ComparisonType");
     SelectorsTable.Columns.Add("Value");
@@ -954,15 +1288,14 @@ Function WriteSRow(Item, ListItem, SelectorsTable)
     Row 				= SelectorsTable.Add();
     Row.Selector 		= Item.Selector;
     Row.ComparisonType 	= Item.ComparisonType;
-    Row.Questionnaire 	= Object.Ref;
-	
+    	
 	If Row.Selector = "Catalog_OutletParameter" Then
 		
 		Row.AdditionalParameter = Item.SelectorRepresent;                        
 		
 	Else
 		
-		Row.AdditionalParameter = "";            
+		Row.AdditionalParameter = Undefined;            
 		
 	EndIf; 
 	
@@ -1007,7 +1340,6 @@ Procedure WriteSelectorRow(NewRow, Selector)
 	Else
 		
 		NewRow.SelectorRepresent 	= String(Enums.QuestionnaireSelectors[Selector.Selector]);
-		NewRow.AdditionalParameter 	= Selector.AdditionalParameter;
 		
 	EndIf;
 	
@@ -1018,23 +1350,19 @@ Procedure LoadSelectors()
 	
 	SelectorsValueTable = CreateSelectorsTable();
 	
-	RecordSet = InformationRegisters.Selectors.CreateRecordSet();
-	RecordSet.Filter.Questionnaire.Set(Object.Ref);
+	Object.Selectors.Clear();
 	
 	For Each Row In SelectorsValueTable Do
 		
-		NewRecord 						= RecordSet.Add();
-		NewRecord.Key 					= New UUID;
-        NewRecord.AdditionalParameter 	= Row.AdditionalParameter;
+		NewRecord 						= Object.Selectors.Add();
+		NewRecord.AdditionalParameter 	= Row.AdditionalParameter;
     	NewRecord.ComparisonType 		= Row.ComparisonType;
-        NewRecord.Questionnaire 		= Row.Questionnaire;
         NewRecord.Selector 				= Row.Selector;
         NewRecord.Value 				= Row.Value;
+		NewRecord.StringValue			= GetStringFromValue(Row.Value);
 		
 	EndDo;    
 	
-	RecordSet.Write();
-
 EndProcedure
 
 
@@ -1050,6 +1378,8 @@ Procedure OnOpen(Cancel)
 	Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
 	
 	FillAvailableStatuses(Object.Status);
+	
+	CheckSelectorsForSKUs(Items.QuestionsCheckSelectorsForSKUs);
 	
 EndProcedure
 
@@ -1278,56 +1608,6 @@ Procedure FillAvailableStatuses(Status)
 
 EndProcedure
 
-&AtServer
-Procedure SetStatusTo(EnumValueName)
-	
-	Object.Status = Enums["QuestionnareStatus"][EnumValueName];
-	
-EndProcedure
-
-&AtServer
-Function StatusIs(EnumValueName) 
-	
-	Return Object.Status = Enums["QuestionnareStatus"][EnumValueName];
-	
-EndFunction
-
-&AtServer
-Function GetAvailableStatuses(Status)
-	
-	AvailableStatuses = New ValueList;
-	
-	If Status = Enums.QuestionnareStatus.Planning Then
-		
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Planning, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
-		
-	ElsIf Status = Enums.QuestionnareStatus.Ready Then
-		
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
-		
-	ElsIf Status = Enums.QuestionnareStatus.Active Then
-		
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
-							  
-	ElsIf Status = Enums.QuestionnareStatus.Inactive Then
-		
-		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
-		                                     
-	EndIf;
-						  
-	Return AvailableStatuses;
-						  
-EndFunction
 
 // End date
 
@@ -1395,100 +1675,6 @@ Procedure ChangeEndDateInActiveStatus(Result, Parameters) Export
 	
 EndProcedure
 
-// SKUs
-
-&AtClient
-Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
-	
-	If Not Item.CurrentRow = Undefined Then
-		
-		ID = Item.CurrentRow;                
-		Row = SKUsValueTable.FindByID(ID);
-		Row.SourceType = TypeOf(Row.SKU);
-		
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure SKUsValueTableSKUStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	TypesArray = New Array;
-	TypesArray.Add(Type("CatalogRef.SKU"));
-	
-	If SKUSourceType = "SKUGroup" Then
-		
-		TypesArray.Add(Type("CatalogRef.SKUGroup"));
-		
-	EndIf;
-		
-	If SKUSourceType = "Brand" Then
-		
-		TypesArray.Add(Type("CatalogRef.Brands"));
-		
-	EndIf;
-
-	TypeDescription = New TypeDescription(TypesArray);
-	Item.TypeRestriction = TypeDescription;
-
-EndProcedure
-
-&AtClient
-Procedure SKUSourceTypeOnChange(Item)
-	
-	If Not OldSKUSourceType.Value = SKUSourceType Then
-	
-		If Not OldSKUSourceType.Value = "SKU" Then
-			
-			FilterParameters = New Structure;
-			FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
-			
-			RowsArray = SKUsValueTable.FindRows(FilterParameters);
-			
-			Modified = RowsArray.Count() > 0;
-			
-			For Each Row In RowsArray Do;
-				
-				Index = SKUsValueTable.IndexOf(Row);
-				SKUsValueTable.Delete(Index);
-				
-			EndDo;
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	AdditionalParameters = New Structure;
-	AdditionalParameters.Insert("StandardProcessing", StandardProcessing);
-	
-	Notification = New NotifyDescription("AfterQuestionClose", ThisForm, AdditionalParameters);
-	
-	OldSKUSourceType = Items.SKUSourceType.ChoiceList.FindByValue(SKUSourceType);
-	
-	If SKUsValueTable.Count() = 0 OR OldSKUSourceType.Presentation = NStr("en = 'SKU'; ru = 'Номенклатура'") Then
-		
-		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
-		
-	Else
-	
-		ShowQueryBox(Notification,
-		NStr("en = 'All rows with catalog """ + OldSKUSourceType.Presentation + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + OldSKUSourceType.Presentation + """ будут удалены. Продолжить?'"),
-		QuestionDialogMode.YesNo,
-		0,
-		DialogReturnCode.No,
-		NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
-		
-	EndIf;
-	
-EndProcedure
-
 
 // Schedule
 
@@ -1527,7 +1713,20 @@ Procedure SelectorsTableOnStartEdit(Item, NewRow, Clone)
 
 	If NewRow Then 
 		
-		CurrentItem.CurrentData.ComparisonType = GetEqualComparisonType();
+		Items.SelectorsTable.CurrentData.ComparisonType = GetEqualComparisonType();
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtClient
+Procedure SelectorsTableBeforeAddRow(Item, Cancel, Clone, Parent, Folder, Parameter)
+	
+	If Selectors.Count() = 10 Then 
+		
+		Message(NStr("en = 'Available only 10 selectors'; ru = 'Доступно только 10 параметров отбора'"));
+		
+		Cancel = True;
 		
 	EndIf;	
 	
@@ -1545,7 +1744,7 @@ EndProcedure
 &AtClient
 Procedure SelectorsSelectorRepresentChoiseProcessing(Result, AdditionalParameter) Export
 	
-	Row = Selectors.FindByID(CurrentItem.CurrentRow);
+	Row = Selectors.FindByID(Items.SelectorsTable.CurrentRow);
 	
 	Row.Value = Undefined;
 	
@@ -1579,7 +1778,7 @@ Procedure SelectorsSelectorChoiseProcessing(Result, AdditionalParameter) Export
 	
 	If Not Result = Undefined Then
 	
-		Row = Selectors.FindByID(CurrentItem.CurrentRow);
+		Row = Selectors.FindByID(Items.SelectorsTable.CurrentRow);
 		
 		Row.SelectorRepresent = Result;
 		
@@ -1598,29 +1797,29 @@ Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	StandardProcessing = False;
 	
-	If CurrentItem.CurrentData.SelectorRepresent = Undefined Or CurrentItem.CurrentData.Selector = Undefined Then
+	If Items.SelectorsTable.CurrentData.SelectorRepresent = Undefined Or Items.SelectorsTable.CurrentData.Selector = Undefined Then
 		
 		Return;    	    
 		
 	EndIf;
 	
-	If Not IsList(CurrentItem.CurrentData.ComparisonType) Then 
+	If Not IsList(Items.SelectorsTable.CurrentData.ComparisonType) Then 
 		
-		If Not IsOutletParameter(CurrentItem.CurrentData.Selector) Then
+		If Not IsOutletParameter(Items.SelectorsTable.CurrentData.Selector) Then
 			
-			Str = StrReplace(CurrentItem.CurrentData.Selector, "_", ".");
+			Str = StrReplace(Items.SelectorsTable.CurrentData.Selector, "_", ".");
 			
 			OpenForm(Str + ".ChoiceForm", , Item, , , , , FormWindowOpeningMode.LockWholeInterface);    	    
 			
 		Else
 			
-			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Items.SelectorsTable.CurrentData.GetID(), CurrentItem.CurrentData.AdditionalParameter, CurrentItem.CurrentData.SelectorRepresent, "QuestionnaireForm", CurrentItem.CurrentData.Value));                
+			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.SelectorRepresent, "QuestionnaireForm", Items.SelectorsTable.CurrentData.Value));                
 			
 		EndIf;
 		
 	Else
 		
-		OpenForm("Document.Questionnaire.Form.SelectorsListForm", New Structure("StringNumber, Selector, DataType, CurrentValue, OutletParameter", Items.SelectorsTable.CurrentData.GetID(), CurrentItem.CurrentData.Selector, CurrentItem.CurrentData.AdditionalParameter, CurrentItem.CurrentData.Value, CurrentItem.CurrentData.SelectorRepresent));
+		OpenForm("Document.Questionnaire.Form.SelectorsListForm", New Structure("StringNumber, Selector, DataType, CurrentValue, OutletParameter", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.Selector, Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.Value, Items.SelectorsTable.CurrentData.SelectorRepresent));
 		
 	EndIf
 
@@ -1636,20 +1835,20 @@ EndProcedure
 &AtClient
 Procedure SelectorsComparisonTypeChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
-	If Not CurrentItem.CurrentData.Value = Undefined And Not CurrentItem.CurrentData.ComparisonType = SelectedValue Then
+	If Not Items.SelectorsTable.CurrentData.Value = Undefined And Not Items.SelectorsTable.CurrentData.ComparisonType = SelectedValue Then
 		
-        If IsList(CurrentItem.CurrentData.ComparisonType) Then
+        If IsList(Items.SelectorsTable.CurrentData.ComparisonType) Then
 			
-			CurrentItem.CurrentData.Value = CurrentItem.CurrentData.Value[0];
+			Items.SelectorsTable.CurrentData.Value = Items.SelectorsTable.CurrentData.Value[0];
 			
 		EndIf; 
 		
 		If IsList(SelectedValue) Then
 			
 			ListOfValues = new ValueList;
-        	ListOfValues.Add(CurrentItem.CurrentData.Value);
+        	ListOfValues.Add(Items.SelectorsTable.CurrentData.Value);
 			
-			CurrentItem.CurrentData.Value = ListOfValues;
+			Items.SelectorsTable.CurrentData.Value = ListOfValues;
 			
 		EndIf; 
 		
@@ -1696,6 +1895,7 @@ Procedure SelectorsComparisonTypeClearing(Item, StandardProcessing)
 	StandardProcessing = False;
 	
 EndProcedure
+
 
 // Questions
 
@@ -1995,33 +2195,238 @@ Procedure DiscardСhanges(Command)
 		
 EndProcedure
 
-&AtServer
-Procedure DisableFormElements()
-	
-	// Блокировка элементов в зависимости от статуса анкеты
-    IsActive = Object.Status = Enums.QuestionnareStatus.Active;
-    IsInactive = Object.Status = Enums.QuestionnareStatus.Inactive;
-	
-    Items.Regularity.Enabled = Not (IsActive Or IsInactive);
-    Items.BeginDate.Enabled = Not (IsActive Or IsInactive);
-    Items.SelectorsTable.Enabled = Not (IsActive Or IsInactive);
-	Items.FillPeriod.Enabled = Not (IsActive Or IsInactive) And Object.Single;
-    
-    Items.SetSchedule.Enabled = Not (IsActive Or IsInactive);
-    
-    Items.Status.Enabled = Not IsInactive;
-    Items.EndDate.Enabled = Not IsInactive;
-    
-    Items.Questions.ReadOnly = IsInactive;
-    Items.Questions.CommandBar.Enabled = Not IsInactive;
-    
-    Items.SKUQuestions.ReadOnly = IsInactive;
-    Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
-    
-    Items.SKUSourceType.Enabled = Not IsInactive;
-    Items.SKUsValueTable.ReadOnly = IsInactive;
-    Items.SKUsValueTable.CommandBar.Enabled = Not IsInactive;
 
+// SKUs
+
+&AtClient
+Procedure SKUSourceTypeOnChange(Item)
+	
+	If Not OldSKUSourceType.Value = SKUSourceType Then
+	
+		If Not OldSKUSourceType.Value = "SKU" Then
+			
+			FilterParameters = New Structure;
+			FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
+			
+			RowsArray = SKUsValueTable.FindRows(FilterParameters);
+			
+			Modified = RowsArray.Count() > 0;
+			
+			For Each Row In RowsArray Do;
+				
+				Index = SKUsValueTable.IndexOf(Row);
+				SKUsValueTable.Delete(Index);
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	AdditionalParameters = New Structure;
+	AdditionalParameters.Insert("StandardProcessing", StandardProcessing);
+	
+	Notification = New NotifyDescription("AfterQuestionClose", ThisForm, AdditionalParameters);
+	
+	OldSKUSourceType = Items.SKUSourceType.ChoiceList.FindByValue(SKUSourceType);
+	
+	If SKUsValueTable.Count() = 0 Or OldSKUSourceType.Value = "SKU" Then
+		
+		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
+		
+	Else
+	
+		ShowQueryBox(Notification,
+		NStr("en = 'All rows with catalog """ + OldSKUSourceType.Presentation + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + OldSKUSourceType.Presentation + """ будут удалены. Продолжить?'"),
+		QuestionDialogMode.YesNo,
+		0,
+		DialogReturnCode.No,
+		NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
+	
+	If Not CancelEdit Then
+	
+		ID = Item.CurrentRow;                
+		Row = SKUsValueTable.FindByID(ID);
+		Row.SourceType = TypeOf(Row.SKU);
+		
+	EndIf;	
+		
+EndProcedure
+
+&AtClient
+Procedure SKUsValueTableSKUStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	TypesArray = New ValueList;
+	TypesArray.Add("Catalog.SKU", NStr("en = 'SKU'; ru = 'Номенклатура'"));
+	
+	If SKUSourceType = "SKUGroup" Then
+		
+		TypesArray.Add("Catalog.SKUGroup", NStr("en = 'SKU Group'; ru = 'Группа номенклатуры'"));
+		
+	EndIf;
+		
+	If SKUSourceType = "Brand" Then
+		
+		TypesArray.Add("Catalog.Brands", NStr("en = 'Brand'; ru = 'Бренд'"));
+		
+	EndIf;
+	
+	ShowChooseFromList(New NotifyDescription("SKUsValueTableSKUChoiceProcessing", ThisForm, Item), TypesArray, Item, );
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsValueTableBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
+	
+	If Not CancelEdit Then 
+	
+		If Not ValueIsFilled(Items.SKUsValueTable.CurrentData.SKU) Then 
+			
+			Message(NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'"));
+			
+			Cancel = True;
+			
+		EndIf;
+				
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsValueTableSKUChoiceProcessing(Result, AdditionalParameter) Export 
+	
+	If Not Result = Undefined Then	
+
+		If Result.Value = "Catalog.SKU" Or Result.Value = "Catalog.SKUGroup" Then 
+			
+			FilterOfList = GetDataCompositionFilter(Result.Value);
+						
+			ChoiseForm = GetForm(Result.Value + ".ChoiceForm");
+						
+			For Each FilterItem In FilterOfList.Items Do 
+				
+				NewFilterItem = ChoiseForm.List.Filter.Items.Add(Type("DataCompositionFilterItem"));
+				
+				FillPropertyValues(NewFilterItem, FilterItem);				
+				
+			EndDo;
+			
+			ChoiseForm.FormOwner 			= AdditionalParameter;
+			ChoiseForm.WindowOpeningMode	= FormWindowOpeningMode.LockWholeInterface;
+						
+			ChoiseForm.Open();		
+								
+		ElsIf Result.Value = "Catalog.Brands" Then
+			
+			OpenForm("Catalog.Brands.ChoiceForm", , AdditionalParameter, , , , , FormWindowOpeningMode.LockWholeInterface);	
+			
+		EndIf;	
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure CheckSelectorsForSKUs(Command)
+	
+	SKUArray 		= New Array;
+	SKUGroupsArray 	= New Array;
+	
+	For Each Element In SKUsValueTable Do 
+		
+		If TypeOf(Element.SKU) = Type("CatalogRef.SKU") Then 
+			
+			SKUArray.Add(Element.SKU);
+			
+		EndIf;
+		
+		If TypeOf(Element.SKU) = Type("CatalogRef.SKUGroup") Then 
+			
+			SKUGroupsArray.Add(Element.SKU);
+			
+		EndIf;
+				
+	EndDo;	
+	
+	FilterOfSKUList 		= GetDataCompositionFilter("Catalog.SKU", "Ref.");
+	FilterOfSKUGroupList 	= GetDataCompositionFilter("Catalog.SKUGroup", "Ref.");
+	
+	If Not SKUArray.Count() = 0 And Not FilterOfSKUList.Items.Count() = 0 Then 
+		
+		SKUArray = CheckSelectorsForSKUsAtServer("Catalog.SKU", FilterOfSKUList, SKUArray); 	
+		
+	EndIf;	
+	
+	If Not SKUGroupsArray.Count() = 0 And Not FilterOfSKUGroupList.Items.Count() = 0 Then 
+		
+		SKUGroupsArray = CheckSelectorsForSKUsAtServer("Catalog.SKUGroup", FilterOfSKUGroupList, SKUGroupsArray); 	
+		
+	EndIf;
+	
+	For Each Element In SKUsValueTable Do
+		
+		If TypeOf(Element.SKU) = Type("CatalogRef.SKU") Then 
+			
+			If SKUArray = Undefined Then 
+				
+				Element.Index = 0;
+				Continue;
+				
+			EndIf;	
+			
+			If SKUArray.Find(Element.SKU) = Undefined Then 
+				
+				Element.Index = 1;
+				
+			Else 
+				
+				Element.Index = 0;
+				
+			EndIf;
+			
+		ElsIf TypeOf(Element.SKU) = Type("CatalogRef.SKUGroup") Then 
+			
+			If SKUGroupsArray = Undefined Then 
+				
+				Element.Index = 0;
+				Continue;
+				
+			EndIf;
+			
+			If SKUGroupsArray.Find(Element.SKU) = Undefined Then 
+				
+				Element.Index = 1;
+				
+			Else 
+				
+				Element.Index = 0;
+				
+			EndIf;	
+			
+		Else 
+			
+			Element.Index = 0;
+			
+		EndIf; 
+				
+	EndDo;	
+		
 EndProcedure
 
 

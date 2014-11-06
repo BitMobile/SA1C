@@ -1,110 +1,158 @@
 ﻿
-Procedure StartUpdate() Export 
+#Region CommonUpdateProcessors
+
+Function StartUpdate() Export 
+	
+	CurrentVersion 	= Constants.bitmobile_ВерсияКонфигурации.Get();
+	MetadataVersion = Metadata.Version;
+	
+	ReturnStructure = New Structure;
+	ReturnStructure.Insert("NeedUpdate", False);
+	ReturnStructure.Insert("UpdateComplete", False);
+	ReturnStructure.Insert("Error", "");
+	
+	If Not CurrentVersion = MetadataVersion Then  
+		
+		ReturnStructure.NeedUpdate = True;
+		
+		If Not (IsInRole("bitmobile_Администратор") And IsInRole("bitmobile_Пользователь") And IsInRole("Admin")) Then 
+			
+			ErrorText = NStr("en = 'Insufficient permissions to perform the update. Required roles: Administrator (bitmobile), Administrator (superagent) and User (bitmobile)." 
+							+ Chars.LF + "System operation is completed.';"
+							+ "ru = 'Недостаточно прав для выполнения обновления. Требуются роли: Администратор (bitmobile), Администратор (superagent) и Пользователь (bitmobile)."
+							+ Chars.LF + "Работа системы будет завершена.'");
+			
+			ReturnStructure.Error = ErrorText;
+			
+			Return ReturnStructure;
+			
+		EndIf;	
+				
+		Try
+			
+			SetExclusiveMode(True);
+			
+		Except
+			
+			ErrorText = NStr("en = 'Failed to set exclusive mode."
+							+ Chars.LF + "Description of error: %1%."
+							+ Chars.LF + "System operation is completed.';"
+							+ "ru = 'Не удалось установить монопольный режим."
+							+ Chars.LF + "Описание ошибки: %1%."
+							+ Chars.LF + "Работа системы будет завершена.'");
+			
+			ErrorText = StrReplace(ErrorText, "%1%", String(ErrorDescription())); 
+						
+			ReturnStructure.Error = ErrorText;
+			
+			Return ReturnStructure;
+			
+		EndTry;
+		
+		BeginTransaction();
+		
+		LastState = "";
+		
+		Try
+		
+			UserMessage 		= New UserMessage;
+			UserMessage.Text 	= NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'");
+			
+			UserMessage.Message();
+			
+			Step = 0;
+			
+			// Общие обработчики для всех релизов
+			UpdateForAllReleases(LastState, Step);			
+						
+			// Специальные обработчики для релизов
+			If MetadataVersion = "1.3.0.57" Then 
+				
+				UpdateForRelease_1_3_0_57(LastState, Step);
+				
+			EndIf;	
+						
+			Constants.bitmobile_ВерсияКонфигурации.Set(MetadataVersion);
+		
+			CommitTransaction();
+			
+			SetExclusiveMode(False);
+			
+			ReturnStructure.UpdateComplete = True;
+			
+			Return ReturnStructure;
+			
+		Except
+			
+			RollbackTransaction();
+			
+			ErrorText = NStr("en = 'Database update aborted at step: %1%. " 
+			                + Chars.LF + "Description of error: %2%. " 
+							+ Chars.LF + "System operation is completed.';" 
+							+ "ru = 'Обновление базы данных прервано на этапе: %1%." 
+							+ Chars.LF +  "Описание ошибки: %2%. " 
+							+ Chars.LF +  "Работа системы будет завершена.'");
+			
+			ErrorText = StrReplace(ErrorText, "%1%", LastState);
+			ErrorText = StrReplace(ErrorText, "%2%", String(ErrorDescription()));
+								
+			ReturnStructure.Error = ErrorText;
+			
+			Return ReturnStructure;
+			
+		EndTry;
+				
+	EndIf;
+	
+	Return ReturnStructure;
     
-    Message(NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'"));
-    
-    Try
-        FillInProcessing();
-        UpdateProcessing();
-        Message(NStr("en = 'Database update processing is finished'; ru = 'Обработка обновления базы данных завершена'"));
-        Constants.update2_0_0.Set(True);
-    Except
-        Message(NStr("en = 'Database update processing is finished with mistakes'; ru = 'Обработка обновления базы данных завершена c ошибками'"));
-    EndTry;
-    
+EndFunction
+
+Procedure WriteProtocol(LastState, Step, Text)
+	
+	Step		= Step + 1;
+	LastState 	= Text;
+	
+	UserMessage 		= New UserMessage;
+	UserMessage.Text	= NStr("en = 'Step '; ru = 'Этап '") + String(Step) + ": " + Text;
+	
+	UserMessage.Message();
+	
+EndProcedure	
+
+#EndRegion
+
+#Region ForAllReleases
+
+Procedure UpdateForAllReleases(LastState, Step)
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Filling database'; ru = 'Заполнение базы данных'"));  
+	FillInProcessing();
+	
+	FillConfigurationName();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update users'; ru = 'Обновление пользователей'"));  
+	ProcessUsers();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update sync settings'; ru = 'Обновление настроек синхронизации'"));  
+	ProcessSyncSettings();
+	
 EndProcedure
 
-Procedure UpdateProcessing() //Actual for release 27
-    
-    UpdateVisitSKU();
-	//DataProcessors.SyncAndSettings.FillRecordset();
-    CheckOutMobileSettingsAtServer();
-    FillInStocks();
-    UpdateOutlets();
-    //DataProcessors.SyncAndSettings.FillFTPRecordset();
-    ClearZeroesAtOutlets();
-    
-EndProcedure
+Procedure FillConfigurationName()
+	
+	Constants.bitmobile_ИмяКонфигурации.Set(Metadata.Name);
+	
+EndProcedure	
 
-Procedure UpdateVisitSKU()
+Procedure FillInProcessing()
     
-    query =new Query();
-    query.Text = 
-    "SELECT
-    |   Visit.Ref
-    |FROM
-    |   Document.Visit AS Visit";
-    recordset = query.Execute().Unload();
-    
-    For Each row In recordset Do
-        
-        //visitObj = row.Ref.GetObject();
-        If row.Ref.SKUs.Count() > 0 Then
-            visitObj = row.Ref.GetObject();
-            VT = visitObj.SKUs.Unload();
-            NewTable = visitObj.SKUs.Unload();
-            NewTable.Clear();
-            For Each VTrow In VT Do
-                If NOT IsBlankString(VTrow.Available) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Доступность");
-                    newRow.Answer = VTrow.Available;
-                EndIf;
-                If NOT IsBlankString(VTrow.Facing) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Фейсинг");
-                    newRow.Answer = VTrow.Facing;
-                EndIf;
-                If NOT IsBlankString(VTrow.Stock) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Остаток");
-                    newRow.Answer = VTrow.Stock;
-                EndIf;
-                If NOT IsBlankString(VTrow.Price) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Цена");
-                    newRow.Answer = VTrow.Price;
-                EndIf;
-                If NOT IsBlankString(VTrow.MarkUp) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Наценка");
-                    newRow.Answer = VTrow.MarkUp;
-                EndIf;
-                If NOT IsBlankString(VTrow.OutOfStock) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Наличие на складе");
-                    newRow.Answer = VTrow.OutOfStock;
-                EndIf;
-                If NOT IsBlankString(VTrow.Snapshot) Then
-                    newRow = NewTable.Add();
-                    newRow.SKU = VTrow.SKU;
-                    newRow.Question = Catalogs.Question.FindByDescription("Фотоснимок");
-                    newRow.Answer = VTrow.Snapshot;
-                EndIf;                
-            EndDo;
-            
-            visitObj.SKUs.Load(NewTable);
-            visitObj.Write();
-            
-        EndIf; 
-                
-    EndDo;
-    
-EndProcedure
-
-
-Procedure FillInProcessing() //Actual for all releases, especially for setup
-    
-    ////Add alements if no one exists, at Catalogs OutletType, Class, Territory, Users, SKUGroup, Region, Brand, Units
+    // Добавить элементы для справочников OutletType, Class, Territory, Users, SKUGroup, Region, Brand, Units
     EntityElements = New ValueTable();
-    EntityElements.Columns.Add("Key");
+	
+	EntityElements.Columns.Add("Key");
     EntityElements.Columns.Add("Value");
+	
     EntityElements = AddInValueTable(EntityElements, "User", "Основной торговый представитель");
     EntityElements = AddInValueTable(EntityElements, "OutletType", "Основной тип");
     EntityElements = AddInValueTable(EntityElements, "OutletClass", "Основной класс");
@@ -115,33 +163,105 @@ Procedure FillInProcessing() //Actual for all releases, especially for setup
     EntityElements = AddInValueTable(EntityElements, "UnitsOfMeasure", "шт.");
     
     For Each Entity In EntityElements Do
-        If NoItems(Entity.Key) Then
-            NewObject = Catalogs[Entity.Key].CreateItem();
+		
+		If NoItems(Entity.Key) Then
+			
+			NewObject = Catalogs[Entity.Key].CreateItem();
             NewObject.Description = Entity.Value;
+			
 			If Entity.Key = "User" Then
-                NewObject.Description = "sr";
-				//NewObject = Catalogs[Entity.Key].CreateItem();
-                NewObject.Role = "SR";
-                NewObject.UserName = "sr";
-                NewObject.Password = "sr";
+				
+				NewObject.Description 	= "sr";
+				NewObject.Role 			= "SR";
+                NewObject.UserName 		= "sr";
+                NewObject.Password 		= "sr";
+				
 				NewObject.Write();
+				
 				NewObject = Catalogs[Entity.Key].CreateItem();
-				NewObject.Description = "srm";
-				NewObject.Role = "SRM";
-				NewObject.UserName = "srm";
-				NewObject.Password = "srm";
-            EndIf;
-            If Entity.Key = "Territory" Then
-                NewObject.SR = Catalogs.User.FindByAttribute("Role", "SR");
+				
+				NewObject.Description 	= "srm";
+				NewObject.Role 			= "SRM";
+				NewObject.UserName 		= "srm";
+				NewObject.Password 		= "srm";
+				
+			EndIf;
+			
+			If Entity.Key = "Territory" Then
+				
+				NewObject.SR = Catalogs.User.FindByAttribute("Role", "SR");
                 NewObject.Owner = Catalogs.Region.FindByCode("000000001");
-            EndIf;
-            If Entity.Key = "Region" Then
-                NewObject.Manager = Catalogs.User.FindByAttribute("Role", "SRM");
-            EndIf;
-            NewObject.Write();
-        EndIf;    
-    EndDo;
-    
+				
+			EndIf;
+			
+			If Entity.Key = "Region" Then
+				
+				NewObject.Manager = Catalogs.User.FindByAttribute("Role", "SRM");
+				
+			EndIf;
+			
+			NewObject.Write();
+			
+		EndIf;    
+		
+	EndDo;
+		
+EndProcedure
+
+Procedure ProcessUsers()
+	
+	UsersArray = InfoBaseUsers.GetUsers();
+	
+	For Each UserElement In UsersArray Do 
+		
+		If UserElement.Roles.Contains(Metadata.Roles.SRM) Then 
+			
+			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
+			
+				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
+				
+				UserElement.Write();
+				
+			EndIf;
+			
+		EndIf;	
+			
+		If UserElement.Roles.Contains(Metadata.Roles.Admin) Then 
+			
+			NeedWrite = False;
+			
+			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
+			
+				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
+				
+				NeedWrite = True;
+				
+			EndIf;
+			
+			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Администратор) Then
+			
+				UserElement.Roles.Add(Metadata.Roles.bitmobile_Администратор);
+				
+				NeedWrite = True;
+				
+			EndIf;
+			
+			If NeedWrite Then 
+			
+				UserElement.Write();
+				
+			EndIf;
+						
+		EndIf;
+		
+	EndDo;	
+	
+EndProcedure	
+
+Procedure ProcessSyncSettings()
+
+	DataProcessors.bitmobile_СинхронизацияИНастройки.ВосстановитьНастройкиИзФайла(Undefined, True, True);
+
 EndProcedure
 
 Function NoItems(EntityName)
@@ -174,165 +294,213 @@ EndFunction
 
 Function AddInValueTable(EntityElements, Entity, Value)
     
-    NewRow = EntityElements.Add();
-    NewRow.Key = Entity;
-    NewRow.Value = Value;
-    Return EntityElements;
+    NewRow 			= EntityElements.Add();
+    NewRow.Key 		= Entity;
+    NewRow.Value 	= Value;
+	
+	Return EntityElements;
     
 EndFunction 
 
-&AtServer
-Procedure CheckOutMobileSettingsAtServer() 
-    ////Update mobile settings
-    array = new Array;
-    array.Add(New Structure("Name, Commentary", "NoStkEnbl", "Номенклатура с нулевым остатком доступна для заказа"));
-    array.Add(New Structure("Name, Commentary", "PlanEnbl", "Доступно создание планового визита из мобильного приложения"));
-    
-    For Each newSet In array Do
-        query2 = new Query;
-        query2.Text=
-        "SELECT
-        |   bitmobile_НастройкиМобильныхПриложений.Ref,
-        |   bitmobile_НастройкиМобильныхПриложений.Description
-        |FROM
-        |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
-        |WHERE
-        |   bitmobile_НастройкиМобильныхПриложений.Code = &Code";
-        query2.SetParameter("Code", newSet.Name);
-        If query2.Execute().IsEmpty() Then
-            newItem = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
-            newItem.Code = newSet.Name;
-            newItem.Description = newSet.Commentary;
-            newItem.Write();
-        EndIf;
-    EndDo;    
-EndProcedure
+#EndRegion
 
+#Region Release_1_3_0_57
 
-Procedure FillInStocks()
-    Query = New Query;
-    Query.Text = 
-    "SELECT
-    |   SKU.Ref
-    |FROM
-    |   Catalog.SKU AS SKU";
-    
-    Result = Query.Execute().Unload();
-    
-    For Each SelectionDetailRecords In Result Do      	  
-        obj = SelectionDetailRecords.Ref.GetObject();
-        TS = obj.Stocks.Unload();
-        For Each row In TS Do
-            If row.Stock=Catalogs.Stock.EmptyRef() Then
-                row.Stock = Catalogs.Stock.FindByCode("000000001");                	                
-            EndIf;            	            
-        EndDo;
-        obj.Stocks.Load(TS);
-        obj.Write();
-    EndDo;
-    
-    
-    
-EndProcedure
+Procedure UpdateForRelease_1_3_0_57(LastState, Step)
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update groups of questions'; ru = 'Обновление групп вопросов'"));
+	ProcessQuestionGroups();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update territories in SKU groups'; ru = 'Обновление территорий в группах номенклатуры'"));
+	ProcessTerritoryInSKUGroups();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update questionnaires'; ru = 'Обновление анкет'"));
+	ProcessQuestionnaires();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update SKU questions in questionnaires'; ru = 'Обновление вопросов по номенклатуре в анкетах'"));
+	ProcessSKUQuestions();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update regular questions in questionnaires'; ru = 'Обновление общих вопросов в анкетах'"));
+	ProcessQuestions();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update SKUs in questionnaires'; ru = 'Обновление номенклатуры в анкетах'"));
+	ProcessSKUs();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update selectors in questionnaires'; ru = 'Обновление параметров отбора в анкетах'"));
+	ProcessSelectors();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update visits'; ru = 'Обновление результатов визитов'"));
+	UpdateSKUQuestionsInVisit();
+	
+EndProcedure	
 
-Procedure UpdateOutlets()
-    
-    query = new Query;
-    query.Text=
-    "SELECT
-    |   Outlet.Ref,
-    |   Outlet.OutletStatus
-    |FROM
-    |   Catalog.Outlet AS Outlet";
-    result = query.Execute().Unload();
-    
-    For Each ref In result Do
-        outletObj = ref.Ref.GetObject();
-        If ref.OutletStatus = Enums.OutletStatus.EmptyRef() Then
-            outletObj.OutletStatus = Enums.OutletStatus.Active;            
-        EndIf;
-        Record = InformationRegisters.OutletStatusHistory.CreateRecordManager();
-        Record.Outlet = ref.Ref;
-        Record.Status = ref.OutletStatus;
-        Record.Period = CurrentDate();
-        Record.Write();   
-        outletObj.Write();     	            
-    EndDo;
-    
-EndProcedure
+#Region Update_QuestionGroups_Territories
 
-Procedure ClearZeroesAtOutlets()
-
-	query = new Query();
-    query.Text = "SELECT
-                 |  Outlet.Ref,
-                 |  Outlet.INN,
-                 |  Outlet.KPP
-                 |FROM
-                 |  Catalog.Outlet AS Outlet";
-                 res = query.Execute().Unload();
-                 
-    For Each row In res Do
-    
-    	outletObj = row.Ref.GetObject();
-        If outletObj.INN = "0" Then
-            outletObj.INN = "";
-        EndIf;
-        If outletObj.KPP = "0" Then
-            outletObj.KPP = "";
-        EndIf;    
-        outletObj.Write();
-    EndDo;             
-
-EndProcedure
-
-&AtServer
-Procedure StartUpdateQuestionnaire() Export
-	Message(NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'"));	
-	Try
-		ProcessQuestionnaires();
-		ProcessQuestionGroups();
-		ProcessSKUQuestions();
-		Message(NStr("en = 'Database update processing is finished'; ru = 'Обработка обновления базы данных завершена'"));
-		Constants.update_questionnaire.Set(True);
-	Except
-		Message(NStr("en = 'Database update processing is finished with mistakes'; ru = 'Обработка обновления базы данных завершена c ошибками'"));
-		ИОО = ИнформацияОбОшибке();
-	EndTry;
-EndProcedure
-
-&AtServer
-Procedure ProcessQuestionnaires()
-	Selection = Documents.Questionnaire.Select();
-	While Selection.Next() Do
-		If Not ValueIsFilled(Selection.Schedule) Then
-			Object = Selection.GetObject();
-			Object.BeginDate = Object.Date + 60 * 60 * 24;
-			Object.Schedule = "Day;1";
-			Object.Write();
-		EndIf;
-	EndDo;
-EndProcedure
-
-&AtServer
 Procedure ProcessQuestionGroups()
 	
 	Selection = Catalogs.QuestionGroup.Select();
+	
 	While Selection.Next() Do
+		
 		If Selection.Type = Enums.QuestionGroupTypes.EmptyRef() Then
+			
 			Object = Selection.GetObject();
+			Object.DataExchange.Load = True;
 			Object.Type = Enums.QuestionGroupTypes.Regular;
 			Object.Write();
+			
 		EndIf;
+		
 	EndDo;
+	
 EndProcedure
 
-&AtServer
+Procedure ProcessTerritoryInSKUGroups()
+	
+	// Очистить списки территорий в группах
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKUGroup.Ref AS SKUGroup
+		|FROM
+		|	Catalog.SKUGroup AS SKUGroup
+		|WHERE
+		|	SKUGroup.IsFolder = FALSE";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		GroupObject = Selection.SKUGroup.GetObject();
+		
+		GroupObject.Territories.Clear();
+		
+		GroupObject.Write();
+				
+	EndDo;
+		
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Territory.Ref AS Territory
+		|FROM
+		|	Catalog.Territory AS Territory";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		Territory = Selection.Territory;
+		
+		For Each Row In Territory.SKUGroups Do 
+			
+			If Not Row.SKUGroup.IsFolder Then 
+			
+				GroupObject = Row.SKUGroup.GetObject();
+				
+				If Not GroupObject = Undefined Then  
+				
+					If GroupObject.Territories.Find(Territory) = Undefined Then 
+						
+						NewRow = GroupObject.Territories.Add();
+						NewRow.Territory = Territory;			
+						
+					EndIf;
+					
+					GroupObject.Write();
+					
+				EndIf;	
+				
+			EndIf;	
+			
+		EndDo;	
+		
+	EndDo;
+		
+EndProcedure
+
+#EndRegion
+
+#Region Update_Questionaire
+
+Procedure ProcessQuestionnaires()
+	
+	Select = Documents.Questionnaire.Select();
+	
+	While Select.Next() Do
+		
+		Object 				= Select.GetObject();
+		Object.BeginDate 	= Object.Date;
+		Object.Schedule 	= "Day;1";
+		Object.Status 		= Enums.QuestionnareStatus.Active;
+		Object.Single 		= False;
+		Object.FillPeriod 	= Enums.QuestionsSaveIntervals.ScheduleInterval;
+		
+		Object.Write();
+		
+	EndDo;
+	
+EndProcedure
+
 Procedure ProcessSKUQuestions()
+	
+	SKUQuestionsGroup = GetSKUQuestionsGroup();
+	
+	SKUQuestionsAssignment = New ValueTable;
+	SKUQuestionsAssignment.Columns.Add("Question");
+	SKUQuestionsAssignment.Columns.Add("Assignment");
+		
+	Question = CreateQuestion(NStr("en='Available';ru='Доступность'"), Enums.DataType.Boolean, Enums.SKUQuestions.Available, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Available;
+	
+	Question = CreateQuestion(NStr("en='Facing';ru='Фейсинг'"), Enums.DataType.Decimal, Enums.SKUQuestions.Facing, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Facing;
+	
+	Question = CreateQuestion(NStr("en='Mark up';ru='Наценка'"), Enums.DataType.Decimal, Enums.SKUQuestions.MarkUp, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.MarkUp;
+	
+	Question = CreateQuestion(NStr("en='Out of stock';ru='Наличие на складе'"), Enums.DataType.Boolean, Enums.SKUQuestions.OutOfStock, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.OutOfStock;
+	
+	Question = CreateQuestion(NStr("en='Price';ru='Цена'"), Enums.DataType.Decimal, Enums.SKUQuestions.Price, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Price;
+	
+	Question = CreateQuestion(NStr("en='Stock';ru='Остаток'"), Enums.DataType.Decimal, Enums.SKUQuestions.Stock, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Stock;
+	
+	Question = CreateQuestion(NStr("en='Snapshot';ru='Снимок'"), Enums.DataType.Snapshot, Enums.SKUQuestions.Snapshot, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Snapshot;
+	
 	Query = New Query(
 	"SELECT
 	|	QuestionnaireSKUQuestions1.Ref AS Ref,
-	|	QuestionnaireSKUQuestions1.SKUQuestion
+	|	QuestionnaireSKUQuestions1.SKUQuestion AS SKUQuestion,
+	|	QuestionnaireSKUQuestions1.LineNumber AS LineNumber
 	|FROM
 	|	Document.Questionnaire.SKUQuestions AS QuestionnaireSKUQuestions1
 	|WHERE
@@ -342,78 +510,66 @@ Procedure ProcessSKUQuestions()
 	|	Ref
 	|TOTALS BY
 	|	Ref");
-	SKUQuestions = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
 	
-	SKUQuestionsGroup = GetSKUQuestionsGroup();
+	SKUQuestions = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
+		
 	If SKUQuestions.Rows.Count() > 0 Then
+		
 		For Each QuestionnaireRow In SKUQuestions.Rows Do
-			QuestionnaireObject = QuestionnaireRow.Ref.GetObject();
+			
 			For Each SKUQuestionsRow In QuestionnaireRow.Rows Do
-				NewRow = QuestionnaireObject.SKUQuestionsNew.Add();
-				Question = SKUQuestionsRow.SKUQuestion;
-				NewRow.Question = GetSKUQuestion(Question, SKUQuestionsGroup);
+				
+				Question = GetSKUQuestion(SKUQuestionsRow.SKUQuestion, SKUQuestionsAssignment);
+				
+				If ValueIsFilled(Question) Then 
+				
+					RecordManager 					= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+					RecordManager.Questionnaire 	= QuestionnaireRow.Ref;
+					RecordManager.ChildQuestion 	= Question;
+					RecordManager.QuestionType 		= Enums.QuestionGroupTypes.SKUQuestions;
+					RecordManager.Order				= SKUQuestionsRow.LineNumber;
+					RecordManager.Obligatoriness 	= False;
+					RecordManager.Status 			= Enums.ValueTableRowStatuses.Added;
+					RecordManager.Period 			= QuestionnaireRow.Ref.Date;
+					
+					RecordManager.Write();
+					
+				EndIf;	
+ 								
 			EndDo;
-			QuestionnaireObject.Write();
+						
 		EndDo;
-	Else
-		CreateQuestion(NStr("en='Available';ru='Доступность'"), Enums.DataType.Boolean, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='Facing';ru='Фейсинг'"), Enums.DataType.Decimal, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='MarkUp';ru='Наценка'"), Enums.DataType.Decimal, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='OutOfStock';ru='Наличие на складе'"), Enums.DataType.Boolean, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='Price';ru='Цена'"), Enums.DataType.Decimal, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='Stock';ru='Остаток'"), Enums.DataType.Decimal, SKUQuestionsGroup);
-		CreateQuestion(NStr("en='Snapshot';ru='Снимок'"), Enums.DataType.Snapshot, SKUQuestionsGroup);
+		
 	EndIf;
+	
 EndProcedure
 
-&AtServer
-Function GetSKUQuestionsGroup()
-	SKUQuestionsGroupDescription = NStr("en = ""SKU questions (created automaticaly)""; ru = ""Вопросы по номенклатуре (создано автоматически)""");
-	SKUQuestionsGroup = Catalogs.QuestionGroup.FindByDescription(SKUQuestionsGroupDescription);
-	If SKUQuestionsGroup = Catalogs.QuestionGroup.EmptyRef() OR SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.Regular Then
-		SKUQuestionsGroup = Catalogs.QuestionGroup.CreateItem();
-		SKUQuestionsGroup.Description = SKUQuestionsGroupDescription;
-		SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.SKUQuestionsGroup;
-		SKUQuestionsGroup.Write();
-	EndIf;	
-	Return SKUQuestionsGroup.Ref;
-EndFunction
-
-&AtServer
-Function GetSKUQuestion(SKUQuestion, Group)
-	Question = Catalogs.Question.FindByDescription(GetSynonymFromEnumValue("SKUQuestions", SKUQuestion), True);
-	If Question = Catalogs.Question.EmptyRef() OR Not Question.Owner = Group Then
-		Question = Catalogs.Question.CreateItem();
-		Question.Description = SKUQuestion;
-		If SKUQuestion = Enums.SKUQuestions.Available OR SKUQuestion = Enums.SKUQuestions.Stock Then
-			Question.AnswerType = Enums.DataType.Boolean;
-		ElsIf Question = Enums.SKUQuestions.Snapshot Then
-			Question.AnswerType = Enums.DataType.Snapshot;
-		Else
-			Question.AnswerType = Enums.DataType.Decimal;
-		EndIf;
-		Question.Owner = Group;
-		Question.Write();
-	EndIf;
-	Return Question.Ref;
-EndFunction
-
-&AtServer
-Function GetSynonymFromEnumValue(Enum, Value)
-	IndexOfValue = Enums[Enum].IndexOf(Value);
-	Return Metadata.Enums[Enum].EnumValues[IndexOfValue].Synonym;
-EndFunction
-
-&AtServer
-Procedure CreateQuestion(Description, Type, Group)
-	NewQuestion = Catalogs.Question.CreateItem();
-	NewQuestion.Description = Description;
-	NewQuestion.AnswerType = Type;
-	NewQuestion.Owner = Group;
-	NewQuestion.Write();
+Procedure ProcessQuestions() 
+	
+	Query = New Query(
+	"SELECT
+	|	QuestionnaireQuestions.Ref AS Questionnaire,
+	|	QuestionnaireQuestions.Question AS ChildQuestion,
+	|	VALUE(Enum.QuestionGroupTypes.Regular) AS QuestionType,
+	|	QuestionnaireQuestions.LineNumber AS Order,
+	|	FALSE AS Obligatoriness,
+	|	VALUE(Enum.ValueTableRowStatuses.Added) AS Status,
+	|	QuestionnaireQuestions.Ref.Date AS Period
+	|FROM
+	|	Document.Questionnaire.Questions AS QuestionnaireQuestions");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		RecordManager = InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+		FillPropertyValues(RecordManager, Line);
+		RecordManager.Write();
+		
+	EndDo;
+	
 EndProcedure
 
-&AtServer
 Procedure ProcessSKUs()
 	
 	Query = New Query(
@@ -438,144 +594,378 @@ Procedure ProcessSKUs()
 	
 EndProcedure
 
-&AtServer
 Procedure ProcessSelectors()
 	
 	Query = New Query(
-	"SELECT
-	|	Territories.Ref AS Questionnaire,
-	|	Territories.Territory AS Value,
-	|	""Catalog_Territory"" AS Selector
-	|INTO SelectorValues
-	|FROM
-	|	Document.Questionnaire.Territories AS Territories
-	|WHERE
-	|	Territories.Ref.Scale = VALUE(Enum.QuestionnaireScale.Territory)
-	|
-	|UNION ALL
-	|
-	|SELECT
-	|	Regions.Ref,
-	|	Regions.Territory.Owner,
-	|	""Catalog_Region""
-	|FROM
-	|	Document.Questionnaire.Territories AS Regions
-	|WHERE
-	|	Regions.Ref.Scale = VALUE(Enum.QuestionnaireScale.Region)
-	|
-	|GROUP BY
-	|	Regions.Ref,
-	|	Regions.Territory.Owner
-	|
-	|UNION ALL
-	|
-	|SELECT
-	|	Questionnaire.Ref,
-	|	Questionnaire.OutletType,
-	|	""Catalog_OutletType""
-	|FROM
-	|	Document.Questionnaire AS Questionnaire
-	|
-	|UNION ALL
-	|
-	|SELECT
-	|	Questionnaire.Ref,
-	|	Questionnaire.OutletClass,
-	|	""Catalog_OutletClass""
-	|FROM
-	|	Document.Questionnaire AS Questionnaire
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
-	|	SelectorValues.Questionnaire AS Questionnaire,
-	|	SelectorValues.Value,
-	|	VALUE(Enum.ComparisonType.Equal) AS ComparisonType,
-	|	SelectorValues.Selector
-	|FROM
-	|	SelectorValues AS SelectorValues
-	|
-	|ORDER BY
-	|	Questionnaire");
+		"SELECT
+		|	Territories.Ref AS Questionnaire,
+		|	Territories.Territory AS Value,
+		|	""Catalog_Territory"" AS Selector
+		|INTO SelectorValues
+		|FROM
+		|	Document.Questionnaire.Territories AS Territories
+		|WHERE
+		|	Territories.Ref.Scale = VALUE(Enum.QuestionnaireScale.Territory)
+		|
+		|UNION ALL
+		|
+		|SELECT
+		|	Regions.Ref,
+		|	Regions.Territory.Owner,
+		|	""Catalog_Region""
+		|FROM
+		|	Document.Questionnaire.Territories AS Regions
+		|WHERE
+		|	Regions.Ref.Scale = VALUE(Enum.QuestionnaireScale.Region)
+		|
+		|GROUP BY
+		|	Regions.Ref,
+		|	Regions.Territory.Owner
+		|
+		|UNION ALL
+		|
+		|SELECT
+		|	Questionnaire.Ref,
+		|	Questionnaire.OutletType,
+		|	""Catalog_OutletType""
+		|FROM
+		|	Document.Questionnaire AS Questionnaire
+		|
+		|UNION ALL
+		|
+		|SELECT
+		|	Questionnaire.Ref,
+		|	Questionnaire.OutletClass,
+		|	""Catalog_OutletClass""
+		|FROM
+		|	Document.Questionnaire AS Questionnaire
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	SelectorValues.Questionnaire AS Questionnaire,
+		|	SelectorValues.Value,
+		|	VALUE(Enum.ComparisonType.Equal) AS ComparisonType,
+		|	SelectorValues.Selector
+		|FROM
+		|	SelectorValues AS SelectorValues
+		|
+		|ORDER BY
+		|	Questionnaire");
 	
 	QueryResult = Query.Execute().Unload();
 	
-	For Each Line In QueryResult Do
-		
-		RecordManager = InformationRegisters.Selectors.CreateRecordManager();
-		RecordManager.Key = New UUID;
-		FillPropertyValues(RecordManager, Line);
-		RecordManager.Write();
-		
-	EndDo;
-	
-EndProcedure
-
-&AtServer
-Procedure ProcessQuestions() 
-	
-	Query = New Query(
-	"SELECT
-	|	QuestionnaireSKUQuestionsNew.Ref AS Questionnaire,
-	|	QuestionnaireSKUQuestionsNew.Question AS ChildQuestion,
-	|	VALUE(Enum.QuestionGroupTypes.SKUQuestions) AS QuestionType,
-	|	QuestionnaireSKUQuestionsNew.LineNumber AS Order,
-	|	QuestionnaireSKUQuestionsNew.Ref.Date AS Period
-	|INTO Questions
-	|FROM
-	|	Document.Questionnaire.SKUQuestionsNew AS QuestionnaireSKUQuestionsNew
-	|
-	|UNION ALL
-	|
-	|SELECT
-	|	QuestionnaireQuestions.Ref,
-	|	QuestionnaireQuestions.Question,
-	|	VALUE(Enum.QuestionGroupTypes.Regular),
-	|	QuestionnaireQuestions.LineNumber,
-	|	QuestionnaireQuestions.Ref.Date
-	|FROM
-	|	Document.Questionnaire.Questions AS QuestionnaireQuestions
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
-	|	Questions.Questionnaire,
-	|	Questions.ChildQuestion,
-	|	Questions.QuestionType,
-	|	FALSE AS Obligatoriness,
-	|	VALUE(Enum.ValueTableRowStatuses.Added) AS Status,
-	|	Questions.Order,
-	|	Questions.Period
-	|FROM
-	|	Questions AS Questions");
-	
-	QueryResult = Query.Execute().Unload();
+	CurrentQuestionaire = Undefined;
 	
 	For Each Line In QueryResult Do
 		
-		RecordManager = InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
-		FillPropertyValues(RecordManager, Line);
-		RecordManager.Write();
+		If CurrentQuestionaire = Undefined Then 
+			
+			CurrentQuestionaire = Line.Questionnaire;
+			
+			CurrentQuestionaireObject = CurrentQuestionaire.GetObject();
+			
+			CurrentQuestionaireObject.Selectors.Clear();
+			
+		EndIf;	
 		
+		If CurrentQuestionaire = Line.Questionnaire Then 
+			
+			If ValueIsFilled(Line.Value) Then
+			
+				Row = CurrentQuestionaireObject.Selectors.Add();
+				
+				FillPropertyValues(Row, Line);
+				
+				Row.StringValue	= GetStringFromValue(Row.Value);
+				
+			EndIf;	
+			
+		Else 	
+			
+			CurrentQuestionaire = Line.Questionnaire;
+			
+			CurrentQuestionaireObject.Write();
+			
+			CurrentQuestionaireObject = CurrentQuestionaire.GetObject();
+			
+			CurrentQuestionaireObject.Selectors.Clear();
+			
+			If ValueIsFilled(Line.Value) Then 
+			
+				Row = CurrentQuestionaireObject.Selectors.Add();
+				
+				FillPropertyValues(Row, Line);
+				
+				Row.StringValue	= GetStringFromValue(Row.Value);
+				
+			EndIf;	
+				
+		EndIf;	
+				
 	EndDo;
-
+	
+	If Not CurrentQuestionaire = Undefined Then 
+	
+		CurrentQuestionaireObject.Write();
+		
+	EndIf;
 	
 EndProcedure
 
-&AtServer
-Procedure ProcessQuestionnairesStatusAndBeginDate()
+Function GUIDFromEnumValue(Value) 
 	
-	Select = Documents.Questionnaire.Select();
+	GUID = Mid(ValueToStringInternal(Value), StrLen(ValueToStringInternal(Value))-32,32);
+	GUID = Left(GUID,8) + "-" + Mid(GUID,9,4) + "-" + Mid(GUID,13,4) + "-" + Mid(GUID,17,4) + "-" + Right(GUID,12);
 	
-	While Select.Next() Do
+	Return GUID;	
+	
+EndFunction
+
+Function GetStringDate(Date)
+
+	Return Format(Date, "DF=ггггММддЧЧмм");
 		
-		Object = Select.GetObject();
-		Object.BeginDate = Object.Date;
-		Object.Status = Enums.QuestionnareStatus.Active;
-		Object.Single = True;
-		Object.FillPeriod = Enums.QuestionsSaveIntervals.ScheduleInterval;
-		Object.Write();
-		
-	EndDo;
+EndFunction
+
+Function GetStringFromValue(Value) 
 	
+	TypeOfValue = TypeOf(Value);
+	
+	If TypeOfValue = Type("Boolean") Then  
+				
+		If Value Then
+				
+	    	Return "True";
+				
+		Else   
+				
+			Return "False";
+				
+		EndIf;
+				
+	ElsIf TypeOfValue = Type("Date") Then 
+				
+		Return GetStringDate(Value);
+						
+	ElsIf TypeOfValue = Type("Number") Then 
+				
+	    Value = Строка(Value);
+        Value = StrReplace(Value, " ", "");
+        Value = StrReplace(Value, Chars.NBSp, "");
+		Value = StrReplace(Value, ",", ".");
+		
+		Return Value;
+				
+	ElsIf Enums.AllRefsType().ContainsType(TypeOfValue) Then 
+			
+		Return GUIDFromEnumValue(Value);
+			
+	ElsIf Catalogs.AllRefsType().ContainsType(TypeOfValue) Or Documents.AllRefsType().ContainsType(TypeOfValue) Then  
+		
+		Return String(Value.UUID());
+						
+	Else   
+			
+		Return String(Value);	
+				
+	EndIf;	    
+	
+EndFunction
+
+Function GetSKUQuestionsGroup()
+	
+	SKUQuestionsGroupDescription = NStr("en = ""SKU questions (created automaticaly)""; ru = ""Вопросы по номенклатуре (создано автоматически)""");
+	
+	SKUQuestionsGroup = Catalogs.QuestionGroup.FindByDescription(SKUQuestionsGroupDescription);
+	
+	If SKUQuestionsGroup = Catalogs.QuestionGroup.EmptyRef() OR SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.Regular Then
+		
+		SKUQuestionsGroup 				= Catalogs.QuestionGroup.CreateItem();
+		SKUQuestionsGroup.Description 	= SKUQuestionsGroupDescription;
+		SKUQuestionsGroup.Type 			= Enums.QuestionGroupTypes.SKUQuestions;
+		
+		SKUQuestionsGroup.Write();
+		
+	EndIf;	
+	
+	Return SKUQuestionsGroup.Ref;
+	
+EndFunction
+
+Function GetSKUQuestion(SKUQuestion, SKUQuestionsAssignment)
+	
+	FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", SKUQuestion));
+	
+	If Not FindRows.Count() = 0 Then 
+	
+		Return FindRows.Get(0).Question;
+		
+	Else 
+		
+		Return Undefined;
+		
+	EndIf;
+			
+EndFunction
+
+Function CreateQuestion(Description, Type, Assignment, Group)
+	
+	Question = Catalogs.Question.FindByAttribute("Assignment", Assignment, , Group);
+	
+	If Question = Catalogs.Question.EmptyRef() Then 	
+	
+		Question 				= Catalogs.Question.CreateItem();
+		Question.Description 	= Description;
+		Question.AnswerType 	= Type;
+		Question.Owner 			= Group;
+		Question.Assignment		= Assignment;
+			
+		Question.Write();
+		
+	EndIf;
+	
+	Return Question.Ref;
+	
+EndFunction
+
+#EndRegion
+
+#Region Update_Visits
+
+Procedure UpdateSKUQuestionsInVisit()
+    
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Question.Ref AS Question,
+		|	Question.Assignment AS Assignment
+		|FROM
+		|	Catalog.Question AS Question
+		|WHERE
+		|	NOT Question.Assignment = VALUE(Enum.SKUQuestions.EmptyRef)";
+	
+	SKUQuestionsAssignment = Query.Execute().Unload();
+	
+	Query = New Query();
+    Query.Text = 
+    "SELECT
+    |   Visit.Ref
+    |FROM
+    |   Document.Visit AS Visit";
+	
+	RecordSet = query.Execute().Unload();
+    
+    For Each Row In RecordSet Do
+        
+        If Row.Ref.SKUs.Count() > 0 Then
+			
+			VisitObj = Row.Ref.GetObject();
+			
+			VT = VisitObj.SKUs.Unload();
+			
+			NewTable = VisitObj.SKUs.Unload();
+            NewTable.Clear();
+			
+			For Each VTRow In VT Do
+				
+				If Not IsBlankString(VTrow.Available) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.Available));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.Available;
+					
+				EndIf;
+				
+				If Not IsBlankString(VTrow.Facing) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.Facing));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.Facing;
+					
+				EndIf;
+				
+				If Not IsBlankString(VTrow.Stock) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.Stock));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.Stock;
+					
+				EndIf;
+				
+				If Not IsBlankString(VTrow.Price) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.Price));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.Price;
+					
+                EndIf;
+				
+				If Not IsBlankString(VTrow.MarkUp) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.MarkUp));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.MarkUp;
+					
+				EndIf;
+				
+                If Not IsBlankString(VTrow.OutOfStock) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.OutOfStock));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+					NewRow.Answer 	= VTRow.OutOfStock;
+					
+				EndIf;
+				
+                If Not IsBlankString(VTrow.Snapshot) Then
+					
+					NewRow 			= NewTable.Add();
+                    NewRow.SKU 		= VTRow.SKU;
+					
+					FindRows = SKUQuestionsAssignment.FindRows(New Structure("Assignment", Enums.SKUQuestions.Snapshot));
+					
+					NewRow.Question = FindRows.Get(0).Question;
+	        		NewRow.Answer 	= VTRow.Snapshot;
+					
+				EndIf;                
+				
+			EndDo;
+            
+            VisitObj.SKUs.Load(NewTable);
+            VisitObj.Write();
+            
+        EndIf; 
+                
+    EndDo;
+    
 EndProcedure
+
+#EndRegion
+
+#EndRegion
+
+

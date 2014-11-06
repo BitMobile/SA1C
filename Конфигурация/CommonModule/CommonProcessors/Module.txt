@@ -1,48 +1,56 @@
-﻿Функция GetTerritory(Outlet) Экспорт
+﻿
+Function GetTerritory(Outlet) Export
     
-    Query = new Query;
+    Query = New Query;
     
-    Query.SetParameter("Outlet", Outlet);
     Query.Text = "SELECT TOP 1
-    |	TerritoryOutlets.Ref
-    |FROM
-    |	Catalog.Territory.Outlets AS TerritoryOutlets
-    |WHERE
-    |	TerritoryOutlets.Outlet = &Outlet";
+                 |	TerritoryOutlets.Ref
+                 |FROM
+                 |	Catalog.Territory.Outlets AS TerritoryOutlets
+                 |WHERE
+                 |	TerritoryOutlets.Outlet = &Outlet";
+	
+	Query.SetParameter("Outlet", Outlet);
+	
+    Selection = Query.Execute().Choose();
+    Selection.Next();
     
-    Выборка = Query.Execute().Choose();
-    Выборка.Next();
+    Return Selection.Ref;	
     
-    Возврат Выборка.Ref;	
-    
-КонецФункции
+EndFunction
 
-//get attributes that must be filled; 
-//return map of values, if it's the only value in catalog, document list
 Function GetPredefinedItems(PredefinedItems) Export 
     
     ItemsMap = New Map;
     
     For Each Row In PredefinedItems Do
-        If Row.Key = "Catalog.User" Then
-            Text =    
-            "SELECT
-            |   User.Ref AS Ref
-            |FROM
-            |   Catalog.User AS User
-            |WHERE
-            |   User.Role = &Role";
-            Query = New Query;
-            Query.Text = Text;
-            Query.SetParameter("Role", "SR");
-        Else
-            Query = New Query;
-            Query.Text = "SELECT Ref FROM " + Row.Key;
-        EndIf;
-        Result = Query.Execute().Unload();
-        If Result.Count() = 1 Then
-            ItemsMap.Insert(Row.Value, Result[0].Ref);
-        EndIf;                      
+		
+		If Row.Key = "Catalog.User" Then
+			
+			Query = New Query;
+            Query.Text = "SELECT
+                         |	User.Ref AS Ref
+                         |FROM
+                         |	Catalog.User AS User
+                         |WHERE
+                         |	User.Role = &Role";
+						 
+			Query.SetParameter("Role", "SR");
+			
+		Else
+			
+			Query = New Query;
+			Query.Text = "SELECT Ref FROM " + Row.Key;
+			
+		EndIf;
+		
+		Result = Query.Execute().Unload();
+		
+		If Result.Count() = 1 Then
+			
+			ItemsMap.Insert(Row.Value, Result[0].Ref);
+			
+		EndIf;                      
         
     EndDo;
     
@@ -53,32 +61,44 @@ EndFunction
 Procedure StockRefresh(Source, Cancel) Export 
     
     If Constants.SKUFeaturesRegistration.Get() Then         
-        If Source.Stocks.Count()=0 Then             
-            n = Source.Stocks.Add();
-            n.Feature = Catalogs.SKUFeatures.FindByCode("000000001");
-            n.StockValue = Source.CommonStock;             
-        EndIf;                   
-    Else
-        //Source.Stocks.Clear();
-        //n = Source.Stocks.Add();
-        //n.Feature = 
-        //n.StockValue = Source.CommonStock;                 
-        For Each row In Source.Stocks Do
-            row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
-        EndDo;         
-    EndIf;
+		
+		If Source.Stocks.Count()=0 Then             
+			
+			NewRow 				= Source.Stocks.Add();
+            NewRow.Feature 		= Catalogs.SKUFeatures.FindByCode("000000001");
+            NewRow.StockValue 	= Source.CommonStock;             
+			
+		EndIf;                   
+		
+	Else
+		
+		For Each Row In Source.Stocks Do
+			
+			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
+			
+		EndDo;         
+		
+	EndIf;
     
     TS = Source.Stocks.Unload();
-    Source.CommonStock = 0;
-    For Each Row In TS Do
-        Source.CommonStock = Source.CommonStock + Row.StockValue;
-    EndDo;
+	
+	Source.CommonStock = 0;
+	
+	For Each Row In TS Do
+		
+		Source.CommonStock = Source.CommonStock + Row.StockValue;
+		
+	EndDo;
     
-    For Each row In Source.Stocks Do
-        If Constants.MultiStock.Get()=False AND row.Stock = Catalogs.Stock.EmptyRef() Then
-            row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
-        EndIf;    	    
-    EndDo;
+    For Each Row In Source.Stocks Do
+		
+		If Constants.MultiStock.Get()=False AND Row.Stock = Catalogs.Stock.EmptyRef() Then
+			
+			Row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
+			
+		EndIf;    	    
+		
+	EndDo;
     
 EndProcedure
 

@@ -1,8 +1,8 @@
 ﻿
-Function SelectOutlets(sourceTable, ref) Export 
+Function SelectOutlets(sourceTable, Ref) Export 
 	
 	If sourceTable = Undefined Then
-		sourceTable = GetTableFromregister(ref);		
+		sourceTable = GetTableFromRef(Ref);		
 	EndIf; 
 	
 	outletParametersMap = CreateOutletParametersMap();
@@ -184,27 +184,11 @@ Function CreateQueryString(j)
 	
 EndFunction
 
-Function GetTableFromregister(ref)
+Function GetTableFromRef(Ref)
 	
-	query = new Query;
-	query.Text =
-	"SELECT
-	|	Selectors.AdditionalParameter,
-	|	Selectors.ComparisonType,
-	|	Selectors.Selector,
-	|	Selectors.Value
-	|FROM
-	|	InformationRegister.Selectors AS Selectors
-	|WHERE
-	|	Selectors.Questionnaire = &Questionnaire
-	|
-	|	ORDER BY
-	|	ComparisonType,
-	|	Selector";
-	query.SetParameter("Questionnaire", ref);
-	Return query.Execute().Unload();
+	Return Ref.Selectors.Unload();
 	
-EndFunction // GetTableFromregister()
+EndFunction
 
 Function CreateOutletParametersMap()
 	
@@ -216,7 +200,7 @@ Function CreateOutletParametersMap()
 	
 EndFunction // CreateOutletParametersMap()
 
-Function SelectPositions(ref) Export 
+Function SelectPositions(Ref) Export 
 
   q = new Query();
   q.Text = "SELECT

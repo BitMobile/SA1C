@@ -1,4 +1,4 @@
-﻿&AtServer
+﻿
 Function GetStringPresentationOfSchedule(Schedule) Export
 	// ТУТ НАЧИНАЕТСЯ ГОВНОКОД
 	Result = "Анкета будет показываться ";
@@ -69,17 +69,14 @@ Function GetStringPresentationOfSchedule(Schedule) Export
 	Return Result;
 EndFunction
 
-&AtServer
 Function GetDayOfWeekFromNumber(Number) Export
 	Return Format(Date(2014, 09, Number), "DF=дддд");
 EndFunction
 
-&AtServer
 Function GetMonthFromNumber(Number) Export
 	Return Format(Date(2014, Number, 1), "DF=MMMM");
 EndFunction
 
-&AtServer
 Function GetNumberWithMonth(Number, Month)
 	MonthString = GetMonthFromNumber(Month);
 	If Month = 3 Or Month = 8 Then // Если март или август
@@ -91,7 +88,6 @@ Function GetNumberWithMonth(Number, Month)
 	Return Result;
 EndFunction
 
-&AtServer
 Function GetEnumValueFromString(Enum, String) Export
 	Return Enums[Enum][String];
 EndFunction

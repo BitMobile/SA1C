@@ -1,6 +1,7 @@
 ﻿
 Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
-    //Earth radius
+	
+	//Earth radius
     R = 6372795;
     Pi = 3.14159265359;
     
@@ -26,7 +27,7 @@ Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
     dist = ad * R;
     
     ThisObject.GPSDifference = dist;
-    
+		
 EndProcedure
 
 

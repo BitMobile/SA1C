@@ -146,6 +146,7 @@
 			<Role>bitmobile_Пользователь</Role>
 			<CommonModule>ClientProcessors</CommonModule>
 			<CommonModule>CommonProcessors</CommonModule>
+			<CommonModule>CommonProcessorsClient</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
 			<CommonModule>UpdateDatabase</CommonModule>
 			<CommonModule>ScheduleFunctions</CommonModule>
@@ -173,7 +174,6 @@
 			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
 			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
-			<CommonModule>PeriodicityProcessors</CommonModule>
 			<EventSubscription>SKUOnWrite</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
@@ -191,10 +191,8 @@
 			<CommandGroup>CommandGroup3</CommandGroup>
 			<CommandGroup>CommandGroup4</CommandGroup>
 			<Constant>SKUFeaturesRegistration</Constant>
-			<Constant>update2_0_0</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
-			<Constant>update_questionnaire</Constant>
 			<Constant>bitmobile_Сервер</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииУдаленныхДанных</Constant>
 			<Constant>bitmobile_ИмяКонфигурации</Constant>
@@ -310,7 +308,6 @@
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
-			<InformationRegister>Selectors</InformationRegister>
 			<InformationRegister>bitmobile_КонтролируемыеИзмеренияРегистров</InformationRegister>
 			<InformationRegister>bitmobile_АдресаЭлПочтыДляОтчетов</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
@@ -318,8 +315,6 @@
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
 			<InformationRegister>QuestionsInQuestionnaires</InformationRegister>
-			<InformationRegister>QuestionnairesInOutlets</InformationRegister>
-			<InformationRegister>QuestionnairessForPositions</InformationRegister>
 			<InformationRegister>QuestionnairesSchedule</InformationRegister>
 			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
 			<InformationRegister>AnsweredQuestions</InformationRegister>

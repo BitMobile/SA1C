@@ -1,82 +1,180 @@
 ﻿
+///////////////////////////////////////////////////////
+// Common procedure and functions
+
+&AtServer
+Procedure OnOpenServer()
+
+	If Not IsInRole("Admin") Then
+		
+		ThisForm.ReadOnly = True;
+		
+	EndIf; 
+		
+EndProcedure
+
+&AtServer
+Procedure SetPicture(SnapShotUUID)
+	
+	SelectionStructure = New Structure("FileName");
+	SelectionStructure.FileName = SnapShotUUID;
+					
+	Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+	
+	If Selection.Next() Then 
+		
+		PictureAddress 		= PutToTempStorage(Selection.Storage.Get(), ThisForm.UUID);
+		PictureExtension	= Selection.Extension;
+		
+	EndIf;
+				
+EndProcedure
+
+&AtServer
+Function ItsPicture(Question)
+	
+	If Question.AnswerType = Enums.DataType.Snapshot Then 
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
+	EndIf;
+			
+EndFunction
+
+&AtServer
+Function PictureExists(SnapShotUUID)
+	
+	SelectionStructure = New Structure("FileName");
+	SelectionStructure.FileName = SnapShotUUID;
+	
+	Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+	
+	If Selection.Next() Then
+		
+		Return True;
+		
+	Else
+		
+		Return False;
+		
+	EndIf;
+
+EndFunction
+
+
+///////////////////////////////////////////////////////
+// User interface
+
 &AtClient
 Procedure OnOpen(Cancel)
     
     OnOpenServer();
 	
-    n = 0;
-    
     For Each Str in Object.Questions Do
-        
-        Ins = TempQuestions.Add();
-        Ins.N = n;
-        Ins.Question = Str.Question;
-        
-        If ItsPicture(Str.Question) Then 
-			Try
-				SnapShotUUID = New UUID(Str.Answer);
-			Except
-			EndTry;
-			If PictureExists(SnapShotUUID) Then
+		
+		AddQuestionaire(Str);	
+		
+		FoundedRows = TempQuestions.FindRows(New Structure("Question", Str.Question));
+		
+		If FoundedRows.Count() = 0 Then 		
+		
+			Ins 			= TempQuestions.Add();
+	        Ins.Question 	= Str.Question;
+	        
+	        If ItsPicture(Str.Question) Then 
 				
-            	Ins.Answer = NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-            	Ins.SnapShotUUID = Str.Answer;
+				Try
+					SnapShotUUID = New UUID(Str.Answer);
+				Except
+				EndTry;
+				
+				If PictureExists(SnapShotUUID) Then
+					
+	            	Ins.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+	            	Ins.SnapShotUUID 	= Str.Answer;
+					
+				Else
+					
+					Ins.Answer 			= NStr("en = ""Picture not found on server""; ru = ""Изображение не найдено на сервере""");
+					Ins.SnapShotUUID 	= Str.Answer;
+					
+				EndIf;
+	            
+	        Else 
+	            
+	            Ins.Answer = Str.Answer;
+	            
+			EndIf;
+			
+		EndIf;	
+                        
+	EndDo;
+	
+	For Each Str In Object.SKUs Do
+		
+		AddQuestionaire(Str);
+		
+		FoundedRows = TempSKUs.FindRows(New Structure("SKU, Question", Str.SKU, Str.Question));
+		
+		If FoundedRows.Count() = 0 Then
+		
+	        Ins 			= TempSKUs.Add();
+	        Ins.SKU 		= Str.SKU;
+	        Ins.Question 	= Str.Question;
+	        
+	        If ItsPicture(Str.Question) Then
+				
+				Try
+					
+					SnapShotUUID = New UUID(Str.Answer);            	            
+					
+				Except
+	            EndTry;
+				
+				If PictureExists(SnapShotUUID) Then
+					
+					Ins.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+	                Ins.SKUSnapShotUUID = Str.Answer;                	                
+					
+				Else
+					
+					Ins.Answer 			= NStr("en = ""Picture not found on server""; ru = ""Изображение не найдено на сервере""");
+	                Ins.SKUSnapShotUUID = Str.Answer;                
+					
+				EndIf;            
 				
 			Else
 				
-				Ins.Answer = NStr("en = ""Picture not found on server""; ru = ""Изображение не найдено на сервере""");
-				Ins.SnapShotUUID = Str.Answer;
+				Ins.Answer = Str.Answer;        	        
 				
 			EndIf;
-            
-        Else 
-            
-            Ins.Answer = Str.Answer;
-            
-        EndIf;
-        
-        n = n + 1;
-        
-	EndDo;
-    
-    
-    n = 0;
-    For Each Str In Object.SKUs Do
-        
-        Ins = TempSKUs.Add();
-        Ins.N = n;
-        Ins.SKU = Str.SKU;
-        Ins.Question = Str.Question;
-        
-        If ItsPicture(Str.Question) Then
-            Try
-                SnapShotUUID = new UUID(Str.Answer);            	            
-            Except
-            EndTry;
-            If PictureExists(SnapShotUUID) Then
-                Ins.Answer = NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-                Ins.SKUSnapShotUUID = Str.Answer;                	                
-            Else
-                Ins.Answer = NStr("en = ""Picture not found on server""; ru = ""Изображение не найдено на сервере""");
-                Ins.SKUSnapShotUUID = Str.Answer;                
-            EndIf;            
-        Else
-            Ins.Answer = Str.Answer;        	        
-        EndIf;
-
-        n = n + 1 ;
+			
+		EndIf;	
         
     EndDo;
 	 
 EndProcedure
 
-&AtServer
-Procedure OnOpenServer()
-
-	If IsInRole("Admin") = False Then
-        ThisForm.ReadOnly = True;
-	EndIf; 
+&AtClient
+Procedure AddQuestionaire(Str)
+	
+	If ValueIsFilled(Str.Questionnaire) Then 
+	
+		FoundedRows = TempQuestionaires.FindRows(New Structure("Questionaire", Str.Questionnaire));
+			
+		If FoundedRows.Count() = 0 Then 
+			
+			Ins 				= TempQuestionaires.Add();
+	        Ins.Questionnaire 	= Str.Questionnaire;	
+			
+		EndIf;
 		
+	EndIf;	
+	
 EndProcedure
 
 &AtClient
@@ -116,49 +214,30 @@ Procedure TempSKUsOnActivateRow(Item)
 	If Items.Pages.CurrentPage = Items.GroupSKUs Then
 	
 	    If Not Item.CurrentRow = Undefined  Then	        
-	        If Not Item.CurrentData.SKUSnapShotUUID = "" Then            
-	            SnapShotUUID = New UUID(Item.CurrentData.SKUSnapShotUUID);			
-	            SetPicture(SnapShotUUID);            
-	        Else            
-	            PictureAddress		= Undefined;
+			
+			If Not Item.CurrentData.SKUSnapShotUUID = "" Then            
+				
+				SnapShotUUID = New UUID(Item.CurrentData.SKUSnapShotUUID);			
+				
+				SetPicture(SnapShotUUID);            
+				
+			Else            
+				
+				PictureAddress		= Undefined;
 	            PictureExtension    = Undefined;                       
-	        EndIf;                
-	    Else        
-	        PictureAddress		= Undefined;
+				
+			EndIf;                
+			
+		Else        
+			
+			PictureAddress		= Undefined;
 	        PictureExtension    = Undefined;        
+			
 		EndIf;
 		
 	EndIf;	
     
 EndProcedure
-
-&AtServer
-Procedure SetPicture(SnapShotUUID)
-	
-	SelectionStructure = New Structure("FileName");
-	SelectionStructure.FileName = SnapShotUUID;
-					
-	Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
-	
-	If Selection.Next() Then 
-		
-		PictureAddress 		= PutToTempStorage(Selection.Storage.Get(), ThisForm.UUID);
-		PictureExtension	= Selection.Extension;
-		
-	EndIf;
-				
-EndProcedure
-
-&AtServer
-Function ItsPicture(Question)
-	
-	If Question.AnswerType = Enums.DataType.Snapshot Then 
-		Return True;
-	Else 
-		Return False;
-	EndIf;
-			
-EndFunction
 
 &AtClient
 Procedure OpenPicture(Command)
@@ -198,50 +277,3 @@ Procedure PagesOnCurrentPageChange(Item, CurrentPage)
 	EndIf;
 			
 EndProcedure
-
-&AtServer
-Function PictureExists(SnapShotUUID)
-	
-	SelectionStructure = New Structure("FileName");
-	SelectionStructure.FileName = SnapShotUUID;
-	
-	Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
-	
-	If Selection.Next() Then
-		
-		Return True;
-		
-	Else
-		
-		Return False;
-		
-	EndIf;
-
-EndFunction
-
-//territories query
-Function  GetTerritories()
-    
-    Query = New Query;
-    Query.Text = 
-    "SELECT
-    |   TerritoryOutlets.Ref.Ref
-    |FROM
-    |   Catalog.Territory.Outlets AS TerritoryOutlets
-    |WHERE
-    |   TerritoryOutlets.Outlet.Ref = &Ref";
-    
-    Query.SetParameter("Ref", Object.Outlet);
-    
-    Result = Query.Execute();
-    
-    Return Result.Unload().UnloadColumn("Ref");
-    
-EndFunction
-
-
-&AtClient
-Procedure QuestionnairesSelection(Item, SelectedRow, Field, StandardProcessing)
-	OpenValue(Item.CurrentData.Ref);
-EndProcedure
-

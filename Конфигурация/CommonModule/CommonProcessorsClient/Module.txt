@@ -1,0 +1,29 @@
+﻿
+Procedure UpdateDatabase() Export  
+
+	UpdateResult = UpdateDatabase.StartUpdate();
+	
+	If UpdateResult.NeedUpdate Then 
+		
+		If UpdateResult.UpdateComplete Then 
+			
+			UserMessage 		= New UserMessage;
+			UserMessage.Text 	= NStr("en = 'Database update completed successfully'; ru = 'Обновление базы данных выполнено успешно'");
+			
+			UserMessage.Message();
+			                           
+		Else 
+			
+			ShowMessageBox(New NotifyDescription("ExitSystem", CommonProcessorsClient), UpdateResult.Error); 
+					
+		EndIf;		
+		
+	EndIf;
+	
+EndProcedure	
+	
+Procedure ExitSystem(AdditionalParameter) Export 
+	
+	Terminate();
+	
+EndProcedure	

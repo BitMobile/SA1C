@@ -1,8 +1,8 @@
-﻿    //Example:
-    //requestMap = New Map;
-    //requestMap.Insert("pName", "SKU");
-    //requestMap.Insert("checkingItem", Items.SKU.CurrentData);
-    //requestMap.Insert("tabularSection", Object.Prices);
+﻿//Example:
+//requestMap = New Map;
+//requestMap.Insert("pName", "SKU");
+//requestMap.Insert("checkingItem", Items.SKU.CurrentData);
+//requestMap.Insert("tabularSection", Object.Prices);
 &AtClient
 Function UniqueRows(requestMap) Export //return True if all rows are unique
     

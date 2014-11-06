@@ -1,55 +1,215 @@
 ﻿
-&AtClient
-Procedure OutletsOutletOnChange(Item)
-    
-    requestMap = New Map;
-    requestMap.Insert("pName", "Outlet");
-    requestMap.Insert("checkingItem", Items.Outlets.CurrentData);
-    requestMap.Insert("tabularSection", Object.Outlets);
-    
-    ClientProcessors.UniqueRows(requestMap);
-
-EndProcedure
+///////////////////////////////////////////////////////
+// Common procedure and functions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-    PredefinedItems = New Map;
+	
+	PredefinedItems = New Map;
     PredefinedItems.Insert("Catalog.User", "SR");
     PredefinedItems.Insert("Catalog.Region", "Owner");
-    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
-    For Each Item In ItemsCollection Do
-        Object[Item.Key] = Item.Value;
-    EndDo;
+	
+	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+	
+	For Each Item In ItemsCollection Do
+		
+		Object[Item.Key] = Item.Value;
+		
+	EndDo;
+	
+	FillSKUGroups();
+	
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	WriteTerritoryInSKUGroups();
+	
+EndProcedure
+
+&AtServer
+Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
+	
+	FillSKUGroups();
+	
+EndProcedure
+
+&AtServer
+Procedure FillSKUGroups()
+	
+	// Заполнить группы SKU
+	SKUGroups.Clear();
+	
+	If ValueIsFilled(Object.Ref) Then 
+	
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	SKUGroupTerritories.Ref As SKUGroup
+			|FROM
+			|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
+			|WHERE
+			|	SKUGroupTerritories.Territory = &Ref";
+		
+		Query.SetParameter("Ref", Object.Ref);
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
+			
+			NewRow = SKUGroups.Add();
+			NewRow.SKUGroup = Selection.SKUGroup;
+			
+		EndDo;
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtServer
+Procedure WriteTerritoryInSKUGroups()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKUGroupTerritories.Ref AS SKUGroup
+		|FROM
+		|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
+		|WHERE
+		|	SKUGroupTerritories.Territory = &Ref
+		|	AND NOT SKUGroupTerritories.Ref IN (&SGArray)";
+	
+	Query.SetParameter("Ref", Object.Ref);
+	Query.SetParameter("SGArray", SKUGroups.Unload().UnloadColumn("SKUGroup"));
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		GroupObject = Selection.SKUGroup.GetObject();
+		
+		FoundString = GroupObject.Territories.Find(Object.Ref);
+		
+		If Not FoundString = Undefined Then 
+			
+			GroupObject.Territories.Delete(FoundString);			
+			
+		EndIf;
+		
+		GroupObject.Write();
+		
+	EndDo;
+		
+	For Each Row In SKUGroups Do 
+		
+		GroupObject = Row.SKUGroup.GetObject();
+		
+		If GroupObject.Territories.Find(Object.Ref) = Undefined Then 
+			
+			NewRow = GroupObject.Territories.Add();
+			NewRow.Territory = Object.Ref;			
+			
+		EndIf;
+		
+		GroupObject.Write();
+			
+	EndDo;
+		
+EndProcedure
+
+&AtServer
+Function ItsFolder(Value)
+	
+	If Value.IsFolder Then 
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
+	EndIf;
+		
+EndFunction
+
+
+
+///////////////////////////////////////////////////////
+// User interface
+
+&AtClient
+Procedure OutletsOutletOnChange(Item)
+    
+    RequestMap = New Map;
+    RequestMap.Insert("pName", "Outlet");
+    RequestMap.Insert("checkingItem", Items.Outlets.CurrentData);
+    RequestMap.Insert("tabularSection", Object.Outlets);
+    
+    ClientProcessors.UniqueRows(RequestMap);
+
 EndProcedure
 
 &AtClient
 Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
-    StandardProcessing = False;
-    SelectionValue = New Structure("Role", "SR");
+	
+	StandardProcessing = False;
+	
+	SelectionValue = New Structure("Role", "SR");
     SelectionParameters = New Structure("Filter", SelectionValue);
-    OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
+	
+	OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
+	
 EndProcedure
-
 
 &AtClient
-Procedure SKUGroups1SKUGroupOnChange(Item)
-    requestMap = New Map;
-    requestMap.Insert("pName", "SKUGroup");
-    requestMap.Insert("checkingItem", Items.SKUGroups1.CurrentData);
-    requestMap.Insert("tabularSection", Object.SKUGroups);
+Procedure StocksStockOnChange(Item)
+	
+	RequestMap = New Map;
+    RequestMap.Insert("pName", "Stock");
+    RequestMap.Insert("checkingItem", Items.Stocks.CurrentData);
+    RequestMap.Insert("tabularSection", Object.Stocks);
     
-    ClientProcessors.UniqueRows(requestMap);
-    
+    ClientProcessors.UniqueRows(RequestMap);
+	
 EndProcedure
-
 
 &AtClient
-Procedure Stocks1StockOnChange(Item)
-    requestMap = New Map;
-    requestMap.Insert("pName", "Stock");
-    requestMap.Insert("checkingItem", Items.Stocks1.CurrentData);
-    requestMap.Insert("tabularSection", Object.Stocks);
-    
-    ClientProcessors.UniqueRows(requestMap);
+Procedure SKUGroupsSKUGroupChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	
+	If ValueIsFilled(SelectedValue) Then 
+		
+		If ItsFolder(SelectedValue) Then 
+			
+			StandardProcessing = False;
+			
+		EndIf;	
+		
+	EndIf;	
+	
 EndProcedure
+
+&AtClient
+Procedure SKUGroupsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
+	
+	If Not CancelEdit Then 
+	
+		If Not ValueIsFilled(Items.SKUGroups.CurrentData.SKUGroup) Then 
+			
+			Message(NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'"));
+			
+			Cancel = True;
+			
+		EndIf;
+				
+	EndIf;
+	
+EndProcedure
+
+
+
 

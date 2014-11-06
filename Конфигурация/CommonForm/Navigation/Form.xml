@@ -1226,20 +1226,20 @@
 									<ContextMenu name="QuesttionaireListNumberContextMenu" id="49"/>
 									<ExtendedTooltip name="QuesttionaireListNumberExtendedTooltip" id="1266"/>
 								</LabelField>
-								<LabelField name="QuesttionaireListScale" id="466">
-									<DataPath>QuesttionaireList.Scale</DataPath>
-									<ContextMenu name="QuesttionaireListScaleContextMenu" id="467"/>
-									<ExtendedTooltip name="QuesttionaireListScaleExtendedTooltip" id="1267"/>
+								<LabelField name="QuesttionaireListStatus" id="1672">
+									<DataPath>QuesttionaireList.Status</DataPath>
+									<ContextMenu name="QuesttionaireListStatusContextMenu" id="1673"/>
+									<ExtendedTooltip name="QuesttionaireListStatusExtendedTooltip" id="1674"/>
 								</LabelField>
-								<LabelField name="QuesttionaireListOutletType" id="52">
-									<DataPath>QuesttionaireList.OutletType</DataPath>
-									<ContextMenu name="QuesttionaireListOutletTypeContextMenu" id="53"/>
-									<ExtendedTooltip name="QuesttionaireListOutletTypeExtendedTooltip" id="1268"/>
+								<LabelField name="QuesttionaireListDescription" id="1675">
+									<DataPath>QuesttionaireList.Description</DataPath>
+									<ContextMenu name="QuesttionaireListDescriptionContextMenu" id="1676"/>
+									<ExtendedTooltip name="QuesttionaireListDescriptionExtendedTooltip" id="1677"/>
 								</LabelField>
-								<LabelField name="QuesttionaireListOutletClass" id="54">
-									<DataPath>QuesttionaireList.OutletClass</DataPath>
-									<ContextMenu name="QuesttionaireListOutletClassContextMenu" id="55"/>
-									<ExtendedTooltip name="QuesttionaireListOutletClassExtendedTooltip" id="1269"/>
+								<LabelField name="QuesttionaireListOwner" id="1678">
+									<DataPath>QuesttionaireList.Owner</DataPath>
+									<ContextMenu name="QuesttionaireListOwnerContextMenu" id="1679"/>
+									<ExtendedTooltip name="QuesttionaireListOwnerExtendedTooltip" id="1680"/>
 								</LabelField>
 							</ChildItems>
 						</Table>
