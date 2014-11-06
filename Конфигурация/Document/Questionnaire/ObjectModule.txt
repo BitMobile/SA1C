@@ -1,4 +1,48 @@
 ﻿
+Procedure OnWrite(Cancel)
+	
+	If Status = Enums.QuestionnareStatus.Inactive Then 
+		
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	QuestionnairesSchedule.Date,
+			|	QuestionnairesSchedule.Questionnaire,
+			|	QuestionnairesSchedule.BeginAnswerPeriod,
+			|	QuestionnairesSchedule.EndAnswerPeriod
+			|FROM
+			|	InformationRegister.QuestionnairesSchedule AS QuestionnairesSchedule
+			|WHERE
+			|	QuestionnairesSchedule.Questionnaire = &Questionnaire
+			|	AND QuestionnairesSchedule.Date >= &CurrentDate";
+		
+		Query.SetParameter("CurrentDate", BegOfDay(CurrentDate()));
+		Query.SetParameter("Questionnaire", Ref);
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		RecordManager = InformationRegisters.QuestionnairesSchedule.CreateRecordManager();
+		
+		While Selection.Next() Do
+			
+			FillPropertyValues(RecordManager, Selection);
+			
+			RecordManager.Read();
+			
+			If RecordManager.Selected() Then 
+				
+				RecordManager.Delete();
+				
+			EndIf;	
+			
+		EndDo;
+				
+	EndIf;
+		
+EndProcedure
+
 
 
 
