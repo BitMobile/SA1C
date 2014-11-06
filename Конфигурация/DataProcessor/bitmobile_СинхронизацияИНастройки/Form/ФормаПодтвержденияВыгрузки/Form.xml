@@ -310,6 +310,10 @@
 		<Command name="Выгрузить" id="1">
 			<Title>
 				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Upload</v8:content>
+				</v8:item>
+				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Выгрузить</v8:content>
 				</v8:item>
@@ -324,6 +328,10 @@
 		</Command>
 		<Command name="ЗакрытьФорму" id="2">
 			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Exit</v8:content>
+				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Закрыть</v8:content>
