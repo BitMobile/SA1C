@@ -398,8 +398,21 @@
 								</LabelField>
 								<CheckBoxField name="РеквизитыШапкиПриводитьКСтроке" id="115">
 									<DataPath>Объект.РеквизитыШапки.ПриводитьКСтроке</DataPath>
-									<TitleLocation>None</TitleLocation>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Lead to string</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Приводить к строке</v8:content>
+										</v8:item>
+									</Title>
 									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Lead to string</v8:content>
+										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
 											<v8:content>Приводить к строке</v8:content>
@@ -661,7 +674,7 @@
 												</v8:item>
 											</Title>
 											<TitleLocation>Top</TitleLocation>
-											<Height>3</Height>
+											<Height>6</Height>
 											<VerticalStretch>false</VerticalStretch>
 											<MultiLine>true</MultiLine>
 											<ContextMenu name="ФильтрТЧКонтекстноеМеню" id="79"/>
@@ -740,7 +753,21 @@
 									<ExtendedTooltip name="РеквизитыТабличныхЧастейНомерСтрокиExtendedTooltip" id="192"/>
 								</LabelField>
 								<ColumnGroup name="РеквизитыТабличныхЧастейГруппаПриводитьКСтроке" id="119">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Lead to string</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Приводить к строке</v8:content>
+										</v8:item>
+									</Title>
 									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Lead to string</v8:content>
+										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
 											<v8:content>Приводить к строке</v8:content>
@@ -751,7 +778,21 @@
 									<ChildItems>
 										<CheckBoxField name="РеквизитыТабличныхЧастейПриводитьКСтроке" id="117">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.ПриводитьКСтроке</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Lead to string</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Приводить к строке</v8:content>
+												</v8:item>
+											</Title>
 											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Lead to string</v8:content>
+												</v8:item>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
 													<v8:content>Приводить к строке</v8:content>
@@ -769,6 +810,16 @@
 									</ChildItems>
 								</ColumnGroup>
 								<ColumnGroup name="РеквизитыТабличныхЧастейГруппаКлючевоеПоле" id="122">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Key field</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Ключевое поле</v8:content>
+										</v8:item>
+									</Title>
 									<ToolTip>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
@@ -784,7 +835,21 @@
 									<ChildItems>
 										<CheckBoxField name="РеквизитыТабличныхЧастейКлючевоеПоле" id="120">
 											<DataPath>Объект.РеквизитыТабличныхЧастей.КлючевоеПоле</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Key field</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Ключевое поле</v8:content>
+												</v8:item>
+											</Title>
 											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Key field</v8:content>
+												</v8:item>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
 													<v8:content>Ключевое поле</v8:content>
