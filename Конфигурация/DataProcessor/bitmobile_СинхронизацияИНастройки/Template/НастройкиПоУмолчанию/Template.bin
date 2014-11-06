@@ -1324,7 +1324,7 @@ WHERE
 			<ЗагрузкаДанных>false</ЗагрузкаДанных>
 			<ВыгрузкаФайловShared>true</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
-			<ФильтрВBitmobile>T.[Owner] IN (SELECT SGroup.Ref FROM [Catalog].[SKUGroup_Territories] SGroup JOIN [Catalog].[Territory] Territory ON Territory.Id = SGroup.Territory AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.[Owner] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -1655,7 +1655,7 @@ WHERE
 			<ЗагрузкаДанных>false</ЗагрузкаДанных>
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT SGroup.Ref FROM [Catalog].[SKUGroup_Territories] SGroup JOIN [Catalog].[Territory] Territory ON Territory.Id = SGroup.Territory AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.[Id] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -1720,8 +1720,48 @@ WHERE
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 			</РеквизитыШапки>
-			<ТабличныеЧасти/>
-			<РеквизитыТабличныхЧастей/>
+			<ТабличныеЧасти>
+				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile/>
+					<ТабличнаяЧастьОбъектаКонфигурации>Territories</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса/>
+					<Фильтр/>
+					<Запрос>false</Запрос>
+					<Ключ/>
+				</Row>
+			</ТабличныеЧасти>
+			<РеквизитыТабличныхЧастей>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Territories</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Territories</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.SKUGroup</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Territories</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>Territory</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Territory</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+			</РеквизитыТабличныхЧастей>
 			<СвязанныеДанные/>
 		</CatalogObject.bitmobile_НастройкиСинхронизации>
 		<CatalogObject.bitmobile_НастройкиСинхронизации>
@@ -1990,7 +2030,7 @@ WHERE
 					<Ключ/>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаBitmobile>SKUGroups</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаBitmobile/>
 					<ТабличнаяЧастьОбъектаКонфигурации>SKUGroups</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
 					<Фильтр/>
@@ -2003,6 +2043,21 @@ WHERE
 					<ТекстЗапроса/>
 					<Фильтр/>
 					<Запрос>false</Запрос>
+					<Ключ/>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile>SKUGroups</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса>SELECT
+	SKUGroupTerritories.Ref AS SKUGroup,
+	SKUGroupTerritories.Territory AS Ref,
+	1 AS LineNumber
+FROM
+	Catalog.SKUGroup.Territories AS SKUGroupTerritories
+WHERE
+	SKUGroupTerritories.Territory IN(&amp;RefArray)</ТекстЗапроса>
+					<Фильтр/>
+					<Запрос>true</Запрос>
 					<Ключ/>
 				</Row>
 			</ТабличныеЧасти>
@@ -2093,6 +2148,36 @@ WHERE
 					<РеквизитОбъектаКонфигурации>Stock</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Catalog.Stock</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>SKUGroup</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>SKUGroup</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.SKUGroup</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Territory</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>false</КлючевоеПоле>
@@ -2996,7 +3081,7 @@ WHERE
 					<ТабличнаяЧастьОбъектаBitmobile>Prices</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>Prices</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр>T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SGroup.Ref FROM [Catalog].[SKUGroup_Territories] SGroup JOIN [Catalog].[Territory] Territory ON Territory.Id = SGroup.Territory AND Territory.SR = @UserId))</Фильтр>
+					<Фильтр>T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)) </Фильтр>
 					<Запрос>false</Запрос>
 					<Ключ/>
 				</Row>
