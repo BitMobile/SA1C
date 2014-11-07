@@ -20,8 +20,49 @@ Procedure ShowPreview()
 		FillPropertyValues(RecordManager, Items.List.CurrentRow);
 		
 		RecordManager.Read();
+		
+		BinaryDataOfFile = RecordManager.Storage.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then 
+		
+			Preview = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
 			
-		Preview = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
+		Else 
+			
+			Password 	= Constants.bitmobile_Пароль.Get();
+			Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+			Path 		= Constants.bitmobile_ПутьНаСервере.Get();
+			Path 		= StrReplace(Path, "admin", "webdav");
+			Port 		= Constants.bitmobile_Порт.Get();
+			
+			Try
+	
+				Connection = New HTTPConnection(Server, Port, "admin", Password);
+				
+			Except
+				
+				Connection = Undefined;
+				
+			EndTry;
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(RecordManager.Extension);
+					
+					Connection.Get(Path + RecordManager.FullFileName, WebDAVFile);
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					Preview = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+										
+				Except
+				EndTry;
+				
+			EndIf;
+			
+		EndIf;	
 		
 	EndIf;
 		

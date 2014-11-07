@@ -57,6 +57,21 @@
 			<ContextMenu name="bitmobile_ОтключитьПодпискиНаСобытияКонтекстноеМеню" id="6"/>
 			<ExtendedTooltip name="bitmobile_ОтключитьПодпискиНаСобытияРасширеннаяПодсказка" id="21"/>
 		</CheckBoxField>
+		<InputField name="bitmobile_ПротоколПередачиФайлов" id="25">
+			<DataPath>НаборКонстант.bitmobile_ПротоколПередачиФайлов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>File transfer protocol</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Протокол передачи файлов</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="bitmobile_ПротоколПередачиФайловContextMenu" id="26"/>
+			<ExtendedTooltip name="bitmobile_ПротоколПередачиФайловExtendedTooltip" id="27"/>
+		</InputField>
 		<InputField name="bitmobile_ДопустимыйРазмерФайла" id="13">
 			<DataPath>НаборКонстант.bitmobile_ДопустимыйРазмерФайла</DataPath>
 			<Title>

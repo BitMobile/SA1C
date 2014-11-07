@@ -129,7 +129,7 @@ Procedure UpdateForAllReleases(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Filling database'; ru = 'Заполнение базы данных'"));  
 	FillInProcessing();
 	
-	FillConfigurationName();
+	FillConfigurationData();
 	
 	WriteProtocol(LastState, Step, NStr("en = 'Update users'; ru = 'Обновление пользователей'"));  
 	ProcessUsers();
@@ -139,9 +139,17 @@ Procedure UpdateForAllReleases(LastState, Step)
 	
 EndProcedure
 
-Procedure FillConfigurationName()
+Procedure FillConfigurationData()
 	
 	Constants.bitmobile_ИмяКонфигурации.Set(Metadata.Name);
+	
+	Protocol = Constants.bitmobile_ПротоколПередачиФайлов.Get();
+	
+	If Not ValueIsFilled(Protocol) Then 
+		
+		Constants.bitmobile_ПротоколПередачиФайлов.Set(Enums.bitmobile_ПротоколыПередачиФайлов.WebDAV);
+		
+	EndIf;	
 	
 EndProcedure	
 

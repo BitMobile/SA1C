@@ -7,12 +7,6 @@
 	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<ChildItems>
-			<Button name="FormTransferFromCatalog" id="25">
-				<Type>CommandBarButton</Type>
-				<CommandName>Form.Command.TransferFromCatalog</CommandName>
-				<Parameter xsi:nil="true"/>
-				<ExtendedTooltip name="FormTransferFromCatalogРасширеннаяПодсказка" id="29"/>
-			</Button>
 			<Button name="FormSetSizeOfFiles" id="28">
 				<Type>CommandBarButton</Type>
 				<CommandName>Form.Command.SetSizeOfFiles</CommandName>
@@ -265,25 +259,6 @@
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="TransferFromCatalog" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Transfer images from catalog</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Перенести изображения из справочника</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Transfer from catalog</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>TransferFromCatalog</Action>
-		</Command>
 		<Command name="SetSizeOfFiles" id="2">
 			<Title>
 				<v8:item>
@@ -301,7 +276,12 @@
 					<v8:content>Set size of files</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.GenerateReport</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>SetSizeOfFiles</Action>
+			<Representation>TextPicture</Representation>
 		</Command>
 	</Commands>
 </Form>

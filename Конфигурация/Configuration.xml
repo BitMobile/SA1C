@@ -219,6 +219,7 @@
 			<Constant>bitmobile_НеподтвержденнаяДатаВыгрузки</Constant>
 			<Constant>bitmobile_ПодтвержденнаяДатаВыгрузки</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
+			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
 			<CommonForm>Navigation</CommonForm>
 			<CommonForm>Settings</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
@@ -287,6 +288,7 @@
 			<Enum>YearScheduleTypes</Enum>
 			<Enum>ValueTableRowStatuses</Enum>
 			<Enum>QuestionsSaveIntervals</Enum>
+			<Enum>bitmobile_ПротоколыПередачиФайлов</Enum>
 			<Report>VisitsOrders</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>Visits</Report>

@@ -20,8 +20,49 @@ Procedure ShowPreview()
 		FillPropertyValues(RecordManager, Items.List.CurrentRow);
 		
 		RecordManager.Read();
+		
+		BinaryDataOfFile = RecordManager.Storage.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then 
+		
+			Preview = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
 			
-		Preview = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
+		Else 
+			
+			Password 	= Constants.bitmobile_Пароль.Get();
+			Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+			Path 		= Constants.bitmobile_ПутьНаСервере.Get();
+			Path 		= StrReplace(Path, "admin", "webdav");
+			Port 		= Constants.bitmobile_Порт.Get();
+			
+			Try
+	
+				Connection = New HTTPConnection(Server, Port, "admin", Password);
+				
+			Except
+				
+				Connection = Undefined;
+				
+			EndTry;
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(RecordManager.Extension);
+					
+					Connection.Get(Path + RecordManager.FullFileName, WebDAVFile);
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					Preview = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+										
+				Except
+				EndTry;
+				
+			EndIf;
+			
+		EndIf;
 		
 	EndIf;
 		
@@ -43,77 +84,6 @@ Procedure ShowPreviewOnChange(Item)
 EndProcedure
 
 &AtClient
-Procedure TransferFromCatalog(Command)
-	
-	TransferFromCatalogServer();
-	
-	Items.List.Refresh();
-	
-EndProcedure
-
-&AtServer
-Procedure TransferFromCatalogServer()
-	
-	Query = New Query;
-	Query.Text = 
-		"SELECT
-		|	StorageAdditionalInformation.Ref,
-		|	StorageAdditionalInformation.DeletionMark,
-		|	StorageAdditionalInformation.Object,
-		|	StorageAdditionalInformation.Storage,
-		|	StorageAdditionalInformation.Extension,
-		|	StorageAdditionalInformation.DefaultPicture
-		|FROM
-		|	Catalog.StorageAdditionalInformation AS StorageAdditionalInformation
-		|WHERE
-		|	StorageAdditionalInformation.DeletionMark = FALSE";
-
-	Query.SetParameter("FALSE", FALSE);
-
-	Result = Query.Execute();
-
-	SelectionDetailRecords = Result.Choose();
-
-	While SelectionDetailRecords.Next() Do
-		
-		SelectionStructure = New Structure("FileName", SelectionDetailRecords.Ref.UUID()); 
-					
-		Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
-					
-		If Not Selection.Next() Then
-			
-			ObjectName = SelectionDetailRecords.Object.Metadata().FullName();
-			ObjectName = StrReplace(ObjectName, "Справочник", "Catalog");
-			ObjectName = StrReplace(ObjectName, "Документ", "Document");
-						
-			RecordManager 				= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-			RecordManager.Object 		= SelectionDetailRecords.Object;
-			RecordManager.SyncDirection = Enums.SyncDirections.Shared;
-			RecordManager.Action 		= Enums.SyncAction.AddFile;
-			RecordManager.FileName 		= SelectionDetailRecords.Ref.UUID();
-			RecordManager.Extension 	= Lower(SelectionDetailRecords.Extension);
-			RecordManager.Storage 		= SelectionDetailRecords.Storage;
-			RecordManager.FullFileName 	= "/shared/" + ObjectName + "/" + SelectionDetailRecords.Object.Ref.UUID() + "/" + SelectionDetailRecords.Ref.UUID() + Lower(SelectionDetailRecords.Extension);
-							
-			RecordManager.Write();
-			
-			If SelectionDetailRecords.DefaultPicture And ObjectName = "Catalog.SKU" Then 
-				
-				EditObject = SelectionDetailRecords.Object.GetObject();
-				EditObject.DefaultPicture			= SelectionDetailRecords.Ref.UUID();
-				EditObject.DefaultPictureExtension	= Lower(SelectionDetailRecords.Extension);
-				
-				EditObject.Write();
-				
-			EndIf;
-						
-		EndIf;
-				
-	EndDo;
-    	
-EndProcedure
-
-&AtClient
 Procedure SetSizeOfFiles(Command)
 	
 	SetSizeOfFilesServer();
@@ -132,12 +102,17 @@ Procedure SetSizeOfFilesServer()
 	
 	For Each Str in RecordSet Do 
 		
-		BinaryData			= Str.Storage.Get();
-		BinaryData.Write(TempFile);
+		BinaryData 	= Str.Storage.Get();
 		
-		CheckFileSize = New File(TempFile);
+		If ValueIsFilled(BinaryData) Then 
 		
-		Str.Size			= CheckFileSize.Size();
+			BinaryData.Write(TempFile);
+			
+			CheckFileSize = New File(TempFile);
+			
+			Str.Size = CheckFileSize.Size();
+			
+		EndIf;	
 		
 	EndDo;
 	
