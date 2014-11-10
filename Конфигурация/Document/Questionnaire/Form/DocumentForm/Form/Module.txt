@@ -1232,77 +1232,43 @@ Function IsList(Value)
 EndFunction
 
 &AtServer
-Function DontSkip(Selector, PreviousSelector, ListOfValues)
-	
-	If Not Selector.ComparisonType = Enums.ComparisonType.InList Or Not Selector.Selector = PreviousSelector.Selector Then
-		
-		NewRow 			= Selectors.Add();
-		NewRow.Value 	= ListOfValues;
-		
-		WriteSelectorRow(NewRow, PreviousSelector);
-		
-		Return True;		
-		
-	Else
-		
-		Return False;		
-		
-	EndIf;	
-	
-EndFunction
-
-&AtServer
 Function FillSelectors()
 	
-	Source = Object.Selectors;
+	Source = Object.Selectors.Unload();
 	
-	Skip 				= False;
-	PreviousSelector 	= Undefined;
-	ListOfValues		= New ValueList;
-	NewRow 				= Undefined;
-
-	For Each Selector In Source Do
+	SelectorTable = Source.Copy();
+	SelectorTable.GroupBy("Selector, ComparisonType");
+	
+	For Each SelectorElsement In SelectorTable Do 
 		
-		If Not Skip Or DontSkip(Selector, PreviousSelector, ListOfValues) Then
-			
-			If Not Selector.ComparisonType = Enums.ComparisonType.InList Then
-				
-				NewRow 			= Selectors.Add();
-				NewRow.Value 	= Selector.Value;
-				
-				WriteSelectorRow(NewRow, Selector);
-				
-				Skip = False;
-				
-			Else
-				
-				ListOfValues = New ValueList;
-				ListOfValues.Add(Selector.Value);
-				
-				PreviousSelector = Selector;
-				
-				Skip = True;
-				
-			EndIf;
-			
-		Else
-			
-			ListOfValues.Add(Selector.Value);
-			
-			If ListOfValues.Count() = Source.Count() Then
-				
-				NewRow = Selectors.Add();
-				
-				WriteSelectorRow(NewRow, Selector);
-				
-				NewRow.Value = ListOfValues;
-				
-			EndIf;
-			
-		EndIf;
+		FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
 		
-	EndDo;
+		If SelectorElsement.ComparisonType = Enums.ComparisonType.InList Then 
+			
+			ListOfValues = New ValueList;
 
+			For Each FoundedString In FoundedStrings Do 
+				
+				ListOfValues.Add(FoundedString.Value);	
+				
+			EndDo;	
+			
+			NewRow 			= Selectors.Add();	
+			NewRow.Value 	= ListOfValues;
+			
+			WriteSelectorRow(NewRow, FoundedString);
+			
+		Else 
+			
+			NewRow 			= Selectors.Add();	
+			NewRow.Value 	= FoundedStrings[0].Value;
+			
+			WriteSelectorRow(NewRow, FoundedStrings[0]);
+			
+		EndIf;	
+			
+	EndDo;	
+		
 EndFunction
 
 &AtServer
