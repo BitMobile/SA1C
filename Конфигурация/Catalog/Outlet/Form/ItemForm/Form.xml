@@ -94,6 +94,7 @@
 								<InputField name="ClosingCause" id="123">
 									<DataPath>Object.ClosingCause</DataPath>
 									<Visible>false</Visible>
+									<Width>1</Width>
 									<ContextMenu name="ClosingCauseContextMenu" id="124"/>
 									<ExtendedTooltip name="ClosingCauseExtendedTooltip" id="148"/>
 								</InputField>
