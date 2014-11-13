@@ -1613,8 +1613,8 @@
 					</Attribute>
 				</ChildObjects>
 			</TabularSection>
-			<Form>ItemForm</Form>
 			<Form>ListForm</Form>
+			<Form>ItemForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>
