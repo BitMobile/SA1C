@@ -24,30 +24,26 @@ EndFunction
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	If Not ValueIsFilled(Object.Ref) Then 
+	Try
 		
-		Try
-		
-			If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormRegularQuestionsWithGroups" Then 
+		If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormRegularQuestionsWithGroups" Then 
+			
+			Object.Type = GetQuestionGroupType("RegularQuestions");
 				
-				Object.Type = GetQuestionGroupType("RegularQuestions");
-					
-				Items.Type.Enabled = False;
-									
-			EndIf;
-			
-			If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormSKUQuestionsWithGroups" Then 
-				
-				Object.Type = GetQuestionGroupType("SKUQuestions");
-					
-				Items.Type.Enabled = False;
-									
-			EndIf;
-			
-		Except
-			
-		EndTry;	
+			Items.Type.Enabled = False;
+								
+		EndIf;
 		
-	EndIf;
-	
+		If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormSKUQuestionsWithGroups" Then 
+			
+			Object.Type = GetQuestionGroupType("SKUQuestions");
+				
+			Items.Type.Enabled = False;
+								
+		EndIf;
+		
+	Except
+		
+	EndTry;	
+		
 EndProcedure

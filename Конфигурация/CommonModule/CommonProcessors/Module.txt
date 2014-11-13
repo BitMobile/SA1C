@@ -60,13 +60,13 @@ EndFunction
 
 Function GetQuestionGroupType(TypeString = "SKUQuestions") Export
 	
-	If TypeString = "Regular" Then 
+	If TypeString = "SKUQuestions" Then 
 	
-		Return Enums.QuestionGroupTypes.RegularQuestions;
+		Return Enums.QuestionGroupTypes.SKUQuestions;
 		
 	Else 
 		
-		Return Enums.QuestionGroupTypes.SKUQuestions;
+		Return Enums.QuestionGroupTypes.RegularQuestions;
 		
 	EndIf;
 		

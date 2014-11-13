@@ -1944,7 +1944,7 @@ Procedure AddQuestion(Command)
 		
 		ItemElement = Items.Questions;
 		Tree 		= Questions;
-		RightValue 	= GetQuestionGroupType("Regular");
+		RightValue 	= GetQuestionGroupType("RegularQuestions");
 		
 	EndIf;
 	
@@ -1985,7 +1985,7 @@ Procedure AddParentQuestion(Command)
 		
 		ItemElement = Items.Questions;
 		Tree 		= Questions;
-		RightValue 	= GetQuestionGroupType("Regular");
+		RightValue 	= GetQuestionGroupType("RegularQuestions");
 		
 	EndIf;	
 	
@@ -2268,7 +2268,7 @@ Procedure DiscardСhanges(Command)
 		
 	Else 
 		
-		FillQuestionsTree(GetQuestionGroupType("Regular"));
+		FillQuestionsTree(GetQuestionGroupType("RegularQuestions"));
 		
 		Items.Questions.Expand(Questions.GetItems()[0].GetID());
 		
