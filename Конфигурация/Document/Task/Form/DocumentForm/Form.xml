@@ -13,115 +13,100 @@
 		<Event name="OnClose">OnClose</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="Group5" id="30">
+		<UsualGroup name="GroupNumberDate" id="25">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group number date</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group number date</v8:content>
+				</v8:item>
+			</ToolTip>
 			<Group>Horizontal</Group>
-			<Representation>StrongSeparation</Representation>
-			<ExtendedTooltip name="Group5РасширеннаяПодсказка" id="31"/>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupNumberDateExtendedTooltip" id="32"/>
 			<ChildItems>
-				<UsualGroup name="ГруппаНомерДата" id="25">
-					<ToolTip>
+				<InputField name="Number" id="1">
+					<DataPath>Object.Number</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="NumberContextMenu" id="2"/>
+					<ExtendedTooltip name="NumberРасширеннаяПодсказка" id="33"/>
+				</InputField>
+				<InputField name="Date" id="3">
+					<DataPath>Object.Date</DataPath>
+					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Группа номер дата</v8:content>
+							<v8:content>Start date</v8:content>
 						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ExtendedTooltip name="ГруппаНомерДатаРасширеннаяПодсказка" id="32"/>
-					<ChildItems>
-						<InputField name="Number" id="1">
-							<DataPath>Object.Number</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="NumberContextMenu" id="2"/>
-							<ExtendedTooltip name="NumberРасширеннаяПодсказка" id="33"/>
-						</InputField>
-						<InputField name="Date" id="3">
-							<DataPath>Object.Date</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Start date</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="DateContextMenu" id="4"/>
-							<ExtendedTooltip name="DateРасширеннаяПодсказка" id="34"/>
-						</InputField>
-						<InputField name="PlanDate" id="15">
-							<DataPath>Object.PlanDate</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Plan date</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="PlanDateContextMenu" id="16"/>
-							<ExtendedTooltip name="PlanDateРасширеннаяПодсказка" id="35"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="DateContextMenu" id="4"/>
+					<ExtendedTooltip name="DateРасширеннаяПодсказка" id="34"/>
+				</InputField>
+				<InputField name="PlanDate" id="15">
+					<DataPath>Object.PlanDate</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Plan date</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="PlanDateContextMenu" id="16"/>
+					<ExtendedTooltip name="PlanDateРасширеннаяПодсказка" id="35"/>
+				</InputField>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="Group4" id="29">
-			<Group>Horizontal</Group>
-			<ExtendedTooltip name="Group4РасширеннаяПодсказка" id="36"/>
-			<ChildItems>
-				<UsualGroup name="Group3" id="28">
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="Group3РасширеннаяПодсказка" id="37"/>
-					<ChildItems>
-						<InputField name="Territory" id="5">
-							<DataPath>Object.Territory</DataPath>
-							<Visible>false</Visible>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="TerritoryContextMenu" id="6"/>
-							<ExtendedTooltip name="TerritoryРасширеннаяПодсказка" id="38"/>
-						</InputField>
-						<InputField name="Outlet" id="7">
-							<DataPath>Object.Outlet</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="OutletContextMenu" id="8"/>
-							<ExtendedTooltip name="OutletРасширеннаяПодсказка" id="39"/>
-						</InputField>
-						<InputField name="StatusTask" id="9">
-							<DataPath>Object.StatusTask</DataPath>
-							<Enabled>false</Enabled>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="StatusTaskContextMenu" id="10"/>
-							<ExtendedTooltip name="StatusTaskРасширеннаяПодсказка" id="40"/>
-						</InputField>
-						<InputField name="VisitPlan" id="13">
-							<DataPath>Object.VisitPlan</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="VisitPlanContextMenu" id="14"/>
-							<ExtendedTooltip name="VisitPlanРасширеннаяПодсказка" id="41"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-				<UsualGroup name="Group2" id="27">
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="Group2РасширеннаяПодсказка" id="42"/>
-					<ChildItems>
-						<InputField name="TextTask" id="11">
-							<DataPath>Object.TextTask</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="TextTaskContextMenu" id="12"/>
-							<ExtendedTooltip name="TextTaskРасширеннаяПодсказка" id="43"/>
-						</InputField>
-						<InputField name="Result" id="19">
-							<DataPath>Object.Result</DataPath>
-							<Visible>false</Visible>
-							<Enabled>false</Enabled>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="ResultContextMenu" id="20"/>
-							<ExtendedTooltip name="ResultРасширеннаяПодсказка" id="44"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
+		<InputField name="Territory" id="5">
+			<DataPath>Object.Territory</DataPath>
+			<Visible>false</Visible>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="TerritoryContextMenu" id="6"/>
+			<ExtendedTooltip name="TerritoryРасширеннаяПодсказка" id="38"/>
+		</InputField>
+		<InputField name="Outlet" id="7">
+			<DataPath>Object.Outlet</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="OutletContextMenu" id="8"/>
+			<ExtendedTooltip name="OutletРасширеннаяПодсказка" id="39"/>
+		</InputField>
+		<InputField name="StatusTask" id="9">
+			<DataPath>Object.StatusTask</DataPath>
+			<Enabled>false</Enabled>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="StatusTaskContextMenu" id="10"/>
+			<ExtendedTooltip name="StatusTaskРасширеннаяПодсказка" id="40"/>
+		</InputField>
+		<InputField name="VisitPlan" id="13">
+			<DataPath>Object.VisitPlan</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="VisitPlanContextMenu" id="14"/>
+			<ExtendedTooltip name="VisitPlanРасширеннаяПодсказка" id="41"/>
+		</InputField>
+		<InputField name="TextTask" id="11">
+			<DataPath>Object.TextTask</DataPath>
+			<TitleLocation>Left</TitleLocation>
+			<EditMode>EnterOnInput</EditMode>
+			<Height>4</Height>
+			<MultiLine>true</MultiLine>
+			<ContextMenu name="TextTaskContextMenu" id="12"/>
+			<ExtendedTooltip name="TextTaskРасширеннаяПодсказка" id="43"/>
+		</InputField>
+		<InputField name="Result" id="19">
+			<DataPath>Object.Result</DataPath>
+			<Visible>false</Visible>
+			<Enabled>false</Enabled>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="ResultContextMenu" id="20"/>
+			<ExtendedTooltip name="ResultРасширеннаяПодсказка" id="44"/>
+		</InputField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">

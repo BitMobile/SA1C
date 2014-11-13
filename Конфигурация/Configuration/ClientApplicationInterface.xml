@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ClientApplicationInterface xmlns="http://v8.1c.ru/8.2/managed-application/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="InterfaceLayouter">
+	<left>
+		<group id="3f95b7bf-0ea0-46d9-bc7e-6718ef2fd0d2">
+			<group>
+				<panel id="3ce368a4-26a3-4b5f-92fc-bb6568e719cf">
+					<name>Панель инструментов</name>
+				</panel>
+			</group>
+			<group>
+				<panel id="bc24d717-eef5-4b73-8b4f-3b56d1ed194c">
+					<name>Панель разделов</name>
+				</panel>
+			</group>
+		</group>
+	</left>
+	<right>
+		<panel id="b9fcbc36-60dd-4ec1-82d2-8de87d40599e">
+			<name>Панель открытых</name>
+			<height>1</height>
+		</panel>
+	</right>
+</ClientApplicationInterface>

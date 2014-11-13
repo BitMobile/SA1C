@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockWholeInterface</WindowOpeningMode>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
@@ -19,7 +20,25 @@
 			<SearchControlLocation>None</SearchControlLocation>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ValuesTableContextMenu" id="8"/>
-			<AutoCommandBar name="ValuesTableCommandBar" id="9"/>
+			<AutoCommandBar name="ValuesTableCommandBar" id="9">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="Ok" id="6">
+						<Type>CommandBarButton</Type>
+						<DefaultButton>true</DefaultButton>
+						<Width>10</Width>
+						<CommandName>Form.Command.Ok</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="OkExtendedTooltip" id="23"/>
+					</Button>
+					<Button name="ValuesTableAdd" id="24">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.ValuesTable.StandardCommand.Add</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="ValuesTableAddExtendedTooltip" id="25"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="ValuesTableExtendedTooltip" id="12"/>
 			<SearchStringAddition name="ValuesTableSearchString" id="13">
 				<Source>
@@ -63,39 +82,6 @@
 				</InputField>
 			</ChildItems>
 		</Table>
-		<UsualGroup name="GroupOk" id="24">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group ok</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group ok</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="GroupOkExtendedTooltip" id="25"/>
-			<ChildItems>
-				<LabelDecoration name="Decoration1" id="26">
-					<HorizontalStretch>true</HorizontalStretch>
-					<ContextMenu name="Decoration1ContextMenu" id="27"/>
-					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="28"/>
-				</LabelDecoration>
-				<Button name="Ok" id="6">
-					<Type>UsualButton</Type>
-					<DefaultButton>true</DefaultButton>
-					<Width>10</Width>
-					<CommandName>Form.Command.Ok</CommandName>
-					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="OkExtendedTooltip" id="23"/>
-				</Button>
-			</ChildItems>
-		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Values" id="1">

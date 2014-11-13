@@ -12,7 +12,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	EndIf;
 	ScheduleStructure = GetScheduleStructure();
 	FillPropertyValues(ThisForm, ScheduleStructure);
-	Items.ScheduleStringPresentation.Title = GetStringPresentationOfSchedule(Schedule);
+	ScheduleStringPresentation = GetStringPresentationOfSchedule(Schedule);
 	SetVisibility();
 EndProcedure
 
@@ -22,7 +22,7 @@ EndProcedure
 Procedure WriteAndClose(Command)
 	Structure = New Structure;
 	Structure.Insert("Schedule", Schedule);
-	Structure.Insert("ScheduleStringPresentation", Items.ScheduleStringPresentation.Title);
+	Structure.Insert("ScheduleStringPresentation", ScheduleStringPresentation);
 	Structure.Insert("Modified", Modified);
 	
 	Notify("ScheduleChanged", Structure);
@@ -113,29 +113,44 @@ Procedure YearBeginPeriodMonthStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	StandardProcessing = False;
 	
-	MonthList = GetEmptyMonths();
+	MonthsList = GetEmptyMonths();
 	
-	SelectedValue = ChooseFromList(MonthList, Item, YearBeginPeriodMonth[0].Value - 1);
+	ShowChooseFromList(New NotifyDescription("YearBeginPeriodMonthProcessing", ThisForm), 
+					   MonthsList,
+					   Item,
+					   YearBeginPeriodMonth[0].Value - 1);
+
+EndProcedure
+
+&AtClient
+Procedure YearBeginPeriodMonthProcessing(Result, Parameters) Export
 	
-	If Not SelectedValue = Undefined Then
+	If Not Result = Undefined Then
+		
 		MList = New ValueList;
-		MList.Add(SelectedValue.Value, SelectedValue.Presentation);
+		MList.Add(Result.Value, Result.Presentation);
 		
 		YearBeginPeriodMonth = MList;
 		
 		YearEndPeriodMonth = ?(YearEndPeriodMonth[0].Value < YearBeginPeriodMonth[0].Value, YearBeginPeriodMonth, YearEndPeriodMonth);
 		
 		If YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value Then
+			
 			Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
 			YearEndPeriodDay = ?(YearEndPeriodDay >= YearBeginPeriodDay, YearEndPeriodDay, YearBeginPeriodDay);
+			
 		Else
+			
 			Items.YearEndPeriodDay.MinValue = 1;
+			
 		EndIf;
+		
 	EndIf;
 
-	SetSchedule();	
-EndProcedure
+	SetSchedule();
 
+EndProcedure	
+	
 &AtClient
 Procedure YearEndPeriodMonthStartChoice(Item, ChoiceData, StandardProcessing)
 	
@@ -143,23 +158,36 @@ Procedure YearEndPeriodMonthStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	MonthsList = GetEmptyMonths(YearBeginPeriodMonth[0].Value);
 	
-	SelectedValue = ChooseFromList(MonthsList, Item, YearEndPeriodMonth[0].Value - YearBeginPeriodMonth[0].Value);
+	ShowChooseFromList(New NotifyDescription("YearEndPeriodMonthProcessing", ThisForm), 
+					   MonthsList,
+					   Item,
+					   YearEndPeriodMonth[0].Value - YearBeginPeriodMonth[0].Value);
+
+EndProcedure
+
+&AtClient
+Procedure YearEndPeriodMonthProcessing(Result, Parameters) Export
 	
-	If Not SelectedValue = Undefined Then
+	If Not Result = Undefined Then
+		
 		MList = New ValueList;
-		MList.Add(SelectedValue.Value, SelectedValue.Presentation); 
+		MList.Add(Result.Value, Result.Presentation); 
 		
 		YearEndPeriodMonth = MList;
 		
 		If YearBeginPeriodMonth[0].Value = YearEndPeriodMonth[0].Value Then
+			
 			Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
 			YearEndPeriodDay = ?(YearEndPeriodDay >= YearBeginPeriodDay, YearEndPeriodDay, YearBeginPeriodDay);
+			
 		Else
+			
 			Items.YearEndPeriodDay.MinValue = 1;
+			
 		EndIf;
 		
 	EndIf;
-	
+
 	SetSchedule();
 
 EndProcedure
@@ -224,7 +252,7 @@ EndProcedure
 &AtServer
 Procedure SetSchedule()
     Schedule = GetScheduleString();
-    Items.ScheduleStringPresentation.Title = GetStringPresentationOfSchedule(Schedule);
+    ScheduleStringPresentation = GetStringPresentationOfSchedule(Schedule);
 EndProcedure
 
 &AtServer 
@@ -232,14 +260,6 @@ Procedure SetVisibilityAndSchedule()
 	SetVisibility();
 	SetSchedule();
 EndProcedure
-
-//&AtClient 
-//Procedure SetYearEndPeriodDayMinimum()
-//	If YearBeginPeriodMonth = YearEndPeriodMonth Then
-//		Items.YearEndPeriodDay.MinValue = YearBeginPeriodDay;
-//		YearEndPeriodDay = Max(YearBeginPeriodDay, YearEndPeriodDay);		
-//	EndIf;	
-//EndProcedure
 
 // HELPER FUNCTIONS
 

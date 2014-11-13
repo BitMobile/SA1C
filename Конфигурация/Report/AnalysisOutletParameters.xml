@@ -16,11 +16,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Analysis outlet parameters</v8:content>
+					<v8:content>Outlet parameters</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Анализ параметров ТТ</v8:content>
+					<v8:content>Параметры торговых точек</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>

@@ -54,80 +54,58 @@
 				<Event name="StartChoice">AssignmentStartChoice</Event>
 			</Events>
 		</InputField>
-		<UsualGroup name="GroupValueList" id="34">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Value list</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Список значений</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group value list</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Representation>StrongSeparation</Representation>
-			<ExtendedTooltip name="GroupValueListExtendedTooltip" id="40"/>
+		<Table name="ValueList" id="9">
+			<Representation>List</Representation>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Object.ValueList</DataPath>
+			<SearchStringLocation>None</SearchStringLocation>
+			<ViewStatusLocation>None</ViewStatusLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ValueListContextMenu" id="10"/>
+			<AutoCommandBar name="ValueListCommandBar" id="11"/>
+			<ExtendedTooltip name="ValueListExtendedTooltip" id="41"/>
+			<SearchStringAddition name="ValueListSearchString" id="42">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>0</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListSearchStringContextMenu" id="43"/>
+				<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="44"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ValueListViewStatus" id="45">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>1</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListViewStatusContextMenu" id="46"/>
+				<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="47"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ValueListSearchControl" id="48">
+				<Source>
+					<lf:elementId>9</lf:elementId>
+					<lf:additionId>2</lf:additionId>
+				</Source>
+				<ContextMenu name="ValueListSearchControlContextMenu" id="49"/>
+				<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="50"/>
+			</SearchControlAddition>
 			<ChildItems>
-				<Table name="ValueList" id="9">
-					<Representation>List</Representation>
-					<AutoInsertNewRow>true</AutoInsertNewRow>
-					<EnableStartDrag>true</EnableStartDrag>
-					<EnableDrag>true</EnableDrag>
-					<DataPath>Object.ValueList</DataPath>
-					<SearchStringLocation>None</SearchStringLocation>
-					<ViewStatusLocation>None</ViewStatusLocation>
-					<SearchControlLocation>None</SearchControlLocation>
-					<RowFilter xsi:nil="true"/>
-					<ContextMenu name="ValueListContextMenu" id="10"/>
-					<AutoCommandBar name="ValueListCommandBar" id="11"/>
-					<ExtendedTooltip name="ValueListExtendedTooltip" id="41"/>
-					<SearchStringAddition name="ValueListSearchString" id="42">
-						<Source>
-							<lf:elementId>9</lf:elementId>
-							<lf:additionId>0</lf:additionId>
-						</Source>
-						<ContextMenu name="ValueListSearchStringContextMenu" id="43"/>
-						<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="44"/>
-					</SearchStringAddition>
-					<ViewStatusAddition name="ValueListViewStatus" id="45">
-						<Source>
-							<lf:elementId>9</lf:elementId>
-							<lf:additionId>1</lf:additionId>
-						</Source>
-						<ContextMenu name="ValueListViewStatusContextMenu" id="46"/>
-						<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="47"/>
-					</ViewStatusAddition>
-					<SearchControlAddition name="ValueListSearchControl" id="48">
-						<Source>
-							<lf:elementId>9</lf:elementId>
-							<lf:additionId>2</lf:additionId>
-						</Source>
-						<ContextMenu name="ValueListSearchControlContextMenu" id="49"/>
-						<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="50"/>
-					</SearchControlAddition>
-					<ChildItems>
-						<LabelField name="ValueListLineNumber" id="12">
-							<DataPath>Object.ValueList.LineNumber</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="ValueListLineNumberContextMenu" id="13"/>
-							<ExtendedTooltip name="ValueListLineNumberExtendedTooltip" id="51"/>
-						</LabelField>
-						<InputField name="ValueListValue" id="14">
-							<DataPath>Object.ValueList.Value</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="ValueListValueContextMenu" id="15"/>
-							<ExtendedTooltip name="ValueListValueExtendedTooltip" id="52"/>
-						</InputField>
-					</ChildItems>
-				</Table>
+				<LabelField name="ValueListLineNumber" id="12">
+					<DataPath>Object.ValueList.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ValueListLineNumberContextMenu" id="13"/>
+					<ExtendedTooltip name="ValueListLineNumberExtendedTooltip" id="51"/>
+				</LabelField>
+				<InputField name="ValueListValue" id="14">
+					<DataPath>Object.ValueList.Value</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ValueListValueContextMenu" id="15"/>
+					<ExtendedTooltip name="ValueListValueExtendedTooltip" id="52"/>
+				</InputField>
 			</ChildItems>
-		</UsualGroup>
+		</Table>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">

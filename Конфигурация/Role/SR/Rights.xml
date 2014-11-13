@@ -4,13 +4,6 @@
 	<setForAttributesByDefault>true</setForAttributesByDefault>
 	<independentRightsOfChildObjects>false</independentRightsOfChildObjects>
 	<object>
-		<name>Subsystem.DistributorGroup.Subsystem.Documents</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.Distributor</name>
 		<right>
 			<name>Read</name>
@@ -69,13 +62,6 @@
 		</right>
 	</object>
 	<object>
-		<name>Subsystem.UsersGroup.Subsystem.Catalogs</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.Question</name>
 		<right>
 			<name>Read</name>
@@ -119,13 +105,6 @@
 		</right>
 		<right>
 			<name>InputByString</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.QuestionGroup</name>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -291,13 +270,6 @@
 		</right>
 		<right>
 			<name>InputByString</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.SKUGroup</name>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -505,13 +477,6 @@
 		</right>
 	</object>
 	<object>
-		<name>Subsystem.DistributorGroup.Subsystem.Catalogs</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.OutletType</name>
 		<right>
 			<name>Read</name>
@@ -555,13 +520,6 @@
 		</right>
 		<right>
 			<name>InputByString</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.DistributorGroup</name>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -731,13 +689,6 @@
 		</right>
 	</object>
 	<object>
-		<name>Subsystem.QuestionGroup.Subsystem.Documents</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.User</name>
 		<right>
 			<name>Read</name>
@@ -781,27 +732,6 @@
 		</right>
 		<right>
 			<name>InputByString</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.UsersGroup</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.QuestionGroup.Subsystem.Catalogs</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Subsystem.SKUGroup.Subsystem.Catalogs</name>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>

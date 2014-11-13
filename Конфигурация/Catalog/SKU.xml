@@ -304,7 +304,7 @@
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Catalog.SKU.Form.ItemForm</DefaultObjectForm>
 			<DefaultFolderForm/>
-			<DefaultListForm/>
+			<DefaultListForm>Catalog.SKU.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm>Catalog.SKU.Form.ChoiceForm</DefaultChoiceForm>
 			<DefaultFolderChoiceForm/>
 			<AuxiliaryObjectForm/>
@@ -889,6 +889,7 @@
 			<Form>ItemForm</Form>
 			<Form>PickFromForm</Form>
 			<Form>ChoiceForm</Form>
+			<Form>ListForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

@@ -10,6 +10,7 @@
 			<v8:content>Выберите значение:</v8:content>
 		</v8:item>
 	</Title>
+	<WindowOpeningMode>LockWholeInterface</WindowOpeningMode>
 	<AutoTitle>false</AutoTitle>
 	<Customizable>false</Customizable>
 	<CommandBarLocation>None</CommandBarLocation>
@@ -27,16 +28,44 @@
 		<ExcludedCommand>Ignore</ExcludedCommand>
 		<ExcludedCommand>OK</ExcludedCommand>
 	</CommandSet>
-	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<AutoCommandBar name="FormCommandBar" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
 	<Events>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
+		<CommandBar name="GroupCommand" id="32">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group command</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group command</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="GroupCommandExtendedTooltip" id="33"/>
+			<ChildItems>
+				<Button name="Ok" id="3">
+					<Type>CommandBarButton</Type>
+					<DefaultButton>true</DefaultButton>
+					<Width>10</Width>
+					<CommandName>Form.Command.Ok</CommandName>
+					<Parameter xsi:nil="true"/>
+					<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+					<ExtendedTooltip name="OkExtendedTooltip" id="29"/>
+				</Button>
+			</ChildItems>
+		</CommandBar>
 		<InputField name="Str" id="1">
 			<DataPath>Str</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<ContextMenu name="StrContextMenu" id="2"/>
 			<ExtendedTooltip name="StrExtendedTooltip" id="23"/>
 		</InputField>
@@ -44,7 +73,7 @@
 			<DataPath>Bool</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<ChoiceButton>true</ChoiceButton>
 			<ContextMenu name="BoolContextMenu" id="21"/>
 			<ExtendedTooltip name="BoolExtendedTooltip" id="24"/>
@@ -56,7 +85,7 @@
 			<DataPath>VList</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<TextEdit>false</TextEdit>
 			<ChoiceListButton>true</ChoiceListButton>
 			<ContextMenu name="VListContextMenu" id="11"/>
@@ -70,7 +99,7 @@
 			<DataPath>Integer</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<ContextMenu name="IntegerContextMenu" id="15"/>
 			<ExtendedTooltip name="IntegerExtendedTooltip" id="26"/>
 		</InputField>
@@ -78,7 +107,7 @@
 			<DataPath>Decimal</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<ContextMenu name="DecimalContextMenu" id="17"/>
 			<ExtendedTooltip name="DecimalExtendedTooltip" id="27"/>
 		</InputField>
@@ -86,44 +115,10 @@
 			<DataPath>DateField</DataPath>
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
-			<HorizontalStretch>true</HorizontalStretch>
+			<Width>30</Width>
 			<ContextMenu name="DateFieldContextMenu" id="19"/>
 			<ExtendedTooltip name="DateFieldExtendedTooltip" id="28"/>
 		</InputField>
-		<UsualGroup name="GroupOk" id="30">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group ok</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group ok</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="GroupOkExtendedTooltip" id="31"/>
-			<ChildItems>
-				<LabelDecoration name="Decoration1" id="32">
-					<HorizontalStretch>true</HorizontalStretch>
-					<ContextMenu name="Decoration1ContextMenu" id="33"/>
-					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="34"/>
-				</LabelDecoration>
-				<Button name="Ok" id="3">
-					<Type>UsualButton</Type>
-					<DefaultButton>true</DefaultButton>
-					<Width>10</Width>
-					<CommandName>Form.Command.Ok</CommandName>
-					<Parameter xsi:nil="true"/>
-					<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-					<ExtendedTooltip name="OkExtendedTooltip" id="29"/>
-				</Button>
-			</ChildItems>
-		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Str" id="1">

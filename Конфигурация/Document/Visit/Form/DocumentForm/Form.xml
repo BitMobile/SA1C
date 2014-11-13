@@ -9,738 +9,712 @@
 		<Event name="OnOpen">OnOpen</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="MasterData" id="103">
+		<Pages name="Pages" id="15">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Master data</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Основные данные</v8:content>
+					<v8:content>Страницы</v8:content>
 				</v8:item>
 			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Master data</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Representation>StrongSeparation</Representation>
-			<ExtendedTooltip name="MasterDataExtendedTooltip" id="139"/>
+			<ExtendedTooltip name="PagesExtendedTooltip" id="156"/>
+			<Events>
+				<Event name="OnCurrentPageChange">PagesOnCurrentPageChange</Event>
+			</Events>
 			<ChildItems>
-				<UsualGroup name="NumberAndDate" id="47">
+				<Page name="GroupMasterData" id="103">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Number and date</v8:content>
+							<v8:content>Master data</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные данные</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Number and date</v8:content>
+							<v8:content>Group master data</v8:content>
 						</v8:item>
 					</ToolTip>
-					<HorizontalStretch>true</HorizontalStretch>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="NumberAndDateExtendedTooltip" id="140"/>
+					<ExtendedTooltip name="GroupMasterDataExtendedTooltip" id="139"/>
 					<ChildItems>
-						<InputField name="Number" id="1">
-							<DataPath>Object.Number</DataPath>
+						<UsualGroup name="GroupNumberAndDate" id="47">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group number and date</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group number and date</v8:content>
+								</v8:item>
+							</ToolTip>
+							<HorizontalStretch>true</HorizontalStretch>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupNumberAndDateExtendedTooltip" id="140"/>
+							<ChildItems>
+								<InputField name="Number" id="1">
+									<DataPath>Object.Number</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="NumberContextMenu" id="2"/>
+									<ExtendedTooltip name="NumberExtendedTooltip" id="141"/>
+								</InputField>
+								<InputField name="Date" id="3">
+									<DataPath>Object.Date</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="DateContextMenu" id="4"/>
+									<ExtendedTooltip name="DateExtendedTooltip" id="142"/>
+								</InputField>
+								<InputField name="Status" id="9">
+									<DataPath>Object.Status</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="StatusContextMenu" id="10"/>
+									<ExtendedTooltip name="StatusExtendedTooltip" id="143"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="Plan" id="50">
+							<DataPath>Object.Plan</DataPath>
+							<ContextMenu name="PlanContextMenu" id="51"/>
+							<ExtendedTooltip name="PlanExtendedTooltip" id="144"/>
+						</InputField>
+						<InputField name="Outlet" id="5">
+							<DataPath>Object.Outlet</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="OutletContextMenu" id="6"/>
+							<ExtendedTooltip name="OutletExtendedTooltip" id="145"/>
+						</InputField>
+						<InputField name="SR" id="7">
+							<DataPath>Object.SR</DataPath>
+							<TitleLocation>Left</TitleLocation>
+							<TitleHeight>2</TitleHeight>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="SRContextMenu" id="8"/>
+							<ExtendedTooltip name="SRExtendedTooltip" id="146"/>
+						</InputField>
+						<InputField name="Encashment" id="48">
+							<ContextMenu name="EncashmentContextMenu" id="49"/>
+							<ExtendedTooltip name="EncashmentExtendedTooltip" id="147"/>
+						</InputField>
+						<UsualGroup name="GroupPeriodAndLocation" id="104">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group period and location</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group period and location</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupPeriodAndLocationExtendedTooltip" id="148"/>
+							<ChildItems>
+								<InputField name="StartTime" id="11">
+									<DataPath>Object.StartTime</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="StartTimeContextMenu" id="12"/>
+									<ExtendedTooltip name="StartTimeExtendedTooltip" id="150"/>
+								</InputField>
+								<InputField name="EndTime" id="13">
+									<DataPath>Object.EndTime</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="EndTimeContextMenu" id="14"/>
+									<ExtendedTooltip name="EndTimeExtendedTooltip" id="151"/>
+								</InputField>
+								<InputField name="Lattitude" id="78">
+									<DataPath>Object.Lattitude</DataPath>
+									<ContextMenu name="LattitudeContextMenu" id="79"/>
+									<ExtendedTooltip name="LattitudeExtendedTooltip" id="153"/>
+								</InputField>
+								<InputField name="Longitude" id="80">
+									<DataPath>Object.Longitude</DataPath>
+									<ContextMenu name="LongitudeContextMenu" id="81"/>
+									<ExtendedTooltip name="LongitudeExtendedTooltip" id="154"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="GroupTasks" id="67">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Tasks</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Задачи</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group tasks</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="GroupTasksExtendedTooltip" id="157"/>
+					<ChildItems>
+						<Table name="Task" id="68">
 							<ReadOnly>true</ReadOnly>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="NumberContextMenu" id="2"/>
-							<ExtendedTooltip name="NumberExtendedTooltip" id="141"/>
-						</InputField>
-						<InputField name="Date" id="3">
-							<DataPath>Object.Date</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="DateContextMenu" id="4"/>
-							<ExtendedTooltip name="DateExtendedTooltip" id="142"/>
-						</InputField>
-						<InputField name="Status" id="9">
-							<DataPath>Object.Status</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="StatusContextMenu" id="10"/>
-							<ExtendedTooltip name="StatusExtendedTooltip" id="143"/>
-						</InputField>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Object.Task</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="TaskContextMenu" id="69"/>
+							<AutoCommandBar name="TaskCommandBar" id="70">
+								<Autofill>false</Autofill>
+							</AutoCommandBar>
+							<ExtendedTooltip name="TaskExtendedTooltip" id="158"/>
+							<SearchStringAddition name="TaskSearchString" id="159">
+								<Source>
+									<lf:elementId>68</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="TaskSearchStringContextMenu" id="160"/>
+								<ExtendedTooltip name="TaskSearchStringExtendedTooltip" id="161"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="TaskViewStatus" id="162">
+								<Source>
+									<lf:elementId>68</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="TaskViewStatusContextMenu" id="163"/>
+								<ExtendedTooltip name="TaskViewStatusExtendedTooltip" id="164"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="TaskSearchControl" id="165">
+								<Source>
+									<lf:elementId>68</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="TaskSearchControlContextMenu" id="166"/>
+								<ExtendedTooltip name="TaskSearchControlExtendedTooltip" id="167"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="TaskLineNumber" id="71">
+									<DataPath>Object.Task.LineNumber</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TaskLineNumberContextMenu" id="72"/>
+									<ExtendedTooltip name="TaskLineNumberExtendedTooltip" id="168"/>
+								</LabelField>
+								<InputField name="TaskTextTask" id="73">
+									<DataPath>Object.Task.TextTask</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TaskTextTaskContextMenu" id="74"/>
+									<ExtendedTooltip name="TaskTextTaskExtendedTooltip" id="169"/>
+								</InputField>
+								<CheckBoxField name="TaskResult" id="75">
+									<DataPath>Object.Task.Result</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="TaskResultContextMenu" id="76"/>
+									<ExtendedTooltip name="TaskResultExtendedTooltip" id="170"/>
+								</CheckBoxField>
+							</ChildItems>
+						</Table>
 					</ChildItems>
-				</UsualGroup>
-				<InputField name="Plan" id="50">
-					<DataPath>Object.Plan</DataPath>
-					<ContextMenu name="PlanContextMenu" id="51"/>
-					<ExtendedTooltip name="PlanExtendedTooltip" id="144"/>
-				</InputField>
-				<InputField name="Outlet" id="5">
-					<DataPath>Object.Outlet</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="OutletContextMenu" id="6"/>
-					<ExtendedTooltip name="OutletExtendedTooltip" id="145"/>
-				</InputField>
-				<InputField name="SR" id="7">
-					<DataPath>Object.SR</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="SRContextMenu" id="8"/>
-					<ExtendedTooltip name="SRExtendedTooltip" id="146"/>
-				</InputField>
-				<InputField name="Encashment" id="48">
-					<ContextMenu name="EncashmentContextMenu" id="49"/>
-					<ExtendedTooltip name="EncashmentExtendedTooltip" id="147"/>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="PeriodAndLocation" id="104">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Period and location</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Period and location</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="PeriodAndLocationExtendedTooltip" id="148"/>
-			<ChildItems>
-				<UsualGroup name="Period" id="46">
+				</Page>
+				<Page name="GroupQuestionaires" id="268">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Period</v8:content>
+							<v8:content>Questionaires</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Период</v8:content>
+							<v8:content>Анкеты</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Period</v8:content>
+							<v8:content>Group questionaires</v8:content>
 						</v8:item>
 					</ToolTip>
-					<HorizontalStretch>true</HorizontalStretch>
-					<Group>Horizontal</Group>
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="PeriodExtendedTooltip" id="149"/>
+					<ExtendedTooltip name="GroupQuestionairesExtendedTooltip" id="269"/>
 					<ChildItems>
-						<InputField name="StartTime" id="11">
-							<DataPath>Object.StartTime</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="StartTimeContextMenu" id="12"/>
-							<ExtendedTooltip name="StartTimeExtendedTooltip" id="150"/>
-						</InputField>
-						<InputField name="EndTime" id="13">
-							<DataPath>Object.EndTime</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="EndTimeContextMenu" id="14"/>
-							<ExtendedTooltip name="EndTimeExtendedTooltip" id="151"/>
-						</InputField>
+						<Table name="TempQuestionaires" id="270">
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<EnableStartDrag>true</EnableStartDrag>
+							<DataPath>TempQuestionaires</DataPath>
+							<RowPictureDataPath>TempQuestionaires.DefaultPicture</RowPictureDataPath>
+							<CommandSet>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>Create</ExcludedCommand>
+								<ExcludedCommand>ListSettings</ExcludedCommand>
+								<ExcludedCommand>Refresh</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>FindByCurrentValue</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+								<ExcludedCommand>Choose</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>SearchHistory</ExcludedCommand>
+							</CommandSet>
+							<AutoRefresh>false</AutoRefresh>
+							<AutoRefreshPeriod>60</AutoRefreshPeriod>
+							<Period xsi:type="v8:StandardPeriod">
+								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+							</Period>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<RestoreCurrentRow>false</RestoreCurrentRow>
+							<TopLevelParent xsi:nil="true"/>
+							<ShowRoot>true</ShowRoot>
+							<AllowRootChoice>false</AllowRootChoice>
+							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<ContextMenu name="TempQuestionairesContextMenu" id="271"/>
+							<AutoCommandBar name="TempQuestionairesCommandBar" id="272"/>
+							<ExtendedTooltip name="TempQuestionairesExtendedTooltip" id="273"/>
+							<SearchStringAddition name="TempQuestionairesSearchString" id="274">
+								<Source>
+									<lf:elementId>270</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionairesSearchStringContextMenu" id="277"/>
+								<ExtendedTooltip name="TempQuestionairesSearchStringExtendedTooltip" id="278"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="TempQuestionairesViewStatus" id="279">
+								<Source>
+									<lf:elementId>270</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionairesViewStatusContextMenu" id="282"/>
+								<ExtendedTooltip name="TempQuestionairesViewStatusExtendedTooltip" id="283"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="TempQuestionairesSearchControl" id="284">
+								<Source>
+									<lf:elementId>270</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionairesSearchControlContextMenu" id="287"/>
+								<ExtendedTooltip name="TempQuestionairesSearchControlExtendedTooltip" id="288"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="TempQuestionairesQuestionnaire" id="289">
+									<DataPath>TempQuestionaires.Questionnaire</DataPath>
+									<ContextMenu name="TempQuestionairesQuestionnaireContextMenu" id="290"/>
+									<ExtendedTooltip name="TempQuestionairesQuestionnaireExtendedTooltip" id="291"/>
+								</LabelField>
+								<LabelField name="TempQuestionairesVisit" id="292">
+									<DataPath>TempQuestionaires.Visit</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="TempQuestionairesVisitContextMenu" id="293"/>
+									<ExtendedTooltip name="TempQuestionairesVisitExtendedTooltip" id="294"/>
+								</LabelField>
+								<LabelField name="TempQuestionairesOutlet" id="295">
+									<DataPath>TempQuestionaires.Outlet</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="TempQuestionairesOutletContextMenu" id="296"/>
+									<ExtendedTooltip name="TempQuestionairesOutletExtendedTooltip" id="297"/>
+								</LabelField>
+								<LabelField name="TempQuestionairesSR" id="298">
+									<DataPath>TempQuestionaires.SR</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="TempQuestionairesSRContextMenu" id="299"/>
+									<ExtendedTooltip name="TempQuestionairesSRExtendedTooltip" id="300"/>
+								</LabelField>
+								<LabelField name="TempQuestionairesDate" id="301">
+									<DataPath>TempQuestionaires.Date</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="TempQuestionairesDateContextMenu" id="302"/>
+									<ExtendedTooltip name="TempQuestionairesDateExtendedTooltip" id="303"/>
+								</LabelField>
+							</ChildItems>
+						</Table>
 					</ChildItems>
-				</UsualGroup>
-				<UsualGroup name="Location" id="77">
-					<ReadOnly>true</ReadOnly>
+				</Page>
+				<Page name="GroupQuestions" id="16">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Location</v8:content>
+							<v8:content>Questions</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Координаты</v8:content>
+							<v8:content>Вопросы</v8:content>
 						</v8:item>
 					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Location</v8:content>
-						</v8:item>
-					</ToolTip>
-					<HorizontalStretch>true</HorizontalStretch>
 					<Group>Horizontal</Group>
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="LocationExtendedTooltip" id="152"/>
+					<ExtendedTooltip name="GroupQuestionsExtendedTooltip" id="171"/>
 					<ChildItems>
-						<InputField name="Lattitude" id="78">
-							<DataPath>Object.Lattitude</DataPath>
-							<ContextMenu name="LattitudeContextMenu" id="79"/>
-							<ExtendedTooltip name="LattitudeExtendedTooltip" id="153"/>
-						</InputField>
-						<InputField name="Longitude" id="80">
-							<DataPath>Object.Longitude</DataPath>
-							<ContextMenu name="LongitudeContextMenu" id="81"/>
-							<ExtendedTooltip name="LongitudeExtendedTooltip" id="154"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="PagesAndPreview" id="125">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Pages and preview</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Pages and preview</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="PagesAndPreviewExtendedTooltip" id="155"/>
-			<ChildItems>
-				<Pages name="Pages" id="15">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Страницы</v8:content>
-						</v8:item>
-					</Title>
-					<ExtendedTooltip name="PagesExtendedTooltip" id="156"/>
-					<Events>
-						<Event name="OnCurrentPageChange">PagesOnCurrentPageChange</Event>
-					</Events>
-					<ChildItems>
-						<Page name="Tasks" id="67">
+						<Table name="TempQuestions" id="92">
+							<Representation>List</Representation>
+							<ReadOnly>true</ReadOnly>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>TempQuestions</DataPath>
+							<CommandSet>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>SortListAsc</ExcludedCommand>
+								<ExcludedCommand>MoveUp</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>SortListDesc</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Add</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>MoveDown</ExcludedCommand>
+							</CommandSet>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="TempQuestionsContextMenu" id="93"/>
+							<AutoCommandBar name="TempQuestionsCommandBar" id="94">
+								<Autofill>false</Autofill>
+							</AutoCommandBar>
+							<ExtendedTooltip name="TempQuestionsExtendedTooltip" id="174"/>
+							<SearchStringAddition name="TempQuestionsSearchString" id="175">
+								<Source>
+									<lf:elementId>92</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionsSearchStringContextMenu" id="176"/>
+								<ExtendedTooltip name="TempQuestionsSearchStringExtendedTooltip" id="177"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="TempQuestionsViewStatus" id="178">
+								<Source>
+									<lf:elementId>92</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionsViewStatusContextMenu" id="179"/>
+								<ExtendedTooltip name="TempQuestionsViewStatusExtendedTooltip" id="180"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="TempQuestionsSearchControl" id="181">
+								<Source>
+									<lf:elementId>92</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="TempQuestionsSearchControlContextMenu" id="182"/>
+								<ExtendedTooltip name="TempQuestionsSearchControlExtendedTooltip" id="183"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnActivateRow">TempQuestionsOnActivateRow</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="TempQuestionsQuestion" id="95">
+									<DataPath>TempQuestions.Question</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempQuestionsQuestionContextMenu" id="96"/>
+									<ExtendedTooltip name="TempQuestionsQuestionExtendedTooltip" id="185"/>
+								</InputField>
+								<InputField name="TempQuestionsAnswer" id="97">
+									<DataPath>TempQuestions.Answer</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempQuestionsAnswerContextMenu" id="98"/>
+									<ExtendedTooltip name="TempQuestionsAnswerExtendedTooltip" id="186"/>
+								</InputField>
+								<InputField name="TempQuestionsSnapShotUUID" id="99">
+									<DataPath>TempQuestions.SnapShotUUID</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempQuestionsSnapShotUUIDContextMenu" id="100"/>
+									<ExtendedTooltip name="TempQuestionsSnapShotUUIDExtendedTooltip" id="187"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+						<UsualGroup name="GroupPreview" id="131">
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Tasks</v8:content>
+									<v8:content>Preview</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Задачи</v8:content>
+									<v8:content>Просмотр</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Tasks</v8:content>
+									<v8:content>Group preview</v8:content>
 								</v8:item>
 							</ToolTip>
-							<ExtendedTooltip name="TasksExtendedTooltip" id="157"/>
-							<ChildItems>
-								<Table name="Task" id="68">
-									<ReadOnly>true</ReadOnly>
-									<ChangeRowSet>false</ChangeRowSet>
-									<ChangeRowOrder>false</ChangeRowOrder>
-									<AutoInsertNewRow>true</AutoInsertNewRow>
-									<EnableStartDrag>true</EnableStartDrag>
-									<EnableDrag>true</EnableDrag>
-									<DataPath>Object.Task</DataPath>
-									<SearchStringLocation>None</SearchStringLocation>
-									<ViewStatusLocation>None</ViewStatusLocation>
-									<SearchControlLocation>None</SearchControlLocation>
-									<RowFilter xsi:nil="true"/>
-									<ContextMenu name="TaskContextMenu" id="69"/>
-									<AutoCommandBar name="TaskCommandBar" id="70">
-										<Autofill>false</Autofill>
-									</AutoCommandBar>
-									<ExtendedTooltip name="TaskExtendedTooltip" id="158"/>
-									<SearchStringAddition name="TaskSearchString" id="159">
-										<Source>
-											<lf:elementId>68</lf:elementId>
-											<lf:additionId>0</lf:additionId>
-										</Source>
-										<ContextMenu name="TaskSearchStringContextMenu" id="160"/>
-										<ExtendedTooltip name="TaskSearchStringExtendedTooltip" id="161"/>
-									</SearchStringAddition>
-									<ViewStatusAddition name="TaskViewStatus" id="162">
-										<Source>
-											<lf:elementId>68</lf:elementId>
-											<lf:additionId>1</lf:additionId>
-										</Source>
-										<ContextMenu name="TaskViewStatusContextMenu" id="163"/>
-										<ExtendedTooltip name="TaskViewStatusExtendedTooltip" id="164"/>
-									</ViewStatusAddition>
-									<SearchControlAddition name="TaskSearchControl" id="165">
-										<Source>
-											<lf:elementId>68</lf:elementId>
-											<lf:additionId>2</lf:additionId>
-										</Source>
-										<ContextMenu name="TaskSearchControlContextMenu" id="166"/>
-										<ExtendedTooltip name="TaskSearchControlExtendedTooltip" id="167"/>
-									</SearchControlAddition>
-									<ChildItems>
-										<LabelField name="TaskLineNumber" id="71">
-											<DataPath>Object.Task.LineNumber</DataPath>
-											<Visible>false</Visible>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TaskLineNumberContextMenu" id="72"/>
-											<ExtendedTooltip name="TaskLineNumberExtendedTooltip" id="168"/>
-										</LabelField>
-										<InputField name="TaskTextTask" id="73">
-											<DataPath>Object.Task.TextTask</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TaskTextTaskContextMenu" id="74"/>
-											<ExtendedTooltip name="TaskTextTaskExtendedTooltip" id="169"/>
-										</InputField>
-										<CheckBoxField name="TaskResult" id="75">
-											<DataPath>Object.Task.Result</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<CheckBoxType>Auto</CheckBoxType>
-											<ContextMenu name="TaskResultContextMenu" id="76"/>
-											<ExtendedTooltip name="TaskResultExtendedTooltip" id="170"/>
-										</CheckBoxField>
-									</ChildItems>
-								</Table>
-							</ChildItems>
-						</Page>
-						<Page name="GroupQuestionaires" id="268">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Questionaires</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Анкеты</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Group questionaires</v8:content>
-								</v8:item>
-							</ToolTip>
-							<ExtendedTooltip name="GroupQuestionairesExtendedTooltip" id="269"/>
-							<ChildItems>
-								<Table name="TempQuestionaires" id="270">
-									<Representation>List</Representation>
-									<ReadOnly>true</ReadOnly>
-									<AutoInsertNewRow>true</AutoInsertNewRow>
-									<EnableStartDrag>true</EnableStartDrag>
-									<EnableDrag>true</EnableDrag>
-									<DataPath>TempQuestionaires</DataPath>
-									<CommandSet>
-										<ExcludedCommand>Copy</ExcludedCommand>
-										<ExcludedCommand>SortListAsc</ExcludedCommand>
-										<ExcludedCommand>MoveUp</ExcludedCommand>
-										<ExcludedCommand>CancelSearch</ExcludedCommand>
-										<ExcludedCommand>OutputList</ExcludedCommand>
-										<ExcludedCommand>SelectAll</ExcludedCommand>
-										<ExcludedCommand>SortListDesc</ExcludedCommand>
-										<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-										<ExcludedCommand>Delete</ExcludedCommand>
-										<ExcludedCommand>EndEdit</ExcludedCommand>
-										<ExcludedCommand>Add</ExcludedCommand>
-										<ExcludedCommand>Change</ExcludedCommand>
-										<ExcludedCommand>Find</ExcludedCommand>
-										<ExcludedCommand>MoveDown</ExcludedCommand>
-									</CommandSet>
-									<RowFilter xsi:nil="true"/>
-									<ContextMenu name="TempQuestionairesContextMenu" id="271"/>
-									<AutoCommandBar name="TempQuestionairesCommandBar" id="272"/>
-									<ExtendedTooltip name="TempQuestionairesExtendedTooltip" id="273"/>
-									<SearchStringAddition name="TempQuestionairesSearchString" id="274">
-										<Source>
-											<lf:elementId>270</lf:elementId>
-											<lf:additionId>0</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionairesSearchStringContextMenu" id="277"/>
-										<ExtendedTooltip name="TempQuestionairesSearchStringExtendedTooltip" id="278"/>
-									</SearchStringAddition>
-									<ViewStatusAddition name="TempQuestionairesViewStatus" id="279">
-										<Source>
-											<lf:elementId>270</lf:elementId>
-											<lf:additionId>1</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionairesViewStatusContextMenu" id="282"/>
-										<ExtendedTooltip name="TempQuestionairesViewStatusExtendedTooltip" id="283"/>
-									</ViewStatusAddition>
-									<SearchControlAddition name="TempQuestionairesSearchControl" id="284">
-										<Source>
-											<lf:elementId>270</lf:elementId>
-											<lf:additionId>2</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionairesSearchControlContextMenu" id="287"/>
-										<ExtendedTooltip name="TempQuestionairesSearchControlExtendedTooltip" id="288"/>
-									</SearchControlAddition>
-									<ChildItems>
-										<InputField name="TempQuestionairesQuestionaire" id="289">
-											<DataPath>TempQuestionaires.Questionnaire</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempQuestionairesQuestionaireContextMenu" id="290"/>
-											<ExtendedTooltip name="TempQuestionairesQuestionaireExtendedTooltip" id="291"/>
-										</InputField>
-									</ChildItems>
-								</Table>
-							</ChildItems>
-						</Page>
-						<Page name="GroupQuestions" id="16">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Questions</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Вопросы</v8:content>
-								</v8:item>
-							</Title>
 							<Group>Horizontal</Group>
-							<ExtendedTooltip name="GroupQuestionsExtendedTooltip" id="171"/>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupPreviewExtendedTooltip" id="228"/>
 							<ChildItems>
-								<Table name="TempQuestions" id="92">
-									<Representation>List</Representation>
-									<ReadOnly>true</ReadOnly>
-									<ChangeRowSet>false</ChangeRowSet>
-									<ChangeRowOrder>false</ChangeRowOrder>
-									<AutoInsertNewRow>true</AutoInsertNewRow>
-									<EnableStartDrag>true</EnableStartDrag>
-									<EnableDrag>true</EnableDrag>
-									<DataPath>TempQuestions</DataPath>
-									<CommandSet>
-										<ExcludedCommand>Copy</ExcludedCommand>
-										<ExcludedCommand>SortListAsc</ExcludedCommand>
-										<ExcludedCommand>MoveUp</ExcludedCommand>
-										<ExcludedCommand>CancelSearch</ExcludedCommand>
-										<ExcludedCommand>OutputList</ExcludedCommand>
-										<ExcludedCommand>SortListDesc</ExcludedCommand>
-										<ExcludedCommand>Delete</ExcludedCommand>
-										<ExcludedCommand>EndEdit</ExcludedCommand>
-										<ExcludedCommand>Add</ExcludedCommand>
-										<ExcludedCommand>Change</ExcludedCommand>
-										<ExcludedCommand>Find</ExcludedCommand>
-										<ExcludedCommand>MoveDown</ExcludedCommand>
-									</CommandSet>
-									<SearchStringLocation>None</SearchStringLocation>
-									<ViewStatusLocation>None</ViewStatusLocation>
-									<SearchControlLocation>None</SearchControlLocation>
-									<RowFilter xsi:nil="true"/>
-									<ContextMenu name="TempQuestionsContextMenu" id="93"/>
-									<AutoCommandBar name="TempQuestionsCommandBar" id="94">
-										<Autofill>false</Autofill>
-									</AutoCommandBar>
-									<ExtendedTooltip name="TempQuestionsExtendedTooltip" id="174"/>
-									<SearchStringAddition name="TempQuestionsSearchString" id="175">
-										<Source>
-											<lf:elementId>92</lf:elementId>
-											<lf:additionId>0</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionsSearchStringContextMenu" id="176"/>
-										<ExtendedTooltip name="TempQuestionsSearchStringExtendedTooltip" id="177"/>
-									</SearchStringAddition>
-									<ViewStatusAddition name="TempQuestionsViewStatus" id="178">
-										<Source>
-											<lf:elementId>92</lf:elementId>
-											<lf:additionId>1</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionsViewStatusContextMenu" id="179"/>
-										<ExtendedTooltip name="TempQuestionsViewStatusExtendedTooltip" id="180"/>
-									</ViewStatusAddition>
-									<SearchControlAddition name="TempQuestionsSearchControl" id="181">
-										<Source>
-											<lf:elementId>92</lf:elementId>
-											<lf:additionId>2</lf:additionId>
-										</Source>
-										<ContextMenu name="TempQuestionsSearchControlContextMenu" id="182"/>
-										<ExtendedTooltip name="TempQuestionsSearchControlExtendedTooltip" id="183"/>
-									</SearchControlAddition>
-									<Events>
-										<Event name="OnActivateRow">TempQuestionsOnActivateRow</Event>
-									</Events>
-									<ChildItems>
-										<InputField name="TempQuestionsQuestion" id="95">
-											<DataPath>TempQuestions.Question</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempQuestionsQuestionContextMenu" id="96"/>
-											<ExtendedTooltip name="TempQuestionsQuestionExtendedTooltip" id="185"/>
-										</InputField>
-										<InputField name="TempQuestionsAnswer" id="97">
-											<DataPath>TempQuestions.Answer</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempQuestionsAnswerContextMenu" id="98"/>
-											<ExtendedTooltip name="TempQuestionsAnswerExtendedTooltip" id="186"/>
-										</InputField>
-										<InputField name="TempQuestionsSnapShotUUID" id="99">
-											<DataPath>TempQuestions.SnapShotUUID</DataPath>
-											<Visible>false</Visible>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempQuestionsSnapShotUUIDContextMenu" id="100"/>
-											<ExtendedTooltip name="TempQuestionsSnapShotUUIDExtendedTooltip" id="187"/>
-										</InputField>
-									</ChildItems>
-								</Table>
-								<UsualGroup name="GroupPreview" id="131">
+								<PictureField name="PictureAddress" id="84">
+									<DataPath>PictureAddress</DataPath>
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Preview</v8:content>
+											<v8:content>Preview </v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
 											<v8:content>Просмотр</v8:content>
 										</v8:item>
 									</Title>
-									<ToolTip>
+									<TitleLocation>None</TitleLocation>
+									<Width>20</Width>
+									<PictureSize>Proportionally</PictureSize>
+									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Group preview</v8:content>
+											<v8:content>No snapshot</v8:content>
 										</v8:item>
-									</ToolTip>
-									<Group>Horizontal</Group>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupPreviewExtendedTooltip" id="228"/>
-									<ChildItems>
-										<PictureField name="PictureAddress" id="84">
-											<DataPath>PictureAddress</DataPath>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Preview </v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Просмотр</v8:content>
-												</v8:item>
-											</Title>
-											<TitleLocation>None</TitleLocation>
-											<Width>20</Width>
-											<PictureSize>Proportionally</PictureSize>
-											<NonselectedPictureText>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>No image</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Нет изображения</v8:content>
-												</v8:item>
-											</NonselectedPictureText>
-											<ContextMenu name="PictureAddressContextMenu" id="85"/>
-											<ExtendedTooltip name="PictureAddressExtendedTooltip" id="229"/>
-										</PictureField>
-										<Button name="OpenPicture" id="88">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.OpenPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Magnifier</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="230"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Нет фотоснимка</v8:content>
+										</v8:item>
+									</NonselectedPictureText>
+									<ContextMenu name="PictureAddressContextMenu" id="85">
+										<Autofill>false</Autofill>
+										<ChildItems>
+											<Button name="OpenPicture" id="88">
+												<Type>CommandBarButton</Type>
+												<Representation>Picture</Representation>
+												<CommandName>Form.Command.OpenPicture</CommandName>
+												<Parameter xsi:nil="true"/>
+												<Picture>
+													<xr:Ref>StdPicture.Magnifier</xr:Ref>
+													<xr:LoadTransparent>true</xr:LoadTransparent>
+												</Picture>
+												<ExtendedTooltip name="OpenPictureExtendedTooltip" id="230"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
+									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="229"/>
+								</PictureField>
 							</ChildItems>
-						</Page>
-						<Page name="GroupSKUs" id="26">
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="GroupSKUs" id="26">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SKUs</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="GroupSKUsExtendedTooltip" id="188"/>
+					<ChildItems>
+						<Table name="TempSKUs" id="105">
+							<Representation>List</Representation>
+							<ReadOnly>true</ReadOnly>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>TempSKUs</DataPath>
+							<CommandSet>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>SortListAsc</ExcludedCommand>
+								<ExcludedCommand>MoveUp</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>SortListDesc</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Add</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>MoveDown</ExcludedCommand>
+							</CommandSet>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="TempSKUsContextMenu" id="106"/>
+							<AutoCommandBar name="TempSKUsCommandBar" id="107"/>
+							<ExtendedTooltip name="TempSKUsExtendedTooltip" id="189"/>
+							<SearchStringAddition name="TempSKUsSearchString" id="190">
+								<Source>
+									<lf:elementId>105</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="TempSKUsSearchStringContextMenu" id="191"/>
+								<ExtendedTooltip name="TempSKUsSearchStringExtendedTooltip" id="192"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="TempSKUsViewStatus" id="193">
+								<Source>
+									<lf:elementId>105</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="TempSKUsViewStatusContextMenu" id="194"/>
+								<ExtendedTooltip name="TempSKUsViewStatusExtendedTooltip" id="195"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="TempSKUsSearchControl" id="196">
+								<Source>
+									<lf:elementId>105</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="TempSKUsSearchControlContextMenu" id="197"/>
+								<ExtendedTooltip name="TempSKUsSearchControlExtendedTooltip" id="198"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnActivateRow">TempSKUsOnActivateRow</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="TempSKUsSKU" id="108">
+									<DataPath>TempSKUs.SKU</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempSKUsSKUContextMenu" id="109"/>
+									<ExtendedTooltip name="TempSKUsSKUExtendedTooltip" id="199"/>
+								</InputField>
+								<InputField name="TempSKUsSKUSnapShotUUID" id="126">
+									<DataPath>TempSKUs.SKUSnapShotUUID</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempSKUsSKUSnapShotUUIDContextMenu" id="127"/>
+									<ExtendedTooltip name="TempSKUsSKUSnapShotUUIDExtendedTooltip" id="208"/>
+								</InputField>
+								<InputField name="TempSKUsQuestion" id="255">
+									<DataPath>TempSKUs.Question</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempSKUsQuestionContextMenu" id="256"/>
+									<ExtendedTooltip name="TempSKUsQuestionExtendedTooltip" id="257"/>
+								</InputField>
+								<InputField name="TempSKUsAnswer" id="258">
+									<DataPath>TempSKUs.Answer</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="TempSKUsAnswerContextMenu" id="259"/>
+									<ExtendedTooltip name="TempSKUsAnswerExtendedTooltip" id="260"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+						<UsualGroup name="GroupPreviewSKUs" id="261">
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>SKUs</v8:content>
+									<v8:content>Preview</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Номенклатура</v8:content>
+									<v8:content>Просмотр</v8:content>
 								</v8:item>
 							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group preview</v8:content>
+								</v8:item>
+							</ToolTip>
 							<Group>Horizontal</Group>
-							<ExtendedTooltip name="GroupSKUsExtendedTooltip" id="188"/>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupPreviewSKUsExtendedTooltip" id="262"/>
 							<ChildItems>
-								<Table name="TempSKUs" id="105">
-									<Representation>List</Representation>
-									<ReadOnly>true</ReadOnly>
-									<AutoInsertNewRow>true</AutoInsertNewRow>
-									<EnableStartDrag>true</EnableStartDrag>
-									<EnableDrag>true</EnableDrag>
-									<DataPath>TempSKUs</DataPath>
-									<CommandSet>
-										<ExcludedCommand>Copy</ExcludedCommand>
-										<ExcludedCommand>SortListAsc</ExcludedCommand>
-										<ExcludedCommand>MoveUp</ExcludedCommand>
-										<ExcludedCommand>CancelSearch</ExcludedCommand>
-										<ExcludedCommand>OutputList</ExcludedCommand>
-										<ExcludedCommand>SortListDesc</ExcludedCommand>
-										<ExcludedCommand>Delete</ExcludedCommand>
-										<ExcludedCommand>EndEdit</ExcludedCommand>
-										<ExcludedCommand>Add</ExcludedCommand>
-										<ExcludedCommand>Change</ExcludedCommand>
-										<ExcludedCommand>Find</ExcludedCommand>
-										<ExcludedCommand>MoveDown</ExcludedCommand>
-									</CommandSet>
-									<SearchStringLocation>None</SearchStringLocation>
-									<ViewStatusLocation>None</ViewStatusLocation>
-									<SearchControlLocation>None</SearchControlLocation>
-									<RowFilter xsi:nil="true"/>
-									<ContextMenu name="TempSKUsContextMenu" id="106"/>
-									<AutoCommandBar name="TempSKUsCommandBar" id="107"/>
-									<ExtendedTooltip name="TempSKUsExtendedTooltip" id="189"/>
-									<SearchStringAddition name="TempSKUsSearchString" id="190">
-										<Source>
-											<lf:elementId>105</lf:elementId>
-											<lf:additionId>0</lf:additionId>
-										</Source>
-										<ContextMenu name="TempSKUsSearchStringContextMenu" id="191"/>
-										<ExtendedTooltip name="TempSKUsSearchStringExtendedTooltip" id="192"/>
-									</SearchStringAddition>
-									<ViewStatusAddition name="TempSKUsViewStatus" id="193">
-										<Source>
-											<lf:elementId>105</lf:elementId>
-											<lf:additionId>1</lf:additionId>
-										</Source>
-										<ContextMenu name="TempSKUsViewStatusContextMenu" id="194"/>
-										<ExtendedTooltip name="TempSKUsViewStatusExtendedTooltip" id="195"/>
-									</ViewStatusAddition>
-									<SearchControlAddition name="TempSKUsSearchControl" id="196">
-										<Source>
-											<lf:elementId>105</lf:elementId>
-											<lf:additionId>2</lf:additionId>
-										</Source>
-										<ContextMenu name="TempSKUsSearchControlContextMenu" id="197"/>
-										<ExtendedTooltip name="TempSKUsSearchControlExtendedTooltip" id="198"/>
-									</SearchControlAddition>
-									<Events>
-										<Event name="OnActivateRow">TempSKUsOnActivateRow</Event>
-									</Events>
-									<ChildItems>
-										<InputField name="TempSKUsSKU" id="108">
-											<DataPath>TempSKUs.SKU</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsSKUContextMenu" id="109"/>
-											<ExtendedTooltip name="TempSKUsSKUExtendedTooltip" id="199"/>
-										</InputField>
-										<InputField name="TempSKUsSKUSnapShotUUID" id="126">
-											<DataPath>TempSKUs.SKUSnapShotUUID</DataPath>
-											<Visible>false</Visible>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsSKUSnapShotUUIDContextMenu" id="127"/>
-											<ExtendedTooltip name="TempSKUsSKUSnapShotUUIDExtendedTooltip" id="208"/>
-										</InputField>
-										<InputField name="TempSKUsQuestion" id="255">
-											<DataPath>TempSKUs.Question</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsQuestionContextMenu" id="256"/>
-											<ExtendedTooltip name="TempSKUsQuestionExtendedTooltip" id="257"/>
-										</InputField>
-										<InputField name="TempSKUsAnswer" id="258">
-											<DataPath>TempSKUs.Answer</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ContextMenu name="TempSKUsAnswerContextMenu" id="259"/>
-											<ExtendedTooltip name="TempSKUsAnswerExtendedTooltip" id="260"/>
-										</InputField>
-									</ChildItems>
-								</Table>
-								<UsualGroup name="GroupPreviewSKUs" id="261">
+								<PictureField name="PictureAddressSKUs" id="263">
+									<DataPath>PictureAddress</DataPath>
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Preview</v8:content>
+											<v8:content>Preview </v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
 											<v8:content>Просмотр</v8:content>
 										</v8:item>
 									</Title>
-									<ToolTip>
+									<TitleLocation>None</TitleLocation>
+									<Width>20</Width>
+									<PictureSize>Proportionally</PictureSize>
+									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Group preview</v8:content>
+											<v8:content>No snapshot</v8:content>
 										</v8:item>
-									</ToolTip>
-									<Group>Horizontal</Group>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupPreviewSKUsExtendedTooltip" id="262"/>
-									<ChildItems>
-										<PictureField name="PictureAddressSKUs" id="263">
-											<DataPath>PictureAddress</DataPath>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Preview </v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Просмотр</v8:content>
-												</v8:item>
-											</Title>
-											<TitleLocation>None</TitleLocation>
-											<Width>20</Width>
-											<PictureSize>Proportionally</PictureSize>
-											<NonselectedPictureText>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>No image</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Нет изображения</v8:content>
-												</v8:item>
-											</NonselectedPictureText>
-											<ContextMenu name="PictureAddressSKUsContextMenu" id="264"/>
-											<ExtendedTooltip name="PictureAddressSKUsExtendedTooltip" id="265"/>
-										</PictureField>
-										<Button name="OpenPictureSKUs" id="266">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.OpenPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Magnifier</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="OpenPictureSKUsExtendedTooltip" id="267"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Нет фотоснимка</v8:content>
+										</v8:item>
+									</NonselectedPictureText>
+									<ContextMenu name="PictureAddressSKUsContextMenu" id="264">
+										<Autofill>false</Autofill>
+										<ChildItems>
+											<Button name="OpenPictureSKUs" id="266">
+												<Type>CommandBarButton</Type>
+												<Representation>Picture</Representation>
+												<CommandName>Form.Command.OpenPicture</CommandName>
+												<Parameter xsi:nil="true"/>
+												<Picture>
+													<xr:Ref>StdPicture.Magnifier</xr:Ref>
+													<xr:LoadTransparent>true</xr:LoadTransparent>
+												</Picture>
+												<ExtendedTooltip name="OpenPictureSKUsExtendedTooltip" id="267"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
+									<ExtendedTooltip name="PictureAddressSKUsExtendedTooltip" id="265"/>
+								</PictureField>
 							</ChildItems>
-						</Page>
-						<Page name="GroupOthers" id="132">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Others</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Прочее</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Group others</v8:content>
-								</v8:item>
-							</ToolTip>
-							<ExtendedTooltip name="GroupOthersExtendedTooltip" id="223"/>
-							<ChildItems>
-								<InputField name="ReasonForVisit" id="133">
-									<DataPath>Object.ReasonForVisit</DataPath>
-									<ContextMenu name="ReasonForVisitContextMenu" id="134"/>
-									<ExtendedTooltip name="ReasonForVisitExtendedTooltip" id="224"/>
-								</InputField>
-								<InputField name="ReasonForNotOfTakingOrder" id="135">
-									<DataPath>Object.ReasonForNotOfTakingOrder</DataPath>
-									<ContextMenu name="ReasonForNotOfTakingOrderContextMenu" id="136"/>
-									<ExtendedTooltip name="ReasonForNotOfTakingOrderExtendedTooltip" id="225"/>
-								</InputField>
-								<InputField name="Commentary" id="137">
-									<DataPath>Object.Commentary</DataPath>
-									<ContextMenu name="CommentaryContextMenu" id="138"/>
-									<ExtendedTooltip name="CommentaryExtendedTooltip" id="226"/>
-								</InputField>
-							</ChildItems>
-						</Page>
+						</UsualGroup>
 					</ChildItems>
-				</Pages>
+				</Page>
+				<Page name="GroupOthers" id="132">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Others</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прочее</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group others</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="GroupOthersExtendedTooltip" id="223"/>
+					<ChildItems>
+						<InputField name="ReasonForVisit" id="133">
+							<DataPath>Object.ReasonForVisit</DataPath>
+							<ContextMenu name="ReasonForVisitContextMenu" id="134"/>
+							<ExtendedTooltip name="ReasonForVisitExtendedTooltip" id="224"/>
+						</InputField>
+						<InputField name="ReasonForNotOfTakingOrder" id="135">
+							<DataPath>Object.ReasonForNotOfTakingOrder</DataPath>
+							<ContextMenu name="ReasonForNotOfTakingOrderContextMenu" id="136"/>
+							<ExtendedTooltip name="ReasonForNotOfTakingOrderExtendedTooltip" id="225"/>
+						</InputField>
+						<InputField name="Commentary" id="137">
+							<DataPath>Object.Commentary</DataPath>
+							<ContextMenu name="CommentaryContextMenu" id="138"/>
+							<ExtendedTooltip name="CommentaryExtendedTooltip" id="226"/>
+						</InputField>
+					</ChildItems>
+				</Page>
 			</ChildItems>
-		</UsualGroup>
+		</Pages>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
@@ -934,29 +908,14 @@
 				</v8:item>
 			</Title>
 			<Type>
-				<v8:Type>v8:ValueTable</v8:Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
 			</Type>
-			<Columns>
-				<Column name="Questionnaire" id="1">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Questionnaire</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Анкета</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>xs:string</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
-					</Type>
-				</Column>
-			</Columns>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>false</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<MainTable>InformationRegister.QuestioningResults</MainTable>
+				<ListSettings/>
+			</Settings>
 		</Attribute>
 		<Attribute name="FileTable" id="7">
 			<Title>
@@ -1014,29 +973,6 @@
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="HidePreview" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Hide preview</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Скрыть</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Hide preview</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Скрыть</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>HidePreview</Action>
-		</Command>
 		<Command name="OpenPicture" id="2">
 			<Title>
 				<v8:item>
@@ -1058,30 +994,12 @@
 					<v8:content>Открыть файл</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Magnifier</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>OpenPicture</Action>
-		</Command>
-		<Command name="ShowPreview" id="3">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Show preview</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Показать</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Show preview</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Показать</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>ShowPreview</Action>
+			<Representation>Picture</Representation>
 		</Command>
 	</Commands>
 </Form>

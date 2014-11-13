@@ -3,7 +3,7 @@
 	<WorkingAreaTemplate>TwoColumnsEqualWidth</WorkingAreaTemplate>
 	<LeftColumn>
 		<Item>
-			<Form>CommonForm.Navigation</Form>
+			<Form>CommonForm.Logo</Form>
 			<Height>10</Height>
 			<Visibility>
 				<xr:Common>true</xr:Common>

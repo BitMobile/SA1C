@@ -444,7 +444,11 @@ Procedure OutletStatusOnChange(Item)
 	
 	If IsClosed(Object.OutletStatus) Then
 		
-		ThisForm.Items.ClosingCause.Visible=True;    	    
+		ThisForm.Items.ClosingCause.Visible = True;
+		
+	Else 
+		
+		ThisForm.Items.ClosingCause.Visible = False;
 		
 	EndIf;
 	
@@ -479,7 +483,7 @@ EndProcedure
 &AtClient
 Procedure TempParametersOnActivateRow(Item)
 	
-	If Items.Pages.CurrentPage = Items.ParametersPage Then	
+	If Items.Pages.CurrentPage = Items.GroupParameters Then	
 		
 		If Not Item.CurrentRow = Undefined Then			
 			

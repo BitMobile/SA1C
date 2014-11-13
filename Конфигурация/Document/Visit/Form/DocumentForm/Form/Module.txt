@@ -13,6 +13,13 @@ Procedure OnOpenServer()
 	
 	FillFileTable();
 	
+	FilterElement 					= TempQuestionaires.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	FilterElement.LeftValue 		= New DataCompositionField("Visit");
+	FilterElement.Use 				= True;
+	FilterElement.ComparisonType 	= DataCompositionComparisonType.Equal;
+	FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	FilterElement.RightValue 		= Object.Ref;
+	
 EndProcedure
 
 &AtServer
@@ -193,8 +200,6 @@ Procedure OnOpen(Cancel)
 	
     For Each Str in Object.Questions Do
 		
-		AddQuestionaire(Str);	
-		
 		FoundedRows = TempQuestions.FindRows(New Structure("Question", Str.Question));
 		
 		If FoundedRows.Count() = 0 Then 		
@@ -239,8 +244,6 @@ Procedure OnOpen(Cancel)
 	
 	For Each Str In Object.SKUs Do
 		
-		AddQuestionaire(Str);
-		
 		FoundedRows = TempSKUs.FindRows(New Structure("SKU, Question", Str.SKU, Str.Question));
 		
 		If FoundedRows.Count() = 0 Then
@@ -282,24 +285,6 @@ Procedure OnOpen(Cancel)
         
     EndDo;
 	 
-EndProcedure
-
-&AtClient
-Procedure AddQuestionaire(Str)
-	
-	If ValueIsFilled(Str.Questionnaire) Then 
-	
-		FoundedRows = TempQuestionaires.FindRows(New Structure("Questionaire", Str.Questionnaire));
-			
-		If FoundedRows.Count() = 0 Then 
-			
-			Ins 				= TempQuestionaires.Add();
-	        Ins.Questionnaire 	= Str.Questionnaire;	
-			
-		EndIf;
-		
-	EndIf;	
-	
 EndProcedure
 
 &AtClient

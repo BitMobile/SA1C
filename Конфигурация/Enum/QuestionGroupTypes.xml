@@ -91,15 +91,15 @@
 		<ChildObjects>
 			<EnumValue uuid="7df5734e-8b64-4420-9d22-f09cc0850c94">
 				<Properties>
-					<Name>Regular</Name>
+					<Name>RegularQuestions</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Regular questions group</v8:content>
+							<v8:content>Regular questions</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Группа общих вопросов</v8:content>
+							<v8:content>Общие вопросы</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -111,11 +111,11 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>SKUQuestions</v8:content>
+							<v8:content>SKU questions</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Группа вопросов по номенклатуре</v8:content>
+							<v8:content>Вопросы по номенклатуре</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>

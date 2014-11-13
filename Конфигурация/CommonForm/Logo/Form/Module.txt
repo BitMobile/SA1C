@@ -1,0 +1,15 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	      
+	If InfoBaseUsers.CurrentUser().Language = Metadata.Languages.Русский Then 
+		
+		Items.Logo.Picture = PictureLib.Logo_Ru;
+		
+	Else 
+		
+		Items.Logo.Picture = PictureLib.Logo_En;
+		
+	EndIf;		
+	
+EndProcedure

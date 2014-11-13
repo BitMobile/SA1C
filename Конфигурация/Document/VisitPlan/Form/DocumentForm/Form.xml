@@ -15,15 +15,27 @@
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="ГруппаНомерДата" id="22">
+		<UsualGroup name="GroupNumberDate" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Group number date</v8:content>
+				</v8:item>
+			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Группа номер дата</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Group number date</v8:content>
+				</v8:item>
 			</ToolTip>
 			<Group>Horizontal</Group>
-			<ExtendedTooltip name="ГруппаНомерДатаExtendedTooltip" id="256"/>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupNumberDateExtendedTooltip" id="256"/>
 			<ChildItems>
 				<InputField name="Number" id="1">
 					<DataPath>Object.Number</DataPath>
@@ -42,19 +54,39 @@
 						<Event name="OnChange">DateOnChange</Event>
 					</Events>
 				</InputField>
+				<InputField name="Owner" id="11">
+					<DataPath>Object.Owner</DataPath>
+					<Enabled>false</Enabled>
+					<EditMode>EnterOnInput</EditMode>
+					<ChoiceButton>false</ChoiceButton>
+					<ClearButton>false</ClearButton>
+					<OpenButton>false</OpenButton>
+					<ChoiceListButton>false</ChoiceListButton>
+					<ContextMenu name="OwnerContextMenu" id="12"/>
+					<ExtendedTooltip name="OwnerExtendedTooltip" id="293"/>
+				</InputField>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="Период" id="23">
+		<UsualGroup name="GroupPeriod" id="23">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Group period</v8:content>
+				</v8:item>
+			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Период</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Group period</v8:content>
+				</v8:item>
 			</ToolTip>
-			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="ПериодExtendedTooltip" id="259"/>
+			<ExtendedTooltip name="GroupPeriodExtendedTooltip" id="259"/>
 			<ChildItems>
 				<InputField name="Year" id="224">
 					<DataPath>YearNumber</DataPath>
@@ -65,7 +97,7 @@
 						</v8:item>
 					</Title>
 					<HorizontalAlign>Left</HorizontalAlign>
-					<Width>12</Width>
+					<Width>11</Width>
 					<HorizontalStretch>false</HorizontalStretch>
 					<ExtendedEdit>false</ExtendedEdit>
 					<SpinButton>true</SpinButton>
@@ -103,12 +135,16 @@
 						<Event name="StartListChoice">WeekNumberStartListChoice</Event>
 					</Events>
 				</InputField>
-				<UsualGroup name="ПодПериод" id="226">
+				<UsualGroup name="GroupSubPeriod" id="226">
 					<Visible>false</Visible>
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
 							<v8:content>Под период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Group sub period</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -116,11 +152,15 @@
 							<v8:lang>en</v8:lang>
 							<v8:content>Под период</v8:content>
 						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Group sub period</v8:content>
+						</v8:item>
 					</ToolTip>
 					<Group>Horizontal</Group>
 					<Representation>None</Representation>
 					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="ПодПериодExtendedTooltip" id="262"/>
+					<ExtendedTooltip name="GroupSubPeriodExtendedTooltip" id="262"/>
 					<ChildItems>
 						<InputField name="DateFrom" id="5">
 							<DataPath>Object.DateFrom</DataPath>
@@ -165,6 +205,7 @@
 				<InputField name="SR" id="9">
 					<DataPath>Object.SR</DataPath>
 					<EditMode>EnterOnInput</EditMode>
+					<Width>30</Width>
 					<HorizontalStretch>false</HorizontalStretch>
 					<ContextMenu name="SRContextMenu" id="10"/>
 					<ExtendedTooltip name="SRExtendedTooltip" id="266"/>
@@ -566,17 +607,6 @@
 				</ColumnGroup>
 			</ChildItems>
 		</Table>
-		<InputField name="Owner" id="11">
-			<DataPath>Object.Owner</DataPath>
-			<Enabled>false</Enabled>
-			<EditMode>EnterOnInput</EditMode>
-			<ChoiceButton>false</ChoiceButton>
-			<ClearButton>false</ClearButton>
-			<OpenButton>false</OpenButton>
-			<ChoiceListButton>false</ChoiceListButton>
-			<ContextMenu name="OwnerContextMenu" id="12"/>
-			<ExtendedTooltip name="OwnerExtendedTooltip" id="293"/>
-		</InputField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">

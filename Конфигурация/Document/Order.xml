@@ -181,12 +181,12 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.Order.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.Order.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
 			<AuxiliaryChoiceForm/>
-			<Posting>Allow</Posting>
+			<Posting>Deny</Posting>
 			<RealTimePosting>Allow</RealTimePosting>
 			<RegisterRecordsDeletion>AutoDeleteOnUnpost</RegisterRecordsDeletion>
 			<RegisterRecordsWritingOnPost>WriteSelected</RegisterRecordsWritingOnPost>
@@ -658,6 +658,7 @@
 				</Properties>
 			</Attribute>
 			<Form>DocumentForm</Form>
+			<Form>ListForm</Form>
 			<TabularSection uuid="b9f6af58-bca6-4bc5-8d03-cfa98b982966">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.Order.SKUs" category="TabularSection">

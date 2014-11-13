@@ -11,8 +11,6 @@
 		<ExcludedCommand>Help</ExcludedCommand>
 		<ExcludedCommand>Delete</ExcludedCommand>
 		<ExcludedCommand>Abort</ExcludedCommand>
-		<ExcludedCommand>UndoPosting</ExcludedCommand>
-		<ExcludedCommand>Post</ExcludedCommand>
 		<ExcludedCommand>Create</ExcludedCommand>
 		<ExcludedCommand>Retry</ExcludedCommand>
 		<ExcludedCommand>Yes</ExcludedCommand>

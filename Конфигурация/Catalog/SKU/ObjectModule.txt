@@ -6,8 +6,68 @@ Procedure BeforeWrite(Cancel)
 	ThisObject.AdditionalProperties.Insert("OldBrand", ThisObject.Ref.Brand);
 	ThisObject.AdditionalProperties.Insert("OldSKUGroup", ThisObject.Ref.Owner);
 	
+	// Проверить наличие упаковки
+	If IsNew() Then 
+		
+		ParameterFilter = new Structure;
+		ParameterFilter.Insert("Pack", BaseUnit);
+		
+		FoundRow = Packing.FindRows(ParameterFilter);
+		
+		If FoundRow.Count() = 0 Then
+			
+			NewRow 				= Packing.Add();
+			NewRow.Pack 		= BaseUnit;
+			NewRow.Multiplier 	= 1;
+			
+		EndIf;
+		
+	EndIf;	
+	
+	// Перезаполнить остатки
+	If Constants.SKUFeaturesRegistration.Get() Then         
+		
+		If Stocks.Count() = 0 Then             
+			
+			NewRow 				= Stocks.Add();
+            NewRow.Feature 		= Catalogs.SKUFeatures.FindByCode("000000001");
+            NewRow.StockValue 	= CommonStock;             
+			
+		EndIf;                   
+		
+	Else
+		
+		For Each Row In Stocks Do
+			
+			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
+			
+		EndDo;         
+		
+	EndIf;
+    
+    TS = Stocks.Unload();
+	
+	CommonStock = 0;
+	
+	For Each Row In TS Do
+		
+		CommonStock = CommonStock + Row.StockValue;
+		
+	EndDo;
+	
+	MultiStockValue = Constants.MultiStock.Get(); 
+	
+    For Each Row In Stocks Do
+		
+		If MultiStockValue = False And Row.Stock = Catalogs.Stock.EmptyRef() Then
+			
+			Row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
+			
+		EndIf;    	    
+		
+	EndDo;
+		
 EndProcedure
-
 
 Procedure OnWrite(Cancel)
 	
@@ -123,4 +183,3 @@ Procedure OnWrite(Cancel)
 	EndIf;
 	
 EndProcedure
-

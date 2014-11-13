@@ -438,7 +438,7 @@
 		</right>
 	</object>
 	<object>
-		<name>Subsystem.bitmobile</name>
+		<name>Subsystem.Bitmobile</name>
 		<right>
 			<name>View</name>
 			<value>true</value>

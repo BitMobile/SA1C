@@ -69,7 +69,7 @@ EndProcedure
 &AtServer
 Procedure OwnerOnChangeAtServer()
 	
-	If Object.Owner = Catalogs.QuestionGroup.EmptyRef() Or Object.Owner.Type = Enums.QuestionGroupTypes.Regular Then 
+	If Object.Owner = Catalogs.QuestionGroup.EmptyRef() Or Object.Owner.Type = Enums.QuestionGroupTypes.RegularQuestions Then 
 		
 		Items.Assignment.Enabled = False;
 		
@@ -152,7 +152,34 @@ Procedure OnOpen(Cancel)
 		Items.ValueList.Enabled = False;
 		
 	EndIf;
-    	
+	
+	If Not ValueIsFilled(Object.Ref) Then 
+		
+		Try
+		
+			If FormOwner.Parent.Parent.FormName = "Catalog.Question.Form.ListFormSKUQuestionsWithGroups"
+				Or FormOwner.Parent.Parent.FormName = "Catalog.Question.Form.ListFormRegularQuestionsWithGroups" Then 
+				
+				If Not FormOwner.Parent.Parent.ChildItems.GroupsList.CurrentData = Undefined Then 
+					
+					Object.Owner = FormOwner.Parent.Parent.ChildItems.GroupsList.CurrentData.Ref;
+					
+					Items.Owner.Enabled = False;
+					
+				Else 
+					
+					Cancel = True;
+					
+				EndIf;	
+						
+			EndIf;
+			
+		Except
+			
+		EndTry;	
+		
+	EndIf;	
+		
 EndProcedure
 
 &AtClient

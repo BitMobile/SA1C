@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1">
@@ -26,120 +25,6 @@
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="CodeGroup" id="58">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Code group</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Code group</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<ExtendedTooltip name="CodeGroupExtendedTooltip" id="145"/>
-			<ChildItems>
-				<InputField name="Code" id="1">
-					<DataPath>Object.Code</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="CodeContextMenu" id="2"/>
-					<ExtendedTooltip name="CodeExtendedTooltip" id="146"/>
-				</InputField>
-				<InputField name="OutletStatus" id="121">
-					<DataPath>Object.OutletStatus</DataPath>
-					<ContextMenu name="OutletStatusContextMenu" id="122"/>
-					<ExtendedTooltip name="OutletStatusExtendedTooltip" id="147"/>
-					<Events>
-						<Event name="OnChange">OutletStatusOnChange</Event>
-					</Events>
-				</InputField>
-				<InputField name="ClosingCause" id="123">
-					<DataPath>Object.ClosingCause</DataPath>
-					<Visible>false</Visible>
-					<ContextMenu name="ClosingCauseContextMenu" id="124"/>
-					<ExtendedTooltip name="ClosingCauseExtendedTooltip" id="148"/>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
-		<InputField name="Description" id="3">
-			<DataPath>Object.Description</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="DescriptionContextMenu" id="4"/>
-			<ExtendedTooltip name="DescriptionExtendedTooltip" id="149"/>
-		</InputField>
-		<InputField name="Owner" id="5">
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="OwnerContextMenu" id="6"/>
-			<ExtendedTooltip name="OwnerExtendedTooltip" id="150"/>
-		</InputField>
-		<InputField name="Type" id="7">
-			<DataPath>Object.Type</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="TypeContextMenu" id="8"/>
-			<ExtendedTooltip name="TypeExtendedTooltip" id="151"/>
-		</InputField>
-		<InputField name="Class" id="9">
-			<DataPath>Object.Class</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="ClassContextMenu" id="10"/>
-			<ExtendedTooltip name="ClassExtendedTooltip" id="152"/>
-		</InputField>
-		<InputField name="Distributor" id="11">
-			<DataPath>Object.Distributor</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="DistributorContextMenu" id="12"/>
-			<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
-		</InputField>
-		<InputField name="Address" id="13">
-			<DataPath>Object.Address</DataPath>
-			<EditMode>EnterOnInput</EditMode>
-			<ContextMenu name="AddressContextMenu" id="14"/>
-			<ExtendedTooltip name="AddressExtendedTooltip" id="154"/>
-		</InputField>
-		<InputField name="ReceivableLimit" id="71">
-			<DataPath>Object.ReceivableLimit</DataPath>
-			<ContextMenu name="ReceivableLimitContextMenu" id="72"/>
-			<ExtendedTooltip name="ReceivableLimitExtendedTooltip" id="155"/>
-		</InputField>
-		<UsualGroup name="Positions" id="73">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Positions</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Positions</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="PositionsExtendedTooltip" id="156"/>
-			<ChildItems>
-				<InputField name="Lattitude" id="74">
-					<DataPath>Object.Lattitude</DataPath>
-					<ContextMenu name="LattitudeContextMenu" id="75"/>
-					<ExtendedTooltip name="LattitudeExtendedTooltip" id="157"/>
-					<Events>
-						<Event name="OnChange">LattitudeOnChange</Event>
-					</Events>
-				</InputField>
-				<InputField name="Longitude" id="76">
-					<DataPath>Object.Longitude</DataPath>
-					<ContextMenu name="LongitudeContextMenu" id="77"/>
-					<ExtendedTooltip name="LongitudeExtendedTooltip" id="158"/>
-					<Events>
-						<Event name="OnChange">LongitudeOnChange</Event>
-					</Events>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
 		<Pages name="Pages" id="63">
 			<Title>
 				<v8:item>
@@ -155,7 +40,144 @@
 			</ToolTip>
 			<ExtendedTooltip name="PagesExtendedTooltip" id="159"/>
 			<ChildItems>
-				<Page name="ParametersPage" id="64">
+				<Page name="GroupMasterData" id="232">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Master data</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные данные</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group master data</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="GroupMasterDataExtendedTooltip" id="233"/>
+					<ChildItems>
+						<UsualGroup name="CodeGroup" id="58">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Code group</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Code group</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="CodeGroupExtendedTooltip" id="145"/>
+							<ChildItems>
+								<InputField name="Code" id="1">
+									<DataPath>Object.Code</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="CodeContextMenu" id="2"/>
+									<ExtendedTooltip name="CodeExtendedTooltip" id="146"/>
+								</InputField>
+								<InputField name="OutletStatus" id="121">
+									<DataPath>Object.OutletStatus</DataPath>
+									<ContextMenu name="OutletStatusContextMenu" id="122"/>
+									<ExtendedTooltip name="OutletStatusExtendedTooltip" id="147"/>
+									<Events>
+										<Event name="OnChange">OutletStatusOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="ClosingCause" id="123">
+									<DataPath>Object.ClosingCause</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="ClosingCauseContextMenu" id="124"/>
+									<ExtendedTooltip name="ClosingCauseExtendedTooltip" id="148"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="Description" id="3">
+							<DataPath>Object.Description</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="DescriptionContextMenu" id="4"/>
+							<ExtendedTooltip name="DescriptionExtendedTooltip" id="149"/>
+						</InputField>
+						<InputField name="Owner" id="5">
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="OwnerContextMenu" id="6"/>
+							<ExtendedTooltip name="OwnerExtendedTooltip" id="150"/>
+						</InputField>
+						<InputField name="Type" id="7">
+							<DataPath>Object.Type</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="TypeContextMenu" id="8"/>
+							<ExtendedTooltip name="TypeExtendedTooltip" id="151"/>
+						</InputField>
+						<InputField name="Class" id="9">
+							<DataPath>Object.Class</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ClassContextMenu" id="10"/>
+							<ExtendedTooltip name="ClassExtendedTooltip" id="152"/>
+						</InputField>
+						<InputField name="Distributor" id="11">
+							<DataPath>Object.Distributor</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="DistributorContextMenu" id="12"/>
+							<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
+						</InputField>
+						<InputField name="Address" id="13">
+							<DataPath>Object.Address</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="AddressContextMenu" id="14"/>
+							<ExtendedTooltip name="AddressExtendedTooltip" id="154"/>
+						</InputField>
+						<InputField name="ReceivableLimit" id="71">
+							<DataPath>Object.ReceivableLimit</DataPath>
+							<ContextMenu name="ReceivableLimitContextMenu" id="72"/>
+							<ExtendedTooltip name="ReceivableLimitExtendedTooltip" id="155"/>
+						</InputField>
+						<UsualGroup name="Positions" id="73">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Positions</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Positions</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="PositionsExtendedTooltip" id="156"/>
+							<ChildItems>
+								<InputField name="Lattitude" id="74">
+									<DataPath>Object.Lattitude</DataPath>
+									<ContextMenu name="LattitudeContextMenu" id="75"/>
+									<ExtendedTooltip name="LattitudeExtendedTooltip" id="157"/>
+									<Events>
+										<Event name="OnChange">LattitudeOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="Longitude" id="76">
+									<DataPath>Object.Longitude</DataPath>
+									<ContextMenu name="LongitudeContextMenu" id="77"/>
+									<ExtendedTooltip name="LongitudeExtendedTooltip" id="158"/>
+									<Events>
+										<Event name="OnChange">LongitudeOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="GroupParameters" id="64">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -169,11 +191,11 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Parameters page</v8:content>
+							<v8:content>Group parameters</v8:content>
 						</v8:item>
 					</ToolTip>
 					<Group>Horizontal</Group>
-					<ExtendedTooltip name="ParametersPageExtendedTooltip" id="160"/>
+					<ExtendedTooltip name="GroupParametersExtendedTooltip" id="160"/>
 					<ChildItems>
 						<UsualGroup name="Param_table" id="129">
 							<Title>
@@ -324,11 +346,11 @@
 						</UsualGroup>
 					</ChildItems>
 				</Page>
-				<Page name="TerritoryPage" id="65">
+				<Page name="GroupTerritories" id="65">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Territory</v8:content>
+							<v8:content>Territories</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -338,10 +360,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Territory page</v8:content>
+							<v8:content>Group territories</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="TerritoryPageExtendedTooltip" id="171"/>
+					<ExtendedTooltip name="GroupTerritoriesExtendedTooltip" id="171"/>
 					<ChildItems>
 						<Table name="TerritoriesList" id="66">
 							<Representation>List</Representation>
@@ -395,11 +417,11 @@
 						</Table>
 					</ChildItems>
 				</Page>
-				<Page name="PriceLists" id="80">
+				<Page name="GroupPriceLists" id="80">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Price lists</v8:content>
+							<v8:content>Group price lists</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -409,10 +431,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Price lists</v8:content>
+							<v8:content>Group price lists</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="PriceListsExtendedTooltip" id="174"/>
+					<ExtendedTooltip name="GroupPriceListsExtendedTooltip" id="174"/>
 					<ChildItems>
 						<Table name="Prices" id="81">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -484,7 +506,7 @@
 						</Table>
 					</ChildItems>
 				</Page>
-				<Page name="Details" id="90">
+				<Page name="GroupDetails" id="90">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -498,10 +520,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Details</v8:content>
+							<v8:content>Group details</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="DetailsExtendedTooltip" id="179"/>
+					<ExtendedTooltip name="GroupDetailsExtendedTooltip" id="179"/>
 					<ChildItems>
 						<InputField name="LegalName" id="91">
 							<DataPath>Object.LegalName</DataPath>
@@ -546,7 +568,7 @@
 						</InputField>
 					</ChildItems>
 				</Page>
-				<Page name="Contacts" id="107">
+				<Page name="GroupContacts" id="107">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -560,10 +582,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Contacts</v8:content>
+							<v8:content>Group contacts</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="ContactsExtendedTooltip" id="188"/>
+					<ExtendedTooltip name="GroupContactsExtendedTooltip" id="188"/>
 					<ChildItems>
 						<Table name="Contacts1" id="108">
 							<AutoInsertNewRow>true</AutoInsertNewRow>

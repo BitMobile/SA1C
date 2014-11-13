@@ -28,11 +28,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Visit</v8:content>
+					<v8:content>Visits</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Результаты визитов</v8:content>
+					<v8:content>Визиты</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
@@ -181,12 +181,12 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.Visit.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.Visit.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
 			<AuxiliaryChoiceForm/>
-			<Posting>Allow</Posting>
+			<Posting>Deny</Posting>
 			<RealTimePosting>Allow</RealTimePosting>
 			<RegisterRecordsDeletion>AutoDeleteOnUnpost</RegisterRecordsDeletion>
 			<RegisterRecordsWritingOnPost>WriteSelected</RegisterRecordsWritingOnPost>
@@ -212,7 +212,7 @@
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Результат визита</v8:content>
+					<v8:content>Визиты</v8:content>
 				</v8:item>
 			</ListPresentation>
 			<ExtendedListPresentation/>
@@ -750,6 +750,7 @@
 				</Properties>
 			</Attribute>
 			<Form>DocumentForm</Form>
+			<Form>ListForm</Form>
 			<TabularSection uuid="05ff41ae-ab19-4dc3-b7d5-dac664b41103">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.Visit.Questions" category="TabularSection">

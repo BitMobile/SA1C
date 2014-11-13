@@ -58,50 +58,19 @@ Function GetPredefinedItems(PredefinedItems) Export
     
 EndFunction
 
-Procedure StockRefresh(Source, Cancel) Export 
-    
-    If Constants.SKUFeaturesRegistration.Get() Then         
+Function GetQuestionGroupType(TypeString = "SKUQuestions") Export
+	
+	If TypeString = "Regular" Then 
+	
+		Return Enums.QuestionGroupTypes.RegularQuestions;
 		
-		If Source.Stocks.Count()=0 Then             
-			
-			NewRow 				= Source.Stocks.Add();
-            NewRow.Feature 		= Catalogs.SKUFeatures.FindByCode("000000001");
-            NewRow.StockValue 	= Source.CommonStock;             
-			
-		EndIf;                   
+	Else 
 		
-	Else
-		
-		For Each Row In Source.Stocks Do
-			
-			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
-			
-		EndDo;         
+		Return Enums.QuestionGroupTypes.SKUQuestions;
 		
 	EndIf;
-    
-    TS = Source.Stocks.Unload();
-	
-	Source.CommonStock = 0;
-	
-	For Each Row In TS Do
 		
-		Source.CommonStock = Source.CommonStock + Row.StockValue;
-		
-	EndDo;
-    
-    For Each Row In Source.Stocks Do
-		
-		If Constants.MultiStock.Get()=False AND Row.Stock = Catalogs.Stock.EmptyRef() Then
-			
-			Row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
-			
-		EndIf;    	    
-		
-	EndDo;
-    
-EndProcedure
-
+EndFunction
 
 
 

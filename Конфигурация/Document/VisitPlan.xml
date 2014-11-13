@@ -181,12 +181,12 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.VisitPlan.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.VisitPlan.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm>Document.VisitPlan.Form.ChoiceForm</DefaultChoiceForm>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
 			<AuxiliaryChoiceForm/>
-			<Posting>Allow</Posting>
+			<Posting>Deny</Posting>
 			<RealTimePosting>Allow</RealTimePosting>
 			<RegisterRecordsDeletion>AutoDeleteOnUnpost</RegisterRecordsDeletion>
 			<RegisterRecordsWritingOnPost>WriteSelected</RegisterRecordsWritingOnPost>
@@ -488,6 +488,7 @@
 			</Attribute>
 			<Form>DocumentForm</Form>
 			<Form>ChoiceForm</Form>
+			<Form>ListForm</Form>
 			<TabularSection uuid="6d007d3c-37db-4be1-aa3b-8af00bac7353">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.VisitPlan.Outlets" category="TabularSection">

@@ -96,40 +96,33 @@
 			<ConfigurationInformationAddress/>
 			<DataLockControlMode>Managed</DataLockControlMode>
 			<ObjectAutonumerationMode>NotAutoFree</ObjectAutonumerationMode>
-			<ModalityUseMode>Use</ModalityUseMode>
+			<ModalityUseMode>UseWithWarnings</ModalityUseMode>
 			<SynchronousExtensionAndAddInCallUseMode>Use</SynchronousExtensionAndAddInCallUseMode>
-			<InterfaceCompatibilityMode>Version8_2</InterfaceCompatibilityMode>
+			<InterfaceCompatibilityMode>Taxi</InterfaceCompatibilityMode>
 			<CompatibilityMode>Version8_2_16</CompatibilityMode>
 			<DefaultConstantsForm/>
 		</Properties>
 		<ChildObjects>
 			<Language>English</Language>
 			<Language>Русский</Language>
-			<Subsystem>DistributorGroup</Subsystem>
-			<Subsystem>QuestionGroup</Subsystem>
-			<Subsystem>SKUGroup</Subsystem>
-			<Subsystem>UsersGroup</Subsystem>
+			<Subsystem>Orders</Subsystem>
+			<Subsystem>Visits</Subsystem>
+			<Subsystem>Questioning</Subsystem>
+			<Subsystem>Outlets</Subsystem>
+			<Subsystem>SKUs</Subsystem>
 			<Subsystem>Administration</Subsystem>
-			<Subsystem>bitmobile</Subsystem>
+			<Subsystem>SynchronisationAndSettings</Subsystem>
+			<Subsystem>Bitmobile</Subsystem>
 			<StyleItem>ШрифтВажнойНадписи</StyleItem>
 			<StyleItem>ПоясняющийТекст</StyleItem>
-			<CommonPicture>Logo</CommonPicture>
-			<CommonPicture>КоллекцияКартинокСопоставлениеОбъектов</CommonPicture>
 			<CommonPicture>ДлительнаяОперация48</CommonPicture>
 			<CommonPicture>КоллекцияДляПомеченныхНаУдалениеОбъектов</CommonPicture>
-			<CommonPicture>КоннекторВерхНиз</CommonPicture>
-			<CommonPicture>КоннекторВерхПраво</CommonPicture>
-			<CommonPicture>КоннекторВерхПравоНиз</CommonPicture>
-			<CommonPicture>КоннекторЛевоНизПраво</CommonPicture>
-			<CommonPicture>КоннекторЛевоПраво</CommonPicture>
-			<CommonPicture>КоннекторПравоНиз</CommonPicture>
-			<CommonPicture>КоллекцияКартинокСопоставлениеОбъектов1</CommonPicture>
-			<CommonPicture>СинхронизацияДанных</CommonPicture>
-			<CommonPicture>More</CommonPicture>
 			<CommonPicture>ВыполнитьРегламентноеЗаданиеВручную</CommonPicture>
 			<CommonPicture>ЗапуститьОтдельныйСеансДляВыполненияРегламентныхЗаданий</CommonPicture>
 			<CommonPicture>НастройкаВыполненияРегламентныхЗаданий</CommonPicture>
 			<CommonPicture>ОшибкаВыполненияРегламентныхЗаданий</CommonPicture>
+			<CommonPicture>Reload</CommonPicture>
+			<CommonPicture>CatalogHierarchy</CommonPicture>
 			<CommonPicture>bitmobile_Информация</CommonPicture>
 			<CommonPicture>bitmobile_Сервер</CommonPicture>
 			<CommonPicture>bitmobile_Клиент</CommonPicture>
@@ -138,6 +131,15 @@
 			<CommonPicture>bitmobile_ПерейтиККарте</CommonPicture>
 			<CommonPicture>bitmobile_ДобавитьНаКарту</CommonPicture>
 			<CommonPicture>bitmobile_ГруппаЭлемент</CommonPicture>
+			<CommonPicture>SectionQuestioning</CommonPicture>
+			<CommonPicture>SectionAdministration</CommonPicture>
+			<CommonPicture>SectionOrders</CommonPicture>
+			<CommonPicture>SectionVisits</CommonPicture>
+			<CommonPicture>SectionOutlets</CommonPicture>
+			<CommonPicture>SectionSKUs</CommonPicture>
+			<CommonPicture>SectionSynchronisationAndSettings</CommonPicture>
+			<CommonPicture>Logo_Ru</CommonPicture>
+			<CommonPicture>Logo_En</CommonPicture>
 			<SessionParameter>ТекущийПользователь</SessionParameter>
 			<Role>SR</Role>
 			<Role>SRM</Role>
@@ -174,7 +176,6 @@
 			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
 			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
-			<EventSubscription>SKUOnWrite</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
@@ -182,14 +183,10 @@
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
-			<CommonCommand>ObjectsDeletion</CommonCommand>
-			<CommonCommand>Reports</CommonCommand>
 			<CommonCommand>CreateTasks</CommonCommand>
 			<CommonCommand>HistoryTask</CommonCommand>
-			<CommandGroup>CommandGroup1</CommandGroup>
-			<CommandGroup>CommandGroup2</CommandGroup>
-			<CommandGroup>CommandGroup3</CommandGroup>
-			<CommandGroup>CommandGroup4</CommandGroup>
+			<CommonCommand>ShowSKUQuestions</CommonCommand>
+			<CommonCommand>ShowRegularQuestions</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
@@ -220,8 +217,7 @@
 			<Constant>bitmobile_ПодтвержденнаяДатаВыгрузки</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
-			<CommonForm>Navigation</CommonForm>
-			<CommonForm>Settings</CommonForm>
+			<CommonForm>Logo</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>
 			<CommonForm>ChooseFromListForm</CommonForm>
@@ -263,7 +259,6 @@
 			<Document>Task</Document>
 			<Document>Visit</Document>
 			<Document>VisitPlan</Document>
-			<DocumentJournal>CommonJournal</DocumentJournal>
 			<Enum>ClosingCause</Enum>
 			<Enum>ComparisonType</Enum>
 			<Enum>DataType</Enum>
@@ -305,7 +300,7 @@
 			<Report>SkuChangeAnalysis</Report>
 			<Report>NumberOfOutlets</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
-			<DataProcessor>РаботаСКартойGoogle</DataProcessor>
+			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
@@ -320,6 +315,7 @@
 			<InformationRegister>QuestionnairesSchedule</InformationRegister>
 			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
 			<InformationRegister>AnsweredQuestions</InformationRegister>
+			<InformationRegister>QuestioningResults</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

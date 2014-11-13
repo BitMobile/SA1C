@@ -10,23 +10,23 @@
 		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="NumberDate" id="15">
+		<UsualGroup name="GroupNumberDate" id="15">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Number date</v8:content>
+					<v8:content>Group number date</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Number date</v8:content>
+					<v8:content>Group number date</v8:content>
 				</v8:item>
 			</ToolTip>
 			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="NumberDateРасширеннаяПодсказка" id="22"/>
+			<ExtendedTooltip name="GroupNumberDateExtendedTooltip" id="22"/>
 			<ChildItems>
 				<InputField name="Number" id="1">
 					<DataPath>Object.Number</DataPath>
@@ -50,7 +50,18 @@
 		</InputField>
 		<CheckBoxField name="DefaultPriceList" id="20">
 			<DataPath>Object.DefaultPriceList</DataPath>
-			<CheckBoxType>Auto</CheckBoxType>
+			<TitleLocation>Right</TitleLocation>
+			<CheckBoxType>Tumbler</CheckBoxType>
+			<EditFormat>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>BF=No; BT=Yes</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>BF=Нет; BT=Да</v8:content>
+				</v8:item>
+			</EditFormat>
 			<ContextMenu name="DefaultPriceListContextMenu" id="21"/>
 			<ExtendedTooltip name="DefaultPriceListРасширеннаяПодсказка" id="26"/>
 		</CheckBoxField>

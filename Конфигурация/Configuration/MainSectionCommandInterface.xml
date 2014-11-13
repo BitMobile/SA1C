@@ -3,32 +3,27 @@
 	<CommandsVisibility>
 		<Command name="Document.Questionnaire.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="0:1a1f22d5-4566-4853-b3f2-f1a9852b3598">
-			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Document.Visit.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Document.VisitPlan.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Document.Order.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Catalog.Outlet.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Catalog.OutletParameter.StandardCommand.OpenList">
@@ -48,70 +43,22 @@
 		</Command>
 		<Command name="Catalog.Territory.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Catalog.Region.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Catalog.SKU.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Catalog.SKUGroup.StandardCommand.OpenList">
 			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="Catalog.Question.StandardCommand.OpenList">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="Catalog.QuestionGroup.StandardCommand.OpenList">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="Catalog.Distributor.StandardCommand.OpenList">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="Catalog.User.StandardCommand.OpenList">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="Catalog.Positions.StandardCommand.OpenList">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="CommonCommand.Reports">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="0:8f9ab13f-862a-4d8b-87c1-1fb942048586">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-				<xr:Value name="Role.SR">false</xr:Value>
-				<xr:Value name="Role.SRM">false</xr:Value>
-			</Visibility>
-		</Command>
-		<Command name="CommonCommand.ObjectsDeletion">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
-		<Command name="0:9c11dcfc-f73c-41b1-be96-0d4e5c09be92">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-				<xr:Value name="Role.Admin">false</xr:Value>
+				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
 		<Command name="Report.VisitsOrders.StandardCommand.Open">
@@ -135,10 +82,6 @@
 			<CommandGroup>NavigationPanelImportant</CommandGroup>
 			<Placement>Manual</Placement>
 		</Command>
-		<Command name="0:1a1f22d5-4566-4853-b3f2-f1a9852b3598">
-			<CommandGroup>NavigationPanelImportant</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
 		<Command name="Document.Visit.StandardCommand.OpenList">
 			<CommandGroup>NavigationPanelImportant</CommandGroup>
 			<Placement>Manual</Placement>
@@ -176,47 +119,11 @@
 			<Placement>Manual</Placement>
 		</Command>
 		<Command name="Catalog.SKU.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup1</CommandGroup>
+			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 			<Placement>Manual</Placement>
 		</Command>
 		<Command name="Catalog.SKUGroup.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup1</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="Catalog.Question.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup2</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="Catalog.QuestionGroup.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup2</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="Catalog.Distributor.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="Catalog.User.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="Catalog.Positions.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="CommonCommand.Reports">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="0:8f9ab13f-862a-4d8b-87c1-1fb942048586">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="CommonCommand.ObjectsDeletion">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-			<Placement>Manual</Placement>
-		</Command>
-		<Command name="0:9c11dcfc-f73c-41b1-be96-0d4e5c09be92">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
+			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 			<Placement>Manual</Placement>
 		</Command>
 		<Command name="Report.VisitsOrders.StandardCommand.Open">
@@ -236,9 +143,6 @@
 		<Command name="Document.Questionnaire.StandardCommand.OpenList">
 			<CommandGroup>NavigationPanelImportant</CommandGroup>
 		</Command>
-		<Command name="0:1a1f22d5-4566-4853-b3f2-f1a9852b3598">
-			<CommandGroup>NavigationPanelImportant</CommandGroup>
-		</Command>
 		<Command name="Document.Visit.StandardCommand.OpenList">
 			<CommandGroup>NavigationPanelImportant</CommandGroup>
 		</Command>
@@ -267,37 +171,10 @@
 			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
 		<Command name="Catalog.SKU.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup1</CommandGroup>
+			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
 		<Command name="Catalog.SKUGroup.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup1</CommandGroup>
-		</Command>
-		<Command name="Catalog.Question.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup2</CommandGroup>
-		</Command>
-		<Command name="Catalog.QuestionGroup.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup2</CommandGroup>
-		</Command>
-		<Command name="Catalog.Distributor.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-		</Command>
-		<Command name="Catalog.User.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-		</Command>
-		<Command name="Catalog.Positions.StandardCommand.OpenList">
-			<CommandGroup>CommandGroup.CommandGroup3</CommandGroup>
-		</Command>
-		<Command name="CommonCommand.Reports">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-		</Command>
-		<Command name="0:8f9ab13f-862a-4d8b-87c1-1fb942048586">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-		</Command>
-		<Command name="CommonCommand.ObjectsDeletion">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
-		</Command>
-		<Command name="0:9c11dcfc-f73c-41b1-be96-0d4e5c09be92">
-			<CommandGroup>CommandGroup.CommandGroup4</CommandGroup>
+			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
 		<Command name="Report.VisitsOrders.StandardCommand.Open">
 			<CommandGroup>ActionsPanelReports</CommandGroup>
@@ -312,10 +189,6 @@
 	<GroupsOrder>
 		<Group>NavigationPanelImportant</Group>
 		<Group>NavigationPanelOrdinary</Group>
-		<Group>CommandGroup.CommandGroup1</Group>
-		<Group>CommandGroup.CommandGroup2</Group>
-		<Group>CommandGroup.CommandGroup3</Group>
-		<Group>CommandGroup.CommandGroup4</Group>
 		<Group>NavigationPanelSeeAlso</Group>
 		<Group>ActionsPanelReports</Group>
 	</GroupsOrder>

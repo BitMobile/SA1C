@@ -27,12 +27,16 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
     PredefinedItems.Insert("Catalog.Brands", "Brand");
     PredefinedItems.Insert("Catalog.UnitsOfMeasure", "BaseUnit");
     PredefinedItems.Insert("Catalog.SKUGroup", "Owner");
-    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
-    For Each Item In ItemsCollection Do
-        Object[Item.Key] = Item.Value;
+	
+	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+	
+	For Each Item In ItemsCollection Do
+		
+		Object[Item.Key] = Item.Value;
 
 	EndDo;
-    AddPack();	
+	
+	AddPack();	
 	
 	Query = New Query;
 	Query.Text = 
@@ -88,22 +92,6 @@ Procedure AddPack()
 		FoundRow[0].Multiplier = 1;
 	EndIf;
 	
-	//ParameterFilter = new Structure;
-	//ParameterFilter.Insert("Multiplier", 1);
-	//FoundRow = Object.Packing.FindRows(ParameterFilter);
-	//If FoundRow.Count()>0 Then
-	//    Object.Packing.Delete(FoundRow[0].LineNumber-1);
-	//EndIf;
-	//ParameterFilter = new Structure;
-	//ParameterFilter.Insert("Pack", Object.BaseUnit);
-	//FoundRow = Object.Packing.FindRows(ParameterFilter);
-	//If FoundRow.Count()>0 Then
-	//    Object.Packing.Delete(FoundRow[0].LineNumber-1);
-	//EndIf;
-	//NewRow = Object.Packing.Add();
-	//NewRow.Multiplier = 1;
-	//NewRow.Pack = Object.BaseUnit;
-
 EndProcedure
 
 &AtClient
@@ -455,6 +443,7 @@ Procedure OnOpen(Cancel)
     Items.Stock.ReadOnly = GetConstant();
 EndProcedure
 
+&AtServer
 Function GetConstant()
 	Return Constants.SKUFeaturesRegistration.Get();
 EndFunction // ()

@@ -354,7 +354,7 @@ Procedure ProcessQuestionGroups()
 			
 			Object = Selection.GetObject();
 			Object.DataExchange.Load = True;
-			Object.Type = Enums.QuestionGroupTypes.Regular;
+			Object.Type = Enums.QuestionGroupTypes.RegularQuestions;
 			Object.Write();
 			
 		EndIf;
@@ -558,7 +558,7 @@ Procedure ProcessQuestions()
 	"SELECT
 	|	QuestionnaireQuestions.Ref AS Questionnaire,
 	|	QuestionnaireQuestions.Question AS ChildQuestion,
-	|	VALUE(Enum.QuestionGroupTypes.Regular) AS QuestionType,
+	|	VALUE(Enum.QuestionGroupTypes.RegularQuestions) AS QuestionType,
 	|	QuestionnaireQuestions.LineNumber AS Order,
 	|	FALSE AS Obligatoriness,
 	|	VALUE(Enum.ValueTableRowStatuses.Added) AS Status,
@@ -787,7 +787,7 @@ Function GetSKUQuestionsGroup()
 	
 	SKUQuestionsGroup = Catalogs.QuestionGroup.FindByDescription(SKUQuestionsGroupDescription);
 	
-	If SKUQuestionsGroup = Catalogs.QuestionGroup.EmptyRef() OR SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.Regular Then
+	If SKUQuestionsGroup = Catalogs.QuestionGroup.EmptyRef() OR SKUQuestionsGroup.Type = Enums.QuestionGroupTypes.RegularQuestions Then
 		
 		SKUQuestionsGroup 				= Catalogs.QuestionGroup.CreateItem();
 		SKUQuestionsGroup.Description 	= SKUQuestionsGroupDescription;

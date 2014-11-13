@@ -72,7 +72,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	SetScheduleStringPresentation();
 	
 	// Заполнить списки вопросов
-	FillQuestionsTree(Enums.QuestionGroupTypes.Regular, Parameters.CopyingValue);
+	FillQuestionsTree(Enums.QuestionGroupTypes.RegularQuestions, Parameters.CopyingValue);
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions, Parameters.CopyingValue);
 	
 	// Заполнить SKU
@@ -86,7 +86,7 @@ EndProcedure
 &AtServer
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
-	If Not SKUsValueTable.Count() = 0 And SKUQuestions.GetItems().Get(0).GetItems().Count() = 0 Then 
+	If Not SKUsValueTable.Count() = 0 And SKUQuestions.GetItems().Count() = 0 Then 
 		
 		UserMessage 		= New UserMessage;
 		UserMessage.Text	= NStr("en = 'The list of SKU questions must be filled'; ru = 'Список вопросов по номенклатуре должен быть заполнен'");
@@ -97,7 +97,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 	EndIf;	
 		
-	If SKUsValueTable.Count() = 0 And Not SKUQuestions.GetItems().Get(0).GetItems().Count() = 0 Then 
+	If SKUsValueTable.Count() = 0 And Not SKUQuestions.GetItems().Count() = 0 Then 
 		
 		UserMessage 		= New UserMessage;
 		UserMessage.Text	= NStr("en = 'The list of SKUs must be filled'; ru = 'Список номенклатуры должен быть заполнен'");
@@ -122,7 +122,7 @@ EndProcedure
 &AtServer
 Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
-	FillQuestionsTree(Enums.QuestionGroupTypes.Regular);
+	FillQuestionsTree(Enums.QuestionGroupTypes.RegularQuestions);
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
 	
 	// Разблокировать/заблокировать элементы в зависимости от статуса
@@ -139,9 +139,6 @@ EndProcedure
 
 &AtClient
 Procedure AfterWrite(WriteParameters)
-	
-	Items.Questions.Expand(Questions.GetItems()[0].GetID());
-	Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
 	
 	FillAvailableStatuses(Object.Status);
 	
@@ -301,16 +298,8 @@ Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
     OutputProcessor.SetObject(ResultTable);
     OutputProcessor.Output(Processor);
 	
-	If Not ResultTable.Count() = 0 Then 
-		
-		Return ResultTable.UnloadColumn("Ref");
-		
-	Else 
-		
-		Return Undefined;
-		
-	EndIf;	
-				
+	Return ResultTable.UnloadColumn("Ref");
+					
 EndFunction
 
 &AtServer
@@ -318,32 +307,20 @@ Procedure FillSKUs(CopyingValue = Undefined)
 	
 	SKUsValueTable.Load(GetSKUsInQuestionnaireValueTable(CopyingValue));
 	
-	If Not ValueIsFilled(Object.Ref) Then
+	SKUGroupFilterParameter = New Structure;
+	SKUGroupFilterParameter.Insert("SourceType", NStr("en = 'SKU Group'; ru = 'Группа номенклатуры'"));
 		
-		SKUSourceType = "SKU";
+	BrandFilterParameter = New Structure;
+	BrandFilterParameter.Insert("SourceType", NStr("en = 'Brand'; ru = 'Бренд'"));
 		
-	Else
-		
-		SKUGroupFilterParameter = New Structure;
-		SKUGroupFilterParameter.Insert("SourceType", NStr("en = 'SKU Group'; ru = 'Группа номенклатуры'"));
-		
-		BrandFilterParameter = New Structure;
-		BrandFilterParameter.Insert("SourceType", NStr("en = 'Brand'; ru = 'Бренд'"));
-		
-		If SKUsValueTable.FindRows(SKUGroupFilterParameter).Count() > 0 Then
+	If SKUsValueTable.FindRows(SKUGroupFilterParameter).Count() > 0 Then
 			
-			SKUSourceType = "SKUGroup";
+		SKUSourceType = "SKUGroup";
 			
-		ElsIf SKUsValueTable.FindRows(BrandFilterParameter).Count() > 0 Then
+	ElsIf SKUsValueTable.FindRows(BrandFilterParameter).Count() > 0 Then
 			
-			SKUSourceType = "Brand";
+		SKUSourceType = "Brand";
 			
-		Else
-			
-			SKUSourceType = "SKU";
-			
-		EndIf;
-		
 	EndIf;
 	
 EndProcedure
@@ -637,7 +614,7 @@ EndFunction
 &AtServer
 Procedure SetScheduleStringPresentation()
 	
-	Items.ScheduleStringPresentation.Title = GetStringPresentationOfSchedule(Object.Schedule);
+	ScheduleStringPresentation = GetStringPresentationOfSchedule(Object.Schedule);
 	
 EndProcedure
 
@@ -740,16 +717,8 @@ EndFunction
 &AtServerNoContext
 Function GetQuestionGroupType(TypeString = "SKUQuestions")
 	
-	If TypeString = "Regular" Then 
-	
-		Return Enums.QuestionGroupTypes.Regular;
-		
-	Else 
-		
-		Return Enums.QuestionGroupTypes.SKUQuestions;
-		
-	EndIf;
-		
+	Return CommonProcessors.GetQuestionGroupType(TypeString);
+			
 EndFunction
 
 &AtServerNoContext
@@ -804,9 +773,7 @@ Procedure WriteQuestions(Cancel, Tree, CurrentObject)
 	
 	If Not Cancel Then 
 		
-		TopLevel = Tree.GetItems()[0];
-		
-		ItemsOfTopLevel = TopLevel.GetItems();
+		ItemsOfTopLevel = Tree.GetItems();
 		
 		IndOrder = 0;
 		
@@ -864,7 +831,7 @@ EndProcedure
 &AtServer
 Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 	
-	If GroupType = Enums.QuestionGroupTypes.Regular Then 
+	If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
 			
 		Tree = Questions;
 			
@@ -875,9 +842,6 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 	EndIf;	
 			
 	Tree.GetItems().Clear();
-	
-	TopLevel = Tree.GetItems().Add();
-	TopLevel.Question = NStr("en = 'List of questions'; ru = 'Список вопросов'");
 	
 	If ValueIsFilled(Object.Ref) Or ValueIsFilled(CopyingValue) Then 
 	
@@ -920,7 +884,7 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 		
 		For Each ParentQuestionRow In ParentQuestionsTable Do 
 			
-			ParentRow 					= TopLevel.GetItems().Add();
+			ParentRow 					= Tree.GetItems().Add();
 			ParentRow.Question       	= ParentQuestionRow.ChildQuestion;
 			ParentRow.Obligatoriness    = ParentQuestionRow.Obligatoriness;
 			ParentRow.Status			= ParentQuestionRow.Status;
@@ -953,12 +917,6 @@ EndProcedure
 &AtClient
 Function CheckAdding(Tree, CurrentRow)
 	
-	If CurrentRow = Undefined Then 
-		
-		Return False;
-		
-	EndIf;
-	
 	If TypeOf(CurrentRow) = Type("Number") Then 
 	
 		Row = Tree.FindByID(CurrentRow);
@@ -975,19 +933,13 @@ Function CheckAdding(Tree, CurrentRow)
 		
 	EndIf;	
 	
-	If TypeOf(Row.Question) = Type("String") Then 
-		
-		Return True;
-		
-	EndIf;	
-		
-	If TypeOf(Row.Question) = Type("CatalogRef.Question") And IsLogicAnswerType(Row.Question) And TypeOf(Row.GetParent().Question) = Type("String") Then 
+	If TypeOf(Row.Question) = Type("CatalogRef.Question") And IsLogicAnswerType(Row.Question) And Row.GetParent() = Undefined Then 
 		
 		Return True;
 		
 	Else 
 		
-		If TypeOf(Row.GetParent().Question) = Type("String") Then 
+		If Row.GetParent() = Undefined Then 
 			
 			UserMessage 		= New UserMessage;
 			UserMessage.Text	= NStr("en = 'Dependent questions can only be added to the question having a logical answer type.'; ru = 'Зависимые вопросы могут быть добавлены только к вопросу имеющему логический тип ответа.'");
@@ -1044,16 +996,8 @@ Function CopyRow(Tree, Receiver, Source)
 		
 	EndIf;
 	
-	If Receiver = Undefined Then  
+	NewRow = Receiver.GetItems().Add();
 		
-		NewRow = Tree.GetItems().Add();
-		
-	Else  
-		
-		NewRow = Receiver.GetItems().Add();
-	
-	EndIf;	
-	
 	FillPropertyValues(NewRow, Source);
 	
 	If Source.IsOldQuestion Then 
@@ -1089,6 +1033,37 @@ Function CopyRow(Tree, Receiver, Source)
 EndFunction
 
 &AtClient
+Procedure ClearParent(Tree, Source)
+	
+	If Source = Undefined Then 
+		
+		Return;
+		
+	EndIf;
+	
+	If Source.Status = GetStatusToRow("Deleted") Then 
+		
+		Return;
+		
+	EndIf;
+	
+	NewRow = Tree.GetItems().Add();
+		
+	FillPropertyValues(NewRow, Source);
+	
+	If Source.IsOldQuestion Then 
+	
+		NewRow.Status = GetStatusToRow("Modified");
+	
+	EndIf;	
+		
+	NewRow.StatusDate = CurrentDate();
+	
+	Source.GetParent().GetItems().Delete(Source);
+		
+EndProcedure
+
+&AtClient
 Procedure FindValueInTree(TreeElements, Value, ElemenFound)
 	
 	For Each TreeElelment In TreeElements Do 
@@ -1120,7 +1095,7 @@ Procedure FindValueInTree(TreeElements, Value, ElemenFound)
 EndProcedure
 
 &AtClient
-Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, CurrentRow, Parent)
+Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, Parent = Undefined, CurrentRow = Undefined)
 	
 	ValueArray = New Array;
 	
@@ -1128,9 +1103,13 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, CurrentRow, Parent)
 		
 		ValueArray.Add(SelectedValue);
 		
-	ElsIf TypeOf(SelectedValue) = Type("CatalogRef.QuestionGroup") Then
+	ElsIf TypeOf(SelectedValue) = Type("DynamicalListGroupRow") Then 
 		
-		ValueArray = GetQuestionsFromGroup(SelectedValue);
+		If TypeOf(SelectedValue.Key) = Type("CatalogRef.QuestionGroup") Then
+		
+			ValueArray = GetQuestionsFromGroup(SelectedValue.Key);
+			
+		EndIf;	
 		
 	EndIf;
 	
@@ -1142,7 +1121,16 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, CurrentRow, Parent)
 		
 		If Not ElementFound Then 
 			
-			AddRow = Parent.GetItems().Add();
+			If IsChildQuestionAdding Then 
+				
+				AddRow = Parent.GetItems().Add();
+				
+			Else 
+				
+				AddRow = Tree.GetItems().Add();
+				
+			EndIf;	
+			
 			AddRow.Question = Element;
 			AddRow.StatusDate = CurrentDate();
 			
@@ -1154,12 +1142,16 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, CurrentRow, Parent)
 			AddRow.Status = Status;
 			AddRow.AnswerType = AnswerType;
 			
-			ItemsTree.Expand(CurrentRow);
+			If IsChildQuestionAdding Then
+				
+				ItemsTree.Expand(CurrentRow);
+				
+			EndIf;	
 			
 		Else 
 			
 			UserMessage 		= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Question " + String(Element) + " has already been added'; ru = 'Вопрос " + String(Element) + " уже добавлен'");
+			UserMessage.Text	= NStr("en = 'Question """ + String(Element) + """ has already been added'; ru = 'Вопрос """ + String(Element) + """ уже добавлен'");
 			
 			UserMessage.Message();
 						
@@ -1336,13 +1328,11 @@ EndFunction
 &AtServer
 Procedure SetOutletsSelected()
 	
-	CountOutlets = Documents.Questionnaire.SelectOutlets(CreateSelectorsTable(), Object.Ref).Count();
+	TempSelectorsTable = CreateSelectorsTable();
 	
-	If Not CountOutlets = Undefined Then 
+	Object.OutletsSelected = Documents.Questionnaire.SelectOutlets(TempSelectorsTable.Copy()).Count();
 	
-    	Object.OutletsSelected = CountOutlets;
-		
-	EndIf;	
+	Object.SRsSelected = Documents.Questionnaire.SelectSRs(TempSelectorsTable, TempSelectorsTable.Copy(New Structure("Selector", "Catalog_Positions"))).Count();
 
 EndProcedure
 
@@ -1393,9 +1383,6 @@ EndProcedure
 Procedure OnOpen(Cancel)
 	
 	FillSelectors();
-	
-	Items.Questions.Expand(Questions.GetItems()[0].GetID());
-	Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
 	
 	FillAvailableStatuses(Object.Status);
 	
@@ -1862,7 +1849,7 @@ Procedure SelectorsComparisonTypeChoiceProcessing(Item, SelectedValue, StandardP
 		
         If IsList(Items.SelectorsTable.CurrentData.ComparisonType) Then
 			
-			Items.SelectorsTable.CurrentData.Value = Items.SelectorsTable.CurrentData.Value[0];
+			Items.SelectorsTable.CurrentData.Value = Items.SelectorsTable.CurrentData.Value[0].Value;
 			
 		EndIf; 
 		
@@ -1919,6 +1906,19 @@ Procedure SelectorsTableBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
 		
 	EndIf;
 	
+	If Not Cancel Then 
+		
+		SetOutletsSelected();	
+		
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure SelectorsTableAfterDeleteRow(Item)
+	
+	SetOutletsSelected();
+	
 EndProcedure
 
 &AtClient
@@ -1932,7 +1932,7 @@ EndProcedure
 // Questions
 
 &AtClient
-Procedure AddQuestion(Command, CloseOnChoise = True)
+Procedure AddQuestion(Command)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
@@ -1944,13 +1944,15 @@ Procedure AddQuestion(Command, CloseOnChoise = True)
 		
 		ItemElement = Items.Questions;
 		Tree 		= Questions;
-		RightValue 	= GetQuestionGroupType("Regular")
+		RightValue 	= GetQuestionGroupType("Regular");
 		
 	EndIf;
 	
 	If CheckAdding(Tree, ItemElement.CurrentRow) Then
-	
-		ChoiseForm = GetForm("Catalog.Question.ChoiceForm");
+		
+		IsChildQuestionAdding = True;
+		
+		ChoiseForm = GetForm("Catalog.Question.Form.ChoiceFormWithGroups");
 		
 		FilterOfList = ChoiseForm.List.Filter;
 		
@@ -1961,7 +1963,7 @@ Procedure AddQuestion(Command, CloseOnChoise = True)
 		FilterElement.RightValue 	= RightValue;	
 		
 		ChoiseForm.FormOwner 			= ItemElement;
-		ChoiseForm.CloseOnChoice 		= CloseOnChoise;
+		ChoiseForm.CloseOnChoice 		= False;
 		ChoiseForm.CloseOnOwnerClose 	= True;
 		
 		ChoiseForm.Open();
@@ -1971,14 +1973,7 @@ Procedure AddQuestion(Command, CloseOnChoise = True)
 EndProcedure
 
 &AtClient
-Procedure SelectQuestions(Command)
-	
-	AddQuestion(Items.QuestionsAddQuestion, False);
-	
-EndProcedure
-
-&AtClient
-Procedure SelectQuestionsFromGroup(Command)
+Procedure AddParentQuestion(Command)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
@@ -1990,19 +1985,54 @@ Procedure SelectQuestionsFromGroup(Command)
 		
 		ItemElement = Items.Questions;
 		Tree 		= Questions;
-		RightValue 	= GetQuestionGroupType("Regular")
-		
-	EndIf;
-	
-	If CheckAdding(Tree, ItemElement.CurrentRow) Then 
-	
-		FormParameters = New Structure;
-		FormParameters.Insert("CloseOnChoice", False);
-		FormParameters.Insert("Filter", New Structure("Type", RightValue));
-		
-		OpenForm("Catalog.QuestionGroup.ChoiceForm", FormParameters, ItemElement);
+		RightValue 	= GetQuestionGroupType("Regular");
 		
 	EndIf;	
+	
+	IsChildQuestionAdding = False;
+	
+	ChoiseForm = GetForm("Catalog.Question.Form.ChoiceFormWithGroups");
+		
+	FilterOfList = ChoiseForm.List.Filter;
+	
+	FilterElement 				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+	FilterElement.LeftValue 	= New DataCompositionField("Owner.Type");
+	FilterElement.Use 			= True;
+	FilterElement.ViewMode		= DataCompositionSettingsItemViewMode.Inaccessible;
+	FilterElement.RightValue 	= RightValue;	
+	
+	ChoiseForm.FormOwner 			= ItemElement;
+	ChoiseForm.CloseOnChoice 		= False;
+	ChoiseForm.CloseOnOwnerClose 	= True;
+	
+	ChoiseForm.Open();
+	
+EndProcedure
+
+&AtClient
+Procedure ClearParentOnQuestion(Command)
+	
+	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
+		
+		If Not Items.SKUQuestions.CurrentRow = Undefined Then 
+		
+			Source = SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow);
+			
+			ClearParent(SKUQuestions, Source);
+			
+		EndIf;	
+		
+	Else 
+		
+		If Not Items.Questions.CurrentRow = Undefined Then
+			
+			Source = Questions.FindByID(Items.Questions.CurrentRow);
+			
+			ClearParent(Questions, Source);
+			
+		EndIf;	
+		
+	EndIf;
 	
 EndProcedure
 
@@ -2071,11 +2101,27 @@ Procedure QuestionsChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
-		AddQuestionsToTree(SelectedValue, SKUQuestions, Items.SKUQuestions, Items.SKUQuestions.CurrentRow, SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow));
+		If IsChildQuestionAdding Then 
 		
+			AddQuestionsToTree(SelectedValue, SKUQuestions, Items.SKUQuestions, SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow), Items.SKUQuestions.CurrentRow);
+			
+		Else 
+			
+			AddQuestionsToTree(SelectedValue, SKUQuestions, Items.SKUQuestions);	
+			
+		EndIf;	
+			
 	Else 
 		
-		AddQuestionsToTree(SelectedValue, Questions, Items.Questions, Items.Questions.CurrentRow, Questions.FindByID(Items.Questions.CurrentRow));
+		If IsChildQuestionAdding Then
+		
+			AddQuestionsToTree(SelectedValue, Questions, Items.Questions, Questions.FindByID(Items.Questions.CurrentRow), Items.Questions.CurrentRow);
+			
+		Else 
+			
+			AddQuestionsToTree(SelectedValue, Questions, Items.Questions);
+			
+		EndIf;	
 		
 	EndIf;
 		
@@ -2230,31 +2276,246 @@ Procedure DiscardСhanges(Command)
 		
 EndProcedure
 
+&AtClient
+Procedure QuestionsOnActivateRow(Item)
+	
+	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
+		
+		If Items.SKUQuestions.CurrentData = Undefined Then 
+			
+			Items.SKUQuestionsAddChildQuestion.Enabled 				= False;
+			Items.SKUQuestionsAddChildQuestionContext.Enabled 		= False;
+			Items.SKUQuestionsClearParentOnQuestionContext.Enabled 	= False;
+			
+		Else
+			
+			If IsLogicAnswerType(Items.SKUQuestions.CurrentData.Question) Then 
+				
+				Items.SKUQuestionsAddChildQuestion.Enabled 			= True;
+				Items.SKUQuestionsAddChildQuestionContext.Enabled 	= True;		
+				
+			Else 
+				
+				Items.SKUQuestionsAddChildQuestion.Enabled 			= False;
+				Items.SKUQuestionsAddChildQuestionContext.Enabled 	= False;
+				
+			EndIf;
+			
+			ItemElement = SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow);
+			
+			If ItemElement.GetParent() = Undefined Then 
+				
+				Items.SKUQuestionsClearParentOnQuestionContext.Enabled = False;	
+				
+			Else 
+				
+				Items.SKUQuestionsClearParentOnQuestionContext.Enabled = True;
+				
+			EndIf;
+						
+		EndIf;
+				
+	Else 
+		
+		If Items.Questions.CurrentData = Undefined Then 
+			
+			Items.QuestionsAddChildQuestion.Enabled 			= False;
+			Items.QuestionsAddChildQuestionContext.Enabled 		= False;
+			Items.QuestionsClearParentOnQuestionContext.Enabled = False;
+			
+		Else
+			
+			If IsLogicAnswerType(Items.Questions.CurrentData.Question) Then 
+				
+				Items.QuestionsAddChildQuestion.Enabled 		= True;
+				Items.QuestionsAddChildQuestionContext.Enabled 	= True;		
+				
+			Else 
+				
+				Items.QuestionsAddChildQuestion.Enabled 		= False;
+				Items.QuestionsAddChildQuestionContext.Enabled 	= False;
+				
+			EndIf;
+			
+			ItemElement = Questions.FindByID(Items.Questions.CurrentRow);
+			
+			If ItemElement.GetParent() = Undefined Then 
+				
+				Items.QuestionsClearParentOnQuestionContext.Enabled = False;	
+				
+			Else 
+				
+				Items.QuestionsClearParentOnQuestionContext.Enabled = True;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
+			
+EndProcedure
+
+&AtClient
+Procedure SetObligatoriness(Command)
+	
+	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
+		
+		Tree = SKUQuestions;
+				
+	Else 
+		
+		Tree = Questions;
+				
+	EndIf;
+
+	DeletedRowStatus 	= GetStatusToRow("Deleted");
+	MobifiedRowStatus 	= GetStatusToRow("Modified");
+	
+	For Each TreeElement In Tree.GetItems() Do 
+		
+		If TreeElement.Status = DeletedRowStatus Then 
+	
+			Continue;
+			
+		Else 
+			
+			If Not TreeElement.Obligatoriness Then 
+			
+				TreeElement.Obligatoriness = True;
+				
+				If TreeElement.IsOldQuestion Then 
+		
+					TreeElement.Status = MobifiedRowStatus;
+				
+				EndIf;	
+					
+				TreeElement.StatusDate = CurrentDate();
+				
+			EndIf;	
+			
+			For Each ChildElement In TreeElement.GetItems() Do
+				
+				If ChildElement.Status = DeletedRowStatus Then 
+	
+					Continue;
+					
+				Else 
+					
+					If Not ChildElement.Obligatoriness Then
+					
+						ChildElement.Obligatoriness = True;	
+						
+						If ChildElement.IsOldQuestion Then 
+		
+							ChildElement.Status = MobifiedRowStatus;
+						
+						EndIf;	
+							
+						ChildElement.StatusDate = CurrentDate();
+						
+					EndIf;
+															
+				EndIf;
+								
+			EndDo;			
+			
+		EndIf;		
+		
+	EndDo;
+		
+EndProcedure
+
+&AtClient
+Procedure UnsetObligatoriness(Command)
+	
+	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
+		
+		Tree = SKUQuestions;
+				
+	Else 
+		
+		Tree = Questions;
+				
+	EndIf;
+
+	DeletedRowStatus 	= GetStatusToRow("Deleted");
+	MobifiedRowStatus 	= GetStatusToRow("Modified");
+	
+	For Each TreeElement In Tree.GetItems() Do 
+		
+		If TreeElement.Status = DeletedRowStatus Then 
+	
+			Continue;
+			
+		Else 
+			
+			If TreeElement.Obligatoriness Then
+			
+				TreeElement.Obligatoriness = False;
+				
+				If TreeElement.IsOldQuestion Then 
+		
+					TreeElement.Status = MobifiedRowStatus;
+				
+				EndIf;	
+					
+				TreeElement.StatusDate = CurrentDate();
+				
+			EndIf;	
+			
+			For Each ChildElement In TreeElement.GetItems() Do
+				
+				If ChildElement.Status = DeletedRowStatus Then 
+	
+					Continue;
+					
+				Else 
+					
+					If ChildElement.Obligatoriness Then
+					
+						ChildElement.Obligatoriness = False;	
+						
+						If ChildElement.IsOldQuestion Then 
+		
+							ChildElement.Status = MobifiedRowStatus;
+						
+						EndIf;	
+							
+						ChildElement.StatusDate = CurrentDate();
+						
+					EndIf;
+					
+				EndIf;
+								
+			EndDo;			
+			
+		EndIf;		
+		
+	EndDo;
+	
+EndProcedure
+
 
 // SKUs
 
 &AtClient
 Procedure SKUSourceTypeOnChange(Item)
 	
-	If Not OldSKUSourceType.Value = SKUSourceType Then
-	
-		If Not OldSKUSourceType.Value = "SKU" Then
+	If TypeOf(OldSKUSourceType) = Type("ValueListItem") Then
+		
+		FilterParameters = New Structure;
+		FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
+		
+		RowsArray = SKUsValueTable.FindRows(FilterParameters);
+		
+		Modified = RowsArray.Count() > 0;
+		
+		For Each Row In RowsArray Do;
 			
-			FilterParameters = New Structure;
-			FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
+			Index = SKUsValueTable.IndexOf(Row);
+			SKUsValueTable.Delete(Index);
 			
-			RowsArray = SKUsValueTable.FindRows(FilterParameters);
-			
-			Modified = RowsArray.Count() > 0;
-			
-			For Each Row In RowsArray Do;
-				
-				Index = SKUsValueTable.IndexOf(Row);
-				SKUsValueTable.Delete(Index);
-				
-			EndDo;
-			
-		EndIf;
+		EndDo;
 		
 	EndIf;
 	
@@ -2272,7 +2533,7 @@ Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	OldSKUSourceType = Items.SKUSourceType.ChoiceList.FindByValue(SKUSourceType);
 	
-	If SKUsValueTable.Count() = 0 Or OldSKUSourceType.Value = "SKU" Then
+	If SKUsValueTable.Count() = 0 Or Not TypeOf(OldSKUSourceType) = Type("ValueListItem") Then
 		
 		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
 		
@@ -2421,13 +2682,6 @@ Procedure CheckSelectorsForSKUs(Command)
 		
 		If TypeOf(Element.SKU) = Type("CatalogRef.SKU") Then 
 			
-			If SKUArray = Undefined Then 
-				
-				Element.Index = 0;
-				Continue;
-				
-			EndIf;	
-			
 			If SKUArray.Find(Element.SKU) = Undefined Then 
 				
 				Element.Index = 1;
@@ -2439,13 +2693,6 @@ Procedure CheckSelectorsForSKUs(Command)
 			EndIf;
 			
 		ElsIf TypeOf(Element.SKU) = Type("CatalogRef.SKUGroup") Then 
-			
-			If SKUGroupsArray = Undefined Then 
-				
-				Element.Index = 0;
-				Continue;
-				
-			EndIf;
 			
 			If SKUGroupsArray.Find(Element.SKU) = Undefined Then 
 				

@@ -1,7 +1,0 @@
-﻿
-&AtClient
-Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
-    //Paste handler content.
-    //FormParameters = New Structure("", );
-    OpenForm("DataProcessor.УдалениеПомеченныхОбъектов.Form.ОсновнаяФорма", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window);
-EndProcedure

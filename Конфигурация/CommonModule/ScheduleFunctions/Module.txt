@@ -1,19 +1,19 @@
 ﻿
 Function GetStringPresentationOfSchedule(Schedule) Export
-	// ТУТ НАЧИНАЕТСЯ ГОВНОКОД
-	Result = "Анкета будет показываться ";
+	
+	Result = NStr("en = 'Questionnaire will be displayed '; ru = 'Анкета будет показываться '");
 	SubstringsArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";");
 	If SubstringsArray[0] = "Day" Then
-		EachDay = ?(+Right(SubstringsArray[1], 1) = 1, "каждый ", "каждые ");
-		Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], "день,дня,дней");
+		EachDay = ?(+Right(SubstringsArray[1], 1) = 1, NStr("en = 'every '; ru = 'каждый '"), NStr("en = 'every '; ru = 'каждые '"));
+		Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], NStr("en = 'day,day,days'; ru = 'день,дня,дней'"));
 		If +SubstringsArray[1] = 1 Then
-			Days = "день";
+			Days = NStr("en = 'day'; ru = 'день'");
 		Else
-			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], "день,дня,дней");
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[1], NStr("en = 'day,day,days'; ru = 'день,дня,дней'"));
 		EndIf;
 		Result = Result + EachDay + Days;
 	ElsIf SubstringsArray[0] = "Week" Then
-		On = "в ";
+		On = NStr("en = 'in '; ru = 'в '");
 		DaysOfWeekArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(SubstringsArray[1], ",");
 		DaysOfWeekString = "";
 		For Day = 1 To 7 Do
@@ -29,20 +29,20 @@ Function GetStringPresentationOfSchedule(Schedule) Export
 		Result = Result + On + DaysOfWeekString;
 	ElsIf SubstringsArray[0] = "Month" Then
 		If SubstringsArray[1] = "Period" Then
-			Result = Result + "c " + SubstringsArray[2] + " по " + SubstringsArray[3] + " день каждого месяца";
+			Result = Result + NStr("en = 'from '; ru = 'c '") + SubstringsArray[2] + NStr("en = ' to '; ru = ' по '") + SubstringsArray[3] + NStr("en = ' day of each month'; ru = ' день каждого месяца'");
 		Else			
 			If SubstringsArray[1] = "First" Then
-				FirstLast = ?(+SubstringsArray[2] = 1, "первый ", "первые ");
+				FirstLast = ?(+SubstringsArray[2] = 1, NStr("en = ' first '; ru = ' первый '"), NStr("en = ' first '; ru = ' первые '"));
 			ElsIf SubstringsArray[1] = "Last" Then			
-				FirstLast = ?(+SubstringsArray[2] = 1, " последний ", "последние ");
+				FirstLast = ?(+SubstringsArray[2] = 1, NStr("en = ' last '; ru = ' последний '"), NStr("en = ' last '; ru = ' последние '"));
 			EndIf;		
-			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], "день,дня,дней");
-			Month = " месяца ";
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], NStr("en = 'day,day,days'; ru = 'день,дня,дней'"));
+			Month = NStr("en = ' of the month '; ru = ' месяца '");
 			Result = Result + FirstLast + Days + Month;
 		EndIf;
 	ElsIf SubstringsArray[0] = "Year" Then
 		If SubstringsArray[1] = "Months" Then
-			EachMonth = "каждый ";
+			EachMonth = NStr("en = 'every '; ru = 'каждый '");
 			MonthsArray = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(SubstringsArray[2], ",");
 			MonthsString = "";
 			For Month = 1  To 12 Do
@@ -54,38 +54,49 @@ Function GetStringPresentationOfSchedule(Schedule) Export
 			MonthsString = Left(MonthsString, StrLen(MonthsString) - 2);
 			Result = Result + EachMonth + MonthsString;
 		ElsIf SubstringsArray[1] = "Period" Then
-			Result = Result + "c " + GetNumberWithMonth(+SubstringsArray[2], +SubstringsArray[3]) + " по " + GetNumberWithMonth(+SubstringsArray[4], +SubstringsArray[5]);
+			Result = Result + NStr("en = 'from '; ru = 'c '") + GetNumberWithMonth(+SubstringsArray[2], +SubstringsArray[3]) + NStr("en = ' to '; ru = ' по '") + GetNumberWithMonth(+SubstringsArray[4], +SubstringsArray[5]);
 		Else
 			If SubstringsArray[1] = "First" Then
-				FirstLast = ?(+SubstringsArray[2] = 1, "первый ", "первые ");
+				FirstLast = ?(+SubstringsArray[2] = 1, NStr("en = ' first '; ru = ' первый '"), NStr("en = ' first '; ru = ' первые '"));
 			ElsIf SubstringsArray[1] = "Last" Then
-				FirstLast = ?(+SubstringsArray[2] = 1, "последний ", "последние ");
+				FirstLast = ?(+SubstringsArray[2] = 1, NStr("en = ' last '; ru = ' последний '"), NStr("en = ' last '; ru = ' последние '"));
 			EndIf;
-			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], "день,дня,дней");
-			Year = " года ";
+			Days = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(+SubstringsArray[2], NStr("en = 'day,day,days'; ru = 'день,дня,дней'"));
+			Year = NStr("en = ' of the year '; ru = ' года '");
 			Result = Result + FirstLast + Days + Year;
 		EndIf;
 	EndIf;
+	
 	Return Result;
+	
 EndFunction
 
 Function GetDayOfWeekFromNumber(Number) Export
-	Return Format(Date(2014, 09, Number), "DF=дддд");
+	Return Format(Date(2014, 09, Number), NStr("en = 'L=en; DF=дддд'; ru = 'L=ru; DF=дддд'"));
 EndFunction
 
 Function GetMonthFromNumber(Number) Export
-	Return Format(Date(2014, Number, 1), "DF=MMMM");
+	Return Format(Date(2014, Number, 1), NStr("en = 'L=en; DF=MMMM'; ru = 'L=ru; DF=MMMM'"));         
 EndFunction
 
 Function GetNumberWithMonth(Number, Month)
+	
 	MonthString = GetMonthFromNumber(Month);
-	If Month = 3 Or Month = 8 Then // Если март или август
-		MonthString = Lower(MonthString) + "а";		
-	Else
-		MonthString = Lower(Left(MonthString, StrLen(MonthString) - 1) + "я");		
+	
+	If InfoBaseUsers.CurrentUser().Language = Metadata.Languages.Русский Then
+	
+		If Month = 3 Or Month = 8 Then // Если март или август
+			MonthString = Lower(MonthString) + "а";		
+		Else
+			MonthString = Lower(Left(MonthString, StrLen(MonthString) - 1) + "я");		
+		EndIf;
+		
 	EndIf;
+	
 	Result = СтроковыеФункцииКлиентСервер.ЧислоЦифрамиПредметИсчисленияПрописью(Number, MonthString + "," + MonthString + "," + MonthString);
+	
 	Return Result;
+	
 EndFunction
 
 Function GetEnumValueFromString(Enum, String) Export

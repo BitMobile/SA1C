@@ -1,5 +1,53 @@
 ﻿
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	ThisForm.Items.Type.Enabled = ValueIsFilled(Object.Ref) AND Not Catalogs.QuestionGroup.HasQuestions(Object.Ref);
+	
+	If Catalogs.QuestionGroup.HasQuestions(Object.Ref) Then 
+		
+		ThisForm.Items.Type.Enabled = False;
+		
+	Else 
+		
+		ThisForm.Items.Type.Enabled = True;
+		
+	EndIf;	
+		
+EndProcedure
+
+&AtServerNoContext
+Function GetQuestionGroupType(TypeString = "SKUQuestions")
+	
+	Return CommonProcessors.GetQuestionGroupType(TypeString);
+			
+EndFunction
+
+&AtClient
+Procedure OnOpen(Cancel)
+	
+	If Not ValueIsFilled(Object.Ref) Then 
+		
+		Try
+		
+			If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormRegularQuestionsWithGroups" Then 
+				
+				Object.Type = GetQuestionGroupType("RegularQuestions");
+					
+				Items.Type.Enabled = False;
+									
+			EndIf;
+			
+			If FormOwner.Parent.FormName = "Catalog.Question.Form.ListFormSKUQuestionsWithGroups" Then 
+				
+				Object.Type = GetQuestionGroupType("SKUQuestions");
+					
+				Items.Type.Enabled = False;
+									
+			EndIf;
+			
+		Except
+			
+		EndTry;	
+		
+	EndIf;
+	
 EndProcedure

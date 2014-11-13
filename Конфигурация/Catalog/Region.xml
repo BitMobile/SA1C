@@ -38,8 +38,8 @@
 			<Comment/>
 			<Hierarchical>true</Hierarchical>
 			<HierarchyType>HierarchyOfItems</HierarchyType>
-			<LimitLevelCount>false</LimitLevelCount>
-			<LevelCount>2</LevelCount>
+			<LimitLevelCount>true</LimitLevelCount>
+			<LevelCount>10</LevelCount>
 			<FoldersOnTop>true</FoldersOnTop>
 			<UseStandardCommands>true</UseStandardCommands>
 			<Owners/>

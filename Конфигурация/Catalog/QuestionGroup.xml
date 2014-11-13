@@ -32,7 +32,7 @@
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Группs вопросов</v8:content>
+					<v8:content>Группы вопросов</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
@@ -293,7 +293,7 @@
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Catalog.QuestionGroup.Form.ItemForm</DefaultObjectForm>
 			<DefaultFolderForm/>
-			<DefaultListForm/>
+			<DefaultListForm>Catalog.QuestionGroup.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm>Catalog.QuestionGroup.Form.ChoiceForm</DefaultChoiceForm>
 			<DefaultFolderChoiceForm/>
 			<AuxiliaryObjectForm/>
@@ -374,6 +374,7 @@
 			</Attribute>
 			<Form>ItemForm</Form>
 			<Form>ChoiceForm</Form>
+			<Form>ListForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

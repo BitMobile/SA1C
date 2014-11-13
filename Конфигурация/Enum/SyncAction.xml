@@ -99,7 +99,7 @@
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Добавить файл на FTP</v8:content>
+							<v8:content>Добавить файл на сервер</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
@@ -115,7 +115,7 @@
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Удалить файл с FTP и из 1С</v8:content>
+							<v8:content>Удалить файл с сервера и из 1С</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>

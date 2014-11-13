@@ -3,8 +3,6 @@
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<CommandSet>
-		<ExcludedCommand>UndoPosting</ExcludedCommand>
-		<ExcludedCommand>Post</ExcludedCommand>
 		<ExcludedCommand>Change</ExcludedCommand>
 	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>

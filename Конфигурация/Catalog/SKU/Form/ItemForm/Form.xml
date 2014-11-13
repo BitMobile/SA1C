@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
@@ -12,168 +11,6 @@
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="Group4" id="30">
-			<Height>6</Height>
-			<VerticalStretch>false</VerticalStretch>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="Group4ExtendedTooltip" id="61"/>
-			<ChildItems>
-				<UsualGroup name="Group3" id="27">
-					<Width>32</Width>
-					<Height>6</Height>
-					<HorizontalStretch>false</HorizontalStretch>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="Group3ExtendedTooltip" id="62"/>
-					<ChildItems>
-						<UsualGroup name="Group6" id="43">
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="Group6ExtendedTooltip" id="63"/>
-							<ChildItems>
-								<Button name="ButtonEdit" id="44">
-									<Type>UsualButton</Type>
-									<Representation>Picture</Representation>
-									<CommandName>Form.Command.EditPicture</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.Change</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Edit picture</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Изменить картинку</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="ButtonEditExtendedTooltip" id="64"/>
-								</Button>
-								<Button name="ButtonDelete" id="45">
-									<Type>UsualButton</Type>
-									<Representation>Picture</Representation>
-									<CommandName>Form.Command.DeletePicture</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.Delete</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Delete picture</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Удалить картинку</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="ButtonDeleteExtendedTooltip" id="65"/>
-								</Button>
-								<Button name="OpenPicture" id="46">
-									<Type>UsualButton</Type>
-									<Representation>Picture</Representation>
-									<CommandName>Form.Command.OpenPicture</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.Magnifier</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Open picture</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Открыть картинку</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
-								</Button>
-							</ChildItems>
-						</UsualGroup>
-						<PictureField name="PictureAddress" id="28">
-							<DataPath>PictureAddress</DataPath>
-							<TitleLocation>None</TitleLocation>
-							<Height>6</Height>
-							<PictureSize>AutoSize</PictureSize>
-							<Hyperlink>true</Hyperlink>
-							<NonselectedPictureText>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Add picture</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Добавить картинку</v8:content>
-								</v8:item>
-							</NonselectedPictureText>
-							<TextColor>#C0C0C0</TextColor>
-							<Font ref="sys:DefaultGUIFont" height="11" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-							<ContextMenu name="PictureAddressContextMenu" id="29">
-								<Autofill>false</Autofill>
-							</ContextMenu>
-							<ExtendedTooltip name="PictureAddressExtendedTooltip" id="67"/>
-							<Events>
-								<Event name="Click">PictureAddressClick</Event>
-							</Events>
-						</PictureField>
-					</ChildItems>
-				</UsualGroup>
-				<UsualGroup name="Group2" id="26">
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="Group2ExtendedTooltip" id="68"/>
-					<ChildItems>
-						<InputField name="Code" id="1">
-							<DataPath>Object.Code</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="CodeContextMenu" id="2"/>
-							<ExtendedTooltip name="CodeExtendedTooltip" id="69"/>
-						</InputField>
-						<InputField name="Description" id="3">
-							<DataPath>Object.Description</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="DescriptionContextMenu" id="4"/>
-							<ExtendedTooltip name="DescriptionExtendedTooltip" id="70"/>
-						</InputField>
-						<InputField name="Owner" id="5">
-							<DataPath>Object.Owner</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="OwnerContextMenu" id="6"/>
-							<ExtendedTooltip name="OwnerExtendedTooltip" id="71"/>
-						</InputField>
-						<InputField name="Brand" id="9">
-							<DataPath>Object.Brand</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="BrandContextMenu" id="10"/>
-							<ExtendedTooltip name="BrandExtendedTooltip" id="72"/>
-						</InputField>
-						<InputField name="BaseUnit" id="24">
-							<DataPath>Object.BaseUnit</DataPath>
-							<ContextMenu name="BaseUnitContextMenu" id="25"/>
-							<ExtendedTooltip name="BaseUnitExtendedTooltip" id="73"/>
-							<Events>
-								<Event name="OnChange">BaseUnitOnChange</Event>
-							</Events>
-						</InputField>
-						<InputField name="Stock" id="41">
-							<DataPath>Object.CommonStock</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<ContextMenu name="StockContextMenu" id="42"/>
-							<ExtendedTooltip name="StockExtendedTooltip" id="74"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
 		<Pages name="Pages" id="47">
 			<Title>
 				<v8:item>
@@ -189,7 +26,220 @@
 			</ToolTip>
 			<ExtendedTooltip name="PagesExtendedTooltip" id="75"/>
 			<ChildItems>
-				<Page name="PackingPage" id="48">
+				<Page name="GroupMasterData" id="30">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Master data</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные данные</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group master data</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Height>6</Height>
+					<VerticalStretch>false</VerticalStretch>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="GroupMasterDataExtendedTooltip" id="61"/>
+					<ChildItems>
+						<UsualGroup name="GroupPicture" id="27">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group picture</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group picture</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Width>32</Width>
+							<Height>6</Height>
+							<HorizontalStretch>false</HorizontalStretch>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupPictureExtendedTooltip" id="62"/>
+							<ChildItems>
+								<UsualGroup name="GroupPictureButtons" id="43">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group picture buttons</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group picture buttons</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="GroupPictureButtonsExtendedTooltip" id="63"/>
+									<ChildItems>
+										<Button name="ButtonEdit" id="44">
+											<Type>UsualButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.EditPicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.Change</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Edit picture</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Изменить картинку</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ButtonEditExtendedTooltip" id="64"/>
+										</Button>
+										<Button name="ButtonDelete" id="45">
+											<Type>UsualButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.DeletePicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.Delete</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Delete picture</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Удалить картинку</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ButtonDeleteExtendedTooltip" id="65"/>
+										</Button>
+										<Button name="OpenPicture" id="46">
+											<Type>UsualButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.OpenPicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.Magnifier</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Open picture</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Открыть картинку</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<PictureField name="PictureAddress" id="28">
+									<DataPath>PictureAddress</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Height>6</Height>
+									<PictureSize>AutoSize</PictureSize>
+									<Hyperlink>true</Hyperlink>
+									<NonselectedPictureText>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Add picture</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Добавить картинку</v8:content>
+										</v8:item>
+									</NonselectedPictureText>
+									<TextColor>#C0C0C0</TextColor>
+									<Font ref="sys:DefaultGUIFont" height="11" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+									<ContextMenu name="PictureAddressContextMenu" id="29">
+										<Autofill>false</Autofill>
+									</ContextMenu>
+									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="67"/>
+									<Events>
+										<Event name="Click">PictureAddressClick</Event>
+									</Events>
+								</PictureField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="GroupDetails" id="26">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group details</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group details</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupDetailsExtendedTooltip" id="68"/>
+							<ChildItems>
+								<InputField name="Code" id="1">
+									<DataPath>Object.Code</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="CodeContextMenu" id="2"/>
+									<ExtendedTooltip name="CodeExtendedTooltip" id="69"/>
+								</InputField>
+								<InputField name="Description" id="3">
+									<DataPath>Object.Description</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>1</Width>
+									<ContextMenu name="DescriptionContextMenu" id="4"/>
+									<ExtendedTooltip name="DescriptionExtendedTooltip" id="70"/>
+								</InputField>
+								<InputField name="Owner" id="5">
+									<DataPath>Object.Owner</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="OwnerContextMenu" id="6"/>
+									<ExtendedTooltip name="OwnerExtendedTooltip" id="71"/>
+								</InputField>
+								<InputField name="Brand" id="9">
+									<DataPath>Object.Brand</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="BrandContextMenu" id="10"/>
+									<ExtendedTooltip name="BrandExtendedTooltip" id="72"/>
+								</InputField>
+								<InputField name="BaseUnit" id="24">
+									<DataPath>Object.BaseUnit</DataPath>
+									<ContextMenu name="BaseUnitContextMenu" id="25"/>
+									<ExtendedTooltip name="BaseUnitExtendedTooltip" id="73"/>
+									<Events>
+										<Event name="OnChange">BaseUnitOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="Stock" id="41">
+									<DataPath>Object.CommonStock</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<ContextMenu name="StockContextMenu" id="42"/>
+									<ExtendedTooltip name="StockExtendedTooltip" id="74"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="GroupPacking" id="48">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -203,10 +253,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Packing page</v8:content>
+							<v8:content>Group packing</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="PackingPageExtendedTooltip" id="76"/>
+					<ExtendedTooltip name="GroupPackingExtendedTooltip" id="76"/>
 					<ChildItems>
 						<Table name="Packing" id="14">
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -268,7 +318,7 @@
 						</Table>
 					</ChildItems>
 				</Page>
-				<Page name="StocksPage" id="49">
+				<Page name="GroupStocks" id="49">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -282,10 +332,10 @@
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Stocks page</v8:content>
+							<v8:content>Group stocks</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="StocksPageExtendedTooltip" id="81"/>
+					<ExtendedTooltip name="GroupStocksExtendedTooltip" id="81"/>
 					<ChildItems>
 						<Table name="Stocks" id="50">
 							<AutoInsertNewRow>true</AutoInsertNewRow>

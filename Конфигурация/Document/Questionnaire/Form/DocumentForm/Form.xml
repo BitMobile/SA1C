@@ -17,457 +17,6 @@
 		<Event name="FillCheckProcessingAtServer">FillCheckProcessingAtServer</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="GroupNumberDate" id="36">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group number date</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group number date</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="GroupNumberDateExtendedTooltip" id="287"/>
-			<ChildItems>
-				<InputField name="Number" id="1">
-					<DataPath>Object.Number</DataPath>
-					<ReadOnly>true</ReadOnly>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="NumberContextMenu" id="2"/>
-					<ExtendedTooltip name="NumberExtendedTooltip" id="288"/>
-				</InputField>
-				<InputField name="Date" id="3">
-					<DataPath>Object.Date</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="DateContextMenu" id="4"/>
-					<ExtendedTooltip name="DateExtendedTooltip" id="289"/>
-				</InputField>
-				<InputField name="Status" id="75">
-					<DataPath>Object.Status</DataPath>
-					<ContextMenu name="StatusContextMenu" id="76"/>
-					<ExtendedTooltip name="StatusExtendedTooltip" id="290"/>
-					<Events>
-						<Event name="OnChange">StatusOnChange</Event>
-						<Event name="StartChoice">StatusStartChoice</Event>
-					</Events>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="GroupDetails" id="397">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Details</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Описание</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group details</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>StrongSeparation</Representation>
-			<ChildItemsWidth>Equal</ChildItemsWidth>
-			<ExtendedTooltip name="GroupDetailsExtendedTooltip" id="398"/>
-			<ChildItems>
-				<UsualGroup name="GroupDescriptionOwner" id="405">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group description owner</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group description owner</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="GroupDescriptionOwnerExtendedTooltip" id="406"/>
-					<ChildItems>
-						<InputField name="Description" id="399">
-							<DataPath>Object.Description</DataPath>
-							<ContextMenu name="DescriptionContextMenu" id="400"/>
-							<ExtendedTooltip name="DescriptionExtendedTooltip" id="401"/>
-						</InputField>
-						<InputField name="Owner" id="394">
-							<DataPath>Object.Owner</DataPath>
-							<ReadOnly>true</ReadOnly>
-							<ContextMenu name="OwnerContextMenu" id="395"/>
-							<ExtendedTooltip name="OwnerExtendedTooltip" id="396"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-				<InputField name="Definition" id="402">
-					<DataPath>Object.Definition</DataPath>
-					<TitleLocation>Left</TitleLocation>
-					<TitleHeight>2</TitleHeight>
-					<Height>2</Height>
-					<HorizontalStretch>true</HorizontalStretch>
-					<VerticalStretch>false</VerticalStretch>
-					<MultiLine>true</MultiLine>
-					<ContextMenu name="DefinitionContextMenu" id="403"/>
-					<ExtendedTooltip name="DefinitionExtendedTooltip" id="404"/>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="GroupPeriod" id="214">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Period and schedule</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Период и расписание</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group period</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Representation>StrongSeparation</Representation>
-			<ExtendedTooltip name="GroupPeriodExtendedTooltip" id="292"/>
-			<ChildItems>
-				<UsualGroup name="IntervalScheduleGroup" id="440">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Interval schedule group</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Interval schedule group</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="IntervalScheduleGroupExtendedTooltip" id="441"/>
-					<ChildItems>
-						<InputField name="BeginDate" id="216">
-							<DataPath>Object.BeginDate</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Анкета действует с</v8:content>
-								</v8:item>
-							</Title>
-							<ContextMenu name="BeginDateContextMenu" id="217"/>
-							<ExtendedTooltip name="BeginDateExtendedTooltip" id="293"/>
-						</InputField>
-						<InputField name="EndDate" id="219">
-							<DataPath>Object.EndDate</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>по</v8:content>
-								</v8:item>
-							</Title>
-							<ContextMenu name="EndDateContextMenu" id="220"/>
-							<ExtendedTooltip name="EndDateExtendedTooltip" id="294"/>
-							<Events>
-								<Event name="OnChange">EndDateOnChange</Event>
-							</Events>
-						</InputField>
-						<Button name="SetSchedule" id="227">
-							<Type>UsualButton</Type>
-							<Representation>PictureAndText</Representation>
-							<CommandName>Form.Command.SetSchedule</CommandName>
-							<Parameter xsi:nil="true"/>
-							<Picture>
-								<xr:Ref>StdPicture.ScheduledJob</xr:Ref>
-								<xr:LoadTransparent>true</xr:LoadTransparent>
-							</Picture>
-							<ExtendedTooltip name="SetScheduleExtendedTooltip" id="297"/>
-						</Button>
-						<LabelDecoration name="ScheduleStringPresentation" id="224">
-							<HorizontalStretch>true</HorizontalStretch>
-							<ContextMenu name="ScheduleStringPresentationContextMenu" id="225"/>
-							<ExtendedTooltip name="ScheduleStringPresentationExtendedTooltip" id="296"/>
-						</LabelDecoration>
-					</ChildItems>
-				</UsualGroup>
-				<UsualGroup name="RegularityGroup" id="442">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Regularity group</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Regularity group</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="RegularityGroupExtendedTooltip" id="443"/>
-					<ChildItems>
-						<InputField name="Regularity" id="159">
-							<DataPath>Regularity</DataPath>
-							<ClearButton>false</ClearButton>
-							<ListChoiceMode>true</ListChoiceMode>
-							<ChooseType>false</ChooseType>
-							<TextEdit>false</TextEdit>
-							<ChoiceList>
-								<xr:Item>
-									<xr:Presentation/>
-									<xr:CheckState>0</xr:CheckState>
-									<xr:Value xsi:type="FormChoiceListDesTimeValue">
-										<Presentation>
-											<v8:item>
-												<v8:lang>en</v8:lang>
-												<v8:content>Questionnaire refilled during of period</v8:content>
-											</v8:item>
-											<v8:item>
-												<v8:lang>ru</v8:lang>
-												<v8:content>Анкета дозаполняется в течение периода</v8:content>
-											</v8:item>
-										</Presentation>
-										<Value xsi:type="xs:string">Single</Value>
-									</xr:Value>
-								</xr:Item>
-								<xr:Item>
-									<xr:Presentation/>
-									<xr:CheckState>0</xr:CheckState>
-									<xr:Value xsi:type="FormChoiceListDesTimeValue">
-										<Presentation>
-											<v8:item>
-												<v8:lang>en</v8:lang>
-												<v8:content>Questionnaire filled each visit</v8:content>
-											</v8:item>
-											<v8:item>
-												<v8:lang>ru</v8:lang>
-												<v8:content>Анкета заполняется каждый визит заново</v8:content>
-											</v8:item>
-										</Presentation>
-										<Value xsi:type="xs:string">Regular</Value>
-									</xr:Value>
-								</xr:Item>
-							</ChoiceList>
-							<ContextMenu name="RegularityContextMenu" id="160"/>
-							<ExtendedTooltip name="RegularityExtendedTooltip" id="291"/>
-							<Events>
-								<Event name="OnChange">RegularityOnChange</Event>
-							</Events>
-						</InputField>
-						<InputField name="FillPeriod" id="444">
-							<DataPath>Object.FillPeriod</DataPath>
-							<ContextMenu name="FillPeriodContextMenu" id="445"/>
-							<ExtendedTooltip name="FillPeriodExtendedTooltip" id="446"/>
-						</InputField>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="GroupSchedule" id="222">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group schedule</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Group schedule</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="GroupScheduleExtendedTooltip" id="295"/>
-		</UsualGroup>
-		<UsualGroup name="SelectorsGroup" id="52">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Selectors</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Параметры отбора</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Selectors</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Representation>StrongSeparation</Representation>
-			<ExtendedTooltip name="SelectorsGroupExtendedTooltip" id="301"/>
-			<ChildItems>
-				<Table name="SelectorsTable" id="53">
-					<Representation>List</Representation>
-					<Height>8</Height>
-					<SelectionMode>SingleRow</SelectionMode>
-					<VerticalStretch>false</VerticalStretch>
-					<EnableStartDrag>true</EnableStartDrag>
-					<EnableDrag>true</EnableDrag>
-					<DataPath>Selectors</DataPath>
-					<SearchStringLocation>None</SearchStringLocation>
-					<ViewStatusLocation>None</ViewStatusLocation>
-					<SearchControlLocation>None</SearchControlLocation>
-					<RowFilter xsi:nil="true"/>
-					<ContextMenu name="SelectorsTableContextMenu" id="54"/>
-					<AutoCommandBar name="SelectorsTableCommandBar" id="55"/>
-					<ExtendedTooltip name="SelectorsTableExtendedTooltip" id="302"/>
-					<SearchStringAddition name="SelectorsTableSearchString" id="303">
-						<Source>
-							<lf:elementId>53</lf:elementId>
-							<lf:additionId>0</lf:additionId>
-						</Source>
-						<ContextMenu name="SelectorsTableSearchStringContextMenu" id="304"/>
-						<ExtendedTooltip name="SelectorsTableSearchStringExtendedTooltip" id="305"/>
-					</SearchStringAddition>
-					<ViewStatusAddition name="SelectorsTableViewStatus" id="306">
-						<Source>
-							<lf:elementId>53</lf:elementId>
-							<lf:additionId>1</lf:additionId>
-						</Source>
-						<ContextMenu name="SelectorsTableViewStatusContextMenu" id="307"/>
-						<ExtendedTooltip name="SelectorsTableViewStatusExtendedTooltip" id="308"/>
-					</ViewStatusAddition>
-					<SearchControlAddition name="SelectorsTableSearchControl" id="309">
-						<Source>
-							<lf:elementId>53</lf:elementId>
-							<lf:additionId>2</lf:additionId>
-						</Source>
-						<ContextMenu name="SelectorsTableSearchControlContextMenu" id="310"/>
-						<ExtendedTooltip name="SelectorsTableSearchControlExtendedTooltip" id="311"/>
-					</SearchControlAddition>
-					<Events>
-						<Event name="BeforeAddRow">SelectorsTableBeforeAddRow</Event>
-						<Event name="BeforeEditEnd">SelectorsTableBeforeEditEnd</Event>
-						<Event name="OnStartEdit">SelectorsTableOnStartEdit</Event>
-					</Events>
-					<ChildItems>
-						<InputField name="SelectorsTableSelector" id="68">
-							<DataPath>Selectors.Selector</DataPath>
-							<Visible>false</Visible>
-							<EditMode>EnterOnInput</EditMode>
-							<ContextMenu name="SelectorsTableSelectorContextMenu" id="69"/>
-							<ExtendedTooltip name="SelectorsTableSelectorExtendedTooltip" id="312"/>
-						</InputField>
-						<InputField name="SelectorsTableAdditionalParameter" id="66">
-							<DataPath>Selectors.AdditionalParameter</DataPath>
-							<Visible>false</Visible>
-							<EditMode>EnterOnInput</EditMode>
-							<Width>1</Width>
-							<ContextMenu name="SelectorsTableAdditionalParameterContextMenu" id="67"/>
-							<ExtendedTooltip name="SelectorsTableAdditionalParameterExtendedTooltip" id="313"/>
-						</InputField>
-						<InputField name="SelectorsSelectorRepresent" id="64">
-							<DataPath>Selectors.SelectorRepresent</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<Width>1</Width>
-							<DropListButton>false</DropListButton>
-							<ChoiceButton>false</ChoiceButton>
-							<ClearButton>false</ClearButton>
-							<SpinButton>false</SpinButton>
-							<CreateButton>false</CreateButton>
-							<AutoMarkIncomplete>true</AutoMarkIncomplete>
-							<ChooseType>false</ChooseType>
-							<TextEdit>false</TextEdit>
-							<ChoiceListButton>true</ChoiceListButton>
-							<ContextMenu name="SelectorsSelectorRepresentContextMenu" id="65"/>
-							<ExtendedTooltip name="SelectorsSelectorRepresentExtendedTooltip" id="314"/>
-							<Events>
-								<Event name="StartChoice">SelectorsSelectorRepresentStartChoice</Event>
-								<Event name="StartListChoice">SelectorsSelectorRepresentStartListChoice</Event>
-							</Events>
-						</InputField>
-						<InputField name="SelectorsComparisonType" id="58">
-							<DataPath>Selectors.ComparisonType</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<Width>1</Width>
-							<TextEdit>false</TextEdit>
-							<ContextMenu name="SelectorsComparisonTypeContextMenu" id="59"/>
-							<ExtendedTooltip name="SelectorsComparisonTypeExtendedTooltip" id="315"/>
-							<Events>
-								<Event name="Clearing">SelectorsComparisonTypeClearing</Event>
-								<Event name="ChoiceProcessing">SelectorsComparisonTypeChoiceProcessing</Event>
-							</Events>
-						</InputField>
-						<InputField name="SelectorsValue" id="60">
-							<DataPath>Selectors.Value</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<Width>1</Width>
-							<ChoiceButton>true</ChoiceButton>
-							<AutoMarkIncomplete>true</AutoMarkIncomplete>
-							<TextEdit>false</TextEdit>
-							<ContextMenu name="SelectorsValueContextMenu" id="61"/>
-							<ExtendedTooltip name="SelectorsValueExtendedTooltip" id="316"/>
-							<Events>
-								<Event name="StartChoice">SelectorsValueStartChoice</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</Table>
-				<UsualGroup name="OutletsCalculate" id="77">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Outlets calculate</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Outlets calculate</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<Representation>None</Representation>
-					<ShowTitle>false</ShowTitle>
-					<ExtendedTooltip name="OutletsCalculateExtendedTooltip" id="298"/>
-					<ChildItems>
-						<LabelDecoration name="Decoration1" id="391">
-							<HorizontalStretch>true</HorizontalStretch>
-							<ContextMenu name="Decoration1ContextMenu" id="392"/>
-							<ExtendedTooltip name="Decoration1ExtendedTooltip" id="393"/>
-						</LabelDecoration>
-						<LabelField name="OutletsSelected" id="73">
-							<DataPath>Object.OutletsSelected</DataPath>
-							<ContextMenu name="OutletsSelectedContextMenu" id="74"/>
-							<ExtendedTooltip name="OutletsSelectedExtendedTooltip" id="299"/>
-						</LabelField>
-						<Button name="SelectOutlets" id="72">
-							<Type>UsualButton</Type>
-							<Representation>Picture</Representation>
-							<CommandName>Form.Command.SelectOutlets</CommandName>
-							<Parameter xsi:nil="true"/>
-							<Picture>
-								<xr:Ref>CommonPicture.СинхронизацияДанных</xr:Ref>
-								<xr:LoadTransparent>false</xr:LoadTransparent>
-							</Picture>
-							<ExtendedTooltip name="SelectOutletsExtendedTooltip" id="300"/>
-						</Button>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
 		<Pages name="Pages" id="11">
 			<Title>
 				<v8:item>
@@ -477,6 +26,474 @@
 			</Title>
 			<ExtendedTooltip name="PagesExtendedTooltip" id="317"/>
 			<ChildItems>
+				<Page name="GroupMasterData" id="499">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Master data</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные данные</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group master data</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<ChildItemsWidth>Equal</ChildItemsWidth>
+					<ExtendedTooltip name="GroupMasterDataExtendedTooltip" id="500"/>
+					<ChildItems>
+						<UsualGroup name="GroupDetails" id="397">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Details</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Описание</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group details</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>None</Representation>
+							<ChildItemsWidth>Equal</ChildItemsWidth>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupDetailsExtendedTooltip" id="398"/>
+							<ChildItems>
+								<InputField name="Status" id="75">
+									<DataPath>Object.Status</DataPath>
+									<ContextMenu name="StatusContextMenu" id="76"/>
+									<ExtendedTooltip name="StatusExtendedTooltip" id="290"/>
+									<Events>
+										<Event name="OnChange">StatusOnChange</Event>
+										<Event name="StartChoice">StatusStartChoice</Event>
+									</Events>
+								</InputField>
+								<InputField name="Description" id="399">
+									<DataPath>Object.Description</DataPath>
+									<ContextMenu name="DescriptionContextMenu" id="400"/>
+									<ExtendedTooltip name="DescriptionExtendedTooltip" id="401"/>
+								</InputField>
+								<InputField name="Owner" id="394">
+									<DataPath>Object.Owner</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<ContextMenu name="OwnerContextMenu" id="395"/>
+									<ExtendedTooltip name="OwnerExtendedTooltip" id="396"/>
+								</InputField>
+								<InputField name="Definition" id="402">
+									<DataPath>Object.Definition</DataPath>
+									<TitleLocation>Left</TitleLocation>
+									<TitleHeight>4</TitleHeight>
+									<Height>4</Height>
+									<HorizontalStretch>true</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<MultiLine>true</MultiLine>
+									<ContextMenu name="DefinitionContextMenu" id="403"/>
+									<ExtendedTooltip name="DefinitionExtendedTooltip" id="404"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="GroupPeriodNumberDate" id="214">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Period and schedule</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Период и расписание</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group period number date</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupPeriodNumberDateExtendedTooltip" id="292"/>
+							<ChildItems>
+								<UsualGroup name="GroupNumberDate" id="36">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group number date</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group number date</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="GroupNumberDateExtendedTooltip" id="287"/>
+									<ChildItems>
+										<InputField name="Number" id="1">
+											<DataPath>Object.Number</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<EditMode>EnterOnInput</EditMode>
+											<Width>10</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="NumberContextMenu" id="2"/>
+											<ExtendedTooltip name="NumberExtendedTooltip" id="288"/>
+										</InputField>
+										<InputField name="Date" id="3">
+											<DataPath>Object.Date</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>from</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>от</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<Width>16</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="DateContextMenu" id="4"/>
+											<ExtendedTooltip name="DateExtendedTooltip" id="289"/>
+										</InputField>
+									</ChildItems>
+								</UsualGroup>
+								<InputField name="Regularity" id="159">
+									<DataPath>Regularity</DataPath>
+									<Width>1</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ClearButton>false</ClearButton>
+									<ListChoiceMode>true</ListChoiceMode>
+									<ChooseType>false</ChooseType>
+									<TextEdit>false</TextEdit>
+									<ChoiceList>
+										<xr:Item>
+											<xr:Presentation/>
+											<xr:CheckState>0</xr:CheckState>
+											<xr:Value xsi:type="FormChoiceListDesTimeValue">
+												<Presentation>
+													<v8:item>
+														<v8:lang>en</v8:lang>
+														<v8:content>Questionnaire refilled during of period</v8:content>
+													</v8:item>
+													<v8:item>
+														<v8:lang>ru</v8:lang>
+														<v8:content>Анкета дозаполняется в течение периода</v8:content>
+													</v8:item>
+												</Presentation>
+												<Value xsi:type="xs:string">Single</Value>
+											</xr:Value>
+										</xr:Item>
+										<xr:Item>
+											<xr:Presentation/>
+											<xr:CheckState>0</xr:CheckState>
+											<xr:Value xsi:type="FormChoiceListDesTimeValue">
+												<Presentation>
+													<v8:item>
+														<v8:lang>en</v8:lang>
+														<v8:content>Questionnaire filled each visit</v8:content>
+													</v8:item>
+													<v8:item>
+														<v8:lang>ru</v8:lang>
+														<v8:content>Анкета заполняется каждый визит заново</v8:content>
+													</v8:item>
+												</Presentation>
+												<Value xsi:type="xs:string">Regular</Value>
+											</xr:Value>
+										</xr:Item>
+									</ChoiceList>
+									<ContextMenu name="RegularityContextMenu" id="160"/>
+									<ExtendedTooltip name="RegularityExtendedTooltip" id="291"/>
+									<Events>
+										<Event name="OnChange">RegularityOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="FillPeriod" id="444">
+									<DataPath>Object.FillPeriod</DataPath>
+									<ContextMenu name="FillPeriodContextMenu" id="445"/>
+									<ExtendedTooltip name="FillPeriodExtendedTooltip" id="446"/>
+								</InputField>
+								<UsualGroup name="GroupIntervalSchedule" id="440">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group interval schedule</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group interval schedule</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="GroupIntervalScheduleExtendedTooltip" id="441"/>
+									<ChildItems>
+										<UsualGroup name="GroupDates" id="501">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group dates</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group dates</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="GroupDatesExtendedTooltip" id="502"/>
+											<ChildItems>
+												<InputField name="BeginDate" id="216">
+													<DataPath>Object.BeginDate</DataPath>
+													<ContextMenu name="BeginDateContextMenu" id="217"/>
+													<ExtendedTooltip name="BeginDateExtendedTooltip" id="293"/>
+												</InputField>
+												<InputField name="EndDate" id="219">
+													<DataPath>Object.EndDate</DataPath>
+													<ContextMenu name="EndDateContextMenu" id="220"/>
+													<ExtendedTooltip name="EndDateExtendedTooltip" id="294"/>
+													<Events>
+														<Event name="OnChange">EndDateOnChange</Event>
+													</Events>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+										<Button name="SetSchedule" id="227">
+											<Type>UsualButton</Type>
+											<Representation>PictureAndText</Representation>
+											<CommandName>Form.Command.SetSchedule</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.ScheduledJob</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="SetScheduleExtendedTooltip" id="297"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<InputField name="ScheduleStringPresentation" id="506">
+									<DataPath>ScheduleStringPresentation</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Schedule</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Расписание</v8:content>
+										</v8:item>
+									</Title>
+									<TitleLocation>Left</TitleLocation>
+									<Height>2</Height>
+									<VerticalStretch>false</VerticalStretch>
+									<MultiLine>true</MultiLine>
+									<ContextMenu name="ScheduleStringPresentationContextMenu" id="507"/>
+									<ExtendedTooltip name="ScheduleStringPresentationExtendedTooltip" id="508"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="SelectorsGroup" id="52">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Selectors</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Параметры отбора</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Selectors</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="SelectorsGroupExtendedTooltip" id="301"/>
+					<ChildItems>
+						<Table name="SelectorsTable" id="53">
+							<Representation>List</Representation>
+							<Height>8</Height>
+							<SelectionMode>SingleRow</SelectionMode>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Selectors</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="SelectorsTableContextMenu" id="54"/>
+							<AutoCommandBar name="SelectorsTableCommandBar" id="55"/>
+							<ExtendedTooltip name="SelectorsTableExtendedTooltip" id="302"/>
+							<SearchStringAddition name="SelectorsTableSearchString" id="303">
+								<Source>
+									<lf:elementId>53</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="SelectorsTableSearchStringContextMenu" id="304"/>
+								<ExtendedTooltip name="SelectorsTableSearchStringExtendedTooltip" id="305"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="SelectorsTableViewStatus" id="306">
+								<Source>
+									<lf:elementId>53</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="SelectorsTableViewStatusContextMenu" id="307"/>
+								<ExtendedTooltip name="SelectorsTableViewStatusExtendedTooltip" id="308"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="SelectorsTableSearchControl" id="309">
+								<Source>
+									<lf:elementId>53</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="SelectorsTableSearchControlContextMenu" id="310"/>
+								<ExtendedTooltip name="SelectorsTableSearchControlExtendedTooltip" id="311"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeAddRow">SelectorsTableBeforeAddRow</Event>
+								<Event name="BeforeEditEnd">SelectorsTableBeforeEditEnd</Event>
+								<Event name="OnStartEdit">SelectorsTableOnStartEdit</Event>
+								<Event name="AfterDeleteRow">SelectorsTableAfterDeleteRow</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="SelectorsTableSelector" id="68">
+									<DataPath>Selectors.Selector</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="SelectorsTableSelectorContextMenu" id="69"/>
+									<ExtendedTooltip name="SelectorsTableSelectorExtendedTooltip" id="312"/>
+								</InputField>
+								<InputField name="SelectorsTableAdditionalParameter" id="66">
+									<DataPath>Selectors.AdditionalParameter</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>1</Width>
+									<ContextMenu name="SelectorsTableAdditionalParameterContextMenu" id="67"/>
+									<ExtendedTooltip name="SelectorsTableAdditionalParameterExtendedTooltip" id="313"/>
+								</InputField>
+								<InputField name="SelectorsSelectorRepresent" id="64">
+									<DataPath>Selectors.SelectorRepresent</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>1</Width>
+									<DropListButton>false</DropListButton>
+									<ChoiceButton>false</ChoiceButton>
+									<ClearButton>false</ClearButton>
+									<SpinButton>false</SpinButton>
+									<CreateButton>false</CreateButton>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ChooseType>false</ChooseType>
+									<TextEdit>false</TextEdit>
+									<ChoiceListButton>true</ChoiceListButton>
+									<ContextMenu name="SelectorsSelectorRepresentContextMenu" id="65"/>
+									<ExtendedTooltip name="SelectorsSelectorRepresentExtendedTooltip" id="314"/>
+									<Events>
+										<Event name="StartChoice">SelectorsSelectorRepresentStartChoice</Event>
+										<Event name="StartListChoice">SelectorsSelectorRepresentStartListChoice</Event>
+									</Events>
+								</InputField>
+								<InputField name="SelectorsComparisonType" id="58">
+									<DataPath>Selectors.ComparisonType</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>1</Width>
+									<TextEdit>false</TextEdit>
+									<ContextMenu name="SelectorsComparisonTypeContextMenu" id="59"/>
+									<ExtendedTooltip name="SelectorsComparisonTypeExtendedTooltip" id="315"/>
+									<Events>
+										<Event name="Clearing">SelectorsComparisonTypeClearing</Event>
+										<Event name="ChoiceProcessing">SelectorsComparisonTypeChoiceProcessing</Event>
+									</Events>
+								</InputField>
+								<InputField name="SelectorsValue" id="60">
+									<DataPath>Selectors.Value</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>1</Width>
+									<ChoiceButton>true</ChoiceButton>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<TextEdit>false</TextEdit>
+									<ContextMenu name="SelectorsValueContextMenu" id="61"/>
+									<ExtendedTooltip name="SelectorsValueExtendedTooltip" id="316"/>
+									<Events>
+										<Event name="StartChoice">SelectorsValueStartChoice</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</Table>
+						<UsualGroup name="OutletsCalculate" id="77">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Outlets calculate</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Outlets calculate</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="OutletsCalculateExtendedTooltip" id="298"/>
+							<ChildItems>
+								<LabelDecoration name="Decoration1" id="391">
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="Decoration1ContextMenu" id="392"/>
+									<ExtendedTooltip name="Decoration1ExtendedTooltip" id="393"/>
+								</LabelDecoration>
+								<InputField name="SRsSelected" id="503">
+									<DataPath>Object.SRsSelected</DataPath>
+									<TextEdit>false</TextEdit>
+									<ContextMenu name="SRsSelectedContextMenu" id="504"/>
+									<ExtendedTooltip name="SRsSelectedExtendedTooltip" id="505"/>
+								</InputField>
+								<InputField name="OutletsSelected" id="73">
+									<DataPath>Object.OutletsSelected</DataPath>
+									<Format>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>NZ=0; NLZ=</v8:content>
+										</v8:item>
+									</Format>
+									<TextEdit>false</TextEdit>
+									<ContextMenu name="OutletsSelectedContextMenu" id="74"/>
+									<ExtendedTooltip name="OutletsSelectedExtendedTooltip" id="299"/>
+								</InputField>
+								<Button name="SelectOutlets" id="72">
+									<Type>UsualButton</Type>
+									<Representation>Picture</Representation>
+									<CommandName>Form.Command.SelectOutlets</CommandName>
+									<Parameter xsi:nil="true"/>
+									<Picture>
+										<xr:Ref>CommonPicture.Reload</xr:Ref>
+										<xr:LoadTransparent>false</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="SelectOutletsExtendedTooltip" id="300"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
 				<Page name="GroupQuestions" id="12">
 					<Title>
 						<v8:item>
@@ -491,248 +508,311 @@
 					<Group>Horizontal</Group>
 					<ExtendedTooltip name="GroupQuestionsExtendedTooltip" id="318"/>
 					<ChildItems>
-						<Table name="Questions" id="231">
-							<Representation>Tree</Representation>
-							<ChangeRowSet>false</ChangeRowSet>
-							<AutoInsertNewRow>true</AutoInsertNewRow>
-							<InitialTreeView>ExpandTopLevel</InitialTreeView>
-							<EnableStartDrag>true</EnableStartDrag>
-							<EnableDrag>true</EnableDrag>
-							<DataPath>Questions</DataPath>
-							<RowPictureDataPath>Questions.Index</RowPictureDataPath>
-							<RowsPicture>
-								<xr:Ref>CommonPicture.КоллекцияКартинокСопоставлениеОбъектов1</xr:Ref>
-								<xr:LoadTransparent>true</xr:LoadTransparent>
-							</RowsPicture>
-							<CommandSet>
-								<ExcludedCommand>HierarchicalList</ExcludedCommand>
-								<ExcludedCommand>Tree</ExcludedCommand>
-								<ExcludedCommand>Copy</ExcludedCommand>
-								<ExcludedCommand>List</ExcludedCommand>
-								<ExcludedCommand>SortListAsc</ExcludedCommand>
-								<ExcludedCommand>OutputList</ExcludedCommand>
-								<ExcludedCommand>SelectAll</ExcludedCommand>
-								<ExcludedCommand>SortListDesc</ExcludedCommand>
-								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-								<ExcludedCommand>Delete</ExcludedCommand>
-								<ExcludedCommand>EndEdit</ExcludedCommand>
-								<ExcludedCommand>Add</ExcludedCommand>
-								<ExcludedCommand>Change</ExcludedCommand>
-							</CommandSet>
-							<SearchStringLocation>None</SearchStringLocation>
-							<ViewStatusLocation>None</ViewStatusLocation>
-							<SearchControlLocation>None</SearchControlLocation>
-							<ContextMenu name="QuestionsContextMenu" id="232">
-								<ChildItems>
-									<Button name="QuestionsAddQuestionContext" id="246">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.AddQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsAddQuestionContextExtendedTooltip" id="319"/>
-									</Button>
-									<Button name="QuestionsDeleteQuestionContext" id="251">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DeleteQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsDeleteQuestionContextExtendedTooltip" id="320"/>
-									</Button>
-								</ChildItems>
-							</ContextMenu>
-							<AutoCommandBar name="QuestionsCommandBar" id="233">
-								<Autofill>false</Autofill>
-								<ChildItems>
-									<Button name="QuestionsAddQuestion" id="257">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.AddQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsAddQuestionExtendedTooltip" id="321"/>
-									</Button>
-									<Button name="QuestionsDeleteQuestion" id="258">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DeleteQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsDeleteQuestionExtendedTooltip" id="322"/>
-									</Button>
-									<Button name="QuestionsSelectQuestions" id="244">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.SelectQuestions</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsSelectQuestionsExtendedTooltip" id="323"/>
-									</Button>
-									<Button name="QuestionsSelectQuestionsFromGroup" id="245">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.SelectQuestionsFromGroup</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsSelectQuestionsFromGroupExtendedTooltip" id="324"/>
-									</Button>
-									<Button name="QuestionsMoveUp" id="247">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.Questions.StandardCommand.MoveUp</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsMoveUpExtendedTooltip" id="325"/>
-									</Button>
-									<Button name="QuestionsMoveDown" id="248">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.Questions.StandardCommand.MoveDown</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsMoveDownExtendedTooltip" id="326"/>
-									</Button>
-									<Button name="QuestionsDiscardСhanges" id="389">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DiscardСhanges</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="QuestionsDiscardСhangesExtendedTooltip" id="390"/>
-									</Button>
-								</ChildItems>
-							</AutoCommandBar>
-							<ExtendedTooltip name="QuestionsExtendedTooltip" id="327"/>
-							<SearchStringAddition name="QuestionsSearchString" id="328">
-								<Source>
-									<lf:elementId>231</lf:elementId>
-									<lf:additionId>0</lf:additionId>
-								</Source>
-								<ContextMenu name="QuestionsSearchStringContextMenu" id="329"/>
-								<ExtendedTooltip name="QuestionsSearchStringExtendedTooltip" id="330"/>
-							</SearchStringAddition>
-							<ViewStatusAddition name="QuestionsViewStatus" id="331">
-								<Source>
-									<lf:elementId>231</lf:elementId>
-									<lf:additionId>1</lf:additionId>
-								</Source>
-								<ContextMenu name="QuestionsViewStatusContextMenu" id="332"/>
-								<ExtendedTooltip name="QuestionsViewStatusExtendedTooltip" id="333"/>
-							</ViewStatusAddition>
-							<SearchControlAddition name="QuestionsSearchControl" id="334">
-								<Source>
-									<lf:elementId>231</lf:elementId>
-									<lf:additionId>2</lf:additionId>
-								</Source>
-								<ContextMenu name="QuestionsSearchControlContextMenu" id="335"/>
-								<ExtendedTooltip name="QuestionsSearchControlExtendedTooltip" id="336"/>
-							</SearchControlAddition>
-							<Events>
-								<Event name="DragCheck">QuestionsDragCheck</Event>
-								<Event name="Drag">QuestionsDrag</Event>
-								<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
-							</Events>
-							<ChildItems>
-								<InputField name="QuestionsQuestion" id="234">
-									<DataPath>Questions.Question</DataPath>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Question</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Вопрос</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<ChoiceButton>false</ChoiceButton>
-									<ClearButton>false</ClearButton>
-									<SpinButton>false</SpinButton>
-									<OpenButton>true</OpenButton>
-									<TextEdit>false</TextEdit>
-									<ChoiceListButton>false</ChoiceListButton>
-									<ContextMenu name="QuestionsQuestionContextMenu" id="235"/>
-									<ExtendedTooltip name="QuestionsQuestionExtendedTooltip" id="338"/>
-									<Events>
-										<Event name="StartChoice">QuestionsQuestionStartChoice</Event>
-									</Events>
-								</InputField>
-								<InputField name="QuestionsAnswerType" id="249">
-									<DataPath>Questions.AnswerType</DataPath>
-									<ReadOnly>true</ReadOnly>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Answer type</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Тип ответа</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<Font ref="sys:DefaultGUIFont" bold="false" italic="true" underline="false" strikeout="false" kind="WindowsFont"/>
-									<ContextMenu name="QuestionsAnswerTypeContextMenu" id="250"/>
-									<ExtendedTooltip name="QuestionsAnswerTypeExtendedTooltip" id="342"/>
-								</InputField>
-								<CheckBoxField name="QuestionsObligatoriness" id="238">
-									<DataPath>Questions.Obligatoriness</DataPath>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Obligatoriness</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Обязательный</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="QuestionsObligatorinessContextMenu" id="239"/>
-									<ExtendedTooltip name="QuestionsObligatorinessExtendedTooltip" id="340"/>
-									<Events>
-										<Event name="OnChange">QuestionsObligatorinessOnChange</Event>
-									</Events>
-								</CheckBoxField>
-								<InputField name="QuestionsStatus" id="240">
-									<DataPath>Questions.Status</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="QuestionsStatusContextMenu" id="241"/>
-									<ExtendedTooltip name="QuestionsStatusExtendedTooltip" id="343"/>
-								</InputField>
-								<InputField name="QuestionsStatusDate" id="242">
-									<DataPath>Questions.StatusDate</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="QuestionsStatusDateContextMenu" id="243"/>
-									<ExtendedTooltip name="QuestionsStatusDateExtendedTooltip" id="344"/>
-								</InputField>
-								<InputField name="QuestionsIsOldQuestion" id="252">
-									<DataPath>Questions.IsOldQuestion</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="QuestionsIsOldQuestionContextMenu" id="253"/>
-									<ExtendedTooltip name="QuestionsIsOldQuestionExtendedTooltip" id="345"/>
-								</InputField>
-							</ChildItems>
-						</Table>
-						<LabelDecoration name="Decoration2" id="449">
-							<Width>20</Width>
-							<VerticalStretch>true</VerticalStretch>
-							<Title formatted="true">
+						<UsualGroup name="GroupQuestionsCommandAndTree" id="482">
+							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>&lt;font Verdana&gt;The table rows are deleted after the overwriting of the questionnaire. Deletes the line marked in &lt;/&gt;&lt;font Verdana&gt;&lt;colorstyle -16&gt;red text&lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;. To cancel changes to the table use the button "Discard changes".&lt;/&gt;</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>&lt;font Verdana&gt;&lt;fontsize 8&gt;Строки таблицы удаляются после перезаписи анкеты. Удаляемые строки отмечаются &lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;&lt;colorstyle -16&gt;красным цветом текста&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;. Для отмены изменений в таблице воспользуйтесь кнопкой "Отменить изменения".&lt;/&gt;&lt;/&gt;</v8:content>
+									<v8:content>Group questions command and tree</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Note</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Внимание</v8:content>
+									<v8:content>Group questions command and tree</v8:content>
 								</v8:item>
 							</ToolTip>
-							<ToolTipRepresentation>ShowTop</ToolTipRepresentation>
-							<VerticalAlign>Top</VerticalAlign>
-							<Border width="1">
-								<v8ui:style xsi:type="v8ui:ControlBorderType">Indented</v8ui:style>
-							</Border>
-							<ContextMenu name="Decoration2ContextMenu" id="450"/>
-							<ExtendedTooltip name="Decoration2ExtendedTooltip" id="451"/>
-						</LabelDecoration>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupQuestionsCommandAndTreeExtendedTooltip" id="483"/>
+							<ChildItems>
+								<UsualGroup name="GroupQuestionsCommand" id="476">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group questions command</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group questions command</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="GroupQuestionsCommandExtendedTooltip" id="477"/>
+									<ChildItems>
+										<CommandBar name="GroupLeftQuestionsCommands" id="478">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group left questions commands</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group left questions commands</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ExtendedTooltip name="GroupLeftQuestionsCommandsExtendedTooltip" id="479"/>
+											<ChildItems>
+												<Button name="QuestionsAddParentQuestion" id="460">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.AddParentQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsAddParentQuestionExtendedTooltip" id="461"/>
+												</Button>
+												<Button name="QuestionsAddChildQuestion" id="257">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.AddChildQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsAddChildQuestionExtendedTooltip" id="321"/>
+												</Button>
+												<Button name="QuestionsDeleteQuestion" id="258">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.DeleteQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsDeleteQuestionExtendedTooltip" id="322"/>
+												</Button>
+												<Button name="QuestionsMoveUp" id="247">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.Questions.StandardCommand.MoveUp</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsMoveUpExtendedTooltip" id="325"/>
+												</Button>
+												<Button name="QuestionsMoveDown" id="248">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.Questions.StandardCommand.MoveDown</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsMoveDownExtendedTooltip" id="326"/>
+												</Button>
+												<Button name="QuestionsDiscardСhanges" id="389">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.DiscardСhanges</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsDiscardСhangesExtendedTooltip" id="390"/>
+												</Button>
+											</ChildItems>
+										</CommandBar>
+										<CommandBar name="GroupRightQuestionCommand" id="480">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group right question command</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group right question command</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Width>7</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<HorizontalLocation>Right</HorizontalLocation>
+											<ExtendedTooltip name="GroupRightQuestionCommandExtendedTooltip" id="481"/>
+											<ChildItems>
+												<Button name="QuestionsSetObligatoriness" id="472">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.SetObligatoriness</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsSetObligatorinessExtendedTooltip" id="473"/>
+												</Button>
+												<Button name="QuestionsUnsetObligatoriness" id="474">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.UnsetObligatoriness</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="QuestionsUnsetObligatorinessExtendedTooltip" id="475"/>
+												</Button>
+											</ChildItems>
+										</CommandBar>
+									</ChildItems>
+								</UsualGroup>
+								<Table name="Questions" id="231">
+									<Representation>Tree</Representation>
+									<ChangeRowSet>false</ChangeRowSet>
+									<AutoInsertNewRow>true</AutoInsertNewRow>
+									<InitialTreeView>ExpandTopLevel</InitialTreeView>
+									<EnableStartDrag>true</EnableStartDrag>
+									<EnableDrag>true</EnableDrag>
+									<DataPath>Questions</DataPath>
+									<RowPictureDataPath>Questions.Index</RowPictureDataPath>
+									<RowsPicture>
+										<xr:Ref>CommonPicture.CatalogHierarchy</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</RowsPicture>
+									<CommandSet>
+										<ExcludedCommand>HierarchicalList</ExcludedCommand>
+										<ExcludedCommand>Tree</ExcludedCommand>
+										<ExcludedCommand>Copy</ExcludedCommand>
+										<ExcludedCommand>List</ExcludedCommand>
+										<ExcludedCommand>SortListAsc</ExcludedCommand>
+										<ExcludedCommand>OutputList</ExcludedCommand>
+										<ExcludedCommand>SelectAll</ExcludedCommand>
+										<ExcludedCommand>SortListDesc</ExcludedCommand>
+										<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+										<ExcludedCommand>Delete</ExcludedCommand>
+										<ExcludedCommand>EndEdit</ExcludedCommand>
+										<ExcludedCommand>Add</ExcludedCommand>
+										<ExcludedCommand>Change</ExcludedCommand>
+									</CommandSet>
+									<SearchStringLocation>None</SearchStringLocation>
+									<ViewStatusLocation>None</ViewStatusLocation>
+									<SearchControlLocation>None</SearchControlLocation>
+									<ContextMenu name="QuestionsContextMenu" id="232">
+										<ChildItems>
+											<Button name="QuestionsAddParentQuestionContext" id="466">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.AddParentQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="QuestionsAddParentQuestionContextExtendedTooltip" id="467"/>
+											</Button>
+											<Button name="QuestionsAddChildQuestionContext" id="246">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.AddChildQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="QuestionsAddChildQuestionContextExtendedTooltip" id="319"/>
+											</Button>
+											<Button name="QuestionsClearParentOnQuestionContext" id="468">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.ClearParentOnQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="QuestionsClearParentOnQuestionContextExtendedTooltip" id="469"/>
+											</Button>
+											<Button name="QuestionsDeleteQuestionContext" id="251">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.DeleteQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="QuestionsDeleteQuestionContextExtendedTooltip" id="320"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
+									<AutoCommandBar name="QuestionsCommandBar" id="233">
+										<Autofill>false</Autofill>
+									</AutoCommandBar>
+									<ExtendedTooltip name="QuestionsExtendedTooltip" id="327"/>
+									<SearchStringAddition name="QuestionsSearchString" id="328">
+										<Source>
+											<lf:elementId>231</lf:elementId>
+											<lf:additionId>0</lf:additionId>
+										</Source>
+										<ContextMenu name="QuestionsSearchStringContextMenu" id="329"/>
+										<ExtendedTooltip name="QuestionsSearchStringExtendedTooltip" id="330"/>
+									</SearchStringAddition>
+									<ViewStatusAddition name="QuestionsViewStatus" id="331">
+										<Source>
+											<lf:elementId>231</lf:elementId>
+											<lf:additionId>1</lf:additionId>
+										</Source>
+										<ContextMenu name="QuestionsViewStatusContextMenu" id="332"/>
+										<ExtendedTooltip name="QuestionsViewStatusExtendedTooltip" id="333"/>
+									</ViewStatusAddition>
+									<SearchControlAddition name="QuestionsSearchControl" id="334">
+										<Source>
+											<lf:elementId>231</lf:elementId>
+											<lf:additionId>2</lf:additionId>
+										</Source>
+										<ContextMenu name="QuestionsSearchControlContextMenu" id="335"/>
+										<ExtendedTooltip name="QuestionsSearchControlExtendedTooltip" id="336"/>
+									</SearchControlAddition>
+									<Events>
+										<Event name="DragCheck">QuestionsDragCheck</Event>
+										<Event name="OnActivateRow">QuestionsOnActivateRow</Event>
+										<Event name="Drag">QuestionsDrag</Event>
+										<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
+									</Events>
+									<ChildItems>
+										<InputField name="QuestionsQuestion" id="234">
+											<DataPath>Questions.Question</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Question</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Вопрос</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<DropListButton>false</DropListButton>
+											<ChoiceButton>false</ChoiceButton>
+											<ClearButton>false</ClearButton>
+											<SpinButton>false</SpinButton>
+											<OpenButton>true</OpenButton>
+											<TextEdit>false</TextEdit>
+											<ChoiceListButton>false</ChoiceListButton>
+											<ContextMenu name="QuestionsQuestionContextMenu" id="235"/>
+											<ExtendedTooltip name="QuestionsQuestionExtendedTooltip" id="338"/>
+											<Events>
+												<Event name="StartChoice">QuestionsQuestionStartChoice</Event>
+											</Events>
+										</InputField>
+										<InputField name="QuestionsAnswerType" id="249">
+											<DataPath>Questions.AnswerType</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Answer type</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Тип ответа</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<Font ref="sys:DefaultGUIFont" bold="false" italic="true" underline="false" strikeout="false" kind="WindowsFont"/>
+											<ContextMenu name="QuestionsAnswerTypeContextMenu" id="250"/>
+											<ExtendedTooltip name="QuestionsAnswerTypeExtendedTooltip" id="342"/>
+										</InputField>
+										<CheckBoxField name="QuestionsObligatoriness" id="238">
+											<DataPath>Questions.Obligatoriness</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Obligatoriness</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Обязательный</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="QuestionsObligatorinessContextMenu" id="239"/>
+											<ExtendedTooltip name="QuestionsObligatorinessExtendedTooltip" id="340"/>
+											<Events>
+												<Event name="OnChange">QuestionsObligatorinessOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="QuestionsStatus" id="240">
+											<DataPath>Questions.Status</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="QuestionsStatusContextMenu" id="241"/>
+											<ExtendedTooltip name="QuestionsStatusExtendedTooltip" id="343"/>
+										</InputField>
+										<InputField name="QuestionsStatusDate" id="242">
+											<DataPath>Questions.StatusDate</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="QuestionsStatusDateContextMenu" id="243"/>
+											<ExtendedTooltip name="QuestionsStatusDateExtendedTooltip" id="344"/>
+										</InputField>
+										<InputField name="QuestionsIsOldQuestion" id="252">
+											<DataPath>Questions.IsOldQuestion</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="QuestionsIsOldQuestionContextMenu" id="253"/>
+											<ExtendedTooltip name="QuestionsIsOldQuestionExtendedTooltip" id="345"/>
+										</InputField>
+									</ChildItems>
+								</Table>
+							</ChildItems>
+						</UsualGroup>
 					</ChildItems>
 				</Page>
 				<Page name="GroupSKUs" id="20">
@@ -772,23 +852,6 @@
 									<ChooseType>false</ChooseType>
 									<TextEdit>false</TextEdit>
 									<ChoiceList>
-										<xr:Item>
-											<xr:Presentation/>
-											<xr:CheckState>0</xr:CheckState>
-											<xr:Value xsi:type="FormChoiceListDesTimeValue">
-												<Presentation>
-													<v8:item>
-														<v8:lang>en</v8:lang>
-														<v8:content>SKU</v8:content>
-													</v8:item>
-													<v8:item>
-														<v8:lang>ru</v8:lang>
-														<v8:content>Номенклатура</v8:content>
-													</v8:item>
-												</Presentation>
-												<Value xsi:type="xs:string">SKU</Value>
-											</xr:Value>
-										</xr:Item>
 										<xr:Item>
 											<xr:Presentation/>
 											<xr:CheckState>0</xr:CheckState>
@@ -928,37 +991,6 @@
 								</Table>
 							</ChildItems>
 						</UsualGroup>
-						<LabelDecoration name="Decoration4" id="455">
-							<Width>20</Width>
-							<VerticalStretch>true</VerticalStretch>
-							<Title formatted="true">
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>&lt;font Verdana&gt;Rows marked with &lt;/&gt;&lt;font Verdana&gt;&lt;colorstyle -16&gt;red text &lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;does not conform for selectors. &lt;/&gt;&lt;font Verdana&gt;To check, use the button "&lt;/&gt;&lt;font Verdana&gt;Check SKUs/SKU groups".&lt;/&gt;</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>&lt;font Verdana&gt;Строки отмеченные &lt;/&gt;&lt;font Verdana&gt;&lt;colorstyle -16&gt;красным цветом текста &lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;не соответствуют установленным параметрам отбора. &lt;/&gt;&lt;font Verdana&gt;Для проверки воспользуйтесь кнопкой "&lt;/&gt;&lt;font Verdana&gt;Проверить номенклатуру/группы номенклатуры".&lt;/&gt;</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Note</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Внимание</v8:content>
-								</v8:item>
-							</ToolTip>
-							<ToolTipRepresentation>ShowTop</ToolTipRepresentation>
-							<VerticalAlign>Top</VerticalAlign>
-							<Border width="1">
-								<v8ui:style xsi:type="v8ui:ControlBorderType">Indented</v8ui:style>
-							</Border>
-							<ContextMenu name="Decoration4ContextMenu" id="456"/>
-							<ExtendedTooltip name="Decoration4ExtendedTooltip" id="457"/>
-						</LabelDecoration>
 					</ChildItems>
 				</Page>
 				<Page name="GroupSKUQuestions" id="37">
@@ -981,247 +1013,310 @@
 					<Group>Horizontal</Group>
 					<ExtendedTooltip name="GroupSKUQuestionsExtendedTooltip" id="359"/>
 					<ChildItems>
-						<Table name="SKUQuestions" id="259">
-							<Representation>Tree</Representation>
-							<ChangeRowSet>false</ChangeRowSet>
-							<AutoInsertNewRow>true</AutoInsertNewRow>
-							<EnableStartDrag>true</EnableStartDrag>
-							<EnableDrag>true</EnableDrag>
-							<DataPath>SKUQuestions</DataPath>
-							<RowPictureDataPath>SKUQuestions.Index</RowPictureDataPath>
-							<RowsPicture>
-								<xr:Ref>CommonPicture.КоллекцияКартинокСопоставлениеОбъектов1</xr:Ref>
-								<xr:LoadTransparent>true</xr:LoadTransparent>
-							</RowsPicture>
-							<CommandSet>
-								<ExcludedCommand>HierarchicalList</ExcludedCommand>
-								<ExcludedCommand>Tree</ExcludedCommand>
-								<ExcludedCommand>Copy</ExcludedCommand>
-								<ExcludedCommand>List</ExcludedCommand>
-								<ExcludedCommand>SortListAsc</ExcludedCommand>
-								<ExcludedCommand>OutputList</ExcludedCommand>
-								<ExcludedCommand>SelectAll</ExcludedCommand>
-								<ExcludedCommand>SortListDesc</ExcludedCommand>
-								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-								<ExcludedCommand>Delete</ExcludedCommand>
-								<ExcludedCommand>EndEdit</ExcludedCommand>
-								<ExcludedCommand>Add</ExcludedCommand>
-								<ExcludedCommand>Change</ExcludedCommand>
-							</CommandSet>
-							<SearchStringLocation>None</SearchStringLocation>
-							<ViewStatusLocation>None</ViewStatusLocation>
-							<SearchControlLocation>None</SearchControlLocation>
-							<ContextMenu name="SKUQuestionsContextMenu" id="260">
-								<ChildItems>
-									<Button name="SKUQuestionsAddQuestionContext" id="282">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.AddQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsAddQuestionContextExtendedTooltip" id="360"/>
-									</Button>
-									<Button name="SKUQuestionsDeleteQuestionContext" id="283">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DeleteQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsDeleteQuestionContextExtendedTooltip" id="361"/>
-									</Button>
-								</ChildItems>
-							</ContextMenu>
-							<AutoCommandBar name="SKUQuestionsCommandBar" id="261">
-								<Autofill>false</Autofill>
-								<ChildItems>
-									<Button name="SKUQuestionsAddQuestion" id="276">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.AddQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsAddQuestionExtendedTooltip" id="362"/>
-									</Button>
-									<Button name="SKUQuestionsDeleteQuestion" id="277">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DeleteQuestion</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsDeleteQuestionExtendedTooltip" id="363"/>
-									</Button>
-									<Button name="SKUQuestionsSelectQuestions" id="278">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.SelectQuestions</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsSelectQuestionsExtendedTooltip" id="364"/>
-									</Button>
-									<Button name="SKUQuestionsSelectQuestionsFromGroup" id="279">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.SelectQuestionsFromGroup</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsSelectQuestionsFromGroupExtendedTooltip" id="365"/>
-									</Button>
-									<Button name="SKUQuestionsMoveUp" id="280">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.SKUQuestions.StandardCommand.MoveUp</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsMoveUpExtendedTooltip" id="366"/>
-									</Button>
-									<Button name="SKUQuestionsMoveDown" id="281">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.SKUQuestions.StandardCommand.MoveDown</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsMoveDownExtendedTooltip" id="367"/>
-									</Button>
-									<Button name="SKUQuestionsDiscardСhanges" id="387">
-										<Type>CommandBarButton</Type>
-										<CommandName>Form.Command.DiscardСhanges</CommandName>
-										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SKUQuestionsDiscardСhangesExtendedTooltip" id="388"/>
-									</Button>
-								</ChildItems>
-							</AutoCommandBar>
-							<ExtendedTooltip name="SKUQuestionsExtendedTooltip" id="368"/>
-							<SearchStringAddition name="SKUQuestionsSearchString" id="369">
-								<Source>
-									<lf:elementId>259</lf:elementId>
-									<lf:additionId>0</lf:additionId>
-								</Source>
-								<ContextMenu name="SKUQuestionsSearchStringContextMenu" id="370"/>
-								<ExtendedTooltip name="SKUQuestionsSearchStringExtendedTooltip" id="371"/>
-							</SearchStringAddition>
-							<ViewStatusAddition name="SKUQuestionsViewStatus" id="372">
-								<Source>
-									<lf:elementId>259</lf:elementId>
-									<lf:additionId>1</lf:additionId>
-								</Source>
-								<ContextMenu name="SKUQuestionsViewStatusContextMenu" id="373"/>
-								<ExtendedTooltip name="SKUQuestionsViewStatusExtendedTooltip" id="374"/>
-							</ViewStatusAddition>
-							<SearchControlAddition name="SKUQuestionsSearchControl" id="375">
-								<Source>
-									<lf:elementId>259</lf:elementId>
-									<lf:additionId>2</lf:additionId>
-								</Source>
-								<ContextMenu name="SKUQuestionsSearchControlContextMenu" id="376"/>
-								<ExtendedTooltip name="SKUQuestionsSearchControlExtendedTooltip" id="377"/>
-							</SearchControlAddition>
-							<Events>
-								<Event name="DragCheck">QuestionsDragCheck</Event>
-								<Event name="Drag">QuestionsDrag</Event>
-								<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
-							</Events>
-							<ChildItems>
-								<InputField name="SKUQuestionsQuestion" id="262">
-									<DataPath>SKUQuestions.Question</DataPath>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Question</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Вопрос</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<ChoiceButton>false</ChoiceButton>
-									<ClearButton>false</ClearButton>
-									<SpinButton>false</SpinButton>
-									<OpenButton>true</OpenButton>
-									<ChoiceListButton>false</ChoiceListButton>
-									<ContextMenu name="SKUQuestionsQuestionContextMenu" id="263"/>
-									<ExtendedTooltip name="SKUQuestionsQuestionExtendedTooltip" id="379"/>
-									<Events>
-										<Event name="StartChoice">SKUQuestionsQuestionStartChoice</Event>
-									</Events>
-								</InputField>
-								<InputField name="SKUQuestionsAnswerType" id="272">
-									<DataPath>SKUQuestions.AnswerType</DataPath>
-									<ReadOnly>true</ReadOnly>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Answer type</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Тип ответа</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<Font ref="sys:DefaultGUIFont" bold="false" italic="true" underline="false" strikeout="false" kind="WindowsFont"/>
-									<ContextMenu name="SKUQuestionsAnswerTypeContextMenu" id="273"/>
-									<ExtendedTooltip name="SKUQuestionsAnswerTypeExtendedTooltip" id="383"/>
-								</InputField>
-								<CheckBoxField name="SKUQuestionsObligatoriness" id="264">
-									<DataPath>SKUQuestions.Obligatoriness</DataPath>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Obligatoriness</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Обязательный</v8:content>
-										</v8:item>
-									</Title>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="SKUQuestionsObligatorinessContextMenu" id="265"/>
-									<ExtendedTooltip name="SKUQuestionsObligatorinessExtendedTooltip" id="381"/>
-									<Events>
-										<Event name="OnChange">QuestionsObligatorinessOnChange</Event>
-									</Events>
-								</CheckBoxField>
-								<InputField name="SKUQuestionsStatus" id="266">
-									<DataPath>SKUQuestions.Status</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="SKUQuestionsStatusContextMenu" id="267"/>
-									<ExtendedTooltip name="SKUQuestionsStatusExtendedTooltip" id="384"/>
-								</InputField>
-								<InputField name="SKUQuestionsStatusDate" id="268">
-									<DataPath>SKUQuestions.StatusDate</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="SKUQuestionsStatusDateContextMenu" id="269"/>
-									<ExtendedTooltip name="SKUQuestionsStatusDateExtendedTooltip" id="385"/>
-								</InputField>
-								<CheckBoxField name="SKUQuestionsIsOldQuestion" id="274">
-									<DataPath>SKUQuestions.IsOldQuestion</DataPath>
-									<Visible>false</Visible>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="SKUQuestionsIsOldQuestionContextMenu" id="275"/>
-									<ExtendedTooltip name="SKUQuestionsIsOldQuestionExtendedTooltip" id="386"/>
-								</CheckBoxField>
-							</ChildItems>
-						</Table>
-						<LabelDecoration name="Decoration3" id="452">
-							<Width>20</Width>
-							<VerticalStretch>true</VerticalStretch>
-							<Title formatted="true">
+						<UsualGroup name="GroupSKUQuestionsCommandAndTree" id="484">
+							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>&lt;font Verdana&gt;&lt;fontsize 8&gt;The table rows are deleted after the overwriting of the questionnaire. Deletes the line marked in &lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;&lt;colorstyle -16&gt;red text&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;. To cancel changes to the table use the button "Discard changes".&lt;/&gt;&lt;/&gt;</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>&lt;font Verdana&gt;&lt;fontsize 8&gt;Строки таблицы удаляются после перезаписи анкеты. Удаляемые строки отмечаются &lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;&lt;colorstyle -16&gt;красным цветом текста&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Verdana&gt;&lt;fontsize 8&gt;. Для отмены изменений в таблице воспользуйтесь кнопкой "Отменить изменения".&lt;/&gt;&lt;/&gt;</v8:content>
+									<v8:content>Group SKUQuestions command and tree</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Note</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Внимание</v8:content>
+									<v8:content>Group SKUQuestions command and tree</v8:content>
 								</v8:item>
 							</ToolTip>
-							<ToolTipRepresentation>ShowTop</ToolTipRepresentation>
-							<VerticalAlign>Top</VerticalAlign>
-							<Border width="1">
-								<v8ui:style xsi:type="v8ui:ControlBorderType">Indented</v8ui:style>
-							</Border>
-							<ContextMenu name="Decoration3ContextMenu" id="453"/>
-							<ExtendedTooltip name="Decoration3ExtendedTooltip" id="454"/>
-						</LabelDecoration>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupSKUQuestionsCommandAndTreeExtendedTooltip" id="485"/>
+							<ChildItems>
+								<UsualGroup name="GroupSKUQuestionsCommand" id="486">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group SKUQuestions command</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group SKUQuestions command</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="GroupSKUQuestionsCommandExtendedTooltip" id="487"/>
+									<ChildItems>
+										<CommandBar name="GroupLeftSKUQuestionsCommands" id="488">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group left SKUQuestions commands</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group left SKUQuestions commands</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ExtendedTooltip name="GroupLeftSKUQuestionsCommandsExtendedTooltip" id="489"/>
+											<ChildItems>
+												<Button name="SKUQuestionsAddParentQuestion" id="462">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.AddParentQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsAddParentQuestionExtendedTooltip" id="463"/>
+												</Button>
+												<Button name="SKUQuestionsAddChildQuestion" id="276">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.AddChildQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsAddChildQuestionExtendedTooltip" id="362"/>
+												</Button>
+												<Button name="SKUQuestionsDeleteQuestion" id="277">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.DeleteQuestion</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsDeleteQuestionExtendedTooltip" id="363"/>
+												</Button>
+												<Button name="SKUQuestionsMoveUp" id="280">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.SKUQuestions.StandardCommand.MoveUp</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsMoveUpExtendedTooltip" id="366"/>
+												</Button>
+												<Button name="SKUQuestionsMoveDown" id="281">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.SKUQuestions.StandardCommand.MoveDown</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsMoveDownExtendedTooltip" id="367"/>
+												</Button>
+												<Button name="SKUQuestionsDiscardСhanges" id="387">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.DiscardСhanges</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SKUQuestionsDiscardСhangesExtendedTooltip" id="388"/>
+												</Button>
+											</ChildItems>
+										</CommandBar>
+										<CommandBar name="GroupRightSKUQuestionsCommand" id="490">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group right SKUQuestions command</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group right SKUQuestions command</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Width>7</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<HorizontalLocation>Right</HorizontalLocation>
+											<ExtendedTooltip name="GroupRightSKUQuestionsCommandExtendedTooltip" id="491"/>
+											<ChildItems>
+												<Button name="SetObligatoriness" id="492">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.SetObligatoriness</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="SetObligatorinessExtendedTooltip" id="493"/>
+												</Button>
+												<Button name="UnsetObligatoriness" id="494">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.UnsetObligatoriness</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="UnsetObligatorinessExtendedTooltip" id="495"/>
+												</Button>
+											</ChildItems>
+										</CommandBar>
+									</ChildItems>
+								</UsualGroup>
+								<Table name="SKUQuestions" id="259">
+									<Representation>Tree</Representation>
+									<ChangeRowSet>false</ChangeRowSet>
+									<AutoInsertNewRow>true</AutoInsertNewRow>
+									<EnableStartDrag>true</EnableStartDrag>
+									<EnableDrag>true</EnableDrag>
+									<DataPath>SKUQuestions</DataPath>
+									<RowPictureDataPath>SKUQuestions.Index</RowPictureDataPath>
+									<RowsPicture>
+										<xr:Ref>CommonPicture.CatalogHierarchy</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</RowsPicture>
+									<CommandSet>
+										<ExcludedCommand>HierarchicalList</ExcludedCommand>
+										<ExcludedCommand>Tree</ExcludedCommand>
+										<ExcludedCommand>Copy</ExcludedCommand>
+										<ExcludedCommand>List</ExcludedCommand>
+										<ExcludedCommand>SortListAsc</ExcludedCommand>
+										<ExcludedCommand>OutputList</ExcludedCommand>
+										<ExcludedCommand>SelectAll</ExcludedCommand>
+										<ExcludedCommand>SortListDesc</ExcludedCommand>
+										<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+										<ExcludedCommand>Delete</ExcludedCommand>
+										<ExcludedCommand>EndEdit</ExcludedCommand>
+										<ExcludedCommand>Add</ExcludedCommand>
+										<ExcludedCommand>Change</ExcludedCommand>
+									</CommandSet>
+									<SearchStringLocation>None</SearchStringLocation>
+									<ViewStatusLocation>None</ViewStatusLocation>
+									<SearchControlLocation>None</SearchControlLocation>
+									<ContextMenu name="SKUQuestionsContextMenu" id="260">
+										<ChildItems>
+											<Button name="SKUQuestionsAddParentQuestionContext" id="464">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.AddParentQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="SKUQuestionsAddParentQuestionContextExtendedTooltip" id="465"/>
+											</Button>
+											<Button name="SKUQuestionsAddChildQuestionContext" id="282">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.AddChildQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="SKUQuestionsAddChildQuestionContextExtendedTooltip" id="360"/>
+											</Button>
+											<Button name="SKUQuestionsClearParentOnQuestionContext" id="470">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.ClearParentOnQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="SKUQuestionsClearParentOnQuestionContextExtendedTooltip" id="471"/>
+											</Button>
+											<Button name="SKUQuestionsDeleteQuestionContext" id="283">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.DeleteQuestion</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="SKUQuestionsDeleteQuestionContextExtendedTooltip" id="361"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
+									<AutoCommandBar name="SKUQuestionsCommandBar" id="261">
+										<Autofill>false</Autofill>
+									</AutoCommandBar>
+									<ExtendedTooltip name="SKUQuestionsExtendedTooltip" id="368"/>
+									<SearchStringAddition name="SKUQuestionsSearchString" id="369">
+										<Source>
+											<lf:elementId>259</lf:elementId>
+											<lf:additionId>0</lf:additionId>
+										</Source>
+										<ContextMenu name="SKUQuestionsSearchStringContextMenu" id="370"/>
+										<ExtendedTooltip name="SKUQuestionsSearchStringExtendedTooltip" id="371"/>
+									</SearchStringAddition>
+									<ViewStatusAddition name="SKUQuestionsViewStatus" id="372">
+										<Source>
+											<lf:elementId>259</lf:elementId>
+											<lf:additionId>1</lf:additionId>
+										</Source>
+										<ContextMenu name="SKUQuestionsViewStatusContextMenu" id="373"/>
+										<ExtendedTooltip name="SKUQuestionsViewStatusExtendedTooltip" id="374"/>
+									</ViewStatusAddition>
+									<SearchControlAddition name="SKUQuestionsSearchControl" id="375">
+										<Source>
+											<lf:elementId>259</lf:elementId>
+											<lf:additionId>2</lf:additionId>
+										</Source>
+										<ContextMenu name="SKUQuestionsSearchControlContextMenu" id="376"/>
+										<ExtendedTooltip name="SKUQuestionsSearchControlExtendedTooltip" id="377"/>
+									</SearchControlAddition>
+									<Events>
+										<Event name="DragCheck">QuestionsDragCheck</Event>
+										<Event name="OnActivateRow">QuestionsOnActivateRow</Event>
+										<Event name="Drag">QuestionsDrag</Event>
+										<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
+									</Events>
+									<ChildItems>
+										<InputField name="SKUQuestionsQuestion" id="262">
+											<DataPath>SKUQuestions.Question</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Question</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Вопрос</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<DropListButton>false</DropListButton>
+											<ChoiceButton>false</ChoiceButton>
+											<ClearButton>false</ClearButton>
+											<SpinButton>false</SpinButton>
+											<OpenButton>true</OpenButton>
+											<ChoiceListButton>false</ChoiceListButton>
+											<ContextMenu name="SKUQuestionsQuestionContextMenu" id="263"/>
+											<ExtendedTooltip name="SKUQuestionsQuestionExtendedTooltip" id="379"/>
+											<Events>
+												<Event name="StartChoice">SKUQuestionsQuestionStartChoice</Event>
+											</Events>
+										</InputField>
+										<InputField name="SKUQuestionsAnswerType" id="272">
+											<DataPath>SKUQuestions.AnswerType</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Answer type</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Тип ответа</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<Font ref="sys:DefaultGUIFont" bold="false" italic="true" underline="false" strikeout="false" kind="WindowsFont"/>
+											<ContextMenu name="SKUQuestionsAnswerTypeContextMenu" id="273"/>
+											<ExtendedTooltip name="SKUQuestionsAnswerTypeExtendedTooltip" id="383"/>
+										</InputField>
+										<CheckBoxField name="SKUQuestionsObligatoriness" id="264">
+											<DataPath>SKUQuestions.Obligatoriness</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Obligatoriness</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Обязательный</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="SKUQuestionsObligatorinessContextMenu" id="265"/>
+											<ExtendedTooltip name="SKUQuestionsObligatorinessExtendedTooltip" id="381"/>
+											<Events>
+												<Event name="OnChange">QuestionsObligatorinessOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="SKUQuestionsStatus" id="266">
+											<DataPath>SKUQuestions.Status</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="SKUQuestionsStatusContextMenu" id="267"/>
+											<ExtendedTooltip name="SKUQuestionsStatusExtendedTooltip" id="384"/>
+										</InputField>
+										<InputField name="SKUQuestionsStatusDate" id="268">
+											<DataPath>SKUQuestions.StatusDate</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="SKUQuestionsStatusDateContextMenu" id="269"/>
+											<ExtendedTooltip name="SKUQuestionsStatusDateExtendedTooltip" id="385"/>
+										</InputField>
+										<CheckBoxField name="SKUQuestionsIsOldQuestion" id="274">
+											<DataPath>SKUQuestions.IsOldQuestion</DataPath>
+											<Visible>false</Visible>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="SKUQuestionsIsOldQuestionContextMenu" id="275"/>
+											<ExtendedTooltip name="SKUQuestionsIsOldQuestionExtendedTooltip" id="386"/>
+										</CheckBoxField>
+									</ChildItems>
+								</Table>
+							</ChildItems>
+						</UsualGroup>
 					</ChildItems>
 				</Page>
 			</ChildItems>
@@ -1432,12 +1527,7 @@
 						</v8:item>
 					</Title>
 					<Type>
-						<v8:Type>xs:string</v8:Type>
 						<v8:Type>cfg:CatalogRef.Question</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
 					</Type>
 				</Column>
 				<Column name="Obligatoriness" id="3">
@@ -1559,12 +1649,7 @@
 						</v8:item>
 					</Title>
 					<Type>
-						<v8:Type>xs:string</v8:Type>
 						<v8:Type>cfg:CatalogRef.Question</v8:Type>
-						<v8:StringQualifiers>
-							<v8:Length>0</v8:Length>
-							<v8:AllowedLength>Variable</v8:AllowedLength>
-						</v8:StringQualifiers>
 					</Type>
 				</Column>
 				<Column name="Obligatoriness" id="3">
@@ -1677,7 +1762,6 @@
 					<v8:AllowedLength>Variable</v8:AllowedLength>
 				</v8:StringQualifiers>
 			</Type>
-			<FillCheck>ShowError</FillCheck>
 		</Attribute>
 		<Attribute name="SKUsValueTable" id="9">
 			<Title>
@@ -1724,6 +1808,32 @@
 					</Type>
 				</Column>
 			</Columns>
+		</Attribute>
+		<Attribute name="IsChildQuestionAdding" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Is child question adding</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ScheduleStringPresentation" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Schedule string presentation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
 		</Attribute>
 		<ConditionalAppearance>
 			<dcsset:item>
@@ -1878,25 +1988,6 @@
 		</ConditionalAppearance>
 	</Attributes>
 	<Commands>
-		<Command name="SelectQuestions" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Select</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Подбор</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Select questions</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>SelectQuestions</Action>
-		</Command>
 		<Command name="SelectOutlets" id="2">
 			<Title>
 				<v8:item>
@@ -1915,26 +2006,6 @@
 				</v8:item>
 			</ToolTip>
 			<Action>SelectOutlets</Action>
-		</Command>
-		<Command name="SelectQuestionsFromGroup" id="3">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Select from group</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Выбрать из группы
-</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Select questions from group</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>SelectQuestionsFromGroup</Action>
 		</Command>
 		<Command name="SetSchedule" id="6">
 			<Title>
@@ -1955,21 +2026,25 @@
 			</ToolTip>
 			<Action>SetSchedule</Action>
 		</Command>
-		<Command name="AddQuestion" id="7">
+		<Command name="AddChildQuestion" id="7">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Add question</v8:content>
+					<v8:content>Add dependent</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Добавить вопрос</v8:content>
+					<v8:content>Добавить зависимый</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Add question</v8:content>
+					<v8:content>Add child question</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить зависимый вопрос</v8:content>
 				</v8:item>
 			</ToolTip>
 			<Picture>
@@ -1977,7 +2052,7 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>AddQuestion</Action>
-			<Representation>TextPicture</Representation>
+			<Representation>Text</Representation>
 		</Command>
 		<Command name="DeleteQuestion" id="8">
 			<Title>
@@ -2010,7 +2085,7 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Discard сhanges</v8:content>
+					<v8:content>Discard changes</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -2028,7 +2103,7 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>DiscardСhanges</Action>
-			<Representation>TextPicture</Representation>
+			<Representation>Text</Representation>
 		</Command>
 		<Command name="CheckSelectorsForSKUs" id="5">
 			<Title>
@@ -2052,7 +2127,114 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>CheckSelectorsForSKUs</Action>
-			<Representation>TextPicture</Representation>
+			<Representation>Text</Representation>
+		</Command>
+		<Command name="AddParentQuestion" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Add</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Add question</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить вопрос</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.CreateListItem</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>AddParentQuestion</Action>
+			<Representation>Text</Representation>
+		</Command>
+		<Command name="ClearParentOnQuestion" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Make question independed</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сделать вопрос независимым</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear parent on question</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.SwitchActivity</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ClearParentOnQuestion</Action>
+		</Command>
+		<Command name="SetObligatoriness" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Set obligatoriness for all questions</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Установить обязательность для всех вопросов</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Set obligatoriness for all questions</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Установить обязательность для всех вопросов</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.CheckAll</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>SetObligatoriness</Action>
+			<Representation>Picture</Representation>
+		</Command>
+		<Command name="UnsetObligatoriness" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Unset obligatoriness for all questions</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Снять обязательность для всех вопросов</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Unset obligatoriness for all questions</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Снять обязательность для всех вопросов</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.UncheckAll</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>UnsetObligatoriness</Action>
+			<Representation>Picture</Representation>
 		</Command>
 	</Commands>
 	<Parameters>

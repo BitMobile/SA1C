@@ -1,0 +1,594 @@
+﻿
+///////////////////////////////////////////////////////
+// Common procedure and functions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	FillFileTable();
+	
+	FillQuestionsTree(Enums.QuestionGroupTypes.RegularQuestions);
+	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
+	
+	FillSKUs();
+	
+	ThisForm.Title = NStr("en = 'Result for ""'; ru = 'Результат для ""'") + String(Record.Questionnaire) + """";
+	
+EndProcedure
+
+
+// Files
+
+&AtServer
+Procedure FillFileNameArray(FileNameArray, Table)
+
+	For Each Element In Table Do 
+		
+		If ItsPicture(Element.Question) Then 
+			
+			Try
+				
+				SnapShotUUID = New UUID(Element.Answer);
+				
+			Except
+				
+				SnapShotUUID = Undefined;	
+				
+			EndTry;
+				
+			If Not SnapShotUUID = Undefined Then 
+		
+				FileNameArray.Add(SnapShotUUID);	
+				
+			EndIf;
+			
+		EndIf;	
+		
+	EndDo; 
+		
+EndProcedure
+
+&AtServer
+Procedure FillFileTable()
+	
+	// Заполнить таблицу файлов
+	Password 	= Constants.bitmobile_Пароль.Get();
+	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
+	Path 		= StrReplace(Path, "admin", "webdav");
+	Port 		= Constants.bitmobile_Порт.Get();
+	
+	Try
+	
+		Connection = New HTTPConnection(Server, Port, "admin", Password);
+		
+	Except
+		
+		Connection = Undefined;
+		
+	EndTry;	
+	
+	FileNameArray = New Array; 
+	
+	FillFileNameArray(FileNameArray, Record.Visit.Questions);
+	
+	FillFileNameArray(FileNameArray, Record.Visit.SKUs);
+		
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	StorageAdditionalInformation.Object,
+		|	StorageAdditionalInformation.SyncDirection,
+		|	StorageAdditionalInformation.Action,
+		|	StorageAdditionalInformation.User,
+		|	StorageAdditionalInformation.FileName,
+		|	StorageAdditionalInformation.FullFileName,
+		|	StorageAdditionalInformation.Extension,
+		|	StorageAdditionalInformation.Storage,
+		|	StorageAdditionalInformation.Size
+		|FROM
+		|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+		|WHERE
+		|	StorageAdditionalInformation.FileName IN(&FileNameArray)";
+	
+	Query.SetParameter("FileNameArray", FileNameArray);
+	
+	FileTableRegister = Query.Execute().Unload();
+	
+	For Each Str In FileTableRegister Do  
+	
+ 		BinaryDataOfFile = Str.Storage.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then 
+		
+			Ins 				= FileTable.Add();
+			Ins.FileName 		= Str.FileName;
+			Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+			Ins.Extension 		= Str.Extension;
+			
+		Else 
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(Str.Extension);
+					
+					Connection.Get(Path + Str.FullFileName, WebDAVFile);
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					Ins 				= FileTable.Add();
+					Ins.FileName 		= Str.FileName;
+					Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+					Ins.Extension 		= Str.Extension;
+										
+				Except
+				EndTry;
+				
+			EndIf;	
+			
+		EndIf;	
+				
+	EndDo;
+				
+EndProcedure
+
+&AtServer
+Procedure SetPicture(SnapShotUUID)
+	
+	FindStructure = New Structure("FileName");
+	FindStructure.FileName = SnapShotUUID;
+	
+	FoundRows = FileTable.FindRows(FindStructure);
+	
+	If Not FoundRows.Count() = 0 Then 
+		
+		PictureAddress 		= FoundRows[0].StorageAddress;
+		PictureExtension	= FoundRows[0].Extension;
+				
+	EndIf;
+				
+EndProcedure
+
+&AtServer
+Function ItsPicture(Question)
+	
+	If Question.AnswerType = Enums.DataType.Snapshot Then 
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
+	EndIf;
+			
+EndFunction
+
+&AtServer
+Function PictureExists(SnapShotUUID)
+	
+	FindStructure = New Structure("FileName");
+	FindStructure.FileName = SnapShotUUID;
+	
+	FoundRows = FileTable.FindRows(FindStructure);
+	
+	If Not FoundRows.Count() = 0 Then 
+		
+		Return True;
+		
+	Else
+		
+		Return False;
+				
+	EndIf;
+
+EndFunction
+
+
+// Questions
+
+&AtServer
+Procedure FillQuestionsTree(GroupType)
+	
+	If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
+			
+		Tree = Questions;
+			
+	Else 
+			
+		Tree = SKUQuestions;
+			
+	EndIf;	
+			
+	If ValueIsFilled(Record.Questionnaire) Then 
+	
+		// Заполнить список вопросов
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	QuestionsInQuestionnairesSliceLast.Period,
+			|	QuestionsInQuestionnairesSliceLast.Questionnaire,
+			|	QuestionsInQuestionnairesSliceLast.ParentQuestion,
+			|	QuestionsInQuestionnairesSliceLast.ChildQuestion,
+			|	QuestionsInQuestionnairesSliceLast.QuestionType,
+			|	QuestionsInQuestionnairesSliceLast.Obligatoriness,
+			|	QuestionsInQuestionnairesSliceLast.Status,
+			|	QuestionsInQuestionnairesSliceLast.Order
+			|FROM
+			|	InformationRegister.QuestionsInQuestionnaires.SliceLast AS QuestionsInQuestionnairesSliceLast
+			|WHERE
+			|	NOT QuestionsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+			|	AND QuestionsInQuestionnairesSliceLast.Questionnaire = &Questionnaire
+			|	AND QuestionsInQuestionnairesSliceLast.QuestionType = &GroupType";
+
+		Query.SetParameter("Questionnaire", Record.Questionnaire);
+		Query.SetParameter("GroupType", GroupType);
+			
+		QuestionsTable = Query.Execute().Unload();
+
+		ParentQuestionsTable = QuestionsTable.Copy(New Structure("ParentQuestion", Catalogs.Question.EmptyRef()));
+		
+		ParentQuestionsTable.Sort("Order Asc");
+		
+		For Each ParentQuestionRow In ParentQuestionsTable Do 
+			
+			ParentRow 					= Tree.GetItems().Add();
+			ParentRow.Question       	= ParentQuestionRow.ChildQuestion;
+			ParentRow.Obligatoriness    = ParentQuestionRow.Obligatoriness;
+			ParentRow.AnswerType        = ParentQuestionRow.ChildQuestion.AnswerType;
+			
+			If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
+					
+				FoundedAnswer = Record.Visit.Questions.Find(ParentRow.Question, "Question");
+				
+				If Not FoundedAnswer = Undefined Then 
+				
+					If ItsPicture(ParentRow.Question) Then
+					
+						Try
+							
+							SnapShotUUID = New UUID(FoundedAnswer.Answer);
+							
+							If PictureExists(SnapShotUUID) Then
+							
+				            	ParentRow.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+				            	ParentRow.SnapShotUUID 		= FoundedAnswer.Answer;
+								
+							Else
+								
+								ParentRow.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
+													
+							EndIf;
+							
+						Except
+							
+							ParentRow.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");
+							
+						EndTry;
+						
+					Else 
+	            
+			            ParentRow.Answer = FoundedAnswer.Answer;
+			            
+					EndIf;
+					
+				EndIf;	
+					
+			EndIf;
+			
+			ChildQuestionsTable = QuestionsTable.Copy(New Structure("ParentQuestion", ParentQuestionRow.ChildQuestion));
+			
+			ChildQuestionsTable.Sort("Order Asc");
+			
+			For Each ChildQuestionRow In ChildQuestionsTable Do 
+				
+				ChildRow 				= ParentRow.GetItems().Add();
+				ChildRow.Question       = ChildQuestionRow.ChildQuestion;
+				ChildRow.Obligatoriness	= ChildQuestionRow.Obligatoriness;
+				ChildRow.AnswerType     = ChildQuestionRow.ChildQuestion.AnswerType;
+				
+				If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
+					
+					FoundedAnswer = Record.Visit.Questions.Find(ChildRow.Question, "Question");
+					
+					If Not FoundedAnswer = Undefined Then 
+					
+						If ItsPicture(ChildRow.Question) Then
+						
+							Try
+								
+								SnapShotUUID = New UUID(FoundedAnswer.Answer);
+								
+								If PictureExists(SnapShotUUID) Then
+								
+					            	ChildRow.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+					            	ChildRow.SnapShotUUID 		= FoundedAnswer.Answer;
+									
+								Else
+									
+									ChildRow.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
+														
+								EndIf;
+								
+							Except
+								
+								ChildRow.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");
+								
+							EndTry;
+							
+						Else 
+		            
+				            ChildRow.Answer = FoundedAnswer.Answer;
+				            
+						EndIf;
+						
+					EndIf;	
+						
+				EndIf;
+				
+			EndDo;
+						
+		EndDo;
+				
+	EndIf;
+		
+EndProcedure
+
+&AtServer
+Procedure LoadSKUAnswers(SKU)
+	
+	For Each ParentQuestionElement In SKUQuestions.GetItems() Do 
+		
+		ParentQuestionElement.Answer 			= "";
+		ParentQuestionElement.SKUSnapShotUUID 	= "";
+		
+		FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Question, SKU", ParentQuestionElement.Question, SKU));       
+		
+		If Not FoundedAnswers.Count() = 0 Then 
+		
+			If ItsPicture(ParentQuestionElement.Question) Then
+			
+				Try
+					
+					SnapShotUUID = New UUID(FoundedAnswers[0].Answer);
+					
+					If PictureExists(SnapShotUUID) Then
+					
+		            	ParentQuestionElement.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+		            	ParentQuestionElement.SKUSnapShotUUID 	= FoundedAnswers[0].Answer;
+						
+					Else
+						
+						ParentQuestionElement.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
+											
+					EndIf;
+					
+				Except
+					
+					ParentQuestionElement.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");
+					
+				EndTry;
+				
+			Else 
+        
+	            ParentQuestionElement.Answer = FoundedAnswers[0].Answer;
+	            
+			EndIf;
+			
+		EndIf;	
+					
+		ChildQuestionsTable = ParentQuestionElement.GetItems();
+		
+		For Each ChildQuestionElement In ChildQuestionsTable Do 
+			
+			ChildQuestionElement.Answer 			= "";
+			ChildQuestionElement.SKUSnapShotUUID 	= "";
+		
+			FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Question, SKU", ChildQuestionElement.Question, SKU));       
+		
+			If Not FoundedAnswers.Count() = 0 Then 
+			
+				If ItsPicture(ChildQuestionElement.Question) Then
+				
+					Try
+						
+						SnapShotUUID = New UUID(FoundedAnswers[0].Answer);
+						
+						If PictureExists(SnapShotUUID) Then
+						
+			            	ChildQuestionElement.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+			            	ChildQuestionElement.SKUSnapShotUUID 	= FoundedAnswers[0].Answer;
+							
+						Else
+							
+							ChildQuestionElement.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
+												
+						EndIf;
+						
+					Except
+						
+						ChildQuestionElement.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");
+						
+					EndTry;
+					
+				Else 
+            
+		            ChildQuestionElement.Answer = FoundedAnswers[0].Answer;
+		            
+				EndIf;
+				
+			EndIf;
+			
+		EndDo;
+					
+	EndDo; 
+		
+EndProcedure
+
+
+// SKUs
+
+&AtServer
+Procedure FillSKUs()
+	
+	SKUsValueTable = New ValueTable;
+	SKUsValueTable.Columns.Add("SKU");
+	
+	For Each SKUElement In Record.Visit.SKUs Do 
+		
+		Ins 	= SKUsValueTable.Add();
+		Ins.SKU = SKUElement.SKU;		
+		
+	EndDo;
+	
+	SKUsValueTable.GroupBy("SKU");
+	
+	SKUs.Load(SKUsValueTable);
+	
+EndProcedure	
+
+
+///////////////////////////////////////////////////////
+// User interface
+
+&AtClient
+Procedure OpenPicture(Command)
+	
+	FileName = Undefined;
+	
+	If ValueIsFilled(PictureAddress) Then 
+		
+		FileName = "picture" + PictureExtension;
+		
+	EndIf;
+		
+	If ValueIsFilled(FileName) Then 
+		
+		GetFile(PictureAddress, FileName, True);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure QuestionsOnActivateRow(Item)
+	
+	If Items.GroupPages.CurrentPage = Items.GroupQuestions Then
+	
+		If Not Item.CurrentRow = Undefined Then	
+		
+			If ItsPicture(Item.CurrentData.Question) Then 
+				
+				Try
+					
+					SnapShotUUID = New UUID(Item.CurrentData.SnapShotUUID);
+					
+					SetPicture(SnapShotUUID);
+					
+				Except
+					
+					PictureAddress		= Undefined;
+					PictureExtension    = Undefined;
+					
+				EndTry;	
+				
+			Else 
+				
+				PictureAddress		= Undefined;
+				PictureExtension    = Undefined;
+			
+			EndIf;
+			
+		Else
+			
+			PictureAddress		= Undefined;
+			PictureExtension    = Undefined;
+
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsOnActivateRow(Item)
+	
+	If Not Item.CurrentRow = Undefined Then
+	
+		LoadSKUAnswers(Item.CurrentData.SKU);	
+		
+	EndIf;	
+		
+EndProcedure
+
+&AtClient
+Procedure SKUQuestionsOnActivateRow(Item)
+	
+	If Items.GroupPages.CurrentPage = Items.GroupSKUQuestions Then
+	
+	    If Not Item.CurrentRow = Undefined  Then	        
+			
+			If ItsPicture(Item.CurrentData.Question) Then            
+				
+				Try
+					
+					SnapShotUUID = New UUID(Item.CurrentData.SKUSnapShotUUID);
+					
+					SetPicture(SnapShotUUID);
+					
+				Except
+					
+					PictureAddress		= Undefined;
+					PictureExtension    = Undefined;
+					
+				EndTry;
+				
+			Else            
+				
+				PictureAddress		= Undefined;
+	            PictureExtension    = Undefined;                       
+				
+			EndIf;                
+			
+		Else        
+			
+			PictureAddress		= Undefined;
+	        PictureExtension    = Undefined;        
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure GroupPagesOnCurrentPageChange(Item, CurrentPage)
+	
+	If CurrentPage = Items.GroupQuestions Then
+		
+		SKUsOnActivateRow(Items.SKUs);
+		QuestionsOnActivateRow(Items.Questions);
+        
+    ElsIf CurrentPage = Items.GroupSKUQuestions Then
+        
+        SKUQuestionsOnActivateRow(Items.SKUQuestions);
+		
+	Else 
+		
+		PictureAddress = Undefined;
+		PictureExtension = Undefined;
+        
+	EndIf;
+	
+EndProcedure
+
+
+
+
+
+
+
+
+

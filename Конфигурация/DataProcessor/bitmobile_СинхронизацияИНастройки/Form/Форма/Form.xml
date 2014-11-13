@@ -204,7 +204,6 @@
 							<v8:content>Данные</v8:content>
 						</v8:item>
 					</Title>
-					<TitleTextColor>style:FormTextColor</TitleTextColor>
 					<ToolTip>
 						<v8:item>
 							<v8:lang>en</v8:lang>

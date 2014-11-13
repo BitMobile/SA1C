@@ -17,14 +17,60 @@ Function CheckEntity(Source) Export
 	
 	If TypeOf(Source) = Type("DocumentObject.Visit") Then
 	
+		// Очистить результаты анкетирования
+		If ValueIsFilled(Source.Ref) Then 
+		
+			Query = New Query;
+			Query.Text = 
+				"SELECT
+				|	QuestioningResults.Questionnaire,
+				|	QuestioningResults.Visit,
+				|	QuestioningResults.Outlet,
+				|	QuestioningResults.SR,
+				|	QuestioningResults.Date
+				|FROM
+				|	InformationRegister.QuestioningResults AS QuestioningResults
+				|WHERE
+				|	QuestioningResults.Visit = &Visit";
+			
+			Query.SetParameter("Visit", Source.Ref);
+			
+			QueryResult = Query.Execute();
+			
+			Selection = QueryResult.Select();
+			
+			RecordManager = InformationRegisters.QuestioningResults.CreateRecordManager();
+			
+			While Selection.Next() Do
+				
+				FillPropertyValues(RecordManager, Selection);
+				
+				RecordManager.Read();
+				
+				RecordManager.Delete();
+				
+			EndDo;
+			
+		EndIf;	
+		
+		SourceRefValue = Documents.Visit.GetRef(New UUID);
+		
+		Source.SetNewObjectRef(SourceRefValue);
+				
+		QuestionnaireTable = New ValueTable;
+		QuestionnaireTable.Columns.Add("Questionnaire");
+				
 		For Each Str In Source.Questions Do 
 			
 			If ValueIsFilled(Str.Questionnaire) And ValueIsFilled(Str.AnswerDate) Then 
 				
+				Ins 				= QuestionnaireTable.Add();
+				Ins.Questionnaire 	= Str.Questionnaire;
+				
 				If Str.Questionnaire.Single Then
 					
 					RecordManager 				= InformationRegisters.AnsweredQuestions.CreateRecordManager();
-					RecordManager.Visit 		= Source.Ref;
+					RecordManager.Visit 		= SourceRefValue;
 					RecordManager.Questionaire 	= Str.Questionnaire;
 					RecordManager.Outlet 		= Source.Outlet;
 					RecordManager.Question 		= Str.Question;
@@ -44,10 +90,13 @@ Function CheckEntity(Source) Export
 			
 			If ValueIsFilled(Str.Questionnaire) And ValueIsFilled(Str.AnswerDate) Then 
 				
+				Ins 				= QuestionnaireTable.Add();
+				Ins.Questionnaire 	= Str.Questionnaire;
+				
 				If Str.Questionnaire.Single Then
 					
 					RecordManager 				= InformationRegisters.AnsweredQuestions.CreateRecordManager();
-					RecordManager.Visit 		= Source.Ref;
+					RecordManager.Visit 		= SourceRefValue;
 					RecordManager.Questionaire 	= Str.Questionnaire;
 					RecordManager.Outlet 		= Source.Outlet;
 					RecordManager.Question 		= Str.Question;
@@ -64,6 +113,21 @@ Function CheckEntity(Source) Export
 			
 		EndDo;			
 		
+		QuestionnaireTable.GroupBy("Questionnaire");
+		
+		For Each QuestionnaireElement In QuestionnaireTable Do 
+			
+			RecordManager 				= InformationRegisters.QuestioningResults.CreateRecordManager();		
+			RecordManager.Questionnaire = QuestionnaireElement.Questionnaire;
+			RecordManager.Visit 		= SourceRefValue;
+			RecordManager.Outlet 		= Source.Outlet;
+			RecordManager.SR 			= Source.SR;
+			RecordManager.Date 			= Source.Date;
+			
+			RecordManager.Write();
+			
+		EndDo;
+				
 	EndIf;	
 	
     Return Source;

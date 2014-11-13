@@ -1,22 +1,16 @@
 ﻿
-Function SelectOutlets(sourceTable, Ref) Export 
-	
-	If sourceTable = Undefined Then
-		sourceTable = GetTableFromRef(Ref);		
-	EndIf; 
+Function SelectOutlets(sourceTable) Export 
 	
 	outletParametersMap = CreateOutletParametersMap();
 	
 	query = New Query();
-	
-	
+		
 	//clearPositions
 	rowsToDelete = sourceTable.FindRows(new Structure("Selector", "Catalog_Positions"));
 	For Each r In rowsToDelete Do
 		sourceTable.Delete(r);    	    
 	EndDo;    
-	
-	
+		
 	//sort out sourceTable
 	newSourseTable = sourceTable.Copy();
 	
@@ -27,8 +21,7 @@ Function SelectOutlets(sourceTable, Ref) Export
 	For Each r In rowsToDelete Do
 		newSourseTable.Delete(r);			
 	EndDo;
-	
-	
+		
 	f2 = new Structure("Selector", "Catalog_Territory");
 	f3 = new Structure("Selector", "Catalog_Region");
 	territoryTable = newSourseTable.Copy(f2);
@@ -50,8 +43,7 @@ Function SelectOutlets(sourceTable, Ref) Export
 	EndDo;
 	
 	sourceTable = newSourseTable;
-	
-	
+	 	
 	//upgrade query string with Outlet_Parameters
 	parametersString = "";
 	i = 0;
@@ -84,8 +76,7 @@ Function SelectOutlets(sourceTable, Ref) Export
 		
 		i = i + 1;
 	EndDo;
-	
-	
+	 	
 	//upgrade query string with Territories
 	territoriesString = "";
 	skip = False;
@@ -94,7 +85,17 @@ Function SelectOutlets(sourceTable, Ref) Export
 			territoriesString = territoriesString + " INNER JOIN Catalog.Territory.Outlets AS T"+ i + 
 			" ON O.Ref = T"+i+".Outlet AND T"+i+".Ref";            
 			If selector.ComparisonType <> Enums.ComparisonType.InList Then
-				territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", "=&parameter" + i,  ".Owner IN HIERARCHY(&parameter"+i+") ");//"= &parameter"+i+" ";                
+				
+				If selector.ComparisonType = Enums.ComparisonType.Equal Then  
+					
+					territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", "=&parameter" + i,  ".Owner IN HIERARCHY(&parameter"+i+") ");                
+					
+				Else 
+					
+					territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", "<>&parameter" + i,  ".Owner NOT IN HIERARCHY(&parameter"+i+") ");
+					
+				EndIf;	
+				
 				query.SetParameter(String("parameter"+i), selector.Value);
 			Else 
 				territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", " IN(", ".Owner IN HIERARCHY(");
@@ -117,9 +118,7 @@ Function SelectOutlets(sourceTable, Ref) Export
 		
 		i = i + 1;
 	EndDo;
-	
-	
-	
+		
 	//upgrade query string
 	string = ?(sourceTable.Count()>0, " WHERE ", "");
 	
@@ -158,6 +157,7 @@ Function SelectOutlets(sourceTable, Ref) Export
 		
 		i = i + 1;
 		j = j + 1;
+		
 	EndDo;
 	
 	Try
@@ -170,94 +170,222 @@ Function SelectOutlets(sourceTable, Ref) Export
 		
 	Except
 		
-		Return Undefined;
+		result = New ValueTable;
+		result.Columns.Add("Ref");
+		
+		Return result;
 		
 	EndTry;
 	
 EndFunction
 
-Function CreateQueryString(j)
+Function CreateQueryString(sValue)
 	
-	string = " INNER JOIN Catalog.Outlet.Parameters AS OP"+j+"
-	| ON O.Ref = OP"+j+".Ref AND OP"+j+".Parameter = &Parameter"+j+" AND OP"+j+".Value "; //= &Value"+j+" ";           
-	Return string;
+	String = " INNER JOIN Catalog.Outlet.Parameters AS OP" + sValue + "
+	| ON O.Ref = OP" + sValue + ".Ref AND OP" + sValue + ".Parameter = &Parameter" + sValue + " AND OP" + sValue + ".Value ";          
 	
-EndFunction
-
-Function GetTableFromRef(Ref)
-	
-	Return Ref.Selectors.Unload();
+	Return String;
 	
 EndFunction
 
 Function CreateOutletParametersMap()
 	
-	subj = new Map;
-	For Each item In Metadata.Enums.QuestionnaireSelectors.EnumValues Do
-		subj.Insert(item.Name, item.Comment);    	    
-	EndDo;
-	Return subj;
+	sMap = new Map;
 	
-EndFunction // CreateOutletParametersMap()
+	For Each Item In Metadata.Enums.QuestionnaireSelectors.EnumValues Do
+		
+		sMap.Insert(Item.Name, Item.Comment);    	    
+		
+	EndDo;
+	
+	Return sMap;
+	
+EndFunction
 
-Function SelectPositions(Ref) Export 
+Function SelectPositions(Positions) Export 
 
-  q = new Query();
-  q.Text = "SELECT
-           |    Selectors.Questionnaire,
-           |    Selectors.ComparisonType AS ComparisonType,
-           |    Selectors.Selector,
-           |    Selectors.Value
-           |FROM
-           |    InformationRegister.Selectors AS Selectors
-           |WHERE
-           |    Selectors.Questionnaire = &Questionnaire
-           |    AND Selectors.Selector = &Selector
-           |
-           |ORDER BY
-           |    ComparisonType";
-    q.SetParameter("Questionnaire", ref);
-    q.SetParameter("Selector", "Catalog_Positions");
-    positions = q.Execute().Unload();
-    
-    qPositions = new Query;
-    string = ?(positions.Count()=0, "", " WHERE ");
-    i = 0;
-    skip = False;
-    For Each row In positions Do
+  	qPositions = new Query;
+	
+	String = ?(Positions.Count()=0, "", " WHERE ");
+	
+	Skip = False;
+	
+	i = 0;
+	
+	For Each Row In Positions Do
         
-        If skip = False Then
-            If row.ComparisonType<>Enums.ComparisonType.InList Then
-                c = ?(row.ComparisonType=Enums.ComparisonType.Equal, " = ", " <> ");
-                string = string + " Ref " + c +  " &Ref" + i;
-                qPositions.SetParameter(String("Ref" + String(i)), row.Value);        
-            Else
-                string = string + " Ref IN(";
-                listTable = positions.FindRows(new Structure("ComparisonType", Enums.ComparisonType.InList));
-                cs = 1;
-                For Each listItem In listTable Do
-                    string = string + "&Ref" + i + String(cs) + ?(cs=listTable.Count(), ") ", ", ");
-                    qPositions.SetParameter(String("Ref" + i + String(cs)), listItem.Value);
-                    cs = cs+1;
-                EndDo;
-                endOfList = listItem;
-                skip = True;
-            EndIf;
+        If Skip = False Then
+			
+			If Not Row.ComparisonType = Enums.ComparisonType.InList Then
+				
+				c = ?(Row.ComparisonType = Enums.ComparisonType.Equal, " = ", " <> ");
+				
+				String = String + " Ref " + c +  " &Ref" + i;
+				
+				qPositions.SetParameter(String("Ref" + String(i)), Row.Value);        
+				
+			Else
+				
+				String = String + " Ref IN(";
+				
+				ListTable = positions.FindRows(New Structure("ComparisonType", Enums.ComparisonType.InList));
+				
+				cs = 1;
+				
+				For Each ListItem In ListTable Do
+					
+					String = String + "&Ref" + i + String(cs) + ?(cs = ListTable.Count(), ") ", ", ");
+					
+					qPositions.SetParameter(String("Ref" + i + String(cs)), ListItem.Value);
+					
+					cs = cs + 1;
+					
+				EndDo;
+				
+				
+				EndOfList = ListItem;
+				
+				Skip = True;
+				
+			EndIf;
+			
         EndIf;
         
-        if row = endOfList Then
-            skip = False;
-        EndIf;        
+        If Row = EndOfList Then
+			
+			Skip = False;
+			
+		EndIf;        
          
         i = i + 1;
             
     EndDo;
-    qPositions.Text = "SELECT Ref FROM Catalog.Positions " + string;
+    	
+	Try
+		
+		qPositions.Text = "SELECT Ref AS Position FROM Catalog.Positions " + string;
 
-    Return qPositions.Execute().Unload();
-    
+    	Return qPositions.Execute().Unload().UnloadColumn("Position");
+		
+	Except
+		
+		Return New Array;
+		
+	EndTry;
+	
 EndFunction
 
+Function SelectSRs(SelectorsList, PositionList) Export 
+
+	PositionsArray = SelectPositions(PositionList);
+	
+	Query = New Query;
+	Query.Text = "SELECT
+	             |	Territory.SR
+	             |FROM
+	             |	Catalog.Territory AS Territory
+	             |		LEFT JOIN Catalog.User AS User
+	             |			LEFT JOIN Catalog.Positions AS Positions
+	             |			ON User.Position = Positions.Ref
+	             |		ON Territory.SR = User.Ref
+	             |WHERE
+	             |	Positions.Ref IN(&PositionsArray)";
+				 
+	Query.SetParameter("PositionsArray", PositionsArray);			 
+				 
+	Ind = 0;			 
+				 
+	TableRegionOr = SelectorsList.Copy(New Structure("Selector, ComparisonType", "Catalog_Region", Enums.ComparisonType.InList)); 
+	
+	If Not TableRegionOr.Count() = 0 Then 
+		
+		Query.Text = Query.Text + " AND (";
+		
+		For Each TableRegionOrElement In TableRegionOr Do 
+			
+			Query.Text = Query.Text + "Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ") OR "; 
+			Query.SetParameter("parameter" + String(Ind), TableRegionOrElement.Value);	
+			
+			Ind = Ind + 1;
+			
+		EndDo;	
+		
+		Query.Text = Left(Query.Text, StrLen(Query.Text) - 4);
+		
+		Query.Text = Query.Text + ") ";
+		
+	EndIf;	
+	
+	TableTerritoryOr = SelectorsList.Copy(New Structure("Selector, ComparisonType", "Catalog_Territory", Enums.ComparisonType.InList)); 
+	
+	If Not TableTerritoryOr.Count() = 0 Then 
+		
+		Query.Text = Query.Text + " AND (";
+		
+		For Each TableTerritoryOrElement In TableTerritoryOr Do 
+			
+			Query.Text = Query.Text + "Territory.Owner = &parameter" + String(Ind) + " OR "; 
+			Query.SetParameter("parameter" + String(Ind), TableTerritoryOrElement.Value);	
+			
+			Ind = Ind + 1;
+			
+		EndDo;	
+		
+		Query.Text = Left(Query.Text, StrLen(Query.Text) - 4);
+		
+		Query.Text = Query.Text + ") ";
+		
+	EndIf;
+	
+	For Each SelectorElement In SelectorsList Do 
+		
+		If Not SelectorElement.ComparisonType = Enums.ComparisonType.InList Then 
+		
+			If SelectorElement.Selector = "Catalog_Region" Then 
+				
+				If SelectorElement.ComparisonType = Enums.ComparisonType.Equal Then 
+				
+					Query.Text = Query.Text + " AND Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ")"; 
+				
+				Else 
+					
+					Query.Text = Query.Text + " AND NOT Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ")";
+					
+				EndIf;	
+					
+				Query.SetParameter("parameter" + String(Ind), SelectorElement.Value);
+				
+				Ind = Ind + 1;
+				
+			EndIf;
+			
+			If SelectorElement.Selector = "Catalog_Territory" Then 
+				
+				If SelectorElement.ComparisonType = Enums.ComparisonType.Equal Then
+				
+					Query.Text = Query.Text + " AND Territory.Ref = &parameter" + String(Ind); 
+					
+				Else 
+					
+					Query.Text = Query.Text + " AND Territory.Ref <> &parameter" + String(Ind);
+					
+				EndIf;	
+				
+				Query.SetParameter("parameter" + String(Ind), SelectorElement.Value);
+				
+				Ind = Ind + 1;
+				
+			EndIf;
+			
+		EndIf;	
+		
+	EndDo;	
+	
+	ResultTable = Query.Execute().Unload();
+			
+	Return ResultTable;
+			
+EndFunction
 
 
 

@@ -8,20 +8,24 @@
 					<v8:lang>en</v8:lang>
 					<v8:content>Administration</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Администрирование</v8:content>
+				</v8:item>
 			</Synonym>
 			<Comment/>
 			<IncludeHelpInContents>true</IncludeHelpInContents>
-			<IncludeInCommandInterface>false</IncludeInCommandInterface>
+			<IncludeInCommandInterface>true</IncludeInCommandInterface>
 			<Explanation/>
-			<Picture/>
-			<Content>
-				<xr:Item xsi:type="xr:MDObjectRef">750d2257-b63d-493f-9fdb-26dc270f46cb</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ObjectsDeletion</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.Visits</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.Orders</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">DocumentJournal.CommonJournal</xr:Item>
-			</Content>
+			<Picture>
+				<xr:Ref>CommonPicture.SectionAdministration</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Content/>
 		</Properties>
-		<ChildObjects/>
+		<ChildObjects>
+			<Subsystem>Catalogs</Subsystem>
+			<Subsystem>DataProcessors</Subsystem>
+		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

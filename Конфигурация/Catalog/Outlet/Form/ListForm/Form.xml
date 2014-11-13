@@ -94,6 +94,11 @@
 					<ContextMenu name="LattitudeContextMenu" id="13"/>
 					<ExtendedTooltip name="LattitudeРасширеннаяПодсказка" id="31"/>
 				</LabelField>
+				<LabelField name="Longitude" id="32">
+					<DataPath>List.Longitude</DataPath>
+					<ContextMenu name="LongitudeContextMenu" id="33"/>
+					<ExtendedTooltip name="LongitudeExtendedTooltip" id="34"/>
+				</LabelField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
