@@ -7,6 +7,6 @@
 		<Subsystem>Subsystem.Outlets</Subsystem>
 		<Subsystem>Subsystem.SKUs</Subsystem>
 		<Subsystem>Subsystem.Administration</Subsystem>
-		<Subsystem>Subsystem.SynchronisationAndSettings</Subsystem>
+		<Subsystem>Subsystem.SynchronizationAndSettings</Subsystem>
 	</SubsystemsOrder>
 </CommandInterface>

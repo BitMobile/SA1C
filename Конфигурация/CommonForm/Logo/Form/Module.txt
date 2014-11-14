@@ -1,6 +1,6 @@
 ﻿
 &AtServer
-Procedure OnCreateAtServer(Cancel, StandardProcessing)
+Procedure OnOpenServer()
 	      
 	If InfoBaseUsers.CurrentUser().Language = Metadata.Languages.Русский Then 
 		
@@ -12,4 +12,300 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;		
 	
+	DBSessions 		= GetInfoBaseSessions();
+	SessionNumber 	= InfoBaseSessionNumber();
+	
+	IDUpload = Constants.bitmobile_IDВыгрузки.Get();
+			
+	For Each DBSession In DBSessions Do  
+		
+		If DBSession.SessionNumber = SessionNumber Тогда 
+			
+			IDSession = String(DBSession.SessionNumber) + String(DBSession.SessionStarted);
+			
+		EndIf;
+		
+	EndDo;
+	
+	CheckSyncState();
+	
 EndProcedure
+
+&AtServer
+Procedure CheckSyncState()
+	
+	Try
+		
+		SyncStarted = Constants.bitmobile_СинхронизацияЗапущена.Get();
+		
+	Except
+		                      
+		Message 			= New UserMessage;
+		Message.Text 		= NStr("en = 'Error getting the current synchronization status'; ru = 'Ошибка при получении текущего состояния синхронизации'");
+		Message.TargetID 	= ThisForm.UUID;
+		Message.Message();
+		
+		Items.SyncronizeData.Enabled = False;
+		
+		Return;
+
+	EndTry;
+			
+	If Not SyncStarted = "" Then  
+		
+		If SyncStarted = IDSession Then 
+			
+			Message 			= New UserMessage;
+			Message.Text 		= NStr("en = 'Synchronization is already running you'; ru = 'Синхронизация уже запущена вами'");
+			Message.TargetID 	= ThisForm.UUID;
+			Message.Message();
+
+			Items.SyncronizeData.Enabled = False;
+			
+			Return;
+			
+		Else  
+			
+			DBSessions = GetInfoBaseSessions();
+			
+			For Each DBSession In DBSessions Do 
+				
+				If String(DBSession.SessionNumber) + String(DBSession.SessionStarted) = SyncStarted Then 
+					
+					Message 			= New UserMessage;
+					Message.Text 		= NStr("en = 'Synchronization is already started by the user: '; ru = 'Синхронизация уже запущена пользователем: '") + String(DBSession.User);
+					Message.TargetID 	= ThisForm.UUID;
+					Message.Message();
+										
+					Items.SyncronizeData.Enabled = False;
+			
+					Return;
+					
+				EndIf;
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+			
+EndProcedure
+
+&AtServer
+Function CheckAsyncUpload(IDUpload, IDForm)
+	
+	 Return DataProcessors.bitmobile_СинхронизацияИНастройки.ПроверитьАсинхроннуюВыгрузку(IDUpload, IDForm);
+	
+EndFunction
+ 
+&AtServer
+Function GetIDUpload()
+	
+	Return Constants.bitmobile_IDВыгрузки.Get();
+
+EndFunction
+
+&AtServer
+Function GetUploadInfo(LastDate, LastStatus)
+
+	LastDate 	= Constants.bitmobile_ДатаПоследнейВыгрузкиДанных.Get();
+    LastStatus 	= Constants.bitmobile_СтатусПоследнейВыгрузкиДанных.Get();
+
+EndFunction
+
+&AtServer
+Function GetDownloadInfo(LastDate, LastStatus)
+
+	LastDate 	= Constants.bitmobile_ДатаПоследнейЗагрузкиДанных.Get();
+    LastStatus 	= Constants.bitmobile_СтатусПоследнейЗагрузкиДанных.Get();
+
+EndFunction
+
+
+//////////////////////////////////////////////
+// Серверные процедуры для синхронизации
+
+&AtServer 
+Procedure SyncronizeDataServer(IDSession)
+	
+	bitmobile_ОбработчикиСинхронизацииИПодписок.Синхронизация(IDSession);
+		
+EndProcedure
+
+&AtServer
+Procedure SyncronizeFilesServer()
+	
+	DataProcessors.bitmobile_СинхронизацияИНастройки.СинхронизироватьФайлы();
+				
+EndProcedure
+
+&AtClient
+Procedure SetUploadInfo(LastDate, LastStatus, UploadStarted = False)
+	
+	If UploadStarted Then  
+		                          
+		Items.DateUpload.TextColor = WebColors.Green;
+		DateUpload = NStr("en = 'In progress'; ru = 'Выполняется'");
+		
+	Else  	
+	
+		If ValueIsFilled(LastDate) Then 
+			
+			If LastStatus Then 
+				
+				Items.DateUpload.TextColor = WebColors.Green;
+				DateUpload = String(LastDate) + NStr("en = ' (completed)'; ru = ' (выполнена)'");
+				
+			Else 
+				
+				Items.DateUpload.TextColor = WebColors.Red;
+				DateUpload = String(LastDate) + NStr("en = ' (not completed)'; ru = ' (не выполнена)'");
+							
+			EndIf;
+					
+		Else 
+			
+			Items.DateUpload.TextColor = WebColors.Red;
+			DateUpload = NStr("en = 'No Information'; ru = 'Нет данных'");
+							
+		EndIf;
+		
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure SetDownloadInfo(LastDate, LastStatus)
+	
+	If ValueIsFilled(LastDate) Then 
+			
+		If LastStatus Then 
+			
+			Items.DateDownload.TextColor = WebColors.Green;
+			DateDownload = String(LastDate) + NStr("en = ' (completed)'; ru = ' (выполнена)'");
+			
+		Else 
+			
+			Items.DateDownload.TextColor = WebColors.Red;
+			DateDownload = String(LastDate) + NStr("en = ' (not completed)'; ru = ' (не выполнена)'");
+						
+		EndIf;
+				
+	Else 
+		
+		Items.DateDownload.TextColor = WebColors.Red;
+		DateDownload = NStr("en = 'No Information'; ru = 'Нет данных'");
+						
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OnOpen(Cancel)
+	
+	OnOpenServer();
+	
+	If ValueIsFilled(IDUpload) Then  
+		
+		Items.SyncronizeData.Enabled = False;
+		
+		AttachIdleHandler("CheckUpload", 20);
+		
+		UpdateInfo(True);
+		
+	Else  
+		
+		UpdateInfo();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure CheckUpload()
+	
+	StopHandler = False;
+	
+	Result = CheckAsyncUpload(IDUpload, ThisForm.UUID);
+	
+	If Result = "Не указан ID выгрузки" Then  
+		
+		StopHandler = True;
+		
+		UpdateInfo();
+		
+	ElsIf Result = "ok" Then  
+		
+		StopHandler = True;
+		
+		UpdateInfo();
+		
+	ElsIf Result = "processing" Then
+		
+		UpdateInfo(True);
+		
+	Else  
+		
+		StopHandler = True;
+		
+		UpdateInfo();
+		
+	EndIf;
+	
+	If StopHandler Then 
+		
+		DetachIdleHandler("CheckUpload");
+		
+		Items.SyncronizeData.Enabled = False;
+				
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure UpdateInfo(UploadStarted = False)
+	
+	LastDate 	= Undefined;
+	LastStatus 	= False;
+	
+	GetUploadInfo(LastDate, LastStatus);
+	SetUploadInfo(LastDate, LastStatus, UploadStarted);
+	
+	LastDate 	= Undefined;
+	LastStatus 	= False;
+	
+	GetDownloadInfo(LastDate, LastStatus);
+	SetDownloadInfo(LastDate, LastStatus);
+					
+EndProcedure
+
+&AtClient
+Procedure SyncronizeData(Command)
+	
+	SyncronizeDataServer(IDSession);
+	
+	IDUpload = GetIDUpload();
+	
+	If ValueIsFilled(IDUpload) Then  
+		
+		Items.SyncronizeData.Enabled = False;
+		
+		AttachIdleHandler("CheckUpload", 20);
+		
+	EndIf;	
+	
+	UpdateInfo();
+	
+EndProcedure
+
+&AtClient
+Procedure SyncronizeFiles(Command)
+	
+	Message = New UserMessage;   
+	Message.Text = NStr("en = 'Synchronize files in the process ...'; ru = 'Cинхронизация файлов в процессе...'");
+	Message.Message();
+    	
+	SyncronizeFilesServer();
+		
+EndProcedure
+

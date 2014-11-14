@@ -280,13 +280,14 @@ Function SelectSRs(SelectorsList, PositionList) Export
 	PositionsArray = SelectPositions(PositionList);
 	
 	Query = New Query;
-	Query.Text = "SELECT
+	Query.Text = "SELECT DISTINCT
 	             |	Territory.SR
 	             |FROM
 	             |	Catalog.Territory AS Territory
 	             |		LEFT JOIN Catalog.User AS User
 	             |			LEFT JOIN Catalog.Positions AS Positions
-	             |			ON User.Position = Positions.Ref
+	             |			ON (User.Position = Positions.Ref
+	             |					OR User.Position = VALUE(Catalog.Positions.EmptyRef))
 	             |		ON Territory.SR = User.Ref
 	             |WHERE
 	             |	Positions.Ref IN(&PositionsArray)";

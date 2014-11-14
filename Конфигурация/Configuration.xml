@@ -111,7 +111,7 @@
 			<Subsystem>Outlets</Subsystem>
 			<Subsystem>SKUs</Subsystem>
 			<Subsystem>Administration</Subsystem>
-			<Subsystem>SynchronisationAndSettings</Subsystem>
+			<Subsystem>SynchronizationAndSettings</Subsystem>
 			<Subsystem>Bitmobile</Subsystem>
 			<StyleItem>ШрифтВажнойНадписи</StyleItem>
 			<StyleItem>ПоясняющийТекст</StyleItem>

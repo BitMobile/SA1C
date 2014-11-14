@@ -19,10 +19,196 @@
 	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
-		<Event name="NotificationProcessing">NotificationProcessing</Event>
-		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+		<Event name="OnOpen">OnOpen</Event>
 	</Events>
 	<ChildItems>
+		<UsualGroup name="GroupSynchronization" id="1634">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group synchronization</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group synchronization</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupSynchronizationExtendedTooltip" id="1635"/>
+			<ChildItems>
+				<UsualGroup name="GroupText" id="1655">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group text</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group text</v8:content>
+						</v8:item>
+					</ToolTip>
+					<HorizontalStretch>true</HorizontalStretch>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="GroupTextExtendedTooltip" id="1656"/>
+					<ChildItems>
+						<UsualGroup name="GroupUploadText" id="1657">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group upload text</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group upload text</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupUploadTextExtendedTooltip" id="1658"/>
+							<ChildItems>
+								<LabelDecoration name="Decoration1" id="1639">
+									<Width>20</Width>
+									<Height>1</Height>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Last data upload:</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Последняя выгрузка данных:</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Upload</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Выгрузка</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ContextMenu name="Decoration1ContextMenu" id="1640"/>
+									<ExtendedTooltip name="Decoration1ExtendedTooltip" id="1641"/>
+								</LabelDecoration>
+								<LabelField name="DateUpload" id="1642">
+									<DataPath>DateUpload</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>20</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="DateUploadContextMenu" id="1643"/>
+									<ExtendedTooltip name="DateUploadExtendedTooltip" id="1644"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="GroupDownloadText" id="1659">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group download text</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group download text</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupDownloadTextExtendedTooltip" id="1660"/>
+							<ChildItems>
+								<LabelDecoration name="Decoration2" id="1645">
+									<Width>20</Width>
+									<Height>1</Height>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Last data download:</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Последняя загрузка данных:</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Download</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Загрузка</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ContextMenu name="Decoration2ContextMenu" id="1646"/>
+									<ExtendedTooltip name="Decoration2ExtendedTooltip" id="1647"/>
+								</LabelDecoration>
+								<LabelField name="DateDownload" id="1648">
+									<DataPath>DateDownload</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>20</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="DateDownloadContextMenu" id="1649"/>
+									<ExtendedTooltip name="DateDownloadExtendedTooltip" id="1650"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="GroupButtons" id="1661">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group buttons</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group buttons</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="GroupButtonsExtendedTooltip" id="1662"/>
+					<ChildItems>
+						<Button name="SyncronizeData" id="1651">
+							<Type>UsualButton</Type>
+							<Width>22</Width>
+							<CommandName>Form.Command.SyncronizeData</CommandName>
+							<Parameter xsi:nil="true"/>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Syncronize data</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="SyncronizeDataExtendedTooltip" id="1652"/>
+						</Button>
+						<Button name="SyncronizeFiles" id="1653">
+							<Type>UsualButton</Type>
+							<Width>22</Width>
+							<CommandName>Form.Command.SyncronizeFiles</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="SyncronizeFilesExtendedTooltip" id="1654"/>
+						</Button>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
 		<PictureDecoration name="Logo" id="295">
 			<HorizontalStretch>true</HorizontalStretch>
 			<VerticalStretch>true</VerticalStretch>
@@ -33,6 +219,7 @@
 					<v8:content>Logo</v8:content>
 				</v8:item>
 			</Title>
+			<PictureSize>AutoSize</PictureSize>
 			<Picture>
 				<xr:Ref>CommonPicture.Logo_En</xr:Ref>
 				<xr:LoadTransparent>false</xr:LoadTransparent>
@@ -41,4 +228,132 @@
 			<ExtendedTooltip name="LogoExtendedTooltip" id="1633"/>
 		</PictureDecoration>
 	</ChildItems>
+	<Attributes>
+		<Attribute name="DateUpload" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Last sync date</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата последней выгрузки данных</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="DateDownload" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Last sync date</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата последней загрузки данных</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="IDSession" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>IDСеанса</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>IDSession</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="IDUpload" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>IDВыгрузки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>IDUpload</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="SyncronizeData" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Syncronize data</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронизировать данные</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Syncronize data</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронизировать данные</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SyncronizeData</Action>
+			<Representation>TextPicture</Representation>
+		</Command>
+		<Command name="SyncronizeFiles" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Syncronize files</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронизировать файлы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Syncronize pictures</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронизировать файлы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SyncronizeFiles</Action>
+			<Representation>TextPicture</Representation>
+		</Command>
+	</Commands>
 </Form>
