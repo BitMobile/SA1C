@@ -793,12 +793,10 @@ Procedure WriteQuestions(Cancel, Tree, CurrentObject)
 			Manager.Write();
 			
 			ItemsOfBottomLevel = ItemOfTopLevel.GetItems();
-			
-			IndOfBottomOrder = 0;
-			
+						
 			For Each ItemOfBottomLevel In ItemsOfBottomLevel Do 
 				
-				IndOfBottomOrder = IndOfBottomOrder + 1;
+				IndOrder = IndOrder + 1;
 				
 				Manager 				= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
 				Manager.Period 			= ItemOfBottomLevel.StatusDate; 
@@ -806,7 +804,7 @@ Procedure WriteQuestions(Cancel, Tree, CurrentObject)
 				Manager.ParentQuestion	= ItemOfTopLevel.Question;
 				Manager.ChildQuestion	= ItemOfBottomLevel.Question;
 				Manager.Obligatoriness 	= ItemOfBottomLevel.Obligatoriness;
-				Manager.Order			= IndOfBottomOrder;
+				Manager.Order			= IndOrder;
 				Manager.QuestionType	= ItemOfBottomLevel.Question.Owner.Type;
 				Manager.Status			= ItemOfBottomLevel.Status;
 				
