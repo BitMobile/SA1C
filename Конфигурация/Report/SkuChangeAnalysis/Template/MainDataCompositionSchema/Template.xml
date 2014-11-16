@@ -54,11 +54,11 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Status</v8:content>
+					<v8:content>Outlet status</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Статус</v8:content>
+					<v8:content>Статус торговой точки</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -86,7 +86,7 @@
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Торговый агент</v8:content>
+					<v8:content>Торговый представитель</v8:content>
 				</v8:item>
 			</title>
 		</field>
