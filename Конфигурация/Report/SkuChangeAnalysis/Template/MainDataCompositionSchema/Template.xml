@@ -150,7 +150,9 @@ FROM
 WHERE
 	VisitSKUs.Ref.Date &gt;= &amp;НачалоПериода
 	AND VisitSKUs.Ref.Date &lt;= &amp;КонецПериода
-	AND VisitSKUs.SKU &gt; 0
+	AND VisitSKUs.Question.Assignment = VALUE(Enum.SKUQuestions.Available)
+	AND (VisitSKUs.Answer = "Yes"
+			OR VisitSKUs.Answer = "Да")
 
 GROUP BY
 	VisitSKUs.Ref,
