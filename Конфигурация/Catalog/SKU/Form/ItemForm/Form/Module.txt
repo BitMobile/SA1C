@@ -247,60 +247,62 @@ Procedure SelectPictureFromDisk()
 	
 #If WebClient Then 
 		
-		TempStorageAddress 	= "";
-		FileName 			= "";
-		
-		PutFile(TempStorageAddress, FileName, FileName, True, ThisForm.UUID);
-					
-		If ValueIsFilled(TempStorageAddress) Then 
-			
-			BinaryData = GetFromTempStorage(TempStorageAddress);
-			
-			SelectPictureServer(BinaryData);
-			
-			FileToExtension = New File(FileName);
-			
-			NewPictureName 		= New UUID();
-			NewPictureExtension = FileToExtension.Extension;
-			NewPictureType 		= "New";
-			
-			Object.DefaultPicture 			= Undefined;
-			Object.DefaultPictureExtension 	= Undefined;
-			
-			Items.PictureAddress.Refresh();
-			
-		EndIf;
-				
+	BeginPutFile(New NotifyDescription("SelectPictureFromDiskPart", ThisForm), , , True, ThisForm.UUID);		
+						
 #Else	
 	
-		DialogChangeFile 				= New FileDialog(FileDialogMode.Open);
-		DialogChangeFile.Filter 		= "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png"; 
-		DialogChangeFile.Title 			= NStr("en = 'Select file'; ru = 'Выберите файл'");
-		DialogChangeFile.Preview 		= True;
-		DialogChangeFile.FilterIndex 	= 0;
+	DialogChangeFile 				= New FileDialog(FileDialogMode.Open);
+	DialogChangeFile.Filter 		= "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png"; 
+	DialogChangeFile.Title 			= NStr("en = 'Select file'; ru = 'Выберите файл'");
+	DialogChangeFile.Preview 		= True;
+	DialogChangeFile.FilterIndex 	= 0;
 		           
-		If DialogChangeFile.Choose() Then 
+	If DialogChangeFile.Choose() Then 
 			
-			BinaryData = New BinaryData(DialogChangeFile.FullFileName);
+		BinaryData = New BinaryData(DialogChangeFile.FullFileName);
+		
+		SelectPictureServer(BinaryData);
 			
-			SelectPictureServer(BinaryData);
+		FileToExtension = New File(DialogChangeFile.FullFileName);
 			
-			FileToExtension = New File(DialogChangeFile.FullFileName);
+		NewPictureName 		= New UUID();
+		NewPictureExtension = FileToExtension.Extension;
+		NewPictureType 		= "New";
 			
-			NewPictureName 		= New UUID();
-			NewPictureExtension = FileToExtension.Extension;
-			NewPictureType 		= "New";
-			
-			Object.DefaultPicture 			= Undefined;
-			Object.DefaultPictureExtension 	= Undefined;
-			
-			Items.PictureAddress.Refresh();
+		Object.DefaultPicture 			= Undefined;
+		Object.DefaultPictureExtension 	= Undefined;
+		
+		Items.PictureAddress.Refresh();
 						 		
-		EndIf;
+	EndIf;
 		
 #EndIf
 	
 EndProcedure
+
+&AtClient
+Procedure SelectPictureFromDiskPart(Result, TempStorageAddress, FileName, AdditionalParameters) Export 
+	
+	If Not Result Then 
+		
+		Return;
+		
+	EndIf;	
+	
+	PictureAddress = TempStorageAddress;	
+	
+	FileToExtension = New File(FileName);
+		
+	NewPictureName 		= New UUID();
+	NewPictureExtension = FileToExtension.Extension;
+	NewPictureType 		= "New";
+		
+	Object.DefaultPicture 			= Undefined;
+	Object.DefaultPictureExtension 	= Undefined;
+		
+	Items.PictureAddress.Refresh();
+			
+EndProcedure	
 
 &AtServer
 Procedure SelectPictureServer(BinaryData)

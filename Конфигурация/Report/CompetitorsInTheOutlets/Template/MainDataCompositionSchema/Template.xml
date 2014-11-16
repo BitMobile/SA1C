@@ -7,292 +7,286 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>DataSet1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Визит</dataPath>
-			<field>Визит</field>
+			<dataPath>Outlet</dataPath>
+			<field>Outlet</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Визит</v8:content>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Номенклатура</dataPath>
-			<field>Номенклатура</field>
+			<dataPath>Assignment</dataPath>
+			<field>Assignment</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
+					<v8:content>Assignment</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Назначение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKU</dataPath>
+			<field>SKU</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
 					<v8:content>Номенклатура</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>КолSKUПоДокументу</dataPath>
-			<field>КолSKUПоДокументу</field>
+			<dataPath>Question</dataPath>
+			<field>Question</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Кол SKUПо документу</v8:content>
+					<v8:content>Question</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вопрос</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>КолSKUПоГруппе</dataPath>
-			<field>КолSKUПоГруппе</field>
+			<dataPath>SKUGroup</dataPath>
+			<field>SKUGroup</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Кол SKUПо группе</v8:content>
+					<v8:content>SKU group</v8:content>
 				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>ГруппаНоменклатуры</dataPath>
-			<field>ГруппаНоменклатуры</field>
-			<title xsi:type="v8:LocalStringType">
 				<v8:item>
-					<v8:lang>en</v8:lang>
+					<v8:lang>ru</v8:lang>
 					<v8:content>Группа номенклатуры</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>НаличиеНаСкладе</dataPath>
-			<field>НаличиеНаСкладе</field>
+			<dataPath>CountOfSKU</dataPath>
+			<field>CountOfSKU</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Наличие на складе</v8:content>
+					<v8:content>Count of SKU in visit</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Всего номенклатуры в визите</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Наценка</dataPath>
-			<field>Наценка</field>
+			<dataPath>Visit</dataPath>
+			<field>Visit</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Наценка</v8:content>
+					<v8:content>Visit</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Визит</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Фейсинг</dataPath>
-			<field>Фейсинг</field>
+			<dataPath>Answer</dataPath>
+			<field>Answer</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Фейсинг</v8:content>
+					<v8:content>Answer</v8:content>
 				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Остаток</dataPath>
-			<field>Остаток</field>
-			<title xsi:type="v8:LocalStringType">
 				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Остаток</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Доступность</dataPath>
-			<field>Доступность</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Доступность</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Цена</dataPath>
-			<field>Цена</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Цена</v8:content>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ответ</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>ВЫБРАТЬ
-	VisitSKUs.Ссылка КАК ДокументВизит
-ПОМЕСТИТЬ Документы
-ИЗ
-	Документ.Visit.SKUs КАК VisitSKUs
-ГДЕ
-	VisitSKUs.SKU &gt; 0
-	И VisitSKUs.Ссылка.Outlet.OutletStatus = ЗНАЧЕНИЕ(Перечисление.OutletStatus.Active)
-	И НЕ VisitSKUs.Ссылка.ПометкаУдаления
-	И VisitSKUs.Ссылка.Дата &gt;= НАЧАЛОПЕРИОДА(&amp;НачалоПериода, ДЕНЬ)
-	И VisitSKUs.Ссылка.Дата &lt;= КОНЕЦПЕРИОДА(&amp;КонецПериода, ДЕНЬ)
+		<query>SELECT
+	VisitSKUs.Ref AS Visit,
+	COUNT(DISTINCT VisitSKUs.SKU) AS CountOfSKU
+INTO Visits
+FROM
+	Document.Visit.SKUs AS VisitSKUs
+WHERE
+	VisitSKUs.Ref.Outlet.OutletStatus = VALUE(Enum.OutletStatus.Active)
+	AND NOT VisitSKUs.Ref.DeletionMark
+	AND VisitSKUs.Ref.Date &gt;= BEGINOFPERIOD(&amp;НачалоПериода, DAY)
+	AND VisitSKUs.Ref.Date &lt;= ENDOFPERIOD(&amp;КонецПериода, DAY)
 
-СГРУППИРОВАТЬ ПО
-	VisitSKUs.Ссылка
+GROUP BY
+	VisitSKUs.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-ВЫБРАТЬ
-	VisitSKUs.Ссылка КАК ДокументВизит,
-	КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VisitSKUs.SKU) КАК КолSKUПоГруппе,
-	VisitSKUs.SKU.Владелец КАК ГруппаSKU
-ПОМЕСТИТЬ КоличествоSKUПоГруппе
-ИЗ
-	Документ.Visit.SKUs КАК VisitSKUs
-		ВНУТРЕННЕЕ СОЕДИНЕНИЕ Документы КАК Документы
-		ПО VisitSKUs.Ссылка = Документы.ДокументВизит
-
-СГРУППИРОВАТЬ ПО
-	VisitSKUs.Ссылка,
-	VisitSKUs.SKU.Владелец
-;
-
-////////////////////////////////////////////////////////////////////////////////
-ВЫБРАТЬ
-	VisitSKUs.Ссылка КАК ДокументВизит,
-	КОЛИЧЕСТВО(РАЗЛИЧНЫЕ VisitSKUs.SKU) КАК КолSKUПоДокументу
-ПОМЕСТИТЬ КоличествоSKUПоДокументу
-ИЗ
-	Документ.Visit.SKUs КАК VisitSKUs
-		ВНУТРЕННЕЕ СОЕДИНЕНИЕ Документы КАК Документы
-		ПО VisitSKUs.Ссылка = Документы.ДокументВизит
-
-СГРУППИРОВАТЬ ПО
-	VisitSKUs.Ссылка
-;
-
-////////////////////////////////////////////////////////////////////////////////
-ВЫБРАТЬ
-	VisitSKUs.Ссылка КАК Визит,
-	VisitSKUs.SKU КАК Номенклатура,
-	КоличествоSKUПоГруппе.КолSKUПоГруппе КАК КолSKUПоГруппе,
-	КоличествоSKUПоДокументу.КолSKUПоДокументу КАК КолSKUПоДокументу,
-	VisitSKUs.SKU.Владелец КАК ГруппаНоменклатуры,
-	VisitSKUs.Available КАК Доступность,
-	VisitSKUs.Facing КАК Фейсинг,
-	VisitSKUs.MarkUp КАК Наценка,
-	VisitSKUs.OutOfStock КАК НаличиеНаСкладе,
-	VisitSKUs.Price КАК Цена,
-	VisitSKUs.Stock КАК Остаток
-ИЗ
-	Документ.Visit.SKUs КАК VisitSKUs
-		ВНУТРЕННЕЕ СОЕДИНЕНИЕ КоличествоSKUПоГруппе КАК КоличествоSKUПоГруппе
-		ПО VisitSKUs.Ссылка = КоличествоSKUПоГруппе.ДокументВизит
-			И VisitSKUs.SKU.Владелец = КоличествоSKUПоГруппе.ГруппаSKU
-		ВНУТРЕННЕЕ СОЕДИНЕНИЕ КоличествоSKUПоДокументу КАК КоличествоSKUПоДокументу
-		ПО VisitSKUs.Ссылка = КоличествоSKUПоДокументу.ДокументВизит</query>
+SELECT
+	VisitSKUs.SKU,
+	VisitSKUs.Answer,
+	VisitSKUs.Ref AS Visit,
+	VisitSKUs.Ref.Outlet,
+	VisitSKUs.SKU.Owner AS SKUGroup,
+	Visits.CountOfSKU,
+	SKUQuestions.Ref AS Question,
+	SKUQuestions.Assignment
+FROM
+	Visits AS Visits
+		INNER JOIN Document.Visit.SKUs AS VisitSKUs
+			INNER JOIN Catalog.Question AS SKUQuestions
+			ON VisitSKUs.Question = SKUQuestions.Ref
+		ON Visits.Visit = VisitSKUs.Ref
+WHERE
+	NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.EmptyRef) AND NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.Snapshot)</query>
 	</dataSet>
 	<totalField>
-		<dataPath>КолSKUПоГруппе</dataPath>
-		<expression>Максимум(КолSKUПоГруппе)</expression>
+		<dataPath>Answer</dataPath>
+		<expression>Max(Answer)</expression>
+		<group>SKU</group>
 	</totalField>
-	<totalField>
-		<dataPath>КолSKUПоДокументу</dataPath>
-		<expression>Максимум(КолSKUПоДокументу)</expression>
-		<group>Визит</group>
-	</totalField>
-	<totalField>
-		<dataPath>Доступность</dataPath>
-		<expression>Максимум(Доступность)</expression>
-		<group>Номенклатура</group>
-	</totalField>
-	<totalField>
-		<dataPath>Фейсинг</dataPath>
-		<expression>Максимум(Фейсинг)</expression>
-		<group>Номенклатура</group>
-	</totalField>
-	<totalField>
-		<dataPath>Наценка</dataPath>
-		<expression>Максимум(Наценка)</expression>
-		<group>Номенклатура</group>
-	</totalField>
-	<totalField>
-		<dataPath>НаличиеНаСкладе</dataPath>
-		<expression>Максимум(НаличиеНаСкладе)</expression>
-		<group>Номенклатура</group>
-	</totalField>
-	<totalField>
-		<dataPath>Цена</dataPath>
-		<expression>Максимум(Цена)</expression>
-		<group>Номенклатура</group>
-	</totalField>
-	<totalField>
-		<dataPath>Остаток</dataPath>
-		<expression>Максимум(Остаток)</expression>
-		<group>Номенклатура</group>
-	</totalField>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
 	<parameter>
 		<name>НачалоПериода</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
+				<v8:content>Beginning of period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
 				<v8:content>Начало периода</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
 			<v8:Type>xs:dateTime</v8:Type>
 			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
+				<v8:DateFractions>Date</v8:DateFractions>
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>false</useRestriction>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Период.ДатаНачала</expression>
 	</parameter>
 	<parameter>
 		<name>КонецПериода</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
+				<v8:content>End of period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
 				<v8:content>Конец периода</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
 			<v8:Type>xs:dateTime</v8:Type>
 			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
+				<v8:DateFractions>Date</v8:DateFractions>
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>false</useRestriction>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Период.ДатаОкончания</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
-			<dcsset:selection>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>КолSKUПоГруппе</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>КолSKUПоДокументу</dcsset:field>
-				</dcsset:item>
-			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
-					<dcsset:left xsi:type="dcscor:Field">ГруппаНоменклатуры</dcsset:left>
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
-					<dcsset:userSettingID>7780ddc5-3722-4755-8fcf-038a3473dfeb</dcsset:userSettingID>
+					<dcsset:userSettingID>ecdfef21-ff76-4c14-bdd2-f1fd4286273a</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>82766ad6-f744-4ef9-93be-57fa3e72f331</dcsset:userSettingID>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>НачалоПериода</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardBeginningDate">
-						<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisYear</v8:variant>
+					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
+					<dcsset:userSettingID>86eb8e0d-29a7-4e8f-bc76-44d5dab9f674</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>НачалоПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>8f2cbd9b-966e-485d-9f5d-d8c18a47fb18</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>КонецПериода</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardBeginningDate">
-						<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfNextMonth</v8:variant>
-					</dcscor:value>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>835eb254-f368-40a7-8293-c4d2d2a0d293</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>CountOfSKU</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>HorizontalAlign</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:HorizontalAlign">Left</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>HorizontalOverallPlacement</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
@@ -301,39 +295,12 @@
 					<dcscor:parameter>VerticalOverallPlacement</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
 				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>FilterOutput</dcscor:parameter>
-					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
-				</dcscor:item>
 			</dcsset:outputParameters>
-			<dcsset:item xsi:type="dcsset:StructureItemGroup">
-				<dcsset:groupItems>
-					<dcsset:item xsi:type="dcsset:GroupItemField">
-						<dcsset:field>Визит</dcsset:field>
-						<dcsset:groupType>Items</dcsset:groupType>
-						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
-						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
-						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
-					</dcsset:item>
-				</dcsset:groupItems>
-				<dcsset:order>
-					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
-				</dcsset:order>
-				<dcsset:selection>
-					<dcsset:item xsi:type="dcsset:SelectedItemField">
-						<dcsset:field>Визит</dcsset:field>
-					</dcsset:item>
-					<dcsset:item xsi:type="dcsset:SelectedItemField">
-						<dcsset:field>КолSKUПоГруппе</dcsset:field>
-					</dcsset:item>
-					<dcsset:item xsi:type="dcsset:SelectedItemField">
-						<dcsset:field>КолSKUПоДокументу</dcsset:field>
-					</dcsset:item>
-				</dcsset:selection>
-				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>Номенклатура</dcsset:field>
+							<dcsset:field>Question</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -344,29 +311,77 @@
 						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 					</dcsset:order>
 					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Номенклатура</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Доступность</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Фейсинг</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Наценка</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>НаличиеНаСкладе</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Цена</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>Остаток</dcsset:field>
+							<dcsset:field>Answer</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
-				</dcsset:item>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Outlet</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Visit</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>CountOfSKU</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+						<dcsset:item>
+							<dcsset:groupItems>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>SKU</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>SKUGroup</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+							</dcsset:groupItems>
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:row>
 			</dcsset:item>
 		</dcsset:settings>
 	</settingsVariant>

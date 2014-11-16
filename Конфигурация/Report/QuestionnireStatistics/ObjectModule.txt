@@ -1,120 +1,57 @@
 ﻿
 Procedure OnComposeResult(ResultDocument, DetailsData, StandardProcessing)
+	
 	StandardProcessing = False;
 	Settings = SettingsComposer.Settings;
 	
+	Password 	= Constants.bitmobile_Пароль.Get();
+	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
+	Path 		= StrReplace(Path, "admin", "webdav");
+	Port 		= Constants.bitmobile_Порт.Get();
+	
+	Try
+	
+		Connection = New HTTPConnection(Server, Port, "admin", Password);
+		
+	Except
+		
+		Connection = Undefined;
+		
+	EndTry;
+	
 	SelectTable = SettingsComposer.UserSettings.Items;
+	
 	//Filter
 	For Each SelectItems in SettingsComposer.Settings.Filter.Items Do
+		
 		FindUserSettings = SelectTable.Find(SelectItems.UserSettingID);
+		
 		If FindUserSettings <> Undefined Then
+			
 			SelectItems.ComparisonType = FindUserSettings.ComparisonType;
 			SelectItems.Use = FindUserSettings.Use;
 			SelectItems.RightValue = FindUserSettings.RightValue;  			
+			
 		EndIf;
+		
 	EndDo;
-	
-	//Edit filter
-	
-	//If SettingsComposer.UserSettings.Items[2].Use = true AND SettingsComposer.UserSettings.Items[2].RightValue <> Undefined Then 
-	//	if TypeOf(SettingsComposer.UserSettings.Items[2].RightValue) = Type("ValueList") Then 
-	//		
-	//		tp = new ValueList;
-	//		cl = new ValueList;
-	//		rg = new ValueList;
-	//		tr = new ValueList;
-	//		For Each Anketa in SettingsComposer.UserSettings.Items[2].RightValue do
-	//			tp.Add(Anketa.Value.OutletType);
-	//			cl.Add(Anketa.Value.OutletClass);
-	//			If Anketa.Value.Scale = Enums.QuestionnaireScale.Region Then 
-	//				rg.Add(Anketa.Value.Territories[0].Territory.Owner);
-	//			else
-	//				tr.Add(Anketa.Value.Territories[0].Territory);
-	//			Endif;
-	//		EndDo;
-	//		
-	//	Else
-	//		tp = Undefined;
-	//		cl = Undefined;
-	//		rg = Undefined;
-	//		tr = Undefined;
-	//		
-	//		tp = SettingsComposer.UserSettings.Items[2].RightValue.OutletType;
-	//		cl = SettingsComposer.UserSettings.Items[2].RightValue.OutletClass;
-	//		If SettingsComposer.UserSettings.Items[2].RightValue.Scale = Enums.QuestionnaireScale.Region Then 
-	//				rg = SettingsComposer.UserSettings.Items[2].RightValue.Territories[0].Territory.Owner;
-	//		Else
-	//				tr = SettingsComposer.UserSettings.Items[2].RightValue.Territories[0].Territory;
-	//		Endif;
-	//					
-	//	EndIf;
-	//SettingsComposer.Settings.Filter.Items[4].Use = True;
-	//SettingsComposer.Settings.Filter.Items[4].ComparisonType = SettingsComposer.UserSettings.Items[2].ComparisonType;
-	//SettingsComposer.Settings.Filter.Items[4].RightValue = cl;
-	//
-	//SettingsComposer.Settings.Filter.Items[5].Use = True;
-	//SettingsComposer.Settings.Filter.Items[5].ComparisonType = SettingsComposer.UserSettings.Items[2].ComparisonType;
-	//SettingsComposer.Settings.Filter.Items[5].RightValue = tp;
-	//
-	//	
-	//if rg <> Undefined then
-	//	SettingsComposer.Settings.Filter.Items[1].Use = True;
-	//	SettingsComposer.Settings.Filter.Items[1].ComparisonType = SettingsComposer.UserSettings.Items[2].ComparisonType;
-	//	SettingsComposer.Settings.Filter.Items[1].RightValue = rg;
-	//Else
-	//	SettingsComposer.Settings.Filter.Items[1].Use = False;	
-	//EndIf;
-	//
-	//If tr <> Undefined then
-	//	SettingsComposer.Settings.Filter.Items[2].Use = True;
-	//	SettingsComposer.Settings.Filter.Items[2].ComparisonType = SettingsComposer.UserSettings.Items[2].ComparisonType;
-	//	SettingsComposer.Settings.Filter.Items[2].RightValue = tr;
-	//else
-	//	SettingsComposer.Settings.Filter.Items[2].Use = False;
-	//	
-	//Endif;
-	////Message("При выборе анкеты значения Тип, Класс, Территория, и Регион торговой точки были взяты из анкеты.");
-	//
-	//if TypeOf(rg) = Type("ValueList") Then
-	//	if rg.Count() = 0 then
-	//		SettingsComposer.Settings.Filter.Items[1].Use = False;		
-	//	Endif;
-	//Endif;
-	//
-	//if TypeOf(tr) = Type("ValueList") Then
-	//	if tr.Count() = 0 then
-	//		SettingsComposer.Settings.Filter.Items[2].Use = False;			
-	//	Endif;
-	//Endif;
-	//
-	//if SettingsComposer.UserSettings.Items[2].ComparisonType = DataCompositionComparisonType.NotEqual then
-	//	SettingsComposer.Settings.Filter.Items[1].Use = False;
-	//	SettingsComposer.Settings.Filter.Items[2].Use = False;
-	//	SettingsComposer.Settings.Filter.Items[4].Use = False;
-	//	SettingsComposer.Settings.Filter.Items[5].Use = False;
-	//endif;
-	//
-	//
-	//tp = Undefined;
-	//cl = Undefined;
-	//rg = Undefined;
-	//tr = Undefined;
-	//EndIf;
-	
 	
 	//Parametrs
 	
 	For Each SelectItems in SettingsComposer.Settings.DataParameters.Items Do
+		
 		FindUserSettings = SelectTable.Find(SelectItems.UserSettingID);
+		
 		If FindUserSettings <> Undefined Then
-			//SelectItems.ComparisonType = FindUserSettings.ComparisonType;
+			
 			SelectItems.Use = FindUserSettings.Use;
 			SelectItems.Value = FindUserSettings.Value;
-		EndIf;
-	EndDo;
-	
 			
-	
+		EndIf;
+		
+	EndDo;
+		
 	DetailsData = New DataCompositionDetailsData;
 	ComposeTemp = New DataCompositionTemplateComposer;
 	
@@ -133,35 +70,54 @@ Procedure OnComposeResult(ResultDocument, DetailsData, StandardProcessing)
 	CountCols = ResultDocument.TableWidth;
 	CountRow = ResultDocument.TableHeight;
 	OutputProcessor.BeginOutput();
+	
 	For Col = 1 to CountCols Do
+		
 		For Row = 1 to CountRow Do
+			
 			CurrentArea = ResultDocument.Area(Row, Col);
+			
 			If CurrentArea.Details <> Undefined Then
+				
 				FieldDetails = DetailsData.Items[CurrentArea.Details].GetFields();
+				
 				If FieldDetails.Count() > 0 Then
-					Picture = GetPicture(CurrentArea.Text);
+					
+					Picture = GetPicture(CurrentArea.Text, Connection, Path);
 					
 					If Picture <> Undefined Then
+						
 						Pic = ResultDocument.Drawings.Add(SpreadsheetDocumentDrawingType.Picture);
 						Pic.PictureSize = PictureSize.RealSize;
 						Pic.Picture = Picture;
 						Pic.Place(CurrentArea);
-						CurrentArea.RowHeight = 300;
+						
+						CurrentArea.RowHeight = 200;
+						
 					EndIf; 				
+					
 				EndIf;   				
+				
 			EndIf;       			
+			
 		EndDo;		
+		
 	EndDo;
+	
 	OutputProcessor.EndOutput();	
 	
 EndProcedure
 
-Function GetPicture(Fl)
+Function GetPicture(ID, Connection, Path)
 	
 	Try 
-		isGuid = New UUID(Fl);
+		
+		isGuid = New UUID(ID);
+		
 	Except
-		return Undefined;
+		
+		Return Undefined;
+		
 	EndTry;
 				
 	Query = New Query;
@@ -174,17 +130,55 @@ Function GetPicture(Fl)
 	             |WHERE
 	             |	StorageAdditionalInformation.FileName = &FileName";
 				 
-	Query.SetParameter("FileName",isGuid);
+	Query.SetParameter("FileName", isGuid);
+	
 	Res = Query.Execute();
+	
 	If Not Res.IsEmpty() Then
+		
 		Sel = Res.Choose();
+		
 		Sel.Next();
-		Return New Picture(Sel.Storage.Get(), True);
+		
+		BinaryDataOfFile = Sel.Storage.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then
+		
+			Return New Picture(BinaryDataOfFile, True);
+			
+		Else 
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(Sel.Extension);
+					
+					Connection.Get(Path + Sel.FullFileName, WebDAVFile);
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					Return New Picture(BinaryDataOfFile, True);
+										
+				Except
+					
+					Return Undefined;
+					
+				EndTry;
+				
+			Else 
+				
+				Return Undefined;
+				
+			EndIf;
+						
+		EndIf;	
 		
 	Else
+		
 		Return Undefined;
+		
 	EndIf;
-	
-	
+		
 EndFunction;
 

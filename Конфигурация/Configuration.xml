@@ -295,10 +295,10 @@
 			<Report>QuestionnireStatistics</Report>
 			<Report>VisitsAnalysis</Report>
 			<Report>AnalysisOutletParameters</Report>
-			<Report>CompetitorsInTheOutlets</Report>
 			<Report>OutletsStatus</Report>
 			<Report>SkuChangeAnalysis</Report>
 			<Report>NumberOfOutlets</Report>
+			<Report>CompetitorsInTheOutlets</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>

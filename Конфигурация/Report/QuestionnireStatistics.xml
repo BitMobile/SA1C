@@ -16,11 +16,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Questionnire statistics</v8:content>
+					<v8:content>Report on questions in questionnaires (questions on outlets)</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Статистика по анкетам</v8:content>
+					<v8:content>Отчет по вопросам анкет (вопросы по ТТ)</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
