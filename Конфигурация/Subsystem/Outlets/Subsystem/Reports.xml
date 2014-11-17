@@ -23,6 +23,10 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.OutletsStatus</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.AnalysisOutletParameters</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.BindingOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowBindingOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowAnalysisOutletParameters</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletsStatuses</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowNumberOfOutlets</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

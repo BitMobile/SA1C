@@ -22,6 +22,9 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.QuestionnireStatistics</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.CompetitorsInTheOutlets</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.SkuChangeAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowQuestionnireStatistics</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSkuChangeAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowCompetitorsInTheOutlets</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

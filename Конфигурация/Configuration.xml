@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.3.0.59</Version>
+			<Version>1.3.0.60</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -187,6 +187,23 @@
 			<CommonCommand>HistoryTask</CommonCommand>
 			<CommonCommand>ShowSKUQuestions</CommonCommand>
 			<CommonCommand>ShowRegularQuestions</CommonCommand>
+			<CommonCommand>ShowSyncAndSettings</CommonCommand>
+			<CommonCommand>ShowDeleteObjects</CommonCommand>
+			<CommonCommand>ShowScheduledJobs</CommonCommand>
+			<CommonCommand>ShowBindingOutlets</CommonCommand>
+			<CommonCommand>ShowAnalysisOutletParameters</CommonCommand>
+			<CommonCommand>ShowOutletsStatuses</CommonCommand>
+			<CommonCommand>ShowNumberOfOutlets</CommonCommand>
+			<CommonCommand>ShowQuestionnireStatistics</CommonCommand>
+			<CommonCommand>ShowSkuChangeAnalysis</CommonCommand>
+			<CommonCommand>ShowCompetitorsInTheOutlets</CommonCommand>
+			<CommonCommand>ShowVisits</CommonCommand>
+			<CommonCommand>ShowVisitEfficiency</CommonCommand>
+			<CommonCommand>ShowEncashment</CommonCommand>
+			<CommonCommand>ShowVisitResults</CommonCommand>
+			<CommonCommand>ShowVisitsAnalysis</CommonCommand>
+			<CommonCommand>ShowVisitsOnMap</CommonCommand>
+			<CommonCommand>ShowOrders</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>

@@ -71,6 +71,8 @@
 							<v8:content>Местоположение</v8:content>
 						</v8:item>
 					</Title>
+					<TitleLocation>None</TitleLocation>
+					<Width>17</Width>
 					<ContextMenu name="НачальноеМестоположениеКонтекстноеМеню" id="12"/>
 					<ExtendedTooltip name="НачальноеМестоположениеРасширеннаяПодсказка" id="66"/>
 				</InputField>

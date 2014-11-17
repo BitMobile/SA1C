@@ -1547,7 +1547,6 @@ Procedure StatusChangeFromPlanningToActiveProcessing(Result, Parameters) Export
 		Object.BeginDate = BegOfDay(CurrentDate());
 		
 		WriteParameters = GetWriteParameters();
-
 		
 		ThisForm.Write(WriteParameters);
 		
@@ -1605,8 +1604,8 @@ EndProcedure
 Function GetWriteParameters()    
 	
 	WriteParameters = New Structure;
-    WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
-	WriteParameters.Insert("PostingMode", DocumentPostingMode.Regular);
+    WriteParameters.Insert("WriteMode", DocumentWriteMode.Write);
+	
     Return WriteParameters;
 
 EndFunction

@@ -23,9 +23,14 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitEfficiency</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitResults</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.Encashment</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.QuestionnireStatistics</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitsAnalysis</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.VisitsOnMap</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisits</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitEfficiency</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowEncashment</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitResults</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsOnMap</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
