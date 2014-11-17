@@ -10,8 +10,7 @@ Var OldStatus;
 &AtClient
 Var AvailableStatuses;
 
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -146,7 +145,7 @@ Procedure AfterWrite(WriteParameters)
 	
 EndProcedure
 
-// Status
+#Region Status
 
 &AtServer
 Procedure DisableFormElements()
@@ -228,8 +227,9 @@ Function GetAvailableStatuses(Status)
 						  
 EndFunction
 
+#EndRegion
 
-// SKUs
+#Region SKUs
 
 &AtServerNoContext
 Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
@@ -608,8 +608,9 @@ Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
 	
 EndFunction
 
+#EndRegion
 
-// Schedule
+#Region Schedule
 
 &AtServer
 Procedure SetScheduleStringPresentation()
@@ -618,8 +619,9 @@ Procedure SetScheduleStringPresentation()
 	
 EndProcedure
 
+#EndRegion
 
-// Questions
+#Region Questions
 
 &AtServer
 Function IsNotEqual(Value)
@@ -1159,8 +1161,9 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, Parent = Undefined,
 	
 EndProcedure
 
+#EndRegion
 
-// Selectors
+#Region Selectors
 
 &AtServerNoContext
 Function GetEqualComparisonType()
@@ -1373,9 +1376,11 @@ Procedure LoadSelectors()
 	
 EndProcedure
 
+#EndRegion
 
-///////////////////////////////////////////////////////
-// User interface
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
@@ -1418,7 +1423,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
     
 EndProcedure
 
-// Status
+#Region Status
 
 &AtClient
 Procedure StatusStartChoice(Item, ChoiceData, StandardProcessing)
@@ -1613,8 +1618,9 @@ Procedure FillAvailableStatuses(Status)
 
 EndProcedure
 
+#EndRegion
 
-// End date
+#Region EndDate
 
 &AtClient
 Procedure EndDateOnChange(Item)
@@ -1680,8 +1686,9 @@ Procedure ChangeEndDateInActiveStatus(Result, Parameters) Export
 	
 EndProcedure
 
+#EndRegion
 
-// Schedule
+#Region Schedule
 
 &AtClient
 Procedure SetSchedule(Command)
@@ -1703,8 +1710,9 @@ Procedure RegularityOnChange(Item)
 	
 EndProcedure
 
+#EndRegion
 
-// Selectors
+#Region Selectors
 
 &AtClient
 Procedure SelectOutlets(Command)
@@ -1926,8 +1934,9 @@ Procedure SelectorsComparisonTypeClearing(Item, StandardProcessing)
 	
 EndProcedure
 
+#EndRegion
 
-// Questions
+#Region Questions
 
 &AtClient
 Procedure AddQuestion(Command)
@@ -2493,8 +2502,9 @@ Procedure UnsetObligatoriness(Command)
 	
 EndProcedure
 
+#EndRegion
 
-// SKUs
+#Region SKUs
 
 &AtClient
 Procedure SKUSourceTypeOnChange(Item)
@@ -2712,6 +2722,9 @@ Procedure CheckSelectorsForSKUs(Command)
 		
 EndProcedure
 
+#EndRegion
+
+#EndRegion
 
 TypesMap = new Map();
 TypesMap.Insert("String", "String");

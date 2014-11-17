@@ -1,14 +1,5 @@
 ﻿
-&AtClient
-Procedure ListOnActivateRow(Item)
-	
-	If ShowPreview Then
-		
-		ShowPreview();
-		
-	EndIf;	
-	
-EndProcedure
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure ShowPreview()
@@ -68,30 +59,6 @@ Procedure ShowPreview()
 		
 EndProcedure
  
-&AtClient
-Procedure ShowPreviewOnChange(Item)
-	
-	If ShowPreview Then
-		
-		ShowPreview();
-		
-	Else 
-		
-		Preview = Undefined;
-		
-	EndIf;	
-	
-EndProcedure
-
-&AtClient
-Procedure SetSizeOfFiles(Command)
-	
-	SetSizeOfFilesServer();
-	
-	Items.List.Refresh();
-	
-EndProcedure
-
 &AtServer
 Procedure SetSizeOfFilesServer()
 	
@@ -119,3 +86,44 @@ Procedure SetSizeOfFilesServer()
 	RecordSet.Write();
 	
 EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure ListOnActivateRow(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtClient
+Procedure ShowPreviewOnChange(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	Else 
+		
+		Preview = Undefined;
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtClient
+Procedure SetSizeOfFiles(Command)
+	
+	SetSizeOfFilesServer();
+	
+	Items.List.Refresh();
+	
+EndProcedure
+
+#EndRegion

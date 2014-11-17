@@ -1,24 +1,5 @@
 ﻿
-&AtClient
-Procedure ShowPacking(Command)
-	
-	If ThisForm.Items.Packing.Visible=False Then
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Hide packing settigns'; ru = 'Скрыть настройки упаковок'");
-        ThisForm.Items.Packing.Visible=True;
-    Else
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Show packing'; ru = 'Показать настройки упаковок'");
-        ThisForm.Items.Packing.Visible=False;
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure BaseUnitOnChange(Item)
-	
-	AddPack();
-	Message(NStr("en = ""Warning, new base unit has multiplier 1. Check multipliers corectness, please.""; ru = ""Внимание, новая базовая единица имеет коэффициент 1. Проверьте, пожалуйста, коэффициенты на правильность."""));	
-	
-EndProcedure
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -74,285 +55,6 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	DefaultPictureName = Object.DefaultPicture;
 	DefaultPictureExtension = Object.DefaultPictureExtension;
-		
-EndProcedure
-
-&AtServer
-Procedure AddPack()
-
-	ParameterFilter = new Structure;
-	ParameterFilter.Insert("Pack", Object.BaseUnit);
-	FoundRow = Object.Packing.FindRows(ParameterFilter);
-	
-	If FoundRow.Count() = 0 Then
-		NewRow = Object.Packing.Add();
-		NewRow.Pack = Object.BaseUnit;
-		NewRow.Multiplier = 1;
-	Else
-		FoundRow[0].Multiplier = 1;
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure PictureAddressClick(Item, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	SelectPicture();
-				
-EndProcedure
-
-&AtClient
-Procedure SelectPicture()
-	
-	OpenForm("Catalog.SKU.Form.PickFromForm");
-	//Buttons = New ValueList;
-	//
-	//FromDisk 	 = "ru = ""Выбрать с диска""; "
-	// 		 	 + "en = ""Pick from disk""";
-	//		 
-	//FromePrivate = "ru = ""Выбрать из раздела 'private'""; "
-	// 		 	 + "en = ""Pick from the 'private'""";
-	//			 
-	//FromeShared  = "ru = ""Выбрать из раздела 'shared'""; "
-	// 		 	 + "en = ""Pick from the 'shared'""";
-	//			 
-	//Cancel 		 = "ru = ""Отмена""; "
-	// 		 	 + "en = ""Cancel""";			 
-	//			 
-	//Buttons.Add("Disk", NStr(FromDisk));
-	//Buttons.Add("Private", NStr(FromePrivate));
-	//Buttons.Add("Shared", NStr(FromeShared));
-	//Buttons.Add("Cancel", NStr(Cancel));
-	//
-	//Header = "ru = ""Выберите действие:""; "
-	// 	   + "en = ""Select an action:""";
-	//
-	//Answer = DoQueryBox(NStr(Header), Buttons, , , , );
-	//
-	//If Answer = "Disk" Then 
-	//	
-	//	SelectPictureFromDisk();
-	//	
-	//ElsIf Answer = "Private" Then
-	//	
-	//	Filter = GetFilter(Answer);
-	//							
-	//	Params = New Structure("Filter", Filter);
-	//	
-	//	SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
-	//	
-	//	If ValueIsFilled(SelectedPictureKey) Then
-	//		
-	//		Mode = QuestionDialogMode.OKCancel;
-	//		
-	//		Header = "ru = ""Изображение будет перенесено в раздел 'shared'. Продолжить?""; "
-	// 	   		   + "en = ""Picture will be moved to the section 'shared'. Continue?""";
-	//		
-	//		Answer = DoQueryBox(NStr(Header), Mode, , , , );
-	//		
-	//		If Answer = DialogReturnCode.OK Then 
-	//			
-	//			SetPicture(SelectedPictureKey);
-	//			
-	//		EndIf;
-	//					
-	//	EndIf;
-	//			
-	//	Items.PictureAddress.Refresh();
-	//	
-	//ElsIf Answer = "Shared" Then
-	//	
-	//	Filter = GetFilter(Answer);
-	//							
-	//	Params = New Structure("Filter", Filter);
-	//	
-	//	SelectedPictureKey = OpenFormModal("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
-	//	
-	//	If ValueIsFilled(SelectedPictureKey) Then 
-	//		
-	//		SetPicture(SelectedPictureKey);
-	//		
-	//	EndIf;
-	//			
-	//	Items.PictureAddress.Refresh();
-	//	
-	//EndIf;
-	
-EndProcedure
-
-&AtServer
-Function GetFilter(SyncDirection)
-	
-	ExtensionList = New ValueList;
-	ExtensionList.Add(".jpg");
-	ExtensionList.Add(".png");
-	
-	ActionList = New ValueList;
-	ActionList.Add(Enums.SyncAction.AddFile);
-	ActionList.Add(Enums.SyncAction.EmptyRef());
-	
-	Filter = Undefined;
-	
-	If SyncDirection = "Shared" Then  
-	
-		Filter = New Structure("Object, SyncDirection, Action, Extension", 
-									Object.Ref, 
-									Enums.SyncDirections.Shared,
-									ActionList,
-									ExtensionList);	
-									
-	ElsIf SyncDirection = "Private" Then
-		
-		Filter = New Structure("Object, SyncDirection, Action, Extension", 
-									Object.Ref, 
-									Enums.SyncDirections.Private,
-									ActionList,
-									ExtensionList);
-									
-	EndIf;
-									
-	Return Filter;
-	
-EndFunction
-
-&AtServer
-Procedure SetPicture(SelectedPictureKey)
-	
-	RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-	
-	FillPropertyValues(RecordManager, SelectedPictureKey);
-	
-	RecordManager.Read();
-	
-	PictureAddress = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
-	
-	NewPictureName 		= RecordManager.FileName;
-	NewPictureExtension = RecordManager.Extension;
-	
-	If RecordManager.SyncDirection = Enums.SyncDirections.Private Then 
-		NewPictureType = "Private";
-	ElsIf RecordManager.SyncDirection = Enums.SyncDirections.Shared Then 
-		NewPictureType = "Shared";
-	EndIf;
-		
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-	
-EndProcedure
-
-&AtClient
-Procedure SelectPictureFromDisk()
-	
-#If WebClient Then 
-		
-	BeginPutFile(New NotifyDescription("SelectPictureFromDiskPart", ThisForm), , , True, ThisForm.UUID);		
-						
-#Else	
-	
-	DialogChangeFile 				= New FileDialog(FileDialogMode.Open);
-	DialogChangeFile.Filter 		= "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png"; 
-	DialogChangeFile.Title 			= NStr("en = 'Select file'; ru = 'Выберите файл'");
-	DialogChangeFile.Preview 		= True;
-	DialogChangeFile.FilterIndex 	= 0;
-		           
-	If DialogChangeFile.Choose() Then 
-			
-		BinaryData = New BinaryData(DialogChangeFile.FullFileName);
-		
-		SelectPictureServer(BinaryData);
-			
-		FileToExtension = New File(DialogChangeFile.FullFileName);
-			
-		NewPictureName 		= New UUID();
-		NewPictureExtension = FileToExtension.Extension;
-		NewPictureType 		= "New";
-			
-		Object.DefaultPicture 			= Undefined;
-		Object.DefaultPictureExtension 	= Undefined;
-		
-		Items.PictureAddress.Refresh();
-						 		
-	EndIf;
-		
-#EndIf
-	
-EndProcedure
-
-&AtClient
-Procedure SelectPictureFromDiskPart(Result, TempStorageAddress, FileName, AdditionalParameters) Export 
-	
-	If Not Result Then 
-		
-		Return;
-		
-	EndIf;	
-	
-	PictureAddress = TempStorageAddress;	
-	
-	FileToExtension = New File(FileName);
-		
-	NewPictureName 		= New UUID();
-	NewPictureExtension = FileToExtension.Extension;
-	NewPictureType 		= "New";
-		
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-		
-	Items.PictureAddress.Refresh();
-			
-EndProcedure	
-
-&AtServer
-Procedure SelectPictureServer(BinaryData)
-	
-	Storage = New ValueStorage(BinaryData);
-			
-	PictureAddress = PutToTempStorage(Storage.Get(), ThisForm.UUID);
-			
-EndProcedure
-
-&AtClient
-Procedure EditPicture(Command)
-	
-	SelectPicture();
-    	
-EndProcedure
-
-&AtClient
-Procedure DeletePicture(Command)
-	
-	NewPictureName 		= Undefined;
-	NewPictureExtension = Undefined;
-	
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-	
-	PictureAddress = "";
-	
-EndProcedure
-
-&AtClient
-Procedure OpenPicture(Command)
-	
-	FileName = Undefined;
-	
-	If ValueIsFilled(Object.DefaultPicture) Then 
-		
-		FileName = String(Object.DefaultPicture) + Object.DefaultPictureExtension;
-		
-	ElsIf ValueIsFilled(NewPictureName) Then 
-		
-		FileName = String(NewPictureName) + NewPictureExtension;
-		
-	EndIf;
-		
-	If ValueIsFilled(FileName) Then 
-		
-		GetFile(PictureAddress, FileName, True);
-		
-	EndIf;
 		
 EndProcedure
 
@@ -440,9 +142,81 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 EndProcedure
 
-&AtClient
-Procedure OnOpen(Cancel)
-    Items.Stock.ReadOnly = GetConstant();
+&AtServer
+Function GetFilter(SyncDirection)
+	
+	ExtensionList = New ValueList;
+	ExtensionList.Add(".jpg");
+	ExtensionList.Add(".png");
+	
+	ActionList = New ValueList;
+	ActionList.Add(Enums.SyncAction.AddFile);
+	ActionList.Add(Enums.SyncAction.EmptyRef());
+	
+	Filter = Undefined;
+	
+	If SyncDirection = "Shared" Then  
+	
+		Filter = New Structure("Object, SyncDirection, Action, Extension", 
+									Object.Ref, 
+									Enums.SyncDirections.Shared,
+									ActionList,
+									ExtensionList);	
+									
+	ElsIf SyncDirection = "Private" Then
+		
+		Filter = New Structure("Object, SyncDirection, Action, Extension", 
+									Object.Ref, 
+									Enums.SyncDirections.Private,
+									ActionList,
+									ExtensionList);
+									
+	EndIf;
+									
+	Return Filter;
+	
+EndFunction
+
+&AtServer
+Procedure SetPicture(SelectedPictureKey)
+	
+	RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+	
+	FillPropertyValues(RecordManager, SelectedPictureKey);
+	
+	RecordManager.Read();
+	
+	PictureAddress = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
+	
+	NewPictureName 		= RecordManager.FileName;
+	NewPictureExtension = RecordManager.Extension;
+	
+	If RecordManager.SyncDirection = Enums.SyncDirections.Private Then 
+		NewPictureType = "Private";
+	ElsIf RecordManager.SyncDirection = Enums.SyncDirections.Shared Then 
+		NewPictureType = "Shared";
+	EndIf;
+		
+	Object.DefaultPicture 			= Undefined;
+	Object.DefaultPictureExtension 	= Undefined;
+	
+EndProcedure
+
+&AtServer
+Procedure AddPack()
+
+	ParameterFilter = new Structure;
+	ParameterFilter.Insert("Pack", Object.BaseUnit);
+	FoundRow = Object.Packing.FindRows(ParameterFilter);
+	
+	If FoundRow.Count() = 0 Then
+		NewRow = Object.Packing.Add();
+		NewRow.Pack = Object.BaseUnit;
+		NewRow.Multiplier = 1;
+	Else
+		FoundRow[0].Multiplier = 1;
+	EndIf;
+	
 EndProcedure
 
 &AtServer
@@ -450,48 +224,244 @@ Function GetConstant()
 	Return Constants.SKUFeaturesRegistration.Get();
 EndFunction // ()
 
+&AtServer
+Procedure SelectPictureServer(BinaryData)
+	
+	Storage = New ValueStorage(BinaryData);
+			
+	PictureAddress = PutToTempStorage(Storage.Get(), ThisForm.UUID);
+			
+EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
 &AtClient
-Procedure NotificationProcessing(EventName, Parameter, Source)
-	If EventName = "PickFromDisk" Then
+Procedure OnOpen(Cancel)
+    Items.Stock.ReadOnly = GetConstant();
+EndProcedure
+
+&AtClient
+Procedure ShowPacking(Command)
+	
+	If ThisForm.Items.Packing.Visible=False Then
+        ThisForm.Items.ShowPacking.Title=NStr("en = 'Hide packing settigns'; ru = 'Скрыть настройки упаковок'");
+        ThisForm.Items.Packing.Visible=True;
+    Else
+        ThisForm.Items.ShowPacking.Title=NStr("en = 'Show packing'; ru = 'Показать настройки упаковок'");
+        ThisForm.Items.Packing.Visible=False;
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure BaseUnitOnChange(Item)
+	
+	AddPack();
+	Message(NStr("en = ""Warning, new base unit has multiplier 1. Check multipliers corectness, please.""; ru = ""Внимание, новая базовая единица имеет коэффициент 1. Проверьте, пожалуйста, коэффициенты на правильность."""));	
+	
+EndProcedure
+
+#Region Pictures
+
+&AtClient
+Procedure EditPicture(Command)
+	
+	SelectPicture();
+    	
+EndProcedure
+
+&AtClient
+Procedure DeletePicture(Command)
+	
+	NewPictureName 		= Undefined;
+	NewPictureExtension = Undefined;
+	
+	Object.DefaultPicture 			= Undefined;
+	Object.DefaultPictureExtension 	= Undefined;
+	
+	PictureAddress = "";
+	
+EndProcedure
+
+&AtClient
+Procedure OpenPicture(Command)
+	
+	FileName = Undefined;
+	
+	If ValueIsFilled(Object.DefaultPicture) Then 
+		
+		FileName = String(Object.DefaultPicture) + Object.DefaultPictureExtension;
+		
+	ElsIf ValueIsFilled(NewPictureName) Then 
+		
+		FileName = String(NewPictureName) + NewPictureExtension;
+		
+	EndIf;
+		
+	If ValueIsFilled(FileName) Then 
+		
+		GetFile(PictureAddress, FileName, True);
+		
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure PictureAddressClick(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	SelectPicture();
+				
+EndProcedure
+
+&AtClient
+Procedure SelectPicture()
+	
+	OpenForm("Catalog.SKU.Form.PickFromForm", , , , , , New NotifyDescription("SelectPicturePart", ThisForm));
+		
+EndProcedure
+
+&AtClient
+Procedure SelectPicturePart(Result, AdditionalParameter) Export 
+	
+	If Result = "PickFromDisk" Then
+		
 		SelectPictureFromDisk();
-	ElsIF EventName = "PickFromPrivate" Then
+		
+	ElsIF Result = "PickFromPrivate" Then
+		
 		Filter = GetFilter("Private");
 								
 		Params = New Structure("Filter", Filter);
 		
-		SelectedPictureKey = OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
-		
-		If ValueIsFilled(SelectedPictureKey) Then
-			
-			
-			Header = "ru = ""Изображение перенесено в раздел 'shared'.""; "
-	 	   		   + "en = ""Picture moved to the section 'shared'.""";
-			
-			Message(NStr(Header));
+		OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromPrivatePart", ThisForm));
 				
-			SetPicture(SelectedPictureKey);
-						
-		EndIf;
-				
-		Items.PictureAddress.Refresh();
-		
-	ElsIf EventName = "PickFromShared" Then
+	ElsIf Result = "PickFromShared" Then
 		
 		Filter = GetFilter("Shared");
 								
 		Params = New Structure("Filter", Filter);
 		
-		SelectedPictureKey = OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params);
+		OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromSharedPart", ThisForm));
+						
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SelectPictureFromDisk()
+	
+#If WebClient Then 
 		
-		If ValueIsFilled(SelectedPictureKey) Then 
+	BeginPutFile(New NotifyDescription("SelectPictureFromDiskPart", ThisForm), , , True, ThisForm.UUID);		
+						
+#Else	
+	
+	DialogChangeFile 				= New FileDialog(FileDialogMode.Open);
+	DialogChangeFile.Filter 		= "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png"; 
+	DialogChangeFile.Title 			= NStr("en = 'Select file'; ru = 'Выберите файл'");
+	DialogChangeFile.Preview 		= True;
+	DialogChangeFile.FilterIndex 	= 0;
+		           
+	If DialogChangeFile.Choose() Then 
 			
-			SetPicture(SelectedPictureKey);
+		BinaryData = New BinaryData(DialogChangeFile.FullFileName);
+		
+		SelectPictureServer(BinaryData);
 			
-		EndIf;
-				
+		FileToExtension = New File(DialogChangeFile.FullFileName);
+			
+		NewPictureName 		= New UUID();
+		NewPictureExtension = FileToExtension.Extension;
+		NewPictureType 		= "New";
+			
+		Object.DefaultPicture 			= Undefined;
+		Object.DefaultPictureExtension 	= Undefined;
+		
 		Items.PictureAddress.Refresh();
+						 		
+	EndIf;
+		
+#EndIf
+	
+EndProcedure
+
+&AtClient
+Procedure SelectPictureFromDiskPart(Result, TempStorageAddress, FileName, AdditionalParameters) Export 
+	
+	If Not Result Then 
+		
+		Return;
+		
+	EndIf;	
+	
+	PictureAddress = TempStorageAddress;	
+	
+	FileToExtension = New File(FileName);
+		
+	NewPictureName 		= New UUID();
+	NewPictureExtension = FileToExtension.Extension;
+	NewPictureType 		= "New";
+		
+	Object.DefaultPicture 			= Undefined;
+	Object.DefaultPictureExtension 	= Undefined;
+		
+	Items.PictureAddress.Refresh();
+			
+EndProcedure	
+
+&AtClient
+Procedure SelectPictureFromPrivatePart(Result, AdditionalParameter) Export
+	
+	If ValueIsFilled(Result) Then
+			
+		QueryText = "ru = ""Изображение будет перенесено в раздел 'shared'. Продолжить?""; "
+ 	   		   + "en = ""Picture will be moved to the section 'shared'. Continue?""";
+		
+		ShowQueryBox(New NotifyDescription("SelectPictureQueryPart", ThisForm, Result), QueryText, QuestionDialogMode.YesNo, 0, DialogReturnCode.Yes);
+				
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure SelectPictureFromSharedPart(Result, AdditionalParameter) Export
+	
+	If ValueIsFilled(Result) Then
+			
+		SetPicture(Result);
+		
+		Items.PictureAddress.Refresh();
+				
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure SelectPictureQueryPart(Result, AdditionalParameter) Export
+	
+	If Result = DialogReturnCode.Yes Then 
+			
+		SetPicture(AdditionalParameter);
 		
 	EndIf;
+			
+	Items.PictureAddress.Refresh();	
+	
 EndProcedure
+
+#EndRegion
+
+#EndRegion
+
+
+
+
+
+
+
 
 

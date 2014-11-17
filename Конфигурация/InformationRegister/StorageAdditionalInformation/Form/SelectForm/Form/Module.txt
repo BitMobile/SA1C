@@ -1,14 +1,5 @@
 ﻿
-&AtClient
-Procedure ListOnActivateRow(Item)
-	
-	If ShowPreview Then
-		
-		ShowPreview();
-		
-	EndIf;	
-	
-EndProcedure
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure ShowPreview()
@@ -68,6 +59,21 @@ Procedure ShowPreview()
 		
 EndProcedure
  
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure ListOnActivateRow(Item)
+	
+	If ShowPreview Then
+		
+		ShowPreview();
+		
+	EndIf;	
+	
+EndProcedure
+
 &AtClient
 Procedure ShowPreviewOnChange(Item)
 	
@@ -82,3 +88,5 @@ Procedure ShowPreviewOnChange(Item)
 	EndIf;	
 	
 EndProcedure
+
+#EndRegion

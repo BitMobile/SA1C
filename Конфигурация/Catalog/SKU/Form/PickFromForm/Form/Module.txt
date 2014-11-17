@@ -1,23 +1,32 @@
 ﻿
+#Region UserInterface
+
 &AtClient
 Procedure PickFromDisk(Command)
-	Notify("PickFromDisk");
-	Close();
+	
+	Close("PickFromDisk");
+		
 EndProcedure
 
 &AtClient
 Procedure PickFromPrivate(Command)
-	Notify("PickFromPrivate");
-	Close();
+	
+	Close("PickFromPrivate");
+		
 EndProcedure
 
 &AtClient
 Procedure PickFromShared(Command)
-	Notify("PickFromShared");
-	Close();
+	
+	Close("PickFromShared");
+	
 EndProcedure
 
 &AtClient
 Procedure Cancel(Command)
+	
 	Close();
+	
 EndProcedure
+
+#EndRegion
