@@ -109,7 +109,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then 	
 	
-		WriteQuestions(Cancel, Questions, CurrentObject);
+		WriteQuestions(Cancel, RegularQuestions, CurrentObject);
 		WriteQuestions(Cancel, SKUQuestions, CurrentObject);
 		
 		WriteSKUs(CurrentObject);
@@ -164,8 +164,8 @@ Procedure DisableFormElements()
     Items.Status.Enabled = Not IsInactive;
     Items.EndDate.Enabled = Not IsInactive;
     
-    Items.Questions.ReadOnly = IsInactive;
-    Items.Questions.CommandBar.Enabled = Not IsInactive;
+    Items.RegularQuestions.ReadOnly = IsInactive;
+    Items.RegularQuestions.CommandBar.Enabled = Not IsInactive;
     
     Items.SKUQuestions.ReadOnly = IsInactive;
     Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
@@ -833,7 +833,7 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 	
 	If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
 			
-		Tree = Questions;
+		Tree = RegularQuestions;
 			
 	Else 
 			
@@ -1949,8 +1949,8 @@ Procedure AddQuestion(Command)
 		
 	Else 
 		
-		ItemElement = Items.Questions;
-		Tree 		= Questions;
+		ItemElement = Items.RegularQuestions;
+		Tree 		= RegularQuestions;
 		RightValue 	= GetQuestionGroupType("RegularQuestions");
 		
 	EndIf;
@@ -1990,8 +1990,8 @@ Procedure AddParentQuestion(Command)
 		
 	Else 
 		
-		ItemElement = Items.Questions;
-		Tree 		= Questions;
+		ItemElement = Items.RegularQuestions;
+		Tree 		= RegularQuestions;
 		RightValue 	= GetQuestionGroupType("RegularQuestions");
 		
 	EndIf;	
@@ -2031,11 +2031,11 @@ Procedure ClearParentOnQuestion(Command)
 		
 	Else 
 		
-		If Not Items.Questions.CurrentRow = Undefined Then
+		If Not Items.RegularQuestions.CurrentRow = Undefined Then
 			
-			Source = Questions.FindByID(Items.Questions.CurrentRow);
+			Source = RegularQuestions.FindByID(Items.RegularQuestions.CurrentRow);
 			
-			ClearParent(Questions, Source);
+			ClearParent(RegularQuestions, Source);
 			
 		EndIf;	
 		
@@ -2053,8 +2053,8 @@ Procedure DeleteQuestion(Command)
 		
 	Else 
 		
-		ItemElement = Items.Questions;
-		Tree 		= Questions;
+		ItemElement = Items.RegularQuestions;
+		Tree 		= RegularQuestions;
 		
 	EndIf;
 		
@@ -2122,11 +2122,11 @@ Procedure QuestionsChoiceProcessing(Item, SelectedValue, StandardProcessing)
 		
 		If IsChildQuestionAdding Then
 		
-			AddQuestionsToTree(SelectedValue, Questions, Items.Questions, Questions.FindByID(Items.Questions.CurrentRow), Items.Questions.CurrentRow);
+			AddQuestionsToTree(SelectedValue, RegularQuestions, Items.RegularQuestions, RegularQuestions.FindByID(Items.RegularQuestions.CurrentRow), Items.RegularQuestions.CurrentRow);
 			
 		Else 
 			
-			AddQuestionsToTree(SelectedValue, Questions, Items.Questions);
+			AddQuestionsToTree(SelectedValue, RegularQuestions, Items.RegularQuestions);
 			
 		EndIf;	
 		
@@ -2157,7 +2157,7 @@ Procedure QuestionsObligatorinessOnChange(Item)
 				
 	Else 
 		
-		ItemElement = Items.Questions;
+		ItemElement = Items.RegularQuestions;
 				
 	EndIf;
 	
@@ -2193,7 +2193,7 @@ Procedure QuestionsDragCheck(Item, DragParameters, StandardProcessing, Row, Fiel
 		
 	Else 
 		
-		Tree = Questions;
+		Tree = RegularQuestions;
 		
 	EndIf;
 	
@@ -2231,8 +2231,8 @@ Procedure QuestionsDrag(Item, DragParameters, StandardProcessing, Row, Field)
 		
 	Else 
 		
-		ItemElement = Items.Questions;
-		Tree 		= Questions;
+		ItemElement = Items.RegularQuestions;
+		Tree 		= RegularQuestions;
 		
 	EndIf;	
 	
@@ -2270,15 +2270,11 @@ Procedure DiscardСhanges(Command)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		FillQuestionsTree(GetQuestionGroupType("SKUQuestions"));
-		
-		Items.SKUQuestions.Expand(SKUQuestions.GetItems()[0].GetID());
-		
+				
 	Else 
 		
 		FillQuestionsTree(GetQuestionGroupType("RegularQuestions"));
-		
-		Items.Questions.Expand(Questions.GetItems()[0].GetID());
-		
+						
 	EndIf;
 		
 EndProcedure
@@ -2324,7 +2320,7 @@ Procedure QuestionsOnActivateRow(Item)
 				
 	Else 
 		
-		If Items.Questions.CurrentData = Undefined Then 
+		If Items.RegularQuestions.CurrentData = Undefined Then 
 			
 			Items.QuestionsAddChildQuestion.Enabled 			= False;
 			Items.QuestionsAddChildQuestionContext.Enabled 		= False;
@@ -2332,7 +2328,7 @@ Procedure QuestionsOnActivateRow(Item)
 			
 		Else
 			
-			If IsLogicAnswerType(Items.Questions.CurrentData.Question) Then 
+			If IsLogicAnswerType(Items.RegularQuestions.CurrentData.Question) Then 
 				
 				Items.QuestionsAddChildQuestion.Enabled 		= True;
 				Items.QuestionsAddChildQuestionContext.Enabled 	= True;		
@@ -2344,7 +2340,7 @@ Procedure QuestionsOnActivateRow(Item)
 				
 			EndIf;
 			
-			ItemElement = Questions.FindByID(Items.Questions.CurrentRow);
+			ItemElement = RegularQuestions.FindByID(Items.RegularQuestions.CurrentRow);
 			
 			If ItemElement.GetParent() = Undefined Then 
 				
@@ -2371,7 +2367,7 @@ Procedure SetObligatoriness(Command)
 				
 	Else 
 		
-		Tree = Questions;
+		Tree = RegularQuestions;
 				
 	EndIf;
 
@@ -2441,7 +2437,7 @@ Procedure UnsetObligatoriness(Command)
 				
 	Else 
 		
-		Tree = Questions;
+		Tree = RegularQuestions;
 				
 	EndIf;
 

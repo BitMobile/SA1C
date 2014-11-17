@@ -578,13 +578,13 @@
 												</Button>
 												<Button name="QuestionsMoveUp" id="247">
 													<Type>CommandBarButton</Type>
-													<CommandName>Form.Item.Questions.StandardCommand.MoveUp</CommandName>
+													<CommandName>Form.Item.RegularQuestions.StandardCommand.MoveUp</CommandName>
 													<Parameter xsi:nil="true"/>
 													<ExtendedTooltip name="QuestionsMoveUpExtendedTooltip" id="325"/>
 												</Button>
 												<Button name="QuestionsMoveDown" id="248">
 													<Type>CommandBarButton</Type>
-													<CommandName>Form.Item.Questions.StandardCommand.MoveDown</CommandName>
+													<CommandName>Form.Item.RegularQuestions.StandardCommand.MoveDown</CommandName>
 													<Parameter xsi:nil="true"/>
 													<ExtendedTooltip name="QuestionsMoveDownExtendedTooltip" id="326"/>
 												</Button>
@@ -630,15 +630,15 @@
 										</CommandBar>
 									</ChildItems>
 								</UsualGroup>
-								<Table name="Questions" id="231">
+								<Table name="RegularQuestions" id="231">
 									<Representation>Tree</Representation>
 									<ChangeRowSet>false</ChangeRowSet>
 									<AutoInsertNewRow>true</AutoInsertNewRow>
 									<InitialTreeView>ExpandTopLevel</InitialTreeView>
 									<EnableStartDrag>true</EnableStartDrag>
 									<EnableDrag>true</EnableDrag>
-									<DataPath>Questions</DataPath>
-									<RowPictureDataPath>Questions.Index</RowPictureDataPath>
+									<DataPath>RegularQuestions</DataPath>
+									<RowPictureDataPath>RegularQuestions.Index</RowPictureDataPath>
 									<RowsPicture>
 										<xr:Ref>CommonPicture.CatalogHierarchy</xr:Ref>
 										<xr:LoadTransparent>true</xr:LoadTransparent>
@@ -661,7 +661,7 @@
 									<SearchStringLocation>None</SearchStringLocation>
 									<ViewStatusLocation>None</ViewStatusLocation>
 									<SearchControlLocation>None</SearchControlLocation>
-									<ContextMenu name="QuestionsContextMenu" id="232">
+									<ContextMenu name="RegularQuestionsContextMenu" id="232">
 										<ChildItems>
 											<Button name="QuestionsAddParentQuestionContext" id="466">
 												<Type>CommandBarButton</Type>
@@ -689,33 +689,33 @@
 											</Button>
 										</ChildItems>
 									</ContextMenu>
-									<AutoCommandBar name="QuestionsCommandBar" id="233">
+									<AutoCommandBar name="RegularQuestionsCommandBar" id="233">
 										<Autofill>false</Autofill>
 									</AutoCommandBar>
-									<ExtendedTooltip name="QuestionsExtendedTooltip" id="327"/>
-									<SearchStringAddition name="QuestionsSearchString" id="328">
+									<ExtendedTooltip name="RegularQuestionsExtendedTooltip" id="327"/>
+									<SearchStringAddition name="RegularQuestionsSearchString" id="328">
 										<Source>
 											<lf:elementId>231</lf:elementId>
 											<lf:additionId>0</lf:additionId>
 										</Source>
-										<ContextMenu name="QuestionsSearchStringContextMenu" id="329"/>
-										<ExtendedTooltip name="QuestionsSearchStringExtendedTooltip" id="330"/>
+										<ContextMenu name="RegularQuestionsSearchStringContextMenu" id="329"/>
+										<ExtendedTooltip name="RegularQuestionsSearchStringExtendedTooltip" id="330"/>
 									</SearchStringAddition>
-									<ViewStatusAddition name="QuestionsViewStatus" id="331">
+									<ViewStatusAddition name="RegularQuestionsViewStatus" id="331">
 										<Source>
 											<lf:elementId>231</lf:elementId>
 											<lf:additionId>1</lf:additionId>
 										</Source>
-										<ContextMenu name="QuestionsViewStatusContextMenu" id="332"/>
-										<ExtendedTooltip name="QuestionsViewStatusExtendedTooltip" id="333"/>
+										<ContextMenu name="RegularQuestionsViewStatusContextMenu" id="332"/>
+										<ExtendedTooltip name="RegularQuestionsViewStatusExtendedTooltip" id="333"/>
 									</ViewStatusAddition>
-									<SearchControlAddition name="QuestionsSearchControl" id="334">
+									<SearchControlAddition name="RegularQuestionsSearchControl" id="334">
 										<Source>
 											<lf:elementId>231</lf:elementId>
 											<lf:additionId>2</lf:additionId>
 										</Source>
-										<ContextMenu name="QuestionsSearchControlContextMenu" id="335"/>
-										<ExtendedTooltip name="QuestionsSearchControlExtendedTooltip" id="336"/>
+										<ContextMenu name="RegularQuestionsSearchControlContextMenu" id="335"/>
+										<ExtendedTooltip name="RegularQuestionsSearchControlExtendedTooltip" id="336"/>
 									</SearchControlAddition>
 									<Events>
 										<Event name="DragCheck">QuestionsDragCheck</Event>
@@ -725,7 +725,7 @@
 									</Events>
 									<ChildItems>
 										<InputField name="QuestionsQuestion" id="234">
-											<DataPath>Questions.Question</DataPath>
+											<DataPath>RegularQuestions.Question</DataPath>
 											<Title>
 												<v8:item>
 													<v8:lang>en</v8:lang>
@@ -751,7 +751,7 @@
 											</Events>
 										</InputField>
 										<InputField name="QuestionsAnswerType" id="249">
-											<DataPath>Questions.AnswerType</DataPath>
+											<DataPath>RegularQuestions.AnswerType</DataPath>
 											<ReadOnly>true</ReadOnly>
 											<Title>
 												<v8:item>
@@ -769,7 +769,7 @@
 											<ExtendedTooltip name="QuestionsAnswerTypeExtendedTooltip" id="342"/>
 										</InputField>
 										<CheckBoxField name="QuestionsObligatoriness" id="238">
-											<DataPath>Questions.Obligatoriness</DataPath>
+											<DataPath>RegularQuestions.Obligatoriness</DataPath>
 											<Title>
 												<v8:item>
 													<v8:lang>en</v8:lang>
@@ -789,21 +789,21 @@
 											</Events>
 										</CheckBoxField>
 										<InputField name="QuestionsStatus" id="240">
-											<DataPath>Questions.Status</DataPath>
+											<DataPath>RegularQuestions.Status</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="QuestionsStatusContextMenu" id="241"/>
 											<ExtendedTooltip name="QuestionsStatusExtendedTooltip" id="343"/>
 										</InputField>
 										<InputField name="QuestionsStatusDate" id="242">
-											<DataPath>Questions.StatusDate</DataPath>
+											<DataPath>RegularQuestions.StatusDate</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="QuestionsStatusDateContextMenu" id="243"/>
 											<ExtendedTooltip name="QuestionsStatusDateExtendedTooltip" id="344"/>
 										</InputField>
 										<InputField name="QuestionsIsOldQuestion" id="252">
-											<DataPath>Questions.IsOldQuestion</DataPath>
+											<DataPath>RegularQuestions.IsOldQuestion</DataPath>
 											<Visible>false</Visible>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="QuestionsIsOldQuestionContextMenu" id="253"/>
@@ -1500,11 +1500,11 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="Questions" id="8">
+		<Attribute name="RegularQuestions" id="8">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Questions</v8:content>
+					<v8:content>Regular questions</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -1859,7 +1859,7 @@
 				</dcsset:selection>
 				<dcsset:filter>
 					<dcsset:item xsi:type="dcsset:FilterItemComparison">
-						<dcsset:left xsi:type="dcscor:Field">Questions.Status</dcsset:left>
+						<dcsset:left xsi:type="dcscor:Field">RegularQuestions.Status</dcsset:left>
 						<dcsset:comparisonType>Equal</dcsset:comparisonType>
 						<dcsset:right xsi:type="dcscor:DesignTimeValue">Enum.ValueTableRowStatuses.Deleted</dcsset:right>
 					</dcsset:item>

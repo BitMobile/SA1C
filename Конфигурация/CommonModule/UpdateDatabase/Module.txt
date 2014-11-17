@@ -66,9 +66,13 @@ Function StartUpdate() Export
 			UpdateForAllReleases(LastState, Step);			
 						
 			// Специальные обработчики для релизов
-			If MetadataVersion = "1.3.0.57" Then 
+			ArrayOfVersion = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(MetadataVersion, ".");
+			
+			UpdateVersion = ArrayOfVersion[0] + "." + ArrayOfVersion[1] + "." + ArrayOfVersion[2];
+			
+			If UpdateVersion = "1.3.0" Then 
 				
-				UpdateForRelease_1_3_0_57(LastState, Step);
+				UpdateForRelease_1_3_0(LastState, Step);
 				
 			EndIf;	
 						
@@ -312,9 +316,9 @@ EndFunction
 
 #EndRegion
 
-#Region Release_1_3_0_57
+#Region Release_1_3_0
 
-Procedure UpdateForRelease_1_3_0_57(LastState, Step)
+Procedure UpdateForRelease_1_3_0(LastState, Step)
 	
 	WriteProtocol(LastState, Step, NStr("en = 'Update groups of questions'; ru = 'Обновление групп вопросов'"));
 	ProcessQuestionGroups();
