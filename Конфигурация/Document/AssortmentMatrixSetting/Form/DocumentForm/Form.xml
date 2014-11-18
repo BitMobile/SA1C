@@ -204,516 +204,654 @@
 					</ToolTip>
 					<ExtendedTooltip name="GroupOutletsPageExtendedTooltip" id="58"/>
 					<ChildItems>
-						<UsualGroup name="GroupOutlets" id="83">
+						<Pages name="GroupOutletsPages" id="285">
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Group outlets</v8:content>
+									<v8:content>Group outlets pages</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Group outlets</v8:content>
+									<v8:content>Group outlets pages</v8:content>
 								</v8:item>
 							</ToolTip>
-							<Group>Horizontal</Group>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="GroupOutletsExtendedTooltip" id="84"/>
+							<PagesRepresentation>None</PagesRepresentation>
+							<ExtendedTooltip name="GroupOutletsPagesExtendedTooltip" id="286"/>
 							<ChildItems>
-								<UsualGroup name="GroupOutletsVT" id="247">
+								<Page name="GroupOutletsNoSelect" id="287">
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Group outlets VT</v8:content>
+											<v8:content>Group outlets no select</v8:content>
 										</v8:item>
 									</Title>
 									<ToolTip>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Group outlets VT</v8:content>
+											<v8:content>Group outlets no select</v8:content>
 										</v8:item>
 									</ToolTip>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupOutletsVTExtendedTooltip" id="248"/>
+									<ExtendedTooltip name="GroupOutletsNoSelectExtendedTooltip" id="288"/>
 									<ChildItems>
-										<CommandBar name="GroupOutletsVTCommandPanel" id="249">
+										<UsualGroup name="GroupOutletsVT" id="247">
 											<Title>
 												<v8:item>
 													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets VTCommand panel</v8:content>
+													<v8:content>Group outlets VT</v8:content>
 												</v8:item>
 											</Title>
 											<ToolTip>
 												<v8:item>
 													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets VTCommand panel</v8:content>
-												</v8:item>
-											</ToolTip>
-											<CommandSource>Item.Outlets</CommandSource>
-											<ExtendedTooltip name="GroupOutletsVTCommandPanelExtendedTooltip" id="250"/>
-											<ChildItems>
-												<Button name="Select" id="283">
-													<Type>CommandBarButton</Type>
-													<CommandName>Form.Command.ShowHideSelect</CommandName>
-													<Parameter xsi:nil="true"/>
-													<ExtendedTooltip name="SelectExtendedTooltip" id="284"/>
-												</Button>
-											</ChildItems>
-										</CommandBar>
-										<Table name="Outlets" id="59">
-											<Representation>List</Representation>
-											<CommandBarLocation>None</CommandBarLocation>
-											<EnableStartDrag>true</EnableStartDrag>
-											<EnableDrag>true</EnableDrag>
-											<DataPath>Outlets</DataPath>
-											<RowFilter xsi:nil="true"/>
-											<ContextMenu name="OutletsContextMenu" id="60"/>
-											<AutoCommandBar name="OutletsCommandBar" id="61"/>
-											<ExtendedTooltip name="OutletsExtendedTooltip" id="62"/>
-											<SearchStringAddition name="OutletsSearchString" id="63">
-												<Source>
-													<lf:elementId>59</lf:elementId>
-													<lf:additionId>0</lf:additionId>
-												</Source>
-												<ContextMenu name="OutletsSearchStringContextMenu" id="66"/>
-												<ExtendedTooltip name="OutletsSearchStringExtendedTooltip" id="67"/>
-											</SearchStringAddition>
-											<ViewStatusAddition name="OutletsViewStatus" id="68">
-												<Source>
-													<lf:elementId>59</lf:elementId>
-													<lf:additionId>1</lf:additionId>
-												</Source>
-												<ContextMenu name="OutletsViewStatusContextMenu" id="71"/>
-												<ExtendedTooltip name="OutletsViewStatusExtendedTooltip" id="72"/>
-											</ViewStatusAddition>
-											<SearchControlAddition name="OutletsSearchControl" id="73">
-												<Source>
-													<lf:elementId>59</lf:elementId>
-													<lf:additionId>2</lf:additionId>
-												</Source>
-												<ContextMenu name="OutletsSearchControlContextMenu" id="76"/>
-												<ExtendedTooltip name="OutletsSearchControlExtendedTooltip" id="77"/>
-											</SearchControlAddition>
-											<Events>
-												<Event name="OnEditEnd">OutletsOnEditEnd</Event>
-												<Event name="BeforeRowChange">OutletsBeforeRowChange</Event>
-											</Events>
-											<ChildItems>
-												<InputField name="OutletsOutlet" id="78">
-													<DataPath>Outlets.Outlet</DataPath>
-													<EditMode>EnterOnInput</EditMode>
-													<AutoMarkIncomplete>true</AutoMarkIncomplete>
-													<ContextMenu name="OutletsOutletContextMenu" id="79"/>
-													<ExtendedTooltip name="OutletsOutletExtendedTooltip" id="80"/>
-												</InputField>
-												<InputField name="OutletsOutletClass" id="275">
-													<DataPath>Outlets.Outlet.Class</DataPath>
-													<EditMode>EnterOnInput</EditMode>
-													<ContextMenu name="OutletsOutletClassContextMenu" id="276"/>
-													<ExtendedTooltip name="OutletsOutletClassExtendedTooltip" id="277"/>
-												</InputField>
-												<InputField name="OutletsOutletType" id="278">
-													<DataPath>Outlets.Outlet.Type</DataPath>
-													<EditMode>EnterOnInput</EditMode>
-													<ContextMenu name="OutletsOutletTypeContextMenu" id="279"/>
-													<ExtendedTooltip name="OutletsOutletTypeExtendedTooltip" id="280"/>
-												</InputField>
-											</ChildItems>
-										</Table>
-									</ChildItems>
-								</UsualGroup>
-								<UsualGroup name="GroupOutletsSelect" id="85">
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Outlets select</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Подбор торговых точек</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group outlets select</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Group>Horizontal</Group>
-									<Behavior>Collapsible</Behavior>
-									<Collapsed>true</Collapsed>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupOutletsSelectExtendedTooltip" id="86"/>
-									<ChildItems>
-										<UsualGroup name="GroupOutletsCommands" id="212">
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets commands</v8:content>
-												</v8:item>
-											</Title>
-											<ToolTip>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets commands</v8:content>
+													<v8:content>Group outlets VT</v8:content>
 												</v8:item>
 											</ToolTip>
 											<Representation>None</Representation>
 											<ShowTitle>false</ShowTitle>
-											<ExtendedTooltip name="GroupOutletsCommandsExtendedTooltip" id="213"/>
+											<ExtendedTooltip name="GroupOutletsVTExtendedTooltip" id="248"/>
 											<ChildItems>
-												<LabelDecoration name="Decoration1" id="218">
-													<ContextMenu name="Decoration1ContextMenu" id="219"/>
-													<ExtendedTooltip name="Decoration1ExtendedTooltip" id="220"/>
-												</LabelDecoration>
-												<Button name="AddOutlet" id="216">
-													<Type>UsualButton</Type>
-													<CommandName>Form.Command.AddOutlet</CommandName>
-													<Parameter xsi:nil="true"/>
+												<CommandBar name="GroupOutletsVTCommandPanel" id="249">
 													<Title>
 														<v8:item>
 															<v8:lang>en</v8:lang>
-															<v8:content>&lt;</v8:content>
-														</v8:item>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>&lt;</v8:content>
-														</v8:item>
-													</Title>
-													<ExtendedTooltip name="AddOutletExtendedTooltip" id="217"/>
-												</Button>
-												<Button name="AddAllOutlets" id="214">
-													<Type>UsualButton</Type>
-													<CommandName>Form.Command.AddAllOutlets</CommandName>
-													<Parameter xsi:nil="true"/>
-													<Title>
-														<v8:item>
-															<v8:lang>en</v8:lang>
-															<v8:content>&lt;&lt;</v8:content>
-														</v8:item>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>&lt;&lt;</v8:content>
-														</v8:item>
-													</Title>
-													<ExtendedTooltip name="AddAllOutletsExtendedTooltip" id="215"/>
-												</Button>
-												<Button name="RemoveOutlet" id="258">
-													<Type>UsualButton</Type>
-													<CommandName>Form.Command.RemoveOutlet</CommandName>
-													<Parameter xsi:nil="true"/>
-													<ExtendedTooltip name="RemoveOutletExtendedTooltip" id="259"/>
-												</Button>
-												<Button name="RemoveAllOutlets" id="256">
-													<Type>UsualButton</Type>
-													<CommandName>Form.Command.RemoveAllOutlets</CommandName>
-													<Parameter xsi:nil="true"/>
-													<ExtendedTooltip name="RemoveAllOutletsExtendedTooltip" id="257"/>
-												</Button>
-												<LabelDecoration name="Decoration2" id="221">
-													<VerticalStretch>true</VerticalStretch>
-													<ContextMenu name="Decoration2ContextMenu" id="222"/>
-													<ExtendedTooltip name="Decoration2ExtendedTooltip" id="223"/>
-												</LabelDecoration>
-											</ChildItems>
-										</UsualGroup>
-										<UsualGroup name="GroupOutletsSelectFilterAndList" id="245">
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets select filter and list</v8:content>
-												</v8:item>
-											</Title>
-											<ToolTip>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Group outlets select filter and list</v8:content>
-												</v8:item>
-											</ToolTip>
-											<Representation>None</Representation>
-											<ShowTitle>false</ShowTitle>
-											<ExtendedTooltip name="GroupOutletsSelectFilterAndListExtendedTooltip" id="246"/>
-											<ChildItems>
-												<UsualGroup name="GroupOutletsFilter" id="234">
-													<Title>
-														<v8:item>
-															<v8:lang>en</v8:lang>
-															<v8:content>Hide selection settings</v8:content>
-														</v8:item>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Скрыть настройки отбора</v8:content>
+															<v8:content>Group outlets VTCommand panel</v8:content>
 														</v8:item>
 													</Title>
 													<ToolTip>
 														<v8:item>
 															<v8:lang>en</v8:lang>
-															<v8:content>Group outlets filter</v8:content>
+															<v8:content>Group outlets VTCommand panel</v8:content>
 														</v8:item>
 													</ToolTip>
-													<Behavior>Collapsible</Behavior>
-													<CollapsedRepresentationTitle>
-														<v8:item>
-															<v8:lang>en</v8:lang>
-															<v8:content>Open selection settings</v8:content>
-														</v8:item>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Открыть настройки отбора</v8:content>
-														</v8:item>
-													</CollapsedRepresentationTitle>
-													<Collapsed>true</Collapsed>
-													<Representation>None</Representation>
-													<ShowLeftMargin>false</ShowLeftMargin>
-													<ExtendedTooltip name="GroupOutletsFilterExtendedTooltip" id="235"/>
+													<CommandSource>Item.Outlets</CommandSource>
+													<ExtendedTooltip name="GroupOutletsVTCommandPanelExtendedTooltip" id="250"/>
 													<ChildItems>
-														<Table name="OutletsSelectFilter" id="150">
-															<Representation>Tree</Representation>
-															<CommandBarLocation>None</CommandBarLocation>
-															<ChangeRowSet>false</ChangeRowSet>
-															<ChangeRowOrder>false</ChangeRowOrder>
-															<Height>7</Height>
-															<InitialTreeView>ExpandAllLevels</InitialTreeView>
-															<VerticalStretch>false</VerticalStretch>
-															<EnableStartDrag>true</EnableStartDrag>
-															<EnableDrag>true</EnableDrag>
-															<DataPath>OutletsSelect.Filter</DataPath>
-															<ViewMode>All</ViewMode>
-															<SettingsNamedItemDetailedRepresentation>false</SettingsNamedItemDetailedRepresentation>
-															<ContextMenu name="OutletsSelectFilterContextMenu" id="151"/>
-															<AutoCommandBar name="OutletsSelectFilterCommandBar" id="152"/>
-															<ExtendedTooltip name="OutletsSelectFilterExtendedTooltip" id="153"/>
-															<SearchStringAddition name="OutletsSelectFilterSearchString" id="154">
-																<Source>
-																	<lf:elementId>150</lf:elementId>
-																	<lf:additionId>0</lf:additionId>
-																</Source>
-																<ContextMenu name="OutletsSelectFilterSearchStringContextMenu" id="157"/>
-																<ExtendedTooltip name="OutletsSelectFilterSearchStringExtendedTooltip" id="158"/>
-															</SearchStringAddition>
-															<ViewStatusAddition name="OutletsSelectFilterViewStatus" id="159">
-																<Source>
-																	<lf:elementId>150</lf:elementId>
-																	<lf:additionId>1</lf:additionId>
-																</Source>
-																<ContextMenu name="OutletsSelectFilterViewStatusContextMenu" id="162"/>
-																<ExtendedTooltip name="OutletsSelectFilterViewStatusExtendedTooltip" id="163"/>
-															</ViewStatusAddition>
-															<SearchControlAddition name="OutletsSelectFilterSearchControl" id="164">
-																<Source>
-																	<lf:elementId>150</lf:elementId>
-																	<lf:additionId>2</lf:additionId>
-																</Source>
-																<ContextMenu name="OutletsSelectFilterSearchControlContextMenu" id="167"/>
-																<ExtendedTooltip name="OutletsSelectFilterSearchControlExtendedTooltip" id="168"/>
-															</SearchControlAddition>
-															<ChildItems>
-																<CheckBoxField name="OutletsSelectFilterUse" id="169">
-																	<DataPath>OutletsSelect.Filter.Use</DataPath>
-																	<TitleLocation>None</TitleLocation>
-																	<EditMode>Directly</EditMode>
-																	<CheckBoxType>Auto</CheckBoxType>
-																	<ContextMenu name="OutletsSelectFilterUseContextMenu" id="170"/>
-																	<ExtendedTooltip name="OutletsSelectFilterUseExtendedTooltip" id="171"/>
-																</CheckBoxField>
-																<ColumnGroup name="OutletsSelectFilterColumnGroup" id="172">
-																	<ExtendedTooltip name="OutletsSelectFilterColumnGroupExtendedTooltip" id="173"/>
-																	<ChildItems>
-																		<ColumnGroup name="OutletsSelectFilterColumnGroup2" id="179">
-																			<Group>Horizontal</Group>
-																			<ExtendedTooltip name="OutletsSelectFilterColumnGroup2ExtendedTooltip" id="180"/>
-																			<ChildItems>
-																				<ColumnGroup name="OutletsSelectFilterColumnGroup3" id="184">
-																					<Group>InCell</Group>
-																					<ExtendedTooltip name="OutletsSelectFilterColumnGroup3ExtendedTooltip" id="185"/>
-																					<ChildItems>
-																						<PictureField name="OutletsSelectFilterLeftValuePicture" id="186">
-																							<DataPath>OutletsSelect.Filter.LeftValuePicture</DataPath>
-																							<ShowInHeader>false</ShowInHeader>
-																							<ShowInFooter>false</ShowInFooter>
-																							<ContextMenu name="OutletsSelectFilterLeftValuePictureContextMenu" id="187"/>
-																							<ExtendedTooltip name="OutletsSelectFilterLeftValuePictureExtendedTooltip" id="188"/>
-																						</PictureField>
-																						<InputField name="OutletsSelectFilterLeftValue" id="189">
-																							<DataPath>OutletsSelect.Filter.LeftValue</DataPath>
-																							<ReadOnly>true</ReadOnly>
-																							<EditMode>EnterOnInput</EditMode>
-																							<Width>10</Width>
-																							<HorizontalStretch>true</HorizontalStretch>
-																							<ContextMenu name="OutletsSelectFilterLeftValueContextMenu" id="190"/>
-																							<ExtendedTooltip name="OutletsSelectFilterLeftValueExtendedTooltip" id="191"/>
-																						</InputField>
-																					</ChildItems>
-																				</ColumnGroup>
-																				<InputField name="OutletsSelectFilterComparisonType" id="192">
-																					<DataPath>OutletsSelect.Filter.ComparisonType</DataPath>
-																					<EditMode>EnterOnInput</EditMode>
-																					<Width>5</Width>
-																					<HorizontalStretch>true</HorizontalStretch>
-																					<ContextMenu name="OutletsSelectFilterComparisonTypeContextMenu" id="193"/>
-																					<ExtendedTooltip name="OutletsSelectFilterComparisonTypeExtendedTooltip" id="194"/>
-																				</InputField>
-																				<ColumnGroup name="OutletsSelectFilterColumnGroup4" id="195">
-																					<Group>InCell</Group>
-																					<ExtendedTooltip name="OutletsSelectFilterColumnGroup4ExtendedTooltip" id="196"/>
-																					<ChildItems>
-																						<PictureField name="OutletsSelectFilterRightValuePicture" id="197">
-																							<DataPath>OutletsSelect.Filter.RightValuePicture</DataPath>
-																							<ShowInHeader>false</ShowInHeader>
-																							<ShowInFooter>false</ShowInFooter>
-																							<ContextMenu name="OutletsSelectFilterRightValuePictureContextMenu" id="198"/>
-																							<ExtendedTooltip name="OutletsSelectFilterRightValuePictureExtendedTooltip" id="199"/>
-																						</PictureField>
-																						<InputField name="OutletsSelectFilterRightValue" id="200">
-																							<DataPath>OutletsSelect.Filter.RightValue</DataPath>
-																							<EditMode>EnterOnInput</EditMode>
-																							<Width>10</Width>
-																							<HorizontalStretch>true</HorizontalStretch>
-																							<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
-																							<ContextMenu name="OutletsSelectFilterRightValueContextMenu" id="201"/>
-																							<ExtendedTooltip name="OutletsSelectFilterRightValueExtendedTooltip" id="202"/>
-																						</InputField>
-																					</ChildItems>
-																				</ColumnGroup>
-																				<InputField name="OutletsSelectFilterDate" id="203">
-																					<DataPath>OutletsSelect.Filter.Date</DataPath>
-																					<EditMode>EnterOnInput</EditMode>
-																					<Width>10</Width>
-																					<HorizontalStretch>true</HorizontalStretch>
-																					<ContextMenu name="OutletsSelectFilterDateContextMenu" id="204"/>
-																					<ExtendedTooltip name="OutletsSelectFilterDateExtendedTooltip" id="205"/>
-																				</InputField>
-																			</ChildItems>
-																		</ColumnGroup>
-																		<InputField name="OutletsSelectFilterGroupType" id="181">
-																			<DataPath>OutletsSelect.Filter.GroupType</DataPath>
-																			<EditMode>EnterOnInput</EditMode>
-																			<ContextMenu name="OutletsSelectFilterGroupTypeContextMenu" id="182"/>
-																			<ExtendedTooltip name="OutletsSelectFilterGroupTypeExtendedTooltip" id="183"/>
-																		</InputField>
-																	</ChildItems>
-																</ColumnGroup>
-																<ColumnGroup name="OutletsSelectFilterColumnGroup1" id="174">
-																	<ExtendedTooltip name="OutletsSelectFilterColumnGroup1ExtendedTooltip" id="175"/>
-																	<ChildItems>
-																		<InputField name="OutletsSelectFilterApplication" id="206">
-																			<DataPath>OutletsSelect.Filter.Application</DataPath>
-																			<EditMode>EnterOnInput</EditMode>
-																			<Width>5</Width>
-																			<HorizontalStretch>true</HorizontalStretch>
-																			<ContextMenu name="OutletsSelectFilterApplicationContextMenu" id="207"/>
-																			<ExtendedTooltip name="OutletsSelectFilterApplicationExtendedTooltip" id="208"/>
-																		</InputField>
-																		<InputField name="OutletsSelectFilterViewMode" id="209">
-																			<DataPath>OutletsSelect.Filter.ViewMode</DataPath>
-																			<EditMode>EnterOnInput</EditMode>
-																			<Width>5</Width>
-																			<HorizontalStretch>true</HorizontalStretch>
-																			<ContextMenu name="OutletsSelectFilterViewModeContextMenu" id="210"/>
-																			<ExtendedTooltip name="OutletsSelectFilterViewModeExtendedTooltip" id="211"/>
-																		</InputField>
-																	</ChildItems>
-																</ColumnGroup>
-																<InputField name="OutletsSelectFilterPresentation" id="176">
-																	<DataPath>OutletsSelect.Filter.Presentation</DataPath>
-																	<EditMode>EnterOnInput</EditMode>
-																	<ContextMenu name="OutletsSelectFilterPresentationContextMenu" id="177"/>
-																	<ExtendedTooltip name="OutletsSelectFilterPresentationExtendedTooltip" id="178"/>
-																</InputField>
-															</ChildItems>
-														</Table>
+														<Button name="ShowHideSelect" id="283">
+															<Type>CommandBarButton</Type>
+															<CommandName>Form.Command.ShowHideSelect</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="ShowHideSelectExtendedTooltip" id="284"/>
+														</Button>
 													</ChildItems>
-												</UsualGroup>
-												<Table name="OutletsSelect" id="87">
+												</CommandBar>
+												<Table name="Outlets" id="59">
+													<Representation>List</Representation>
 													<CommandBarLocation>None</CommandBarLocation>
-													<ChangeRowSet>false</ChangeRowSet>
-													<ChangeRowOrder>false</ChangeRowOrder>
-													<Height>1</Height>
-													<UseAlternationRowColor>true</UseAlternationRowColor>
 													<EnableStartDrag>true</EnableStartDrag>
-													<DataPath>OutletsSelect</DataPath>
-													<RowPictureDataPath>OutletsSelect.DefaultPicture</RowPictureDataPath>
-													<AutoRefresh>false</AutoRefresh>
-													<AutoRefreshPeriod>60</AutoRefreshPeriod>
-													<Period xsi:type="v8:StandardPeriod">
-														<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-														<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-														<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-													</Period>
-													<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
-													<RestoreCurrentRow>false</RestoreCurrentRow>
-													<TopLevelParent xsi:nil="true"/>
-													<ShowRoot>true</ShowRoot>
-													<AllowRootChoice>false</AllowRootChoice>
-													<UpdateOnDataChange>Auto</UpdateOnDataChange>
-													<ContextMenu name="OutletsSelectContextMenu" id="88"/>
-													<AutoCommandBar name="OutletsSelectCommandBar" id="89"/>
-													<ExtendedTooltip name="OutletsSelectExtendedTooltip" id="90"/>
-													<SearchStringAddition name="OutletsSelectSearchString" id="91">
+													<EnableDrag>true</EnableDrag>
+													<DataPath>Outlets</DataPath>
+													<RowFilter xsi:nil="true"/>
+													<ContextMenu name="OutletsContextMenu" id="60"/>
+													<AutoCommandBar name="OutletsCommandBar" id="61"/>
+													<ExtendedTooltip name="OutletsExtendedTooltip" id="62"/>
+													<SearchStringAddition name="OutletsSearchString" id="63">
 														<Source>
-															<lf:elementId>87</lf:elementId>
+															<lf:elementId>59</lf:elementId>
 															<lf:additionId>0</lf:additionId>
 														</Source>
-														<ContextMenu name="OutletsSelectSearchStringContextMenu" id="94"/>
-														<ExtendedTooltip name="OutletsSelectSearchStringExtendedTooltip" id="95"/>
+														<ContextMenu name="OutletsSearchStringContextMenu" id="66"/>
+														<ExtendedTooltip name="OutletsSearchStringExtendedTooltip" id="67"/>
 													</SearchStringAddition>
-													<ViewStatusAddition name="OutletsSelectViewStatus" id="96">
+													<ViewStatusAddition name="OutletsViewStatus" id="68">
 														<Source>
-															<lf:elementId>87</lf:elementId>
+															<lf:elementId>59</lf:elementId>
 															<lf:additionId>1</lf:additionId>
 														</Source>
-														<ContextMenu name="OutletsSelectViewStatusContextMenu" id="99"/>
-														<ExtendedTooltip name="OutletsSelectViewStatusExtendedTooltip" id="100"/>
+														<ContextMenu name="OutletsViewStatusContextMenu" id="71"/>
+														<ExtendedTooltip name="OutletsViewStatusExtendedTooltip" id="72"/>
 													</ViewStatusAddition>
-													<SearchControlAddition name="OutletsSelectSearchControl" id="101">
+													<SearchControlAddition name="OutletsSearchControl" id="73">
 														<Source>
-															<lf:elementId>87</lf:elementId>
+															<lf:elementId>59</lf:elementId>
 															<lf:additionId>2</lf:additionId>
 														</Source>
-														<ContextMenu name="OutletsSelectSearchControlContextMenu" id="104"/>
-														<ExtendedTooltip name="OutletsSelectSearchControlExtendedTooltip" id="105"/>
+														<ContextMenu name="OutletsSearchControlContextMenu" id="76"/>
+														<ExtendedTooltip name="OutletsSearchControlExtendedTooltip" id="77"/>
 													</SearchControlAddition>
 													<Events>
-														<Event name="Selection">OutletsSelectSelection</Event>
+														<Event name="OnEditEnd">OutletsOnEditEnd</Event>
+														<Event name="BeforeRowChange">OutletsBeforeRowChange</Event>
 													</Events>
 													<ChildItems>
-														<LabelField name="OutletsSelectOutlet" id="109">
-															<DataPath>OutletsSelect.Outlet</DataPath>
-															<Title>
-																<v8:item>
-																	<v8:lang>en</v8:lang>
-																	<v8:content>Outlet</v8:content>
-																</v8:item>
-																<v8:item>
-																	<v8:lang>ru</v8:lang>
-																	<v8:content>Торговая точка</v8:content>
-																</v8:item>
-															</Title>
-															<ContextMenu name="OutletsSelectOutletContextMenu" id="110"/>
-															<ExtendedTooltip name="OutletsSelectOutletExtendedTooltip" id="111"/>
-														</LabelField>
-														<LabelField name="OutletsSelectClass" id="236">
-															<DataPath>OutletsSelect.Class</DataPath>
-															<ContextMenu name="OutletsSelectClassContextMenu" id="237"/>
-															<ExtendedTooltip name="OutletsSelectClassExtendedTooltip" id="238"/>
-														</LabelField>
-														<LabelField name="OutletsSelectType" id="272">
-															<DataPath>OutletsSelect.Type</DataPath>
-															<ContextMenu name="OutletsSelectTypeContextMenu" id="273"/>
-															<ExtendedTooltip name="OutletsSelectTypeExtendedTooltip" id="274"/>
-														</LabelField>
+														<InputField name="OutletsOutlet" id="78">
+															<DataPath>Outlets.Outlet</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<AutoMarkIncomplete>true</AutoMarkIncomplete>
+															<ContextMenu name="OutletsOutletContextMenu" id="79"/>
+															<ExtendedTooltip name="OutletsOutletExtendedTooltip" id="80"/>
+														</InputField>
+														<InputField name="OutletsOutletClass" id="275">
+															<DataPath>Outlets.Outlet.Class</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ContextMenu name="OutletsOutletClassContextMenu" id="276"/>
+															<ExtendedTooltip name="OutletsOutletClassExtendedTooltip" id="277"/>
+														</InputField>
+														<InputField name="OutletsOutletType" id="278">
+															<DataPath>Outlets.Outlet.Type</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ContextMenu name="OutletsOutletTypeContextMenu" id="279"/>
+															<ExtendedTooltip name="OutletsOutletTypeExtendedTooltip" id="280"/>
+														</InputField>
 													</ChildItems>
 												</Table>
 											</ChildItems>
 										</UsualGroup>
 									</ChildItems>
-								</UsualGroup>
+								</Page>
+								<Page name="GroupOutletsWithSelect" id="289">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group outlets with select</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group outlets with select</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="GroupOutletsWithSelectExtendedTooltip" id="290"/>
+									<ChildItems>
+										<UsualGroup name="GroupOutletsVT1" id="291">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group outlets VT</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group outlets VT</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="GroupOutletsVT1ExtendedTooltip" id="292"/>
+											<ChildItems>
+												<CommandBar name="GroupOutletsVTCommandPanel1" id="293">
+													<Title>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets VTCommand panel</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets VTCommand panel</v8:content>
+														</v8:item>
+													</ToolTip>
+													<CommandSource>Item.Outlets1</CommandSource>
+													<ExtendedTooltip name="GroupOutletsVTCommandPanel1ExtendedTooltip" id="294"/>
+													<ChildItems>
+														<Button name="ShowHideSelect1" id="295">
+															<Type>CommandBarButton</Type>
+															<Check>true</Check>
+															<CommandName>Form.Command.ShowHideSelect</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="ShowHideSelect1ExtendedTooltip" id="296"/>
+														</Button>
+													</ChildItems>
+												</CommandBar>
+												<Table name="Outlets1" id="297">
+													<Representation>List</Representation>
+													<CommandBarLocation>None</CommandBarLocation>
+													<EnableStartDrag>true</EnableStartDrag>
+													<EnableDrag>true</EnableDrag>
+													<DataPath>Outlets</DataPath>
+													<RowFilter xsi:nil="true"/>
+													<ContextMenu name="Outlets1ContextMenu" id="298"/>
+													<AutoCommandBar name="Outlets1CommandBar" id="299"/>
+													<ExtendedTooltip name="Outlets1ExtendedTooltip" id="300"/>
+													<SearchStringAddition name="Outlets1SearchString" id="301">
+														<Source>
+															<lf:elementId>297</lf:elementId>
+															<lf:additionId>0</lf:additionId>
+														</Source>
+														<ContextMenu name="Outlets1SearchStringContextMenu" id="304"/>
+														<ExtendedTooltip name="Outlets1SearchStringExtendedTooltip" id="305"/>
+													</SearchStringAddition>
+													<ViewStatusAddition name="Outlets1ViewStatus" id="306">
+														<Source>
+															<lf:elementId>297</lf:elementId>
+															<lf:additionId>1</lf:additionId>
+														</Source>
+														<ContextMenu name="Outlets1ViewStatusContextMenu" id="309"/>
+														<ExtendedTooltip name="Outlets1ViewStatusExtendedTooltip" id="310"/>
+													</ViewStatusAddition>
+													<SearchControlAddition name="Outlets1SearchControl" id="311">
+														<Source>
+															<lf:elementId>297</lf:elementId>
+															<lf:additionId>2</lf:additionId>
+														</Source>
+														<ContextMenu name="Outlets1SearchControlContextMenu" id="314"/>
+														<ExtendedTooltip name="Outlets1SearchControlExtendedTooltip" id="315"/>
+													</SearchControlAddition>
+													<Events>
+														<Event name="OnEditEnd">OutletsOnEditEnd</Event>
+														<Event name="BeforeRowChange">OutletsBeforeRowChange</Event>
+													</Events>
+													<ChildItems>
+														<InputField name="OutletsOutlet1" id="316">
+															<DataPath>Outlets.Outlet</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<AutoMarkIncomplete>true</AutoMarkIncomplete>
+															<ContextMenu name="OutletsOutlet1ContextMenu" id="317"/>
+															<ExtendedTooltip name="OutletsOutlet1ExtendedTooltip" id="318"/>
+														</InputField>
+														<InputField name="OutletsOutletClass1" id="319">
+															<DataPath>Outlets.Outlet.Class</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ContextMenu name="OutletsOutletClass1ContextMenu" id="320"/>
+															<ExtendedTooltip name="OutletsOutletClass1ExtendedTooltip" id="321"/>
+														</InputField>
+														<InputField name="OutletsOutletType1" id="322">
+															<DataPath>Outlets.Outlet.Type</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ContextMenu name="OutletsOutletType1ContextMenu" id="323"/>
+															<ExtendedTooltip name="OutletsOutletType1ExtendedTooltip" id="324"/>
+														</InputField>
+													</ChildItems>
+												</Table>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="GroupOutletsSelect" id="85">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Outlets select</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Подбор торговых точек</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group outlets select</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Width>30</Width>
+											<Group>Horizontal</Group>
+											<Behavior>Collapsible</Behavior>
+											<Collapsed>true</Collapsed>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="GroupOutletsSelectExtendedTooltip" id="86"/>
+											<ChildItems>
+												<UsualGroup name="GroupOutletsCommands" id="212">
+													<Title>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets commands</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets commands</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="GroupOutletsCommandsExtendedTooltip" id="213"/>
+													<ChildItems>
+														<LabelDecoration name="Decoration1" id="218">
+															<ContextMenu name="Decoration1ContextMenu" id="219"/>
+															<ExtendedTooltip name="Decoration1ExtendedTooltip" id="220"/>
+														</LabelDecoration>
+														<Button name="AddOutlet" id="216">
+															<Type>UsualButton</Type>
+															<CommandName>Form.Command.AddOutlet</CommandName>
+															<Parameter xsi:nil="true"/>
+															<Title>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>&lt;</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>&lt;</v8:content>
+																</v8:item>
+															</Title>
+															<ExtendedTooltip name="AddOutletExtendedTooltip" id="217"/>
+														</Button>
+														<Button name="AddAllOutlets" id="214">
+															<Type>UsualButton</Type>
+															<CommandName>Form.Command.AddAllOutlets</CommandName>
+															<Parameter xsi:nil="true"/>
+															<Title>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>&lt;&lt;</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>&lt;&lt;</v8:content>
+																</v8:item>
+															</Title>
+															<ExtendedTooltip name="AddAllOutletsExtendedTooltip" id="215"/>
+														</Button>
+														<Button name="RemoveOutlet" id="258">
+															<Type>UsualButton</Type>
+															<CommandName>Form.Command.RemoveOutlet</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="RemoveOutletExtendedTooltip" id="259"/>
+														</Button>
+														<Button name="RemoveAllOutlets" id="256">
+															<Type>UsualButton</Type>
+															<CommandName>Form.Command.RemoveAllOutlets</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="RemoveAllOutletsExtendedTooltip" id="257"/>
+														</Button>
+														<LabelDecoration name="Decoration2" id="221">
+															<VerticalStretch>true</VerticalStretch>
+															<ContextMenu name="Decoration2ContextMenu" id="222"/>
+															<ExtendedTooltip name="Decoration2ExtendedTooltip" id="223"/>
+														</LabelDecoration>
+													</ChildItems>
+												</UsualGroup>
+												<UsualGroup name="GroupOutletsSelectFilterAndList" id="245">
+													<Title>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets select filter and list</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group outlets select filter and list</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="GroupOutletsSelectFilterAndListExtendedTooltip" id="246"/>
+													<ChildItems>
+														<UsualGroup name="GroupOutletsFilter" id="234">
+															<Title>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Hide selection settings</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Скрыть настройки отбора</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Group outlets filter</v8:content>
+																</v8:item>
+															</ToolTip>
+															<Behavior>Collapsible</Behavior>
+															<CollapsedRepresentationTitle>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Open selection settings</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Открыть настройки отбора</v8:content>
+																</v8:item>
+															</CollapsedRepresentationTitle>
+															<Collapsed>true</Collapsed>
+															<Representation>None</Representation>
+															<ShowLeftMargin>false</ShowLeftMargin>
+															<ExtendedTooltip name="GroupOutletsFilterExtendedTooltip" id="235"/>
+															<ChildItems>
+																<Table name="OutletsSelectFilter" id="150">
+																	<Representation>Tree</Representation>
+																	<CommandBarLocation>None</CommandBarLocation>
+																	<ChangeRowSet>false</ChangeRowSet>
+																	<ChangeRowOrder>false</ChangeRowOrder>
+																	<Height>7</Height>
+																	<InitialTreeView>ExpandAllLevels</InitialTreeView>
+																	<VerticalStretch>false</VerticalStretch>
+																	<EnableStartDrag>true</EnableStartDrag>
+																	<EnableDrag>true</EnableDrag>
+																	<DataPath>OutletsSelect.Filter</DataPath>
+																	<ViewMode>All</ViewMode>
+																	<SettingsNamedItemDetailedRepresentation>false</SettingsNamedItemDetailedRepresentation>
+																	<ContextMenu name="OutletsSelectFilterContextMenu" id="151"/>
+																	<AutoCommandBar name="OutletsSelectFilterCommandBar" id="152"/>
+																	<ExtendedTooltip name="OutletsSelectFilterExtendedTooltip" id="153"/>
+																	<SearchStringAddition name="OutletsSelectFilterSearchString" id="154">
+																		<Source>
+																			<lf:elementId>150</lf:elementId>
+																			<lf:additionId>0</lf:additionId>
+																		</Source>
+																		<ContextMenu name="OutletsSelectFilterSearchStringContextMenu" id="157"/>
+																		<ExtendedTooltip name="OutletsSelectFilterSearchStringExtendedTooltip" id="158"/>
+																	</SearchStringAddition>
+																	<ViewStatusAddition name="OutletsSelectFilterViewStatus" id="159">
+																		<Source>
+																			<lf:elementId>150</lf:elementId>
+																			<lf:additionId>1</lf:additionId>
+																		</Source>
+																		<ContextMenu name="OutletsSelectFilterViewStatusContextMenu" id="162"/>
+																		<ExtendedTooltip name="OutletsSelectFilterViewStatusExtendedTooltip" id="163"/>
+																	</ViewStatusAddition>
+																	<SearchControlAddition name="OutletsSelectFilterSearchControl" id="164">
+																		<Source>
+																			<lf:elementId>150</lf:elementId>
+																			<lf:additionId>2</lf:additionId>
+																		</Source>
+																		<ContextMenu name="OutletsSelectFilterSearchControlContextMenu" id="167"/>
+																		<ExtendedTooltip name="OutletsSelectFilterSearchControlExtendedTooltip" id="168"/>
+																	</SearchControlAddition>
+																	<ChildItems>
+																		<CheckBoxField name="OutletsSelectFilterUse" id="169">
+																			<DataPath>OutletsSelect.Filter.Use</DataPath>
+																			<TitleLocation>None</TitleLocation>
+																			<EditMode>Directly</EditMode>
+																			<CheckBoxType>Auto</CheckBoxType>
+																			<ContextMenu name="OutletsSelectFilterUseContextMenu" id="170"/>
+																			<ExtendedTooltip name="OutletsSelectFilterUseExtendedTooltip" id="171"/>
+																		</CheckBoxField>
+																		<ColumnGroup name="OutletsSelectFilterColumnGroup" id="172">
+																			<ExtendedTooltip name="OutletsSelectFilterColumnGroupExtendedTooltip" id="173"/>
+																			<ChildItems>
+																				<ColumnGroup name="OutletsSelectFilterColumnGroup2" id="179">
+																					<Group>Horizontal</Group>
+																					<ExtendedTooltip name="OutletsSelectFilterColumnGroup2ExtendedTooltip" id="180"/>
+																					<ChildItems>
+																						<ColumnGroup name="OutletsSelectFilterColumnGroup3" id="184">
+																							<Group>InCell</Group>
+																							<ExtendedTooltip name="OutletsSelectFilterColumnGroup3ExtendedTooltip" id="185"/>
+																							<ChildItems>
+																								<PictureField name="OutletsSelectFilterLeftValuePicture" id="186">
+																									<DataPath>OutletsSelect.Filter.LeftValuePicture</DataPath>
+																									<ShowInHeader>false</ShowInHeader>
+																									<ShowInFooter>false</ShowInFooter>
+																									<ContextMenu name="OutletsSelectFilterLeftValuePictureContextMenu" id="187"/>
+																									<ExtendedTooltip name="OutletsSelectFilterLeftValuePictureExtendedTooltip" id="188"/>
+																								</PictureField>
+																								<InputField name="OutletsSelectFilterLeftValue" id="189">
+																									<DataPath>OutletsSelect.Filter.LeftValue</DataPath>
+																									<ReadOnly>true</ReadOnly>
+																									<EditMode>EnterOnInput</EditMode>
+																									<Width>10</Width>
+																									<HorizontalStretch>true</HorizontalStretch>
+																									<ContextMenu name="OutletsSelectFilterLeftValueContextMenu" id="190"/>
+																									<ExtendedTooltip name="OutletsSelectFilterLeftValueExtendedTooltip" id="191"/>
+																								</InputField>
+																							</ChildItems>
+																						</ColumnGroup>
+																						<InputField name="OutletsSelectFilterComparisonType" id="192">
+																							<DataPath>OutletsSelect.Filter.ComparisonType</DataPath>
+																							<EditMode>EnterOnInput</EditMode>
+																							<Width>5</Width>
+																							<HorizontalStretch>true</HorizontalStretch>
+																							<ContextMenu name="OutletsSelectFilterComparisonTypeContextMenu" id="193"/>
+																							<ExtendedTooltip name="OutletsSelectFilterComparisonTypeExtendedTooltip" id="194"/>
+																						</InputField>
+																						<ColumnGroup name="OutletsSelectFilterColumnGroup4" id="195">
+																							<Group>InCell</Group>
+																							<ExtendedTooltip name="OutletsSelectFilterColumnGroup4ExtendedTooltip" id="196"/>
+																							<ChildItems>
+																								<PictureField name="OutletsSelectFilterRightValuePicture" id="197">
+																									<DataPath>OutletsSelect.Filter.RightValuePicture</DataPath>
+																									<ShowInHeader>false</ShowInHeader>
+																									<ShowInFooter>false</ShowInFooter>
+																									<ContextMenu name="OutletsSelectFilterRightValuePictureContextMenu" id="198"/>
+																									<ExtendedTooltip name="OutletsSelectFilterRightValuePictureExtendedTooltip" id="199"/>
+																								</PictureField>
+																								<InputField name="OutletsSelectFilterRightValue" id="200">
+																									<DataPath>OutletsSelect.Filter.RightValue</DataPath>
+																									<EditMode>EnterOnInput</EditMode>
+																									<Width>10</Width>
+																									<HorizontalStretch>true</HorizontalStretch>
+																									<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
+																									<ContextMenu name="OutletsSelectFilterRightValueContextMenu" id="201"/>
+																									<ExtendedTooltip name="OutletsSelectFilterRightValueExtendedTooltip" id="202"/>
+																								</InputField>
+																							</ChildItems>
+																						</ColumnGroup>
+																						<InputField name="OutletsSelectFilterDate" id="203">
+																							<DataPath>OutletsSelect.Filter.Date</DataPath>
+																							<EditMode>EnterOnInput</EditMode>
+																							<Width>10</Width>
+																							<HorizontalStretch>true</HorizontalStretch>
+																							<ContextMenu name="OutletsSelectFilterDateContextMenu" id="204"/>
+																							<ExtendedTooltip name="OutletsSelectFilterDateExtendedTooltip" id="205"/>
+																						</InputField>
+																					</ChildItems>
+																				</ColumnGroup>
+																				<InputField name="OutletsSelectFilterGroupType" id="181">
+																					<DataPath>OutletsSelect.Filter.GroupType</DataPath>
+																					<EditMode>EnterOnInput</EditMode>
+																					<ContextMenu name="OutletsSelectFilterGroupTypeContextMenu" id="182"/>
+																					<ExtendedTooltip name="OutletsSelectFilterGroupTypeExtendedTooltip" id="183"/>
+																				</InputField>
+																			</ChildItems>
+																		</ColumnGroup>
+																		<ColumnGroup name="OutletsSelectFilterColumnGroup1" id="174">
+																			<ExtendedTooltip name="OutletsSelectFilterColumnGroup1ExtendedTooltip" id="175"/>
+																			<ChildItems>
+																				<InputField name="OutletsSelectFilterApplication" id="206">
+																					<DataPath>OutletsSelect.Filter.Application</DataPath>
+																					<EditMode>EnterOnInput</EditMode>
+																					<Width>5</Width>
+																					<HorizontalStretch>true</HorizontalStretch>
+																					<ContextMenu name="OutletsSelectFilterApplicationContextMenu" id="207"/>
+																					<ExtendedTooltip name="OutletsSelectFilterApplicationExtendedTooltip" id="208"/>
+																				</InputField>
+																				<InputField name="OutletsSelectFilterViewMode" id="209">
+																					<DataPath>OutletsSelect.Filter.ViewMode</DataPath>
+																					<EditMode>EnterOnInput</EditMode>
+																					<Width>5</Width>
+																					<HorizontalStretch>true</HorizontalStretch>
+																					<ContextMenu name="OutletsSelectFilterViewModeContextMenu" id="210"/>
+																					<ExtendedTooltip name="OutletsSelectFilterViewModeExtendedTooltip" id="211"/>
+																				</InputField>
+																			</ChildItems>
+																		</ColumnGroup>
+																		<InputField name="OutletsSelectFilterPresentation" id="176">
+																			<DataPath>OutletsSelect.Filter.Presentation</DataPath>
+																			<EditMode>EnterOnInput</EditMode>
+																			<ContextMenu name="OutletsSelectFilterPresentationContextMenu" id="177"/>
+																			<ExtendedTooltip name="OutletsSelectFilterPresentationExtendedTooltip" id="178"/>
+																		</InputField>
+																	</ChildItems>
+																</Table>
+															</ChildItems>
+														</UsualGroup>
+														<Table name="OutletsSelect" id="87">
+															<CommandBarLocation>None</CommandBarLocation>
+															<ChangeRowSet>false</ChangeRowSet>
+															<ChangeRowOrder>false</ChangeRowOrder>
+															<Height>1</Height>
+															<UseAlternationRowColor>true</UseAlternationRowColor>
+															<EnableStartDrag>true</EnableStartDrag>
+															<DataPath>OutletsSelect</DataPath>
+															<RowPictureDataPath>OutletsSelect.DefaultPicture</RowPictureDataPath>
+															<AutoRefresh>false</AutoRefresh>
+															<AutoRefreshPeriod>60</AutoRefreshPeriod>
+															<Period xsi:type="v8:StandardPeriod">
+																<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+																<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+																<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+															</Period>
+															<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+															<RestoreCurrentRow>false</RestoreCurrentRow>
+															<TopLevelParent xsi:nil="true"/>
+															<ShowRoot>true</ShowRoot>
+															<AllowRootChoice>false</AllowRootChoice>
+															<UpdateOnDataChange>Auto</UpdateOnDataChange>
+															<ContextMenu name="OutletsSelectContextMenu" id="88"/>
+															<AutoCommandBar name="OutletsSelectCommandBar" id="89"/>
+															<ExtendedTooltip name="OutletsSelectExtendedTooltip" id="90"/>
+															<SearchStringAddition name="OutletsSelectSearchString" id="91">
+																<Source>
+																	<lf:elementId>87</lf:elementId>
+																	<lf:additionId>0</lf:additionId>
+																</Source>
+																<ContextMenu name="OutletsSelectSearchStringContextMenu" id="94"/>
+																<ExtendedTooltip name="OutletsSelectSearchStringExtendedTooltip" id="95"/>
+															</SearchStringAddition>
+															<ViewStatusAddition name="OutletsSelectViewStatus" id="96">
+																<Source>
+																	<lf:elementId>87</lf:elementId>
+																	<lf:additionId>1</lf:additionId>
+																</Source>
+																<ContextMenu name="OutletsSelectViewStatusContextMenu" id="99"/>
+																<ExtendedTooltip name="OutletsSelectViewStatusExtendedTooltip" id="100"/>
+															</ViewStatusAddition>
+															<SearchControlAddition name="OutletsSelectSearchControl" id="101">
+																<Source>
+																	<lf:elementId>87</lf:elementId>
+																	<lf:additionId>2</lf:additionId>
+																</Source>
+																<ContextMenu name="OutletsSelectSearchControlContextMenu" id="104"/>
+																<ExtendedTooltip name="OutletsSelectSearchControlExtendedTooltip" id="105"/>
+															</SearchControlAddition>
+															<Events>
+																<Event name="Selection">OutletsSelectSelection</Event>
+															</Events>
+															<ChildItems>
+																<LabelField name="OutletsSelectOutlet" id="109">
+																	<DataPath>OutletsSelect.Outlet</DataPath>
+																	<Title>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Outlet</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Торговая точка</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="OutletsSelectOutletContextMenu" id="110"/>
+																	<ExtendedTooltip name="OutletsSelectOutletExtendedTooltip" id="111"/>
+																</LabelField>
+																<LabelField name="OutletsSelectClass" id="236">
+																	<DataPath>OutletsSelect.Class</DataPath>
+																	<ContextMenu name="OutletsSelectClassContextMenu" id="237"/>
+																	<ExtendedTooltip name="OutletsSelectClassExtendedTooltip" id="238"/>
+																</LabelField>
+																<LabelField name="OutletsSelectType" id="272">
+																	<DataPath>OutletsSelect.Type</DataPath>
+																	<ContextMenu name="OutletsSelectTypeContextMenu" id="273"/>
+																	<ExtendedTooltip name="OutletsSelectTypeExtendedTooltip" id="274"/>
+																</LabelField>
+															</ChildItems>
+														</Table>
+													</ChildItems>
+												</UsualGroup>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</Page>
 							</ChildItems>
-						</UsualGroup>
+						</Pages>
 					</ChildItems>
 				</Page>
 				<Page name="GroupSKUsPage" id="55">
@@ -1096,7 +1234,7 @@ GROUP BY
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Show hide select</v8:content>
+					<v8:content>Select</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>

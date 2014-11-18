@@ -593,10 +593,6 @@ Procedure OnOpen(Cancel)
 	// Блокировка элементов формы
 	BlockElements();
 	
-	// Видимость группы подбора торговых точек
-	SelectVisibility = False;
-	Items.GroupOutletsSelect.Visible = SelectVisibility;
-	
 EndProcedure
 
 &AtClient
@@ -1044,8 +1040,16 @@ EndFunction
 &AtClient
 Procedure ShowHideSelect(Command)
 	
-	Items.GroupOutletsSelect.Visible = Not Items.GroupOutletsSelect.Visible;
-	Items.Select.Check = Items.GroupOutletsSelect.Visible;
+	IsSelectHidden = Items.GroupOutletsPages.CurrentPage = Items.GroupOutletsNoSelect;
+	
+	CurrentFormTable = ?(IsSelectHidden, "Outlets", "Outlets1");
+	NextFormTable = ?(IsSelectHidden, "Outlets1", "Outlets");
+	
+	Items[NextFormTable].CurrentRow = Items[CurrentFormTable].CurrentRow;
+	
+	Items.GroupOutletsPages.CurrentPage = ?(IsSelectHidden,
+											Items.GroupOutletsWithSelect,
+											Items.GroupOutletsNoSelect);
 	
 EndProcedure
 
