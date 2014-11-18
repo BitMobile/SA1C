@@ -177,6 +177,7 @@
 			
 			// Блок обработчиков выполняемых перед синхронизацией данных
 			SyncSuperAgent.SetStatusOfQuestionnaires();
+			SyncSuperAgent.SetStatusOfAssortmentMatrix(CurrentDate());
 			SyncSuperAgent.ActualizePeriodicity();	
 			// Конец блока обработчиков выполняемых перед синхронизацией данных
 			

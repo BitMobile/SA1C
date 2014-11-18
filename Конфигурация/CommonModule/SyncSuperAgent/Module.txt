@@ -601,3 +601,131 @@ EndFunction
 #EndRegion
 
 #EndRegion
+
+#Region Document_AssortmentMatrix
+
+Procedure SetStatusOfAssortmentMatrix(Date) Export
+	
+	Query = New Query(
+	"SELECT
+	|	AssortmentMatrix.Ref AS AM,
+	|	AssortmentMatrix.Status AS AMStatus,
+	|	BEGINOFPERIOD(AssortmentMatrix.BeginDate, DAY) AS AMBeginDate,
+	|	CASE
+	|		WHEN AssortmentMatrix.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
+	|			THEN DATETIME(1, 1, 1, 0, 0, 0)
+	|		ELSE ENDOFPERIOD(AssortmentMatrix.EndDate, DAY)
+	|	END AS AMEndDate
+	|INTO AssortmentMatrices
+	|FROM
+	|	Catalog.AssortmentMatrix AS AssortmentMatrix
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	AssortmentMatrixSetting.Ref AS Setting,
+	|	AssortmentMatrixSetting.AssortmentMatrix AS AM,
+	|	BEGINOFPERIOD(AssortmentMatrixSetting.BeginDate, DAY) AS SettingBeginDate,
+	|	CASE
+	|		WHEN AssortmentMatrixSetting.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
+	|			THEN DATETIME(1, 1, 1, 0, 0, 0)
+	|		ELSE ENDOFPERIOD(AssortmentMatrixSetting.EndDate, DAY)
+	|	END AS SettingEndDate
+	|INTO Settings
+	|FROM
+	|	Document.AssortmentMatrixSetting AS AssortmentMatrixSetting
+	|WHERE
+	|	BEGINOFPERIOD(AssortmentMatrixSetting.BeginDate, DAY) <= &CurrentDate
+	|	AND CASE
+	|			WHEN AssortmentMatrixSetting.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
+	|				THEN DATETIME(2999, 12, 31, 23, 59, 59)
+	|			ELSE ENDOFPERIOD(AssortmentMatrixSetting.EndDate, DAY)
+	|		END >= &CurrentDate
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	AssortmentMatrices.AM,
+	|	CASE
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Inactive)
+	|				AND NOT Settings.Setting IS NULL 
+	|			THEN VALUE(Enum.AssortmentMatrixStatus.Active)
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
+	|			THEN VALUE(Enum.AssortmentMatrixStatus.Active)
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
+	|			THEN NULL
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND Settings.Setting IS NULL 
+	|			THEN VALUE(Enum.AssortmentMatrixStatus.Inactive)
+	|	END AS NewStatus,
+	|	CASE
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(ENUM.AssortmentMatrixStatus.Inactive)
+	|				AND NOT Settings.Setting IS NULL 
+	|			THEN Settings.SettingBeginDate
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
+	|			THEN Settings.SettingBeginDate
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
+	|			THEN NULL
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND Settings.Setting IS NULL 
+	|			THEN AssortmentMatrices.AMBeginDate
+	|	END AS NewBeginDate,
+	|	CASE
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(ENUM.AssortmentMatrixStatus.Inactive)
+	|				AND NOT Settings.Setting IS NULL 
+	|			THEN Settings.SettingEndDate
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
+	|			THEN Settings.SettingEndDate
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
+	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
+	|			THEN NULL
+	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|				AND Settings.Setting IS NULL 
+	|			THEN AssortmentMatrices.AMEndDate
+	|	END AS NewEndDate
+	|INTO Map
+	|FROM
+	|	AssortmentMatrices AS AssortmentMatrices
+	|		LEFT JOIN Settings AS Settings
+	|		ON AssortmentMatrices.AM = Settings.AM
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	Map.AM,
+	|	Map.NewStatus AS Status,
+	|	Map.NewBeginDate AS BeginDate,
+	|	Map.NewEndDate AS EndDate
+	|FROM
+	|	Map AS Map
+	|WHERE
+	|	NOT Map.NewBeginDate IS NULL 
+	|	AND NOT Map.NewEndDate IS NULL 
+	|	AND NOT Map.NewStatus IS NULL ");
+	
+	Query.SetParameter("CurrentDate", Date);
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Line In QueryResult Do
+		
+		AMObject = Line.AM.GetObject();
+		FillPropertyValues(AMObject, Line);
+		AMObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion

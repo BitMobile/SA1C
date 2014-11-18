@@ -1,0 +1,41 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	// Если создается новый элемент справочника
+	If Not ValueIsFilled(Object.Ref) Then
+		
+		// Статус нового элемента - неактивен
+		Object.Status = Enums.AssortmentMatrixStatus.Inactive;
+		
+		// Ответственный за новый элемент - текущий пользователь
+		UserID = InfoBaseUsers.CurrentUser().UUID;
+		
+		CurrentUserElement = Catalogs.User.FindByAttribute("UserID", UserID);
+		
+		If ValueIsFilled(CurrentUserElement) Then
+		
+			Object.Responsible = CurrentUserElement;
+			
+		EndIf;
+		
+	Else
+		
+		Outlets.Parameters.SetParameterValue("AssortmentMatrix", Object.Ref);
+		
+	EndIf;
+	
+	// Блокировка элементов для редактирования
+	Items.Status.ReadOnly = True;
+	Items.BeginDate.ReadOnly = True;
+	Items.EndDate.ReadOnly = True;
+	Items.Responsible.ReadOnly = True;
+	
+EndProcedure
+
+&AtClient
+Procedure OutletsSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+EndProcedure

@@ -1,0 +1,45 @@
+﻿
+&AtClient
+Procedure Create(Command)
+	
+	If CheckFilling() Then
+		
+		AssortmentMatrixRef = CreateAssortmentMatrix();
+		Close(AssortmentMatrixRef);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Function CreateAssortmentMatrix()
+	
+	AssortmentMatrixObject = Catalogs.AssortmentMatrix.CreateItem();
+	
+	AssortmentMatrixObject.Status = Enums.AssortmentMatrixStatus.Inactive;
+	AssortmentMatrixObject.Description = Description;
+	AssortmentMatrixObject.Commentary = Commentary;
+	AssortmentMatrixObject.Responsible = GetCurrentUser();
+	
+	AssortmentMatrixObject.Write();
+	
+	Return AssortmentMatrixObject.Ref;
+	
+EndFunction
+
+&AtServerNoContext
+Function GetCurrentUser()
+	
+	UserID = InfoBaseUsers.CurrentUser().UUID;
+	
+	CurrentUserElement = Catalogs.User.FindByAttribute("UserID", UserID);
+	
+	If ValueIsFilled(CurrentUserElement) Then
+		
+		CurrentUser = CurrentUserElement;
+		
+	EndIf;
+	
+	Return CurrentUser;
+	
+EndFunction
