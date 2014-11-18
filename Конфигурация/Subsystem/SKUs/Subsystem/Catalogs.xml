@@ -24,6 +24,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SKUFeatures</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SKUGroup</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.UnitsOfMeasure</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.AssortmentMatrix</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
