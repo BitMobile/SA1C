@@ -243,6 +243,7 @@
 			<CommonForm>bitmobile_НастройкиОтправкиОтчетов</CommonForm>
 			<CommonForm>bitmobile_НастройкиСервера</CommonForm>
 			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
+			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>Outlet</Catalog>
@@ -267,7 +268,7 @@
 			<Catalog>User</Catalog>
 			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
 			<Catalog>bitmobile_НастройкиМобильныхПриложений</Catalog>
-			<Catalog>AssortmentMatrix</Catalog>
+			<Document>AssortmentMatrixSetting</Document>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
@@ -278,7 +279,7 @@
 			<Document>Task</Document>
 			<Document>Visit</Document>
 			<Document>VisitPlan</Document>
-			<Document>AssortmentMatrixSetting</Document>
+			<Enum>AssortmentMatrixStatus</Enum>
 			<Enum>ClosingCause</Enum>
 			<Enum>ComparisonType</Enum>
 			<Enum>DataType</Enum>
@@ -304,7 +305,6 @@
 			<Enum>ValueTableRowStatuses</Enum>
 			<Enum>QuestionsSaveIntervals</Enum>
 			<Enum>bitmobile_ПротоколыПередачиФайлов</Enum>
-			<Enum>AssortmentMatrixStatus</Enum>
 			<Report>VisitsOrders</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>Visits</Report>
