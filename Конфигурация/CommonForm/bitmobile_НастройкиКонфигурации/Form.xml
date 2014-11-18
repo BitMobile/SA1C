@@ -57,6 +57,59 @@
 			<ContextMenu name="bitmobile_ОтключитьПодпискиНаСобытияКонтекстноеМеню" id="6"/>
 			<ExtendedTooltip name="bitmobile_ОтключитьПодпискиНаСобытияРасширеннаяПодсказка" id="21"/>
 		</CheckBoxField>
+		<UsualGroup name="ГруппаДополнительныеРеквизиты" id="31">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Группа дополнительные реквизиты</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Группа дополнительные реквизиты</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаДополнительныеРеквизитыExtendedTooltip" id="32"/>
+			<ChildItems>
+				<CheckBoxField name="bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях" id="28">
+					<DataPath>НаборКонстант.bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Do not upload additional details in the tabular section</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Не выгружать дополнительние реквизиты в табличных частях</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>Left</TitleLocation>
+					<TitleHeight>2</TitleHeight>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастяхContextMenu" id="29"/>
+					<ExtendedTooltip name="bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастяхExtendedTooltip" id="30"/>
+				</CheckBoxField>
+				<LabelDecoration name="Decoration1" id="33">
+					<TextColor>style:SpecialTextColor</TextColor>
+					<Title formatted="false">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Use for server version "bitmobile" 2.362 or higher</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Использовать для версии сервера "bitmobile" 2.362 или выше</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="Decoration1ContextMenu" id="34"/>
+					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="35"/>
+				</LabelDecoration>
+			</ChildItems>
+		</UsualGroup>
 		<InputField name="bitmobile_ПротоколПередачиФайлов" id="25">
 			<DataPath>НаборКонстант.bitmobile_ПротоколПередачиФайлов</DataPath>
 			<Title>

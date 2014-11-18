@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.3.0.61</Version>
+			<Version>1.3.0.62</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -234,6 +234,7 @@
 			<Constant>bitmobile_ПодтвержденнаяДатаВыгрузки</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
+			<Constant>bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</Constant>
 			<CommonForm>Logo</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>

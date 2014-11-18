@@ -79,6 +79,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанныеПриЗагрузке</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ПротоколыПередачиФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПротоколПередачиФайлов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
