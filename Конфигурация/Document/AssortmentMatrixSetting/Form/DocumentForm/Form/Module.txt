@@ -700,7 +700,7 @@ EndProcedure
 &AtClient
 Procedure CreateAssortmentMatrix(Command)
 	
-	If ValueIsFilled(Object.Ref) Then
+	If ValueIsFilled(Object.AssortmentMatrix) Then
 		
 		OldAM = Object.AssortmentMatrix;
 		
@@ -728,7 +728,7 @@ Procedure ShowClearAndRefillQuestion(CreateAM = False)
 							NStr("en = 'After assortment matrix create value table ""Outlets"" will be cleared. Continue?'; 
 								 |ru = 'После создания ассортиментной матрицы табличная часть ""Торговые точки"" будет очищена. Продолжить?'"),
 							NStr("en = 'Value table ""Outlets"" will be cleared and filled with data from chosen assortment matrix. All changes will be lost. Continue?'; 
-								 |ru = 'Табличная часть ""Торговые точки"" будет очищена и заполнена данными соответствующими выбранной ассортиментной матрице.Все внесенные изменения будут потеряны."));
+								 |ru = 'Табличная часть ""Торговые точки"" будет очищена и заполнена данными соответствующими выбранной ассортиментной матрице. Все внесенные изменения будут потеряны. Продолжить?'"));
 			
 			ShowQueryBox(New NotifyDescription("FillOutletsFromAssortmentMatrixProcessing", ThisForm, AdditionalParameters),
 						 QueryText,
