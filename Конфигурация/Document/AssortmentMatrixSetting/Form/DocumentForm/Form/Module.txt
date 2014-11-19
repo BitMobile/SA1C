@@ -94,20 +94,20 @@ Procedure SetBeginDate()
 		
 		// Получаем действующий документ "Настройка ассортиментной матрицы" для 
 		// ассортиментной матрицы выбранной в данном документе.
-	    Query = New Query(
-	    "SELECT TOP 1
-	    |	AssortmentMatrixSetting.Ref,
-	    |	AssortmentMatrixSetting.BeginDate AS BeginDate
-	    |FROM
-	    |	Document.AssortmentMatrixSetting AS AssortmentMatrixSetting
-	    |WHERE
-	    |	AssortmentMatrixSetting.AssortmentMatrix = &AssortmentMatrix
-	    |
-	    |ORDER BY
-	    |	BeginDate DESC");
-	    
-	    Query.SetParameter("AssortmentMatrix", Object.AssortmentMatrix);
-	    QueryResultSelection = Query.Execute().Select();
+		Query = New Query(
+		"SELECT TOP 1
+		|	AssortmentMatrixSetting.Ref,
+		|	AssortmentMatrixSetting.BeginDate AS BeginDate
+		|FROM
+		|	Document.AssortmentMatrixSetting AS AssortmentMatrixSetting
+		|WHERE
+		|	AssortmentMatrixSetting.AssortmentMatrix = &AssortmentMatrix
+		|
+		|ORDER BY
+		|	BeginDate DESC");
+
+		Query.SetParameter("AssortmentMatrix", Object.AssortmentMatrix);
+		QueryResultSelection = Query.Execute().Select();
 		
 		// Если найден документ
 		If QueryResultSelection.Next() Then
@@ -120,7 +120,7 @@ Procedure SetBeginDate()
 				MinBeginDate = BegOfDay(QueryResultSelection.BeginDate + 60 * 60 * 24);
 				
 				ExistingAMS = QueryResultSelection.Ref;
-								
+				
 			EndIf;
 			
 		EndIf;
@@ -138,10 +138,11 @@ Procedure SetBeginDate()
 						 "ассортиментной матрицы"" не может быть раньше чем начало действия "  +
 						 " уже действующего для данной ассортиментной матрицы документа "      + 
 						 ExistingAMS + "';"));
+			
 		EndIf;
 		
 	EndIf;
-    
+	
 EndProcedure
 
 &AtClient
@@ -166,10 +167,10 @@ EndProcedure
 
 #EndRegion
 
-#Region AssortmentMatrix
+#Region Outlets
 
 &AtServer
-Procedure FillOutletsFromAssortmentMatrix()
+Procedure FillOutlets()
 	
 	If ValueIsFilled(Object.AssortmentMatrix) Then
 		
@@ -193,32 +194,6 @@ Procedure FillOutletsFromAssortmentMatrix()
 		Outlets.Load(QueryResult);
 		
 	EndIf;
-	
-EndProcedure
-
-#EndRegion
-
-#Region Outlets
-
-&AtServer
-Procedure FillOutlets()
-	
-	Query = New Query(
-	"SELECT DISTINCT
-	|	AssortmentMatrixOutletsSliceLast.Outlet,
-	|	AssortmentMatrixOutletsSliceLast.Outlet.Class AS Class,
-	|	AssortmentMatrixOutletsSliceLast.Outlet.Type AS Type
-	|FROM
-	|	InformationRegister.AssortmentMatrixOutlets.SliceLast(&CurrentDate, AssortmentMatrix = &AssortmentMatrix) AS AssortmentMatrixOutletsSliceLast
-	|WHERE
-	|	AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)");
-	
-	Query.SetParameter("CurrentDate", CurrentDate());
-	Query.SetParameter("AssortmentMatrix", Object.AssortmentMatrix);
-	
-	QueryResult = Query.Execute().Unload();
-	
-	Outlets.Load(QueryResult);
 	
 EndProcedure
 
@@ -316,9 +291,9 @@ Procedure WriteOutlets(CurrentObject)
 	Query.SetParameter("AssortmentMatrix", CurrentObject.AssortmentMatrix);
 	Query.SetParameter("AssortmentMatrixSetting", CurrentObject.Ref);
 	
-	QueryDifferenceResult = Query.Execute().Unload();
+	QueryResult = Query.Execute().Unload();
 	
-	For Each Line In QueryDifferenceResult Do
+	For Each Line In QueryResult Do
 		
 		RecordManager = InformationRegisters.AssortmentMatrixOutlets.CreateRecordManager();
 		FillPropertyValues(RecordManager, Line);
@@ -392,22 +367,18 @@ Procedure FillOutletsSelectFilters()
 
 	ClassFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
 	ClassFilter.LeftValue = New DataCompositionField("Class");
-	//ClassFilter.Presentation = NStr("en = 'Class'; ru = 'Класс'");
 	ClassFilter.Use = False;
 
 	TypeFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
 	TypeFilter.LeftValue = New DataCompositionField("Type");
-	//TypeFilter.Presentation = NStr("en = 'Type'; ru = 'Тип'");
 	TypeFilter.Use = False;
 
 	TerritoryFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
 	TerritoryFilter.LeftValue = New DataCompositionField(NStr("en = 'Territory'; ru = 'Территория'"));
-	//TerritoryFilter.Presentation = NStr("en = 'Territory'; ru = 'Территория'");
 	TerritoryFilter.Use = False;
 
 	RegionFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
 	RegionFilter.LeftValue = New DataCompositionField(NStr("en = 'Region'; ru = 'Регион'"));
-	//TerritoryFilter.Presentation = NStr("en = 'Territory'; ru = 'Территория'");
 	RegionFilter.Use = False;
 
 EndProcedure
@@ -491,21 +462,21 @@ EndProcedure
 
 &AtServer
 Procedure FillSKUs()
-        
-    Query = New Query(
-    "SELECT
-    |	AssortmentMatrixSKUsSliceLast.SKU,
-    |	AssortmentMatrixSKUsSliceLast.Qty,
-    |	AssortmentMatrixSKUsSliceLast.Unit
-    |FROM
-    |	InformationRegister.AssortmentMatrixSKUs.SliceLast(, AssortmentMatrixSetting = &AssortmentMatrixSetting) AS AssortmentMatrixSKUsSliceLast");
-    
-    Query.SetParameter("AssortmentMatrixSetting", Object.Ref);
+	
+	Query = New Query(
+	"SELECT
+	|	AssortmentMatrixSKUsSliceLast.SKU,
+	|	AssortmentMatrixSKUsSliceLast.Qty,
+	|	AssortmentMatrixSKUsSliceLast.Unit
+	|FROM
+	|	InformationRegister.AssortmentMatrixSKUs.SliceLast(, AssortmentMatrixSetting = &AssortmentMatrixSetting) AS AssortmentMatrixSKUsSliceLast");
+	
+	Query.SetParameter("AssortmentMatrixSetting", Object.Ref);
 	
 	QueryResult = Query.Execute().Unload();
-    
-    SKUs.Load(QueryResult);
-
+	
+	SKUs.Load(QueryResult);
+	
 EndProcedure
 
 &AtServer
@@ -650,7 +621,7 @@ Procedure WriteDocument(Command)
 		
 	Else
 		
-		Write();
+		Write(GetWriteParameters());
 		Close();
 		
 	EndIf;
@@ -662,16 +633,23 @@ Procedure WriteDocumentProcessing(Result, AdditionalParameters) Export
 	
 	If Result = DialogReturnCode.Yes Then
 		
-		WriteParameters = New Structure;
-		WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
-		
-		Write(WriteParameters);
+		Write(GetWriteParameters());
 		
 		Close();
 		
 	EndIf;
 	
 EndProcedure
+
+&AtClient
+Function GetWriteParameters()
+	
+	WriteParameters = New Structure;
+	WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
+	
+	Return WriteParameters;
+	
+EndFunction
 
 #EndRegion
 
@@ -758,7 +736,7 @@ Procedure ShowClearAndRefillQuestion(CreateAM = False)
 			
 		Else
 			
-			FillOutletsFromAssortmentMatrix();
+			FillOutlets();
 			
 		EndIf;
 		
@@ -795,7 +773,7 @@ Procedure FillOutletsFromAssortmentMatrixProcessing(Result, AdditionalParameters
 			
 		Else
 			
-			FillOutletsFromAssortmentMatrix();
+			FillOutlets();
 			
 		EndIf;
 		
