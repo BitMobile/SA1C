@@ -1051,22 +1051,30 @@ Procedure FillFromAM(Command)
 	
 	If ValueIsFilled(Object.AssortmentMatrix) Then
 		
-		// Спрашиваем пользователя хочет ли он очистить табличную часть "Номенклатура"
-		// и заполнить её данными из выбранного документа. Если да - очищаем, 
-		// заполняем. Если нет, не делаем ничего.
-		ShowQueryBox(New NotifyDescription("FillSKUsFromAMProcessing", ThisForm),
-		             NStr("en = 'After you choose base-document for fill value table will be cleared and filled with data from chosen document. Continue?'; 
-					      |ru = 'После выбора документа-основания для заполнения табличная часть будет очищена и заполнена данными из выбранного документа. Продолжить?'"),
-					 QuestionDialogMode.YesNo,
-					 0,
-					 DialogReturnCode.No,
-					 NStr("en = 'Clear value table?'; ru = 'Очистить табличную часть?'"));
+		If SKUs.Count() > 0 Then
+			
+			// Спрашиваем пользователя хочет ли он очистить табличную часть "Номенклатура"
+			// и заполнить её данными из выбранного документа. Если да - очищаем, 
+			// заполняем. Если нет, не делаем ничего.
+			ShowQueryBox(New NotifyDescription("FillSKUsFromAMProcessing", ThisForm),
+						 NStr("en = 'After you choose base-document for fill value table will be cleared and filled with data from chosen document. Continue?'; 
+							  |ru = 'После выбора документа-основания для заполнения табличная часть будет очищена и заполнена данными из выбранного документа. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 0,
+						 DialogReturnCode.No,
+						 NStr("en = 'Clear value table?'; ru = 'Очистить табличную часть?'"));
+						
+		Else
+			
+			OpenAMSettingChoiceForm();
+			
+		EndIf;
 		
 	Else
 		
 		UserMessage = New UserMessage;
 		UserMessage.Text = NStr("en = 'Fill ""Assortiment matrix"" filed.'; 
-		                        |ru = 'Заполните поле ""Ассортиментная матрица"".'");
+								|ru = 'Заполните поле ""Ассортиментная матрица"".'");
 								
 		UserMessage.Message();
 		
@@ -1134,12 +1142,16 @@ Procedure FillSKUsFromAMProcessing(Result, Parameters) Export
 	
 	If Result = DialogReturnCode.Yes Then
 		
-		FormParameters = New Structure;
-		FormParameters.Insert("Filter", New Structure("AssortmentMatrix", Object.AssortmentMatrix));
-		
-		OpenForm("Document.AssortmentMatrixSetting.ChoiceForm", FormParameters, Items.SKUs);		
+		OpenAMSettingChoiceForm();
 		
 	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenAMSettingChoiceForm()
+	
+	OpenForm("Document.AssortmentMatrixSetting.ChoiceForm", , Items.SKUs);
 	
 EndProcedure
 

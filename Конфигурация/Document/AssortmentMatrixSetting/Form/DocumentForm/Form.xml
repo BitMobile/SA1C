@@ -1106,11 +1106,11 @@ GROUP BY
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Fill from AM</v8:content>
+					<v8:content>Fill from another setting</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить из АМ</v8:content>
+					<v8:content>Заполнить из другой настройки</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
