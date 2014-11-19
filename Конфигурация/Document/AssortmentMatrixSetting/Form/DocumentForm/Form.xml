@@ -279,6 +279,7 @@
 												<Table name="Outlets" id="59">
 													<Representation>List</Representation>
 													<CommandBarLocation>None</CommandBarLocation>
+													<RowSelectionMode>Row</RowSelectionMode>
 													<EnableStartDrag>true</EnableStartDrag>
 													<EnableDrag>true</EnableDrag>
 													<DataPath>Outlets</DataPath>
@@ -401,6 +402,7 @@
 												<Table name="Outlets1" id="297">
 													<Representation>List</Representation>
 													<CommandBarLocation>None</CommandBarLocation>
+													<RowSelectionMode>Row</RowSelectionMode>
 													<EnableStartDrag>true</EnableStartDrag>
 													<EnableDrag>true</EnableDrag>
 													<DataPath>Outlets</DataPath>
@@ -769,6 +771,7 @@
 															<ChangeRowSet>false</ChangeRowSet>
 															<ChangeRowOrder>false</ChangeRowOrder>
 															<Height>1</Height>
+															<RowSelectionMode>Row</RowSelectionMode>
 															<UseAlternationRowColor>true</UseAlternationRowColor>
 															<EnableStartDrag>true</EnableStartDrag>
 															<DataPath>OutletsSelect</DataPath>
@@ -832,15 +835,15 @@
 																	<ContextMenu name="OutletsSelectOutletContextMenu" id="110"/>
 																	<ExtendedTooltip name="OutletsSelectOutletExtendedTooltip" id="111"/>
 																</LabelField>
-																<LabelField name="OutletsSelectClass" id="236">
-																	<DataPath>OutletsSelect.Class</DataPath>
-																	<ContextMenu name="OutletsSelectClassContextMenu" id="237"/>
-																	<ExtendedTooltip name="OutletsSelectClassExtendedTooltip" id="238"/>
+																<LabelField name="OutletsSelectOutletType" id="325">
+																	<DataPath>OutletsSelect.Outlet.Type</DataPath>
+																	<ContextMenu name="OutletsSelectOutletTypeContextMenu" id="326"/>
+																	<ExtendedTooltip name="OutletsSelectOutletTypeExtendedTooltip" id="327"/>
 																</LabelField>
-																<LabelField name="OutletsSelectType" id="272">
-																	<DataPath>OutletsSelect.Type</DataPath>
-																	<ContextMenu name="OutletsSelectTypeContextMenu" id="273"/>
-																	<ExtendedTooltip name="OutletsSelectTypeExtendedTooltip" id="274"/>
+																<LabelField name="OutletsSelectOutletClass" id="328">
+																	<DataPath>OutletsSelect.Outlet.Class</DataPath>
+																	<ContextMenu name="OutletsSelectOutletClassContextMenu" id="329"/>
+																	<ExtendedTooltip name="OutletsSelectOutletClassExtendedTooltip" id="330"/>
 																</LabelField>
 															</ChildItems>
 														</Table>
@@ -1072,22 +1075,12 @@
 				<ManualQuery>true</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<QueryText>SELECT
-	Outlets.Ref AS Outlet,
-	Outlets.Class,
-	Outlets.Type,
-	TerritoryOutlets.Ref AS Territory,
-	TerritoryOutlets.Ref.Owner AS Region
+	Outlets.Ref AS Outlet
 FROM
 	Catalog.Outlet AS Outlets
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON Outlets.Ref = TerritoryOutlets.Outlet
 
 GROUP BY
-	Outlets.Ref,
-	Outlets.Class,
-	Outlets.Type,
-	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.Owner</QueryText>
+	Outlets.Ref</QueryText>
 				<MainTable>Catalog.Outlet</MainTable>
 				<ListSettings/>
 			</Settings>

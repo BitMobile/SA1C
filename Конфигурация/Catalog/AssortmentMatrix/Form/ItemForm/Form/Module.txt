@@ -19,11 +19,9 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 			
 		EndIf;
 		
-	Else
-		
-		Outlets.Parameters.SetParameterValue("AssortmentMatrix", Object.Ref);
-		
 	EndIf;
+	
+	Outlets.Parameters.SetParameterValue("AssortmentMatrix", Object.Ref);
 	
 	// Блокировка элементов для редактирования
 	Items.Status.ReadOnly = True;

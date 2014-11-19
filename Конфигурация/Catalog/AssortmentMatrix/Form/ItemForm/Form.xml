@@ -212,12 +212,11 @@
 				<ManualQuery>true</ManualQuery>
 				<DynamicDataRead>false</DynamicDataRead>
 				<QueryText>SELECT DISTINCT
-	InformationRegisterAssortmentMatrixOutlets.Outlet
+	AssortmentMatrixOutletsSliceLast.Outlet
 FROM
-	InformationRegister.AssortmentMatrixOutlets AS InformationRegisterAssortmentMatrixOutlets
+	InformationRegister.AssortmentMatrixOutlets.SliceLast(, AssortmentMatrix = &amp;AssortmentMatrix) AS AssortmentMatrixOutletsSliceLast
 WHERE
-	InformationRegisterAssortmentMatrixOutlets.AssortmentMatrix = &amp;AssortmentMatrix
-	AND InformationRegisterAssortmentMatrixOutlets.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)</QueryText>
+	AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)</QueryText>
 				<ListSettings>
 					<dcsset:filter>
 						<dcsset:item xsi:type="dcsset:FilterItemComparison">

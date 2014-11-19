@@ -233,8 +233,9 @@ Procedure WriteOutlets(CurrentObject)
 	//
 	// Четвертый запрос в зависимости от того откуда пришли данные проставляет 
 	// статусы строк. Если из регистра - значит статус "Удалена", если с формы
-	// значит "Добавлена".
-	QueryDifference = New Query(
+	// значит "Добавлена". Также запрос формирует список торговых точек к удалению
+	// из других ассортиментных матриц.
+	Query = New Query(
 	"SELECT
 	|	Outlets.Outlet AS OutletOnForm
 	|INTO FromOutlets
@@ -286,33 +287,16 @@ Procedure WriteOutlets(CurrentObject)
 	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
 	|	END AS OutletStatus
 	|FROM
-	|	Difference AS Difference");
-	
-	OutletsValueTable = FormAttributeToValue("Outlets");
-	
-	QueryDifference.SetParameter("Outlets", OutletsValueTable);
-	QueryDifference.SetParameter("Period", CurrentDate());
-	QueryDifference.SetParameter("AssortmentMatrix", CurrentObject.AssortmentMatrix);
-	QueryDifference.SetParameter("AssortmentMatrixSetting", CurrentObject.Ref);
-	
-	QueryDifferenceResult = QueryDifference.Execute().Unload();
-	
-	For Each Line In QueryDifferenceResult Do
-		
-		RecordManager = InformationRegisters.AssortmentMatrixOutlets.CreateRecordManager();
-		FillPropertyValues(RecordManager, Line);
-		RecordManager.Write();
-		
-	EndDo;
-	
-	// Удаляем торговые точки из ассортиментных матриц отличных от текущей.
-	QueryOutletsInAMs = New Query(
-	"SELECT
-	|	DATEADD(&Period, SECOND, -1) AS Period,
-	|	AssortmentMatrixOutletsSliceLast.Outlet,
+	|	Difference AS Difference
+	|
+	|UNION ALL
+	|
+	|SELECT
+	|	DATEADD(&Period, SECOND, -1),
 	|	AssortmentMatrixOutletsSliceLast.AssortmentMatrix,
-	|	AssortmentMatrixOutletsSliceLast.AssortmentMatrixSetting,
-	|	VALUE(Enum.ValueTableRowStatuses.Deleted) AS OutletStatus
+	|	&AssortmentMatrixSetting,
+	|	AssortmentMatrixOutletsSliceLast.Outlet,
+	|	VALUE(Enum.ValueTableRowStatuses.Deleted)
 	|FROM
 	|	InformationRegister.AssortmentMatrixOutlets.SliceLast(
 	|			,
@@ -321,13 +305,16 @@ Procedure WriteOutlets(CurrentObject)
 	|WHERE
 	|	AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)");
 	
-	QueryOutletsInAMs.SetParameter("Period", CurrentDate());
-	QueryOutletsInAMs.SetParameter("AssortmentMatrix", CurrentObject.AssortmentMatrix);
-	QueryOutletsInAMs.SetParameter("Outlets", OutletsValueTable);
+	OutletsValueTable = FormAttributeToValue("Outlets");
 	
-	QueryOutletsInAMsResult = QueryOutletsInAMs.Execute().Unload();
+	Query.SetParameter("Outlets", OutletsValueTable);
+	Query.SetParameter("Period", CurrentDate());
+	Query.SetParameter("AssortmentMatrix", CurrentObject.AssortmentMatrix);
+	Query.SetParameter("AssortmentMatrixSetting", CurrentObject.Ref);
 	
-	For Each Line In QueryOutletsInAMsResult Do
+	QueryDifferenceResult = Query.Execute().Unload();
+	
+	For Each Line In QueryDifferenceResult Do
 		
 		RecordManager = InformationRegisters.AssortmentMatrixOutlets.CreateRecordManager();
 		FillPropertyValues(RecordManager, Line);
@@ -611,7 +598,7 @@ Procedure BlockElements()
 	
 	// Ассортиментную матрицу в уже записанном объекте менять нельзя
 	Items.AssortmentMatrix.ReadOnly = ValueIsFilled(Object.Ref);
-	Items.CreateAssortmentMatrix.Enabled = ValueIsFilled(Object.Ref);
+	Items.CreateAssortmentMatrix.Enabled = Not ValueIsFilled(Object.Ref);
 	
 	// Блокировка элементов формы для активных матриц
 	IsActive = CurrentDate() >= Object.BeginDate;
@@ -1050,6 +1037,8 @@ Procedure ShowHideSelect(Command)
 	Items.GroupOutletsPages.CurrentPage = ?(IsSelectHidden,
 											Items.GroupOutletsWithSelect,
 											Items.GroupOutletsNoSelect);
+	
+	ThisForm.CurrentItem = Items[NextFormTable];
 	
 EndProcedure
 
