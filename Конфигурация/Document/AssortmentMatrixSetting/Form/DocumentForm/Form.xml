@@ -1075,12 +1075,22 @@
 				<ManualQuery>true</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<QueryText>SELECT
-	Outlets.Ref AS Outlet
+	Outlets.Ref AS Outlet,
+	Outlets.Class,
+	Outlets.Type,
+	TerritoryOutlets.Ref AS Territory,
+	TerritoryOutlets.Ref.Owner AS Region
 FROM
 	Catalog.Outlet AS Outlets
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON Outlets.Ref = TerritoryOutlets.Outlet
 
 GROUP BY
-	Outlets.Ref</QueryText>
+	Outlets.Ref,
+	Outlets.Class,
+	Outlets.Type,
+	TerritoryOutlets.Ref,
+	TerritoryOutlets.Ref.Owner</QueryText>
 				<MainTable>Catalog.Outlet</MainTable>
 				<ListSettings/>
 			</Settings>

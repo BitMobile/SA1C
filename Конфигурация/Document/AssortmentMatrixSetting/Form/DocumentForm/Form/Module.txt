@@ -37,6 +37,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	// Изменяем запрос динамического списка OutletsSelect для правильного
+	// отображения отборов
+	ChangeOutletsSelectQuery();
+	
 	// Заполнение фильтров отбора торговых точек
 	FillOutletsSelectFilters();
 	
@@ -336,6 +340,7 @@ Function GetOutletsArrayFromDynamicList()
 	
 	DataSet = DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
 	DataSet.Name = "DataSet1";
+	
 	DataSet.Query = OutletsSelect.QueryText;
 	DataSet.DataSource = "DataSource1";
 	DataSet.AutoFillAvailableFields = True;
@@ -396,15 +401,28 @@ Procedure FillOutletsSelectFilters()
 	TypeFilter.Use = False;
 
 	TerritoryFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	TerritoryFilter.LeftValue = New DataCompositionField("Territory");
+	TerritoryFilter.LeftValue = New DataCompositionField(NStr("en = 'Territory'; ru = 'Территория'"));
 	//TerritoryFilter.Presentation = NStr("en = 'Territory'; ru = 'Территория'");
 	TerritoryFilter.Use = False;
 
 	RegionFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	RegionFilter.LeftValue = New DataCompositionField("Region");
+	RegionFilter.LeftValue = New DataCompositionField(NStr("en = 'Region'; ru = 'Регион'"));
 	//TerritoryFilter.Presentation = NStr("en = 'Territory'; ru = 'Территория'");
 	RegionFilter.Use = False;
 
+EndProcedure
+
+&AtServer
+Procedure ChangeOutletsSelectQuery()
+	
+	QuerySchema = New QuerySchema;
+	QuerySchema.SetQueryText(OutletsSelect.QueryText);
+	
+	QuerySchema.QueryBatch[0].Columns[3].Alias = NStr("en = 'Territory'; ru = 'Территория'");
+	QuerySchema.QueryBatch[0].Columns[4].Alias = NStr("en = 'Region'; ru = 'Регион'");
+	
+	OutletsSelect.QueryText = QuerySchema.GetQueryText();
+	
 EndProcedure
 
 &AtServerNoContext
