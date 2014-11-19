@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.3.0.63</Version>
+			<Version>1.3.0.64</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -110,7 +110,7 @@
 			<Subsystem>Questioning</Subsystem>
 			<Subsystem>Outlets</Subsystem>
 			<Subsystem>SKUs</Subsystem>
-			<Subsystem>Administration</Subsystem>
+			<Subsystem>Users</Subsystem>
 			<Subsystem>SynchronizationAndSettings</Subsystem>
 			<Subsystem>Bitmobile</Subsystem>
 			<StyleItem>ШрифтВажнойНадписи</StyleItem>
@@ -132,7 +132,7 @@
 			<CommonPicture>bitmobile_ДобавитьНаКарту</CommonPicture>
 			<CommonPicture>bitmobile_ГруппаЭлемент</CommonPicture>
 			<CommonPicture>SectionQuestioning</CommonPicture>
-			<CommonPicture>SectionAdministration</CommonPicture>
+			<CommonPicture>SectionUsers</CommonPicture>
 			<CommonPicture>SectionOrders</CommonPicture>
 			<CommonPicture>SectionVisits</CommonPicture>
 			<CommonPicture>SectionOutlets</CommonPicture>
@@ -235,6 +235,9 @@
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
 			<Constant>bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</Constant>
+			<Constant>bitmobile_СтатусПоследнейСинхронизацииФайлов</Constant>
+			<Constant>bitmobile_ДатаПоследнейСинхронизацииФайлов</Constant>
+			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
 			<CommonForm>Logo</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>

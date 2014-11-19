@@ -6,7 +6,7 @@
 		<Subsystem>Subsystem.Questioning</Subsystem>
 		<Subsystem>Subsystem.Outlets</Subsystem>
 		<Subsystem>Subsystem.SKUs</Subsystem>
-		<Subsystem>Subsystem.Administration</Subsystem>
+		<Subsystem>Subsystem.Users</Subsystem>
 		<Subsystem>Subsystem.SynchronizationAndSettings</Subsystem>
 	</SubsystemsOrder>
 </CommandInterface>

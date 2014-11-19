@@ -21,6 +21,10 @@
 			<Content>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.bitmobile_СинхронизацияИНастройки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSyncAndSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowDeleteObjects</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowScheduledJobs</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.УдалениеПомеченныхОбъектов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.РегламентныеИФоновыеЗадания</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

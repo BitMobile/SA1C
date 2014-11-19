@@ -80,6 +80,9 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ПротоколыПередачиФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПротоколПередачиФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейСинхронизацииФайлов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейСинхронизацииФайлов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияФайловЗапущена</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

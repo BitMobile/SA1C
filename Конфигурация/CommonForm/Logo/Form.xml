@@ -77,7 +77,7 @@
 							<ExtendedTooltip name="GroupUploadTextExtendedTooltip" id="1658"/>
 							<ChildItems>
 								<LabelDecoration name="Decoration1" id="1639">
-									<Width>20</Width>
+									<Width>25</Width>
 									<Height>1</Height>
 									<Title formatted="false">
 										<v8:item>
@@ -131,7 +131,7 @@
 							<ExtendedTooltip name="GroupDownloadTextExtendedTooltip" id="1660"/>
 							<ChildItems>
 								<LabelDecoration name="Decoration2" id="1645">
-									<Width>20</Width>
+									<Width>25</Width>
 									<Height>1</Height>
 									<Title formatted="false">
 										<v8:item>
@@ -163,6 +163,59 @@
 									<HorizontalStretch>true</HorizontalStretch>
 									<ContextMenu name="DateDownloadContextMenu" id="1649"/>
 									<ExtendedTooltip name="DateDownloadExtendedTooltip" id="1650"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="GroupFilesSync" id="1666">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group files sync</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group files sync</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupFilesSyncExtendedTooltip" id="1667"/>
+							<ChildItems>
+								<LabelDecoration name="Decoration3" id="1668">
+									<Width>25</Width>
+									<Height>1</Height>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Last sync files:</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Последняя синхронизация файлов:</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Download</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Загрузка</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ContextMenu name="Decoration3ContextMenu" id="1669"/>
+									<ExtendedTooltip name="Decoration3ExtendedTooltip" id="1670"/>
+								</LabelDecoration>
+								<LabelField name="FilesSync" id="1663">
+									<DataPath>FilesSync</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>20</Width>
+									<ContextMenu name="FilesSyncContextMenu" id="1664"/>
+									<ExtendedTooltip name="FilesSyncExtendedTooltip" id="1665"/>
 								</LabelField>
 							</ChildItems>
 						</UsualGroup>
@@ -204,6 +257,13 @@
 							<CommandName>Form.Command.SyncronizeFiles</CommandName>
 							<Parameter xsi:nil="true"/>
 							<ExtendedTooltip name="SyncronizeFilesExtendedTooltip" id="1654"/>
+						</Button>
+						<Button name="UpdateInfo" id="1671">
+							<Type>UsualButton</Type>
+							<Width>22</Width>
+							<CommandName>Form.Command.UpdateInfo</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="UpdateInfoExtendedTooltip" id="1672"/>
 						</Button>
 					</ChildItems>
 				</UsualGroup>
@@ -305,6 +365,25 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
+		<Attribute name="FilesSync" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Last sync files</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Последняя синхронизация файлов</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="SyncronizeData" id="1">
@@ -354,6 +433,25 @@
 			</ToolTip>
 			<Action>SyncronizeFiles</Action>
 			<Representation>TextPicture</Representation>
+		</Command>
+		<Command name="UpdateInfo" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Update information</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить информацию</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Update info</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UpdateInfo</Action>
 		</Command>
 	</Commands>
 </Form>

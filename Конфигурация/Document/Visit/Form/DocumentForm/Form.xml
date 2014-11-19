@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<CommandSet>
+		<ExcludedCommand>WriteAndClose</ExcludedCommand>
+		<ExcludedCommand>Copy</ExcludedCommand>
+		<ExcludedCommand>Write</ExcludedCommand>
+	</CommandSet>
 	<AutoTime>CurrentOrLast</AutoTime>
 	<UsePostingMode>Auto</UsePostingMode>
 	<RepostOnWrite>true</RepostOnWrite>
@@ -68,12 +73,14 @@
 								</InputField>
 								<InputField name="Date" id="3">
 									<DataPath>Object.Date</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="DateContextMenu" id="4"/>
 									<ExtendedTooltip name="DateExtendedTooltip" id="142"/>
 								</InputField>
 								<InputField name="Status" id="9">
 									<DataPath>Object.Status</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="StatusContextMenu" id="10"/>
 									<ExtendedTooltip name="StatusExtendedTooltip" id="143"/>
@@ -82,19 +89,22 @@
 						</UsualGroup>
 						<InputField name="Plan" id="50">
 							<DataPath>Object.Plan</DataPath>
+							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="PlanContextMenu" id="51"/>
 							<ExtendedTooltip name="PlanExtendedTooltip" id="144"/>
 						</InputField>
 						<InputField name="Outlet" id="5">
 							<DataPath>Object.Outlet</DataPath>
+							<ReadOnly>true</ReadOnly>
 							<EditMode>EnterOnInput</EditMode>
 							<ContextMenu name="OutletContextMenu" id="6"/>
 							<ExtendedTooltip name="OutletExtendedTooltip" id="145"/>
 						</InputField>
 						<InputField name="SR" id="7">
 							<DataPath>Object.SR</DataPath>
+							<ReadOnly>true</ReadOnly>
 							<TitleLocation>Left</TitleLocation>
-							<TitleHeight>2</TitleHeight>
+							<TitleHeight>1</TitleHeight>
 							<EditMode>EnterOnInput</EditMode>
 							<ContextMenu name="SRContextMenu" id="8"/>
 							<ExtendedTooltip name="SRExtendedTooltip" id="146"/>
@@ -103,48 +113,51 @@
 							<ContextMenu name="EncashmentContextMenu" id="49"/>
 							<ExtendedTooltip name="EncashmentExtendedTooltip" id="147"/>
 						</InputField>
-						<UsualGroup name="GroupPeriodAndLocation" id="104">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Group period and location</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Group period and location</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Group>Horizontal</Group>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="GroupPeriodAndLocationExtendedTooltip" id="148"/>
-							<ChildItems>
-								<InputField name="StartTime" id="11">
-									<DataPath>Object.StartTime</DataPath>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="StartTimeContextMenu" id="12"/>
-									<ExtendedTooltip name="StartTimeExtendedTooltip" id="150"/>
-								</InputField>
-								<InputField name="EndTime" id="13">
-									<DataPath>Object.EndTime</DataPath>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="EndTimeContextMenu" id="14"/>
-									<ExtendedTooltip name="EndTimeExtendedTooltip" id="151"/>
-								</InputField>
-								<InputField name="Lattitude" id="78">
-									<DataPath>Object.Lattitude</DataPath>
-									<ContextMenu name="LattitudeContextMenu" id="79"/>
-									<ExtendedTooltip name="LattitudeExtendedTooltip" id="153"/>
-								</InputField>
-								<InputField name="Longitude" id="80">
-									<DataPath>Object.Longitude</DataPath>
-									<ContextMenu name="LongitudeContextMenu" id="81"/>
-									<ExtendedTooltip name="LongitudeExtendedTooltip" id="154"/>
-								</InputField>
-							</ChildItems>
-						</UsualGroup>
+						<InputField name="ReasonForVisit" id="133">
+							<DataPath>Object.ReasonForVisit</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="ReasonForVisitContextMenu" id="134"/>
+							<ExtendedTooltip name="ReasonForVisitExtendedTooltip" id="224"/>
+						</InputField>
+						<InputField name="ReasonForNotOfTakingOrder" id="135">
+							<DataPath>Object.ReasonForNotOfTakingOrder</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="ReasonForNotOfTakingOrderContextMenu" id="136"/>
+							<ExtendedTooltip name="ReasonForNotOfTakingOrderExtendedTooltip" id="225"/>
+						</InputField>
+						<InputField name="StartTime" id="11">
+							<DataPath>Object.StartTime</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="StartTimeContextMenu" id="12"/>
+							<ExtendedTooltip name="StartTimeExtendedTooltip" id="150"/>
+						</InputField>
+						<InputField name="EndTime" id="13">
+							<DataPath>Object.EndTime</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="EndTimeContextMenu" id="14"/>
+							<ExtendedTooltip name="EndTimeExtendedTooltip" id="151"/>
+						</InputField>
+						<InputField name="Lattitude" id="78">
+							<DataPath>Object.Lattitude</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="LattitudeContextMenu" id="79"/>
+							<ExtendedTooltip name="LattitudeExtendedTooltip" id="153"/>
+						</InputField>
+						<InputField name="Longitude" id="80">
+							<DataPath>Object.Longitude</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<ContextMenu name="LongitudeContextMenu" id="81"/>
+							<ExtendedTooltip name="LongitudeExtendedTooltip" id="154"/>
+						</InputField>
+						<InputField name="Commentary" id="137">
+							<DataPath>Object.Commentary</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<TitleLocation>Left</TitleLocation>
+							<ContextMenu name="CommentaryContextMenu" id="138"/>
+							<ExtendedTooltip name="CommentaryExtendedTooltip" id="226"/>
+						</InputField>
 					</ChildItems>
 				</Page>
 				<Page name="GroupTasks" id="67">
@@ -167,7 +180,6 @@
 					<ExtendedTooltip name="GroupTasksExtendedTooltip" id="157"/>
 					<ChildItems>
 						<Table name="Task" id="68">
-							<ReadOnly>true</ReadOnly>
 							<ChangeRowSet>false</ChangeRowSet>
 							<ChangeRowOrder>false</ChangeRowOrder>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
@@ -236,11 +248,11 @@
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Questionaires</v8:content>
+							<v8:content>Results of questioning</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Анкеты</v8:content>
+							<v8:content>Результаты анкетирования</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -258,21 +270,6 @@
 							<EnableStartDrag>true</EnableStartDrag>
 							<DataPath>TempQuestionaires</DataPath>
 							<RowPictureDataPath>TempQuestionaires.DefaultPicture</RowPictureDataPath>
-							<CommandSet>
-								<ExcludedCommand>Copy</ExcludedCommand>
-								<ExcludedCommand>Create</ExcludedCommand>
-								<ExcludedCommand>ListSettings</ExcludedCommand>
-								<ExcludedCommand>Refresh</ExcludedCommand>
-								<ExcludedCommand>CancelSearch</ExcludedCommand>
-								<ExcludedCommand>FindByCurrentValue</ExcludedCommand>
-								<ExcludedCommand>OutputList</ExcludedCommand>
-								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-								<ExcludedCommand>Choose</ExcludedCommand>
-								<ExcludedCommand>Delete</ExcludedCommand>
-								<ExcludedCommand>Change</ExcludedCommand>
-								<ExcludedCommand>Find</ExcludedCommand>
-								<ExcludedCommand>SearchHistory</ExcludedCommand>
-							</CommandSet>
 							<AutoRefresh>false</AutoRefresh>
 							<AutoRefreshPeriod>60</AutoRefreshPeriod>
 							<Period xsi:type="v8:StandardPeriod">
@@ -287,7 +284,9 @@
 							<AllowRootChoice>false</AllowRootChoice>
 							<UpdateOnDataChange>Auto</UpdateOnDataChange>
 							<ContextMenu name="TempQuestionairesContextMenu" id="271"/>
-							<AutoCommandBar name="TempQuestionairesCommandBar" id="272"/>
+							<AutoCommandBar name="TempQuestionairesCommandBar" id="272">
+								<Autofill>false</Autofill>
+							</AutoCommandBar>
 							<ExtendedTooltip name="TempQuestionairesExtendedTooltip" id="273"/>
 							<SearchStringAddition name="TempQuestionairesSearchString" id="274">
 								<Source>
@@ -348,6 +347,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="GroupQuestions" id="16">
+					<Visible>false</Visible>
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -512,6 +512,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="GroupSKUs" id="26">
+					<Visible>false</Visible>
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -675,42 +676,6 @@
 								</PictureField>
 							</ChildItems>
 						</UsualGroup>
-					</ChildItems>
-				</Page>
-				<Page name="GroupOthers" id="132">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Others</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Прочее</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group others</v8:content>
-						</v8:item>
-					</ToolTip>
-					<ExtendedTooltip name="GroupOthersExtendedTooltip" id="223"/>
-					<ChildItems>
-						<InputField name="ReasonForVisit" id="133">
-							<DataPath>Object.ReasonForVisit</DataPath>
-							<ContextMenu name="ReasonForVisitContextMenu" id="134"/>
-							<ExtendedTooltip name="ReasonForVisitExtendedTooltip" id="224"/>
-						</InputField>
-						<InputField name="ReasonForNotOfTakingOrder" id="135">
-							<DataPath>Object.ReasonForNotOfTakingOrder</DataPath>
-							<ContextMenu name="ReasonForNotOfTakingOrderContextMenu" id="136"/>
-							<ExtendedTooltip name="ReasonForNotOfTakingOrderExtendedTooltip" id="225"/>
-						</InputField>
-						<InputField name="Commentary" id="137">
-							<DataPath>Object.Commentary</DataPath>
-							<ContextMenu name="CommentaryContextMenu" id="138"/>
-							<ExtendedTooltip name="CommentaryExtendedTooltip" id="226"/>
-						</InputField>
 					</ChildItems>
 				</Page>
 			</ChildItems>
