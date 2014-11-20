@@ -92,15 +92,19 @@
 									<ToolTip>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Upload</v8:content>
+											<v8:content>Click to update information</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Выгрузка</v8:content>
+											<v8:content>Нажмите чтобы обновить информацию</v8:content>
 										</v8:item>
 									</ToolTip>
+									<Hyperlink>true</Hyperlink>
 									<ContextMenu name="Decoration1ContextMenu" id="1640"/>
 									<ExtendedTooltip name="Decoration1ExtendedTooltip" id="1641"/>
+									<Events>
+										<Event name="Click">UpdateInfo</Event>
+									</Events>
 								</LabelDecoration>
 								<LabelField name="DateUpload" id="1642">
 									<DataPath>DateUpload</DataPath>
@@ -146,15 +150,19 @@
 									<ToolTip>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Download</v8:content>
+											<v8:content>Click to update information</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Загрузка</v8:content>
+											<v8:content>Нажмите чтобы обновить информацию</v8:content>
 										</v8:item>
 									</ToolTip>
+									<Hyperlink>true</Hyperlink>
 									<ContextMenu name="Decoration2ContextMenu" id="1646"/>
 									<ExtendedTooltip name="Decoration2ExtendedTooltip" id="1647"/>
+									<Events>
+										<Event name="Click">UpdateInfo</Event>
+									</Events>
 								</LabelDecoration>
 								<LabelField name="DateDownload" id="1648">
 									<DataPath>DateDownload</DataPath>
@@ -200,15 +208,19 @@
 									<ToolTip>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Download</v8:content>
+											<v8:content>Click to update information</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Загрузка</v8:content>
+											<v8:content>Нажмите чтобы обновить информацию</v8:content>
 										</v8:item>
 									</ToolTip>
+									<Hyperlink>true</Hyperlink>
 									<ContextMenu name="Decoration3ContextMenu" id="1669"/>
 									<ExtendedTooltip name="Decoration3ExtendedTooltip" id="1670"/>
+									<Events>
+										<Event name="Click">UpdateInfo</Event>
+									</Events>
 								</LabelDecoration>
 								<LabelField name="FilesSync" id="1663">
 									<DataPath>FilesSync</DataPath>
@@ -240,6 +252,7 @@
 					<ChildItems>
 						<Button name="SyncronizeData" id="1651">
 							<Type>UsualButton</Type>
+							<DefaultItem>true</DefaultItem>
 							<Width>22</Width>
 							<CommandName>Form.Command.SyncronizeData</CommandName>
 							<Parameter xsi:nil="true"/>
@@ -257,13 +270,6 @@
 							<CommandName>Form.Command.SyncronizeFiles</CommandName>
 							<Parameter xsi:nil="true"/>
 							<ExtendedTooltip name="SyncronizeFilesExtendedTooltip" id="1654"/>
-						</Button>
-						<Button name="UpdateInfo" id="1671">
-							<Type>UsualButton</Type>
-							<Width>22</Width>
-							<CommandName>Form.Command.UpdateInfo</CommandName>
-							<Parameter xsi:nil="true"/>
-							<ExtendedTooltip name="UpdateInfoExtendedTooltip" id="1672"/>
 						</Button>
 					</ChildItems>
 				</UsualGroup>

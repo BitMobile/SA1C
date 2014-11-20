@@ -23,6 +23,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Document.Encashment</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Document.Visit</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Document.VisitPlan</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Document.Task</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
