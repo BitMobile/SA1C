@@ -1,6 +1,5 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -18,10 +17,21 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
 EndProcedure
 
-&AtServer
-Function AnswerTypeOnChangeServer()
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+	
+	If NotAllowed() Then
+		
+		Cancel = True;
+		
+	EndIf; 
+	
+EndProcedure
 
-    If Object.AnswerType = Enums.DataType.ValueList Then
+&AtServer
+Function IsValueList()
+	
+	If Object.AnswerType = Enums.DataType.ValueList Then
 		
 		Return True;
 		
@@ -30,7 +40,22 @@ Function AnswerTypeOnChangeServer()
 		Return False;
 		
 	EndIf;
-    
+	
+EndFunction
+
+&AtServer
+Function GetQuestionGroupType(TypeString = "SKUQuestions")
+	
+	If TypeString = "SKUQuestions" Then 
+		
+		Return Enums.QuestionGroupTypes.SKUQuestions;
+		
+	Else 
+		
+		Return Enums.QuestionGroupTypes.RegularQuestions;
+		
+	EndIf;
+	
 EndFunction
 
 &AtServer
@@ -54,17 +79,6 @@ Function GetValueList()
 	Return Enums.DataType.ValueList;
 	
 EndFunction
-
-&AtClient
-Procedure BeforeWrite(Cancel, WriteParameters)
-    
-    If NotAllowed() Then       
-		
-		Cancel = True;   
-		
-	EndIf; 
-    
-EndProcedure
 
 &AtServer
 Procedure OwnerOnChangeAtServer()
@@ -126,13 +140,13 @@ Procedure CheckAssignment()
 		Object.Assignment = Undefined;
 		
 	ElsIf Object.AnswerType = Enums.DataType.Decimal And Not (Object.Assignment = Enums.SKUQuestions.Facing Or
-													Object.Assignment = Enums.SKUQuestions.MarkUp Or 
-													Object.Assignment = Enums.SKUQuestions.Price Or 
-													Object.Assignment = Enums.SKUQuestions.Stock) Then 
+															Object.Assignment = Enums.SKUQuestions.MarkUp Or 
+															Object.Assignment = Enums.SKUQuestions.Price Or 
+															Object.Assignment = Enums.SKUQuestions.Stock) Then 
 		
 		Object.Assignment = Undefined;
 		
-	ElsIf Not (Object.AnswerType = Enums.DataType.Snapshot Or Object.AnswerType = Enums.DataType.Boolean Or Object.AnswerType = Enums.DataType.Decimal) Then  
+	ElsIf Not (Object.AnswerType = Enums.DataType.Snapshot Or Object.AnswerType = Enums.DataType.Boolean Or Object.AnswerType = Enums.DataType.Decimal) Then 
 		
 		Object.Assignment = Undefined;
 		
@@ -140,16 +154,16 @@ Procedure CheckAssignment()
 	
 EndProcedure
 
+#EndRegion
 
-///////////////////////////////////////////////////////
-// User interface
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
-    
-    If Object.ValueList.Count() = 0 Then
+	
+	If Not IsValueList() Then
 		
-		Items.ValueList.Enabled = False;
+		Items.ValueList.Visible = False;
 		
 	EndIf;
 	
@@ -164,22 +178,44 @@ Procedure OnOpen(Cancel)
 					
 					Object.Owner = FormOwner.Parent.Parent.ChildItems.GroupsList.CurrentData.Ref;
 					
-					Items.Owner.Enabled = False;
+					ParamArray = New Array;
+					
+					If FormOwner.Parent.Parent.FormName = "Catalog.Question.Form.ListFormSKUQuestionsWithGroups" Then 
+						
+						ParamArray.Add(New ChoiceParameter("Filter.Type", GetQuestionGroupType("SKUQuestions")));
+						
+					Else 
+						
+						ParamArray.Add(New ChoiceParameter("Filter.Type", GetQuestionGroupType("RegularQuestions")));
+						
+					EndIf;
+					
+					Items.Owner.ChoiceParameters = New FixedArray(ParamArray);
+					
+					If FormOwner.Parent.Parent.UseGroupFilter Then 
+						
+						Items.Owner.Enabled = False;
+						
+					Else 
+						
+						Items.Owner.Enabled = True;
+						
+					EndIf;
 					
 				Else 
 					
 					Cancel = True;
 					
-				EndIf;	
-						
+				EndIf;
+				
 			EndIf;
 			
 		Except
-			
-		EndTry;	
 		
-	EndIf;	
+		EndTry;
 		
+	EndIf;
+	
 EndProcedure
 
 &AtClient
@@ -189,7 +225,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 		
 		Object.ValueList.Clear();
 		
-		Items.ValueList.Enabled = False;
+		Items.ValueList.Visible = False;
 		
 	EndIf;
 	
@@ -203,19 +239,19 @@ EndProcedure
 
 &AtClient
 Procedure AnswerTypeOnChange(Item)
-     
-    If AnswerTypeOnChangeServer() Then
+	
+	If IsValueList() Then
 		
-		Items.ValueList.Enabled = True;
+		Items.ValueList.Visible = True;
 		
 	Else
 		
 		If Not Object.ValueList.Count() = 0 Then
 			
 			Text = "en = ""The tabular section will be cleaned. 
-            |Are you sure you want to continue?"";
-            |ru = ""Табличная часть будет очищена.
-            |Продолжить?""";
+					|Are you sure you want to continue?"";
+					|ru = ""Табличная часть будет очищена.
+					|Продолжить?""";
 			
 			OpenForm("CommonForm.DoQueryBox", New Structure("Text, Source", NStr(Text), "ClearQuestions"));
 			
@@ -254,11 +290,11 @@ EndProcedure
 Procedure ChooseAssignmentProcessing(Result, Parameters) Export
 	
 	If Not Result = Undefined Then
-
+		
 		Object.Assignment = Result.Value;
-				
+		
 	EndIf;
 	
 EndProcedure
 
-
+#EndRegion

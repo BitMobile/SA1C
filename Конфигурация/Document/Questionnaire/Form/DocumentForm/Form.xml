@@ -12,6 +12,7 @@
 		<Event name="NotificationProcessing">NotificationProcessing</Event>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="BeforeWrite">BeforeWrite</Event>
+		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
 		<Event name="FillCheckProcessingAtServer">FillCheckProcessingAtServer</Event>
@@ -312,7 +313,7 @@
 						</UsualGroup>
 					</ChildItems>
 				</Page>
-				<Page name="SelectorsGroup" id="52">
+				<Page name="GroupSelectors" id="52">
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -329,8 +330,39 @@
 							<v8:content>Selectors</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="SelectorsGroupExtendedTooltip" id="301"/>
+					<ExtendedTooltip name="GroupSelectorsExtendedTooltip" id="301"/>
 					<ChildItems>
+						<CommandBar name="GroupSelectorsCommand" id="509">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group selectors command</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group selectors command</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="GroupSelectorsCommandExtendedTooltip" id="510"/>
+							<ChildItems>
+								<Button name="SelectorsAdd" id="513">
+									<Type>CommandBarButton</Type>
+									<CommandName>Form.Item.SelectorsTable.StandardCommand.Add</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="SelectorsAddExtendedTooltip" id="514"/>
+								</Button>
+								<Button name="SelectorsDelete" id="511">
+									<Type>CommandBarButton</Type>
+									<Representation>Picture</Representation>
+									<OnlyInAllActions>true</OnlyInAllActions>
+									<CommandName>Form.Item.SelectorsTable.StandardCommand.Delete</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="SelectorsDeleteExtendedTooltip" id="512"/>
+								</Button>
+							</ChildItems>
+						</CommandBar>
 						<Table name="SelectorsTable" id="53">
 							<Representation>List</Representation>
 							<Height>8</Height>
@@ -343,7 +375,9 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="SelectorsTableContextMenu" id="54"/>
-							<AutoCommandBar name="SelectorsTableCommandBar" id="55"/>
+							<AutoCommandBar name="SelectorsTableCommandBar" id="55">
+								<Autofill>false</Autofill>
+							</AutoCommandBar>
 							<ExtendedTooltip name="SelectorsTableExtendedTooltip" id="302"/>
 							<SearchStringAddition name="SelectorsTableSearchString" id="303">
 								<Source>
@@ -371,9 +405,8 @@
 							</SearchControlAddition>
 							<Events>
 								<Event name="BeforeAddRow">SelectorsTableBeforeAddRow</Event>
-								<Event name="BeforeEditEnd">SelectorsTableBeforeEditEnd</Event>
 								<Event name="OnStartEdit">SelectorsTableOnStartEdit</Event>
-								<Event name="AfterDeleteRow">SelectorsTableAfterDeleteRow</Event>
+								<Event name="OnChange">SelectorsTableOnChange</Event>
 							</Events>
 							<ChildItems>
 								<InputField name="SelectorsTableSelector" id="68">
@@ -572,7 +605,9 @@
 												</Button>
 												<Button name="QuestionsDeleteQuestion" id="258">
 													<Type>CommandBarButton</Type>
-													<CommandName>Form.Command.DeleteQuestion</CommandName>
+													<Representation>Picture</Representation>
+													<OnlyInAllActions>true</OnlyInAllActions>
+													<CommandName>Form.Item.RegularQuestions.StandardCommand.Delete</CommandName>
 													<Parameter xsi:nil="true"/>
 													<ExtendedTooltip name="QuestionsDeleteQuestionExtendedTooltip" id="322"/>
 												</Button>
@@ -632,7 +667,6 @@
 								</UsualGroup>
 								<Table name="RegularQuestions" id="231">
 									<Representation>Tree</Representation>
-									<ChangeRowSet>false</ChangeRowSet>
 									<AutoInsertNewRow>true</AutoInsertNewRow>
 									<InitialTreeView>ExpandTopLevel</InitialTreeView>
 									<EnableStartDrag>true</EnableStartDrag>
@@ -653,7 +687,6 @@
 										<ExcludedCommand>SelectAll</ExcludedCommand>
 										<ExcludedCommand>SortListDesc</ExcludedCommand>
 										<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-										<ExcludedCommand>Delete</ExcludedCommand>
 										<ExcludedCommand>EndEdit</ExcludedCommand>
 										<ExcludedCommand>Add</ExcludedCommand>
 										<ExcludedCommand>Change</ExcludedCommand>
@@ -683,7 +716,7 @@
 											</Button>
 											<Button name="QuestionsDeleteQuestionContext" id="251">
 												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.DeleteQuestion</CommandName>
+												<CommandName>Form.Item.RegularQuestions.StandardCommand.Delete</CommandName>
 												<Parameter xsi:nil="true"/>
 												<ExtendedTooltip name="QuestionsDeleteQuestionContextExtendedTooltip" id="320"/>
 											</Button>
@@ -719,6 +752,7 @@
 									</SearchControlAddition>
 									<Events>
 										<Event name="DragCheck">QuestionsDragCheck</Event>
+										<Event name="BeforeDeleteRow">RegularQuestionsBeforeDeleteRow</Event>
 										<Event name="OnActivateRow">QuestionsOnActivateRow</Event>
 										<Event name="Drag">QuestionsDrag</Event>
 										<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
@@ -894,6 +928,43 @@
 										<Event name="StartChoice">SKUSourceTypeStartChoice</Event>
 									</Events>
 								</InputField>
+								<CommandBar name="GroupSKUsCommand" id="515">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group SKUs command</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group SKUs command</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ExtendedTooltip name="GroupSKUsCommandExtendedTooltip" id="516"/>
+									<ChildItems>
+										<Button name="SKUsAdd" id="517">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Item.SKUsValueTable.StandardCommand.Add</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="SKUsAddExtendedTooltip" id="518"/>
+										</Button>
+										<Button name="SKUsDelete" id="519">
+											<Type>CommandBarButton</Type>
+											<Representation>Picture</Representation>
+											<OnlyInAllActions>true</OnlyInAllActions>
+											<CommandName>Form.Item.SKUsValueTable.StandardCommand.Delete</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="SKUsDeleteExtendedTooltip" id="520"/>
+										</Button>
+										<Button name="QuestionsCheckSelectorsForSKUs" id="447">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.CheckSelectorsForSKUs</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="QuestionsCheckSelectorsForSKUsExtendedTooltip" id="448"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
 								<Table name="SKUsValueTable" id="410">
 									<Representation>List</Representation>
 									<RowSelectionMode>Row</RowSelectionMode>
@@ -903,14 +974,7 @@
 									<RowFilter xsi:nil="true"/>
 									<ContextMenu name="SKUsValueTableContextMenu" id="411"/>
 									<AutoCommandBar name="SKUsValueTableCommandBar" id="412">
-										<ChildItems>
-											<Button name="QuestionsCheckSelectorsForSKUs" id="447">
-												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.CheckSelectorsForSKUs</CommandName>
-												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="QuestionsCheckSelectorsForSKUsExtendedTooltip" id="448"/>
-											</Button>
-										</ChildItems>
+										<Autofill>false</Autofill>
 									</AutoCommandBar>
 									<ExtendedTooltip name="SKUsValueTableExtendedTooltip" id="413"/>
 									<SearchStringAddition name="SKUsValueTableSearchString" id="414">
@@ -939,7 +1003,6 @@
 									</SearchControlAddition>
 									<Events>
 										<Event name="OnEditEnd">SKUsValueTableOnEditEnd</Event>
-										<Event name="BeforeEditEnd">SKUsValueTableBeforeEditEnd</Event>
 									</Events>
 									<ChildItems>
 										<ColumnGroup name="SKUsValueTableGroupGroupType" id="429">
@@ -1077,7 +1140,9 @@
 												</Button>
 												<Button name="SKUQuestionsDeleteQuestion" id="277">
 													<Type>CommandBarButton</Type>
-													<CommandName>Form.Command.DeleteQuestion</CommandName>
+													<Representation>Picture</Representation>
+													<OnlyInAllActions>true</OnlyInAllActions>
+													<CommandName>Form.Item.SKUQuestions.StandardCommand.Delete</CommandName>
 													<Parameter xsi:nil="true"/>
 													<ExtendedTooltip name="SKUQuestionsDeleteQuestionExtendedTooltip" id="363"/>
 												</Button>
@@ -1137,7 +1202,6 @@
 								</UsualGroup>
 								<Table name="SKUQuestions" id="259">
 									<Representation>Tree</Representation>
-									<ChangeRowSet>false</ChangeRowSet>
 									<AutoInsertNewRow>true</AutoInsertNewRow>
 									<EnableStartDrag>true</EnableStartDrag>
 									<EnableDrag>true</EnableDrag>
@@ -1157,7 +1221,6 @@
 										<ExcludedCommand>SelectAll</ExcludedCommand>
 										<ExcludedCommand>SortListDesc</ExcludedCommand>
 										<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-										<ExcludedCommand>Delete</ExcludedCommand>
 										<ExcludedCommand>EndEdit</ExcludedCommand>
 										<ExcludedCommand>Add</ExcludedCommand>
 										<ExcludedCommand>Change</ExcludedCommand>
@@ -1187,7 +1250,7 @@
 											</Button>
 											<Button name="SKUQuestionsDeleteQuestionContext" id="283">
 												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.DeleteQuestion</CommandName>
+												<CommandName>Form.Item.SKUQuestions.StandardCommand.Delete</CommandName>
 												<Parameter xsi:nil="true"/>
 												<ExtendedTooltip name="SKUQuestionsDeleteQuestionContextExtendedTooltip" id="361"/>
 											</Button>
@@ -1223,6 +1286,7 @@
 									</SearchControlAddition>
 									<Events>
 										<Event name="DragCheck">QuestionsDragCheck</Event>
+										<Event name="BeforeDeleteRow">SKUQuestionsBeforeDeleteRow</Event>
 										<Event name="OnActivateRow">QuestionsOnActivateRow</Event>
 										<Event name="Drag">QuestionsDrag</Event>
 										<Event name="ChoiceProcessing">QuestionsChoiceProcessing</Event>
@@ -1835,113 +1899,147 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
+		<Attribute name="DeletedRegularQuestions" id="12">
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Question" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Question</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вопрос</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Question</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Obligatoriness" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Obligatoriness</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обязательный</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="StatusDate" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Status date</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата статуса</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ParentQuestion" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Question</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вопрос</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Question</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="DeletedSKUQuestions" id="13">
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Question" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Question</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вопрос</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Question</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Obligatoriness" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Obligatoriness</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обязательный</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="StatusDate" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Status date</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата статуса</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ParentQuestion" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Question</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вопрос</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Question</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
 		<ConditionalAppearance>
-			<dcsset:item>
-				<dcsset:selection>
-					<dcsset:item>
-						<dcsset:field>QuestionsQuestion</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>QuestionsAnswerType</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>QuestionsObligatoriness</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>QuestionsStatus</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>QuestionsStatusDate</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>QuestionsIsOldQuestion</dcsset:field>
-					</dcsset:item>
-				</dcsset:selection>
-				<dcsset:filter>
-					<dcsset:item xsi:type="dcsset:FilterItemComparison">
-						<dcsset:left xsi:type="dcscor:Field">RegularQuestions.Status</dcsset:left>
-						<dcsset:comparisonType>Equal</dcsset:comparisonType>
-						<dcsset:right xsi:type="dcscor:DesignTimeValue">Enum.ValueTableRowStatuses.Deleted</dcsset:right>
-					</dcsset:item>
-				</dcsset:filter>
-				<dcsset:appearance>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>TextColor</dcscor:parameter>
-						<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:use>false</dcscor:use>
-						<dcscor:parameter>Visible</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>Enabled</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>ReadOnly</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:use>false</dcscor:use>
-						<dcscor:parameter>Show</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-				</dcsset:appearance>
-			</dcsset:item>
-			<dcsset:item>
-				<dcsset:selection>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsQuestion</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsAnswerType</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsObligatoriness</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsStatus</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsStatusDate</dcsset:field>
-					</dcsset:item>
-					<dcsset:item>
-						<dcsset:field>SKUQuestionsIsOldQuestion</dcsset:field>
-					</dcsset:item>
-				</dcsset:selection>
-				<dcsset:filter>
-					<dcsset:item xsi:type="dcsset:FilterItemComparison">
-						<dcsset:left xsi:type="dcscor:Field">SKUQuestions.Status</dcsset:left>
-						<dcsset:comparisonType>Equal</dcsset:comparisonType>
-						<dcsset:right xsi:type="dcscor:DesignTimeValue">Enum.ValueTableRowStatuses.Deleted</dcsset:right>
-					</dcsset:item>
-				</dcsset:filter>
-				<dcsset:appearance>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>TextColor</dcscor:parameter>
-						<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:use>false</dcscor:use>
-						<dcscor:parameter>Visible</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>Enabled</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>ReadOnly</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
-					</dcscor:item>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:use>false</dcscor:use>
-						<dcscor:parameter>Show</dcscor:parameter>
-						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
-					</dcscor:item>
-				</dcsset:appearance>
-			</dcsset:item>
 			<dcsset:item>
 				<dcsset:selection>
 					<dcsset:item>

@@ -16,8 +16,8 @@ Var AvailableStatuses;
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	PredefinedItems = New Map;
-    PredefinedItems.Insert("Catalog.OutletType", "OutletType");
-    PredefinedItems.Insert("Catalog.OutletClass", "OutletClass");
+	PredefinedItems.Insert("Catalog.OutletType", "OutletType");
+	PredefinedItems.Insert("Catalog.OutletClass", "OutletClass");
 	
 	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
 	
@@ -41,7 +41,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 			
 			Object.Owner = CurrentUserElement;
 			
-		EndIf;	
+		EndIf;
 		
 		Object.Status = Enums.QuestionnareStatus.Planning;
 		
@@ -59,11 +59,11 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 		Modified = True;
 		
-		UserMessage 		= New UserMessage;
+		UserMessage			= New UserMessage;
 		UserMessage.Text	= NStr("en = 'For this questionnaire has not been established schedule. The schedule is set by default.'; ru = 'Для данной анкеты не было установлено расписание. Установлено расписание по умолчанию.'");
 		
 		UserMessage.Message();
-				
+	
 	EndIf;
 	
 	Regularity = ?(Object.Single, "Single", "Regular");
@@ -75,27 +75,45 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions, Parameters.CopyingValue);
 	
 	// Заполнить SKU
-	FillSKUs(Parameters.CopyingValue);	
+	FillSKUs(Parameters.CopyingValue);
+	
+	// Заполнить параметры отбора
+	FillSelectors();
 	
 	// Разблокировать/заблокировать элементы в зависимости от статуса
-	DisableFormElements();					  
+	DisableFormElements();
 	
 EndProcedure
 
 &AtServer
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
+	TempSKUsValueTable = SKUsValueTable.Unload();
+	TempSKUsValueTable.Clear();
+	
+	For Each SKUElement In SKUsValueTable Do 
+		
+		If ValueIsFilled(SKUElement.SKU) Then 
+			
+			FillPropertyValues(TempSKUsValueTable.Add(), SKUElement);
+			
+		EndIf;
+		
+	EndDo;
+	
+	SKUsValueTable.Load(TempSKUsValueTable);
+	
 	If Not SKUsValueTable.Count() = 0 And SKUQuestions.GetItems().Count() = 0 Then 
 		
-		UserMessage 		= New UserMessage;
+		UserMessage			= New UserMessage;
 		UserMessage.Text	= NStr("en = 'The list of SKU questions must be filled'; ru = 'Список вопросов по номенклатуре должен быть заполнен'");
 		
 		UserMessage.Message();
 		
 		Cancel = True;
 		
-	EndIf;	
-		
+	EndIf;
+	
 	If SKUsValueTable.Count() = 0 And Not SKUQuestions.GetItems().Count() = 0 Then 
 		
 		UserMessage 		= New UserMessage;
@@ -108,14 +126,14 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	EndIf;
 	
 	If Not Cancel Then 	
-	
-		WriteQuestions(Cancel, RegularQuestions, CurrentObject);
-		WriteQuestions(Cancel, SKUQuestions, CurrentObject);
+		
+		WriteQuestions(Cancel, RegularQuestions, DeletedRegularQuestions, CurrentObject);
+		WriteQuestions(Cancel, SKUQuestions, DeletedSKUQuestions, CurrentObject);
 		
 		WriteSKUs(CurrentObject);
 		
 	EndIf;
-		
+	
 EndProcedure
 
 &AtServer
@@ -123,6 +141,10 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
 	FillQuestionsTree(Enums.QuestionGroupTypes.RegularQuestions);
 	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
+	
+	FillSKUs();
+	
+	FillSelectors();
 	
 	// Разблокировать/заблокировать элементы в зависимости от статуса
 	DisableFormElements();
@@ -151,28 +173,28 @@ EndProcedure
 Procedure DisableFormElements()
 	
 	// Блокировка элементов в зависимости от статуса анкеты
-    IsActive = Object.Status = Enums.QuestionnareStatus.Active;
-    IsInactive = Object.Status = Enums.QuestionnareStatus.Inactive;
+	IsActive = Object.Status = Enums.QuestionnareStatus.Active;
+	IsInactive = Object.Status = Enums.QuestionnareStatus.Inactive;
 	
-    Items.Regularity.Enabled = Not (IsActive Or IsInactive);
-    Items.BeginDate.Enabled = Not (IsActive Or IsInactive);
-    Items.SelectorsTable.Enabled = Not (IsActive Or IsInactive);
+	Items.Regularity.Enabled = Not (IsActive Or IsInactive);
+	Items.BeginDate.Enabled = Not (IsActive Or IsInactive);
+	Items.SelectorsTable.Enabled = Not (IsActive Or IsInactive);
 	Items.FillPeriod.Enabled = Not (IsActive Or IsInactive) And Object.Single;
-    
-    Items.SetSchedule.Enabled = Not (IsActive Or IsInactive);
-    
-    Items.Status.Enabled = Not IsInactive;
-    Items.EndDate.Enabled = Not IsInactive;
-    
-    Items.RegularQuestions.ReadOnly = IsInactive;
-    Items.RegularQuestions.CommandBar.Enabled = Not IsInactive;
-    
-    Items.SKUQuestions.ReadOnly = IsInactive;
-    Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
-    
-    Items.SKUSourceType.Enabled = Not IsInactive;
-    Items.SKUsValueTable.ReadOnly = IsInactive;
-    Items.SKUsValueTable.CommandBar.Enabled = Not IsInactive;
+	
+	Items.SetSchedule.Enabled = Not (IsActive Or IsInactive);
+	
+	Items.Status.Enabled = Not IsInactive;
+	Items.EndDate.Enabled = Not IsInactive;
+	
+	Items.RegularQuestions.ReadOnly = IsInactive;
+	Items.RegularQuestions.CommandBar.Enabled = Not IsInactive;
+	
+	Items.SKUQuestions.ReadOnly = IsInactive;
+	Items.SKUQuestions.CommandBar.Enabled = Not IsInactive;
+	
+	Items.SKUSourceType.Enabled = Not IsInactive;
+	Items.SKUsValueTable.ReadOnly = IsInactive;
+	Items.SKUsValueTable.CommandBar.Enabled = Not IsInactive;
 
 EndProcedure
 
@@ -198,33 +220,33 @@ Function GetAvailableStatuses(Status)
 	If Status = Enums.QuestionnareStatus.Planning Then
 		
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Planning, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
+							Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+							Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
 		
 	ElsIf Status = Enums.QuestionnareStatus.Ready Then
 		
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
+							Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+							Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
 		
 	ElsIf Status = Enums.QuestionnareStatus.Active Then
 		
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
+							Metadata.Enums.QuestionnareStatus.EnumValues.Active.Presentation());
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
-							  
+							Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+		
 	ElsIf Status = Enums.QuestionnareStatus.Inactive Then
 		
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Inactive, 
-							  Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
-		                                     
+							Metadata.Enums.QuestionnareStatus.EnumValues.Inactive.Presentation());
+		
 	EndIf;
-						  
+	
 	Return AvailableStatuses;
-						  
+	
 EndFunction
 
 #EndRegion
@@ -236,70 +258,70 @@ Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
 	
 	// Объявляем схему
 	DCS = New DataCompositionSchema;
-      
-	DataSource 						= DCS.DataSources.Add();
-	DataSource.Name 				= "DataSource1";
-	DataSource.DataSourceType	 	= "Local";
-	DataSource.ConnectionString  	= "";
 	
-	DataSet 						= DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
-	DataSet.Name 					= "DataSet1";
+	DataSource						= DCS.DataSources.Add();
+	DataSource.Name					= "DataSource1";
+	DataSource.DataSourceType		= "Local";
+	DataSource.ConnectionString		= "";
+	
+	DataSet							= DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
+	DataSet.Name					= "DataSet1";
 	DataSet.Query					= "Select Ref AS Ref From " + ObjectName;
-	DataSet.DataSource 				= "DataSource1";
+	DataSet.DataSource				= "DataSource1";
 	DataSet.AutoFillAvailableFields	= True;
 	
-	RefField 			= DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
-	RefField.Field 		= "Ref";
-	RefField.DataPath 	= "Ref";
-	RefField.Title 		= "Ref";
+	RefField			= DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
+	RefField.Field		= "Ref";
+	RefField.DataPath	= "Ref";
+	RefField.Title		= "Ref";
 	
 	DCGroup = DCS.DefaultSettings.Structure.Add(Type("DataCompositionGroup"));
 	DCGroup.Selection.Items.Add(Type("DataCompositionAutoSelectedField"));
 	DCGroup.Use = True;
 	
-	SelectField 		= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
-	SelectField.Field 	= New DataCompositionField("Ref");
-	SelectField.Use 	= True;	
+	SelectField			= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
+	SelectField.Field	= New DataCompositionField("Ref");
+	SelectField.Use		= True;
 	
 	For Each FilterItem In Filter.Items Do 
 		
-		RefField = DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
-  		RefField.Field 		= String(FilterItem.LeftValue);
-  		RefField.DataPath 	= String(FilterItem.LeftValue);
-		RefField.Title 		= String(FilterItem.LeftValue);
+		RefField			= DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
+		RefField.Field		= String(FilterItem.LeftValue);
+		RefField.DataPath	= String(FilterItem.LeftValue);
+		RefField.Title		= String(FilterItem.LeftValue);
 		
-		SelectField 		= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
-		SelectField.Field 	= FilterItem.LeftValue;
-		SelectField.Use 	= True;
+		SelectField			= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
+		SelectField.Field	= FilterItem.LeftValue;
+		SelectField.Use	= True;
 				
 		NewFilterItem = DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
 		
-		FillPropertyValues(NewFilterItem, FilterItem);				
+		FillPropertyValues(NewFilterItem, FilterItem);
 		
 	EndDo;
 	
-	NewFilterItem = DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	NewFilterItem.LeftValue 		= New DataCompositionField("Ref");
-	NewFilterItem.Use 				= True;
-	NewFilterItem.ComparisonType 	= DataCompositionComparisonType.InList;
-	NewFilterItem.RightValue 		= RefArray;
+	NewFilterItem					= DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	NewFilterItem.LeftValue			= New DataCompositionField("Ref");
+	NewFilterItem.Use				= True;
+	NewFilterItem.ComparisonType	= DataCompositionComparisonType.InList;
+	NewFilterItem.RightValue		= RefArray;
 		
 	TemplateComposer = New DataCompositionTemplateComposer;
-	                                                                      
+	
 	Template = TemplateComposer.Execute(DCS, DCS.DefaultSettings, , , Type("DataCompositionValueCollectionTemplateGenerator"));
 
-    Processor = New DataCompositionProcessor;
-    Processor.Initialize(Template);
+	Processor = New DataCompositionProcessor;
+	Processor.Initialize(Template);
 
-    ResultTable = New ValueTable;
+	ResultTable = New ValueTable;
 	
 	OutputProcessor = New DataCompositionResultValueCollectionOutputProcessor;
 
-    OutputProcessor.SetObject(ResultTable);
-    OutputProcessor.Output(Processor);
+	OutputProcessor.SetObject(ResultTable);
+	OutputProcessor.Output(Processor);
 	
 	Return ResultTable.UnloadColumn("Ref");
-					
+	
 EndFunction
 
 &AtServer
@@ -431,7 +453,7 @@ Procedure WriteSKUs(CurrentObject)
 	|	Difference AS Difference");
 	
 	// Установка параметров запроса.
-	Query.SetParameter("FormSKUs", FormAttributeToValue("SKUsValueTable")); 
+	Query.SetParameter("FormSKUs", SKUsValueTable.Unload());
 	Query.SetParameter("Questionnaire", CurrentObject.Ref);
 	Query.SetParameter("CurrentDate", CurrentDate());
 	
@@ -443,7 +465,7 @@ Procedure WriteSKUs(CurrentObject)
 		
 		// Создание, заполнение и запись менедежра записи.
 		RecordManager = InformationRegisters.SKUsInQuestionnaires.CreateRecordManager();
-		FillPropertyValues(RecordManager, Line);        		
+		FillPropertyValues(RecordManager, Line);
 		RecordManager.Questionnaire = CurrentObject.Ref;
 		
 		RecordManager.Write();
@@ -454,36 +476,36 @@ EndProcedure
 
 &AtServer
 Function GetSKUsInQuestionnaireValueTable(CopyingValue)
-    
-    Var Query, QueryResult;
-    
-    Query = New Query(
-    "SELECT
-    |	SKUsInQuestionnairesSliceLast.Source AS SKU,
-    |	VALUETYPE(SKUsInQuestionnairesSliceLast.Source) AS SourceType
-    |FROM
-    |	InformationRegister.SKUsInQuestionnaires.SliceLast AS SKUsInQuestionnairesSliceLast
-    |WHERE
-    |	SKUsInQuestionnairesSliceLast.Questionnaire = &Questionnaire
-    |	AND SKUsInQuestionnairesSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
-    |
-    |GROUP BY
-    |	SKUsInQuestionnairesSliceLast.Source,
-    |	VALUETYPE(SKUsInQuestionnairesSliceLast.Source)");
+	
+	Var Query, QueryResult;
+	
+	Query = New Query(
+	"SELECT
+	|	SKUsInQuestionnairesSliceLast.Source AS SKU,
+	|	VALUETYPE(SKUsInQuestionnairesSliceLast.Source) AS SourceType
+	|FROM
+	|	InformationRegister.SKUsInQuestionnaires.SliceLast AS SKUsInQuestionnairesSliceLast
+	|WHERE
+	|	SKUsInQuestionnairesSliceLast.Questionnaire = &Questionnaire
+	|	AND SKUsInQuestionnairesSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|
+	|GROUP BY
+	|	SKUsInQuestionnairesSliceLast.Source,
+	|	VALUETYPE(SKUsInQuestionnairesSliceLast.Source)");
 	
 	If ValueIsFilled(CopyingValue) Then 
 	
-    	Query.SetParameter("Questionnaire", CopyingValue);
+		Query.SetParameter("Questionnaire", CopyingValue);
 		
 	Else 
 		
 		Query.SetParameter("Questionnaire", Object.Ref);
 		
-	EndIf;	
+	EndIf;
 	
-    QueryResult = Query.Execute().Unload();
+	QueryResult = Query.Execute().Unload();
 	
-    Return QueryResult;
+	Return QueryResult;
 
 EndFunction
 
@@ -502,7 +524,7 @@ EndProcedure
 Procedure ChooseFromListProcessing(Result, Parameters) Export
 	
 	If Not Result = Undefined Then
-
+		
 		SKUSourceType = Result.Value;
 		SKUSourceTypeOnChange(Items.SKUSourceType);
 		
@@ -515,14 +537,14 @@ Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
 	
 	FilterOfList = New DataCompositionFilter;
 	
-	For Each Item In Selectors Do        
-				
+	For Each Item In Selectors Do
+		
 		FieldName = Undefined;
 		
 		If Item.Selector = "Catalog_Region" Then 
 			
 			If ResultValue = "Catalog.SKU" Then 
-			
+				
 				FieldName = AdditionalText + "Owner.Territories.Territory.Owner";
 				
 			Else 
@@ -530,11 +552,11 @@ Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
 				FieldName = AdditionalText + "Territories.Territory.Owner";
 				
 			EndIf;
-								
+			
 		ElsIf Item.Selector = "Catalog_Territory" Then
 			
 			If ResultValue = "Catalog.SKU" Then 
-			
+				
 				FieldName = AdditionalText + "Owner.Territories.Territory";
 				
 			Else 
@@ -542,66 +564,66 @@ Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
 				FieldName = AdditionalText + "Territories.Territory";
 				
 			EndIf;
-								
-		EndIf;	
+			
+		EndIf;
 		
 		If Not FieldName = Undefined Then 
-		
+			
 			If IsList(Item.ComparisonType) Then
 			
 				For Each ListItem In Item.Value Do
 					
-					FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-					FilterElement.LeftValue 		= New DataCompositionField(FieldName);
-					FilterElement.Use 				= True;
-					FilterElement.ComparisonType 	= DataCompositionComparisonType.InHierarchy;
+					FilterElement					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+					FilterElement.LeftValue			= New DataCompositionField(FieldName);
+					FilterElement.Use				= True;
+					FilterElement.ComparisonType	= DataCompositionComparisonType.InHierarchy;
 					FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-					FilterElement.RightValue 		= ListItem.Value;	
+					FilterElement.RightValue		= ListItem.Value;	
 					
-				EndDo;        	        
+				EndDo;
 				
 			ElsIf IsEqual(Item.ComparisonType) Then  
 				
-				FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-				FilterElement.LeftValue 		= New DataCompositionField(FieldName);
-				FilterElement.Use 				= True;
+				FilterElement					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+				FilterElement.LeftValue			= New DataCompositionField(FieldName);
+				FilterElement.Use				= True;
 				
 				If Item.Selector = "Catalog_Region" Then 
 				
-					FilterElement.ComparisonType 	= DataCompositionComparisonType.InHierarchy;
+					FilterElement.ComparisonType	= DataCompositionComparisonType.InHierarchy;
 					
 				Else 
 					
-					FilterElement.ComparisonType 	= DataCompositionComparisonType.Equal;
-					
-				EndIf;						
-				
-				FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-				FilterElement.RightValue 		= Item.Value;
-				
-			ElsIf IsNotEqual(Item.ComparisonType) Then
-				
-				FilterElement 					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-				FilterElement.LeftValue 		= New DataCompositionField(FieldName);
-				FilterElement.Use 				= True;
-				
-				If Item.Selector = "Catalog_Region" Then 
-				
-					FilterElement.ComparisonType 	= DataCompositionComparisonType.NotInHierarchy;
-					
-				Else 
-					
-					FilterElement.ComparisonType 	= DataCompositionComparisonType.NotEqual;
+					FilterElement.ComparisonType	= DataCompositionComparisonType.Equal;
 					
 				EndIf;
 				
 				FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-				FilterElement.RightValue 		= Item.Value;
+				FilterElement.RightValue		= Item.Value;
 				
-			EndIf;	
-							
-		EndIf;	
-						
+			ElsIf IsNotEqual(Item.ComparisonType) Then
+				
+				FilterElement					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+				FilterElement.LeftValue			= New DataCompositionField(FieldName);
+				FilterElement.Use				= True;
+				
+				If Item.Selector = "Catalog_Region" Then 
+				
+					FilterElement.ComparisonType	= DataCompositionComparisonType.NotInHierarchy;
+					
+				Else 
+					
+					FilterElement.ComparisonType	= DataCompositionComparisonType.NotEqual;
+					
+				EndIf;
+				
+				FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+				FilterElement.RightValue		= Item.Value;
+				
+			EndIf;
+			
+		EndIf;
+		
 	EndDo;
 	
 	Return FilterOfList;
@@ -628,11 +650,11 @@ Function IsNotEqual(Value)
 
 	If Value = Enums.ComparisonType.NotEqual Then
 		
-		Return True;    	    
+		Return True;
 		
 	Else
 		
-		Return False;    	    
+		Return False;
 		
 	EndIf;
 
@@ -643,11 +665,11 @@ Function IsEqual(Value)
 
 	If Value = Enums.ComparisonType.Equal Then
 		
-		Return True;    	    
+		Return True;
 		
 	Else
 		
-		Return False;    	    
+		Return False;
 		
 	EndIf;
 
@@ -659,7 +681,7 @@ Function GUIDFromEnumValue(Value)
 	GUID = Mid(ValueToStringInternal(Value), StrLen(ValueToStringInternal(Value))-32,32);
 	GUID = Left(GUID,8) + "-" + Mid(GUID,9,4) + "-" + Mid(GUID,13,4) + "-" + Mid(GUID,17,4) + "-" + Right(GUID,12);
 	
-	Return GUID;	
+	Return GUID;
 	
 EndFunction
 
@@ -667,7 +689,7 @@ EndFunction
 Function GetStringDate(Date)
 
 	Return Format(Date, "DF=ггггММддЧЧмм");
-		
+	
 EndFunction
 
 &AtServerNoContext
@@ -675,44 +697,44 @@ Function GetStringFromValue(Value)
 	
 	TypeOfValue = TypeOf(Value);
 	
-	If TypeOfValue = Type("Boolean") Then  
-				
+	If TypeOfValue = Type("Boolean") Then 
+		
 		If Value Then
-				
-	    	Return "True";
-				
-		Else   
-				
+			
+			Return "True";
+			
+		Else 
+			
 			Return "False";
-				
+			
 		EndIf;
 				
 	ElsIf TypeOfValue = Type("Date") Then 
-				
+		
 		Return GetStringDate(Value);
-						
+		
 	ElsIf TypeOfValue = Type("Number") Then 
-				
-	    Value = Строка(Value);
-        Value = StrReplace(Value, " ", "");
-        Value = StrReplace(Value, Chars.NBSp, "");
+		
+		Value = Строка(Value);
+		Value = StrReplace(Value, " ", "");
+		Value = StrReplace(Value, Chars.NBSp, "");
 		Value = StrReplace(Value, ",", ".");
 		
 		Return Value;
-				
+		
 	ElsIf Enums.AllRefsType().ContainsType(TypeOfValue) Then 
-			
+		
 		Return GUIDFromEnumValue(Value);
-			
-	ElsIf Catalogs.AllRefsType().ContainsType(TypeOfValue) Or Документы.AllRefsType().ContainsType(TypeOfValue) Then  
+		
+	ElsIf Catalogs.AllRefsType().ContainsType(TypeOfValue) Or Документы.AllRefsType().ContainsType(TypeOfValue) Then 
 		
 		Return String(Value.UUID());
-						
-	Else   
-			
-		Return String(Value);	
-				
-	EndIf;	    
+		
+	Else 
+		
+		Return String(Value);
+		
+	EndIf;
 	
 EndFunction
 
@@ -720,7 +742,7 @@ EndFunction
 Function GetQuestionGroupType(TypeString = "SKUQuestions")
 	
 	Return CommonProcessors.GetQuestionGroupType(TypeString);
-			
+	
 EndFunction
 
 &AtServerNoContext
@@ -742,15 +764,15 @@ EndFunction
 Function GetStatusToRow(StringStatus)
 	
 	If StringStatus = "Deleted" Then 
-	
+		
 		Return Enums.ValueTableRowStatuses.Deleted;
 		
 	ElsIf StringStatus = "Modified" Then 
+		
+		Return Enums.ValueTableRowStatuses.Modified;
+		
+	EndIf;
 	
-		Return Enums.ValueTableRowStatuses.Modified;	
-		
-	EndIf;	
-		
 EndFunction
 
 &AtServerNoContext
@@ -771,7 +793,7 @@ Function GetQuestionsFromGroup(Group)
 EndFunction
 
 &AtServer
-Procedure WriteQuestions(Cancel, Tree, CurrentObject)
+Procedure WriteQuestions(Cancel, Tree, DeletedTable, CurrentObject)
 	
 	If Not Cancel Then 
 		
@@ -779,15 +801,33 @@ Procedure WriteQuestions(Cancel, Tree, CurrentObject)
 		
 		IndOrder = 0;
 		
+		For Each DeletedElement In DeletedTable Do 
+			
+			Manager					= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+			Manager.Period			= DeletedElement.StatusDate; 
+			Manager.Questionnaire	= CurrentObject.Ref;
+			Manager.ParentQuestion	= DeletedElement.ParentQuestion;
+			Manager.ChildQuestion	= DeletedElement.Question;
+			Manager.Obligatoriness	= DeletedElement.Obligatoriness;
+			Manager.Order			= IndOrder;
+			Manager.QuestionType	= DeletedElement.Question.Owner.Type;
+			Manager.Status			=  Enums.ValueTableRowStatuses.Deleted;
+			
+			Manager.Write();
+			
+		EndDo;
+		
+		DeletedTable.Clear();
+		
 		For Each ItemOfTopLevel In ItemsOfTopLevel Do 
 			
 			IndOrder = IndOrder + 1;
 			
-			Manager 				= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
-			Manager.Period 			= ItemOfTopLevel.StatusDate; 
-			Manager.Questionnaire 	= CurrentObject.Ref;
+			Manager					= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+			Manager.Period			= ItemOfTopLevel.StatusDate; 
+			Manager.Questionnaire	= CurrentObject.Ref;
 			Manager.ChildQuestion	= ItemOfTopLevel.Question;
-			Manager.Obligatoriness 	= ItemOfTopLevel.Obligatoriness;
+			Manager.Obligatoriness	= ItemOfTopLevel.Obligatoriness;
 			Manager.Order			= IndOrder;
 			Manager.QuestionType	= ItemOfTopLevel.Question.Owner.Type;
 			Manager.Status			= ItemOfTopLevel.Status;
@@ -795,36 +835,36 @@ Procedure WriteQuestions(Cancel, Tree, CurrentObject)
 			Manager.Write();
 			
 			ItemsOfBottomLevel = ItemOfTopLevel.GetItems();
-						
+			
 			For Each ItemOfBottomLevel In ItemsOfBottomLevel Do 
 				
 				IndOrder = IndOrder + 1;
 				
-				Manager 				= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
-				Manager.Period 			= ItemOfBottomLevel.StatusDate; 
-				Manager.Questionnaire 	= CurrentObject.Ref;
+				Manager					= InformationRegisters.QuestionsInQuestionnaires.CreateRecordManager();
+				Manager.Period			= ItemOfBottomLevel.StatusDate; 
+				Manager.Questionnaire	= CurrentObject.Ref;
 				Manager.ParentQuestion	= ItemOfTopLevel.Question;
 				Manager.ChildQuestion	= ItemOfBottomLevel.Question;
-				Manager.Obligatoriness 	= ItemOfBottomLevel.Obligatoriness;
+				Manager.Obligatoriness	= ItemOfBottomLevel.Obligatoriness;
 				Manager.Order			= IndOrder;
 				Manager.QuestionType	= ItemOfBottomLevel.Question.Owner.Type;
 				Manager.Status			= ItemOfBottomLevel.Status;
 				
 				Manager.Write();
 				
-			EndDo;	
-						
-		EndDo;	
-		    		
-	EndIf;	
-	        	
+			EndDo;
+			
+		EndDo;
+		
+	EndIf;
+	
 EndProcedure
 
 &AtServerNoContext
 Procedure GetAddedStatusAndAnswerTypeToRow(Question, Status, AnswerType)
 	
-	Status 		= Enums.ValueTableRowStatuses.Added;
-	AnswerType 	= Question.AnswerType;
+	Status		= Enums.ValueTableRowStatuses.Added;
+	AnswerType	= Question.AnswerType;
 	
 EndProcedure
 
@@ -832,15 +872,15 @@ EndProcedure
 Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 	
 	If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
-			
+		
 		Tree = RegularQuestions;
-			
+		
 	Else 
-			
+		
 		Tree = SKUQuestions;
-			
-	EndIf;	
-			
+		
+	EndIf;
+	
 	Tree.GetItems().Clear();
 	
 	If ValueIsFilled(Object.Ref) Or ValueIsFilled(CopyingValue) Then 
@@ -865,8 +905,8 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 			|	AND QuestionsInQuestionnairesSliceLast.QuestionType = &GroupType";
 
 		If ValueIsFilled(CopyingValue) Then 
-	
-	    	Query.SetParameter("Questionnaire", CopyingValue);
+			
+			Query.SetParameter("Questionnaire", CopyingValue);
 			
 		Else 
 			
@@ -875,7 +915,7 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 		EndIf;
 		
 		Query.SetParameter("GroupType", GroupType);
-			
+		
 		QuestionsTable = Query.Execute().Unload();
 
 		ParentQuestionsTable = QuestionsTable.Copy(New Structure("ParentQuestion", Catalogs.Question.EmptyRef()));
@@ -884,13 +924,13 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 		
 		For Each ParentQuestionRow In ParentQuestionsTable Do 
 			
-			ParentRow 					= Tree.GetItems().Add();
-			ParentRow.Question       	= ParentQuestionRow.ChildQuestion;
-			ParentRow.Obligatoriness    = ParentQuestionRow.Obligatoriness;
+			ParentRow					= Tree.GetItems().Add();
+			ParentRow.Question			= ParentQuestionRow.ChildQuestion;
+			ParentRow.Obligatoriness	= ParentQuestionRow.Obligatoriness;
 			ParentRow.Status			= ParentQuestionRow.Status;
-			ParentRow.StatusDate        = ParentQuestionRow.Period;
-			ParentRow.AnswerType        = ParentQuestionRow.ChildQuestion.AnswerType;
-			ParentRow.IsOldQuestion     = True;
+			ParentRow.StatusDate		= ParentQuestionRow.Period;
+			ParentRow.AnswerType		= ParentQuestionRow.ChildQuestion.AnswerType;
+			ParentRow.IsOldQuestion		= True;
 			
 			ChildQuestionsTable = QuestionsTable.Copy(New Structure("ParentQuestion", ParentQuestionRow.ChildQuestion));
 			
@@ -898,40 +938,40 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 			
 			For Each ChildQuestionRow In ChildQuestionsTable Do 
 				
-				ChildRow 				= ParentRow.GetItems().Add();
-				ChildRow.Question       = ChildQuestionRow.ChildQuestion;
+				ChildRow				= ParentRow.GetItems().Add();
+				ChildRow.Question		= ChildQuestionRow.ChildQuestion;
 				ChildRow.Obligatoriness	= ChildQuestionRow.Obligatoriness;
 				ChildRow.Status			= ChildQuestionRow.Status;
-				ChildRow.StatusDate     = ChildQuestionRow.Period;
-				ChildRow.AnswerType     = ChildQuestionRow.ChildQuestion.AnswerType;
-				ChildRow.IsOldQuestion  = True;
-								
-			EndDo;
-						
-		EndDo;
+				ChildRow.StatusDate		= ChildQuestionRow.Period;
+				ChildRow.AnswerType		= ChildQuestionRow.ChildQuestion.AnswerType;
+				ChildRow.IsOldQuestion	= True;
 				
-	EndIf;
+			EndDo;
+			
+		EndDo;
 		
+	EndIf;
+	
 EndProcedure
 
 &AtClient
 Function CheckAdding(Tree, CurrentRow)
 	
 	If TypeOf(CurrentRow) = Type("Number") Then 
-	
+		
 		Row = Tree.FindByID(CurrentRow);
 		
 	Else 
 		
 		Row = CurrentRow;
 		
-	EndIf;	
+	EndIf;
 	
 	If Row.Status = GetStatusToRow("Deleted") Then 
 		
 		Return False;
 		
-	EndIf;	
+	EndIf;
 	
 	If TypeOf(Row.Question) = Type("CatalogRef.Question") And IsLogicAnswerType(Row.Question) And Row.GetParent() = Undefined Then 
 		
@@ -941,24 +981,24 @@ Function CheckAdding(Tree, CurrentRow)
 		
 		If Row.GetParent() = Undefined Then 
 			
-			UserMessage 		= New UserMessage;
+			UserMessage			= New UserMessage;
 			UserMessage.Text	= NStr("en = 'Dependent questions can only be added to the question having a logical answer type.'; ru = 'Зависимые вопросы могут быть добавлены только к вопросу имеющему логический тип ответа.'");
 			
 			UserMessage.Message();
-						
-		EndIf;	
-			
+		
+		EndIf;
+		
 		Return False;
-		             		
+		
 	EndIf;
 	
 	Return False;
-		
+	
 EndFunction
 
 &AtClient
 Function DragAvailable(Element, Val NewParent)
-		
+	
 	While Not NewParent = Undefined Do 
 		
 		If Element = NewParent Then 
@@ -982,7 +1022,7 @@ Function CopyRow(Tree, Receiver, Source)
 		
 		Return Undefined;
 		
-	EndIf;	
+	EndIf;
 	
 	If Source = Undefined Then 
 		
@@ -997,15 +1037,15 @@ Function CopyRow(Tree, Receiver, Source)
 	EndIf;
 	
 	NewRow = Receiver.GetItems().Add();
-		
+	
 	FillPropertyValues(NewRow, Source);
 	
 	If Source.IsOldQuestion Then 
-	
-		NewRow.Status = GetStatusToRow("Modified");
-	
-	EndIf;	
 		
+		NewRow.Status = GetStatusToRow("Modified");
+		
+	EndIf;
+	
 	NewRow.StatusDate = CurrentDate();
 	
 	RowCount = Source.GetItems().Count();
@@ -1015,9 +1055,9 @@ Function CopyRow(Tree, Receiver, Source)
 		ChildRow = Source.GetItems()[RowCount - ReverseIndex];
 		
 		CopyRow(Tree, NewRow, ChildRow);
-			
-	EndDo;
 		
+	EndDo;
+	
 	If Source.GetParent() = Undefined Then 
 		
 		Tree.GetItems().Delete(Source);
@@ -1048,32 +1088,32 @@ Procedure ClearParent(Tree, Source)
 	EndIf;
 	
 	NewRow = Tree.GetItems().Add();
-		
+	
 	FillPropertyValues(NewRow, Source);
 	
 	If Source.IsOldQuestion Then 
-	
-		NewRow.Status = GetStatusToRow("Modified");
-	
-	EndIf;	
 		
+		NewRow.Status = GetStatusToRow("Modified");
+		
+	EndIf;
+	
 	NewRow.StatusDate = CurrentDate();
 	
 	Source.GetParent().GetItems().Delete(Source);
-		
+	
 EndProcedure
 
 &AtClient
 Procedure FindValueInTree(TreeElements, Value, ElemenFound)
 	
 	For Each TreeElelment In TreeElements Do 
-			
+		
 		If ElemenFound Then
 			
 			Break;
 			
-		Else 	
-		
+		Else 
+			
 			If Not TreeElelment.Question = Value Then 
 				
 				FindValueInTree(TreeElelment.GetItems(), Value, ElemenFound);
@@ -1081,17 +1121,17 @@ Procedure FindValueInTree(TreeElements, Value, ElemenFound)
 			Else
 				
 				If Not TreeElelment.Status = GetStatusToRow("Deleted") Then 
-				
+					
 					ElemenFound = True;
 					
-				EndIf;	
+				EndIf;
 				
 			EndIf;
 			
 		EndIf;
-							
+		
 	EndDo;
-			
+	
 EndProcedure
 
 &AtClient
@@ -1109,7 +1149,7 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, Parent = Undefined,
 		
 			ValueArray = GetQuestionsFromGroup(SelectedValue.Key);
 			
-		EndIf;	
+		EndIf;
 		
 	EndIf;
 	
@@ -1134,29 +1174,29 @@ Procedure AddQuestionsToTree(SelectedValue, Tree, ItemsTree, Parent = Undefined,
 			AddRow.Question = Element;
 			AddRow.StatusDate = CurrentDate();
 			
-			Status 		= Undefined;
+			Status		= Undefined;
 			AnswerType 	= Undefined;
 			
-			GetAddedStatusAndAnswerTypeToRow(Element, Status, AnswerType);			
+			GetAddedStatusAndAnswerTypeToRow(Element, Status, AnswerType);
 			
-			AddRow.Status = Status;
-			AddRow.AnswerType = AnswerType;
+			AddRow.Status		= Status;
+			AddRow.AnswerType	= AnswerType;
 			
 			If IsChildQuestionAdding Then
 				
 				ItemsTree.Expand(CurrentRow);
 				
-			EndIf;	
+			EndIf;
 			
 		Else 
 			
-			UserMessage 		= New UserMessage;
+			UserMessage			= New UserMessage;
 			UserMessage.Text	= NStr("en = 'Question """ + String(Element) + """ has already been added'; ru = 'Вопрос """ + String(Element) + """ уже добавлен'");
 			
 			UserMessage.Message();
-						
+			
 		EndIf;
-				
+		
 	EndDo;
 	
 EndProcedure
@@ -1167,7 +1207,7 @@ EndProcedure
 
 &AtServerNoContext
 Function GetEqualComparisonType()
-
+	
 	Return Enums.ComparisonType.Equal;
 	
 EndFunction
@@ -1175,11 +1215,11 @@ EndFunction
 &AtServer
 Function GetSelectorList()
 
-    List = New ValueList;
+	List = New ValueList;
 	
 	For Each Value In Metadata.Enums.QuestionnaireSelectors.EnumValues Do
 		
-		List.Add(Value.Name, Value.Synonym);    	    
+		List.Add(Value.Name, Value.Synonym);
 		
 	EndDo; 
 	
@@ -1190,7 +1230,7 @@ EndFunction
 &AtServer
 Function GetParameterType(Parameter)
 
-    Return TypesMap.Get(String(Parameter.DataType));
+	Return TypesMap.Get(String(Parameter.DataType));
 
 EndFunction
 
@@ -1203,7 +1243,7 @@ Function IsOutletParameter(Value)
 		
 	Else
 		
-		Return False;    	    
+		Return False;
 		
 	EndIf; 
 
@@ -1214,11 +1254,11 @@ Function IsList(Value)
 
 	If Value = Enums.ComparisonType.InList Then
 		
-		Return True;    	    
+		Return True;
 		
 	Else
 		
-		Return False;    	    
+		Return False;
 		
 	EndIf;
 
@@ -1226,6 +1266,8 @@ EndFunction
 
 &AtServer
 Function FillSelectors()
+	
+	Selectors.Clear();
 	
 	Source = Object.Selectors.Unload();
 	
@@ -1239,91 +1281,95 @@ Function FillSelectors()
 		If SelectorElsement.ComparisonType = Enums.ComparisonType.InList Then 
 			
 			ListOfValues = New ValueList;
-
+			
 			For Each FoundedString In FoundedStrings Do 
 				
-				ListOfValues.Add(FoundedString.Value);	
+				ListOfValues.Add(FoundedString.Value);
 				
-			EndDo;	
+			EndDo;
 			
-			NewRow 			= Selectors.Add();	
+			NewRow			= Selectors.Add();	
 			NewRow.Value 	= ListOfValues;
 			
 			WriteSelectorRow(NewRow, FoundedString);
 			
 		Else 
 			
-			NewRow 			= Selectors.Add();	
+			NewRow			= Selectors.Add();	
 			NewRow.Value 	= FoundedStrings[0].Value;
 			
 			WriteSelectorRow(NewRow, FoundedStrings[0]);
 			
-		EndIf;	
-			
-	EndDo;	
+		EndIf;
 		
+	EndDo;
+	
 EndFunction
 
 &AtServer
 Function CreateSelectorsTable()
-    
-    SelectorsTable = new ValueTable();
-    SelectorsTable.Columns.Add("Selector");
-    SelectorsTable.Columns.Add("ComparisonType");
-    SelectorsTable.Columns.Add("Value");
-    SelectorsTable.Columns.Add("AdditionalParameter");
+
+	SelectorsTable = New ValueTable();
+	SelectorsTable.Columns.Add("Selector");
+	SelectorsTable.Columns.Add("ComparisonType");
+	SelectorsTable.Columns.Add("Value");
+	SelectorsTable.Columns.Add("AdditionalParameter");
 	
-	For Each Item In Selectors Do        
+	For Each Item In Selectors Do
 		
-		If IsList(Item.ComparisonType) Then
+		If ValueIsFilled(Item.Selector) And ValueIsFilled(Item.ComparisonType) And ValueIsFilled(Item.Value) Then 
 			
-			For Each ListItem In Item.Value Do
+			If IsList(Item.ComparisonType) Then
 				
-				SelectorsTable = WriteSRow(Item, ListItem.Value, SelectorsTable);
+				For Each ListItem In Item.Value Do
+					
+					SelectorsTable = WriteSRow(Item, ListItem.Value, SelectorsTable);
+					
+				EndDo;
 				
-			EndDo;        	        
-			
-		Else
-			
-			SelectorsTable = WriteSRow(Item, Undefined, SelectorsTable);        	        
+			Else
+				
+				SelectorsTable = WriteSRow(Item, Undefined, SelectorsTable);
+				
+			EndIf;
 			
 		EndIf;
 		
 	EndDo;
-		
-    Return SelectorsTable; 
-    
+	
+	Return SelectorsTable; 
+
 EndFunction
 
 &AtServer
 Function WriteSRow(Item, ListItem, SelectorsTable)
-    
-    Row 				= SelectorsTable.Add();
-    Row.Selector 		= Item.Selector;
-    Row.ComparisonType 	= Item.ComparisonType;
-    	
+	
+	Row					= SelectorsTable.Add();
+	Row.Selector		= Item.Selector;
+	Row.ComparisonType	= Item.ComparisonType;
+	
 	If Row.Selector = "Catalog_OutletParameter" Then
 		
-		Row.AdditionalParameter = Item.SelectorRepresent;                        
+		Row.AdditionalParameter = Item.SelectorRepresent;
 		
 	Else
 		
-		Row.AdditionalParameter = Undefined;            
+		Row.AdditionalParameter = Undefined;
 		
 	EndIf; 
 	
 	If Not ListItem = Undefined Then
 		
-		Row.Value = ListItem;        
+		Row.Value = ListItem;
 		
 	Else
 		
-		Row.Value = Item.Value;        
+		Row.Value = Item.Value;
 		
 	EndIf;
-    
-    Return SelectorsTable;
-
+	
+	Return SelectorsTable;
+	
 EndFunction
 
 &AtServer
@@ -1334,23 +1380,23 @@ Procedure SetOutletsSelected()
 	Object.OutletsSelected = Documents.Questionnaire.SelectOutlets(TempSelectorsTable.Copy()).Count();
 	
 	Object.SRsSelected = Documents.Questionnaire.SelectSRs(TempSelectorsTable, TempSelectorsTable.Copy(New Structure("Selector", "Catalog_Positions"))).Count();
-
+	
 EndProcedure
 
 &AtServer
 Procedure WriteSelectorRow(NewRow, Selector)
 	
-	NewRow.Selector 		= Selector.Selector;
-	NewRow.ComparisonType 	= Selector.ComparisonType;
+	NewRow.Selector			= Selector.Selector;
+	NewRow.ComparisonType	= Selector.ComparisonType;
 	
 	If Selector.Selector = "Catalog_OutletParameter" Then
 		
-		NewRow.SelectorRepresent 	= Selector.AdditionalParameter;
-		NewRow.AdditionalParameter 	= TypesMap.Get(String(Selector.AdditionalParameter.DataType));
+		NewRow.SelectorRepresent	= Selector.AdditionalParameter;
+		NewRow.AdditionalParameter	= TypesMap.Get(String(Selector.AdditionalParameter.DataType));
 		
 	Else
 		
-		NewRow.SelectorRepresent 	= String(Enums.QuestionnaireSelectors[Selector.Selector]);
+		NewRow.SelectorRepresent	= String(Enums.QuestionnaireSelectors[Selector.Selector]);
 		
 	EndIf;
 	
@@ -1365,14 +1411,18 @@ Procedure LoadSelectors()
 	
 	For Each Row In SelectorsValueTable Do
 		
-		NewRecord 						= Object.Selectors.Add();
-		NewRecord.AdditionalParameter 	= Row.AdditionalParameter;
-    	NewRecord.ComparisonType 		= Row.ComparisonType;
-        NewRecord.Selector 				= Row.Selector;
-        NewRecord.Value 				= Row.Value;
-		NewRecord.StringValue			= GetStringFromValue(Row.Value);
+		If ValueIsFilled(Row.Selector) And ValueIsFilled(Row.ComparisonType) And ValueIsFilled(Row.Value) Then 
+			
+			NewRecord						= Object.Selectors.Add();
+			NewRecord.AdditionalParameter	= Row.AdditionalParameter;
+			NewRecord.ComparisonType		= Row.ComparisonType;
+			NewRecord.Selector				= Row.Selector;
+			NewRecord.Value					= Row.Value;
+			NewRecord.StringValue			= GetStringFromValue(Row.Value);
+			
+		EndIf;
 		
-	EndDo;    
+	EndDo;
 	
 EndProcedure
 
@@ -1385,8 +1435,6 @@ EndProcedure
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	FillSelectors();
-	
 	FillAvailableStatuses(Object.Status);
 	
 	CheckSelectorsForSKUs(Items.QuestionsCheckSelectorsForSKUs);
@@ -1396,9 +1444,9 @@ EndProcedure
 &AtClient
 Procedure NotificationProcessing(EventName, Parameter, Source)
 
-    If EventName = "QuestionnaireForm" Then        
+	If EventName = "QuestionnaireForm" Then
 		
-		Selectors.FindByID(Parameter.StringNumber).Value = Parameter.Str;               
+		Selectors.FindByID(Parameter.StringNumber).Value = Parameter.Str;
 		
 	EndIf;
 	
@@ -1409,18 +1457,18 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 		If Modified Then
 			
 			Object.Schedule = Parameter.Schedule;
-			SetScheduleStringPresentation();			
+			SetScheduleStringPresentation();
 			
 		EndIf;
 		
 	EndIf;
 
-    If EventName = "ValueListOk" Then
+	If EventName = "ValueListOk" Then
 		
 		Selectors.FindByID(Parameter.StringNumber).Value = Parameter.List;
 		
 	EndIf;
-    
+	
 EndProcedure
 
 #Region Status
@@ -1433,10 +1481,10 @@ Procedure StatusStartChoice(Item, ChoiceData, StandardProcessing)
 	OldStatus = Object.Status;
 	
 	ShowChooseFromList(New NotifyDescription("StatusChooseFromListProcessing", ThisForm), 
-					   AvailableStatuses,
-					   Item,
-					   AvailableStatuses.FindByValue(OldStatus));
-					   
+						AvailableStatuses,
+						Item,
+						AvailableStatuses.FindByValue(OldStatus));
+	
 EndProcedure
 
 &AtClient
@@ -1471,22 +1519,22 @@ Procedure StatusOnChange(Item)
 				// блокируется шапка.
 				// Если нет, устанавливаем статус обратно в значение "Черновик".
 				ShowQueryBox(New NotifyDescription("StatusChangeFromPlanningToActiveProcessing", ThisForm),
-							 NStr("en = 'Current date is after begin date of questionnaire. 
-                                   |Questionnaire status will be automatically set to ""Active"", 
-								   |begin date of period will be set to current date, document 
-								   |will be written and header (periodicity, period and 
-                                   |schedule, selectors) will be blocked. Continue?'; 
-								   |ru = 'Текущая дата больше даты начала действия анкеты. Анкета будет 
-                                   |автоматически переведена в статус ""Активна"", дата начала действия 
-								   |анкеты будет установлена равной текущей дате, документ будет 
-                                   |записан и шапка (регулярность, период и расписание, селекторы) 
-                                   |будет заблокирована. Продолжить?'"), 
-							 QuestionDialogMode.YesNo,
-							 0,
-							 DialogReturnCode.No,
-							 NStr("en = 'Change status to ""Active""?'; 
-							 	  |ru = 'Изменить статус на ""Активна""?'"));							 
-								 
+							NStr("en = 'Current date is after begin date of questionnaire. 
+								|Questionnaire status will be automatically set to ""Active"", 
+								|begin date of period will be set to current date, document 
+								|will be written and header (periodicity, period and 
+								|schedule, selectors) will be blocked. Continue?'; 
+								|ru = 'Текущая дата больше даты начала действия анкеты. Анкета будет 
+								|автоматически переведена в статус ""Активна"", дата начала действия 
+								|анкеты будет установлена равной текущей дате, документ будет 
+								|записан и шапка (регулярность, период и расписание, селекторы) 
+								|будет заблокирована. Продолжить?'"), 
+							QuestionDialogMode.YesNo,
+							0,
+							DialogReturnCode.No,
+							NStr("en = 'Change status to ""Active""?'; 
+									|ru = 'Изменить статус на ""Активна""?'"));
+				
 			EndIf;
 			
 		// Если новый статус "Активна"	
@@ -1497,20 +1545,20 @@ Procedure StatusOnChange(Item)
 			// Если да, меняем статус, меняем дату, записываем документ.
 			// Если нет, устанавливаем статус обратно в значение "Готова к работе".
 			ShowQueryBox(New NotifyDescription("StatusChangeFromReadyToActiveProcessing", ThisForm),
-						 NStr("en = 'Begin date of this questionnaire will be changed to current 
-							  |date. This document will be written and uploaded to server on next 
-							  |synchronization. Document header (periodicity, period and schedule, 
-							  |selectors) will be blocked for changing. Continue?'; 
-							  |ru = 'Дата начала действия данной анкеты будет изменена на текущую 
-							  |дату. Документ будет записан и выгружен на сервер при следующей 
-							  |синхронизации. Шапка документа (регулярность, период и расписание, 
-							  |селекторы) будет заблокирована для изменения. Продолжить?'"),
-						 QuestionDialogMode.YesNo,
-						 0,
-						 DialogReturnCode.No,
-						 NStr("en = 'Change status to ""Active""?'; 
-						      |ru = 'Изменить статус на ""Активна""?'"));
-			      
+						NStr("en = 'Begin date of this questionnaire will be changed to current 
+							|date. This document will be written and uploaded to server on next 
+							|synchronization. Document header (periodicity, period and schedule, 
+							|selectors) will be blocked for changing. Continue?'; 
+							|ru = 'Дата начала действия данной анкеты будет изменена на текущую 
+							|дату. Документ будет записан и выгружен на сервер при следующей 
+							|синхронизации. Шапка документа (регулярность, период и расписание, 
+							|селекторы) будет заблокирована для изменения. Продолжить?'"),
+						QuestionDialogMode.YesNo,
+						0,
+						DialogReturnCode.No,
+						NStr("en = 'Change status to ""Active""?'; 
+								|ru = 'Изменить статус на ""Активна""?'"));
+			
 		// Если новый статус "Неактивна"
 		ElsIf StatusIs("Inactive") Then
 			
@@ -1519,17 +1567,17 @@ Procedure StatusOnChange(Item)
 			// Если да, меняем статус, меняем дату, записываем документ.
 			// Если нет, устанавливаем статус обратно в значение "Активна".
 			ShowQueryBox(New NotifyDescription("StatusChangeFromActiveToInactiveProcessing", ThisForm),
-						 NStr("en = 'End date of this questionnaire will be changed to current 
-						 	  |date. This document will be saved and blocked for changing. 
-							  |Continue?'; 
-							  |ru = 'Дата конца периода действия данной анкеты будет изменена на 
-							  |текущую дату. Этот документ будет записан и заблокирован для 
-							  |изменения. Продолжить?'"),
-						 QuestionDialogMode.YesNo,
-						 0,
-						 DialogReturnCode.No,
-						 NStr("en = 'Change status to ""Inactive""'; 
-						      |ru = 'Изменить статус на ""Неактивна""'"));
+						NStr("en = 'End date of this questionnaire will be changed to current 
+							|date. This document will be saved and blocked for changing. 
+							|Continue?'; 
+							|ru = 'Дата конца периода действия данной анкеты будет изменена на 
+							|текущую дату. Этот документ будет записан и заблокирован для 
+							|изменения. Продолжить?'"),
+						QuestionDialogMode.YesNo,
+						0,
+						DialogReturnCode.No,
+						NStr("en = 'Change status to ""Inactive""'; 
+								|ru = 'Изменить статус на ""Неактивна""'"));
 			
 		EndIf;
 		
@@ -1601,12 +1649,12 @@ Procedure StatusChangeFromActiveToInactiveProcessing(Result, Parameters) Export
 EndProcedure
 
 &AtClient
-Function GetWriteParameters()    
+Function GetWriteParameters()
 	
 	WriteParameters = New Structure;
-    WriteParameters.Insert("WriteMode", DocumentWriteMode.Write);
+	WriteParameters.Insert("WriteMode", DocumentWriteMode.Write);
 	
-    Return WriteParameters;
+	Return WriteParameters;
 
 EndFunction
 
@@ -1614,7 +1662,7 @@ EndFunction
 Procedure FillAvailableStatuses(Status)
 	
 	AvailableStatuses = GetAvailableStatuses(Status);
-
+	
 EndProcedure
 
 #EndRegion
@@ -1627,8 +1675,8 @@ Procedure EndDateOnChange(Item)
 	// Если новая дата конца действия анкеты раньше даты начала действия анкеты
 	// Ставим новую дату конца действия анкеты равной датей начала действия анкеты
 	Object.EndDate = ?(EndOfDay(Object.EndDate) >= EndOfDay(Object.BeginDate),
-					   Object.EndDate, 
-					   Object.BeginDate);
+						Object.EndDate, 
+						Object.BeginDate);
 	
 	
 	// Если новая дата окончания действия анкеты меньше чем текущая дата
@@ -1645,19 +1693,19 @@ Procedure EndDateOnChange(Item)
 			// Если нет, то оставляем статус старым, дату конца периода действия анкеты
 			// устанавливаем равной старой дате (та что записана в объекте).
 			ShowQueryBox(New NotifyDescription("ChangeEndDateInActiveStatus", ThisForm),
-						 NStr("en = 'New end period date of questionnaire is before current date. 
-                               |Status will be automatically set to value ""Inactive"". End period date 
-							   |of questionnaire will be set to current date.
-                               |Questionnaire will be rewritten and blocked for changing. 
-                               |Continue?'; ru = 'Новая дата конца действия анкеты меньше чем текущая дата. 
-                               |Статус будет автоматически установлен в значение ""Неактивна"", Дата конца 
-                               |действия анкеты будет установлена соответствующей текущей дате.
-                               |Анкета будет перезаписана и заблокирована для изменения. Продолжить?'"),
-						 QuestionDialogMode.YesNo,
-						 0,
-						 DialogReturnCode.No,
-						 NStr("en = 'Change status to ""Inactive""?'; 
-						      |ru = 'Изменить статус на ""Неактивна""?'"));
+						NStr("en = 'New end period date of questionnaire is before current date. 
+							|Status will be automatically set to value ""Inactive"". End period date 
+							|of questionnaire will be set to current date.
+							|Questionnaire will be rewritten and blocked for changing. 
+							|Continue?'; ru = 'Новая дата конца действия анкеты меньше чем текущая дата. 
+							|Статус будет автоматически установлен в значение ""Неактивна"", Дата конца 
+							|действия анкеты будет установлена соответствующей текущей дате.
+							|Анкета будет перезаписана и заблокирована для изменения. Продолжить?'"),
+						QuestionDialogMode.YesNo,
+						0,
+						DialogReturnCode.No,
+						NStr("en = 'Change status to ""Inactive""?'; 
+								|ru = 'Изменить статус на ""Неактивна""?'"));
 			
 		EndIf;
 		
@@ -1714,8 +1762,15 @@ EndProcedure
 #Region Selectors
 
 &AtClient
-Procedure SelectOutlets(Command)
+Procedure SelectorsTableOnChange(Item)
+	
+	SetOutletsSelected();
+	
+EndProcedure
 
+&AtClient
+Procedure SelectOutlets(Command)
+	
 	SetOutletsSelected();
 	
 EndProcedure
@@ -1727,7 +1782,7 @@ Procedure SelectorsTableOnStartEdit(Item, NewRow, Clone)
 		
 		Items.SelectorsTable.CurrentData.ComparisonType = GetEqualComparisonType();
 		
-	EndIf;	
+	EndIf;
 	
 EndProcedure
 
@@ -1736,14 +1791,14 @@ Procedure SelectorsTableBeforeAddRow(Item, Cancel, Clone, Parent, Folder, Parame
 	
 	If Selectors.Count() = 10 Then 
 		
-		UserMessage 		= New UserMessage;
+		UserMessage			= New UserMessage;
 		UserMessage.Text	= NStr("en = 'Available only 10 selectors'; ru = 'Доступно только 10 параметров отбора'");
 		
 		UserMessage.Message();
-				
+		
 		Cancel = True;
 		
-	EndIf;	
+	EndIf;
 	
 EndProcedure
 
@@ -1753,7 +1808,7 @@ Procedure SelectorsSelectorRepresentStartListChoice(Item, StandardProcessing)
 	StandardProcessing = False;
 	
 	ShowChooseFromList(New NotifyDescription("SelectorsSelectorRepresentChoiseProcessing", ThisForm), GetSelectorList(), Item, );
-		
+	
 EndProcedure
 
 &AtClient
@@ -1769,7 +1824,7 @@ Procedure SelectorsSelectorRepresentChoiseProcessing(Result, AdditionalParameter
 		
 		If Not IsOutletParameter(Result.Value) Then
 			
-			Row.SelectorRepresent = Result.Presentation;                                                
+			Row.SelectorRepresent = Result.Presentation;
 			
 		Else
 			
@@ -1781,7 +1836,7 @@ Procedure SelectorsSelectorRepresentChoiseProcessing(Result, AdditionalParameter
 					,
 					New NotifyDescription("SelectorsSelectorChoiseProcessing", ThisForm),
 					FormWindowOpeningMode.LockWholeInterface);
-						
+			
 		EndIf;
 		
 	EndIf;
@@ -1797,15 +1852,15 @@ Procedure SelectorsSelectorChoiseProcessing(Result, AdditionalParameter) Export
 		
 		Row.SelectorRepresent = Result;
 		
-		If Not Result = Undefined Then            
+		If Not Result = Undefined Then
 			
-			Row.AdditionalParameter = GetParameterType(Result);                        
-					
+			Row.AdditionalParameter = GetParameterType(Result);
+			
 		EndIf;
 		
-	EndIf;	
+	EndIf;
 	
-EndProcedure	
+EndProcedure
 
 &AtClient
 Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
@@ -1814,7 +1869,7 @@ Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	If Items.SelectorsTable.CurrentData.SelectorRepresent = Undefined Or Items.SelectorsTable.CurrentData.Selector = Undefined Then
 		
-		Return;    	    
+		Return;
 		
 	EndIf;
 	
@@ -1824,11 +1879,11 @@ Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
 			
 			Str = StrReplace(Items.SelectorsTable.CurrentData.Selector, "_", ".");
 			
-			OpenForm(Str + ".ChoiceForm", , Item, , , , , FormWindowOpeningMode.LockWholeInterface);    	    
+			OpenForm(Str + ".ChoiceForm", , Item, , , , , FormWindowOpeningMode.LockWholeInterface);
 			
 		Else
 			
-			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.SelectorRepresent, "QuestionnaireForm", Items.SelectorsTable.CurrentData.Value));                
+			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.SelectorRepresent, "QuestionnaireForm", Items.SelectorsTable.CurrentData.Value));
 			
 		EndIf;
 		
@@ -1852,7 +1907,7 @@ Procedure SelectorsComparisonTypeChoiceProcessing(Item, SelectedValue, StandardP
 	
 	If Not Items.SelectorsTable.CurrentData.Value = Undefined And Not Items.SelectorsTable.CurrentData.ComparisonType = SelectedValue Then
 		
-        If IsList(Items.SelectorsTable.CurrentData.ComparisonType) Then
+		If IsList(Items.SelectorsTable.CurrentData.ComparisonType) Then
 			
 			Items.SelectorsTable.CurrentData.Value = Items.SelectorsTable.CurrentData.Value[0].Value;
 			
@@ -1861,68 +1916,13 @@ Procedure SelectorsComparisonTypeChoiceProcessing(Item, SelectedValue, StandardP
 		If IsList(SelectedValue) Then
 			
 			ListOfValues = new ValueList;
-        	ListOfValues.Add(Items.SelectorsTable.CurrentData.Value);
+			ListOfValues.Add(Items.SelectorsTable.CurrentData.Value);
 			
 			Items.SelectorsTable.CurrentData.Value = ListOfValues;
 			
 		EndIf; 
 		
 	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure SelectorsTableBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
-	
-	If Not CancelEdit Then 
-	
-		If Not ValueIsFilled(Items.SelectorsTable.CurrentData.Selector) Then 
-			
-			UserMessage 		= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Selector is not selected'; ru = 'Параметр отбора не выбран'");
-			
-			UserMessage.Message();
-					
-			Cancel = True;
-			
-		EndIf;
-		
-		If Not ValueIsFilled(Items.SelectorsTable.CurrentData.ComparisonType) Then 
-			
-			UserMessage 		= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Comparison type is not selected'; ru = 'Тип сравнения не выбран'");
-			
-			UserMessage.Message();
-						
-			Cancel = True;
-			
-		EndIf;
-		
-		If Not ValueIsFilled(Items.SelectorsTable.CurrentData.Value) Then 
-			
-			UserMessage 		= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'");
-			
-			UserMessage.Message();
-						
-			Cancel = True;
-			
-		EndIf;
-		
-	EndIf;
-	
-	If Not Cancel Then 
-		
-		SetOutletsSelected();	
-		
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure SelectorsTableAfterDeleteRow(Item)
-	
-	SetOutletsSelected();
 	
 EndProcedure
 
@@ -1942,15 +1942,15 @@ Procedure AddQuestion(Command)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
-		ItemElement = Items.SKUQuestions;
-		Tree 		= SKUQuestions;
-		RightValue 	= GetQuestionGroupType("SKUQuestions");
+		ItemElement	= Items.SKUQuestions;
+		Tree		= SKUQuestions;
+		RightValue	= GetQuestionGroupType("SKUQuestions");
 		
 	Else 
 		
-		ItemElement = Items.RegularQuestions;
-		Tree 		= RegularQuestions;
-		RightValue 	= GetQuestionGroupType("RegularQuestions");
+		ItemElement	= Items.RegularQuestions;
+		Tree		= RegularQuestions;
+		RightValue	= GetQuestionGroupType("RegularQuestions");
 		
 	EndIf;
 	
@@ -1962,19 +1962,19 @@ Procedure AddQuestion(Command)
 		
 		FilterOfList = ChoiseForm.List.Filter;
 		
-		FilterElement 				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-		FilterElement.LeftValue 	= New DataCompositionField("Owner.Type");
-		FilterElement.Use 			= True;
+		FilterElement				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+		FilterElement.LeftValue		= New DataCompositionField("Owner.Type");
+		FilterElement.Use			= True;
 		FilterElement.ViewMode		= DataCompositionSettingsItemViewMode.Inaccessible;
-		FilterElement.RightValue 	= RightValue;	
+		FilterElement.RightValue	= RightValue;
 		
-		ChoiseForm.FormOwner 			= ItemElement;
-		ChoiseForm.CloseOnChoice 		= False;
-		ChoiseForm.CloseOnOwnerClose 	= True;
+		ChoiseForm.FormOwner			= ItemElement;
+		ChoiseForm.CloseOnChoice		= False;
+		ChoiseForm.CloseOnOwnerClose	= True;
 		
 		ChoiseForm.Open();
 		
-	EndIf;	
+	EndIf;
 	
 EndProcedure
 
@@ -1983,33 +1983,33 @@ Procedure AddParentQuestion(Command)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
-		ItemElement = Items.SKUQuestions;
-		Tree 		= SKUQuestions;
-		RightValue 	= GetQuestionGroupType("SKUQuestions");
+		ItemElement	= Items.SKUQuestions;
+		Tree		= SKUQuestions;
+		RightValue	= GetQuestionGroupType("SKUQuestions");
 		
 	Else 
 		
-		ItemElement = Items.RegularQuestions;
-		Tree 		= RegularQuestions;
-		RightValue 	= GetQuestionGroupType("RegularQuestions");
+		ItemElement	= Items.RegularQuestions;
+		Tree		= RegularQuestions;
+		RightValue	= GetQuestionGroupType("RegularQuestions");
 		
-	EndIf;	
+	EndIf;
 	
 	IsChildQuestionAdding = False;
 	
 	ChoiseForm = GetForm("Catalog.Question.Form.ChoiceFormWithGroups");
-		
+	
 	FilterOfList = ChoiseForm.List.Filter;
 	
-	FilterElement 				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-	FilterElement.LeftValue 	= New DataCompositionField("Owner.Type");
-	FilterElement.Use 			= True;
+	FilterElement				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+	FilterElement.LeftValue		= New DataCompositionField("Owner.Type");
+	FilterElement.Use			= True;
 	FilterElement.ViewMode		= DataCompositionSettingsItemViewMode.Inaccessible;
-	FilterElement.RightValue 	= RightValue;	
+	FilterElement.RightValue	= RightValue;
 	
-	ChoiseForm.FormOwner 			= ItemElement;
-	ChoiseForm.CloseOnChoice 		= False;
-	ChoiseForm.CloseOnOwnerClose 	= True;
+	ChoiseForm.FormOwner			= ItemElement;
+	ChoiseForm.CloseOnChoice		= False;
+	ChoiseForm.CloseOnOwnerClose	= True;
 	
 	ChoiseForm.Open();
 	
@@ -2021,12 +2021,12 @@ Procedure ClearParentOnQuestion(Command)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		If Not Items.SKUQuestions.CurrentRow = Undefined Then 
-		
+			
 			Source = SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow);
 			
 			ClearParent(SKUQuestions, Source);
 			
-		EndIf;	
+		EndIf;
 		
 	Else 
 		
@@ -2036,70 +2036,81 @@ Procedure ClearParentOnQuestion(Command)
 			
 			ClearParent(RegularQuestions, Source);
 			
-		EndIf;	
+		EndIf;
 		
 	EndIf;
 	
 EndProcedure
 
 &AtClient
-Procedure DeleteQuestion(Command)
+Procedure RegularQuestionsBeforeDeleteRow(Item, Cancel)
+	
+	DeleteQuestion(Cancel);
+	
+EndProcedure
+
+&AtClient
+Procedure SKUQuestionsBeforeDeleteRow(Item, Cancel)
+	
+	DeleteQuestion(Cancel);
+	
+EndProcedure
+
+&AtClient
+Procedure DeleteQuestion(Cancel)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
-		ItemElement = Items.SKUQuestions;
-		Tree 		= SKUQuestions;
+		ItemElement		= Items.SKUQuestions;
+		Tree			= SKUQuestions;
+		DeletedTable	= DeletedSKUQuestions;
 		
 	Else 
 		
-		ItemElement = Items.RegularQuestions;
-		Tree 		= RegularQuestions;
+		ItemElement		= Items.RegularQuestions;
+		Tree			= RegularQuestions;
+		DeletedTable	= DeletedRegularQuestions;
 		
 	EndIf;
 		
-	If Not ItemElement.CurrentData = Undefined Then 
+	If Not ItemElement.CurrentData = Undefined And Not ItemElement.CurrentRow = Undefined Then 
 		
 		If Not TypeOf(ItemElement.CurrentData.Question) = Type("String") Then 
-		
-			// Проверка на наличие подчиненных вопросов
-			DeleteAvailable = True;
 			
 			CurrentRow = Tree.FindByID(ItemElement.CurrentRow);
 			
 			CurrenRowItems = CurrentRow.GetItems();
 			
-			DeletedStatus = GetStatusToRow("Deleted");
-			
-			For Each CurrentRowItem In CurrenRowItems Do 
+			If Not CurrenRowItems.Count() = 0 Then 
 				
-				If Not CurrentRowItem.Status = DeletedStatus Then 
-					
-					DeleteAvailable = False;
-					
-					Break;
-					
-				EndIf;	
-				
-			EndDo;
-						
-			If DeleteAvailable Then 
-			
-				ItemElement.CurrentData.Status 		= GetStatusToRow("Deleted");
-				ItemElement.CurrentData.StatusDate 	= CurrentDate();
-				
-			Else 
-				
-				UserMessage 		= New UserMessage;
+				UserMessage			= New UserMessage;
 				UserMessage.Text	= NStr("en = 'At question has dependent issues. Deletion is disabled'; ru = 'У вопроса есть зависимые вопросы. Удаление невозможно'");
 				
 				UserMessage.Message();
-								
+				
+				Cancel = True;
+				
+			Else 
+				
+				InsDeletedRow					= DeletedTable.Add();
+				InsDeletedRow.StatusDate		= CurrentDate();
+				InsDeletedRow.Question			= CurrentRow.Question;
+				InsDeletedRow.Obligatoriness	= CurrentRow.Obligatoriness;
+				
+				CurrentParent = CurrentRow.GetParent();
+				
+				If Not CurrentParent = Undefined Then 
+					
+					InsDeletedRow.ParentQuestion = CurrentParent.Question;
+					
+				EndIf;
+				
 			EndIf;
 			
-		EndIf;	
+		EndIf;
 		
 	EndIf;
-		
+	
 EndProcedure
 
 &AtClient
@@ -2108,29 +2119,29 @@ Procedure QuestionsChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		If IsChildQuestionAdding Then 
-		
+			
 			AddQuestionsToTree(SelectedValue, SKUQuestions, Items.SKUQuestions, SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow), Items.SKUQuestions.CurrentRow);
 			
 		Else 
 			
 			AddQuestionsToTree(SelectedValue, SKUQuestions, Items.SKUQuestions);	
 			
-		EndIf;	
+		EndIf;
 			
 	Else 
 		
 		If IsChildQuestionAdding Then
-		
+			
 			AddQuestionsToTree(SelectedValue, RegularQuestions, Items.RegularQuestions, RegularQuestions.FindByID(Items.RegularQuestions.CurrentRow), Items.RegularQuestions.CurrentRow);
 			
 		Else 
 			
 			AddQuestionsToTree(SelectedValue, RegularQuestions, Items.RegularQuestions);
 			
-		EndIf;	
+		EndIf;
 		
 	EndIf;
-		
+	
 EndProcedure
 
 &AtClient
@@ -2153,11 +2164,11 @@ Procedure QuestionsObligatorinessOnChange(Item)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		ItemElement = Items.SKUQuestions;
-				
+		
 	Else 
 		
 		ItemElement = Items.RegularQuestions;
-				
+		
 	EndIf;
 	
 	If Not ItemElement.CurrentData = Undefined Then 
@@ -2168,16 +2179,16 @@ Procedure QuestionsObligatorinessOnChange(Item)
 			
 			Return;
 			
-		EndIf;	
+		EndIf;
 		
 		If ItemElement.CurrentData.IsOldQuestion Then 
 		
-			ItemElement.CurrentData.Status 		= GetStatusToRow("Modified");
-			ItemElement.CurrentData.StatusDate 	= CurrentDate();
+			ItemElement.CurrentData.Status		= GetStatusToRow("Modified");
+			ItemElement.CurrentData.StatusDate	= CurrentDate();
 			
 		EndIf;
-				
-	EndIf;	
+		
+	EndIf;
 	
 EndProcedure
 
@@ -2212,10 +2223,10 @@ Procedure QuestionsDragCheck(Item, DragParameters, StandardProcessing, Row, Fiel
 			
 			Break;
 			
-		EndIf;	
+		EndIf;
 		
 	EndDo;
-		
+	
 EndProcedure
 
 &AtClient
@@ -2225,23 +2236,23 @@ Procedure QuestionsDrag(Item, DragParameters, StandardProcessing, Row, Field)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
-		ItemElement = Items.SKUQuestions;
-		Tree 		= SKUQuestions;
+		ItemElement	= Items.SKUQuestions;
+		Tree		= SKUQuestions;
 		
 	Else 
 		
-		ItemElement = Items.RegularQuestions;
-		Tree 		= RegularQuestions;
+		ItemElement	= Items.RegularQuestions;
+		Tree		= RegularQuestions;
 		
-	EndIf;	
+	EndIf;
 	
 	IDReceiver = Row;
 	
-    Receiver = ?(IDReceiver = Undefined, Undefined, Tree.FindByID(IDReceiver));
+	Receiver = ?(IDReceiver = Undefined, Undefined, Tree.FindByID(IDReceiver));
 	
 	ArrayIDSource = DragParameters.Value;
 	
-	For Each IDSource In ArrayIDSource Do  
+	For Each IDSource In ArrayIDSource Do 
 		
 		Source = Tree.FindByID(IDSource); 
 		
@@ -2268,14 +2279,18 @@ Procedure DiscardСhanges(Command)
 	
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
+		DeletedSKUQuestions.Clear();
+		
 		FillQuestionsTree(GetQuestionGroupType("SKUQuestions"));
-				
+		
 	Else 
 		
-		FillQuestionsTree(GetQuestionGroupType("RegularQuestions"));
-						
-	EndIf;
+		DeletedRegularQuestions.Clear();
 		
+		FillQuestionsTree(GetQuestionGroupType("RegularQuestions"));
+		
+	EndIf;
+	
 EndProcedure
 
 &AtClient
@@ -2285,21 +2300,21 @@ Procedure QuestionsOnActivateRow(Item)
 		
 		If Items.SKUQuestions.CurrentData = Undefined Then 
 			
-			Items.SKUQuestionsAddChildQuestion.Enabled 				= False;
-			Items.SKUQuestionsAddChildQuestionContext.Enabled 		= False;
-			Items.SKUQuestionsClearParentOnQuestionContext.Enabled 	= False;
+			Items.SKUQuestionsAddChildQuestion.Enabled				= False;
+			Items.SKUQuestionsAddChildQuestionContext.Enabled		= False;
+			Items.SKUQuestionsClearParentOnQuestionContext.Enabled	= False;
 			
 		Else
 			
 			If IsLogicAnswerType(Items.SKUQuestions.CurrentData.Question) Then 
 				
-				Items.SKUQuestionsAddChildQuestion.Enabled 			= True;
-				Items.SKUQuestionsAddChildQuestionContext.Enabled 	= True;		
+				Items.SKUQuestionsAddChildQuestion.Enabled			= True;
+				Items.SKUQuestionsAddChildQuestionContext.Enabled	= True;
 				
 			Else 
 				
-				Items.SKUQuestionsAddChildQuestion.Enabled 			= False;
-				Items.SKUQuestionsAddChildQuestionContext.Enabled 	= False;
+				Items.SKUQuestionsAddChildQuestion.Enabled			= False;
+				Items.SKUQuestionsAddChildQuestionContext.Enabled	= False;
 				
 			EndIf;
 			
@@ -2307,35 +2322,35 @@ Procedure QuestionsOnActivateRow(Item)
 			
 			If ItemElement.GetParent() = Undefined Then 
 				
-				Items.SKUQuestionsClearParentOnQuestionContext.Enabled = False;	
+				Items.SKUQuestionsClearParentOnQuestionContext.Enabled = False;
 				
 			Else 
 				
 				Items.SKUQuestionsClearParentOnQuestionContext.Enabled = True;
 				
 			EndIf;
-						
+			
 		EndIf;
-				
+		
 	Else 
 		
 		If Items.RegularQuestions.CurrentData = Undefined Then 
 			
-			Items.QuestionsAddChildQuestion.Enabled 			= False;
-			Items.QuestionsAddChildQuestionContext.Enabled 		= False;
-			Items.QuestionsClearParentOnQuestionContext.Enabled = False;
+			Items.QuestionsAddChildQuestion.Enabled					= False;
+			Items.QuestionsAddChildQuestionContext.Enabled			= False;
+			Items.QuestionsClearParentOnQuestionContext.Enabled		= False;
 			
 		Else
 			
 			If IsLogicAnswerType(Items.RegularQuestions.CurrentData.Question) Then 
 				
-				Items.QuestionsAddChildQuestion.Enabled 		= True;
-				Items.QuestionsAddChildQuestionContext.Enabled 	= True;		
+				Items.QuestionsAddChildQuestion.Enabled				= True;
+				Items.QuestionsAddChildQuestionContext.Enabled		= True;
 				
 			Else 
 				
-				Items.QuestionsAddChildQuestion.Enabled 		= False;
-				Items.QuestionsAddChildQuestionContext.Enabled 	= False;
+				Items.QuestionsAddChildQuestion.Enabled				= False;
+				Items.QuestionsAddChildQuestionContext.Enabled		= False;
 				
 			EndIf;
 			
@@ -2343,7 +2358,7 @@ Procedure QuestionsOnActivateRow(Item)
 			
 			If ItemElement.GetParent() = Undefined Then 
 				
-				Items.QuestionsClearParentOnQuestionContext.Enabled = False;	
+				Items.QuestionsClearParentOnQuestionContext.Enabled = False;
 				
 			Else 
 				
@@ -2354,7 +2369,7 @@ Procedure QuestionsOnActivateRow(Item)
 		EndIf;
 		
 	EndIf;
-			
+	
 EndProcedure
 
 &AtClient
@@ -2363,68 +2378,68 @@ Procedure SetObligatoriness(Command)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		Tree = SKUQuestions;
-				
+		
 	Else 
 		
 		Tree = RegularQuestions;
-				
+		
 	EndIf;
 
-	DeletedRowStatus 	= GetStatusToRow("Deleted");
-	MobifiedRowStatus 	= GetStatusToRow("Modified");
+	DeletedRowStatus	= GetStatusToRow("Deleted");
+	MobifiedRowStatus	= GetStatusToRow("Modified");
 	
 	For Each TreeElement In Tree.GetItems() Do 
 		
 		If TreeElement.Status = DeletedRowStatus Then 
-	
+			
 			Continue;
 			
 		Else 
 			
 			If Not TreeElement.Obligatoriness Then 
-			
+				
 				TreeElement.Obligatoriness = True;
 				
 				If TreeElement.IsOldQuestion Then 
-		
+					
 					TreeElement.Status = MobifiedRowStatus;
-				
-				EndIf;	
+					
+				EndIf;
 					
 				TreeElement.StatusDate = CurrentDate();
 				
-			EndIf;	
+			EndIf;
 			
 			For Each ChildElement In TreeElement.GetItems() Do
 				
 				If ChildElement.Status = DeletedRowStatus Then 
-	
+					
 					Continue;
 					
 				Else 
 					
 					If Not ChildElement.Obligatoriness Then
-					
+						
 						ChildElement.Obligatoriness = True;	
 						
 						If ChildElement.IsOldQuestion Then 
-		
-							ChildElement.Status = MobifiedRowStatus;
-						
-						EndIf;	
 							
+							ChildElement.Status = MobifiedRowStatus;
+							
+						EndIf;
+						
 						ChildElement.StatusDate = CurrentDate();
 						
 					EndIf;
-															
+					
 				EndIf;
-								
-			EndDo;			
+				
+			EndDo;
 			
-		EndIf;		
+		EndIf;
 		
 	EndDo;
-		
+	
 EndProcedure
 
 &AtClient
@@ -2433,20 +2448,20 @@ Procedure UnsetObligatoriness(Command)
 	If Items.Pages.CurrentPage = Items.GroupSKUQuestions Then
 		
 		Tree = SKUQuestions;
-				
+		
 	Else 
 		
 		Tree = RegularQuestions;
-				
+		
 	EndIf;
 
-	DeletedRowStatus 	= GetStatusToRow("Deleted");
-	MobifiedRowStatus 	= GetStatusToRow("Modified");
+	DeletedRowStatus	= GetStatusToRow("Deleted");
+	MobifiedRowStatus	= GetStatusToRow("Modified");
 	
 	For Each TreeElement In Tree.GetItems() Do 
 		
 		If TreeElement.Status = DeletedRowStatus Then 
-	
+			
 			Continue;
 			
 		Else 
@@ -2456,19 +2471,19 @@ Procedure UnsetObligatoriness(Command)
 				TreeElement.Obligatoriness = False;
 				
 				If TreeElement.IsOldQuestion Then 
-		
+					
 					TreeElement.Status = MobifiedRowStatus;
-				
-				EndIf;	
+					
+				EndIf;
 					
 				TreeElement.StatusDate = CurrentDate();
 				
-			EndIf;	
+			EndIf;
 			
 			For Each ChildElement In TreeElement.GetItems() Do
 				
 				If ChildElement.Status = DeletedRowStatus Then 
-	
+					
 					Continue;
 					
 				Else 
@@ -2478,20 +2493,20 @@ Procedure UnsetObligatoriness(Command)
 						ChildElement.Obligatoriness = False;	
 						
 						If ChildElement.IsOldQuestion Then 
-		
+							
 							ChildElement.Status = MobifiedRowStatus;
-						
-						EndIf;	
+							
+						EndIf;
 							
 						ChildElement.StatusDate = CurrentDate();
 						
 					EndIf;
 					
 				EndIf;
-								
-			EndDo;			
+				
+			EndDo;
 			
-		EndIf;		
+		EndIf;
 		
 	EndDo;
 	
@@ -2541,13 +2556,13 @@ Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
 		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
 		
 	Else
-	
+		
 		ShowQueryBox(Notification,
-		NStr("en = 'All rows with catalog """ + OldSKUSourceType.Presentation + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + OldSKUSourceType.Presentation + """ будут удалены. Продолжить?'"),
-		QuestionDialogMode.YesNo,
-		0,
-		DialogReturnCode.No,
-		NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
+					NStr("en = 'All rows with catalog """ + OldSKUSourceType.Presentation + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + OldSKUSourceType.Presentation + """ будут удалены. Продолжить?'"),
+					QuestionDialogMode.YesNo,
+					0,
+					DialogReturnCode.No,
+					NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
 		
 	EndIf;
 	
@@ -2556,13 +2571,14 @@ EndProcedure
 &AtClient
 Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
 	
-	If Not CancelEdit Then
-	
-		ID = Item.CurrentRow;                
-		Row = SKUsValueTable.FindByID(ID);
-		Row.SourceType = TypeOf(Row.SKU);
+		ID	= Item.CurrentRow;
+		Row	= SKUsValueTable.FindByID(ID);
 		
-	EndIf;	
+		If ValueIsFilled(Row.SKU) Then
+		
+			Row.SourceType = TypeOf(Row.SKU);
+		
+		EndIf;
 		
 EndProcedure
 
@@ -2591,54 +2607,34 @@ Procedure SKUsValueTableSKUStartChoice(Item, ChoiceData, StandardProcessing)
 EndProcedure
 
 &AtClient
-Procedure SKUsValueTableBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
-	
-	If Not CancelEdit Then 
-	
-		If Not ValueIsFilled(Items.SKUsValueTable.CurrentData.SKU) Then 
-			
-			UserMessage 		= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'");
-			
-			UserMessage.Message();
-						
-			Cancel = True;
-			
-		EndIf;
-				
-	EndIf;
-	
-EndProcedure
-
-&AtClient
 Procedure SKUsValueTableSKUChoiceProcessing(Result, AdditionalParameter) Export 
 	
 	If Not Result = Undefined Then	
-
+		
 		If Result.Value = "Catalog.SKU" Or Result.Value = "Catalog.SKUGroup" Then 
 			
 			FilterOfList = GetDataCompositionFilter(Result.Value);
-						
+			
 			ChoiseForm = GetForm(Result.Value + ".ChoiceForm");
-						
+			
 			For Each FilterItem In FilterOfList.Items Do 
 				
 				NewFilterItem = ChoiseForm.List.Filter.Items.Add(Type("DataCompositionFilterItem"));
 				
-				FillPropertyValues(NewFilterItem, FilterItem);				
+				FillPropertyValues(NewFilterItem, FilterItem);	
 				
 			EndDo;
 			
-			ChoiseForm.FormOwner 			= AdditionalParameter;
+			ChoiseForm.FormOwner			= AdditionalParameter;
 			ChoiseForm.WindowOpeningMode	= FormWindowOpeningMode.LockWholeInterface;
-						
-			ChoiseForm.Open();		
-								
+			
+			ChoiseForm.Open();
+			
 		ElsIf Result.Value = "Catalog.Brands" Then
 			
 			OpenForm("Catalog.Brands.ChoiceForm", , AdditionalParameter, , , , , FormWindowOpeningMode.LockWholeInterface);	
 			
-		EndIf;	
+		EndIf;
 		
 	EndIf;
 	
@@ -2647,8 +2643,8 @@ EndProcedure
 &AtClient
 Procedure CheckSelectorsForSKUs(Command)
 	
-	SKUArray 		= New Array;
-	SKUGroupsArray 	= New Array;
+	SKUArray		= New Array;
+	SKUGroupsArray	= New Array;
 	
 	For Each Element In SKUsValueTable Do 
 		
@@ -2663,21 +2659,21 @@ Procedure CheckSelectorsForSKUs(Command)
 			SKUGroupsArray.Add(Element.SKU);
 			
 		EndIf;
-				
-	EndDo;	
+		
+	EndDo;
 	
-	FilterOfSKUList 		= GetDataCompositionFilter("Catalog.SKU", "Ref.");
-	FilterOfSKUGroupList 	= GetDataCompositionFilter("Catalog.SKUGroup", "Ref.");
+	FilterOfSKUList			= GetDataCompositionFilter("Catalog.SKU", "Ref.");
+	FilterOfSKUGroupList	= GetDataCompositionFilter("Catalog.SKUGroup", "Ref.");
 	
 	If Not SKUArray.Count() = 0 And Not FilterOfSKUList.Items.Count() = 0 Then 
 		
-		SKUArray = CheckSelectorsForSKUsAtServer("Catalog.SKU", FilterOfSKUList, SKUArray); 	
+		SKUArray = CheckSelectorsForSKUsAtServer("Catalog.SKU", FilterOfSKUList, SKUArray);
 		
-	EndIf;	
+	EndIf;
 	
 	If Not SKUGroupsArray.Count() = 0 And Not FilterOfSKUGroupList.Items.Count() = 0 Then 
 		
-		SKUGroupsArray = CheckSelectorsForSKUsAtServer("Catalog.SKUGroup", FilterOfSKUGroupList, SKUGroupsArray); 	
+		SKUGroupsArray = CheckSelectorsForSKUsAtServer("Catalog.SKUGroup", FilterOfSKUGroupList, SKUGroupsArray);
 		
 	EndIf;
 	
@@ -2705,16 +2701,16 @@ Procedure CheckSelectorsForSKUs(Command)
 				
 				Element.Index = 0;
 				
-			EndIf;	
+			EndIf;
 			
 		Else 
 			
 			Element.Index = 0;
 			
-		EndIf; 
-				
-	EndDo;	
+		EndIf;
 		
+	EndDo;
+	
 EndProcedure
 
 #EndRegion
