@@ -3337,7 +3337,7 @@ WHERE
 			OR QuestionsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Modified))</ТекстЗапроса>
 					<Фильтр/>
 					<Запрос>true</Запрос>
-					<Ключ/>
+					<Ключ>ChildQuestion</Ключ>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаBitmobile>Questions</ТабличнаяЧастьОбъектаBitmobile>
@@ -3367,7 +3367,7 @@ WHERE
 			OR QuestionsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Modified))</ТекстЗапроса>
 					<Фильтр/>
 					<Запрос>true</Запрос>
-					<Ключ/>
+					<Ключ>ChildQuestion</Ключ>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаBitmobile>SKUs</ТабличнаяЧастьОбъектаBitmobile>
@@ -3793,7 +3793,7 @@ WHERE
 					<ТипРеквизита>Catalog.Question</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
+					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
@@ -3903,7 +3903,7 @@ WHERE
 					<ТипРеквизита>Catalog.Question</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
+					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
