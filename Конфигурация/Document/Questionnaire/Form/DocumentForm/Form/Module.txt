@@ -292,7 +292,7 @@ Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
 		
 		SelectField			= DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
 		SelectField.Field	= FilterItem.LeftValue;
-		SelectField.Use	= True;
+		SelectField.Use		= True;
 				
 		NewFilterItem = DCS.DefaultSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
 		
@@ -2074,24 +2074,24 @@ Procedure DeleteQuestion(Cancel)
 	EndIf;
 		
 	If Not ItemElement.CurrentData = Undefined And Not ItemElement.CurrentRow = Undefined Then 
+			
+		CurrentRow = Tree.FindByID(ItemElement.CurrentRow);
 		
-		If Not TypeOf(ItemElement.CurrentData.Question) = Type("String") Then 
+		CurrenRowItems = CurrentRow.GetItems();
+		
+		If Not CurrenRowItems.Count() = 0 Then 
 			
-			CurrentRow = Tree.FindByID(ItemElement.CurrentRow);
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'At question has dependent issues. Deletion is disabled'; ru = 'У вопроса есть зависимые вопросы. Удаление невозможно'");
 			
-			CurrenRowItems = CurrentRow.GetItems();
+			UserMessage.Message();
 			
-			If Not CurrenRowItems.Count() = 0 Then 
-				
-				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'At question has dependent issues. Deletion is disabled'; ru = 'У вопроса есть зависимые вопросы. Удаление невозможно'");
-				
-				UserMessage.Message();
-				
-				Cancel = True;
-				
-			Else 
-				
+			Cancel = True;
+			
+		Else 
+			
+			If CurrentRow.IsOldQuestion Then 
+			
 				InsDeletedRow					= DeletedTable.Add();
 				InsDeletedRow.StatusDate		= CurrentDate();
 				InsDeletedRow.Question			= CurrentRow.Question;
@@ -2172,14 +2172,6 @@ Procedure QuestionsObligatorinessOnChange(Item)
 	EndIf;
 	
 	If Not ItemElement.CurrentData = Undefined Then 
-		
-		If TypeOf(ItemElement.CurrentData.Question) = Type("String") Then 
-			
-			ItemElement.CurrentData.Obligatoriness = False;
-			
-			Return;
-			
-		EndIf;
 		
 		If ItemElement.CurrentData.IsOldQuestion Then 
 		

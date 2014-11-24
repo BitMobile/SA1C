@@ -2152,33 +2152,6 @@
 			<Action>AddQuestion</Action>
 			<Representation>Text</Representation>
 		</Command>
-		<Command name="DeleteQuestion" id="8">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Delete question</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Удалить вопрос</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Delete question</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Удалить вопрос</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.Delete</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>DeleteQuestion</Action>
-		</Command>
 		<Command name="DiscardСhanges" id="4">
 			<Title>
 				<v8:item>
