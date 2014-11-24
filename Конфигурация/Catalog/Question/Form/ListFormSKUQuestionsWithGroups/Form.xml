@@ -239,6 +239,7 @@
 						</LabelField>
 						<LabelField name="Assignment" id="29">
 							<DataPath>List.Assignment</DataPath>
+							<Visible>false</Visible>
 							<ContextMenu name="AssignmentContextMenu" id="30"/>
 							<ExtendedTooltip name="AssignmentExtendedTooltip" id="31"/>
 						</LabelField>
