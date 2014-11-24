@@ -4,9 +4,17 @@
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
-	
-	OwnerOnChangeAtServer();
+	If ValueIsFilled(Object.Assignment) Then 
+		
+		ThisForm.ReadOnly = True;
+		
+	Else 
+		
+		Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
+		
+		OwnerOnChangeAtServer();
+		
+	EndIf;
 	
 EndProcedure
 
@@ -83,17 +91,17 @@ EndFunction
 &AtServer
 Procedure OwnerOnChangeAtServer()
 	
-	If Object.Owner = Catalogs.QuestionGroup.EmptyRef() Or Object.Owner.Type = Enums.QuestionGroupTypes.RegularQuestions Then 
-		
-		Items.Assignment.Enabled = False;
-		
-		Object.Assignment = Undefined;
-		
-	Else 
-		
-		Items.Assignment.Enabled = True;
-		
-	EndIf;	
+	//If Object.Owner = Catalogs.QuestionGroup.EmptyRef() Or Object.Owner.Type = Enums.QuestionGroupTypes.RegularQuestions Then 
+	//	
+	//	Items.Assignment.Enabled = False;
+	//	
+	//	Object.Assignment = Undefined;
+	//	
+	//Else 
+	//	
+	//	Items.Assignment.Enabled = True;
+	//	
+	//EndIf;	
 	
 EndProcedure
 
@@ -264,7 +272,7 @@ Procedure AnswerTypeOnChange(Item)
 	EndIf;
 	
 	// Проверить соответствие назначения и типа ответа
-	CheckAssignment();
+	//CheckAssignment();
 	
 EndProcedure
 
