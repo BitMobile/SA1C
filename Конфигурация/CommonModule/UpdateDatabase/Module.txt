@@ -3,30 +3,65 @@
 
 Function StartUpdate() Export 
 	
-	CurrentVersion 	= Constants.bitmobile_ВерсияКонфигурации.Get();
+	CurrentVersion = Constants.bitmobile_ВерсияКонфигурации.Get();
 	
 	If ValueIsFilled(CurrentVersion) Then 
-	
+		
 		ArrayOfCurrentVersion = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(CurrentVersion, ".");
 		
 		CurrentVersion = ArrayOfCurrentVersion[0] + "." + ArrayOfCurrentVersion[1] + "." + ArrayOfCurrentVersion[2];
 		
-	EndIf;	
-		
+	EndIf;
+	
 	MetadataVersion = Metadata.Version;
 	
 	ArrayOfMetadataVersion = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(MetadataVersion, ".");
 	
 	MetadataVersionForUpdate = ArrayOfMetadataVersion[0] + "." + ArrayOfMetadataVersion[1] + "." + ArrayOfMetadataVersion[2];
-		
+	
 	ReturnStructure = New Structure;
 	ReturnStructure.Insert("NeedUpdate", False);
+	ReturnStructure.Insert("NeedRestart", False);
 	ReturnStructure.Insert("UpdateComplete", False);
 	ReturnStructure.Insert("Error", "");
 	
-	If Not CurrentVersion = MetadataVersionForUpdate Then  
+	If Not CurrentVersion = MetadataVersionForUpdate Then
 		
 		ReturnStructure.NeedUpdate = True;
+		
+		CurrenUser = InfoBaseUsers.CurrentUser();
+		
+		If IsInRole("Admin") Then 
+			
+			NeedWriteUserAndRestartSystem = False;
+			
+			If Not CurrenUser.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
+				
+				CurrenUser.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
+				
+				NeedWriteUserAndRestartSystem = True;
+				
+			EndIf;
+			
+			If Not CurrenUser.Roles.Contains(Metadata.Roles.bitmobile_Администратор) Then
+				
+				CurrenUser.Roles.Add(Metadata.Roles.bitmobile_Администратор);
+				
+				NeedWriteUserAndRestartSystem = True;
+				
+			EndIf;
+			
+			If NeedWriteUserAndRestartSystem Then 
+				
+				CurrenUser.Write();
+				
+				ReturnStructure.NeedRestart = True;
+				
+				Return ReturnStructure;
+				
+			EndIf;
+			
+		EndIf;
 		
 		If Not (IsInRole("bitmobile_Администратор") And IsInRole("bitmobile_Пользователь") And IsInRole("Admin")) Then 
 			
@@ -39,8 +74,8 @@ Function StartUpdate() Export
 			
 			Return ReturnStructure;
 			
-		EndIf;	
-				
+		EndIf;
+		
 		Try
 			
 			SetExclusiveMode(True);
@@ -54,8 +89,8 @@ Function StartUpdate() Export
 							+ Chars.LF + "Описание ошибки: %1%."
 							+ Chars.LF + "Работа системы будет завершена.'");
 			
-			ErrorText = StrReplace(ErrorText, "%1%", String(ErrorDescription())); 
-						
+			ErrorText = StrReplace(ErrorText, "%1%", String(ErrorDescription()));
+			
 			ReturnStructure.Error = ErrorText;
 			
 			Return ReturnStructure;
@@ -68,23 +103,23 @@ Function StartUpdate() Export
 		
 		Try
 		
-			UserMessage 		= New UserMessage;
-			UserMessage.Text 	= NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'");
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'");
 			
 			UserMessage.Message();
 			
 			Step = 0;
 			
 			// Общие обработчики для всех релизов
-			UpdateForAllReleases(LastState, Step);			
-						
+			UpdateForAllReleases(LastState, Step);
+			
 			// Специальные обработчики для релизов
 			If MetadataVersionForUpdate = "1.3.0" Then 
 				
 				UpdateForRelease_1_3_0(LastState, Step);
 				
-			EndIf;	
-						
+			EndIf;
+			
 			Constants.bitmobile_ВерсияКонфигурации.Set(MetadataVersion);
 		
 			CommitTransaction();
@@ -100,7 +135,7 @@ Function StartUpdate() Export
 			RollbackTransaction();
 			
 			ErrorText = NStr("en = 'Database update aborted at step: %1%. " 
-			                + Chars.LF + "Description of error: %2%. " 
+							+ Chars.LF + "Description of error: %2%. " 
 							+ Chars.LF + "System operation is completed.';" 
 							+ "ru = 'Обновление базы данных прервано на этапе: %1%." 
 							+ Chars.LF +  "Описание ошибки: %2%. " 
@@ -108,17 +143,17 @@ Function StartUpdate() Export
 			
 			ErrorText = StrReplace(ErrorText, "%1%", LastState);
 			ErrorText = StrReplace(ErrorText, "%2%", String(ErrorDescription()));
-								
+			
 			ReturnStructure.Error = ErrorText;
 			
 			Return ReturnStructure;
 			
 		EndTry;
-				
+	
 	EndIf;
 	
 	Return ReturnStructure;
-    
+
 EndFunction
 
 Procedure WriteProtocol(LastState, Step, Text)
@@ -233,26 +268,26 @@ Procedure ProcessUsers()
 	
 	UsersArray = InfoBaseUsers.GetUsers();
 	
-	For Each UserElement In UsersArray Do 
+	For Each UserElement In UsersArray Do
 		
 		If UserElement.Roles.Contains(Metadata.Roles.SRM) Then 
 			
 			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
-			
+				
 				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
 				
 				UserElement.Write();
 				
 			EndIf;
 			
-		EndIf;	
-			
-		If UserElement.Roles.Contains(Metadata.Roles.Admin) Then 
+		EndIf;
+		
+		If UserElement.Roles.Contains(Metadata.Roles.Admin) Then
 			
 			NeedWrite = False;
 			
 			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
-			
+				
 				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
 				
 				NeedWrite = True;
@@ -260,7 +295,7 @@ Procedure ProcessUsers()
 			EndIf;
 			
 			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Администратор) Then
-			
+				
 				UserElement.Roles.Add(Metadata.Roles.bitmobile_Администратор);
 				
 				NeedWrite = True;
@@ -268,16 +303,16 @@ Procedure ProcessUsers()
 			EndIf;
 			
 			If NeedWrite Then 
-			
+				
 				UserElement.Write();
 				
 			EndIf;
-						
+			
 		EndIf;
 		
-	EndDo;	
+	EndDo;
 	
-EndProcedure	
+EndProcedure
 
 Procedure ProcessSyncSettings()
 
