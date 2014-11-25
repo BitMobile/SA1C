@@ -88,21 +88,23 @@ EndProcedure
 &AtServer
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
-	TempSKUsValueTable = SKUsValueTable.Unload();
-	TempSKUsValueTable.Clear();
-	
 	For Each SKUElement In SKUsValueTable Do 
 		
-		If ValueIsFilled(SKUElement.SKU) Then 
+		If Not ValueIsFilled(SKUElement.SKU) Then 
 			
-			FillPropertyValues(TempSKUsValueTable.Add(), SKUElement);
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Found blank rows in a tabular section ""SKUs""'; ru = 'Найдены незаполненные строки в табличной части ""Номенклатура""'");
+			
+			UserMessage.Message();
+			
+			Cancel = True;
+			
+			Return;
 			
 		EndIf;
 		
 	EndDo;
-	
-	SKUsValueTable.Load(TempSKUsValueTable);
-	
+		
 	If Not SKUsValueTable.Count() = 0 And SKUQuestions.GetItems().Count() = 0 Then 
 		
 		UserMessage			= New UserMessage;
@@ -154,7 +156,7 @@ EndProcedure
 &AtClient
 Procedure BeforeWrite(Cancel, WriteParameters)
 	
-	LoadSelectors();
+	LoadSelectors(Cancel);
 	
 EndProcedure
 
@@ -1307,7 +1309,7 @@ Function FillSelectors()
 EndFunction
 
 &AtServer
-Function CreateSelectorsTable()
+Function CreateSelectorsTable(Cancel = Undefined)
 
 	SelectorsTable = New ValueTable();
 	SelectorsTable.Columns.Add("Selector");
@@ -1330,6 +1332,21 @@ Function CreateSelectorsTable()
 			Else
 				
 				SelectorsTable = WriteSRow(Item, Undefined, SelectorsTable);
+				
+			EndIf;
+			
+		Else 
+			
+			If Not Cancel = Undefined Then 
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Found blank rows in a tabular section ""Selectors""'; ru = 'Найдены незаполненные строки в табличной части ""Параметры отбора""'");
+				
+				UserMessage.Message();
+				
+				Cancel = True;
+				
+				Break;
 				
 			EndIf;
 			
@@ -1403,15 +1420,15 @@ Procedure WriteSelectorRow(NewRow, Selector)
 EndProcedure
 
 &AtServer
-Procedure LoadSelectors() 
+Procedure LoadSelectors(Cancel) 
 	
-	SelectorsValueTable = CreateSelectorsTable();
+	SelectorsValueTable = CreateSelectorsTable(Cancel);
 	
-	Object.Selectors.Clear();
+	If Not Cancel Then 
 	
-	For Each Row In SelectorsValueTable Do
+		Object.Selectors.Clear();
 		
-		If ValueIsFilled(Row.Selector) And ValueIsFilled(Row.ComparisonType) And ValueIsFilled(Row.Value) Then 
+		For Each Row In SelectorsValueTable Do
 			
 			NewRecord						= Object.Selectors.Add();
 			NewRecord.AdditionalParameter	= Row.AdditionalParameter;
@@ -1420,10 +1437,10 @@ Procedure LoadSelectors()
 			NewRecord.Value					= Row.Value;
 			NewRecord.StringValue			= GetStringFromValue(Row.Value);
 			
-		EndIf;
+		EndDo;
 		
-	EndDo;
-	
+	EndIf;
+		
 EndProcedure
 
 #EndRegion
