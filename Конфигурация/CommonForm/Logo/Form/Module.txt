@@ -149,6 +149,17 @@ Procedure OnOpen(Cancel)
 EndProcedure
 
 &AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	
+	If EventName = "ReloadInfoOnStartPage" Then 
+		
+		UpdateTextInfo();
+		
+	EndIf;
+		
+EndProcedure
+
+&AtClient
 Procedure SetUploadInfo(LastDate, LastStatus, IDUpload = "")
 	
 	If ValueIsFilled(IDUpload) Then  
