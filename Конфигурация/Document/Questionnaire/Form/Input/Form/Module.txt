@@ -4,8 +4,8 @@
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
-    
-    StringNumber 	= Parameters.StringNumber;
+	
+	StringNumber 	= Parameters.StringNumber;
     OutletParameter = Parameters.OutletParameter;
     Source 			= Parameters.Source;
 		

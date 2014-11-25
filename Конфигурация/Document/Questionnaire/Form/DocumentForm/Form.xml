@@ -440,7 +440,6 @@
 									<ContextMenu name="SelectorsSelectorRepresentContextMenu" id="65"/>
 									<ExtendedTooltip name="SelectorsSelectorRepresentExtendedTooltip" id="314"/>
 									<Events>
-										<Event name="StartChoice">SelectorsSelectorRepresentStartChoice</Event>
 										<Event name="StartListChoice">SelectorsSelectorRepresentStartListChoice</Event>
 									</Events>
 								</InputField>
@@ -1463,9 +1462,9 @@
 						<v8:TypeSet>cfg:EnumRef</v8:TypeSet>
 						<v8:TypeSet>cfg:CatalogRef</v8:TypeSet>
 						<v8:NumberQualifiers>
-							<v8:Digits>10</v8:Digits>
-							<v8:FractionDigits>0</v8:FractionDigits>
-							<v8:AllowedSign>Any</v8:AllowedSign>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
 						</v8:NumberQualifiers>
 						<v8:StringQualifiers>
 							<v8:Length>500</v8:Length>

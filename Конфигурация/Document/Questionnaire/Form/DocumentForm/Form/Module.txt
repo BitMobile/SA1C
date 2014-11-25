@@ -1237,6 +1237,13 @@ Function GetParameterType(Parameter)
 EndFunction
 
 &AtServer
+Function GetSnapshotDataType()
+	
+	Return Enums.DataType.Snapshot;
+	
+EndFunction
+
+&AtServer
 Function IsOutletParameter(Value)
 
 	If Value = "Catalog_OutletParameter" Then
@@ -1278,10 +1285,10 @@ Function FillSelectors()
 	
 	For Each SelectorElsement In SelectorTable Do 
 		
-		FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
-		
 		If SelectorElsement.ComparisonType = Enums.ComparisonType.InList Then 
 			
+			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
+					
 			ListOfValues = New ValueList;
 			
 			For Each FoundedString In FoundedStrings Do 
@@ -1297,10 +1304,16 @@ Function FillSelectors()
 			
 		Else 
 			
-			NewRow			= Selectors.Add();	
-			NewRow.Value 	= FoundedStrings[0].Value;
+			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
 			
-			WriteSelectorRow(NewRow, FoundedStrings[0]);
+			For Each FoundedString In FoundedStrings Do
+				
+				NewRow			= Selectors.Add();	
+				NewRow.Value 	= FoundedString.Value;
+				
+				WriteSelectorRow(NewRow, FoundedString);
+				
+			EndDo;
 			
 		EndIf;
 		
@@ -1845,14 +1858,21 @@ Procedure SelectorsSelectorRepresentChoiseProcessing(Result, AdditionalParameter
 			
 		Else
 			
-			OpenForm("Catalog.OutletParameter.ChoiceForm",
-					,
-					,
-					,
-					,
-					,
-					New NotifyDescription("SelectorsSelectorChoiseProcessing", ThisForm),
-					FormWindowOpeningMode.LockWholeInterface);
+			ChoiceForm = GetForm("Catalog.OutletParameter.ChoiceForm");
+			
+			Filter = ChoiceForm.List.Filter;
+			
+			FilterElement 					= Filter.Items.Add(Type("DataCompositionFilterItem"));
+			FilterElement.LeftValue 		= New DataCompositionField("Ref.DataType");
+			FilterElement.Use 				= True;
+			FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+			FilterElement.ComparisonType	= DataCompositionComparisonType.NotEqual;
+			FilterElement.RightValue		= GetSnapshotDataType();
+			
+			ChoiceForm.OnCloseNotifyDescription	= New NotifyDescription("SelectorsSelectorChoiseProcessing", ThisForm);
+			ChoiceForm.WindowOpeningMode		= FormWindowOpeningMode.LockWholeInterface;
+			
+			ChoiceForm.Open();
 			
 		EndIf;
 		
@@ -1869,11 +1889,7 @@ Procedure SelectorsSelectorChoiseProcessing(Result, AdditionalParameter) Export
 		
 		Row.SelectorRepresent = Result;
 		
-		If Not Result = Undefined Then
-			
-			Row.AdditionalParameter = GetParameterType(Result);
-			
-		EndIf;
+		Row.AdditionalParameter = GetParameterType(Result);
 		
 	EndIf;
 	
@@ -1910,13 +1926,6 @@ Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
 		
 	EndIf
 
-EndProcedure
-
-&AtClient
-Procedure SelectorsSelectorRepresentStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
 EndProcedure
 
 &AtClient

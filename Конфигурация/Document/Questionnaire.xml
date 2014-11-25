@@ -847,9 +847,9 @@
 				</Properties>
 			</Attribute>
 			<Form>DocumentForm</Form>
-			<Form>Input</Form>
-			<Form>SelectorsListForm</Form>
 			<Form>ListForm</Form>
+			<Form>SelectorsListForm</Form>
+			<Form>Input</Form>
 			<TabularSection uuid="95738978-8d44-4c57-bb03-e69ef603ee9a">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.Questionnaire.Questions" category="TabularSection">
@@ -1459,8 +1459,8 @@
 								<v8:Type>cfg:CatalogRef.OutletClass</v8:Type>
 								<v8:Type>cfg:CatalogRef.Territory</v8:Type>
 								<v8:NumberQualifiers>
-									<v8:Digits>10</v8:Digits>
-									<v8:FractionDigits>0</v8:FractionDigits>
+									<v8:Digits>15</v8:Digits>
+									<v8:FractionDigits>2</v8:FractionDigits>
 									<v8:AllowedSign>Any</v8:AllowedSign>
 								</v8:NumberQualifiers>
 								<v8:StringQualifiers>
@@ -1468,7 +1468,7 @@
 									<v8:AllowedLength>Variable</v8:AllowedLength>
 								</v8:StringQualifiers>
 								<v8:DateQualifiers>
-									<v8:DateFractions>Date</v8:DateFractions>
+									<v8:DateFractions>DateTime</v8:DateFractions>
 								</v8:DateQualifiers>
 							</Type>
 							<PasswordMode>false</PasswordMode>

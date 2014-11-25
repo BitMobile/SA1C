@@ -4,6 +4,18 @@
 	<SaveDataInSettings>UseList</SaveDataInSettings>
 	<Customizable>false</Customizable>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<CommandSet>
+		<ExcludedCommand>No</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>Close</ExcludedCommand>
+		<ExcludedCommand>Abort</ExcludedCommand>
+		<ExcludedCommand>Retry</ExcludedCommand>
+		<ExcludedCommand>Yes</ExcludedCommand>
+		<ExcludedCommand>Cancel</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>Ignore</ExcludedCommand>
+		<ExcludedCommand>OK</ExcludedCommand>
+	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
 	</AutoCommandBar>
@@ -607,6 +619,7 @@
 											<v8:content>Группа работа с настройками</v8:content>
 										</v8:item>
 									</ToolTip>
+									<CommandSource>Form</CommandSource>
 									<ExtendedTooltip name="ГруппаРаботаСНастройкамиРасширеннаяПодсказка" id="278"/>
 									<ChildItems>
 										<Button name="ВыгрузитьМетаданныеВФайл" id="159">

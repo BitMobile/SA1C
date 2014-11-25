@@ -10,6 +10,8 @@
 			<v8:content>Выберите значение:</v8:content>
 		</v8:item>
 	</Title>
+	<Width>30</Width>
+	<Height>3</Height>
 	<WindowOpeningMode>LockWholeInterface</WindowOpeningMode>
 	<AutoTitle>false</AutoTitle>
 	<Customizable>false</Customizable>
@@ -162,7 +164,7 @@
 			<Type>
 				<v8:Type>xs:decimal</v8:Type>
 				<v8:NumberQualifiers>
-					<v8:Digits>10</v8:Digits>
+					<v8:Digits>13</v8:Digits>
 					<v8:FractionDigits>0</v8:FractionDigits>
 					<v8:AllowedSign>Any</v8:AllowedSign>
 				</v8:NumberQualifiers>
@@ -222,7 +224,7 @@
 			<Type>
 				<v8:Type>xs:decimal</v8:Type>
 				<v8:NumberQualifiers>
-					<v8:Digits>10</v8:Digits>
+					<v8:Digits>15</v8:Digits>
 					<v8:FractionDigits>2</v8:FractionDigits>
 					<v8:AllowedSign>Any</v8:AllowedSign>
 				</v8:NumberQualifiers>
