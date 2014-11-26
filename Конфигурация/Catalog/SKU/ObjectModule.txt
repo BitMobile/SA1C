@@ -37,6 +37,13 @@ Procedure BeforeWrite(Cancel)
 		
 	Else
 		
+		If Stocks.Count() = 0 Then 
+			
+			NewRow				= Stocks.Add();
+			NewRow.StockValue	= CommonStock; 
+			
+		EndIf;
+		
 		For Each Row In Stocks Do
 			
 			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
