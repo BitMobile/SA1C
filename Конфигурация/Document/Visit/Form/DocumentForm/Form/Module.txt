@@ -405,3 +405,14 @@ Procedure PagesOnCurrentPageChange(Item, CurrentPage)
 	EndIf;
 			
 EndProcedure
+
+&AtClient
+Procedure TempQuestionairesOnActivateRow(Item)
+	
+	If Not Items.TempQuestionaires.CurrentData = Undefined Then  
+		
+		Items.TempQuestionaires.CurrentData.QuestionnaireResult = NStr("en = 'Result for ""'; ru = 'Результат для ""'") + String(Items.TempQuestionaires.CurrentData.Questionnaire) + """";
+		
+	EndIf;
+	
+EndProcedure

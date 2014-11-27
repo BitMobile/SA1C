@@ -51,6 +51,9 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		// Новая анкета заполняется исходя из 
 		Object.FillPeriod = Enums.QuestionsSaveIntervals.ScheduleInterval;
 		
+		// Группы номенклатуры по умолчанию
+		SKUSourceType = "SKUGroup";
+		
 	EndIf;
 	
 	If Not ValueIsFilled(Object.Schedule) Then

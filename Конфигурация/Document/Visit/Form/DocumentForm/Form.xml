@@ -266,6 +266,9 @@
 						<Table name="TempQuestionaires" id="270">
 							<ChangeRowSet>false</ChangeRowSet>
 							<ChangeRowOrder>false</ChangeRowOrder>
+							<SelectionMode>SingleRow</SelectionMode>
+							<RowSelectionMode>Row</RowSelectionMode>
+							<VerticalLines>false</VerticalLines>
 							<UseAlternationRowColor>true</UseAlternationRowColor>
 							<EnableStartDrag>true</EnableStartDrag>
 							<DataPath>TempQuestionaires</DataPath>
@@ -312,9 +315,28 @@
 								<ContextMenu name="TempQuestionairesSearchControlContextMenu" id="287"/>
 								<ExtendedTooltip name="TempQuestionairesSearchControlExtendedTooltip" id="288"/>
 							</SearchControlAddition>
+							<Events>
+								<Event name="OnActivateRow">TempQuestionairesOnActivateRow</Event>
+							</Events>
 							<ChildItems>
+								<LabelField name="TempQuestionairesQuestionnaireResult" id="304">
+									<DataPath>TempQuestionaires.QuestionnaireResult</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Result of questioning</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Результат анкетирования</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="TempQuestionairesQuestionnaireResultContextMenu" id="305"/>
+									<ExtendedTooltip name="TempQuestionairesQuestionnaireResultExtendedTooltip" id="306"/>
+								</LabelField>
 								<LabelField name="TempQuestionairesQuestionnaire" id="289">
-									<DataPath>TempQuestionaires.Questionnaire</DataPath>
+									<DataPath>6/9</DataPath>
+									<Visible>false</Visible>
 									<ContextMenu name="TempQuestionairesQuestionnaireContextMenu" id="290"/>
 									<ExtendedTooltip name="TempQuestionairesQuestionnaireExtendedTooltip" id="291"/>
 								</LabelField>
@@ -875,9 +897,25 @@
 			<Type>
 				<v8:Type>cfg:DynamicList</v8:Type>
 			</Type>
+			<UseAlways>
+				<Field>TempQuestionaires.SR</Field>
+				<Field>TempQuestionaires.Outlet</Field>
+				<Field>TempQuestionaires.Visit</Field>
+				<Field>TempQuestionaires.QuestionnaireResult</Field>
+				<Field>TempQuestionaires.Questionnaire</Field>
+			</UseAlways>
 			<Settings xsi:type="DynamicList">
-				<ManualQuery>false</ManualQuery>
+				<ManualQuery>true</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
+				<QueryText>SELECT
+	CAST("" AS STRING(200)) AS QuestionnaireResult,
+	InformationRegisterQuestioningResults.Questionnaire,
+	InformationRegisterQuestioningResults.Visit,
+	InformationRegisterQuestioningResults.Outlet,
+	InformationRegisterQuestioningResults.SR,
+	InformationRegisterQuestioningResults.Date
+FROM
+	InformationRegister.QuestioningResults AS InformationRegisterQuestioningResults</QueryText>
 				<MainTable>InformationRegister.QuestioningResults</MainTable>
 				<ListSettings/>
 			</Settings>
