@@ -265,9 +265,23 @@
 															<v8:content>Group outlets VTCommand panel</v8:content>
 														</v8:item>
 													</ToolTip>
-													<CommandSource>Item.Outlets</CommandSource>
 													<ExtendedTooltip name="GroupOutletsVTCommandPanelExtendedTooltip" id="250"/>
 													<ChildItems>
+														<Button name="Add" id="331">
+															<Type>CommandBarButton</Type>
+															<OnlyInAllActions>true</OnlyInAllActions>
+															<CommandName>Form.Item.Outlets.StandardCommand.Add</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="AddExtendedTooltip" id="332"/>
+														</Button>
+														<Button name="Delete" id="333">
+															<Type>CommandBarButton</Type>
+															<Representation>Picture</Representation>
+															<OnlyInAllActions>true</OnlyInAllActions>
+															<CommandName>Form.Item.Outlets.StandardCommand.Delete</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="DeleteExtendedTooltip" id="334"/>
+														</Button>
 														<Button name="ShowHideSelect" id="283">
 															<Type>CommandBarButton</Type>
 															<CommandName>Form.Command.ShowHideSelect</CommandName>
@@ -312,7 +326,6 @@
 														<ExtendedTooltip name="OutletsSearchControlExtendedTooltip" id="77"/>
 													</SearchControlAddition>
 													<Events>
-														<Event name="OnEditEnd">OutletsOnEditEnd</Event>
 														<Event name="BeforeRowChange">OutletsBeforeRowChange</Event>
 													</Events>
 													<ChildItems>
@@ -387,9 +400,23 @@
 															<v8:content>Group outlets VTCommand panel</v8:content>
 														</v8:item>
 													</ToolTip>
-													<CommandSource>Item.Outlets1</CommandSource>
 													<ExtendedTooltip name="GroupOutletsVTCommandPanel1ExtendedTooltip" id="294"/>
 													<ChildItems>
+														<Button name="Add1" id="335">
+															<Type>CommandBarButton</Type>
+															<OnlyInAllActions>true</OnlyInAllActions>
+															<CommandName>Form.Item.Outlets1.StandardCommand.Add</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="Add1ExtendedTooltip" id="336"/>
+														</Button>
+														<Button name="Delete1" id="337">
+															<Type>CommandBarButton</Type>
+															<Representation>Picture</Representation>
+															<OnlyInAllActions>true</OnlyInAllActions>
+															<CommandName>Form.Item.Outlets1.StandardCommand.Delete</CommandName>
+															<Parameter xsi:nil="true"/>
+															<ExtendedTooltip name="Delete1ExtendedTooltip" id="338"/>
+														</Button>
 														<Button name="ShowHideSelect1" id="295">
 															<Type>CommandBarButton</Type>
 															<Check>true</Check>
@@ -542,8 +569,18 @@
 														</Button>
 														<Button name="RemoveOutlet" id="258">
 															<Type>UsualButton</Type>
-															<CommandName>Form.Command.RemoveOutlet</CommandName>
+															<CommandName>Form.Item.Outlets1.StandardCommand.Delete</CommandName>
 															<Parameter xsi:nil="true"/>
+															<Title>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>&gt;</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>&gt;</v8:content>
+																</v8:item>
+															</Title>
 															<ExtendedTooltip name="RemoveOutletExtendedTooltip" id="259"/>
 														</Button>
 														<Button name="RemoveAllOutlets" id="256">
@@ -884,7 +921,23 @@
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="SKUsContextMenu" id="24"/>
 							<AutoCommandBar name="SKUsCommandBar" id="25">
+								<Autofill>false</Autofill>
 								<ChildItems>
+									<Button name="SKUsAdd" id="339">
+										<Type>CommandBarButton</Type>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.SKUs.StandardCommand.Add</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="SKUsAddExtendedTooltip" id="340"/>
+									</Button>
+									<Button name="SKUsDelete" id="341">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.SKUs.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="SKUsDeleteExtendedTooltip" id="342"/>
+									</Button>
 									<Button name="FormFillFromAM" id="51">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.FillFromAM</CommandName>
@@ -1175,25 +1228,6 @@ GROUP BY
 				</v8:item>
 			</ToolTip>
 			<Action>CreateAssortmentMatrix</Action>
-		</Command>
-		<Command name="RemoveOutlet" id="5">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>&gt;</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>&gt;</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Remove outlet</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>RemoveOutlet</Action>
 		</Command>
 		<Command name="RemoveAllOutlets" id="6">
 			<Title>

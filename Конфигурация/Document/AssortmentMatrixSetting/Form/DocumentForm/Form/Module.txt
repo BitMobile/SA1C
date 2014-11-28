@@ -1,8 +1,5 @@
 ﻿
 &AtClient
-Var OldOutlet; // Торговая точка до изменения
-
-&AtClient
 Var OldAM; // Ассортиментная матрица до изменения
 
 #Region CommonProceduresAndFunctions
@@ -85,61 +82,22 @@ EndProcedure
 
 #Region Period
 
-&AtServer
+&AtClient
 Procedure SetBeginDate()
 	
-	MinBeginDate = '00010101';
+	MinBeginDate = EndOfDay(CurrentDate()) + 1;
 	
-	If ValueIsFilled(Object.AssortmentMatrix) Then
+	ChangeDate = Object.BeginDate < MinBeginDate;
+	
+	Object.BeginDate = ?(ChangeDate, MinBeginDate, Object.BeginDate);
+	
+	If ChangeDate Then
 		
-		// Получаем действующий документ "Настройка ассортиментной матрицы" для 
-		// ассортиментной матрицы выбранной в данном документе.
-		Query = New Query(
-		"SELECT TOP 1
-		|	AssortmentMatrixSetting.Ref,
-		|	AssortmentMatrixSetting.BeginDate AS BeginDate
-		|FROM
-		|	Document.AssortmentMatrixSetting AS AssortmentMatrixSetting
-		|WHERE
-		|	AssortmentMatrixSetting.AssortmentMatrix = &AssortmentMatrix
-		|
-		|ORDER BY
-		|	BeginDate DESC");
-
-		Query.SetParameter("AssortmentMatrix", Object.AssortmentMatrix);
-		QueryResultSelection = Query.Execute().Select();
-		
-		// Если найден документ
-		If QueryResultSelection.Next() Then
-			
-			// Если найденный документ не текущий документ
-			If Not QueryResultSelection.Ref = Object.Ref Then
-				
-				// Минимальная дата начала действия - дата начала действия найденного 
-				// документа плюс сутки
-				MinBeginDate = BegOfDay(QueryResultSelection.BeginDate + 60 * 60 * 24);
-				
-				ExistingAMS = QueryResultSelection.Ref;
-				
-			EndIf;
-			
-		EndIf;
-		
-		// Если введенная дата начала действия меньше чем минимальная дата начала 
-		// действия
-		If BegOfDay(Object.BeginDate) < MinBeginDate Then 
-			
-			Object.BeginDate = MinBeginDate;
-				
-			Message(NStr("en = 'Begin date of current document ""Assortment matrix setting"""  +
-						 "cannot be earlier then begin date of active document " + ExistingAMS +
-						 ") for current chosen assortment matrix.';"                           + 
-						 "ru = 'Начало действия текущего документа ""Настройка "               +
-						 "ассортиментной матрицы"" не может быть раньше чем начало действия "  +
-						 " уже действующего для данной ассортиментной матрицы документа "      + 
-						 ExistingAMS + "';"));
-			
-		EndIf;
+		UserMessage = New UserMessage;
+		UserMessage.Text = NStr("en = 'Assortment matrix setting begin date cannot be earlier than next day.'; 
+								|ru = 'Дата начала действия ассортиментной матрицы не может быть раньше чем слейдующий день.'");
+								
+		UserMessage.Message();
 		
 	EndIf;
 	
@@ -175,7 +133,7 @@ Procedure FillOutlets()
 	If ValueIsFilled(Object.AssortmentMatrix) Then
 		
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	AssortmentMatrixOutletsSliceLast.Outlet,
 		|	AssortmentMatrixOutletsSliceLast.Outlet.Class,
 		|	AssortmentMatrixOutletsSliceLast.Outlet.Type
@@ -215,7 +173,7 @@ Procedure WriteOutlets(CurrentObject)
 	// значит "Добавлена". Также запрос формирует список торговых точек к удалению
 	// из других ассортиментных матриц.
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	Outlets.Outlet AS OutletOnForm
 	|INTO FromOutlets
 	|FROM
@@ -225,7 +183,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	AssortmentMatrixOutletsSliceLast.Outlet AS OutletInRegister,
 	|	AssortmentMatrixOutletsSliceLast.Period AS PeriodInRegister,
 	|	AssortmentMatrixOutletsSliceLast.OutletStatus
@@ -237,7 +195,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FromOutlets.OutletOnForm,
 	|	SavedOutlets.OutletInRegister,
 	|	&Period AS PeriodOnForm,
@@ -254,7 +212,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&Period AS Period,
 	|	&AssortmentMatrix,
 	|	&AssortmentMatrixSetting,
@@ -270,7 +228,7 @@ Procedure WriteOutlets(CurrentObject)
 	|
 	|UNION ALL
 	|
-	|SELECT
+	|SELECT 
 	|	DATEADD(&Period, SECOND, -1),
 	|	AssortmentMatrixOutletsSliceLast.AssortmentMatrix,
 	|	&AssortmentMatrixSetting,
@@ -403,7 +361,7 @@ Function IsInAnotherAM(Outlet, AssortmentMatrix)
 	// матриц" у которых торговая точка равна текущей торговой точке и статус
 	// данной торговой точки - "Добавлена".
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixOutletsSliceLast.Period,
 	|	AssortmentMatrixOutletsSliceLast.Outlet,
 	|	AssortmentMatrixOutletsSliceLast.AssortmentMatrix,
@@ -464,7 +422,7 @@ EndProcedure
 Procedure FillSKUs()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
 	|	AssortmentMatrixSKUsSliceLast.Unit
@@ -489,7 +447,7 @@ Procedure WriteSKUs(CurrentObject)
 	
 	// Выбираем записи из табличной части на форме
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	SKUs.SKU,
 	|	SKUs.Qty,
 	|	SKUs.Unit
@@ -499,7 +457,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&Period,
 	|	&AssortmentMatrix,
 	|	&AssortmentMatrixSetting,
@@ -528,7 +486,7 @@ EndProcedure
 Procedure FillFromAMOnServer(SelectedValue)
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
 	|	AssortmentMatrixSKUsSliceLast.Unit
@@ -685,8 +643,6 @@ EndProcedure
 &AtClient
 Procedure AssortmentMatrixOnChange(Item)
 	
-	SetBeginDate();
-	
 	SetEndDate();
 	
 	ShowClearAndRefillQuestion();
@@ -789,13 +745,13 @@ EndProcedure
 Procedure OpenAMCreationForm()
 	
 	CreationForm = OpenForm("Document.AssortmentMatrixSetting.Form.AssortmentMatrixCreationForm",
-	,
-	ThisForm,
-	,
-	,
-	,
-	New NotifyDescription("NewAssortmentMatrixNotifyProcessing", ThisForm),
-	FormWindowOpeningMode.LockWholeInterface);
+		,
+		ThisForm,
+		,
+		,
+		,
+		New NotifyDescription("NewAssortmentMatrixNotifyProcessing", ThisForm),
+		FormWindowOpeningMode.LockWholeInterface);
 	
 EndProcedure
 
@@ -831,28 +787,6 @@ Procedure AddAllOutlets(Command)
 EndProcedure
 
 &AtClient
-Procedure RemoveOutlet(Command)
-	
-	If Not Items.Outlets.CurrentData = Undefined Then
-		
-		Outlet = Items.Outlets.CurrentData.Outlet;
-		
-		FilterParameters = New Structure;
-		FilterParameters.Insert("Outlet", Outlet);
-		
-		OutletsToDelete = Outlets.FindRows(FilterParameters);
-		
-		For Each Line In OutletsToDelete Do
-			
-			Outlets.Delete(Outlets.IndexOf(Line));
-			
-		EndDo;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
 Procedure RemoveAllOutlets(Command)
 	
 	Outlets.Clear();
@@ -876,31 +810,9 @@ Procedure AddToOutletsVT(OutletsArray)
 			NewOutletRow = Outlets.Add();
 			NewOutletRow.Outlet = Outlet;
 			
-			Modified = True;
-			
-			If ValueIsFilled(Object.AssortmentMatrix) Then
-				
-				ThisOutletIsInAnotherAM = IsInAnotherAM(Outlet, Object.AssortmentMatrix);
-				
-				SomeOutletsIsInAnotherAM = ?(SomeOutletsIsInAnotherAM, True, ThisOutletIsInAnotherAM);
-				
-				If ThisOutletIsInAnotherAM Then
-					
-					RowIDs.Add(NewOutletRow.GetID());
-					
-				EndIf;
-				
-			EndIf;
-			
 		EndIf;
 		
 	EndDo;
-	
-	If SomeOutletsIsInAnotherAM Then
-		
-		ShowDeleteOutletFromOtherAMsQueryBox(RowIDs);
-		
-	EndIf;
 	
 EndProcedure
 
@@ -923,100 +835,6 @@ Procedure OutletsSelectSelection(Item, SelectedRow, Field, StandardProcessing)
 	EndIf;
 	
 EndProcedure
-
-&AtClient
-Procedure OutletsBeforeRowChange(Item, Cancel)
-	
-	// Сохранение торговой точки до изменения
-	If Not Item.CurrentData = Undefined Then
-		
-		OldOutlet = Item.CurrentData.Outlet;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure OutletsOnEditEnd(Item, NewRow, CancelEdit)
-	
-	// Контролируем наличие торговой точки в других ассортиментных матрицах
-	If Not CancelEdit Then
-		
-		If Not Item.CurrentData = Undefined Then
-		
-			Outlet = Item.CurrentData.Outlet;
-			
-			If ValueIsFilled(Outlet) Then
-				
-				If IsInAnotherAM(Outlet, Object.AssortmentMatrix) Then
-					
-					// Оборачиваем идентификатор текущей строки в массив, потому что процедура
-					// удаления торговых точек присутствующих в других ассортиментных матрицах 
-					// из табличной части работает с массивом идентификаторов строк которые
-					// надо удалить.
-					RowIDs = New Array;
-					RowIDs.Add(Item.CurrentRow);
-					
-					// Спрашиваем пользователя хочет ли он добавить в ассортиментную матрицу
-					// торговую точку и удалить эту торговую точку из других ассортиментных 
-					// матриц при записи данного документа. Если "Да", торговая точка 
-					// добавляется в табличную часть текущего документа и при записи текущего 
-					// документа удаляется из всех остальных. Если "Нет", торговая точка не 
-					// добавляется в табличную часть текущего документа.
-					ShowDeleteOutletFromOtherAMsQueryBox(RowIDs);
-					
-				EndIf;
-				
-			EndIf;
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure ShowDeleteOutletFromOtherAMsQueryBox(RowIDs)
-	
-	NotifyParameters = New Structure;
-	NotifyParameters.Insert("RowIDs", RowIDs);
-	
-	ShowQueryBox(New NotifyDescription("OutletWillBeDeletedFromOtherAMsProcessing", ThisForm, NotifyParameters),
-	             NStr("en = 'Outlet present in other assortment matrices. When current document will be written this outlet will be deleted from other assortment matrices. Continue?'; 
-				      |ru = 'Торговая точка присутствует в других ассортиментных матрицах. При записи данного документа данная торговая точка будет удалена из других ассортиментных матриц. Продолжить?'"),
-				 QuestionDialogMode.YesNo,
-				 0,
-				 DialogReturnCode.No,
-				 NStr("en = 'Delete outlet from other assortment matrices?'; 
-				      |ru = 'Удалить торговую точку из других ассортиментных матриц?'"));
-	
-EndProcedure
-
-&AtClient
-Function OutletWillBeDeletedFromOtherAMsProcessing(Result, NotifyParameters) Export
-	
-	If Result = DialogReturnCode.No Then
-		
-		For Each RowID In NotifyParameters.RowIDs Do
-			
-			If ValueIsFilled(OldOutlet) Then
-				
-				OutletsRow = Outlets.FindByID(RowID);
-				OutletsRow.Outlet = OldOutlet;
-				
-			Else
-				
-				Outlets.Delete(Outlets.FindByID(RowID));
-				
-			EndIf;
-			
-		EndDo;
-		
-	EndIf;
-	
-	OldOutlet = Undefined;
-	
-EndFunction
 
 // Outlets select
 
