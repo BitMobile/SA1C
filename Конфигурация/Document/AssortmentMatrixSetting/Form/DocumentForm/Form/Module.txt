@@ -138,12 +138,12 @@ Procedure FillOutlets()
 		|	AssortmentMatrixOutletsSliceLast.Outlet.Class,
 		|	AssortmentMatrixOutletsSliceLast.Outlet.Type
 		|FROM
-		|	InformationRegister.AssortmentMatrixOutlets.SliceLast(&CurrentDate, AssortmentMatrix = &AssortmentMatrix) AS AssortmentMatrixOutletsSliceLast
+		|	InformationRegister.AssortmentMatrixOutlets.SliceLast(&CurrentDate, AssortmentMatrixSetting = &AssortmentMatrixSetting) AS AssortmentMatrixOutletsSliceLast
 		|WHERE
 		|	AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)");
 		
 		Query.SetParameter("CurrentDate", CurrentDate());
-		Query.SetParameter("AssortmentMatrix", Object.AssortmentMatrix);
+		Query.SetParameter("AssortmentMatrixSetting", Object.Ref);
 		
 		QueryResult = Query.Execute().Unload();
 		
@@ -170,8 +170,7 @@ Procedure WriteOutlets(CurrentObject)
 	//
 	// Четвертый запрос в зависимости от того откуда пришли данные проставляет 
 	// статусы строк. Если из регистра - значит статус "Удалена", если с формы
-	// значит "Добавлена". Также запрос формирует список торговых точек к удалению
-	// из других ассортиментных матриц.
+	// значит "Добавлена".
 	Query = New Query(
 	"SELECT ALLOWED
 	|	Outlets.Outlet AS OutletOnForm
@@ -224,23 +223,7 @@ Procedure WriteOutlets(CurrentObject)
 	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
 	|	END AS OutletStatus
 	|FROM
-	|	Difference AS Difference
-	|
-	|UNION ALL
-	|
-	|SELECT 
-	|	DATEADD(&Period, SECOND, -1),
-	|	AssortmentMatrixOutletsSliceLast.AssortmentMatrix,
-	|	&AssortmentMatrixSetting,
-	|	AssortmentMatrixOutletsSliceLast.Outlet,
-	|	VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|FROM
-	|	InformationRegister.AssortmentMatrixOutlets.SliceLast(
-	|			,
-	|			NOT AssortmentMatrix = &AssortmentMatrix
-	|				AND Outlet IN (&Outlets)) AS AssortmentMatrixOutletsSliceLast
-	|WHERE
-	|	AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Added)");
+	|	Difference AS Difference");
 	
 	OutletsValueTable = FormAttributeToValue("Outlets");
 	
