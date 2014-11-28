@@ -43,6 +43,16 @@
 					<ChildItems>
 						<InputField name="Code" id="1">
 							<DataPath>Object.Code</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Code</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Код</v8:content>
+								</v8:item>
+							</Title>
 							<EditMode>EnterOnInput</EditMode>
 							<ContextMenu name="CodeContextMenu" id="2"/>
 							<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
@@ -65,28 +75,38 @@
 							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="PeriodGroupExtendedTooltip" id="25"/>
 							<ChildItems>
-								<InputField name="BeginDate" id="16">
+								<LabelField name="BeginDate" id="16">
 									<DataPath>Object.BeginDate</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="BeginDateContextMenu" id="17"/>
 									<ExtendedTooltip name="BeginDateExtendedTooltip" id="18"/>
-								</InputField>
-								<InputField name="EndDate" id="19">
+								</LabelField>
+								<LabelField name="EndDate" id="19">
 									<DataPath>Object.EndDate</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="EndDateContextMenu" id="20"/>
 									<ExtendedTooltip name="EndDateExtendedTooltip" id="21"/>
-								</InputField>
-								<InputField name="Status" id="13">
+								</LabelField>
+								<LabelField name="Status" id="13">
 									<DataPath>Object.Status</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="StatusContextMenu" id="14"/>
 									<ExtendedTooltip name="StatusExtendedTooltip" id="15"/>
-								</InputField>
+								</LabelField>
 							</ChildItems>
 						</UsualGroup>
 						<InputField name="Description" id="4">
 							<DataPath>Object.Description</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Description</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Наименование</v8:content>
+								</v8:item>
+							</Title>
 							<EditMode>EnterOnInput</EditMode>
 							<ContextMenu name="DescriptionContextMenu" id="5"/>
 							<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
