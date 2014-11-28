@@ -20,7 +20,6 @@
 			<Picture/>
 			<Content>
 				<xr:Item xsi:type="xr:MDObjectRef">Document.PriceList</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Document.AssortmentMatrixSetting</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
