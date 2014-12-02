@@ -132,6 +132,14 @@
 						</LabelField>
 						<LabelField name="ДатаПоследнейСинхронизацииУдаленныхДанных" id="56">
 							<DataPath>ДатаПоследнейСинхронизацииУдаленныхДанных</DataPath>
+							<UserVisible>
+								<xr:Common>true</xr:Common>
+								<xr:Value name="Role.SR">false</xr:Value>
+								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="Role.Admin">false</xr:Value>
+								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
+								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+							</UserVisible>
 							<ReadOnly>true</ReadOnly>
 							<Title>
 								<v8:item>
@@ -210,6 +218,14 @@
 						</Button>
 						<Button name="ВыгрузитьВсеФайлы" id="44">
 							<Type>UsualButton</Type>
+							<UserVisible>
+								<xr:Common>true</xr:Common>
+								<xr:Value name="Role.SR">false</xr:Value>
+								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="Role.Admin">false</xr:Value>
+								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
+								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+							</UserVisible>
 							<Representation>PictureAndText</Representation>
 							<CommandName>Form.Command.ВыгрузитьВсеФайлы</CommandName>
 							<Parameter xsi:nil="true"/>
@@ -227,6 +243,14 @@
 						</Button>
 						<Button name="СинхронизароватьУдаленныеДанные" id="53">
 							<Type>UsualButton</Type>
+							<UserVisible>
+								<xr:Common>true</xr:Common>
+								<xr:Value name="Role.SR">false</xr:Value>
+								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="Role.Admin">false</xr:Value>
+								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
+								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+							</UserVisible>
 							<Representation>PictureAndText</Representation>
 							<CommandName>Form.Command.СинхронизироватьУдаленныеДанные</CommandName>
 							<Parameter xsi:nil="true"/>
