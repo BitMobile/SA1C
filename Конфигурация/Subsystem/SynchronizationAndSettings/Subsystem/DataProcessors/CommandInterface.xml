@@ -4,6 +4,37 @@
 		<Command name="DataProcessor.РегламентныеИФоновыеЗадания.Command.РегламентныеИФоновыеЗадания">
 			<Visibility>
 				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.SR">false</xr:Value>
+				<xr:Value name="Role.SRM">false</xr:Value>
+				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+				<xr:Value name="Role.Admin">false</xr:Value>
+			</Visibility>
+		</Command>
+		<Command name="CommonCommand.ShowSyncAndSettings">
+			<Visibility>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.SR">false</xr:Value>
+				<xr:Value name="Role.bitmobile_Пользователь">true</xr:Value>
+				<xr:Value name="Role.Admin">false</xr:Value>
+				<xr:Value name="Role.SRM">false</xr:Value>
+			</Visibility>
+		</Command>
+		<Command name="CommonCommand.ShowScheduledJobs">
+			<Visibility>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.SR">false</xr:Value>
+				<xr:Value name="Role.SRM">false</xr:Value>
+				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+				<xr:Value name="Role.Admin">false</xr:Value>
+			</Visibility>
+		</Command>
+		<Command name="CommonCommand.ShowDeleteObjects">
+			<Visibility>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.SR">false</xr:Value>
+				<xr:Value name="Role.SRM">false</xr:Value>
+				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
+				<xr:Value name="Role.Admin">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="DataProcessor.РегламентныеИФоновыеЗадания.StandardCommand.Open">
