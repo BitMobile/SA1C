@@ -7,7 +7,6 @@
 		</v8:item>
 	</Title>
 	<Width>60</Width>
-	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<AutoTitle>false</AutoTitle>
 	<AutoFillCheck>false</AutoFillCheck>
 	<Customizable>false</Customizable>

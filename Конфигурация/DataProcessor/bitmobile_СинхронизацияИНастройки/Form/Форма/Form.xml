@@ -118,11 +118,11 @@
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Files</v8:content>
+									<v8:content>Sync files</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Файлы</v8:content>
+									<v8:content>Синхронизация файлов</v8:content>
 								</v8:item>
 							</Title>
 							<TitleTextColor>#805E06</TitleTextColor>
@@ -143,12 +143,12 @@
 							<ReadOnly>true</ReadOnly>
 							<Title>
 								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Удаленные данные</v8:content>
+									<v8:lang>en</v8:lang>
+									<v8:content>Sync deleted data</v8:content>
 								</v8:item>
 								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Deleted data</v8:content>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Синхронизация удаленных данных</v8:content>
 								</v8:item>
 							</Title>
 							<TitleTextColor>#805E06</TitleTextColor>
