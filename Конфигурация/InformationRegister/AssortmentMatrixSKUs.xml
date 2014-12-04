@@ -256,22 +256,22 @@
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
 			</Resource>
-			<Dimension uuid="515dfaf0-ce51-4c22-8f56-dec54e252a41">
+			<Resource uuid="1538d3c7-0453-4235-bcde-95ead1ca357c">
 				<Properties>
-					<Name>AssortmentMatrix</Name>
+					<Name>SKUStatus</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Assortment matrix</v8:content>
+							<v8:content>Status</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Ассортиментная матрица</v8:content>
+							<v8:content>Статус</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
-						<v8:Type>cfg:CatalogRef.AssortmentMatrix</v8:Type>
+						<v8:Type>cfg:EnumRef.ValueTableRowStatuses</v8:Type>
 					</Type>
 					<PasswordMode>false</PasswordMode>
 					<Format/>
@@ -294,29 +294,26 @@
 					<ChoiceForm/>
 					<LinkByType/>
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
-					<Master>false</Master>
-					<MainFilter>true</MainFilter>
-					<DenyIncompleteValues>false</DenyIncompleteValues>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
-			</Dimension>
-			<Dimension uuid="9ba09739-e319-434d-9f3f-f85ef3618440">
+			</Resource>
+			<Dimension uuid="515dfaf0-ce51-4c22-8f56-dec54e252a41">
 				<Properties>
-					<Name>AssortmentMatrixSetting</Name>
+					<Name>AssortmentMatrix</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Assortment matrix setting</v8:content>
+							<v8:content>Assortment matrix</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Настройка ассортиментной матрицы</v8:content>
+							<v8:content>Ассортиментная матрица</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
-						<v8:Type>cfg:DocumentRef.AssortmentMatrixSetting</v8:Type>
+						<v8:Type>cfg:CatalogRef.AssortmentMatrix</v8:Type>
 					</Type>
 					<PasswordMode>false</PasswordMode>
 					<Format/>
@@ -389,6 +386,47 @@
 					<DenyIncompleteValues>false</DenyIncompleteValues>
 					<Indexing>DontIndex</Indexing>
 					<FullTextSearch>Use</FullTextSearch>
+				</Properties>
+			</Dimension>
+			<Dimension uuid="2efcba53-0b69-4a27-a5c3-d25c62884747">
+				<Properties>
+					<Name>UUID</Name>
+					<Synonym>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>UUID</v8:content>
+						</v8:item>
+					</Synonym>
+					<Comment/>
+					<Type>
+						<v8:Type>v8:UUID</v8:Type>
+					</Type>
+					<PasswordMode>false</PasswordMode>
+					<Format/>
+					<EditFormat/>
+					<ToolTip/>
+					<MarkNegatives>false</MarkNegatives>
+					<Mask/>
+					<MultiLine>false</MultiLine>
+					<ExtendedEdit>false</ExtendedEdit>
+					<MinValue xsi:nil="true"/>
+					<MaxValue xsi:nil="true"/>
+					<FillFromFillingValue>false</FillFromFillingValue>
+					<FillValue xsi:nil="true"/>
+					<FillChecking>ShowError</FillChecking>
+					<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+					<ChoiceParameterLinks/>
+					<ChoiceParameters/>
+					<QuickChoice>Auto</QuickChoice>
+					<CreateOnInput>Auto</CreateOnInput>
+					<ChoiceForm/>
+					<LinkByType/>
+					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+					<Master>false</Master>
+					<MainFilter>true</MainFilter>
+					<DenyIncompleteValues>false</DenyIncompleteValues>
+					<Indexing>DontIndex</Indexing>
+					<FullTextSearch>DontUse</FullTextSearch>
 				</Properties>
 			</Dimension>
 		</ChildObjects>
