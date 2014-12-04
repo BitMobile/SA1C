@@ -658,7 +658,15 @@ Procedure PeriodsBeginDateOnChange(Item)
 		
 		Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 		
-		Params.Insert("Earliest", NextDay());
+		If PreviousData = Undefined Then
+			
+			Params.Insert("Earliest", NextDay());
+			
+		Else
+			
+			Params.Insert("Earliest", Max(NextDay(), NextDay(PreviousData.EndDate)));
+			
+		EndIf;
 		
 		QueryText = NStr("en = 'Current row begin date cannot be earlier than tomorrow.'; 
 			|ru = 'Начало периода текущей строки не может быть раньше чем завтра.'");
@@ -1067,7 +1075,7 @@ Procedure RemoveAllOutlets(Command)
 	
 	CurrentItem = ?(Items.GroupOutletsPages.CurrentPage = Items.GroupOutletsNoSelect, Items.Outlets, Items.Outlets1);
 	
-	If Items.Periods.CurrentData = Undefined Then
+	If Not Items.Periods.CurrentData = Undefined Then
 		
 		If Not ValueIsFilled(Items.Periods.CurrentData.EndDate) OR Items.Periods.CurrentData.EndDate > CurrentDate() Then
 	
