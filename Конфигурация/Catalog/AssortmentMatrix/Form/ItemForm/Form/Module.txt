@@ -565,6 +565,28 @@ Procedure PeriodsOnStartEdit(Item, NewRow, Clone)
 				
 			CurrentData.BeginDate = NextDay(PreviousData.EndDate);
 			
+			PreviousDataOutlets = Outlets.FindRows(New Structure("UUID", String(PreviousData.UUID)));
+			
+			For Each PreviousDataOutletsRow In PreviousDataOutlets Do
+				
+				CurrentDataOutletsRow = Outlets.Add();
+				FillPropertyValues(CurrentDataOutletsRow, PreviousDataOutletsRow, , "UUID");
+				CurrentDataOutletsRow.UUID = CurrentData.UUID;
+				
+			EndDo;
+			
+			PreviousDataSKUs = SKUs.FindRows(New Structure("UUID", String(PreviousData.UUID)));
+			
+			For Each PreviousDataSKUsRow In PreviousDataSKUs Do
+				
+				CurrentDataSKUsRow = SKUs.Add();
+				FillPropertyValues(CurrentDataSKUsRow, PreviousDataSKUsRow, , "UUID");
+				CurrentDataSKUsRow.UUID = CurrentData.UUID;
+				
+			EndDo;
+			
+			SetFilter(Item);
+			
 		Else
 			
 			CurrentData.BeginDate = NextDay();
@@ -650,6 +672,7 @@ Procedure PeriodsBeginDateOnChange(Item)
 	Params = New Structure;
 	Params.Insert("FieldName", "BeginDate");
 	Params.Insert("CurrentData", Object.Periods.FindByID(CurrentData.GetId()));
+	Params.Insert("PreviousData", PreviousData);
 	Params.Insert("OldValue", OldBeginDate);
 	
 	QueryText = "";
@@ -664,7 +687,7 @@ Procedure PeriodsBeginDateOnChange(Item)
 			
 		Else
 			
-			Params.Insert("Earliest", Max(NextDay(), NextDay(PreviousData.EndDate)));
+			Params.Insert("Earliest", Max(NextDay(), NextDay(PreviousData.BeginDate)));
 			
 		EndIf;
 		
@@ -677,21 +700,21 @@ Procedure PeriodsBeginDateOnChange(Item)
 			
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			
-			Params.Insert("Earliest", NextDay(PreviousData.EndDate));
+			Params.Insert("Earliest", NextDay(PreviousData.BeginDate));
 			
 			QueryText = NStr("en = 'Current period begin date cannot be earlier or equal to previous row begin period.'; 
 				|ru = 'Начало периода текущей строки не может быть раньше или таким же как начало периода предыдущей строки.'");
 			
 			
-		ElsIf PreviousData.EndDate >= CurrentData.BeginDate Then
-			
-			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
-			
-			Params.Insert("Earliest", NextDay(PreviousData.EndDate));
-			
-			QueryText = NStr("en = 'Current row begin date cannot be earlier than previous row end date'; 
-				|ru = 'Начало периода текущей строки не может быть раньше чем конец периода предыдущей строки.'");
-			
+		//ElsIf PreviousData.EndDate >= CurrentData.BeginDate Then
+		//	
+		//	Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
+		//	
+		//	Params.Insert("Earliest", NextDay(PreviousData.EndDate));
+		//	
+		//	QueryText = NStr("en = 'Current row begin date cannot be earlier than previous row end date'; 
+		//		|ru = 'Начало периода текущей строки не может быть раньше чем конец периода предыдущей строки.'");
+		//	
 		EndIf;
 	
 	ElsIf Not NextData = Undefined Then
@@ -733,8 +756,16 @@ Procedure PeriodsBeginDateOnChange(Item)
 			,
 			NStr("en = 'Incorrect begin date'; ru = 'Неправильная дата начала'"));
 		
-	EndIf;
+	Else
 		
+		If Not PreviousData = Undefined Then
+			
+			PreviousData.EndDate = PrevDay(CurrentData.BeginDate);
+			
+		EndIf;
+		
+	EndIf;
+	
 	Item.Parent.EndEditRow(False);
 	
 EndProcedure
@@ -882,6 +913,22 @@ Procedure PeriodsIncorrectInputProcessing(Result, AdditionalParameter) Export
 	NewDate = AdditionalParameter[Result];
 	
 	CurrentData[FieldName] = NewDate;
+	
+	If AdditionalParameter.Property("PreviousData") Then
+	
+		PreviousData = AdditionalParameter.PreviousData;
+		
+		If Not PreviousData = Undefined Then
+			
+			If PreviousData.EndDate > CurrentDate() Then
+				
+				PreviousData.EndDate = PrevDay(CurrentData.BeginDate);
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
 	
 EndProcedure
 
