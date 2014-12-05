@@ -609,110 +609,77 @@ Procedure SetStatusOfAssortmentMatrix(Date) Export
 	Query = New Query(
 	"SELECT
 	|	AssortmentMatrix.Ref AS AM,
+	|	AssortmentMatrix.PeriodUUID AS AMPeriodUUID,
 	|	AssortmentMatrix.Status AS AMStatus,
-	|	BEGINOFPERIOD(AssortmentMatrix.BeginDate, DAY) AS AMBeginDate,
-	|	CASE
-	|		WHEN AssortmentMatrix.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
-	|			THEN DATETIME(1, 1, 1, 0, 0, 0)
-	|		ELSE ENDOFPERIOD(AssortmentMatrix.EndDate, DAY)
-	|	END AS AMEndDate
-	|INTO AssortmentMatrices
+	|	AssortmentMatrix.BeginDate AS AMBeginDate,
+	|	AssortmentMatrix.EndDate AS AMEndDate
+	|INTO AMs
 	|FROM
 	|	Catalog.AssortmentMatrix AS AssortmentMatrix
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT
-	|	AssortmentMatrixSetting.Ref AS Setting,
-	|	AssortmentMatrixSetting.AssortmentMatrix AS AM,
-	|	BEGINOFPERIOD(AssortmentMatrixSetting.BeginDate, DAY) AS SettingBeginDate,
-	|	CASE
-	|		WHEN AssortmentMatrixSetting.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
-	|			THEN DATETIME(1, 1, 1, 0, 0, 0)
-	|		ELSE ENDOFPERIOD(AssortmentMatrixSetting.EndDate, DAY)
-	|	END AS SettingEndDate
-	|INTO Settings
+	|	AssortmentMatrixPeriods.Ref AS AM,
+	|	AssortmentMatrixPeriods.BeginDate AS CurrentPeriodBeginDate,
+	|	AssortmentMatrixPeriods.EndDate AS CurrentPeriodEndDate,
+	|	AssortmentMatrixPeriods.UUID AS CurrentPeriodUUID
+	|INTO CurrentPeriods
 	|FROM
-	|	Document.AssortmentMatrixSetting AS AssortmentMatrixSetting
+	|	Catalog.AssortmentMatrix.Periods AS AssortmentMatrixPeriods
 	|WHERE
-	|	BEGINOFPERIOD(AssortmentMatrixSetting.BeginDate, DAY) <= &CurrentDate
+	|	BEGINOFPERIOD(AssortmentMatrixPeriods.BeginDate, DAY) <= &CurrentDate
 	|	AND CASE
-	|			WHEN AssortmentMatrixSetting.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
+	|			WHEN AssortmentMatrixPeriods.EndDate = DATETIME(1, 1, 1, 0, 0, 0)
 	|				THEN DATETIME(2999, 12, 31, 23, 59, 59)
-	|			ELSE ENDOFPERIOD(AssortmentMatrixSetting.EndDate, DAY)
+	|			ELSE ENDOFPERIOD(AssortmentMatrixPeriods.EndDate, DAY)
 	|		END >= &CurrentDate
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT
-	|	AssortmentMatrices.AM,
+	|	AMs.AM,
+	|	AMs.AMPeriodUUID,
+	|	AMs.AMStatus,
+	|	AMs.AMBeginDate,
+	|	AMs.AMEndDate,
+	|	ISNULL(CurrentPeriods.CurrentPeriodUUID, AMs.AMPeriodUUID) AS NewPeriodUUID,
+	|	ISNULL(CurrentPeriods.CurrentPeriodBeginDate, AMs.AMBeginDate) AS NewPeriodBeginDate,
+	|	ISNULL(CurrentPeriods.CurrentPeriodEndDate, AMs.AMEndDate) AS NewPeriodEndDate,
 	|	CASE
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Inactive)
-	|				AND NOT Settings.Setting IS NULL 
-	|			THEN VALUE(Enum.AssortmentMatrixStatus.Active)
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
-	|			THEN VALUE(Enum.AssortmentMatrixStatus.Active)
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
-	|			THEN NULL
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND Settings.Setting IS NULL 
-	|			THEN VALUE(Enum.AssortmentMatrixStatus.Inactive)
-	|	END AS NewStatus,
-	|	CASE
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(ENUM.AssortmentMatrixStatus.Inactive)
-	|				AND NOT Settings.Setting IS NULL 
-	|			THEN Settings.SettingBeginDate
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
-	|			THEN Settings.SettingBeginDate
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
-	|			THEN NULL
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND Settings.Setting IS NULL 
-	|			THEN AssortmentMatrices.AMBeginDate
-	|	END AS NewBeginDate,
-	|	CASE
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(ENUM.AssortmentMatrixStatus.Inactive)
-	|				AND NOT Settings.Setting IS NULL 
-	|			THEN Settings.SettingEndDate
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate <> Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate <> Settings.SettingEndDate)
-	|			THEN Settings.SettingEndDate
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND (AssortmentMatrices.AMBeginDate = Settings.SettingBeginDate
-	|					OR AssortmentMatrices.AMEndDate = Settings.SettingEndDate)
-	|			THEN NULL
-	|		WHEN AssortmentMatrices.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
-	|				AND Settings.Setting IS NULL 
-	|			THEN AssortmentMatrices.AMEndDate
-	|	END AS NewEndDate
+	|		WHEN AMs.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Inactive)
+	|			THEN CASE
+	|					WHEN NOT CurrentPeriods.CurrentPeriodUUID IS NULL 
+	|						THEN VALUE(Enum.AssortmentMatrixStatus.Active)
+	|					ELSE AMs.AMStatus
+	|				END
+	|		WHEN AMs.AMStatus = VALUE(Enum.AssortmentMatrixStatus.Active)
+	|			THEN CASE
+	|					WHEN CurrentPeriods.CurrentPeriodUUID IS NULL 
+	|						THEN VALUE(Enum.AssortmentMatrixStatus.Inactive)
+	|					ELSE AMs.AMStatus
+	|				END
+	|	END AS NewStatus
 	|INTO Map
 	|FROM
-	|	AssortmentMatrices AS AssortmentMatrices
-	|		LEFT JOIN Settings AS Settings
-	|		ON AssortmentMatrices.AM = Settings.AM
+	|	AMs AS AMs
+	|		LEFT JOIN CurrentPeriods AS CurrentPeriods
+	|		ON AMs.AM = CurrentPeriods.AM
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT
 	|	Map.AM,
-	|	Map.NewStatus AS Status,
-	|	Map.NewBeginDate AS BeginDate,
-	|	Map.NewEndDate AS EndDate
+	|	Map.NewPeriodBeginDate AS BeginDate,
+	|	Map.NewPeriodEndDate AS EndDate,
+	|	Map.NewPeriodUUID AS PeriodUUID,
+	|	Map.NewStatus AS Status
 	|FROM
 	|	Map AS Map
 	|WHERE
-	|	NOT Map.NewBeginDate IS NULL 
-	|	AND NOT Map.NewEndDate IS NULL 
-	|	AND NOT Map.NewStatus IS NULL ");
+	|	NOT(Map.NewPeriodUUID = Map.AMPeriodUUID
+	|				OR Map.NewPeriodBeginDate = Map.AMBeginDate
+	|				OR Map.AMEndDate = Map.NewPeriodEndDate)");
 	
 	Query.SetParameter("CurrentDate", Date);
 	
