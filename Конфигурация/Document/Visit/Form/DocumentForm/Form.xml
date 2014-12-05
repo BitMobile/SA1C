@@ -270,22 +270,13 @@
 							<RowSelectionMode>Row</RowSelectionMode>
 							<VerticalLines>false</VerticalLines>
 							<UseAlternationRowColor>true</UseAlternationRowColor>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<InitialListView>Beginning</InitialListView>
+							<InitialTreeView>ExpandAllLevels</InitialTreeView>
 							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
 							<DataPath>TempQuestionaires</DataPath>
-							<RowPictureDataPath>TempQuestionaires.DefaultPicture</RowPictureDataPath>
-							<AutoRefresh>false</AutoRefresh>
-							<AutoRefreshPeriod>60</AutoRefreshPeriod>
-							<Period xsi:type="v8:StandardPeriod">
-								<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-								<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-								<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-							</Period>
-							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
-							<RestoreCurrentRow>false</RestoreCurrentRow>
-							<TopLevelParent xsi:nil="true"/>
-							<ShowRoot>true</ShowRoot>
-							<AllowRootChoice>false</AllowRootChoice>
-							<UpdateOnDataChange>Auto</UpdateOnDataChange>
+							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="TempQuestionairesContextMenu" id="271"/>
 							<AutoCommandBar name="TempQuestionairesCommandBar" id="272">
 								<Autofill>false</Autofill>
@@ -316,7 +307,7 @@
 								<ExtendedTooltip name="TempQuestionairesSearchControlExtendedTooltip" id="288"/>
 							</SearchControlAddition>
 							<Events>
-								<Event name="OnActivateRow">TempQuestionairesOnActivateRow</Event>
+								<Event name="Selection">TempQuestionairesSelection</Event>
 							</Events>
 							<ChildItems>
 								<LabelField name="TempQuestionairesQuestionnaireResult" id="304">
@@ -335,7 +326,7 @@
 									<ExtendedTooltip name="TempQuestionairesQuestionnaireResultExtendedTooltip" id="306"/>
 								</LabelField>
 								<LabelField name="TempQuestionairesQuestionnaire" id="289">
-									<DataPath>6/9</DataPath>
+									<DataPath>TempQuestionaires.Questionnaire</DataPath>
 									<Visible>false</Visible>
 									<ContextMenu name="TempQuestionairesQuestionnaireContextMenu" id="290"/>
 									<ExtendedTooltip name="TempQuestionairesQuestionnaireExtendedTooltip" id="291"/>
@@ -359,7 +350,7 @@
 									<ExtendedTooltip name="TempQuestionairesSRExtendedTooltip" id="300"/>
 								</LabelField>
 								<LabelField name="TempQuestionairesDate" id="301">
-									<DataPath>TempQuestionaires.Date</DataPath>
+									<DataPath>TempQuestionaires.Filter</DataPath>
 									<Visible>false</Visible>
 									<ContextMenu name="TempQuestionairesDateContextMenu" id="302"/>
 									<ExtendedTooltip name="TempQuestionairesDateExtendedTooltip" id="303"/>
@@ -895,30 +886,25 @@
 				</v8:item>
 			</Title>
 			<Type>
-				<v8:Type>cfg:DynamicList</v8:Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.QuestioningResults</v8:Type>
 			</Type>
-			<UseAlways>
-				<Field>TempQuestionaires.SR</Field>
-				<Field>TempQuestionaires.Outlet</Field>
-				<Field>TempQuestionaires.Visit</Field>
-				<Field>TempQuestionaires.QuestionnaireResult</Field>
-				<Field>TempQuestionaires.Questionnaire</Field>
-			</UseAlways>
-			<Settings xsi:type="DynamicList">
-				<ManualQuery>true</ManualQuery>
-				<DynamicDataRead>true</DynamicDataRead>
-				<QueryText>SELECT
-	CAST("" AS STRING(200)) AS QuestionnaireResult,
-	InformationRegisterQuestioningResults.Questionnaire,
-	InformationRegisterQuestioningResults.Visit,
-	InformationRegisterQuestioningResults.Outlet,
-	InformationRegisterQuestioningResults.SR,
-	InformationRegisterQuestioningResults.Date
-FROM
-	InformationRegister.QuestioningResults AS InformationRegisterQuestioningResults</QueryText>
-				<MainTable>InformationRegister.QuestioningResults</MainTable>
-				<ListSettings/>
-			</Settings>
+			<Columns>
+				<Column name="QuestionnaireResult" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Questionnaire result</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
 		</Attribute>
 		<Attribute name="FileTable" id="7">
 			<Title>

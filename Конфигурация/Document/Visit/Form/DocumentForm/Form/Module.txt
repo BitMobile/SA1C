@@ -13,12 +13,24 @@ Procedure OnOpenServer()
 	
 	FillFileTable();
 	
-	FilterElement 					= TempQuestionaires.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	FilterElement.LeftValue 		= New DataCompositionField("Visit");
-	FilterElement.Use 				= True;
-	FilterElement.ComparisonType 	= DataCompositionComparisonType.Equal;
-	FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-	FilterElement.RightValue 		= Object.Ref;
+	If ValueIsFilled(Object.Ref) Then 
+		
+		RecordSet								= InformationRegisters.QuestioningResults.CreateRecordSet();
+		RecordSet.Filter.Visit.Use				= True;
+		RecordSet.Filter.Visit.ComparisonType	= ComparisonType.Equal;
+		RecordSet.Filter.Visit.Value			= Object.Ref;
+		
+		RecordSet.Read();
+		
+		ValueToFormData(RecordSet, TempQuestionaires);
+		
+		For Each StrResult In TempQuestionaires Do 
+			
+			StrResult.QuestionnaireResult = NStr("en = 'Result for ""'; ru = 'Результат для ""'") + String(StrResult.Questionnaire) + """";
+			
+		EndDo;
+		
+	EndIf;
 	
 EndProcedure
 
@@ -187,6 +199,13 @@ Function PictureExists(SnapShotUUID)
 				
 	EndIf;
 
+EndFunction
+
+&AtServerNoContext
+Function GetRecordKey(KeyData)
+	
+	Return InformationRegisters.QuestioningResults.CreateRecordKey(KeyData);
+	
 EndFunction
 
 
@@ -407,11 +426,22 @@ Procedure PagesOnCurrentPageChange(Item, CurrentPage)
 EndProcedure
 
 &AtClient
-Procedure TempQuestionairesOnActivateRow(Item)
+Procedure TempQuestionairesSelection(Item, SelectedRow, Field, StandardProcessing)
 	
-	If Not Items.TempQuestionaires.CurrentData = Undefined Then  
+	If Not Items.TempQuestionaires.CurrentData = Undefined Then 
 		
-		Items.TempQuestionaires.CurrentData.QuestionnaireResult = NStr("en = 'Result for ""'; ru = 'Результат для ""'") + String(Items.TempQuestionaires.CurrentData.Questionnaire) + """";
+		CurrenRowData = TempQuestionaires.FindByID(Items.TempQuestionaires.CurrentRow);
+		
+		KeyData = New Structure;
+		KeyData.Insert("Questionnaire",CurrenRowData.Questionnaire);
+		KeyData.Insert("Visit",CurrenRowData.Visit);
+		KeyData.Insert("Outlet",CurrenRowData.Outlet);
+		KeyData.Insert("SR",CurrenRowData.SR);
+		KeyData.Insert("Date",CurrenRowData.Date);
+		
+		RecordKey = GetRecordKey(KeyData);
+		
+		OpenForm("InformationRegister.QuestioningResults.RecordForm", New Structure("Key", RecordKey));
 		
 	EndIf;
 	
