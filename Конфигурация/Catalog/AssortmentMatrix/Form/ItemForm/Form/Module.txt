@@ -760,7 +760,11 @@ Procedure PeriodsBeginDateOnChange(Item)
 		
 		If Not PreviousData = Undefined Then
 			
-			PreviousData.EndDate = PrevDay(CurrentData.BeginDate);
+			If PreviousData.EndDate > CurrentDate() Then
+				
+				PreviousData.EndDate = PrevDay(CurrentData.BeginDate);
+				
+			EndIf;
 			
 		EndIf;
 		
@@ -778,6 +782,8 @@ Procedure PeriodsEndDateOnChange(Item)
 	CurrentDataIndex = Object.Periods.IndexOf(CurrentData);
 	
 	NextData = GetNextData(CurrentDataIndex);
+	
+	PreviousData = GetPreviousData(CurrentDataIndex);
 	
 	Buttons = New ValueList;
 	Buttons.Add("OldValue", NStr("en = 'Old value'; ru = 'Старое значение'"));
@@ -807,7 +813,8 @@ Procedure PeriodsEndDateOnChange(Item)
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			Buttons.Add("Latest", NStr("en = 'Latest'; ru = 'Самую позднюю возможную'"));
 			
-			Params.Insert("Earliest", CurrentDate());
+			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
+			
 			Params.Insert("Latest", PrevDay(NextData.BeginDate));
 			
 			QueryText = NStr("en = 'Current row end date cannot be empty.'; 
@@ -817,7 +824,7 @@ Procedure PeriodsEndDateOnChange(Item)
 			
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			
-			Params.Insert("Earliest", CurrentData.BeginDate);
+			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
 			
 			QueryText = NStr("en = 'Current row end period cannot be earlier than current row begin period.'; 
 				|ru = 'Конец периода текущей строки не может быть раньше чем начало периода текущей строки.'");
@@ -839,7 +846,7 @@ Procedure PeriodsEndDateOnChange(Item)
 			
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			
-			Params.Insert("Earliest", CurrentData.BeginDate);
+			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
 			
 			QueryText = NStr("en = 'Current row end date cannot be earlier than current row end period.'; 
 				|ru = 'Конец периода текущей строки не может быть раньше чем начало периода текущей строки.'");
