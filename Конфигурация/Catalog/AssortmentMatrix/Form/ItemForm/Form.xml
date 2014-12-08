@@ -925,14 +925,19 @@
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="SKUsQtyContextMenu" id="330"/>
 									<ExtendedTooltip name="SKUsQtyExtendedTooltip" id="331"/>
+									<Events>
+										<Event name="OnChange">SKUsQtyOnChange</Event>
+									</Events>
 								</InputField>
 								<InputField name="SKUsUnit" id="332">
 									<DataPath>SKUs.Unit</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<TextEdit>false</TextEdit>
+									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 									<ContextMenu name="SKUsUnitContextMenu" id="333"/>
 									<ExtendedTooltip name="SKUsUnitExtendedTooltip" id="334"/>
 									<Events>
+										<Event name="OnChange">SKUsUnitOnChange</Event>
 										<Event name="StartChoice">SKUsUnitStartChoice</Event>
 									</Events>
 								</InputField>
@@ -1104,6 +1109,22 @@ GROUP BY
 							<v8:Length>36</v8:Length>
 							<v8:AllowedLength>Variable</v8:AllowedLength>
 						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="BaseUnitQty" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Base unit qty</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
 					</Type>
 				</Column>
 			</Columns>

@@ -321,9 +321,13 @@ Procedure FillSKUs()
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
 	|	AssortmentMatrixSKUsSliceLast.Unit,
-	|	AssortmentMatrixSKUsSliceLast.UUID
+	|	AssortmentMatrixSKUsSliceLast.UUID,
+	|	AssortmentMatrixSKUsSliceLast.Qty * SKUPacking.Multiplier AS BaseUnitQty
 	|FROM
 	|	InformationRegister.AssortmentMatrixSKUs.SliceLast(, AssortmentMatrix = &AssortmentMatrix) AS AssortmentMatrixSKUsSliceLast
+	|		LEFT JOIN Catalog.SKU.Packing AS SKUPacking
+	|		ON AssortmentMatrixSKUsSliceLast.SKU = SKUPacking.Ref
+	|			AND AssortmentMatrixSKUsSliceLast.Unit = SKUPacking.Pack
 	|WHERE
 	|	NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)");
 	
@@ -357,7 +361,8 @@ Procedure WriteSKUs(CurrentObject)
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.UUID,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
-	|	AssortmentMatrixSKUsSliceLast.Unit
+	|	AssortmentMatrixSKUsSliceLast.Unit,
+	|	AssortmentMatrixSKUsSliceLast.BaseUnitQty
 	|FROM
 	|	InformationRegister.AssortmentMatrixSKUs.SliceLast(, AssortmentMatrix = &AssortmentMatrix) AS AssortmentMatrixSKUsSliceLast
 	|WHERE
@@ -384,7 +389,8 @@ Procedure WriteSKUs(CurrentObject)
 	|	FormSKUs.SKU,
 	|	FormSKUs.Qty,
 	|	FormSKUs.Unit,
-	|	FormSKUs.UUID
+	|	FormSKUs.UUID,
+	|	FormSKUs.BaseUnitQty
 	|INTO FormSKUs
 	|FROM
 	|	&FormSKUs AS FormSKUs
@@ -395,7 +401,8 @@ Procedure WriteSKUs(CurrentObject)
 	|	RegisterSKUs.SKU,
 	|	RegisterSKUs.Qty,
 	|	RegisterSKUs.Unit,
-	|	RegisterSKUs.UUID
+	|	RegisterSKUs.UUID,
+	|	RegisterSKUs.BaseUnitQty
 	|INTO RegisterSKUs
 	|FROM
 	|	&RegisterSKUs AS RegisterSKUs
@@ -407,10 +414,12 @@ Procedure WriteSKUs(CurrentObject)
 	|	FormSKUs.Qty AS FormQty,
 	|	FormSKUs.Unit AS FormUnit,
 	|	FormSKUs.UUID AS FormUUID,
+	|	FormSKUs.BaseUnitQty AS FormBaseUnitQty,
 	|	RegisterSKUs.SKU AS RegisterSKU,
 	|	RegisterSKUs.Qty AS RegisterQty,
 	|	RegisterSKUs.Unit AS RegisterUnit,
-	|	RegisterSKUs.UUID AS RegisterUUID
+	|	RegisterSKUs.UUID AS RegisterUUID,
+	|	RegisterSKUs.BaseUnitQty AS RegisterBaseUnitQty
 	|INTO Difference
 	|FROM
 	|	FormSKUs AS FormSKUs
@@ -421,11 +430,14 @@ Procedure WriteSKUs(CurrentObject)
 	|	(FormSKUs.SKU IS NULL 
 	|				AND FormSKUs.Qty IS NULL 
 	|				AND FormSKUs.Unit IS NULL 
+	|				AND FormSKUs.BaseUnitQty IS NULL 
 	|			OR RegisterSKUs.SKU IS NULL 
 	|				AND RegisterSKUs.Qty IS NULL 
 	|				AND RegisterSKUs.Unit IS NULL 
+	|				AND RegisterSKUs.BaseUnitQty IS NULL 
 	|			OR NOT FormSKUs.Qty = RegisterSKUs.Qty
-	|			OR NOT FormSKUs.Unit = RegisterSKUs.Unit)
+	|			OR NOT FormSKUs.Unit = RegisterSKUs.Unit
+	|			OR NOT FormSKUs.BaseUnitQty = RegisterSKUs.BaseUnitQty)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
@@ -436,6 +448,7 @@ Procedure WriteSKUs(CurrentObject)
 	|	ISNULL(Difference.FormUUID, Difference.RegisterUUID) AS UUID,
 	|	ISNULL(Difference.FormQty, Difference.RegisterQty) AS Qty,
 	|	ISNULL(Difference.FormUnit, Difference.RegisterUnit) AS Unit,
+	|	ISNULL(Difference.FormBaseUnitQty, Difference.RegisterBaseUnitQty) AS BaseUnitQty,
 	|	CASE
 	|		WHEN Difference.FormSKU IS NULL 
 	|				AND Difference.FormQty IS NULL 
@@ -783,8 +796,6 @@ Procedure PeriodsEndDateOnChange(Item)
 	
 	NextData = GetNextData(CurrentDataIndex);
 	
-	PreviousData = GetPreviousData(CurrentDataIndex);
-	
 	Buttons = New ValueList;
 	Buttons.Add("OldValue", NStr("en = 'Old value'; ru = 'Старое значение'"));
 	
@@ -813,8 +824,7 @@ Procedure PeriodsEndDateOnChange(Item)
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			Buttons.Add("Latest", NStr("en = 'Latest'; ru = 'Самую позднюю возможную'"));
 			
-			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
-			
+			Params.Insert("Earliest", CurrentDate());
 			Params.Insert("Latest", PrevDay(NextData.BeginDate));
 			
 			QueryText = NStr("en = 'Current row end date cannot be empty.'; 
@@ -824,7 +834,7 @@ Procedure PeriodsEndDateOnChange(Item)
 			
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			
-			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
+			Params.Insert("Earliest", CurrentData.BeginDate);
 			
 			QueryText = NStr("en = 'Current row end period cannot be earlier than current row begin period.'; 
 				|ru = 'Конец периода текущей строки не может быть раньше чем начало периода текущей строки.'");
@@ -846,7 +856,7 @@ Procedure PeriodsEndDateOnChange(Item)
 			
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			
-			Params.Insert("Earliest", Max(CurrentData.BeginDate, CurrentDate()));
+			Params.Insert("Earliest", CurrentData.BeginDate);
 			
 			QueryText = NStr("en = 'Current row end date cannot be earlier than current row end period.'; 
 				|ru = 'Конец периода текущей строки не может быть раньше чем начало периода текущей строки.'");
@@ -1284,6 +1294,59 @@ Procedure SKUsUnitStartChoice(Item, ChoiceData, StandardProcessing)
 	ChoiceData = GetAvailableUnits(Item.Parent.CurrentData.SKU);
 	
 EndProcedure
+
+&AtClient
+Procedure SKUsUnitOnChange(Item)
+	
+	RecountBaseUnitQty(Item);
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsQtyOnChange(Item)
+	
+	RecountBaseUnitQty(Item);
+	
+EndProcedure
+
+&AtClient
+Procedure RecountBaseUnitQty(Item)
+	
+	CurrentData = Item.Parent.CurrentData;
+	
+	Unit = CurrentData.Unit;
+	SKU = CurrentData.SKU;
+	
+	Multiplier = GetCurrentSKUUnitMultiplier(SKU, Unit);
+	
+	CurrentData.BaseUnitQty = CurrentData.Qty * Multiplier;
+
+EndProcedure
+
+&AtServerNoContext
+Function GetCurrentSKUUnitMultiplier(SKU, Unit)
+	
+	Query = New Query(
+	"SELECT
+	|	SKUPacking.Multiplier
+	|FROM
+	|	Catalog.SKU.Packing AS SKUPacking
+	|WHERE
+	|	SKUPacking.Ref = &SKU
+	|	AND SKUPacking.Pack = &Pack");
+	
+	Query.SetParameter("SKU", SKU);
+	Query.SetParameter("Pack", Unit);
+	
+	Selection = Query.Execute().Select();
+	
+	If Selection.Next() Then
+		
+		Return Selection.Multiplier;
+		
+	EndIf;
+	
+EndFunction
 
 &AtServerNoContext
 Function GetAvailableUnits(SKU)
