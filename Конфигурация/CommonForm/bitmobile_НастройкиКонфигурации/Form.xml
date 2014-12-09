@@ -9,6 +9,7 @@
 	<ChildItems>
 		<InputField name="bitmobile_ИмяКонфигурации" id="1">
 			<DataPath>НаборКонстант.bitmobile_ИмяКонфигурации</DataPath>
+			<ReadOnly>true</ReadOnly>
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -25,6 +26,7 @@
 		</InputField>
 		<InputField name="bitmobile_ВерсияКонфигурации" id="3">
 			<DataPath>НаборКонстант.bitmobile_ВерсияКонфигурации</DataPath>
+			<ReadOnly>true</ReadOnly>
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -98,7 +100,7 @@
 					<Title formatted="false">
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Use for server version "bitmobile" 2.362 or higher</v8:content>
+							<v8:content>Use for server "bitmobile" version 2.362 or higher</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>

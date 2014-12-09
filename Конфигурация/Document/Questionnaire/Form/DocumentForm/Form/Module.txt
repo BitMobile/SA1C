@@ -329,6 +329,13 @@ Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
 	
 EndFunction
 
+&AtServerNoContext
+Function GetDataCompositionFilterConstructor()
+	
+	Return New DataCompositionFilter;
+	
+EndFunction
+
 &AtServer
 Procedure FillSKUs(CopyingValue = Undefined)
 	
@@ -540,7 +547,7 @@ EndProcedure
 &AtClient
 Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
 	
-	FilterOfList = New DataCompositionFilter;
+	FilterOfList = GetDataCompositionFilterConstructor();
 	
 	For Each Item In Selectors Do
 		
@@ -2623,7 +2630,7 @@ Procedure SKUsValueTableSKUStartChoice(Item, ChoiceData, StandardProcessing)
 		
 	EndIf;
 	
-	ShowChooseFromList(New NotifyDescription("SKUsValueTableSKUChoiceProcessing", ThisForm, Item), TypesArray, Item, );
+	ShowChooseFromList(New NotifyDescription("SKUsValueTableSKUChoiceProcessing", ThisForm), TypesArray, Item, );
 	
 EndProcedure
 
@@ -2646,14 +2653,21 @@ Procedure SKUsValueTableSKUChoiceProcessing(Result, AdditionalParameter) Export
 				
 			EndDo;
 			
-			ChoiseForm.FormOwner			= AdditionalParameter;
-			ChoiseForm.WindowOpeningMode	= FormWindowOpeningMode.LockWholeInterface;
+			ChoiseForm.OnCloseNotifyDescription	= New NotifyDescription("CheckSKUValue", ThisForm, Result);
+			ChoiseForm.WindowOpeningMode		= FormWindowOpeningMode.LockWholeInterface;
 			
 			ChoiseForm.Open();
 			
 		ElsIf Result.Value = "Catalog.Brands" Then
 			
-			OpenForm("Catalog.Brands.ChoiceForm", , AdditionalParameter, , , , , FormWindowOpeningMode.LockWholeInterface);	
+			OpenForm("Catalog.Brands.ChoiceForm"
+					, 
+					, 
+					, 
+					, 
+					, 
+					, New NotifyDescription("CheckSKUValue", ThisForm, Result)
+					, FormWindowOpeningMode.LockWholeInterface);	
 			
 		EndIf;
 		
@@ -2661,6 +2675,32 @@ Procedure SKUsValueTableSKUChoiceProcessing(Result, AdditionalParameter) Export
 	
 EndProcedure
 
+&AtClient
+Procedure CheckSKUValue(Result, AdditionalParameter) Export 
+	
+	If Not Result = Undefined Then
+		
+		FoundedRows = SKUsValueTable.FindRows(New Structure("SKU", Result));
+		
+		If Not FoundedRows.Count() = 0 Then 
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Value """ + String(Result) + """ has already been added'; ru = 'Значение """ + String(Result) + """ уже добавлено'");
+			
+			UserMessage.Message();
+			
+			SKUsValueTableSKUChoiceProcessing(AdditionalParameter, Undefined);
+			
+		Else 
+			
+			Items.SKUsValueTable.CurrentData.SKU = Result;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+	
 &AtClient
 Procedure CheckSelectorsForSKUs(Command)
 	

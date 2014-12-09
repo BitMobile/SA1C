@@ -405,11 +405,11 @@ Procedure YearTuning(Item, Direction, StandardProcessing)
 	YearNumber = ДатаКакГодПредставление(EndOfYear(Object.Year));
 
 	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > WeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
+	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
 	Если Object.WeekNumber = 0 Тогда
 		Object.WeekNumber = 1;
-	ИначеЕсли 	Object.WeekNumber <  WeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = WeekOfYear(CurrentDate());
+	ИначеЕсли 	Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
+		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
 	КонецЕсли;	
 	
 	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
@@ -446,11 +446,11 @@ Procedure WeekNumberTuning(Item, Direction, StandardProcessing)
 	StandardProcessing = Ложь;
 	
 	lWeekNumber = Object.WeekNumber + Direction;
-	Object.WeekNumber = ?(lWeekNumber > WeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
+	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
 	Если Object.WeekNumber = 0 Тогда
 		Object.WeekNumber  = 1;
-	ИначеЕсли 	Year(Object.Year) <= Year(CurrentDate()) И Object.WeekNumber <  WeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = WeekOfYear(CurrentDate());
+	ИначеЕсли 	Year(Object.Year) <= Year(CurrentDate()) И Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
+		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
 	КонецЕсли;	
 	
 	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
@@ -468,11 +468,11 @@ EndProcedure
 Procedure WeekNumberOnChange(Item)
 	
  	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > WeekOfYear(EndOfYear(Object.Year)),WeekOfYear(EndOfYear(Object.Year)),lWeekNumber);
+	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber);
 	Если Object.WeekNumber = 0 Тогда
 		Object.WeekNumber = 1;
-	ИначеЕсли Year(Object.Year) <= Year(CurrentDate()) И  Object.WeekNumber <  WeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = WeekOfYear(CurrentDate());
+	ИначеЕсли Year(Object.Year) <= Year(CurrentDate()) И  Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
+		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
 	КонецЕсли;	
 	
 	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
@@ -593,7 +593,7 @@ Procedure WeekNumberStartListChoice(Item, StandardProcessing)
 	НачалоВыбораИзСпискаПредставленияWeekNumber(Item, StandardProcessing,Object.WeekNumber, Object.Year, ThisForm);
 	
 	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > WeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
+	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
 	Если Object.WeekNumber = 0 Тогда
 		Object.WeekNumber = 1;
 	КонецЕсли;	
@@ -621,6 +621,13 @@ EndProcedure
 	ВыбранныйЭлемент = OpenForm("CommonForm.ChooseFromListForm", new Structure("List, Source", PeriodListStuct.ValueList, "GetWeek"));
 	
 КонецПроцедуры
+
+&AtServerNoContext
+Function GetWeekOfYear(Value)
+
+	Return WeekOfYear(Value);
+	
+EndFunction
 
 // bit_vbobylev 18.06.2013 Заполнение списка выбора перенесено на сервер
 &AtServerNoContext
@@ -1069,9 +1076,9 @@ EndFunction
 &AtClient
 Procedure CreateTasksFromVisitPlan_(Item,FormParameters_) 
 	
-	Если  Object.Ref.IsEmpty() Тогда
+	Если Object.Ref.IsEmpty() Тогда
 		Сообщить("Нужно записать документ!");
-		Item.Parent.CurrentData["DateBoolean" +Прав(Item.Name,1)] = Ложь;		
+		Items.ValueTableOutlets.CurrentData["DateBoolean" +Прав(Item.Name,1)] = Ложь;		
 		Возврат; 
 	КонецЕсли;	
 	
