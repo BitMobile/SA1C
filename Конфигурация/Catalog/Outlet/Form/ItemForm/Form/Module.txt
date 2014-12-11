@@ -343,20 +343,10 @@ Procedure SetClosingCauseVisibility()
     
 EndProcedure
 
-
-///////////////////////////////////////////////////////
-// User interface
-
-&AtClient
-Procedure OnOpen(Cancel)
-    
-    OnOpenServer();
+&AtServer
+Procedure FillTempParameters()
 	
-	FillTerritories();
-	
-	OutletStatusOnChange(Undefined);
-    
-    For Each Str in Object.Parameters Do
+	For Each Str in Object.Parameters Do
 		
 		Ins 			= TempParameters.Add();
         Ins.Parameter 	= Str.Parameter;
@@ -392,6 +382,22 @@ Procedure OnOpen(Cancel)
 			                       
 	EndDo;
     
+EndProcedure
+
+///////////////////////////////////////////////////////
+// User interface
+
+&AtClient
+Procedure OnOpen(Cancel)
+    
+    OnOpenServer();
+	
+	FillTerritories();
+	
+	OutletStatusOnChange(Undefined);
+	
+	FillTempParameters();
+	
 EndProcedure
 
 &AtClient
