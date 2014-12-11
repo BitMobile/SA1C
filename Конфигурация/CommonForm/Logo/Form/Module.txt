@@ -302,7 +302,9 @@ Procedure UpdateTextInfo()
 	
 	GetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted);
 	SetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted);
-					
+	
+	Notify("ОбновитьИнформациюОСинхронизации");
+	
 EndProcedure
 
 &AtClient

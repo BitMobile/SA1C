@@ -153,6 +153,7 @@
 								</UsualGroup>
 								<PictureField name="PictureAddress" id="28">
 									<DataPath>PictureAddress</DataPath>
+									<TitleFont ref="sys:DefaultGUIFont" kind="WindowsFont"/>
 									<TitleLocation>None</TitleLocation>
 									<Height>6</Height>
 									<PictureSize>AutoSize</PictureSize>

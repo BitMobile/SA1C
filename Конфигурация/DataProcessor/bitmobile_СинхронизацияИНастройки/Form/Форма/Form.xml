@@ -134,11 +134,8 @@
 							<DataPath>ДатаПоследнейСинхронизацииУдаленныхДанных</DataPath>
 							<UserVisible>
 								<xr:Common>true</xr:Common>
-								<xr:Value name="Role.SR">false</xr:Value>
-								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="">false</xr:Value>
 								<xr:Value name="Role.Admin">false</xr:Value>
-								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
-								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
 							</UserVisible>
 							<ReadOnly>true</ReadOnly>
 							<Title>
@@ -220,11 +217,8 @@
 							<Type>UsualButton</Type>
 							<UserVisible>
 								<xr:Common>true</xr:Common>
-								<xr:Value name="Role.SR">false</xr:Value>
-								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="">false</xr:Value>
 								<xr:Value name="Role.Admin">false</xr:Value>
-								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
-								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
 							</UserVisible>
 							<Representation>PictureAndText</Representation>
 							<CommandName>Form.Command.ВыгрузитьВсеФайлы</CommandName>
@@ -245,11 +239,8 @@
 							<Type>UsualButton</Type>
 							<UserVisible>
 								<xr:Common>true</xr:Common>
-								<xr:Value name="Role.SR">false</xr:Value>
-								<xr:Value name="Role.SRM">false</xr:Value>
+								<xr:Value name="">false</xr:Value>
 								<xr:Value name="Role.Admin">false</xr:Value>
-								<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
-								<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
 							</UserVisible>
 							<Representation>PictureAndText</Representation>
 							<CommandName>Form.Command.СинхронизироватьУдаленныеДанные</CommandName>
@@ -273,11 +264,8 @@
 		<UsualGroup name="ГруппаНастройки" id="72">
 			<UserVisible>
 				<xr:Common>true</xr:Common>
-				<xr:Value name="Role.SR">false</xr:Value>
-				<xr:Value name="Role.SRM">false</xr:Value>
+				<xr:Value name="">false</xr:Value>
 				<xr:Value name="Role.Admin">false</xr:Value>
-				<xr:Value name="Role.bitmobile_Администратор">true</xr:Value>
-				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
 			</UserVisible>
 			<Title>
 				<v8:item>

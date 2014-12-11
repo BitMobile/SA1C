@@ -4,7 +4,8 @@
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
-		<Event name="AfterWriteAtServer">AfterWriteAtServer</Event>
+		<Event name="AfterWrite">AfterWrite</Event>
+		<Event name="OnOpen">OnOpen</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
 	</Events>
@@ -130,7 +131,6 @@
 							<ChildItems>
 								<LabelField name="OutletsLineNumber" id="14">
 									<DataPath>Object.Outlets.LineNumber</DataPath>
-									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="OutletsLineNumberContextMenu" id="15"/>
 									<ExtendedTooltip name="OutletsLineNumberExtendedTooltip" id="41"/>
@@ -202,8 +202,16 @@
 							</SearchControlAddition>
 							<Events>
 								<Event name="BeforeEditEnd">SKUGroupsBeforeEditEnd</Event>
+								<Event name="OnChange">SKUGroupsOnChange</Event>
 							</Events>
 							<ChildItems>
+								<InputField name="SKUGroupsLineNumber" id="102">
+									<DataPath>SKUGroups.LineNumber</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="SKUGroupsLineNumberContextMenu" id="103"/>
+									<ExtendedTooltip name="SKUGroupsLineNumberExtendedTooltip" id="104"/>
+								</InputField>
 								<InputField name="SKUGroupsSKUGroup" id="97">
 									<DataPath>SKUGroups.SKUGroup</DataPath>
 									<EditMode>EnterOnInput</EditMode>
@@ -276,7 +284,6 @@
 							<ChildItems>
 								<LabelField name="StocksLineNumber" id="30">
 									<DataPath>Object.Stocks.LineNumber</DataPath>
-									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="StocksLineNumberContextMenu" id="31"/>
 									<ExtendedTooltip name="StocksLineNumberExtendedTooltip" id="49"/>
@@ -333,6 +340,26 @@
 					</Title>
 					<Type>
 						<v8:Type>cfg:CatalogRef.SKUGroup</v8:Type>
+					</Type>
+				</Column>
+				<Column name="LineNumber" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>N</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>N</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
 					</Type>
 				</Column>
 			</Columns>

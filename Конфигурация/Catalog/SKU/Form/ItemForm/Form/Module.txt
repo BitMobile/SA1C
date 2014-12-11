@@ -5,9 +5,9 @@
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	PredefinedItems = New Map;
-    PredefinedItems.Insert("Catalog.Brands", "Brand");
-    PredefinedItems.Insert("Catalog.UnitsOfMeasure", "BaseUnit");
-    PredefinedItems.Insert("Catalog.SKUGroup", "Owner");
+	PredefinedItems.Insert("Catalog.Brands", "Brand");
+	PredefinedItems.Insert("Catalog.UnitsOfMeasure", "BaseUnit");
+	PredefinedItems.Insert("Catalog.SKUGroup", "Owner");
 	
 	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
 	
@@ -17,11 +17,11 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 
 	EndDo;
 	
-	AddPack();	
+	CheckBaseUnitAndMultiplier();
 	
 	Query = New Query;
 	Query.Text = 
-		"SELECT TOP 1
+		"SELECT ALLOWED TOP 1
 		|	StorageAdditionalInformation.Object,
 		|	StorageAdditionalInformation.SyncDirection,
 		|	StorageAdditionalInformation.Action,
@@ -45,7 +45,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	Result = Query.Execute();
 
-	Records = Result.Choose();
+	Records = Result.Select();
 
 	If Records.Next() Then 
 		
@@ -56,6 +56,22 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	DefaultPictureName = Object.DefaultPicture;
 	DefaultPictureExtension = Object.DefaultPictureExtension;
 		
+EndProcedure
+
+&AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not ValueIsFilled(Object.DefaultPicture) Then
+		
+		If ValueIsFilled(NewPictureName) Then
+			
+			CurrentObject.DefaultPicture = NewPictureName;
+			CurrentObject.DefaultPictureExtension = NewPictureExtension;
+			
+		EndIf;
+		
+	EndIf;
+	
 EndProcedure
 
 &AtServer
@@ -127,19 +143,142 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 EndProcedure
 
 &AtServer
-Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+Procedure CheckBaseUnitAndMultiplier()
 	
-	If Not ValueIsFilled(Object.DefaultPicture) Then
+	If ValueIsFilled(Object.BaseUnit) Then 
+	
+		ParameterFilter = new Structure;
+		ParameterFilter.Insert("Pack", Object.BaseUnit);
 		
-		If ValueIsFilled(NewPictureName) Then
+		FoundRow = Object.Packing.FindRows(ParameterFilter);
+		
+		If FoundRow.Count() = 0 Then
 			
-			CurrentObject.DefaultPicture = NewPictureName;
-			CurrentObject.DefaultPictureExtension = NewPictureExtension;
+			NewRow				= Object.Packing.Add();
+			NewRow.Pack			= Object.BaseUnit;
+			NewRow.Multiplier	= 1;
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = ""Warning, new base unit has multiplier 1. Check multipliers corectness, please.""; ru = ""Внимание, новая базовая единица имеет коэффициент 1. Проверьте, пожалуйста, коэффициенты на правильность.""");
+			
+			UserMessage.Message();
+			
+		Else
+			
+			If Not FoundRow[0].Multiplier = 1 Then 
+				
+				FoundRow[0].Multiplier = 1;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = ""Warning, new base unit has multiplier 1. Check multipliers corectness, please.""; ru = ""Внимание, новая базовая единица имеет коэффициент 1. Проверьте, пожалуйста, коэффициенты на правильность.""");
+				
+				UserMessage.Message();
+				
+			EndIf;
 			
 		EndIf;
 		
 	EndIf;
 	
+EndProcedure
+
+&AtServer
+Function GetConstant()
+	Return Constants.SKUFeaturesRegistration.Get();
+EndFunction // ()
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure OnOpen(Cancel)
+	
+	Items.Stock.ReadOnly = GetConstant();
+	
+EndProcedure
+
+&AtClient
+Procedure ShowPacking(Command)
+	
+	If ThisForm.Items.Packing.Visible=False Then
+        ThisForm.Items.ShowPacking.Title=NStr("en = 'Hide packing settigns'; ru = 'Скрыть настройки упаковок'");
+        ThisForm.Items.Packing.Visible=True;
+    Else
+        ThisForm.Items.ShowPacking.Title=NStr("en = 'Show packing'; ru = 'Показать настройки упаковок'");
+        ThisForm.Items.Packing.Visible=False;
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure BaseUnitOnChange(Item)
+	
+	CheckBaseUnitAndMultiplier();
+	
+EndProcedure
+
+#Region Pictures
+
+&AtClient
+Procedure EditPicture(Command)
+	
+	SelectPicture();
+	
+EndProcedure
+
+&AtClient
+Procedure DeletePicture(Command)
+	
+	NewPictureName 		= Undefined;
+	NewPictureExtension = Undefined;
+	
+	Object.DefaultPicture 			= Undefined;
+	Object.DefaultPictureExtension 	= Undefined;
+	
+	PictureAddress = "";
+	
+	Modified = True;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenPicture(Command)
+	
+	FileName = Undefined;
+	
+	If ValueIsFilled(Object.DefaultPicture) Then 
+		
+		FileName = String(Object.DefaultPicture) + Object.DefaultPictureExtension;
+		
+	ElsIf ValueIsFilled(NewPictureName) Then 
+		
+		FileName = String(NewPictureName) + NewPictureExtension;
+		
+	EndIf;
+		
+	If ValueIsFilled(FileName) Then 
+		
+		GetFile(PictureAddress, FileName, True);
+		
+	EndIf;
+		
+EndProcedure
+
+&AtClient
+Procedure PictureAddressClick(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	SelectPicture();
+				
+EndProcedure
+
+&AtClient
+Procedure SelectPicture()
+	
+	OpenForm("Catalog.SKU.Form.PickFromForm", , , , , , New NotifyDescription("SelectPicturePart", ThisForm));
+		
 EndProcedure
 
 &AtServer
@@ -203,125 +342,12 @@ Procedure SetPicture(SelectedPictureKey)
 EndProcedure
 
 &AtServer
-Procedure AddPack()
-
-	ParameterFilter = new Structure;
-	ParameterFilter.Insert("Pack", Object.BaseUnit);
-	FoundRow = Object.Packing.FindRows(ParameterFilter);
-	
-	If FoundRow.Count() = 0 Then
-		NewRow = Object.Packing.Add();
-		NewRow.Pack = Object.BaseUnit;
-		NewRow.Multiplier = 1;
-	Else
-		FoundRow[0].Multiplier = 1;
-	EndIf;
-	
-EndProcedure
-
-&AtServer
-Function GetConstant()
-	Return Constants.SKUFeaturesRegistration.Get();
-EndFunction // ()
-
-&AtServer
 Procedure SelectPictureServer(BinaryData)
 	
 	Storage = New ValueStorage(BinaryData);
 			
 	PictureAddress = PutToTempStorage(Storage.Get(), ThisForm.UUID);
 			
-EndProcedure
-
-#EndRegion
-
-#Region UserInterface
-
-&AtClient
-Procedure OnOpen(Cancel)
-    Items.Stock.ReadOnly = GetConstant();
-EndProcedure
-
-&AtClient
-Procedure ShowPacking(Command)
-	
-	If ThisForm.Items.Packing.Visible=False Then
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Hide packing settigns'; ru = 'Скрыть настройки упаковок'");
-        ThisForm.Items.Packing.Visible=True;
-    Else
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Show packing'; ru = 'Показать настройки упаковок'");
-        ThisForm.Items.Packing.Visible=False;
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure BaseUnitOnChange(Item)
-	
-	AddPack();
-	Message(NStr("en = ""Warning, new base unit has multiplier 1. Check multipliers corectness, please.""; ru = ""Внимание, новая базовая единица имеет коэффициент 1. Проверьте, пожалуйста, коэффициенты на правильность."""));	
-	
-EndProcedure
-
-#Region Pictures
-
-&AtClient
-Procedure EditPicture(Command)
-	
-	SelectPicture();
-    	
-EndProcedure
-
-&AtClient
-Procedure DeletePicture(Command)
-	
-	NewPictureName 		= Undefined;
-	NewPictureExtension = Undefined;
-	
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-	
-	PictureAddress = "";
-	
-EndProcedure
-
-&AtClient
-Procedure OpenPicture(Command)
-	
-	FileName = Undefined;
-	
-	If ValueIsFilled(Object.DefaultPicture) Then 
-		
-		FileName = String(Object.DefaultPicture) + Object.DefaultPictureExtension;
-		
-	ElsIf ValueIsFilled(NewPictureName) Then 
-		
-		FileName = String(NewPictureName) + NewPictureExtension;
-		
-	EndIf;
-		
-	If ValueIsFilled(FileName) Then 
-		
-		GetFile(PictureAddress, FileName, True);
-		
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure PictureAddressClick(Item, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	SelectPicture();
-				
-EndProcedure
-
-&AtClient
-Procedure SelectPicture()
-	
-	OpenForm("Catalog.SKU.Form.PickFromForm", , , , , , New NotifyDescription("SelectPicturePart", ThisForm));
-		
 EndProcedure
 
 &AtClient
@@ -456,12 +482,3 @@ EndProcedure
 #EndRegion
 
 #EndRegion
-
-
-
-
-
-
-
-
-

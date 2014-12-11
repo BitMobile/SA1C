@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<AutoCommandBar name="" id="-1"/>
 	<ChildItems>
 		<Table name="List" id="1">
 			<Representation>List</Representation>
@@ -11,9 +11,6 @@
 			<EnableStartDrag>true</EnableStartDrag>
 			<DataPath>List</DataPath>
 			<RowPictureDataPath>List.DefaultPicture</RowPictureDataPath>
-			<SearchStringLocation>None</SearchStringLocation>
-			<ViewStatusLocation>Top</ViewStatusLocation>
-			<SearchControlLocation>CommandBar</SearchControlLocation>
 			<AutoRefresh>false</AutoRefresh>
 			<AutoRefreshPeriod>60</AutoRefreshPeriod>
 			<Period xsi:type="v8:StandardPeriod">
@@ -57,46 +54,16 @@
 				<ExtendedTooltip name="ListSearchControlExtendedTooltip" id="19"/>
 			</SearchControlAddition>
 			<ChildItems>
-				<LabelField name="Date" id="20">
-					<DataPath>List.Date</DataPath>
+				<LabelField name="Description" id="20">
+					<DataPath>List.Description</DataPath>
 					<DefaultItem>true</DefaultItem>
-					<ContextMenu name="DateContextMenu" id="21"/>
-					<ExtendedTooltip name="DateExtendedTooltip" id="22"/>
+					<ContextMenu name="DescriptionContextMenu" id="21"/>
+					<ExtendedTooltip name="DescriptionExtendedTooltip" id="22"/>
 				</LabelField>
-				<LabelField name="Number" id="23">
-					<DataPath>List.Number</DataPath>
-					<ContextMenu name="NumberContextMenu" id="24"/>
-					<ExtendedTooltip name="NumberExtendedTooltip" id="25"/>
-				</LabelField>
-				<LabelField name="Status" id="41">
-					<DataPath>List.Status</DataPath>
-					<ContextMenu name="StatusContextMenu" id="42"/>
-					<ExtendedTooltip name="StatusExtendedTooltip" id="43"/>
-				</LabelField>
-				<LabelField name="Outlet" id="26">
-					<DataPath>List.Outlet</DataPath>
-					<ContextMenu name="OutletContextMenu" id="27"/>
-					<ExtendedTooltip name="OutletExtendedTooltip" id="28"/>
-				</LabelField>
-				<LabelField name="SR" id="29">
-					<DataPath>List.SR</DataPath>
-					<ContextMenu name="SRContextMenu" id="30"/>
-					<ExtendedTooltip name="SRExtendedTooltip" id="31"/>
-				</LabelField>
-				<LabelField name="DeliveryDate" id="32">
-					<DataPath>List.DeliveryDate</DataPath>
-					<ContextMenu name="DeliveryDateContextMenu" id="33"/>
-					<ExtendedTooltip name="DeliveryDateExtendedTooltip" id="34"/>
-				</LabelField>
-				<LabelField name="Commentary" id="35">
-					<DataPath>List.Commentary</DataPath>
-					<ContextMenu name="CommentaryContextMenu" id="36"/>
-					<ExtendedTooltip name="CommentaryExtendedTooltip" id="37"/>
-				</LabelField>
-				<LabelField name="Visit" id="38">
-					<DataPath>List.Visit</DataPath>
-					<ContextMenu name="VisitContextMenu" id="39"/>
-					<ExtendedTooltip name="VisitExtendedTooltip" id="40"/>
+				<LabelField name="Code" id="23">
+					<DataPath>List.Code</DataPath>
+					<ContextMenu name="CodeContextMenu" id="24"/>
+					<ExtendedTooltip name="CodeExtendedTooltip" id="25"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
@@ -110,7 +77,7 @@
 			<Settings xsi:type="DynamicList">
 				<ManualQuery>false</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
-				<MainTable>Document.Order</MainTable>
+				<MainTable>Catalog.Territory</MainTable>
 				<ListSettings/>
 			</Settings>
 		</Attribute>

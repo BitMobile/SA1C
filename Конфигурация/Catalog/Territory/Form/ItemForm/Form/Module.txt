@@ -29,13 +29,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 EndProcedure
 
 &AtServer
-Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
-	
-	FillSKUGroups();
-	
-EndProcedure
-
-&AtServer
 Procedure FillSKUGroups()
 	
 	// Заполнить группы SKU
@@ -45,12 +38,15 @@ Procedure FillSKUGroups()
 	
 		Query = New Query;
 		Query.Text = 
-			"SELECT
-			|	SKUGroupTerritories.Ref As SKUGroup
+			"SELECT ALLOWED
+			|	SKUGroupTerritories.Ref AS SKUGroup
 			|FROM
 			|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
 			|WHERE
-			|	SKUGroupTerritories.Territory = &Ref";
+			|	SKUGroupTerritories.Territory = &Ref
+			|
+			|ORDER BY
+			|	SKUGroupTerritories.LineNumberInTerritory";
 		
 		Query.SetParameter("Ref", Object.Ref);
 		
@@ -65,7 +61,7 @@ Procedure FillSKUGroups()
 			
 		EndDo;
 		
-	EndIf;	
+	EndIf;
 	
 EndProcedure
 
@@ -113,6 +109,7 @@ Procedure WriteTerritoryInSKUGroups()
 			
 			NewRow = GroupObject.Territories.Add();
 			NewRow.Territory = Object.Ref;			
+			NewRow.LineNumberInTerritory	= Row.LineNumber;
 			
 		EndIf;
 		
@@ -141,6 +138,20 @@ EndFunction
 
 ///////////////////////////////////////////////////////
 // User interface
+
+&AtClient
+Procedure OnOpen(Cancel)
+	
+	SKUGroupsOnChange(Items.SKUGroups);
+	
+EndProcedure
+
+&AtClient
+Procedure AfterWrite(WriteParameters)
+	
+	SKUGroupsOnChange(Items.SKUGroups);
+	
+EndProcedure
 
 &AtClient
 Procedure OutletsOutletOnChange(Item)
@@ -209,6 +220,25 @@ Procedure SKUGroupsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
 	EndIf;
 	
 EndProcedure
+
+&AtClient
+Procedure SKUGroupsOnChange(Item)
+	
+	Ind = 0;
+	
+	For Each ItemElement In SKUGroups Do 
+		
+		Ind = Ind + 1;
+		
+		ItemElement.LineNumber = Ind;
+		
+	EndDo;
+	
+EndProcedure
+
+
+
+
 
 
 

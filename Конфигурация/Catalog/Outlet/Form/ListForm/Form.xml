@@ -5,12 +5,14 @@
 		<ChildItems>
 			<Button name="FormCommonCommandCreateTasks" id="14">
 				<Type>CommandBarButton</Type>
+				<Visible>false</Visible>
 				<CommandName>CommonCommand.CreateTasks</CommandName>
 				<Parameter xsi:nil="true"/>
 				<ExtendedTooltip name="FormCommonCommandCreateTasksРасширеннаяПодсказка" id="16"/>
 			</Button>
 			<Button name="FormCommonCommandHistoryTask" id="15">
 				<Type>CommandBarButton</Type>
+				<Visible>false</Visible>
 				<CommandName>CommonCommand.HistoryTask</CommandName>
 				<Parameter xsi:nil="true"/>
 				<ExtendedTooltip name="FormCommonCommandHistoryTaskРасширеннаяПодсказка" id="17"/>
@@ -91,13 +93,35 @@
 				</LabelField>
 				<LabelField name="Lattitude" id="12">
 					<DataPath>List.Lattitude</DataPath>
+					<Visible>false</Visible>
 					<ContextMenu name="LattitudeContextMenu" id="13"/>
 					<ExtendedTooltip name="LattitudeРасширеннаяПодсказка" id="31"/>
 				</LabelField>
 				<LabelField name="Longitude" id="32">
 					<DataPath>List.Longitude</DataPath>
+					<Visible>false</Visible>
 					<ContextMenu name="LongitudeContextMenu" id="33"/>
 					<ExtendedTooltip name="LongitudeExtendedTooltip" id="34"/>
+				</LabelField>
+				<LabelField name="OutletStatus" id="35">
+					<DataPath>List.OutletStatus</DataPath>
+					<ContextMenu name="OutletStatusContextMenu" id="36"/>
+					<ExtendedTooltip name="OutletStatusExtendedTooltip" id="37"/>
+				</LabelField>
+				<LabelField name="Type" id="38">
+					<DataPath>List.Type</DataPath>
+					<ContextMenu name="TypeContextMenu" id="39"/>
+					<ExtendedTooltip name="TypeExtendedTooltip" id="40"/>
+				</LabelField>
+				<LabelField name="Address" id="44">
+					<DataPath>List.Address</DataPath>
+					<ContextMenu name="AddressContextMenu" id="45"/>
+					<ExtendedTooltip name="AddressExtendedTooltip" id="46"/>
+				</LabelField>
+				<LabelField name="Class" id="41">
+					<DataPath>List.Class</DataPath>
+					<ContextMenu name="ClassContextMenu" id="42"/>
+					<ExtendedTooltip name="ClassExtendedTooltip" id="43"/>
 				</LabelField>
 			</ChildItems>
 		</Table>

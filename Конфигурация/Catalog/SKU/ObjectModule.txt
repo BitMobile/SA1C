@@ -25,15 +25,15 @@ Procedure BeforeWrite(Cancel)
 	EndIf;	
 	
 	// Перезаполнить остатки
-	If Constants.SKUFeaturesRegistration.Get() Then         
+	If Constants.SKUFeaturesRegistration.Get() Then
 		
-		If Stocks.Count() = 0 Then             
+		If Stocks.Count() = 0 Then
 			
 			NewRow 				= Stocks.Add();
-            NewRow.Feature 		= Catalogs.SKUFeatures.FindByCode("000000001");
-            NewRow.StockValue 	= CommonStock;             
+			NewRow.Feature 		= Catalogs.SKUFeatures.FindByCode("000000001");
+			NewRow.StockValue 	= CommonStock;
 			
-		EndIf;                   
+		EndIf;
 		
 	Else
 		
@@ -46,13 +46,13 @@ Procedure BeforeWrite(Cancel)
 		
 		For Each Row In Stocks Do
 			
-			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");         	         
+			Row.Feature = Catalogs.SKUFeatures.FindByCode("000000001");
 			
-		EndDo;         
+		EndDo;
 		
 	EndIf;
-    
-    TS = Stocks.Unload();
+	
+	TS = Stocks.Unload();
 	
 	CommonStock = 0;
 	
@@ -62,18 +62,16 @@ Procedure BeforeWrite(Cancel)
 		
 	EndDo;
 	
-	MultiStockValue = Constants.MultiStock.Get(); 
-	
-    For Each Row In Stocks Do
+	For Each Row In Stocks Do
 		
-		If MultiStockValue = False And Row.Stock = Catalogs.Stock.EmptyRef() Then
+		If Row.Stock = Catalogs.Stock.EmptyRef() Then
 			
-			Row.Stock = Catalogs.Stock.FindByCode("000000001");        	        
+			Row.Stock = Catalogs.Stock.FindByCode("000000001");
 			
-		EndIf;    	    
+		EndIf;
 		
 	EndDo;
-		
+	
 EndProcedure
 
 Procedure OnWrite(Cancel)
@@ -137,7 +135,7 @@ Procedure OnWrite(Cancel)
 		// номенклатуры" и "Брэнд" и во все анкеты где присутствуют новые значения
 		// реквизитов "Группа номенклатуры" и "Брэнд" добавляется эта же номенклатура
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	&CurrentDate AS Period,
 		|	SKUsInQuestionnairesSliceLast.Questionnaire,
 		|	SKUsInQuestionnairesSliceLast.SKU,
@@ -152,7 +150,7 @@ Procedure OnWrite(Cancel)
 		|
 		|UNION ALL
 		|
-		|SELECT
+		|SELECT 
 		|	DATEADD(&CurrentDate, SECOND, 1),
 		|	SKUsInQuestionnairesSliceLast.Questionnaire,
 		|	&SKU,

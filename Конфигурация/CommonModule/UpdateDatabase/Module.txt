@@ -197,9 +197,17 @@ Procedure FillConfigurationData()
 		
 		Constants.bitmobile_ПротоколПередачиФайлов.Set(Enums.bitmobile_ПротоколыПередачиФайлов.WebDAV);
 		
-	EndIf;	
+	EndIf;
 	
-EndProcedure	
+	AvailebleFileSize = Constants.bitmobile_ДопустимыйРазмерФайла.Get();
+	
+	If AvailebleFileSize = 0 Then 
+		
+		Constants.bitmobile_ДопустимыйРазмерФайла.Set(500);
+		
+	EndIf;
+	
+EndProcedure
 
 Procedure FillInProcessing()
     
@@ -209,14 +217,15 @@ Procedure FillInProcessing()
 	EntityElements.Columns.Add("Key");
     EntityElements.Columns.Add("Value");
 	
-    EntityElements = AddInValueTable(EntityElements, "User", "Основной торговый представитель");
-    EntityElements = AddInValueTable(EntityElements, "OutletType", "Основной тип");
-    EntityElements = AddInValueTable(EntityElements, "OutletClass", "Основной класс");
-    EntityElements = AddInValueTable(EntityElements, "Region", "Основной регион");
-    EntityElements = AddInValueTable(EntityElements, "Territory", "Основная территория");
-    EntityElements = AddInValueTable(EntityElements, "SKUGroup", "Основная группа");
-    EntityElements = AddInValueTable(EntityElements, "Brands", "Основной бренд");
-    EntityElements = AddInValueTable(EntityElements, "UnitsOfMeasure", "шт.");
+	EntityElements = AddInValueTable(EntityElements, "User", NStr("en = 'Default sales representative'; ru = 'Основной торговый представитель'"));
+	EntityElements = AddInValueTable(EntityElements, "OutletType", NStr("en = 'Default type'; ru = 'Основной тип'"));
+	EntityElements = AddInValueTable(EntityElements, "OutletClass", );
+	EntityElements = AddInValueTable(EntityElements, "Region", NStr("en = 'Default region'; ru = 'Основной регион'"));
+	EntityElements = AddInValueTable(EntityElements, "Territory", NStr("en = 'Default territory'; ru = 'Основная территория'"));
+	EntityElements = AddInValueTable(EntityElements, "Distributor", NStr("en = 'Default distributor'; ru = 'Основной дистрибьютор'"));
+	EntityElements = AddInValueTable(EntityElements, "SKUGroup", NStr("en = 'Default group'; ru = 'Основная группа'"));
+	EntityElements = AddInValueTable(EntityElements, "Brands", NStr("en = 'Default brand'; ru = 'Основной бренд'"));
+	EntityElements = AddInValueTable(EntityElements, "UnitsOfMeasure", NStr("en = 'pcs.'; ru = 'шт.'"));
     
     For Each Entity In EntityElements Do
 		
