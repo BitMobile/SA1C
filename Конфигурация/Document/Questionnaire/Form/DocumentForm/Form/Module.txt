@@ -1486,7 +1486,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 
 	If EventName = "QuestionnaireForm" Then
 		
-		Selectors.FindByID(Parameter.StringNumber).Value = Parameter.Str;
+		Selectors[Parameter.StringNumber].Value = Parameter.Str;
 		
 	EndIf;
 	
@@ -1505,7 +1505,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 
 	If EventName = "ValueListOk" Then
 		
-		Selectors.FindByID(Parameter.StringNumber).Value = Parameter.List;
+		Selectors[Parameter.StringNumber].Value = Parameter.List;
 		
 	EndIf;
 	
@@ -1926,13 +1926,13 @@ Procedure SelectorsValueStartChoice(Item, ChoiceData, StandardProcessing)
 			
 		Else
 			
-			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.SelectorRepresent, "QuestionnaireForm", Items.SelectorsTable.CurrentData.Value));
+			OpenForm("Document.Questionnaire.Form.Input", New Structure("StringNumber, DataType, OutletParameter, Source, CurrentValue", Selectors.IndexOf(Items.SelectorsTable.CurrentData), Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.SelectorRepresent, "QuestionnaireForm", Items.SelectorsTable.CurrentData.Value));
 			
 		EndIf;
 		
 	Else
 		
-		OpenForm("Document.Questionnaire.Form.SelectorsListForm", New Structure("StringNumber, Selector, DataType, CurrentValue, OutletParameter", Items.SelectorsTable.CurrentData.GetID(), Items.SelectorsTable.CurrentData.Selector, Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.Value, Items.SelectorsTable.CurrentData.SelectorRepresent));
+		OpenForm("Document.Questionnaire.Form.SelectorsListForm", New Structure("StringNumber, Selector, DataType, CurrentValue, OutletParameter", Selectors.IndexOf(Items.SelectorsTable.CurrentData), Items.SelectorsTable.CurrentData.Selector, Items.SelectorsTable.CurrentData.AdditionalParameter, Items.SelectorsTable.CurrentData.Value, Items.SelectorsTable.CurrentData.SelectorRepresent));
 		
 	EndIf
 
