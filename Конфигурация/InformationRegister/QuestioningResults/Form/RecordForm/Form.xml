@@ -218,7 +218,6 @@
 								<CheckBoxField name="QuestionsObligatoriness" id="48">
 									<DataPath>Questions.Obligatoriness</DataPath>
 									<ReadOnly>true</ReadOnly>
-									<TitleLocation>None</TitleLocation>
 									<ToolTip>
 										<v8:item>
 											<v8:lang>en</v8:lang>
@@ -496,7 +495,6 @@
 										<CheckBoxField name="SKUQuestionsObligatoriness" id="90">
 											<DataPath>SKUQuestions.Obligatoriness</DataPath>
 											<ReadOnly>true</ReadOnly>
-											<TitleLocation>None</TitleLocation>
 											<ToolTip>
 												<v8:item>
 													<v8:lang>en</v8:lang>

@@ -76,7 +76,7 @@ Procedure FillFileTable()
 		
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	StorageAdditionalInformation.Object,
 		|	StorageAdditionalInformation.SyncDirection,
 		|	StorageAdditionalInformation.Action,
@@ -207,7 +207,7 @@ Procedure FillQuestionsTree(GroupType)
 		// Заполнить список вопросов
 		Query = New Query;
 		Query.Text = 
-			"SELECT
+			"SELECT ALLOWED
 			|	QuestionsInQuestionnairesSliceLast.Period,
 			|	QuestionsInQuestionnairesSliceLast.Questionnaire,
 			|	QuestionsInQuestionnairesSliceLast.ParentQuestion,

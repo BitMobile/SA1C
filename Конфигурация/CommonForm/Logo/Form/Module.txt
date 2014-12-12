@@ -153,23 +153,27 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	
 	If EventName = "ReloadInfoOnStartPage" Then 
 		
-		UpdateTextInfo();
+		UpdateTextInfo(True);
 		
 	EndIf;
 		
 EndProcedure
 
 &AtClient
-Procedure SetUploadInfo(LastDate, LastStatus, IDUpload = "")
+Procedure SetUploadInfo(LastDate, LastStatus, IsDataProcessorNotification, IDUpload = "")
 	
 	If ValueIsFilled(IDUpload) Then  
 		                          
 		Items.DateUpload.TextColor = WebColors.Green;
 		DateUpload = NStr("en = 'In progress'; ru = 'Выполняется'");
 		
-		AttachIdleHandler("CheckUpload", 20);
+		If Not IsDataProcessorNotification Then
+			
+			AttachIdleHandler("CheckUpload", 20);
+			
+		EndIf;
 		
-	Else  	
+	Else
 	
 		If ValueIsFilled(LastDate) Then 
 			
@@ -225,16 +229,20 @@ Procedure SetDownloadInfo(LastDate, LastStatus)
 EndProcedure
 
 &AtClient
-Procedure SetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted)
+Procedure SetFilesSyncInfo(LastDate, LastStatus, IsDataProcessorNotification, FilesSyncStarted)
 	
 	If FilesSyncStarted Then 
 		
 		Items.FilesSync.TextColor = WebColors.Green;
 		FilesSync = NStr("en = 'In progress'; ru = 'Выполняется'");
 		
-		AttachIdleHandler("CheckFilesSync", 20);
+		If Not IsDataProcessorNotification Then
+			
+			AttachIdleHandler("CheckFilesSync", 20);
+			
+		EndIf;
 		
-	Else 	
+	Else
 	
 		If ValueIsFilled(LastDate) Then 
 				
@@ -280,7 +288,7 @@ Procedure CheckFilesSync()
 EndProcedure
 
 &AtClient
-Procedure UpdateTextInfo()
+Procedure UpdateTextInfo(IsDataProcessorNotification = False)
 	
 	IDUpload = GetIDUpload();
 			
@@ -288,7 +296,7 @@ Procedure UpdateTextInfo()
 	LastStatus 	= False;
 	
 	GetUploadInfo(LastDate, LastStatus);
-	SetUploadInfo(LastDate, LastStatus, IDUpload);
+	SetUploadInfo(LastDate, LastStatus, IsDataProcessorNotification, IDUpload);
 	
 	LastDate 	= Undefined;
 	LastStatus 	= False;
@@ -301,9 +309,13 @@ Procedure UpdateTextInfo()
 	FilesSyncStarted 	= False;
 	
 	GetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted);
-	SetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted);
+	SetFilesSyncInfo(LastDate, LastStatus, IsDataProcessorNotification, FilesSyncStarted);
 	
-	Notify("ОбновитьИнформациюОСинхронизации");
+	If Not IsDataProcessorNotification Then 
+		
+		Notify("ОбновитьИнформациюОСинхронизации");
+		
+	EndIf;
 	
 EndProcedure
 
