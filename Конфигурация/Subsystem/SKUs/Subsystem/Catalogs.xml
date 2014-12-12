@@ -27,6 +27,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">FunctionalOption.Stocks</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.Stock</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">FunctionalOption.Features</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SKUProperties</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SKUPropertiesValues</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
