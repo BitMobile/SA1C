@@ -14,7 +14,7 @@
 				</v8:item>
 			</Synonym>
 			<Comment>Очищает накопленные изменения в регистре "Измененные данные (bitmobile)"</Comment>
-			<MethodName>CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок.bitmobile_ОчисткаДанных</MethodName>
+			<MethodName>CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок.ОчисткаДанных</MethodName>
 			<Description>Очистка данных (bitmobile)</Description>
 			<Key>bitmobile_ОчисткаДанных</Key>
 			<Use>false</Use>

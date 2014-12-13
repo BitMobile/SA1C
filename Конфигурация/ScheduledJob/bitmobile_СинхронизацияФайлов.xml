@@ -14,7 +14,7 @@
 				</v8:item>
 			</Synonym>
 			<Comment/>
-			<MethodName>CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок.bitmobile_СинхронизацияФайлов</MethodName>
+			<MethodName>CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок.СинхронизацияФайлов</MethodName>
 			<Description>Синхронизация файлов (bitmobile)</Description>
 			<Key>bitmobile_СинхронизацияФайлов</Key>
 			<Use>false</Use>
