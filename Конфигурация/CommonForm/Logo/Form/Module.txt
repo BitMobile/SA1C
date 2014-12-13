@@ -86,7 +86,7 @@ Function GetFilesSyncInfo(LastDate, LastStatus, FilesSyncStarted)
 EndFunction
 
 &AtServer 
-Procedure SyncronizeDataServer(IDSession)
+Procedure SyncronizeDataServer()
 	
 	SyncStarted = "";
 	
@@ -94,7 +94,7 @@ Procedure SyncronizeDataServer(IDSession)
 	
 	If Not ValueIsFilled(SyncStarted) Then 
 		
-		bitmobile_ОбработчикиСинхронизацииИПодписок.Синхронизация(IDSession);
+		bitmobile_ОбработчикиСинхронизацииИПодписок.Синхронизация();
 		
 	EndIf;	
 	
@@ -322,7 +322,7 @@ EndProcedure
 &AtClient
 Procedure SyncronizeData(Command)
 	
-	SyncronizeDataServer(IDSession);
+	SyncronizeDataServer();
 	
 	UpdateTextInfo();
 	
