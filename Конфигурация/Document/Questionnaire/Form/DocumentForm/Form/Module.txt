@@ -231,6 +231,8 @@ Function GetAvailableStatuses(Status)
 		
 	ElsIf Status = Enums.QuestionnareStatus.Ready Then
 		
+		AvailableStatuses.Add(Enums.QuestionnareStatus.Planning, 
+							Metadata.Enums.QuestionnareStatus.EnumValues.Planning.Presentation());
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Ready, 
 							Metadata.Enums.QuestionnareStatus.EnumValues.Ready.Presentation());
 		AvailableStatuses.Add(Enums.QuestionnareStatus.Active, 
