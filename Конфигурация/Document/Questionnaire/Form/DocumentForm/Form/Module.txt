@@ -52,7 +52,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		Object.FillPeriod = Enums.QuestionsSaveIntervals.ScheduleInterval;
 		
 		// Группы номенклатуры по умолчанию
-		SKUSourceType = "SKUGroup";
+		Object.SKUSourceType = Enums.SKUSourceTypes.SKUGroup;
 		
 	EndIf;
 	
@@ -261,6 +261,21 @@ EndFunction
 #Region SKUs
 
 &AtServerNoContext
+Function GetSKUSourceType(Value)
+	
+	If Value = "SKUGroup" Then 
+		
+		Return Enums.SKUSourceTypes.SKUGroup;
+		
+	Else 
+		
+		Return Enums.SKUSourceTypes.Brand;
+		
+	EndIf;
+		
+EndFunction
+
+&AtServerNoContext
 Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
 	
 	// Объявляем схему
@@ -273,7 +288,7 @@ Function CheckSelectorsForSKUsAtServer(ObjectName, Filter, RefArray)
 	
 	DataSet							= DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
 	DataSet.Name					= "DataSet1";
-	DataSet.Query					= "Select Ref AS Ref From " + ObjectName;
+	DataSet.Query					= "Select ALLOWED Ref AS Ref From " + ObjectName;
 	DataSet.DataSource				= "DataSource1";
 	DataSet.AutoFillAvailableFields	= True;
 	
@@ -342,23 +357,7 @@ EndFunction
 Procedure FillSKUs(CopyingValue = Undefined)
 	
 	SKUsValueTable.Load(GetSKUsInQuestionnaireValueTable(CopyingValue));
-	
-	SKUGroupFilterParameter = New Structure;
-	SKUGroupFilterParameter.Insert("SourceType", NStr("en = 'SKU Group'; ru = 'Группа номенклатуры'"));
 		
-	BrandFilterParameter = New Structure;
-	BrandFilterParameter.Insert("SourceType", NStr("en = 'Brand'; ru = 'Бренд'"));
-		
-	If SKUsValueTable.FindRows(SKUGroupFilterParameter).Count() > 0 Then
-			
-		SKUSourceType = "SKUGroup";
-			
-	ElsIf SKUsValueTable.FindRows(BrandFilterParameter).Count() > 0 Then
-			
-		SKUSourceType = "Brand";
-			
-	EndIf;
-	
 EndProcedure
 
 &AtServer
@@ -383,7 +382,7 @@ Procedure WriteSKUs(CurrentObject)
 	// "Added".
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormSKUs.SKU AS Source
 	|INTO Sources
 	|FROM
@@ -391,7 +390,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	SKU.Ref AS SKUOnForm,
 	|	Sources.Source AS SourceOnForm
 	|INTO SKUsWithSources
@@ -403,24 +402,24 @@ Procedure WriteSKUs(CurrentObject)
 	|				OR SKU.Brand = Sources.Source)
 	|WHERE
 	|	(SKU.Ref IN
-	|				(SELECT
+	|				(SELECT 
 	|					Sources.Source
 	|				FROM
 	|					Sources AS Sources)
 	|			OR SKU.Owner IN
-	|				(SELECT
+	|				(SELECT 
 	|					Sources.Source
 	|				FROM
 	|					Sources AS Sources)
 	|			OR SKU.Brand IN
-	|				(SELECT
+	|				(SELECT 
 	|					Sources.Source
 	|				FROM
 	|					Sources AS Sources))
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	SKUsInQuestionnairesSliceLast.SKU AS SKUInRegister,
 	|	SKUsInQuestionnairesSliceLast.Source AS SourceInRegister
 	|INTO SavedSKUs
@@ -431,7 +430,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	SavedSKUs.SKUInRegister,
 	|	SavedSKUs.SourceInRegister,
 	|	SKUsWithSources.SKUOnForm,
@@ -450,7 +449,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&CurrentDate AS Period,
 	|	&Questionnaire,
 	|	ISNULL(Difference.SKUInRegister, Difference.SKUOnForm) AS SKU,
@@ -494,7 +493,7 @@ Function GetSKUsInQuestionnaireValueTable(CopyingValue)
 	Var Query, QueryResult;
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	SKUsInQuestionnairesSliceLast.Source AS SKU,
 	|	VALUETYPE(SKUsInQuestionnairesSliceLast.Source) AS SourceType
 	|FROM
@@ -522,29 +521,6 @@ Function GetSKUsInQuestionnaireValueTable(CopyingValue)
 	Return QueryResult;
 
 EndFunction
-
-&AtClient 
-Procedure AfterQuestionClose(Result, Parameters) Export
-	
-	If Result = DialogReturnCode.Yes Then
-		
-		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure ChooseFromListProcessing(Result, Parameters) Export
-	
-	If Not Result = Undefined Then
-		
-		SKUSourceType = Result.Value;
-		SKUSourceTypeOnChange(Items.SKUSourceType);
-		
-	EndIf;
-	
-EndProcedure
 
 &AtClient
 Function GetDataCompositionFilter(ResultValue, AdditionalText = "")
@@ -902,7 +878,7 @@ Procedure FillQuestionsTree(GroupType, CopyingValue = Undefined)
 		// Заполнить список вопросов
 		Query = New Query;
 		Query.Text = 
-			"SELECT
+			"SELECT ALLOWED
 			|	QuestionsInQuestionnairesSliceLast.Period,
 			|	QuestionsInQuestionnairesSliceLast.Questionnaire,
 			|	QuestionsInQuestionnairesSliceLast.ParentQuestion,
@@ -2547,52 +2523,60 @@ EndProcedure
 #Region SKUs
 
 &AtClient
-Procedure SKUSourceTypeOnChange(Item)
+Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
 	
-	If TypeOf(OldSKUSourceType) = Type("ValueListItem") Then
+	OldSKUSourceType = Object.SKUSourceType;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUSourceTypeChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	
+	If Not SelectedValue = Undefined Then
 		
-		FilterParameters = New Structure;
-		FilterParameters.Insert("SourceType", OldSKUSourceType.Presentation);
-		
-		RowsArray = SKUsValueTable.FindRows(FilterParameters);
-		
-		Modified = RowsArray.Count() > 0;
-		
-		For Each Row In RowsArray Do;
+		If Not SKUsValueTable.Count() = 0 And ValueIsFilled(Object.SKUSourceType) And Not OldSKUSourceType = SelectedValue Then
 			
-			Index = SKUsValueTable.IndexOf(Row);
-			SKUsValueTable.Delete(Index);
-			
-		EndDo;
+			ShowQueryBox(New NotifyDescription("AfterQuestionClose", ThisForm, SelectedValue),
+						NStr("en = 'All rows with catalog """ + String(OldSKUSourceType) + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + String(OldSKUSourceType) + """ будут удалены. Продолжить?'"),
+						QuestionDialogMode.YesNo,
+						0,
+						DialogReturnCode.No,
+						NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
+		
+		EndIf;
 		
 	EndIf;
 	
 EndProcedure
 
-&AtClient
-Procedure SKUSourceTypeStartChoice(Item, ChoiceData, StandardProcessing)
+&AtClient 
+Procedure AfterQuestionClose(Result, Parameter) Export
 	
-	StandardProcessing = False;
-	
-	AdditionalParameters = New Structure;
-	AdditionalParameters.Insert("StandardProcessing", StandardProcessing);
-	
-	Notification = New NotifyDescription("AfterQuestionClose", ThisForm, AdditionalParameters);
-	
-	OldSKUSourceType = Items.SKUSourceType.ChoiceList.FindByValue(SKUSourceType);
-	
-	If SKUsValueTable.Count() = 0 Or Not TypeOf(OldSKUSourceType) = Type("ValueListItem") Then
+	If Result = DialogReturnCode.Yes Then
 		
-		ShowChooseFromList(New NotifyDescription("ChooseFromListProcessing", ThisForm), Items.SKUSourceType.ChoiceList, Items.SKUSourceType);
+		Object.SKUSourceType = Parameter;
 		
-	Else
+		If ValueIsFilled(OldSKUSourceType) And Not OldSKUSourceType = Object.SKUSourceType Then
 		
-		ShowQueryBox(Notification,
-					NStr("en = 'All rows with catalog """ + OldSKUSourceType.Presentation + """ elements will be deleted. Continue?'; ru = 'Все строки являющиеся элементами справочника """ + OldSKUSourceType.Presentation + """ будут удалены. Продолжить?'"),
-					QuestionDialogMode.YesNo,
-					0,
-					DialogReturnCode.No,
-					NStr("en = 'Value table сhange '; ru = 'Изменение табличной части'"));
+			FilterParameters = New Structure;
+			FilterParameters.Insert("SourceType", String(OldSKUSourceType));
+			
+			RowsArray = SKUsValueTable.FindRows(FilterParameters);
+			
+			Modified = RowsArray.Count() > 0;
+			
+			For Each Row In RowsArray Do;
+				
+				Index = SKUsValueTable.IndexOf(Row);
+				SKUsValueTable.Delete(Index);
+				
+			EndDo;
+			
+		EndIf;
+		
+	Else 
+		
+		Object.SKUSourceType = OldSKUSourceType;
 		
 	EndIf;
 	
@@ -2601,14 +2585,14 @@ EndProcedure
 &AtClient
 Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
 	
-		ID	= Item.CurrentRow;
-		Row	= SKUsValueTable.FindByID(ID);
+	ID	= Item.CurrentRow;
+	Row	= SKUsValueTable.FindByID(ID);
+	
+	If ValueIsFilled(Row.SKU) Then
 		
-		If ValueIsFilled(Row.SKU) Then
+		Row.SourceType = TypeOf(Row.SKU);
 		
-			Row.SourceType = TypeOf(Row.SKU);
-		
-		EndIf;
+	EndIf;
 		
 EndProcedure
 
@@ -2620,13 +2604,13 @@ Procedure SKUsValueTableSKUStartChoice(Item, ChoiceData, StandardProcessing)
 	TypesArray = New ValueList;
 	TypesArray.Add("Catalog.SKU", NStr("en = 'SKU'; ru = 'Номенклатура'"));
 	
-	If SKUSourceType = "SKUGroup" Then
+	If Object.SKUSourceType = GetSKUSourceType("SKUGroup") Then
 		
 		TypesArray.Add("Catalog.SKUGroup", NStr("en = 'SKU Group'; ru = 'Группа номенклатуры'"));
 		
 	EndIf;
 		
-	If SKUSourceType = "Brand" Then
+	If Object.SKUSourceType = GetSKUSourceType("Brand") Then
 		
 		TypesArray.Add("Catalog.Brands", NStr("en = 'Brand'; ru = 'Бренд'"));
 		

@@ -162,7 +162,7 @@ Function SelectOutlets(sourceTable) Export
 	
 	Try
 		
-		query.Text="SELECT DISTINCT O.Ref FROM Catalog.Outlet AS O " + parametersString + territoriesString + string;
+		query.Text="SELECT ALLOWED DISTINCT O.Ref FROM Catalog.Outlet AS O " + parametersString + territoriesString + string;
 		
 		result = query.Execute().Unload(); 
 		
@@ -263,7 +263,7 @@ Function SelectPositions(Positions) Export
     	
 	Try
 		
-		qPositions.Text = "SELECT Ref AS Position FROM Catalog.Positions " + string;
+		qPositions.Text = "SELECT ALLOWED Ref AS Position FROM Catalog.Positions " + string;
 
     	Return qPositions.Execute().Unload().UnloadColumn("Position");
 		
@@ -280,7 +280,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 	PositionsArray = SelectPositions(PositionList);
 	
 	Query = New Query;
-	Query.Text = "SELECT DISTINCT
+	Query.Text = "SELECT ALLOWED DISTINCT
 	             |	Territory.SR
 	             |FROM
 	             |	Catalog.Territory AS Territory

@@ -11,7 +11,7 @@ Procedure OnWrite(Cancel)
 		
 		Query = New Query;
 		Query.Text = 
-			"SELECT
+			"SELECT ALLOWED
 			|	QuestionnairesSchedule.Date,
 			|	QuestionnairesSchedule.Questionnaire,
 			|	QuestionnairesSchedule.BeginAnswerPeriod,
