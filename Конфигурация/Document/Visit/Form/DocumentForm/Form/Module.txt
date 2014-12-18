@@ -1,6 +1,5 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnOpenServer()
@@ -9,9 +8,7 @@ Procedure OnOpenServer()
 		
 		ThisForm.ReadOnly = True;
 		
-	EndIf; 
-	
-	FillFileTable();
+	EndIf;
 	
 	If ValueIsFilled(Object.Ref) Then 
 		
@@ -34,173 +31,6 @@ Procedure OnOpenServer()
 	
 EndProcedure
 
-&AtServer
-Procedure FillFileNameArray(FileNameArray, Table)
-
-	For Each Element In Table Do 
-		
-		If ItsPicture(Element.Question) Then 
-			
-			Try
-				
-				SnapShotUUID = New UUID(Element.Answer);
-				
-			Except
-				
-				SnapShotUUID = Undefined;	
-				
-			EndTry;
-				
-			If Not SnapShotUUID = Undefined Then 
-		
-				FileNameArray.Add(SnapShotUUID);	
-				
-			EndIf;
-			
-		EndIf;	
-		
-	EndDo; 
-		
-EndProcedure
-
-&AtServer
-Procedure FillFileTable()
-	
-	// Заполнить таблицу файлов
-	Password 	= Constants.bitmobile_Пароль.Get();
-	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path 		= StrReplace(Path, "admin", "webdav");
-	Port 		= Constants.bitmobile_Порт.Get();
-	
-	Try
-	
-		Connection = New HTTPConnection(Server, Port, "admin", Password);
-		
-	Except
-		
-		Connection = Undefined;
-		
-	EndTry;	
-	
-	FileNameArray = New Array; 
-	
-	FillFileNameArray(FileNameArray, Object.Questions);
-	
-	FillFileNameArray(FileNameArray, Object.SKUs);
-		
-	Query = New Query;
-	Query.Text = 
-		"SELECT
-		|	StorageAdditionalInformation.Object,
-		|	StorageAdditionalInformation.SyncDirection,
-		|	StorageAdditionalInformation.Action,
-		|	StorageAdditionalInformation.User,
-		|	StorageAdditionalInformation.FileName,
-		|	StorageAdditionalInformation.FullFileName,
-		|	StorageAdditionalInformation.Extension,
-		|	StorageAdditionalInformation.Storage,
-		|	StorageAdditionalInformation.Size
-		|FROM
-		|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
-		|WHERE
-		|	StorageAdditionalInformation.FileName IN(&FileNameArray)";
-	
-	Query.SetParameter("FileNameArray", FileNameArray);
-	
-	FileTableRegister = Query.Execute().Unload();
-	
-	For Each Str In FileTableRegister Do  
-	
- 		BinaryDataOfFile = Str.Storage.Get();
-		
-		If ValueIsFilled(BinaryDataOfFile) Then 
-		
-			Ins 				= FileTable.Add();
-			Ins.FileName 		= Str.FileName;
-			Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-			Ins.Extension 		= Str.Extension;
-			
-		Else 
-			
-			If Not Connection = Undefined Then 
-			
-				Try
-					
-					WebDAVFile = GetTempFileName(Str.Extension);
-					
-					Connection.Get(Path + Str.FullFileName, WebDAVFile);
-					
-					BinaryDataOfFile = New BinaryData(WebDAVFile);
-					
-					Ins 				= FileTable.Add();
-					Ins.FileName 		= Str.FileName;
-					Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-					Ins.Extension 		= Str.Extension;
-										
-				Except
-				EndTry;
-				
-			EndIf;	
-			
-		EndIf;	
-				
-	EndDo;
-				
-EndProcedure
-
-&AtServer
-Procedure SetPicture(SnapShotUUID)
-	
-	FindStructure = New Structure("FileName");
-	FindStructure.FileName = SnapShotUUID;
-	
-	FoundRows = FileTable.FindRows(FindStructure);
-	
-	If Not FoundRows.Count() = 0 Then 
-		
-		PictureAddress 		= FoundRows[0].StorageAddress;
-		PictureExtension	= FoundRows[0].Extension;
-				
-	EndIf;
-				
-EndProcedure
-
-&AtServer
-Function ItsPicture(Question)
-	
-	If Question.AnswerType = Enums.DataType.Snapshot Then 
-		
-		Return True;
-		
-	Else 
-		
-		Return False;
-		
-	EndIf;
-			
-EndFunction
-
-&AtServer
-Function PictureExists(SnapShotUUID)
-	
-	FindStructure = New Structure("FileName");
-	FindStructure.FileName = SnapShotUUID;
-	
-	FoundRows = FileTable.FindRows(FindStructure);
-	
-	If Not FoundRows.Count() = 0 Then 
-		
-		Return True;
-		
-	Else
-		
-		Return False;
-				
-	EndIf;
-
-EndFunction
-
 &AtServerNoContext
 Function GetRecordKey(KeyData)
 	
@@ -208,221 +38,15 @@ Function GetRecordKey(KeyData)
 	
 EndFunction
 
+#EndRegion
 
-///////////////////////////////////////////////////////
-// User interface
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
-    
-    OnOpenServer();
 	
-    For Each Str in Object.Questions Do
-		
-		FoundedRows = TempQuestions.FindRows(New Structure("Question", Str.Question));
-		
-		If FoundedRows.Count() = 0 Then 		
-		
-			Ins 			= TempQuestions.Add();
-	        Ins.Question 	= Str.Question;
-	        
-	        If ItsPicture(Str.Question) Then 
-				
-				Try
-					
-					SnapShotUUID = New UUID(Str.Answer);
-					
-					If PictureExists(SnapShotUUID) Then
-					
-		            	Ins.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-		            	Ins.SnapShotUUID 	= Str.Answer;
-						
-					Else
-						
-						Ins.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
-											
-					EndIf;
-					
-				Except
-					
-					Ins.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");
-					
-				EndTry;
-				
-				
-	            
-	        Else 
-	            
-	            Ins.Answer = Str.Answer;
-	            
-			EndIf;
-			
-		EndIf;	
-                        
-	EndDo;
+	OnOpenServer();
 	
-	For Each Str In Object.SKUs Do
-		
-		FoundedRows = TempSKUs.FindRows(New Structure("SKU, Question", Str.SKU, Str.Question));
-		
-		If FoundedRows.Count() = 0 Then
-		
-	        Ins 			= TempSKUs.Add();
-	        Ins.SKU 		= Str.SKU;
-	        Ins.Question 	= Str.Question;
-	        
-	        If ItsPicture(Str.Question) Then
-				
-				Try
-					
-					SnapShotUUID = New UUID(Str.Answer);            	            
-					
-					If PictureExists(SnapShotUUID) Then
-					
-						Ins.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-		                Ins.SKUSnapShotUUID = Str.Answer;                	                
-						
-					Else
-						
-						Ins.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
-		                					
-					EndIf;
-					
-				Except
-					
-					Ins.Answer = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");	
-					
-				EndTry;
-							
-			Else
-				
-				Ins.Answer = Str.Answer;        	        
-				
-			EndIf;
-			
-		EndIf;	
-        
-    EndDo;
-	 
-EndProcedure
-
-&AtClient
-Procedure TempQuestionsOnActivateRow(Item)
-	
-	If Items.Pages.CurrentPage = Items.GroupQuestions Then
-	
-		If Not Item.CurrentRow = Undefined Then	
-		
-			If ItsPicture(Item.CurrentData.Question) Then 
-				
-				Try
-					
-					SnapShotUUID = New UUID(Item.CurrentData.SnapShotUUID);
-					
-					SetPicture(SnapShotUUID);
-					
-				Except
-					
-					PictureAddress		= Undefined;
-					PictureExtension    = Undefined;
-					
-				EndTry;	
-				
-			Else 
-				
-				PictureAddress		= Undefined;
-				PictureExtension    = Undefined;
-			
-			EndIf;
-			
-		Else
-			
-			PictureAddress		= Undefined;
-			PictureExtension    = Undefined;
-
-		EndIf;
-		
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure TempSKUsOnActivateRow(Item)
-	
-	If Items.Pages.CurrentPage = Items.GroupSKUs Then
-	
-	    If Not Item.CurrentRow = Undefined  Then	        
-			
-			If ItsPicture(Item.CurrentData.Question) Then            
-				
-				Try
-					
-					SnapShotUUID = New UUID(Item.CurrentData.SKUSnapShotUUID);
-					
-					SetPicture(SnapShotUUID);
-					
-				Except
-					
-					PictureAddress		= Undefined;
-					PictureExtension    = Undefined;
-					
-				EndTry;
-				
-			Else            
-				
-				PictureAddress		= Undefined;
-	            PictureExtension    = Undefined;                       
-				
-			EndIf;                
-			
-		Else        
-			
-			PictureAddress		= Undefined;
-	        PictureExtension    = Undefined;        
-			
-		EndIf;
-		
-	EndIf;	
-    
-EndProcedure
-
-&AtClient
-Procedure OpenPicture(Command)
-	
-	FileName = Undefined;
-	
-	If ValueIsFilled(PictureAddress) Then 
-		
-		FileName = "picture" + PictureExtension;
-		
-	EndIf;
-		
-	If ValueIsFilled(FileName) Then 
-		
-		GetFile(PictureAddress, FileName, True);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure PagesOnCurrentPageChange(Item, CurrentPage)
-	
-	If CurrentPage = Items.GroupQuestions Then
-		
-		TempQuestionsOnActivateRow(Items.TempQuestions);
-        
-    ElsIf CurrentPage = Items.GroupSKUs Then
-        
-        TempSKUsOnActivateRow(Items.TempSKUs);
-		
-	Else 
-		
-		PictureAddress = Undefined;
-		PictureExtension = Undefined;
-        
-	EndIf;
-			
 EndProcedure
 
 &AtClient
@@ -446,3 +70,5 @@ Procedure TempQuestionairesSelection(Item, SelectedRow, Field, StandardProcessin
 	EndIf;
 	
 EndProcedure
+
+#EndRegion
