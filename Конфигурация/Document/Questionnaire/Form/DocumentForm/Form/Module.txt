@@ -2324,7 +2324,7 @@ Procedure QuestionsOnActivateRow(Item)
 				
 			EndIf;
 			
-			ItemElement = SKUQuestions.FindByID(Items.SKUQuestions.CurrentRow);
+			ItemElement = SKUQuestions.FindByID(Items.SKUQuestions.CurrentData.GetID());
 			
 			If ItemElement.GetParent() = Undefined Then 
 				
@@ -2360,7 +2360,7 @@ Procedure QuestionsOnActivateRow(Item)
 				
 			EndIf;
 			
-			ItemElement = RegularQuestions.FindByID(Items.RegularQuestions.CurrentRow);
+			ItemElement = RegularQuestions.FindByID(Items.RegularQuestions.CurrentData.GetID());
 			
 			If ItemElement.GetParent() = Undefined Then 
 				
