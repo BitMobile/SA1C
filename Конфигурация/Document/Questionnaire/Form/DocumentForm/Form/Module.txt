@@ -353,6 +353,68 @@ Function GetDataCompositionFilterConstructor()
 	
 EndFunction
 
+&AtServerNoContext
+Procedure CheckBrand(Brand, IsCorrect)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKU.Ref
+		|FROM
+		|	Catalog.SKU AS SKU
+		|WHERE
+		|	SKU.Brand = &Brand";
+	
+	Query.SetParameter("Brand", Brand);
+	
+	QueryResult = Query.Execute();
+	
+	If Not QueryResult.IsEmpty() Then 
+		
+		IsCorrect = True;
+		
+	Else 
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = 'No nomenclature with brand """ + String(Brand) + """ '; ru = 'Нет номенклатуры с брендом """ + String(Brand) + """ '");
+		
+		UserMessage.Message();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServerNoContext
+Procedure CheckGroup(Group, IsCorrect)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKU.Ref
+		|FROM
+		|	Catalog.SKU AS SKU
+		|WHERE
+		|	SKU.Owner = &Group";
+	
+	Query.SetParameter("Group", Group);
+	
+	QueryResult = Query.Execute();
+	
+	If Not QueryResult.IsEmpty() Then 
+		
+		IsCorrect = True;
+		
+	Else 
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = 'No nomenclature with group """ + String(Group) + """ '; ru = 'Нет номенклатуры с группой """ + String(Group) + """ '");
+		
+		UserMessage.Message();
+		
+	EndIf;
+	
+EndProcedure
+
 &AtServer
 Procedure FillSKUs(CopyingValue = Undefined)
 	
@@ -2679,7 +2741,27 @@ Procedure CheckSKUValue(Result, AdditionalParameter) Export
 			
 		Else 
 			
-			Items.SKUsValueTable.CurrentData.SKU = Result;
+			IsCorrect = False;
+			
+			If TypeOf(Result) = Type("CatalogRef.Brands") Then 
+				
+				CheckBrand(Result, IsCorrect);
+				
+			ElsIf TypeOf(Result) = Type("CatalogRef.SKUGroup") Then
+				
+				CheckGroup(Result, IsCorrect);
+				
+			Else 
+				
+				IsCorrect = True;
+				
+			EndIf;
+			
+			If IsCorrect Then 
+				
+				Items.SKUsValueTable.CurrentData.SKU = Result;
+				
+			EndIf;
 			
 		EndIf;
 		
