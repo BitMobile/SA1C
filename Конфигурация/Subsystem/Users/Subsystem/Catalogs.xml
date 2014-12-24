@@ -21,6 +21,10 @@
 			<Content>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.Positions</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.User</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.RolesOfUsers</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.AdditionalAccessRights</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.SystemObjects</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.MobileAppAccessRights</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

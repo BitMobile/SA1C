@@ -4,27 +4,24 @@
 		<Command name="InformationRegister.bitmobile_АдресаЭлПочтыДляОтчетов.StandardCommand.OpenList">
 			<Visibility>
 				<xr:Common>true</xr:Common>
-				<xr:Value name="Role.SR">false</xr:Value>
-				<xr:Value name="Role.SRM">false</xr:Value>
-				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
-				<xr:Value name="Role.Admin">false</xr:Value>
+				<xr:Value name="Role.User">false</xr:Value>
+				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
+				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="InformationRegister.bitmobile_ИзмененныеДанные.StandardCommand.OpenList">
 			<Visibility>
 				<xr:Common>true</xr:Common>
-				<xr:Value name="Role.SR">false</xr:Value>
-				<xr:Value name="Role.SRM">false</xr:Value>
-				<xr:Value name="Role.bitmobile_Пользователь">false</xr:Value>
-				<xr:Value name="Role.Admin">false</xr:Value>
+				<xr:Value name="Role.User">false</xr:Value>
+				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
+				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="InformationRegister.bitmobile_ОбъектыСОшибками.StandardCommand.OpenList">
 			<Visibility>
 				<xr:Common>true</xr:Common>
-				<xr:Value name="Role.SR">false</xr:Value>
-				<xr:Value name="Role.SRM">false</xr:Value>
-				<xr:Value name="Role.Admin">false</xr:Value>
+				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
+				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
 			</Visibility>
 		</Command>
 	</CommandsVisibility>

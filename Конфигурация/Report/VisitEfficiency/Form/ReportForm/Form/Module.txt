@@ -20,7 +20,7 @@ Function SROnChangeServer(SR)
     If SR = Undefined Then
         Query = new Query;
         Query.Text = 
-        	"SELECT
+        	"SELECT ALLOWED
             |   User.Ref
             |FROM
             |   Catalog.User AS User";
@@ -32,7 +32,7 @@ Function SROnChangeServer(SR)
     Else     
         
     	Query = Новый Query;
-    	Query.Text = "SELECT
+    	Query.Text = "SELECT ALLOWED
     	             |	User.Ref AS Пользователь
     	             |FROM
     	             |	Catalog.User AS User
@@ -61,7 +61,7 @@ EndFunction
 Function GetSub(SRMList)
 	
 	Query = Новый Query;
-	Query.Text="SELECT
+	Query.Text="SELECT ALLOWED
 	             |	User.Ref AS Пользователь
 	             |FROM
 	             |	Catalog.User AS User

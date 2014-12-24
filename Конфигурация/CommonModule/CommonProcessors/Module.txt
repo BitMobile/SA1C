@@ -1,46 +1,46 @@
 ﻿
 Function GetTerritory(Outlet) Export
-    
-    Query = New Query;
-    
-    Query.Text = "SELECT TOP 1
-                 |	TerritoryOutlets.Ref
-                 |FROM
-                 |	Catalog.Territory.Outlets AS TerritoryOutlets
-                 |WHERE
-                 |	TerritoryOutlets.Outlet = &Outlet";
+	
+	Query = New Query;
+	
+	Query.Text = "SELECT ALLOWED TOP 1
+				|	TerritoryOutlets.Ref
+				|FROM
+				|	Catalog.Territory.Outlets AS TerritoryOutlets
+				|WHERE
+				|	TerritoryOutlets.Outlet = &Outlet";
 	
 	Query.SetParameter("Outlet", Outlet);
 	
-    Selection = Query.Execute().Choose();
-    Selection.Next();
-    
-    Return Selection.Ref;	
-    
+	Selection = Query.Execute().Choose();
+	Selection.Next();
+	
+	Return Selection.Ref;	
+	
 EndFunction
 
 Function GetPredefinedItems(PredefinedItems) Export 
-    
-    ItemsMap = New Map;
-    
-    For Each Row In PredefinedItems Do
+	
+	ItemsMap = New Map;
+	
+	For Each Row In PredefinedItems Do
 		
 		If Row.Key = "Catalog.User" Then
 			
 			Query = New Query;
-            Query.Text = "SELECT
-                         |	User.Ref AS Ref
-                         |FROM
-                         |	Catalog.User AS User
-                         |WHERE
-                         |	User.Role = &Role";
-						 
+			Query.Text = "SELECT ALLOWED
+						|	User.Ref AS Ref
+						|FROM
+						|	Catalog.User AS User
+						|WHERE
+						|	User.Role = &Role";
+			
 			Query.SetParameter("Role", "SR");
 			
 		Else
 			
 			Query = New Query;
-			Query.Text = "SELECT Ref FROM " + Row.Key;
+			Query.Text = "SELECT ALLOWED Ref FROM " + Row.Key;
 			
 		EndIf;
 		
@@ -50,18 +50,18 @@ Function GetPredefinedItems(PredefinedItems) Export
 			
 			ItemsMap.Insert(Row.Value, Result[0].Ref);
 			
-		EndIf;                      
-        
-    EndDo;
-    
-    Return ItemsMap;
-    
+		EndIf;
+		
+	EndDo;
+	
+	Return ItemsMap;
+	
 EndFunction
 
 Function GetQuestionGroupType(TypeString = "SKUQuestions") Export
 	
 	If TypeString = "SKUQuestions" Then 
-	
+		
 		Return Enums.QuestionGroupTypes.SKUQuestions;
 		
 	Else 
@@ -69,8 +69,9 @@ Function GetQuestionGroupType(TypeString = "SKUQuestions") Export
 		Return Enums.QuestionGroupTypes.RegularQuestions;
 		
 	EndIf;
-		
+	
 EndFunction
+
 
 
 

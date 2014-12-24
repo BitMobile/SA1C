@@ -1,0 +1,51 @@
+﻿
+Function UsersListIsEmpty() Export 
+	
+	If PrivilegedMode() Then 
+		
+		// Выполнен запуск в привилегированном режиме
+		// (параметр командной строки "/UsePrivilegedMode").
+		//
+		// В этом режиме пользователь имеет все права,
+		// первого администратора не требуется создавать.
+		Return False;
+		
+	EndIf;
+	
+	CurrentUser = InfoBaseUsers.CurrentUser();
+	
+	If ValueIsFilled(CurrentUser.Name) Then 
+		
+		// Список пользователей ИБ не пустой.
+		Return False;
+		
+	EndIf;
+	
+	Return True;
+	
+EndFunction
+
+Procedure CreateFirstAdmin() Export 
+	
+	ErrorText = UsersCallServer.CheckUsersList(True);
+	
+	If ValueIsFilled(ErrorText) Then 
+		
+		SetPrivilegedMode(True);
+		
+		FirstAdmin							= InfoBaseUsers.CreateUser();
+		FirstAdmin.Name						= "Admin";
+		FirstAdmin.FullName					= FirstAdmin.Name;
+		FirstAdmin.Language					= Metadata.Languages.Русский;
+		FirstAdmin.StandardAuthentication	= True;
+		FirstAdmin.ShowInList				= True;
+		
+		FirstAdmin.Roles.Add(Metadata.Roles.Admin);
+		
+		FirstAdmin.Write();
+		
+	EndIf;
+	
+EndProcedure
+
+

@@ -1,205 +1,568 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProceduresAndFunctions
 
 &AtServer
-Procedure OnOpenServer()
-       
-    PredefinedItems = New Map;
-    PredefinedItems.Insert("Catalog.OutletType", "Type");
-    PredefinedItems.Insert("Catalog.OutletClass", "Class");
-    PredefinedItems.Insert("Catalog.Distributor", "Distributor");
-    PredefinedItems.Insert("Document.PriceList", "Prices");
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+	#Region Commented
 	
-	For Each Item In ItemsCollection Do
+	//PredefinedItems = New Map;
+	//PredefinedItems.Insert("Catalog.OutletType", "Type");
+	//PredefinedItems.Insert("Catalog.OutletClass", "Class");
+	//PredefinedItems.Insert("Catalog.Distributor", "Distributor");
+	//PredefinedItems.Insert("Document.PriceList", "Prices");
+	//
+	//ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+	//
+	//For Each Item In ItemsCollection Do
+	//	
+	//	If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then
+	//		
+	//		If Object[Item.Key].Count() = 0 Then
+	//			
+	//			NewRow = Object[Item.Key].Add();
+	//			
+	//			For Each Attribute In Metadata.Catalogs.Outlet.TabularSections[Item.Key].Attributes Do
+	//				
+	//				If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
+	//					
+	//					NewRow[Attribute.Name] = Item.Value;
+	//					
+	//				EndIf;
+	//				
+	//			EndDo;
+	//			
+	//		EndIf;
+	//		
+	//	Else 
+	//		
+	//		Object[Item.Key] = Item.Value;
+	//		
+	//	EndIf;
+	//	
+	//EndDo;
+	
+	#EndRegion
+	
+	// Проверить возможность редактирования параметров торговой точки
+	If Not Users.HaveAdditionalRight(GetParametersRight()) Then 
 		
-		If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then
+		HaveEditParametersRight = False;
+		
+		Items.Snapshots.ReadOnly = True;
+		
+		Items.GroupPreviewButtons.Enabled			= False;
+		Items.GroupOutletSnapshotButtons.Enabled	= False;
+		
+	Else 
+		
+		HaveEditParametersRight = True;
+		
+	EndIf;
+	
+	If Not ValueIsFilled(Object.Ref) Then
+		
+		Object.OutletStatus = Enums.OutletStatus.Potential;
+		
+	EndIf;
+	
+	FillTerritories();
+	
+	FillSnapshots();
+	
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not Cancel Then
+		
+		For Each Row In Object.Parameters Do
 			
-			If Object[Item.Key].Count() = 0 Then
+			If IsPicture(Row.Parameter) Then
 				
-				NewRow = Object[Item.Key].Add();
-				
-				For Each Attribute In metadata.Catalogs.Outlet.TabularSections[Item.Key].Attributes Do
+				If Row.Type = "New" Then
 					
-					If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
+					TempFile = GetTempFileName(Row.Extension);
+					BinaryData = GetFromTempStorage(Row.StorageAddress);
+					BinaryData.Write(TempFile);
+					
+					CheckFileSize = New File(TempFile);
+					
+					RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+					RecordManager.Object = CurrentObject.Ref;
+					RecordManager.SyncDirection = Enums.SyncDirections.Shared;
+					RecordManager.Action = Enums.SyncAction.AddFile;
+					RecordManager.FileName = New UUID(Row.Value);
+					RecordManager.Extension = Row.Extension;
+					RecordManager.Storage = New ValueStorage(BinaryData);
+					RecordManager.Size = CheckFileSize.Size();
+					RecordManager.FullFileName = "/shared/Catalog.Outlet/" + 
+						CurrentObject.Ref.UUID() + 
+						"/" + 
+						Row.Value + 
+						Lower(Row.Extension);
 						
-						NewRow[Attribute.Name] = Item.Value;
+					RecordManager.Write();
+					
+				ElsIf Row.Type = "Private" Then
+					
+					SelectionStructure = New Structure("FileName");
+					SelectionStructure.FileName = New UUID(Row.Value);
+					
+					Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+					
+					If Selection.Next() Then
+						
+						RecordManagerPrivate = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+						
+						FillPropertyValues(RecordManagerPrivate, Selection);
+						
+						RecordManagerPrivate.Read();
+						
+						TempFile = GetTempFileName(Row.Extension);
+						BinaryData = GetFromTempStorage(Row.StorageAddress);
+						BinaryData.Write(TempFile);
+						
+						CheckFileSize = New File(TempFile);
+						
+						RecordManagerPrivate.SyncDirection = Enums.SyncDirections.Shared;
+						RecordManagerPrivate.Action = Enums.SyncAction.AddFile;
+						RecordManagerPrivate.User = Catalogs.User.EmptyRef();
+						RecordManagerPrivate.Storage = New ValueStorage(BinaryData);
+						RecordManagerPrivate.Size = CheckFileSize.Size();
+						RecordManagerPrivate.FullFileName = "/shared/Catalog.Outlet/" + 
+							CurrentObject.Ref.UUID() + 
+							"/" + 
+							Row.Value + 
+							Lower(Row.Extension);
+						
+						RecordManagerPrivate.Write();
 						
 					EndIf;
 					
-				EndDo;
+				EndIf;
 				
 			EndIf;
 			
-		Else 
+		EndDo;
+		
+		For Each Row In Object.Snapshots Do
 			
-			Object[Item.Key] = Item.Value;
+			If Row.Type = "New" Then
+				
+				TempFile = GetTempFileName(Row.Extension);
+				BinaryData = GetFromTempStorage(Row.StorageAddress);
+				BinaryData.Write(TempFile);
+				
+				CheckFileSize = New File(TempFile);
+				
+				RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+				RecordManager.Object = CurrentObject.Ref;
+				RecordManager.SyncDirection = Enums.SyncDirections.Shared;
+				RecordManager.Action = Enums.SyncAction.AddFile;
+				RecordManager.FileName = Row.FileName;
+				RecordManager.Extension = Row.Extension;
+				RecordManager.Storage = New ValueStorage(BinaryData);
+				RecordManager.Size = CheckFileSize.Size();
+				RecordManager.FullFileName = "/shared/Catalog.Outlet/" + 
+					CurrentObject.Ref.UUID() + 
+					"/" + 
+					String(Row.FileName) + 
+					Lower(Row.Extension);
+					
+				RecordManager.Write();
+				
+			ElsIf Row.Type = "Private" Then
+				
+				SelectionStructure = New Structure("FileName");
+				SelectionStructure.FileName = Row.FileName;
+				
+				Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+				
+				If Selection.Next() Then
+					
+					RecordManagerPrivate = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+					
+					FillPropertyValues(RecordManagerPrivate, Selection);
+					
+					RecordManagerPrivate.Read();
+					
+					TempFile = GetTempFileName(Row.Extension);
+					BinaryData = GetFromTempStorage(Row.StorageAddress);
+					BinaryData.Write(TempFile);
+					
+					CheckFileSize = New File(TempFile);
+					
+					RecordManagerPrivate.SyncDirection = Enums.SyncDirections.Shared;
+					RecordManagerPrivate.Action = Enums.SyncAction.AddFile;
+					RecordManagerPrivate.User = Catalogs.User.EmptyRef();
+					RecordManagerPrivate.Storage = New ValueStorage(BinaryData);
+					RecordManagerPrivate.Size = CheckFileSize.Size();
+					RecordManagerPrivate.FullFileName = "/shared/Catalog.Outlet/" + 
+						CurrentObject.Ref.UUID() + 
+						"/" + 
+						Row.FileName + 
+						Lower(Row.Extension);
+					
+					RecordManagerPrivate.Write();
+				
+				EndIf;
+				
+			EndIf;
+		
+		EndDo;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
+	
+	FillParametersAdditionalInformation();
+	
+	FillSnapshots();
+	
+EndProcedure
+
+#Region Status
+
+&AtServerNoContext
+Function IsClosed(Status)
+	
+	If Status = Enums.OutletStatus.Closed Then
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
+	EndIf;
+	
+EndFunction
+
+&AtServer
+Function CheckStatus()
+	
+	If Object.OutletStatus=Enums.OutletStatus.Closed And Object.ClosingCause=Enums.ClosingCause.EmptyRef() Then
+		
+		Message(NStr("en = '""Closing cause"" field couldn''t be empty'; ru = 'Поле ""Причина закрытия"" не может быть пустым'"));
+		
+		Return True;
+		
+	Else
+		
+		Return False;
+		
+	EndIf;
+	
+EndFunction
+
+&AtServer
+Procedure SetClosingCauseVisibility()
+	
+	ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Parameters
+
+&AtServerNoContext
+Function GetParametersRight()
+	
+	Return Catalogs.AdditionalAccessRights.EditParametersInOutlet;	
+	
+EndFunction
+
+&AtServer
+Function GetNewParameters()
+	
+	// Первый запрос пакета выбирает те параметры которые уже добавлены в текущую
+	// торговую точку.
+	//
+	// Второй запрос пакета выбирает все существующие параметры в справочнике.
+	//
+	// Третий запрос пакета выбирает те параметры в справочнике которые не 
+	// добавлены в торговую точку.
+	//
+	// Четвертый запрос пакета выбирает результирующую выборку параметров к 
+	// добавлению в данную торговую точку.
+	Query = New Query(
+	"SELECT
+	|	FormParameters.Parameter AS Parameter
+	|INTO FormParameters
+	|FROM
+	|	&FormParameters AS FormParameters
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	OutletParameter.Ref AS CatalogParameter
+	|INTO CatalogParameters
+	|FROM
+	|	Catalog.OutletParameter AS OutletParameter
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	CatalogParameters.CatalogParameter
+	|INTO Difference
+	|FROM
+	|	CatalogParameters AS CatalogParameters
+	|		LEFT JOIN FormParameters AS FormParameters
+	|		ON CatalogParameters.CatalogParameter = FormParameters.Parameter
+	|WHERE
+	|	FormParameters.Parameter IS NULL 
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	Difference.CatalogParameter AS Parameter
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("FormParameters", Object.Parameters.Unload());
+	
+	QueryResult = Query.Execute().Unload();
+	
+	Return QueryResult.UnloadColumn("Parameter");
+	
+EndFunction
+
+&AtServer
+Procedure FillSnapshots()
+	
+	FileTable = GetFileTable();
+	
+	For Each Row In Object.Snapshots Do
+		
+		FillPictureInformation(FileTable, Row, "FileName");
+		
+	EndDo;
+	
+EndProcedure 
+
+#EndRegion
+
+#Region ParametersPictures
+
+&AtServer
+Procedure FillParametersAdditionalInformation()
+	
+	FileTable = GetFileTable();
+	
+	// Для каждой строки из параметров данной торговой точки
+	For Each Row In Object.Parameters Do
+		
+		// Если тип данных параметра текущей строки - фотоснимок
+		If IsPicture(Row.Parameter) Then
+			
+			FillPictureInformation(FileTable, Row, "Value");
+			Row.IsPicture = True;
+			
+		// Если тип данных параметра данной строки - не фотоснимок
+		Else
+			
+			Row.Presentation = Row.Value;
+			Row.IsPicture = False;
 			
 		EndIf;
 		
 	EndDo;
 	
-	FillFileTable();
-	
 EndProcedure
 
 &AtServer
-Procedure FillFileNameArray(FileNameArray, Table)
+Function GetFileTable()
+	
+	// Выбираем все записи относящиеся к данной торговой точке из регистра 
+	// сведений с файлами.
+	Query = New Query(
+	"SELECT
+	|	StorageAdditionalInformation.Object,
+	|	StorageAdditionalInformation.SyncDirection,
+	|	StorageAdditionalInformation.Action,
+	|	StorageAdditionalInformation.User,
+	|	StorageAdditionalInformation.FileName,
+	|	StorageAdditionalInformation.FullFileName,
+	|	StorageAdditionalInformation.Extension,
+	|	StorageAdditionalInformation.Storage,
+	|	StorageAdditionalInformation.Size
+	|FROM
+	|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+	|WHERE
+	|	StorageAdditionalInformation.Object = &Outlet");
+	
+	Query.SetParameter("Outlet", Object.Ref);
+	
+	// Ложим результат запроса в таблицу файлов
+	FileTable = Query.Execute().Unload();
+	
+	Return FileTable;
+	
+EndFunction
 
-	For Each Element In Table Do 
+&AtServer
+Procedure FillPictureInformation(FileTable, Row, FileNameColumnName)
+	
+	// Если значение параметра заполнено
+	If ValueIsFilled(Row[FileNameColumnName]) Then
 		
-		If ItsPicture(Element.Parameter) Then 
+		// Проверяем что значение текущего параметра - УИД
+		Try
 			
-			Try
+			ShapshotUUID = New UUID(Row[FileNameColumnName]);
+			
+			// Ищем в таблице файлов уид из текущей строки
+			FileTableRow = FileTable.Find(ShapshotUUID, "FileName");
+			
+			// Если найден уид в таблице файлов
+			If Not FileTableRow = Undefined Then
 				
-				SnapShotUUID = New UUID(Element.Value);
+				Row.Type = "Snapshot";
 				
-			Except
+				// Инициализация подключения
+				Password = Constants.bitmobile_Пароль.Get();
+				Server = StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+				Path = Constants.bitmobile_ПутьНаСервере.Get();
+				Path = StrReplace(Path, "admin", "webdav");
+				Port = Constants.bitmobile_Порт.Get();
 				
-				SnapShotUUID = Undefined;	
+				Try
+					
+					Connection = New HTTPConnection(Server, Port, "admin", Password);
+					
+				Except
+					
+					Connection = Undefined;
+					
+				EndTry;
 				
-			EndTry;
+				// Забираем бинарные данные из таблицы файлов
+				BinaryDataOfFile = FileTableRow.Storage.Get();
 				
-			If Not SnapShotUUID = Undefined Then 
-		
-				FileNameArray.Add(SnapShotUUID);	
+				// Если бинарные данные есть
+				If ValueIsFilled(BinaryDataOfFile) Then
+					
+					Row.StorageAddress = PutToTempStorage(FileTableRow.Storage.Get(), ThisForm.UUID);
+					Row.Extension = FileTableRow.Extension;
+					
+				// Если нет бинарных данных
+				Else
+					
+					// Если соединение было создано успешно
+					If Not Connection = Undefined Then
+						
+						// Пробуем забрать файл
+						Try
+							
+							WebDAVFile = GetTempFileName(FileTableRow.Extension);
+							
+							Connection.Get(Path + FileTableRow.FullFileName, WebDAVFile);
+							
+							Row.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+							Row.Extension 		= FileTableRow.Extension;
+							
+						// Не получилось забрать файл
+						Except
+							
+							Row.Type = "WebDAVFailed";
+							
+						EndTry;
+						
+					EndIf;
+					
+				EndIf;
+				
+			// Если уид не найден
+			Else
+				
+				Row.Type = "NotFound";
 				
 			EndIf;
 			
-		EndIf;	
+		// Если значение - не УИД, тогда мы не можем получить фотоснимок
+		Except
+			
+			Row.Type = "NotUID";
+			
+		EndTry;
 		
-	EndDo; 
 		
+	// Если значение параметра не заполнено
+	Else
+		
+		Row.Type = "NoSnapshot";
+		
+	EndIf;
+	
 EndProcedure
 
-&AtServer
-Procedure FillFileTable()
+&AtServerNoContext
+Function IsPicture(Parameter)
 	
-	// Заполнить таблицу файлов
-	Password 	= Constants.bitmobile_Пароль.Get();
-	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path 		= StrReplace(Path, "admin", "webdav");
-	Port 		= Constants.bitmobile_Порт.Get();
-	
-	Try
-	
-		Connection = New HTTPConnection(Server, Port, "admin", Password);
+	If Parameter.DataType = Enums.DataType.Snapshot Then 
 		
-	Except
+		Return True;
 		
-		Connection = Undefined;
+	Else 
 		
-	EndTry;	
-	
-	FileNameArray = New Array; 
-	
-	FillFileNameArray(FileNameArray, Object.Parameters);
-			
-	Query = New Query;
-	Query.Text = 
-		"SELECT
-		|	StorageAdditionalInformation.Object,
-		|	StorageAdditionalInformation.SyncDirection,
-		|	StorageAdditionalInformation.Action,
-		|	StorageAdditionalInformation.User,
-		|	StorageAdditionalInformation.FileName,
-		|	StorageAdditionalInformation.FullFileName,
-		|	StorageAdditionalInformation.Extension,
-		|	StorageAdditionalInformation.Storage,
-		|	StorageAdditionalInformation.Size
-		|FROM
-		|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
-		|WHERE
-		|	StorageAdditionalInformation.FileName IN(&FileNameArray)";
-	
-	Query.SetParameter("FileNameArray", FileNameArray);
-	
-	FileTableRegister = Query.Execute().Unload();
-	
-	For Each Str In FileTableRegister Do  
-	
- 		BinaryDataOfFile = Str.Storage.Get();
+		Return False;
 		
-		If ValueIsFilled(BinaryDataOfFile) Then 
-		
-			Ins 				= FileTable.Add();
-			Ins.FileName 		= Str.FileName;
-			Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-			Ins.Extension 		= Str.Extension;
-			
-		Else 
-			
-			If Not Connection = Undefined Then 
-			
-				Try
-					
-					WebDAVFile = GetTempFileName(Str.Extension);
-					
-					Connection.Get(Path + Str.FullFileName, WebDAVFile);
-					
-					BinaryDataOfFile = New BinaryData(WebDAVFile);
-					
-					Ins 				= FileTable.Add();
-					Ins.FileName 		= Str.FileName;
-					Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-					Ins.Extension 		= Str.Extension;
-										
-				Except
-				EndTry;
-				
-			EndIf;	
-			
-		EndIf;	
-				
-	EndDo;
-				
-EndProcedure
+	EndIf;
+	
+EndFunction
+
+#EndRegion
+
+#Region Territories
 
 &AtServer
 Procedure FillTerritories()
-    
-    Territories = GetTerritories();
-    
-    SelectionDetailRecords = Territories.Choose();
-    
-    While SelectionDetailRecords.Next() Do
+	
+	Territories = GetTerritories();
+	
+	SelectionDetailRecords = Territories.Choose();
+	
+	While SelectionDetailRecords.Next() Do
 		
 		NewRow = TerritoriesList.Add();
-        NewRow.Value = SelectionDetailRecords.Ref;
-        
-    EndDo;	
-    
+		NewRow.Value = SelectionDetailRecords.Ref;
+		
+	EndDo;
+	
 EndProcedure
 
 &AtServer
 Function GetTerritories()
-    
-    Query = New Query;
-    Query.Text = 
-    "SELECT
-    |   TerritoryOutlets.Ref.Ref
-    |FROM
-    |   Catalog.Territory.Outlets AS TerritoryOutlets
-    |WHERE
-    |   TerritoryOutlets.Outlet.Ref = &Ref";
-    
-    Query.SetParameter("Ref", Object.Ref);
-    
-    Result = Query.Execute();
-    
-    Return Result;
-    
+	
+	Query = New Query;
+	Query.Text = 
+	"SELECT ALLOWED
+	|	TerritoryOutlets.Ref.Ref
+	|FROM
+	|	Catalog.Territory.Outlets AS TerritoryOutlets
+	|WHERE
+	|	TerritoryOutlets.Outlet.Ref = &Ref";
+	
+	Query.SetParameter("Ref", Object.Ref);
+	
+	Result = Query.Execute();
+	
+	Return Result;
+	
 EndFunction
 
 &AtServer
 Procedure WriteTerritory()
-    
-    WrittenTerritories = GetTerritories().Unload();
-    
-    For Each TerritoryRow In TerritoriesList Do
+	
+	WrittenTerritories = GetTerritories().Unload();
+	
+	For Each TerritoryRow In TerritoriesList Do
 		
 		SelectedItem = WrittenTerritories.Find(TerritoryRow.Value.Ref, "Ref");
 		
@@ -212,23 +575,23 @@ Procedure WriteTerritory()
 			Outlets = Territory.Outlets.Unload();
 			
 			NewRow 			= Outlets.Add();
-            NewRow.Outlet 	= Object.Ref;
+			NewRow.Outlet 	= Object.Ref;
 			
 			Territory.Outlets.Load(Outlets);
-            Territory.Write();
+			Territory.Write();
 			
 		EndIf;
 		
 	EndDo;
-    
+	
 EndProcedure
 
 &AtServer
 Procedure DeleteTerritories()
-    
-    Territories 			= GetTerritories();
-    RecordedTerritories 	= Territories.Unload();
-    TerritoriesValueTable 	= TerritoriesList.Unload();
+	
+	Territories 			= GetTerritories();
+	RecordedTerritories 	= Territories.Unload();
+	TerritoriesValueTable 	= TerritoriesList.Unload();
 	
 	For Each Territory In RecordedTerritories Do
 		
@@ -237,213 +600,91 @@ Procedure DeleteTerritories()
 			TerritoryObject = Territory.Ref.GetObject();
 			
 			Outlets = TerritoryObject.Outlets.Unload();
-            Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
+			Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
 			
 			TerritoryObject.Outlets.Load(Outlets);
-            TerritoryObject.Write();    
+			TerritoryObject.Write();    
 			
 		EndIf;
 		
 	EndDo;
-    
+	
 EndProcedure
 
-&AtServer
-Function IsClosed(Status)
-    
-    If Status = Enums.OutletStatus.Closed Then
-		
-		Return True;
-		
-	Else 
-		
-		Return False;
-		
-	EndIf;
-    
-EndFunction
+#EndRegion
+
+#Region Files
 
 &AtServer
-Function CheckStatus()
+Procedure FillFileNameArray(FileNameArray, Table)
 	
-	If Object.OutletStatus=Enums.OutletStatus.Closed And Object.ClosingCause=Enums.ClosingCause.EmptyRef() Then
+	For Each Element In Table Do 
 		
-		Message(NStr("en = '""Closing cause"" field couldn''t be empty'; ru = 'Поле ""Причина закрытия"" не может быть пустым'"));
-		
-		Return True;    
-		
-	Else
-		
-		Return False;
-		
-	EndIf;
-EndFunction
-
-&AtServer
-Procedure SetPicture(SnapShotUUID)
-	
-	FindStructure = New Structure("FileName");
-	FindStructure.FileName = SnapShotUUID;
-	
-	FoundRows = FileTable.FindRows(FindStructure);
-	
-	If Not FoundRows.Count() = 0 Then 
-		
-		PictureAddress 		= FoundRows[0].StorageAddress;
-		PictureExtension	= FoundRows[0].Extension;
-				
-	EndIf;
-				
-EndProcedure
-
-&AtServer
-Function ItsPicture(Parameter)
-	
-	If Parameter.DataType = Enums.DataType.Snapshot Then 
-		
-		Return True;
-		
-	Else 
-		
-		Return False;
-		
-	EndIf;
-			
-EndFunction
-
-&AtServer
-Function PictureExists(SnapShotUUID)
-	
-	FindStructure = New Structure("FileName");
-	FindStructure.FileName = SnapShotUUID;
-	
-	FoundRows = FileTable.FindRows(FindStructure);
-	
-	If Not FoundRows.Count() = 0 Then 
-		
-		Return True;
-		
-	Else
-		
-		Return False;
-				
-	EndIf;
-
-EndFunction
-
-&AtServer
-Procedure SetClosingCauseVisibility()
-	
-	ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
-	
-	// TODO: Delete commented; Old; SUPA-514
-	//If Object.OutletStatus=Enums.OutletStatus.Closed Then
-	//    ThisForm.Items.ClosingCause.Visible=True;    	    
-	//EndIf;
-    
-EndProcedure
-
-&AtServer
-Procedure FillTempParameters()
-	
-	For Each Str in Object.Parameters Do
-		
-		Ins 			= TempParameters.Add();
-        Ins.Parameter 	= Str.Parameter;
-        
-        If ItsPicture(Str.Parameter) Then 
+		If IsPicture(Element.Parameter) Then 
 			
 			Try
 				
-				SnapShotUUID = New UUID(Str.Value);
-				
-				If PictureExists(SnapShotUUID) Then
-				
-	            	Ins.Value 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-	            	Ins.SnapShotUUID 	= Str.Value;
-					
-				Else
-					
-					Ins.Value = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
-									
-				EndIf;
+				SnapShotUUID = New UUID(Element.Value);
 				
 			Except
 				
-				Ins.Value = NStr("en = ""Error getting snapshot""; ru = ""Ошибка при получении фотоснимка""");	
+				SnapShotUUID = Undefined;	
 				
 			EndTry;
-			            
-        Else 
-            
-            Ins.Value = Str.Value;
-            
+			
+			If Not SnapShotUUID = Undefined Then 
+				
+				FileNameArray.Add(SnapShotUUID);
+				
+			EndIf;
+			
 		EndIf;
-			                       
-	EndDo;
-    
+		
+	EndDo; 
+	
 EndProcedure
 
-///////////////////////////////////////////////////////
-// User interface
+#EndRegion
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
-    
-    OnOpenServer();
-	
-	FillTerritories();
 	
 	OutletStatusOnChange(Undefined);
 	
-	FillTempParameters();
+	ProcessParameters();
 	
 EndProcedure
 
 &AtClient
-Procedure TerritoriesListValueOnChange(Item)
-    
-    OutletValue 		= Items.TerritoriesList.CurrentData.Value;
+Procedure BeforeWrite(Cancel, WriteParameters)
 	
-	ParametersFilter 	= New Structure("Value", OutletValue);
+	Cancel = CheckStatus();
 	
-	FoundRows 			= TerritoriesList.FindRows(ParametersFilter);
-	
-	If FoundRows.count() > 1 Then
-		
-		Message(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
-		
-	EndIf;
-        
 EndProcedure
 
 &AtClient
 Procedure AfterWrite(WriteParameters)
-    
-    WriteTerritory();
-    
+	
+	WriteTerritory();
+	
 EndProcedure
 
 &AtClient
-Procedure PricesPriceListOnChange(Item)
-    
-    requestMap = New Map;
-    requestMap.Insert("pName", "PriceList");
-    requestMap.Insert("checkingItem", Items.Prices.CurrentData);
-    requestMap.Insert("tabularSection", Object.Prices);
-    
-    ClientProcessors.UniqueRows(requestMap);
-    
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	
+	If EventName = "OutletParameterCreated" Then
+		
+		ProcessParameters();
+		
+	EndIf;
+	
 EndProcedure
 
-&AtClient
-Procedure PricesPriceListStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-        
-    OpenForm("Document.PriceList.ChoiceForm", , Item);
-	
-EndProcedure
+#Region Status
 
 &AtClient
 Procedure OutletStatusOnChange(Item)
@@ -460,71 +701,9 @@ Procedure OutletStatusOnChange(Item)
 	
 EndProcedure
 
-&AtClient
-Procedure BeforeWrite(Cancel, WriteParameters)
-	
-	Cancel = CheckStatus();
-	
-EndProcedure
+#EndRegion
 
-&AtClient
-Procedure OpenPicture(Command)
-	
-	FileName = Undefined;
-	
-	If ValueIsFilled(PictureAddress) Then 
-		
-		FileName = "picture" + PictureExtension;
-		
-	EndIf;
-		
-	If ValueIsFilled(FileName) Then 
-		
-		GetFile(PictureAddress, FileName, True);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure TempParametersOnActivateRow(Item)
-	
-	If Items.Pages.CurrentPage = Items.GroupParameters Then	
-		
-		If Not Item.CurrentRow = Undefined Then			
-			
-			If ItsPicture(Item.CurrentData.Parameter) Then 
-				
-				Try
-					
-					SnapShotUUID = New UUID(Item.CurrentData.SnapShotUUID);
-					
-					SetPicture(SnapShotUUID);
-					
-				Except
-					
-					PictureAddress		= Undefined;
-					PictureExtension    = Undefined;
-					
-				EndTry;
-												
-			Else 
-				
-				PictureAddress		= Undefined;
-				PictureExtension    = Undefined;
-			
-			EndIf;
-			
-		Else
-			
-			PictureAddress		= Undefined;
-			PictureExtension    = Undefined;
-
-		EndIf;
-		
-	EndIf;
-
-EndProcedure
+#Region LattitudeLongtitude
 
 &AtClient
 Procedure LattitudeOnChange(Item)
@@ -540,12 +719,473 @@ Procedure LongitudeOnChange(Item)
 	
 EndProcedure
 
-&AtClient
+&AtClientAtServerNoContext
 Function GetRealLatLng(LatLng, Limit)
 	
-	Return ?(LatLng > Limit, Limit, ?(LatLng < -Limit, -Limit, LatLng));	
+	Return ?(LatLng > Limit, Limit, ?(LatLng < -Limit, -Limit, LatLng));
 	
 EndFunction
 
+#EndRegion
 
+#Region Parameters
+
+&AtClient
+Procedure UpdateParameters(Command)
+	
+	ProcessParameters();
+	
+EndProcedure
+
+&AtClient
+Procedure ParametersOnActivateRow(Item)
+	
+	IsPicture = Not Item.CurrentData = Undefined And Item.CurrentData.IsPicture;
+	
+	PictureAddress = ?(IsPicture, Item.CurrentData.StorageAddress, Undefined);
+	PictureExtension = ?(IsPicture, Item.CurrentData.Extension, Undefined);
+	
+	Items.PictureAddress.Hyperlink = IsPicture;
+	Items.PictureAddress.NonselectedPictureText = ?(IsPicture, 
+		NStr("en = 'Add picture'; ru = 'Добавить изображение'"),
+		NStr("en = 'No picture'; ru = 'Нет изображения'"));
+		
+	If HaveEditParametersRight Then 
+		
+		Items.GroupPreviewButtons.Enabled = IsPicture;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ParametersSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	If Item.CurrentItem = Items.ParametersPresentation Then
+		
+		StandardProcessing = False;
+		
+		If HaveEditParametersRight Then 
+		
+			OpenEditParameterValueForm();
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ParametersOnStartEdit(Item, NewRow, Clone)
+	
+	If Item.CurrentItem = Items.ParametersPresentation Then
+	
+		StandardProcessing = False;
+		
+		OpenEditParameterValueForm();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenEditParameterValueForm()
+	
+	If IsPicture(Items.Parameters.CurrentData.Parameter) Then
+		
+		OpenPickPictureFromForm("Parameters", "PictureAddress", "PictureExtension", GetParametersAliases());
+		
+	Else
+		
+		OpenOutletParameterValueInputForm();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenOutletParameterValueInputForm()
+	
+	CurrentRowId = Items.Parameters.CurrentData.GetID();
+	CurrentRowData = Object.Parameters.FindByID(CurrentRowId);
+	
+	InputFormParameters = GetInputFormParameters(CurrentRowData);
+	
+	OpenForm("CommonForm.OutletParameterValueInputForm", 
+		InputFormParameters,
+		ThisForm, 
+		, 
+		, 
+		, 
+		New NotifyDescription("OutletParameterValueInputProcessing", ThisForm));
+
+EndProcedure
+
+&AtClient
+Procedure OutletParameterValueInputProcessing(Result, AdditionalParameter) Export
+	
+	If Result = Undefined Then
+		
+		Items.Parameters.EndEditRow(True);
+		
+	Else
+		
+		ObjectRow = Object.Parameters.FindByID(Result.StringNumber);
+		
+		ObjectRow.Value = Result.Str;
+		ObjectRow.Presentation = ObjectRow.Value;
+		
+		Items.Parameters.EndEditRow(False);
+		
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure 
+
+&AtClient
+Procedure ProcessParameters()
+	
+	NewParametersArray = GetNewParameters();
+	
+	AddNewParameters(NewParametersArray);
+	
+	FillParametersAdditionalInformation();
+	
+EndProcedure
+
+&AtClient
+Procedure AddNewParameters(ParametersArray)
+	
+	// Строка добавленных параметров. Нужна для вывода сообщения.
+	AddedParameters = New Array;
+	
+	// Новые параметры добавляются в конец таблицы параметров.
+	For Each Parameter In ParametersArray Do
+		
+		NewRow = Object.Parameters.Add();
+		NewRow.Parameter = Parameter;
+		
+	EndDo;
+	
+	MustShowMessage = ValueIsFilled(Object.Ref) AND ParametersArray.Count() > 0;
+	
+	If MustShowMessage Then
+		
+		ShowMessageBox( , 
+			NStr("en = 'In ""Parameters"" value table of this outlet were added elements of catalog ""Outlet parameters"" that were not present in value table. You must write outlet in order to save changes.'; 
+				|ru = 'В табличную часть ""Параметры"" данной торговой точки были добавлены элементы справочника ""Параметры торговой точки"". Необходимо записать данную точку для сохранения изменений.'"),
+			0,
+			NStr("en = 'Parameters updated'; ru = 'Параметры обновлены'"));
+		
+		
+		For Each Parameter In ParametersArray Do
+			
+			Message(Parameter);
+			
+		EndDo;
+		
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Function GetInputFormParameters(CurrentData)
+	
+	InputFormParameters = New Structure;
+	InputFormParameters.Insert("StringNumber", CurrentData.GetID());
+	InputFormParameters.Insert("OutletParameter", CurrentData.Parameter);
+	InputFormParameters.Insert("PreviousValue", CurrentData.Value);
+	
+	Return InputFormParameters;
+	
+EndFunction
+
+#EndRegion
+
+#Region ParametersPictures
+
+&AtClient
+Procedure OpenPicture(Command)
+	
+	FileName = Undefined;
+	
+	If Items.Pages.CurrentPage = Items.GroupParameters Then
+		
+		CurrentData = Items.Parameters.CurrentData;
+		FileNameColumnName = "Value";
+		
+	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
+		
+		CurrentData = Items.Snapshots.CurrentData;
+		FileNameColumnName = "FileName";
+		
+	EndIf;
+	
+	If Not CurrentData = Undefined Then
+		
+		If ValueIsFilled(CurrentData[FileNameColumnName]) Then
+			
+			FileName = String(CurrentData[FileNameColumnName]) + String(CurrentData.Extension);
+			
+		EndIf;
+		
+	EndIf;
+	
+	If ValueIsFilled(FileName) Then
+		
+		GetFile(CurrentData.StorageAddress, FileName, True);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure EditPicture(Command)
+	
+	If Items.Pages.CurrentPage = Items.GroupParameters Then
+		
+		OpenPickPictureFromForm("Parameters", "PictureAddress", "PictureExtension", GetParametersAliases());
+		
+	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
+		
+		OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension");
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure DeletePicture(Command)
+	
+	If Items.Pages.CurrentPage = Items.GroupParameters Then
+	
+		CurrentData = Items.Parameters.CurrentData;
+		ValueTableName = "Parameters";
+		FileNameColumnName = "Value";
+		PictureAttributeName = "PictureAddress";
+		ExtensionAttributeName = "PictureExtension";
+		
+	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
+		
+		CurrentData = Items.Snapshots.CurrentData;
+		ValueTableName = "Snapshots";
+		FileNameColumnName = "FileName";
+		PictureAttributeName = "OutletSnapshotAddress";
+		ExtensionAttributeName = "OutletSnapshotExtension";
+		
+	EndIf;
+	
+	If Not CurrentData = Undefined Then
+			
+		CurrentRowId = CurrentData.GetID();
+		
+		ObjectRow = Object[ValueTableName].FindByID(CurrentRowId);
+		
+		ObjectRow[FileNameColumnName] = Undefined;
+		ObjectRow.StorageAddress = Undefined;
+		ObjectRow.Extension = Undefined;
+		ObjectRow.Type = "NoSnapshot";
+		
+		ThisForm[PictureAttributeName] = "";
+		ThisForm[ExtensionAttributeName] = "";
+		
+		Modified = True;
+		
+	EndIf;	
+	
+EndProcedure
+
+&AtClient
+Procedure PictureAddressClick(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	If Not Items.Parameters.CurrentData = Undefined Then
+		
+		If HaveEditParametersRight Then
+			
+			OpenPickPictureFromForm("Parameters", "PictureAddress", "PictureExtension", GetParametersAliases());
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenPickPictureFromForm(FormTableName, PictureAttribute, ExtensionAttribute, Aliases = Undefined)
+	
+	If Not Items[FormTableName].CurrentData = Undefined Then
+		
+		AdditionalParameters = New Structure;
+		AdditionalParameters.Insert("FormTableName", FormTableName);
+		AdditionalParameters.Insert("PictureAttribute", PictureAttribute);
+		AdditionalParameters.Insert("ExtensionAttribute", ExtensionAttribute);
+		AdditionalParameters.Insert("Aliases", ?(Aliases = Undefined, New Structure, Aliases));
+		AdditionalParameters.Insert("RowId", Items[FormTableName].CurrentData.GetID());
+		
+		OpenForm("CommonForm.PickPictureFromForm", 
+			, 
+			ThisForm, 
+			, 
+			, 
+			, 
+			New NotifyDescription("SelectPictureProcessing", ThisForm, AdditionalParameters));
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SelectPictureProcessing(Result, AdditionalParameter) Export
+	
+	If Not Result = Undefined Then
+		
+		ObjectRow = Object[AdditionalParameter.FormTableName].FindByID(AdditionalParameter.RowId);
+		FillPropertyValues(ObjectRow, Result);
+		Items[AdditionalParameter.FormTableName].EndEditRow(False);
+		
+		ThisForm[AdditionalParameter.PictureAttribute] = ObjectRow.StorageAddress;
+		ThisForm[AdditionalParameter.ExtensionAttribute] = ObjectRow.Extension;
+		
+		Modified = True;
+		
+	Else
+		
+		Items[AdditionalParameter.FormTableName].EndEditRow(True);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Function GetParametersAliases()
+	
+	Aliases = New Structure;
+	Aliases.Insert("FileName", "Value");
+	
+	Return Aliases;
+	
+EndFunction
+
+#EndRegion
+
+#Region Territories
+
+&AtClient
+Procedure TerritoriesListValueOnChange(Item)
+	
+	OutletValue 		= Items.TerritoriesList.CurrentData.Value;
+	
+	ParametersFilter 	= New Structure("Value", OutletValue);
+	
+	FoundRows 			= TerritoriesList.FindRows(ParametersFilter);
+	
+	If FoundRows.count() > 1 Then
+		
+		Message(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Prices
+
+&AtClient
+Procedure PricesPriceListOnChange(Item)
+	
+	requestMap = New Map;
+	requestMap.Insert("pName", "PriceList");
+	requestMap.Insert("checkingItem", Items.Prices.CurrentData);
+	requestMap.Insert("tabularSection", Object.Prices);
+	
+	ClientProcessors.UniqueRows(requestMap);
+	
+EndProcedure
+
+&AtClient
+Procedure PricesPriceListStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	OpenForm("Document.PriceList.ChoiceForm", , Item);
+	
+EndProcedure
+
+#EndRegion
+
+#Region Snapshots
+
+&AtClient
+Procedure SnapshotsOnActivateRow(Item)
+	
+	If Not Item.CurrentData = Undefined Then
+	
+		ThisForm.OutletSnapshotAddress = Item.CurrentData.StorageAddress;
+		ThisForm.OutletSnapshotExtension = Item.CurrentData.Extension;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SnapshotsOnStartEdit(Item, NewRow, Clone)
+	
+	If Item.CurrentItem = Items.SnapshotsPresentation Then
+		
+		OpenPickPictureFromForm("Snapshots","OutletSnapshotAddress", "OutletSnapshotExtension");
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SnapshotsSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	If Item.CurrentItem = Items.SnapshotsPresentation Then
+		
+		StandardProcessing = False;
+		
+		If HaveEditParametersRight Then
+			
+			OpenPickPictureFromForm("Snapshots","OutletSnapshotAddress", "OutletSnapshotExtension");
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	If Not Items.Snapshots.CurrentData = Undefined Then 
+		
+		If HaveEditParametersRight Then
+		
+			OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension", GetParametersAliases());
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SnapshotsBeforeAddRow(Item, Cancel, Clone, Parent, Folder, Parameter)
+	
+
+	
+EndProcedure
+
+#EndRegion
+
+#EndRegion
 

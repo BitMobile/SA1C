@@ -83,7 +83,7 @@
 			<field>Qty</field>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	OrderSKUs.Ref.SR,
 	OrderSKUs.Ref.Outlet,
 	OrderSKUs.Ref AS Order,

@@ -10,7 +10,7 @@ Procedure FillSKUServer()
 
 	Query = New Query;
     Query.Text = 
-    "SELECT
+    "SELECT ALLOWED
     |   SKU.Ref
     |FROM
     |   Catalog.SKU AS SKU";
@@ -52,7 +52,7 @@ Function PriceCheck()
         
         Query = New Query;
         Query.Text = 
-            "SELECT
+            "SELECT ALLOWED
             |   PriceListPrices.SKU.Ref AS SKURef,
             |   PriceListPrices.Ref.Ref
             |FROM

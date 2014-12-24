@@ -74,6 +74,11 @@
 					<ContextMenu name="UserNameContextMenu" id="13"/>
 					<ExtendedTooltip name="UserNameРасширеннаяПодсказка" id="28"/>
 				</LabelField>
+				<LabelField name="RoleOfUser" id="31">
+					<DataPath>List.RoleOfUser</DataPath>
+					<ContextMenu name="RoleOfUserContextMenu" id="32"/>
+					<ExtendedTooltip name="RoleOfUserExtendedTooltip" id="33"/>
+				</LabelField>
 				<LabelField name="Manager" id="8">
 					<DataPath>List.Manager</DataPath>
 					<ContextMenu name="ManagerContextMenu" id="9"/>
@@ -83,11 +88,6 @@
 					<DataPath>List.EMail</DataPath>
 					<ContextMenu name="EMailContextMenu" id="11"/>
 					<ExtendedTooltip name="EMailРасширеннаяПодсказка" id="30"/>
-				</LabelField>
-				<LabelField name="Роль" id="14">
-					<DataPath>1/12</DataPath>
-					<ContextMenu name="РольContextMenu" id="15"/>
-					<ExtendedTooltip name="РольРасширеннаяПодсказка" id="31"/>
 				</LabelField>
 			</ChildItems>
 		</Table>

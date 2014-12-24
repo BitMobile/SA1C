@@ -11,7 +11,7 @@ EndProcedure
 Function CheckVisitPlans()
 
 	Query = New Query;
-	Query.Text = "SELECT
+	Query.Text = "SELECT ALLOWED
 	             |	VisitPlan.SR,
 	             |	VisitPlan.Year,
 	             |	VisitPlan.WeekNumber
@@ -76,7 +76,7 @@ EndProcedure
 	
 	Query = New Query;
 	Query.Text = 
-	"SELECT
+	"SELECT ALLOWED
     |	TerritoryOutlets.Outlet.Ref AS Outlet
     |FROM
     |	Catalog.Territory.Outlets AS TerritoryOutlets
@@ -184,7 +184,7 @@ EndProcedure
 	Query = New Query;
 	Query.TempTablesManager =   МенеджерВременныхТаблиц;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	VisitPlanOutlets.Outlet AS Outlet,
 		|	WEEKDAY(VisitPlanOutlets.Date) AS ИндексДня,
         |   VisitPlanOutlets.Date AS Time,
@@ -195,7 +195,7 @@ EndProcedure
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	Таблица.Outlet AS Outlet,
 		|	Таблица.ИндексДня,
         |   Таблица.Time,
@@ -743,7 +743,7 @@ Procedure ЗаполнитьПоДокументу (DocRef)
 	Query = New Query;
 	Query.TempTablesManager =   МенеджерВременныхТаблиц;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	VisitPlanOutlets.Outlet AS Outlet,
 		|	WEEKDAY(VisitPlanOutlets.Date) AS ИндексДня,
         |   VisitPlanOutlets.Date AS Time,
@@ -754,7 +754,7 @@ Procedure ЗаполнитьПоДокументу (DocRef)
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	Таблица.Outlet AS Outlet,
 		|	Таблица.ИндексДня,
         |   Таблица.Time,
@@ -1095,7 +1095,7 @@ Function FindTasks(Parameters)
 		
 		//bit_rumyantseva_alena 29/03/2013
 		Query = New Query;
-		Query.Text = "SELECT
+		Query.Text = "SELECT ALLOWED
 		             |	Task.Ref
 		             |FROM
 		             |	Document.Task AS Task
@@ -1172,12 +1172,12 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	if EventName="GetWeek" Then
 		
 		ВыбранныйЭлемент = Parameter;
-		Object.WeekNumber = WeekOfYear(ВыбранныйЭлемент.Значение);
-		WeekNumber = WeekOfYear(ВыбранныйЭлемент.Значение);
+		Object.WeekNumber = GetWeekOfYear(ВыбранныйЭлемент.Значение);
+		WeekNumber = GetWeekOfYear(ВыбранныйЭлемент.Значение);
 		Object.DateFrom = ВыбранныйЭлемент.Значение;
 		
 		lWeekNumber = Object.WeekNumber;
-		Object.WeekNumber = ?(lWeekNumber > WeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
+		Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
 		Если Object.WeekNumber = 0 Тогда
 			Object.WeekNumber = 1;
 		КонецЕсли;	

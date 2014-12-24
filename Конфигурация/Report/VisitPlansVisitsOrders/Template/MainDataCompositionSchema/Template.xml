@@ -23,7 +23,7 @@
 			<field>VisitPlan</field>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	COUNT(VisitPlanOutlets.Date) AS VisitPlan,
 	VisitPlanOutlets.Ref.SR AS SR_visitplan
 INTO T_VisitPlan
@@ -37,7 +37,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	COUNT(Visit.Date) AS Visit,
 	Visit.SR AS SR_visit
 INTO T_Visit
@@ -51,7 +51,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	COUNT(Order.Date) AS Order,
 	Order.SR AS SR_order
 INTO T_Order
@@ -65,7 +65,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	User.Ref AS SR
 INTO T_Users
 FROM
@@ -75,7 +75,7 @@ WHERE
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	T_Order.Order,
 	T_Visit.Visit,
 	T_VisitPlan.VisitPlan,

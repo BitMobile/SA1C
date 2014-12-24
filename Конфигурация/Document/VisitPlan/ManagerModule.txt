@@ -10,7 +10,7 @@
     Query = new Query;
 	
 	Query.SetParameter("Ref", ДокументСсылка);
-	Query.Text = "SELECT
+	Query.Text = "SELECT ALLOWED
 	             |	VisitPlan.Ref,
 	             |	VisitPlan.Date,
 	             |	VisitPlan.DateFrom,
@@ -30,7 +30,7 @@
 
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	VisitPlanOutlets.Outlet AS Outlet,
 		|	VisitPlanOutlets.Date
 		|FROM

@@ -1,562 +1,490 @@
-﻿////////////////////////////////////////////////////////////////////////////////
-// ОБРАБОТЧИКИ СОБЫТИЙ ФОРМЫ
+﻿
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	// Кэш проверки
-	ЭтоНовый = Object.Ссылка.Пустая();
-
-	//Если ПараметрыСеанса.ТекущийПользователь.Role <> "Admin" И НЕ ЭтоНовый Тогда
+	If Object.Role = "Admin" Then 
 		
-	Если Object.Role = "Admin" тогда
-		Сообщить(NStr("ru = ""Нельзя изменять пользователей с полными правами""; en = ""Changing users with full rights is enabled"""));
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("ru = ""Нельзя изменять пользователей с полными правами""; en = ""Changing users with full rights is disabled""");
+		
+		UserMessage.Message();
+		
 		ThisForm.ReadOnly = True;
-	КонецЕсли;
-
-	//КонецЕсли;	
+		
+		Items.RoleOfUser.Visible = False;
+		
+	EndIf;
 	
-	// Заполнение списка выбора языка.
-	Если Метаданные.Языки.Количество() < 2 Тогда
-		Элементы.ПользовательИнфБазыЯзык.Видимость = Ложь;
-	Иначе
-		Для каждого МетаданныеЯзыка ИЗ Метаданные.Языки Цикл
+	// Заполнить языки интерфейса
+	If Metadata.Languages.Count() < 2 Then 
+		
+		Items.InterfaceLanguage.Visible = False;
+		
+	Else 
+		
+		For Each MetaLanguage In Metadata.Languages Do 
 			
-			Элементы.ПользовательИнфБазыЯзык.СписокВыбора.Добавить(
-			МетаданныеЯзыка.Имя, МетаданныеЯзыка.Синоним);
-		КонецЦикла;
-	КонецЕсли;
-
-	// Заполнение списка выбора режимов запуска.
-	Для каждого РежимЗапуска Из РежимЗапускаКлиентскогоПриложения Цикл
-		ПолноеИмяЗначения = ПолучитьПолноеИмяПредопределенногоЗначения(РежимЗапуска);
-		ИмяЗначения = Сред(ПолноеИмяЗначения, Найти(ПолноеИмяЗначения, ".") + 1);
-		Элементы.ПользовательИнфБазыРежимЗапуска.СписокВыбора.Добавить(ИмяЗначения, Строка(РежимЗапуска));
-	КонецЦикла;
-	Элементы.ПользовательИнфБазыРежимЗапуска.СписокВыбора.СортироватьПоПредставлению();
+			Items.InterfaceLanguage.ChoiceList.Add(MetaLanguage.Name);
+			
+		EndDo;
+		
+	EndIf;
+		
+	// Первоначальное заполнение пользователя
+	If Not ValueIsFilled(Object.Ref) Then 
+		
+		Object.InterfaceLanguage = Metadata.Languages.Русский.Name;
+		
+	EndIf;
 	
-	Для каждого Роль Из Метаданные.Роли Цикл
-		Если Роль.Name = "Admin" Или Роль.Name = "bitmobile_Администратор" Или Роль.Name = "bitmobile_Пользователь" Тогда
-			Продолжить;
-		Иначе	
-			Элементы.Role.СписокВыбора.Добавить(Роль.Name, Строка(Роль.Synonym));
-		КонецЕсли;
-	КонецЦикла;
+	FillRegions();
+	FillTerritories();
 	
-	
-	// Подготовка к интерактивным действиям с учетом сценариев открытия формы.
-	УстановитьПривилегированныйРежим(Истина);
-
-	Если НЕ ЗначениеЗаполнено(Object.Ссылка) Тогда
-		// Создание нового элемента.
-		Если ЗначениеЗаполнено(Параметры.ЗначениеКопирования) Тогда
-			// Копирование элемента.
-			ЗначениеКопирования = Параметры.ЗначениеКопирования;
-			Object.UserName = "";
-			ПрочитатьПользователяИБ(
-			ЗначениеЗаполнено(Параметры.ЗначениеКопирования.UserID));
-		Иначе
-			// Добавление элемента.
-			Object.UserID = Параметры.UserID;
-			// Чтение начальных значений свойств пользователя ИБ.
-			ПрочитатьПользователяИБ();
-		КонецЕсли;
-	Иначе
-		// Открытие существующего элемента.
-		ПрочитатьПользователяИБ();
-	КонецЕсли;
-	
-	УстановитьПривилегированныйРежим(Ложь);
-
-	ОпределитьДействияВФорме();
-
-	ОпределитьНесоответствияПользователяСПользователемИБ();
-
 EndProcedure
 
-&НаКлиенте
-Процедура ПередЗаписью(Отказ)
-    	
-	Если ДоступКИнформационнойБазеРазрешен Тогда
-		ЗаголовокВопросов = НСтр("en = 'Запись пользователя информационной базы'");
-	КонецЕсли;
+&AtServer
+Procedure FillCheckProcessingAtServer(Cancel, CheckedAttributes)
 	
-	Если Отказ Тогда
-		Возврат;
-	КонецЕсли;
+	If Not Object.Role = "Admin" Then 
 	
-КонецПроцедуры
-
-&НаСервере
-Процедура ПередЗаписьюНаСервере(Отказ, ТекущийОбъект, ПараметрыЗаписи)
-	
-	ТекущийОбъект.ДополнительныеСвойства.Вставить("ЗначениеКопирования", ЗначениеКопирования);
-	
-	ДоступКИнформационнойБазеРазрешен = ТекущийОбъект.Role = "SRM";
-	
-	ПользовательИнфБазыИмя = Object.UserName;
-	ПользовательИнфБазыПолноеИмя = Object.Description;
-	ПользовательИнфБазыПароль = Object.Password;
-	Пароль = Object.Password;
-	ПодтверждениеПароля =  Object.Password;
-	ПользовательИнфБазыАутентификацияСтандартная =  ДоступКИнформационнойБазеРазрешен;
-	ПользовательИнфБазыЗапрещеноИзменятьПароль   =  ДоступКИнформационнойБазеРазрешен;
-	ПользовательИнфБазыПоказыватьВСпискеВыбора   =  Ложь;
-	ПользовательИнфБазыЯзык = Object.InterfaceLanguage;
-
-	// Восстановление действий в форме, если они изменены на клиенте
-	ОпределитьДействияВФорме();
-	
-	Если ДействияВФорме.СвойстваПользователяИБ = "РедактированиеВсех"
-	 ИЛИ ДействияВФорме.СвойстваПользователяИБ = "РедактированиеСвоих" Тогда
-		
-		ОписаниеПользователяИБ = ОписаниеПользователяИБ();
-		ОписаниеПользователяИБ.Удалить("ПодтверждениеПароля");
-		
-		Если ДоступКИнформационнойБазеРазрешен Тогда
-			ОписаниеПользователяИБ.Вставить("Действие", "Записать");
-		Иначе
-			ОписаниеПользователяИБ.Вставить("Действие", "Удалить");
-		КонецЕсли;
-		
-		ТекущийОбъект.ДополнительныеСвойства.Вставить(
-			"ОписаниеПользователяИБ", ОписаниеПользователяИБ);
-	КонецЕсли;
-	
-	Если ДействияВФорме.СвойстваЭлемента <> "Редактирование" Тогда
-		
-		ЗаполнитьЗначенияСвойств(
-			ТекущийОбъект,
-			ОбщегоНазначения.ЗначенияРеквизитовОбъекта(
-				ТекущийОбъект.Ссылка, "Наименование, ПометкаУдаления"));
-	КонецЕсли;
-	
-КонецПроцедуры
-
-&НаСервере
-Процедура ПослеЗаписиНаСервере(ТекущийОбъект, ПараметрыЗаписи)
-	
-	ТребуетсяСинхронизацияССервисом = Ложь;
-	
-	ПараметрыЗаписи.Вставить(
-		ТекущийОбъект.ДополнительныеСвойства.ОписаниеПользователяИБ.РезультатДействия);
-	
-	ПрочитатьПользователяИБ();
-	
-	ОпределитьНесоответствияПользователяСПользователемИБ(ПараметрыЗаписи);
-	
-КонецПроцедуры
-
-&НаКлиенте
-Процедура ПослеЗаписи(ПараметрыЗаписи)
-	
-	Оповестить("Запись_Пользователи", Новый Структура, Object.Ссылка);
-	
-	Если ПараметрыЗаписи.Свойство("ДобавленПользовательИБ") Тогда
-		Оповестить("ДобавленПользовательИБ", ПараметрыЗаписи.ДобавленПользовательИБ, ЭтаФорма);
-		
-	ИначеЕсли ПараметрыЗаписи.Свойство("ИзмененПользовательИБ") Тогда
-		Оповестить("ИзмененПользовательИБ", ПараметрыЗаписи.ИзмененПользовательИБ, ЭтаФорма);
-		
-	ИначеЕсли ПараметрыЗаписи.Свойство("УдаленПользовательИБ") Тогда
-		Оповестить("УдаленПользовательИБ", ПараметрыЗаписи.УдаленПользовательИБ, ЭтаФорма);
-		
-	ИначеЕсли ПараметрыЗаписи.Свойство("ОчищенаСвязьСНесуществующимПользователемИБ") Тогда
-		Оповестить(
-			"ОчищенаСвязьСНесуществующимПользователемИБ",
-			ПараметрыЗаписи.ОчищенаСвязьСНесуществующимПользователемИБ,
-			ЭтаФорма);
-	КонецЕсли;
-	
-КонецПроцедуры
-
-&НаСервере
-Процедура ОбработкаПроверкиЗаполненияНаСервере(Отказ, ПроверяемыеРеквизиты)
-	
-	Если ДоступКИнформационнойБазеРазрешен Тогда
-		
-		ОписаниеПользователяИБ = ОписаниеПользователяИБ();
-		ОписаниеПользователяИБ.Вставить("UserID", Object.UserID);
-		ПользователиСлужебный.ПроверитьОписаниеПользователяИБ(ОписаниеПользователяИБ, Отказ);
-	КонецЕсли;
-	
-КонецПроцедуры
-
-
-////////////////////////////////////////////////////////////////////////////////
-// ОБРАБОТЧИКИ СОБЫТИЙ ЭЛЕМЕНТОВ ШАПКИ ФОРМЫ
-
-&НаКлиенте
-Процедура ЗаполнитьПолноеИмяПоПользователюИБ(Команда)
-	
-	Object.Description = ПользовательИнфБазыПолноеИмя;
-	Элементы.ПолноеИмяОбработкаНесоответствия.Видимость = Ложь;
-	
-КонецПроцедуры
-
-&НаКлиенте
-Процедура ДоступКИнформационнойБазеРазрешенПриИзменении(Элемент)
-	
-	Если НЕ ПользовательИБСуществует
-	   И ДоступКИнформационнойБазеРазрешен Тогда
-		
-		ПользовательИнфБазыИмя =
-			ОбщегоНазначенияКлиентСервер.ПолучитьКраткоеИмяПользователяИБ(
-				Object.UserName);
-		
-		ПользовательИнфБазыПолноеИмя = Object.Description;
-	КонецЕсли;
-	
-КонецПроцедуры
-
-&НаКлиенте
-Процедура ПользовательИнфБазыРежимЗапускаОчистка(Элемент, СтандартнаяОбработка)
-	
-	СтандартнаяОбработка = Ложь;
-	
-КонецПроцедуры
-
-////////////////////////////////////////////////////////////////////////////////
-// ОБРАБОТЧИКИ КОМАНД ФОРМЫ
-
-////////////////////////////////////////////////////////////////////////////////
-// СЛУЖЕБНЫЕ ПРОЦЕДУРЫ И ФУНКЦИИ
-
-&НаСервере
-Процедура ОпределитьДействияВФорме()
-	
-	ДействияВФорме = Новый Структура;
-	
-	// "", "Просмотр", "Редактирование".
-	ДействияВФорме.Вставить("Роли", "");
-	
-	// "", "ПросмотрВсех", "РедактированиеВсех", "РедактированиеСвоих".
-	ДействияВФорме.Вставить("СвойстваПользователяИБ", "");
-	
-	// "", "Просмотр", "Редактирование".
-	ДействияВФорме.Вставить("СвойстваЭлемента", "");
-	
-	//Если Пользователи.ЭтоПолноправныйПользователь() Тогда
-		// Администратор.
-		ДействияВФорме.Роли                   = "Редактирование";
-		ДействияВФорме.СвойстваПользователяИБ = "РедактированиеВсех";
-		ДействияВФорме.СвойстваЭлемента       = "Редактирование";
-		
-	//ИначеЕсли РольДоступна("ДобавлениеИзменениеПользователей")
-	//		И НЕ Пользователи.ЭтоПолноправныйПользователь(Object.Ссылка) Тогда
-	//	ДействияВФорме.Роли                   = "";
-	//	ДействияВФорме.СвойстваПользователяИБ = "РедактированиеВсех";
-	//	ДействияВФорме.СвойстваЭлемента       = "Редактирование";
-	//Иначе
-	//	// Чужие свойства.
-	//	ДействияВФорме.Роли                   = "";
-	//	ДействияВФорме.СвойстваПользователяИБ = "";
-	//	ДействияВФорме.СвойстваЭлемента       = "Просмотр";
-	//КонецЕсли;
-	
-	// Проверка имен действий в форме.
-	Если Найти(", Просмотр, Редактирование,", ", " + ДействияВФорме.Роли + ",") = 0 Тогда
-		ДействияВФорме.Роли = "";
-	КонецЕсли;
-	
-	Если Найти(", ПросмотрВсех, РедактированиеВсех, РедактированиеСвоих,",
-	           ", " + ДействияВФорме.СвойстваПользователяИБ + ",") = 0 Тогда
-		ДействияВФорме.СвойстваПользователяИБ = "";
-	КонецЕсли;
-	
-	Если Найти(", Просмотр, Редактирование,", ", " + ДействияВФорме.СвойстваЭлемента + ",") = 0 Тогда
-		ДействияВФорме.СвойстваЭлемента = "";
-	КонецЕсли;
-	
-КонецПроцедуры
-
-&НаСервере
-Функция ОписаниеПользователяИБ()
-	
-	ПользовательИнфБазыПолноеИмя = Object.Description;
-	
-	Если ДействияВФорме.СвойстваПользователяИБ = "РедактированиеВсех" Тогда
-		
-		Результат = Пользователи.НовоеОписаниеПользователяИБ();
-		Пользователи.СкопироватьСвойстваПользователяИБ(
-			Результат,
-			ЭтаФорма,
-			,
-			"УникальныйИдентификатор,
-			|Роли",
-			"ПользовательИнфБазы");
-		
-	Иначе
-		// РедактированиеСвоих.
-		Результат = Новый Структура;
-		Результат.Вставить("Пароль", ПользовательИнфБазыПароль);
-		Результат.Вставить("Язык",   ПользовательИнфБазыЯзык);
-	КонецЕсли;
-	Результат.Вставить("ПодтверждениеПароля", ПодтверждениеПароля);
-	
-	Если ДействияВФорме.Роли = "Редактирование" Тогда
-		ТекущиеРоли = Новый Массив;
-		ТекущиеРоли.Добавить(Object.Role);
-		
-		Если Object.Role = "SRM" Тогда
+		If Not ValueIsFilled(Object.RoleOfUser) Then 
 			
-			ТекущиеРоли.Добавить("bitmobile_Пользователь");	
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("ru = ""Не заполнена роль пользователя""; en = ""Not filled role of user""");
 			
-		КонецЕсли;	
+			UserMessage.Message();
+			
+			Cancel = True;
+			
+		EndIf;
 		
-		Результат.Вставить("Роли", ТекущиеРоли);
-	КонецЕсли;
+	EndIf;
 	
-	Возврат Результат;
+	If Not ValueIsFilled(Object.Password) Then 
+			
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("ru = ""Запрещено создавать пользователей с пустым паролем""; en = ""It is forbidden to create a user with a blank password""");
+		
+		UserMessage.Message();
+		
+		Cancel = True;
+		
+	EndIf;
 	
-КонецФункции
+	If Not ValueIsFilled(Object.InterfaceLanguage) Then 
+			
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("ru = ""Не заполнен язык интерфейса""; en = ""Not filled interface language""");
+		
+		UserMessage.Message();
+		
+		Cancel = True;
+		
+	EndIf;
+	
+EndProcedure
 
-////////////////////////////////////////////////////////////////////////////////
-// Обработка пользователя ИБ.
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	// Проверить заполнение таблиц регионов и территорий
+	If Object.RoleOfUser.Role = "SRM_SR" Or Object.RoleOfUser.Role = "SRM" Then 
+		
+		If Regions.Count() = 0 Then 
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'User has access to the information base, the list of regions must be filled.'; ru = 'Пользователь имеет доступ в информационную базу, список регионов должен быть заполнен.'");
+			
+			UserMessage.Message();
+			
+			Cancel = True;
+			
+		EndIf;
+		
+	EndIf;
+	
+	If Object.RoleOfUser.Role = "SRM_SR" Or Object.RoleOfUser.Role = "SR" Then 
+		
+		If Territories.Count() = 0 Then 
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'User has access to a mobile application, the list of territories must be filled.'; ru = 'Пользователь имеет доступ к мобильному приложению, список территорий должен быть заполнен.'");
+			
+			UserMessage.Message();
+			
+			Cancel = True;
+			
+		EndIf;
+		
+	EndIf;
+	
+	If Not Cancel Then 
+	
+		// Записать пользователя в регионы
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED
+			|	RegionManagers.Ref AS Region
+			|FROM
+			|	Catalog.Region.Managers AS RegionManagers
+			|WHERE
+			|	RegionManagers.Manager = &User
+			|	AND NOT RegionManagers.Ref IN (&RGArray)";
+		
+		Query.SetParameter("User", Object.Ref);
+		Query.SetParameter("RGArray", Regions.Unload().UnloadColumn("Region"));
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
+			
+			RGObject = Selection.Region.GetObject();
+			
+			FoundString = RGObject.Managers.Find(Object.Ref);
+			
+			If Not FoundString = Undefined Then 
+				
+				RGObject.Managers.Delete(FoundString);
+				
+			EndIf;
+			
+			RGObject.Write();
+			
+		EndDo;
+			
+		For Each Row In Regions Do 
+			
+			RGObject = Row.Region.GetObject();
+			
+			FoundString = RGObject.Managers.Find(Object.Ref);
+			
+			If FoundString = Undefined Then 
+				
+				NewRow					= RGObject.Managers.Add();
+				NewRow.Manager			= Object.Ref;
+				NewRow.LineNumberInUser	= Row.LineNumber;
+				
+			Else 
+				
+				FoundString.LineNumberInUser = Row.LineNumber;
+				
+			EndIf;
+			
+			RGObject.Write();
+			
+		EndDo;
+		
+		// Записать пользователя в территории
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED
+			|	TerritorySRs.Ref AS Territory
+			|FROM
+			|	Catalog.Territory.SRs AS TerritorySRs
+			|WHERE
+			|	TerritorySRs.SR = &User
+			|	AND NOT TerritorySRs.Ref IN (&TRArray)";
+		
+		Query.SetParameter("User", Object.Ref);
+		Query.SetParameter("TRArray", Territories.Unload().UnloadColumn("Territory"));
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
+			
+			TRObject = Selection.Territory.GetObject();
+			
+			FoundString = TRObject.SRs.Find(Object.Ref);
+			
+			If Not FoundString = Undefined Then 
+				
+				TRObject.SRs.Delete(FoundString);
+				
+			EndIf;
+			
+			TRObject.Write();
+			
+		EndDo;
+			
+		For Each Row In Territories Do 
+			
+			TRObject = Row.Territory.GetObject();
+			
+			FoundString = TRObject.SRs.Find(Object.Ref);
+			
+			If FoundString = Undefined Then 
+				
+				NewRow					= TRObject.SRs.Add();
+				NewRow.SR				= Object.Ref;
+				NewRow.LineNumberInUser	= Row.LineNumber;
+				
+			Else 
+				
+				FoundString.LineNumberInUser = Row.LineNumber;
+				
+			EndIf;
+			
+			TRObject.Write();
+			
+		EndDo;
+		
+	EndIf;
+	
+EndProcedure
 
-&НаСервере
-Процедура ПрочитатьПользователяИБ(ПриКопированииЭлемента = Ложь)
+&AtServer
+Procedure FillRegions()
 	
-	УстановитьПривилегированныйРежим(Истина);
+	// Заполнить регионы
+	Regions.Clear();
 	
-	Пароль              = "";
-	ПодтверждениеПароля = "";
-	ПрочитанныеСвойства               = Неопределено;
-	ОписаниеПользователяИБ            = Пользователи.НовоеОписаниеПользователяИБ();
-	ПользовательИБСуществует          = Ложь;
-	ДоступКИнформационнойБазеРазрешен = Ложь;
+	If ValueIsFilled(Object.Ref) Then 
 	
-	ОписаниеПользователяИБ.ПоказыватьВСпискеВыбора = Ложь;
-	ОписаниеПользователяИБ.АутентификацияСтандартная = Истина;
-	ОписаниеПользователяИБ.Роли = Новый Массив;
-	Если  NOT IsBlankString(TrimAll(Object.InterfaceLanguage)) Тогда 
-		ОписаниеПользователяИБ.Язык = Object.InterfaceLanguage;
-	КонецЕсли;
-	
-	Если ПриКопированииЭлемента Тогда
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED DISTINCT
+			|	RegionManagers.Ref AS Region,
+			|	RegionManagers.LineNumberInUser AS LineNumberInUser
+			|FROM
+			|	Catalog.Region.Managers AS RegionManagers
+			|WHERE
+			|	RegionManagers.Manager = &User
+			|
+			|ORDER BY
+			|	LineNumberInUser";
 		
-		Если Пользователи.ПрочитатьПользователяИБ(
-		         Параметры.ЗначениеКопирования.UserID,
-		         ПрочитанныеСвойства) Тогда
-			
-			// Установка связи пользователем ИБ.
-			ДоступКИнформационнойБазеРазрешен = Истина;
-			
-			// Копирование свойств и ролей пользователяИБ.
-			ЗаполнитьЗначенияСвойств(
-				ОписаниеПользователяИБ,
-				ПрочитанныеСвойства,
-				"АутентификацияOpenID,
-				|АутентификацияСтандартная,
-				|ЗапрещеноИзменятьПароль,
-				|ПоказыватьВСпискеВыбора,
-				|АутентификацияОС,
-				|РежимЗапуска,
-				|Язык,
-				|Роли");
-		КонецЕсли;
-		Object.UserID = Неопределено;
-	Иначе
-		Если Пользователи.ПрочитатьПользователяИБ(
-		         Object.UserID,
-		         ПрочитанныеСвойства) Тогда
+		Query.SetParameter("User", Object.Ref);
 		
-			ПользовательИБСуществует          = Истина;
-			ДоступКИнформационнойБазеРазрешен = Истина;
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
 			
-			ЗаполнитьЗначенияСвойств(
-				ОписаниеПользователяИБ,
-				ПрочитанныеСвойства,
-				"Имя,
-				|ПолноеИмя,
-				|АутентификацияOpenID,
-				|АутентификацияСтандартная,
-				|ПоказыватьВСпискеВыбора,
-				|ЗапрещеноИзменятьПароль,
-				|АутентификацияОС,
-				|ПользовательОС,
-				|РежимЗапуска,
-				|Язык,
-				|Роли");
+			NewRow			= Regions.Add();
+			NewRow.Region	= Selection.Region;
 			
-			Если ПрочитанныеСвойства.ПарольУстановлен Тогда
-				Пароль              = "**********";
-				ПодтверждениеПароля = "**********";
-			КонецЕсли;
-		КонецЕсли;
-	КонецЕсли;
+		EndDo;
+		
+	EndIf;	
 	
-	Пользователи.СкопироватьСвойстваПользователяИБ(
-		ЭтаФорма,
-		ОписаниеПользователяИБ,
-		,
-		"УникальныйИдентификатор,Роли",
-		"ПользовательИнфБазы");
-	
-КонецПроцедуры
+EndProcedure
 
-&НаСервере
-Процедура ОпределитьНесоответствияПользователяСПользователемИБ(ПараметрыЗаписи = Неопределено)
+&AtServer
+Procedure FillTerritories()
 	
-	// Проверка соответствия свойства "ПолноеИмя" пользователяИБ и
-	// свойства "Наименование" пользователя.
+	// Заполнить регионы
+	Territories.Clear();
 	
-	Если НЕ (  ДействияВФорме.СвойстваЭлемента       = "Редактирование"
-	         И ДействияВФорме.СвойстваПользователяИБ = "РедактированиеВсех") Тогда
+	If ValueIsFilled(Object.Ref) Then 
+	
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED DISTINCT
+			|	TerritorySRs.Ref AS Territory,
+			|	TerritorySRs.LineNumberInUser AS LineNumberInUser
+			|FROM
+			|	Catalog.Territory.SRs AS TerritorySRs
+			|WHERE
+			|	TerritorySRs.SR = &User
+			|
+			|ORDER BY
+			|	LineNumberInUser";
 		
-		// Прочитанное ПолноеИмя пользователя не может быть изменено, если не совпадает.
-		ПользовательИнфБазыПолноеИмя = Неопределено;
-	КонецЕсли;
-	
-	Если НЕ ПользовательИБСуществует
-		ИЛИ ПользовательИнфБазыПолноеИмя = Неопределено
-		ИЛИ ПользовательИнфБазыПолноеИмя = Object.Description Тогда
+		Query.SetParameter("User", Object.Ref);
 		
-	Иначе
-		Object.Description = ПользовательИнфБазыПолноеИмя;
-	КонецЕсли;
-	
-	// Определение связи с несуществующим пользователем ИБ.
-	ЕстьНоваяСвязьСНесуществующимПользователемИБ
-		= НЕ ПользовательИБСуществует
-		И ЗначениеЗаполнено(Object.UserID);
-	
-	Если ПараметрыЗаписи <> Неопределено
-	   И ЕстьСвязьСНесуществующимПользователемИБ
-	   И НЕ ЕстьНоваяСвязьСНесуществующимПользователемИБ Тогда
+		QueryResult = Query.Execute();
 		
-		ПараметрыЗаписи.Вставить("ОчищенаСвязьСНесуществующимПользователемИБ", Object.Ссылка);
-	КонецЕсли;
-	ЕстьСвязьСНесуществующимПользователемИБ = ЕстьНоваяСвязьСНесуществующимПользователемИБ;
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
+			
+			NewRow				= Territories.Add();
+			NewRow.Territory	= Selection.Territory;
+			
+		EndDo;
+		
+	EndIf;
 	
-КонецПроцедуры
+EndProcedure
+
+&AtServer
+Function UniqueCheck(Attribute)
+	
+	FoundRef = Catalogs.User.FindByAttribute(Attribute, Object[Attribute]);
+	
+	If FoundRef = Catalogs.User.EmptyRef() Then
+		
+		FoundRef = True;
+		
+	Else
+		
+		FoundRef = False;
+		
+	EndIf;
+	
+	Return FoundRef;
+
+EndFunction
+
+&AtServer
+Function ItsFolder(Value)
+	
+	If Value.IsFolder Then 
+		
+		Return True;
+		
+	Else 
+		
+		Return False;
+		
+	EndIf;
+		
+EndFunction
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
-Procedure РольOnChange(Item)
+Procedure OnOpen(Cancel)
 	
-	ДоступКИнформационнойБазеРазрешен = Object.Role = "SRM";
-	//Object.UserName =
-	//ОбщегоНазначенияКлиентСервер.ПолучитьКраткоеИмяПользователяИБ(
-	//Object.Description);
-	ПользовательИнфБазыИмя = Object.UserName;
-	ПользовательИнфБазыПолноеИмя = Object.Description;
-	//ПользовательИнфБазыПароль = Object.Password;
-	//Пароль = Object.Password;
-	//ПодтверждениеПароля =  Object.Password;
-	//ПользовательИнфБазыАутентификацияСтандартная =  ДоступКИнформационнойБазеРазрешен;
-	//ПользовательИнфБазыЗапрещеноИзменятьПароль   =  ДоступКИнформационнойБазеРазрешен;
-	//ПользовательИнфБазыПоказыватьВСпискеВыбора   =  Ложь;
-    If Object.Role = "SRM" Then
-        ThisForm.Items.ПользовательИнфБазыЯзык.Visible = True;
-    Else
-        ThisForm.Items.ПользовательИнфБазыЯзык.Visible = False;
-    EndIf;
-		
+	TerritoriesOnChange(Items.Territories);
+	RegionsOnChange(Items.Regions);
+	
 EndProcedure
 
-//MKGorshkova ->
+&AtClient
+Procedure AfterWrite(WriteParameters)
+	
+	TerritoriesOnChange(Items.Territories);
+	RegionsOnChange(Items.Regions);
+	
+EndProcedure
+
+&AtClient
+Procedure SetLineNumbers(Collection)
+	
+	Ind = 0;
+	
+	For Each ItemElement In Collection Do 
+		
+		Ind = Ind + 1;
+		
+		ItemElement.LineNumber = Ind;
+		
+	EndDo;
+	
+EndProcedure
+
 &AtClient
 Procedure UserNameOnChange(Item)
-    
-    UserNameChecked();
-    	
+	
+	UserNameChecked();
+	
 EndProcedure
 
+&AtClient
 Function UserNameChecked()
 
 	If Not UniqueCheck("UserName") Then
-        Message(NStr("en = ""This login is already used""; ru = ""Этот логин уже используется"""));
-    	Object.UserName = Undefined;
-        Return False;
-    EndIf;
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = ""This login is already used""; ru = ""Этот логин уже используется""");
+		
+		UserMessage.Message();
+		
+		Object.UserName = Undefined;
+		
+		Return False;
+		
+	EndIf;
 
-EndFunction // ()
-
-
-&AtClient
-Procedure EMailOnChange(Item)
-       	
-	ПользовательИнфБазыИмя = Object.UserName;
-	ПользовательИнфБазыПолноеИмя = Object.Description;
-
-EndProcedure
-
-
-Function UniqueCheck(Attribute)
-
-    FoundRef = Catalogs.User.FindByAttribute(Attribute, Object[Attribute]);
-    If FoundRef = Catalogs.User.EmptyRef() Then
-        FoundRef = True;
-    Else
-        FoundRef = False;
-    EndIf;
-    
-    Return FoundRef
-
-EndFunction // LoginCheck()
-
-//MKGorshkova <-
-
-
-&AtClient
-Procedure PasswordOnChange(Item)
-	
-	//ПользовательИнфБазыПароль = Object.Password;
-	//Пароль = Object.Password;
-	//ПодтверждениеПароля =  Object.Password;
-	
-EndProcedure
-
-&AtClient
-Procedure DescriptionOnChange(Item)
-	
-	Если ПользовательИнфБазыПолноеИмя <> Неопределено Тогда
-		ПользовательИнфБазыПолноеИмя = Object.Description;
-	КонецЕсли;
-	
-	//Если НЕ ПользовательИБСуществует Тогда
-	//	
-	//	Object.UserName =
-	//		ОбщегоНазначенияКлиентСервер.ПолучитьКраткоеИмяПользователяИБ(
-	//			Object.Description);
-	//   ПользовательИнфБазыИмя = Object.UserName;
-	//КонецЕсли;
-
-EndProcedure
+EndFunction
 
 &AtClient
 Procedure ManagerStartChoice(Item, ChoiceData, StandardProcessing)
-    
-    StandardProcessing = False;
-  
-    SelectionValue = New Structure("Role", "SRM");
-    SelectionParameters = New Structure("Filter", SelectionValue);
-    OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.Manager);
-
+	
+	StandardProcessing = False;
+	
+	ChoiseForm = GetForm("Catalog.User.ChoiceForm");
+	
+	FilterOfList = ChoiseForm.List.Filter;
+	
+	ListOfValues = New ValueList;
+	ListOfValues.Add("SRM_SR");
+	ListOfValues.Add("SRM");
+	
+	FilterElement					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
+	FilterElement.LeftValue			= New DataCompositionField("RoleOfUser.Role");
+	FilterElement.ComparisonType	= DataCompositionComparisonType.InList;
+	FilterElement.Use				= True;
+	FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	FilterElement.RightValue		= ListOfValues;
+	
+	ChoiseForm.FormOwner			= Item;
+	ChoiseForm.CloseOnChoice		= True;
+	ChoiseForm.CloseOnOwnerClose	= True;
+	
+	ChoiseForm.Open();	
+		
 EndProcedure
 
 &AtClient
-Procedure ManagerOnChange(Item)
-    
-    ManagerOnChangeServer();    
-
-EndProcedure
-
-Procedure ManagerOnChangeServer()
-
-    If Object.Manager.Role <> "SRM" And Object.Manager.Role <> "" Then 
-        Message(NStr("en = ""Enable to choose user with role SRM only""; ru = ""Возможно выбрать пользователя только с ролью SRM"""));   
-        Object.Manager = Undefined;
-    EndIf;
-    
+Procedure TerritoriesOnChange(Item)
+	
+	SetLineNumbers(Territories);
+	
 EndProcedure
 
 &AtClient
-Procedure InterfaceLanguageOnChange(Item)
-	Object.InterfaceLanguage = ПользовательИнфБазыЯзык;
+Procedure RegionsOnChange(Item)
+	
+	SetLineNumbers(Regions);
+	
 EndProcedure
 
+&AtClient
+Procedure RegionsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
+	
+	If Not CancelEdit Then 
+		
+		If Not ValueIsFilled(Items.Regions.CurrentData.Region) Then 
+			
+			Message(NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'"));
+			
+			Cancel = True;
+			
+		EndIf;
+				
+	EndIf;
+	
+EndProcedure
 
+&AtClient
+Procedure TerritoriesBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
+	
+	If Not CancelEdit Then 
+		
+		If Not ValueIsFilled(Items.Territories.CurrentData.Territory) Then 
+			
+			Message(NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'"));
+			
+			Cancel = True;
+			
+		EndIf;
+				
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
 
 
 

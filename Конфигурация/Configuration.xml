@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.4.0.113</Version>
+			<Version>1.4.0.114</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -140,18 +140,18 @@
 			<CommonPicture>SectionSynchronisationAndSettings</CommonPicture>
 			<CommonPicture>Logo_Ru</CommonPicture>
 			<CommonPicture>Logo_En</CommonPicture>
-			<SessionParameter>ТекущийПользователь</SessionParameter>
-			<Role>SR</Role>
-			<Role>SRM</Role>
+			<SessionParameter>CurrentUser</SessionParameter>
 			<Role>Admin</Role>
-			<Role>bitmobile_Администратор</Role>
-			<Role>bitmobile_Пользователь</Role>
+			<Role>User</Role>
 			<CommonModule>ClientProcessors</CommonModule>
 			<CommonModule>CommonProcessors</CommonModule>
 			<CommonModule>CommonProcessorsClient</CommonModule>
 			<CommonModule>SyncSuperAgent</CommonModule>
-			<CommonModule>UpdateDatabase</CommonModule>
 			<CommonModule>ScheduleFunctions</CommonModule>
+			<CommonModule>UpdateDatabase</CommonModule>
+			<CommonModule>Users</CommonModule>
+			<CommonModule>UsersClient</CommonModule>
+			<CommonModule>UsersCallServer</CommonModule>
 			<CommonModule>ДлительныеОперации</CommonModule>
 			<CommonModule>ДлительныеОперацииКлиент</CommonModule>
 			<CommonModule>ДлительныеОперацииКлиентПовтИсп</CommonModule>
@@ -161,9 +161,6 @@
 			<CommonModule>ОбщегоНазначенияКлиентСервер</CommonModule>
 			<CommonModule>ОбщегоНазначенияПереопределяемый</CommonModule>
 			<CommonModule>ОбщегоНазначенияПовтИсп</CommonModule>
-			<CommonModule>Пользователи</CommonModule>
-			<CommonModule>ПользователиКлиентСервер</CommonModule>
-			<CommonModule>ПользователиСлужебный</CommonModule>
 			<CommonModule>РегламентныеЗаданияКлиент</CommonModule>
 			<CommonModule>РегламентныеЗаданияСервер</CommonModule>
 			<CommonModule>РегламентныеЗаданияСлужебный</CommonModule>
@@ -171,10 +168,7 @@
 			<CommonModule>РегламентныеЗаданияСлужебныйГлобальный</CommonModule>
 			<CommonModule>РегламентныеЗаданияСлужебныйКлиент</CommonModule>
 			<CommonModule>СтандартныеПодсистемыПовтИсп</CommonModule>
-			<CommonModule>СтандартныеПодсистемыСервер</CommonModule>
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
-			<CommonModule>ПользователиСлужебныйВызовСервера</CommonModule>
-			<CommonModule>ПользователиСлужебныйКлиент</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
@@ -246,9 +240,13 @@
 			<CommonForm>bitmobile_НастройкиОтправкиОтчетов</CommonForm>
 			<CommonForm>bitmobile_НастройкиСервера</CommonForm>
 			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
+			<CommonForm>OutletParameterValueInputForm</CommonForm>
+			<CommonForm>PickPictureFromForm</CommonForm>
+			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
+			<Catalog>MobileAppAccessRights</Catalog>
 			<Catalog>Outlet</Catalog>
 			<Catalog>OutletClass</Catalog>
 			<Catalog>OutletParameter</Catalog>
@@ -259,13 +257,14 @@
 			<Catalog>ReasonForNotOfTakingOrder</Catalog>
 			<Catalog>ReasonForVisit</Catalog>
 			<Catalog>Region</Catalog>
+			<Catalog>RolesOfUsers</Catalog>
+			<Catalog>SystemObjects</Catalog>
 			<Catalog>SKU</Catalog>
 			<Catalog>SKUFeatures</Catalog>
 			<Catalog>SKUGroup</Catalog>
 			<Catalog>SKUProperties</Catalog>
 			<Catalog>SKUPropertiesValues</Catalog>
 			<Catalog>Stock</Catalog>
-			<Catalog>StorageAdditionalInformation</Catalog>
 			<Catalog>Territory</Catalog>
 			<Catalog>UnitsOfMeasure</Catalog>
 			<Catalog>User</Catalog>
@@ -323,9 +322,9 @@
 			<Report>SkuChangeAnalysis</Report>
 			<Report>NumberOfOutlets</Report>
 			<Report>CompetitorsInTheOutlets</Report>
-			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
+			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
 			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
@@ -342,6 +341,7 @@
 			<InformationRegister>QuestioningResults</InformationRegister>
 			<InformationRegister>AssortmentMatrixOutlets</InformationRegister>
 			<InformationRegister>AssortmentMatrixSKUs</InformationRegister>
+			<InformationRegister>ManagersOfRegions</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

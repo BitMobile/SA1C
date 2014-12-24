@@ -133,7 +133,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	COUNT(DISTINCT VisitSKUs.SKU) AS Номенклатура,
 	VisitSKUs.Ref AS Визит,
 	VisitSKUs.Ref.Date AS ДатаВизита,

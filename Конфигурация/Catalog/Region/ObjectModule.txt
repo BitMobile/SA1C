@@ -1,0 +1,50 @@
+﻿
+Procedure OnWrite(Cancel)
+	
+	RecordSet = InformationRegisters.ManagersOfRegions.CreateRecordSet();
+	RecordSet.Filter.ParentRegion.Value = Ref;
+	RecordSet.Filter.ParentRegion.Use = True;
+	RecordSet.Write();
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT ALLOWED DISTINCT
+		|	Region.Ref AS Region
+		|FROM
+		|	Catalog.Region AS Region
+		|WHERE
+		|	Region.Ref IN HIERARCHY(&Ref)
+		|
+		|ORDER BY
+		|	Region HIERARCHY";
+	
+	Query.SetParameter("Ref", Ref);
+	
+	Result = Query.Execute();
+	
+	Selection = Result.Select();
+	
+	RecordSet = InformationRegisters.ManagersOfRegions.CreateRecordSet();
+	RecordSet.Filter.ParentRegion.Value = Ref;
+	RecordSet.Filter.ParentRegion.Use = True;
+	
+	While Selection.Next() Do 
+		
+		For Each ItemManager In Managers Do 
+			
+			Ins					= RecordSet.Add();
+			Ins.ParentRegion	= Ref;
+			Ins.Region			= Selection.Region;
+			Ins.Manager			= ItemManager.Manager;
+			
+		EndDo;
+		
+	EndDo;
+	
+	RecordSet.Write();
+	
+EndProcedure
+
+
+
+

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<PredefinedData xmlns="http://v8.1c.ru/8.3/xcf/predef" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CatalogPredefinedItems">
+	<Item id="acd8efb3-9fab-43f2-879a-ce856655345b">
+		<Name>AccessToMobileApp</Name>
+		<Code>000000002</Code>
+		<Description>en = 'Access to mobile app'; ru = 'Доступ к мобильному приложению'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="5c602579-8df9-4524-95e5-578a0a34a615">
+		<Name>EditParametersInOutlet</Name>
+		<Code>000000001</Code>
+		<Description>en = 'Edit parameters in outlet'; ru = 'Редактирование параметров в торговой точке'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+</PredefinedData>

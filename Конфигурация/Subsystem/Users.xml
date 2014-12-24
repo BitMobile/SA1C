@@ -26,6 +26,7 @@
 		<ChildObjects>
 			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>DataProcessors</Subsystem>
+			<Subsystem>InformationRegisters</Subsystem>
 		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

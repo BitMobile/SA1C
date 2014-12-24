@@ -1,6 +1,6 @@
 ﻿Function HasQuestions(QuestionGroupRef) Export
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	Question.Ref
 	|FROM
 	|	Catalog.Question AS Question

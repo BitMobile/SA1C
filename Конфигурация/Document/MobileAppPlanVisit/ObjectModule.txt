@@ -14,7 +14,7 @@ Function GetPlanDoc()
     
     query = new Query;
     query.Text = 
-    "SELECT
+    "SELECT ALLOWED
     |   VisitPlan.Ref
     |FROM
     |   Document.VisitPlan AS VisitPlan
@@ -56,7 +56,7 @@ Procedure CreatePlan(planDoc)
     
     tabularSection = planDoc.Outlets.Unload();
     query = New Query();
-    query.Text = "SELECT
+    query.Text = "SELECT ALLOWED
                  |  VisitPlanOutlets.Outlet,
                  |  VisitPlanOutlets.Date,
                  |  VisitPlanOutlets.LineNumber

@@ -14,7 +14,7 @@ Function SROnChangeServer(SR)
 	СписокПользователей = Новый СписокЗначений;
 	СписокПользователей.Add(SR);
 	Query = Новый Query;
-	Query.Text = "SELECT
+	Query.Text = "SELECT ALLOWED
 	             |	User.Ref AS Пользователь
 	             |FROM
 	             |	Catalog.User AS User
@@ -41,7 +41,7 @@ EndFunction
 Function GetSub(SRMList)
 	
 	Query = Новый Query;
-	Query.Text="SELECT
+	Query.Text="SELECT ALLOWED
 	             |	User.Ref AS Пользователь
 	             |FROM
 	             |	Catalog.User AS User

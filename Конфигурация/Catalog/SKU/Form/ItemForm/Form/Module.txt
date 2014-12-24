@@ -277,205 +277,28 @@ EndProcedure
 &AtClient
 Procedure SelectPicture()
 	
-	OpenForm("Catalog.SKU.Form.PickFromForm", , , , , , New NotifyDescription("SelectPicturePart", ThisForm));
-		
-EndProcedure
-
-&AtServer
-Function GetFilter(SyncDirection)
-	
-	ExtensionList = New ValueList;
-	ExtensionList.Add(".jpg");
-	ExtensionList.Add(".png");
-	
-	ActionList = New ValueList;
-	ActionList.Add(Enums.SyncAction.AddFile);
-	ActionList.Add(Enums.SyncAction.EmptyRef());
-	
-	Filter = Undefined;
-	
-	If SyncDirection = "Shared" Then  
-	
-		Filter = New Structure("Object, SyncDirection, Action, Extension", 
-									Object.Ref, 
-									Enums.SyncDirections.Shared,
-									ActionList,
-									ExtensionList);	
-									
-	ElsIf SyncDirection = "Private" Then
-		
-		Filter = New Structure("Object, SyncDirection, Action, Extension", 
-									Object.Ref, 
-									Enums.SyncDirections.Private,
-									ActionList,
-									ExtensionList);
-									
-	EndIf;
-									
-	Return Filter;
-	
-EndFunction
-
-&AtServer
-Procedure SetPicture(SelectedPictureKey)
-	
-	RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-	
-	FillPropertyValues(RecordManager, SelectedPictureKey);
-	
-	RecordManager.Read();
-	
-	PictureAddress = PutToTempStorage(RecordManager.Storage.Get(), ThisForm.UUID);
-	
-	NewPictureName 		= RecordManager.FileName;
-	NewPictureExtension = RecordManager.Extension;
-	
-	If RecordManager.SyncDirection = Enums.SyncDirections.Private Then 
-		NewPictureType = "Private";
-	ElsIf RecordManager.SyncDirection = Enums.SyncDirections.Shared Then 
-		NewPictureType = "Shared";
-	EndIf;
-		
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-	
-EndProcedure
-
-&AtServer
-Procedure SelectPictureServer(BinaryData)
-	
-	Storage = New ValueStorage(BinaryData);
-			
-	PictureAddress = PutToTempStorage(Storage.Get(), ThisForm.UUID);
-			
-EndProcedure
-
-&AtClient
-Procedure SelectPicturePart(Result, AdditionalParameter) Export 
-	
-	If Result = "PickFromDisk" Then
-		
-		SelectPictureFromDisk();
-		
-	ElsIF Result = "PickFromPrivate" Then
-		
-		Filter = GetFilter("Private");
-								
-		Params = New Structure("Filter", Filter);
-		
-		OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromPrivatePart", ThisForm));
-				
-	ElsIf Result = "PickFromShared" Then
-		
-		Filter = GetFilter("Shared");
-								
-		Params = New Structure("Filter", Filter);
-		
-		OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromSharedPart", ThisForm));
-						
-	EndIf;
+	OpenForm("CommonForm.PickPictureFromForm", , ThisForm, , , , New NotifyDescription("SelectPictureProcessing", ThisForm));
 	
 EndProcedure
 
 &AtClient
-Procedure SelectPictureFromDisk()
+Procedure SelectPictureProcessing(Result, AdditionalParameter) Export 
 	
-#If WebClient Then 
+	If Not Result = Undefined Then
 		
-	BeginPutFile(New NotifyDescription("SelectPictureFromDiskPart", ThisForm), , , True, ThisForm.UUID);		
-						
-#Else	
-	
-	DialogChangeFile 				= New FileDialog(FileDialogMode.Open);
-	DialogChangeFile.Filter 		= "JPG (*.jpg)|*.jpg|PNG (*.png)|*.png"; 
-	DialogChangeFile.Title 			= NStr("en = 'Select file'; ru = 'Выберите файл'");
-	DialogChangeFile.Preview 		= True;
-	DialogChangeFile.FilterIndex 	= 0;
-		           
-	If DialogChangeFile.Choose() Then 
-			
-		BinaryData = New BinaryData(DialogChangeFile.FullFileName);
+		ThisForm.PictureAddress			= Result.StorageAddress;
+		ThisForm.NewPictureName			= Result.FileName;
+		ThisForm.NewPictureExtension	= Result.Extension;
+		ThisForm.NewPictureType			= Result.Type;
 		
-		SelectPictureServer(BinaryData);
-			
-		FileToExtension = New File(DialogChangeFile.FullFileName);
-			
-		NewPictureName 		= New UUID();
-		NewPictureExtension = FileToExtension.Extension;
-		NewPictureType 		= "New";
-			
-		Object.DefaultPicture 			= Undefined;
-		Object.DefaultPictureExtension 	= Undefined;
+		Object.DefaultPicture			= Undefined;
+		Object.DefaultPictureExtension	= Undefined;
 		
 		Items.PictureAddress.Refresh();
-						 		
-	EndIf;
 		
-#EndIf
-	
-EndProcedure
-
-&AtClient
-Procedure SelectPictureFromDiskPart(Result, TempStorageAddress, FileName, AdditionalParameters) Export 
-	
-	If Not Result Then 
-		
-		Return;
-		
-	EndIf;	
-	
-	PictureAddress = TempStorageAddress;	
-	
-	FileToExtension = New File(FileName);
-		
-	NewPictureName 		= New UUID();
-	NewPictureExtension = FileToExtension.Extension;
-	NewPictureType 		= "New";
-		
-	Object.DefaultPicture 			= Undefined;
-	Object.DefaultPictureExtension 	= Undefined;
-		
-	Items.PictureAddress.Refresh();
-			
-EndProcedure	
-
-&AtClient
-Procedure SelectPictureFromPrivatePart(Result, AdditionalParameter) Export
-	
-	If ValueIsFilled(Result) Then
-			
-		QueryText = "ru = ""Изображение будет перенесено в раздел 'shared'. Продолжить?""; "
- 	   		   + "en = ""Picture will be moved to the section 'shared'. Continue?""";
-		
-		ShowQueryBox(New NotifyDescription("SelectPictureQueryPart", ThisForm, Result), QueryText, QuestionDialogMode.YesNo, 0, DialogReturnCode.Yes);
-				
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure SelectPictureFromSharedPart(Result, AdditionalParameter) Export
-	
-	If ValueIsFilled(Result) Then
-			
-		SetPicture(Result);
-		
-		Items.PictureAddress.Refresh();
-				
-	EndIf;
-		
-EndProcedure
-
-&AtClient
-Procedure SelectPictureQueryPart(Result, AdditionalParameter) Export
-	
-	If Result = DialogReturnCode.Yes Then 
-			
-		SetPicture(AdditionalParameter);
+		Modified = True;
 		
 	EndIf;
-			
-	Items.PictureAddress.Refresh();	
 	
 EndProcedure
 

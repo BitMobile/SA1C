@@ -31,43 +31,11 @@ Function StartUpdate() Export
 		
 		CurrenUser = InfoBaseUsers.CurrentUser();
 		
-		If IsInRole("Admin") Then 
+		If Not IsInRole("Admin") Then 
 			
-			NeedWriteUserAndRestartSystem = False;
-			
-			If Not CurrenUser.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
-				
-				CurrenUser.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
-				
-				NeedWriteUserAndRestartSystem = True;
-				
-			EndIf;
-			
-			If Not CurrenUser.Roles.Contains(Metadata.Roles.bitmobile_Администратор) Then
-				
-				CurrenUser.Roles.Add(Metadata.Roles.bitmobile_Администратор);
-				
-				NeedWriteUserAndRestartSystem = True;
-				
-			EndIf;
-			
-			If NeedWriteUserAndRestartSystem Then 
-				
-				CurrenUser.Write();
-				
-				ReturnStructure.NeedRestart = True;
-				
-				Return ReturnStructure;
-				
-			EndIf;
-			
-		EndIf;
-		
-		If Not (IsInRole("bitmobile_Администратор") And IsInRole("bitmobile_Пользователь") And IsInRole("Admin")) Then 
-			
-			ErrorText = NStr("en = 'Insufficient permissions to perform the update. Required roles: Administrator (bitmobile), Administrator (superagent) and User (bitmobile)." 
+			ErrorText = NStr("en = 'Insufficient permissions to perform the update. Required role: Administrator." 
 							+ Chars.LF + "System operation is completed.';"
-							+ "ru = 'Недостаточно прав для выполнения обновления. Требуются роли: Администратор (bitmobile), Администратор (superagent) и Пользователь (bitmobile)."
+							+ "ru = 'Недостаточно прав для выполнения обновления. Требуется роль: Администратор."
 							+ Chars.LF + "Работа системы будет завершена.'");
 			
 			ReturnStructure.Error = ErrorText;
@@ -114,9 +82,15 @@ Function StartUpdate() Export
 			UpdateForAllReleases(LastState, Step);
 			
 			// Специальные обработчики для релизов
-			If MetadataVersionForUpdate = "1.4.0" Then 
+			If Not ValueIsFilled(CurrentVersion) And MetadataVersionForUpdate = "1.4.0" Then 
 				
 				UpdateForRelease_1_4_0(LastState, Step);
+				
+			EndIf;
+			
+			If CurrentVersion = "1.4.0" And MetadataVersionForUpdate = "1.5.0" Then 
+				
+				UpdateForRelease_1_5_0(LastState, Step);
 				
 			EndIf;
 			
@@ -179,11 +153,63 @@ Procedure UpdateForAllReleases(LastState, Step)
 	
 	FillConfigurationData();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update roles os users'; ru = 'Обновление ролей пользователей'"));  
+	ProcessPredefinedRoles();
+	
 	WriteProtocol(LastState, Step, NStr("en = 'Update users'; ru = 'Обновление пользователей'"));  
 	ProcessUsers();
 	
 	WriteProtocol(LastState, Step, NStr("en = 'Update sync settings'; ru = 'Обновление настроек синхронизации'"));  
 	ProcessSyncSettings();
+	
+EndProcedure
+
+Procedure ProcessPredefinedRoles()
+	
+	SRMRole = Catalogs.RolesOfUsers.SRM.GetObject();
+	SRMRole.AccessRightsToSystemObjects.Clear();
+	SRMRole.AdditionalAccessRights.Clear();
+	SRMRole.MobileAppAccessRights.Clear();
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SystemObjects.Ref AS SystemObject,
+		|	TRUE AS Read,
+		|	TRUE AS Edit,
+		|	TRUE AS MarkForDeletion
+		|FROM
+		|	Catalog.SystemObjects AS SystemObjects
+		|WHERE
+		|	SystemObjects.Predefined = TRUE";
+	
+	Result = Query.Execute();
+	
+	Selection = Result.Select();
+	
+	While Selection.Next() Do
+		
+		FillPropertyValues(SRMRole.AccessRightsToSystemObjects.Add(), Selection);
+		
+	EndDo;
+	
+	InsRightToOutletParameterEdit				= SRMRole.AdditionalAccessRights.Add();
+	InsRightToOutletParameterEdit.AccessRight	= Catalogs.AdditionalAccessRights.EditParametersInOutlet;
+	
+	SRMRole.Write();
+	
+	SRRole = Catalogs.RolesOfUsers.SR.GetObject();
+	SRRole.AccessRightsToSystemObjects.Clear();
+	SRRole.AdditionalAccessRights.Clear();
+	SRRole.MobileAppAccessRights.Clear();
+	
+	InsMobileRights				= SRRole.MobileAppAccessRights.Add();
+	InsMobileRights.AccessRight	= Catalogs.MobileAppAccessRights.AccessToMobileApp;
+	
+	InsMobileRights				= SRRole.MobileAppAccessRights.Add();
+	InsMobileRights.AccessRight	= Catalogs.MobileAppAccessRights.EditParametersInOutlet;
+	
+	SRRole.Write();
 	
 EndProcedure
 
@@ -210,12 +236,12 @@ Procedure FillConfigurationData()
 EndProcedure
 
 Procedure FillInProcessing()
-    
-    // Добавить элементы для справочников OutletType, Class, Territory, Users, SKUGroup, Region, Brand, Units
-    EntityElements = New ValueTable();
+	
+	// Добавить элементы для справочников OutletType, Class, Territory, Users, SKUGroup, Region, Brand, Units
+	EntityElements = New ValueTable();
 	
 	EntityElements.Columns.Add("Key");
-    EntityElements.Columns.Add("Value");
+	EntityElements.Columns.Add("Value");
 	
 	EntityElements = AddInValueTable(EntityElements, "User", NStr("en = 'Default sales representative'; ru = 'Основной торговый представитель'"));
 	EntityElements = AddInValueTable(EntityElements, "OutletType", NStr("en = 'Default type'; ru = 'Основной тип'"));
@@ -226,48 +252,53 @@ Procedure FillInProcessing()
 	EntityElements = AddInValueTable(EntityElements, "SKUGroup", NStr("en = 'Default group'; ru = 'Основная группа'"));
 	EntityElements = AddInValueTable(EntityElements, "Brands", NStr("en = 'Default brand'; ru = 'Основной бренд'"));
 	EntityElements = AddInValueTable(EntityElements, "UnitsOfMeasure", NStr("en = 'pcs.'; ru = 'шт.'"));
-    
-    For Each Entity In EntityElements Do
+	
+	For Each Entity In EntityElements Do
 		
 		If NoItems(Entity.Key) Then
 			
-			NewObject = Catalogs[Entity.Key].CreateItem();
-            NewObject.Description = Entity.Value;
+			NewObject				= Catalogs[Entity.Key].CreateItem();
+			NewObject.Description	= Entity.Value;
 			
 			If Entity.Key = "User" Then
 				
-				NewObject.Description 	= "sr";
-				NewObject.Role 			= "SR";
-                NewObject.UserName 		= "sr";
-                NewObject.Password 		= "sr";
+				NewObject.Description		= "sr";
+				NewObject.RoleOfUser		= Catalogs.RolesOfUsers.SR;
+				NewObject.UserName			= "sr";
+				NewObject.Password			= "sr";
+				NewObject.InterfaceLanguage	= Metadata.Languages.Русский.Name;
 				
 				NewObject.Write();
 				
 				NewObject = Catalogs[Entity.Key].CreateItem();
 				
-				NewObject.Description 	= "srm";
-				NewObject.Role 			= "SRM";
-				NewObject.UserName 		= "srm";
-				NewObject.Password 		= "srm";
+				NewObject.Description		= "srm";
+				NewObject.RoleOfUser		= Catalogs.RolesOfUsers.SRM;
+				NewObject.UserName			= "srm";
+				NewObject.Password			= "srm";
+				NewObject.InterfaceLanguage	= Metadata.Languages.Русский.Name;
 				
 			EndIf;
 			
 			If Entity.Key = "Territory" Then
 				
-				NewObject.SR = Catalogs.User.FindByAttribute("Role", "SR");
-                NewObject.Owner = Catalogs.Region.FindByCode("000000001");
+				Ins		= NewObject.SRs.Add();
+				Ins.SR	= Catalogs.User.FindByAttribute("Role", "SR");
+				
+				NewObject.Owner = Catalogs.Region.FindByCode("000000001");
 				
 			EndIf;
 			
 			If Entity.Key = "Region" Then
 				
-				NewObject.Manager = Catalogs.User.FindByAttribute("Role", "SRM");
+				Ins			= NewObject.Managers.Add();
+				Ins.Manager	= Catalogs.User.FindByAttribute("Role", "SRM");
 				
 			EndIf;
 			
 			NewObject.Write();
 			
-		EndIf;    
+		EndIf;
 		
 	EndDo;
 		
@@ -275,48 +306,74 @@ EndProcedure
 
 Procedure ProcessUsers()
 	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	User.Ref AS User,
+		|	User.Role AS Role,
+		|	User.InterfaceLanguage AS Language
+		|FROM
+		|	Catalog.User AS User";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		UserObject = Selection.User;
+		
+		If Lower(Selection.Role) = "sr" Then 
+			
+			UserObject.RoleOfUser = Catalogs.RolesOfUsers.SR;
+			
+		ElsIf Lower(Selection.Role) = "srm" Then
+			
+			UserObject.RoleOfUser = Catalogs.RolesOfUsers.SRM;
+			
+		EndIf;
+		
+		If Not ValueIsFilled(Selection.Language) Then 
+			
+			UserObject.InterfaceLanguage = Metadata.Languages.Русский.Name;
+			
+		EndIf;
+		
+		UserObject.Write();		
+		
+	EndDo;
+	
 	UsersArray = InfoBaseUsers.GetUsers();
 	
 	For Each UserElement In UsersArray Do
 		
-		If UserElement.Roles.Contains(Metadata.Roles.SRM) Then 
+		If UserElement.Roles.Contains(Metadata.Roles.Admin) Then 
 			
-			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
+			FoundedUser = Catalogs.User.FindByAttribute("UserID", UserElement.UUID); 
+			
+			If Not ValueIsFilled(FoundedUser) Then 
 				
-				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
+				NewAdmin = Catalogs.User.CreateItem();
 				
-				UserElement.Write();
+				NewAdmin.Description	= UserElement.FullName;
+				NewAdmin.Role			= "Admin";
+				NewAdmin.UserName		= UserElement.Name;
+				NewAdmin.Password		= UserElement.Password;
+				
+				If Not ValueIsFilled(UserElement.Language) Then 
+					
+					NewAdmin.InterfaceLanguage	= Metadata.Languages.Русский.Name;
+					
+				Else 
+					
+					NewAdmin.InterfaceLanguage	= UserElement.Language.Name;
+					
+				EndIf;
+				
+				NewAdmin.Write();
 				
 			EndIf;
-			
-		EndIf;
-		
-		If UserElement.Roles.Contains(Metadata.Roles.Admin) Then
-			
-			NeedWrite = False;
-			
-			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Пользователь) Then
 				
-				UserElement.Roles.Add(Metadata.Roles.bitmobile_Пользователь);
-				
-				NeedWrite = True;
-				
-			EndIf;
-			
-			If Not UserElement.Roles.Contains(Metadata.Roles.bitmobile_Администратор) Then
-				
-				UserElement.Roles.Add(Metadata.Roles.bitmobile_Администратор);
-				
-				NeedWrite = True;
-				
-			EndIf;
-			
-			If NeedWrite Then 
-				
-				UserElement.Write();
-				
-			EndIf;
-			
 		EndIf;
 		
 	EndDo;
@@ -333,7 +390,7 @@ Function NoItems(EntityName)
     
     If EntityName = "User" Then
         Text = 
-        "SELECT
+        "SELECT ALLOWED
         |   COUNT(DISTINCT User.Ref) AS Ref
         |FROM
         |   Catalog.User AS User
@@ -343,7 +400,7 @@ Function NoItems(EntityName)
         Query.Text = Text;
         Query.SetParameter("Role", "SR");
     Else
-        Text = "SELECT COUNT(DISTINCT Ref) FROM Catalog." + EntityName;
+        Text = "SELECT ALLOWED COUNT(DISTINCT Ref) FROM Catalog." + EntityName;
         Query = New Query;
         Query.Text = Text;
     EndIf;
@@ -448,7 +505,7 @@ Procedure ProcessTerritoryInSKUGroups()
 		
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	Territory.Ref AS Territory
 		|FROM
 		|	Catalog.Territory AS Territory";
@@ -562,7 +619,7 @@ Procedure ProcessSKUQuestions()
 	NewAssignment.Assignment 	= Enums.SKUQuestions.Snapshot;
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	QuestionnaireSKUQuestions1.Ref AS Ref,
 	|	QuestionnaireSKUQuestions1.SKUQuestion AS SKUQuestion,
 	|	QuestionnaireSKUQuestions1.LineNumber AS LineNumber
@@ -612,7 +669,7 @@ EndProcedure
 Procedure ProcessQuestions() 
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	QuestionnaireQuestions.Ref AS Questionnaire,
 	|	QuestionnaireQuestions.Question AS ChildQuestion,
 	|	VALUE(Enum.QuestionGroupTypes.RegularQuestions) AS QuestionType,
@@ -638,7 +695,7 @@ EndProcedure
 Procedure ProcessSKUs()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	QuestionnaireSKUs.Ref.Date AS Period,
 	|	QuestionnaireSKUs.Ref AS Questionnaire,
 	|	QuestionnaireSKUs.SKU,
@@ -662,7 +719,7 @@ EndProcedure
 Procedure ProcessSelectors()
 	
 	Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	Territories.Ref AS Questionnaire,
 		|	Territories.Territory AS Value,
 		|	""Catalog_Territory"" AS Selector
@@ -674,7 +731,7 @@ Procedure ProcessSelectors()
 		|
 		|UNION ALL
 		|
-		|SELECT
+		|SELECT 
 		|	Regions.Ref,
 		|	Regions.Territory.Owner,
 		|	""Catalog_Region""
@@ -689,7 +746,7 @@ Procedure ProcessSelectors()
 		|
 		|UNION ALL
 		|
-		|SELECT
+		|SELECT 
 		|	Questionnaire.Ref,
 		|	Questionnaire.OutletType,
 		|	""Catalog_OutletType""
@@ -698,7 +755,7 @@ Procedure ProcessSelectors()
 		|
 		|UNION ALL
 		|
-		|SELECT
+		|SELECT 
 		|	Questionnaire.Ref,
 		|	Questionnaire.OutletClass,
 		|	""Catalog_OutletClass""
@@ -707,7 +764,7 @@ Procedure ProcessSelectors()
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	SelectorValues.Questionnaire AS Questionnaire,
 		|	SelectorValues.Value,
 		|	VALUE(Enum.ComparisonType.Equal) AS ComparisonType,
@@ -902,7 +959,7 @@ Procedure UpdateSKUQuestionsInVisit()
     
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	Question.Ref AS Question,
 		|	Question.Assignment AS Assignment
 		|FROM
@@ -914,7 +971,7 @@ Procedure UpdateSKUQuestionsInVisit()
 	
 	Query = New Query();
     Query.Text = 
-    "SELECT
+    "SELECT ALLOWED
     |   Visit.Ref
     |FROM
     |   Document.Visit AS Visit";
@@ -1033,4 +1090,84 @@ EndProcedure
 
 #EndRegion
 
+#Region Release_1_5_0
 
+Procedure UpdateForRelease_1_5_0(LastState, Step)
+
+	WriteProtocol(LastState, Step, NStr("en = 'Update regions'; ru = 'Обновление регионов'"));
+	ProcessRegions();
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update territories'; ru = 'Обновление территорий'"));
+	ProcessTerritories();
+	
+EndProcedure
+
+Procedure ProcessRegions()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT ALLOWED
+		|	Region.Ref AS Region,
+		|	Region.Manager
+		|FROM
+		|	Catalog.Region AS Region";
+	
+	Result = Query.Execute();
+	
+	Selection = Result.Select();
+	
+	While Selection.Next() Do 
+		
+		RegionObject = Selection.Region.GetObject();
+		
+		RegionObject.Managers.Clear();
+		
+		If ValueIsFilled(Selection.Manager) Then 
+			
+			InsToManagers					= RegionObject.Managers.Add();
+			InsToManagers.Manager			= Selection.Manager;
+			InsToManagers.LineNumberInUser	= 1;
+			
+		EndIf;
+		
+		RegionObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessTerritories()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT ALLOWED
+		|	Territory.Ref AS Territory,
+		|	Territory.SR
+		|FROM
+		|	Catalog.Territory AS Territory";
+	
+	Result = Query.Execute();
+	
+	Selection = Result.Select();
+	
+	While Selection.Next() Do 
+		
+		TerritoryObject = Selection.Territory.GetObject();
+		
+		TerritoryObject.SRs.Clear();
+		
+		If ValueIsFilled(Selection.SR) Then 
+			
+			InsToSRs					= TerritoryObject.SRs.Add();
+			InsToSRs.SR					= Selection.SR;
+			InsToSRs.LineNumberInUser	= 1;
+			
+		EndIf;
+		
+		TerritoryObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion

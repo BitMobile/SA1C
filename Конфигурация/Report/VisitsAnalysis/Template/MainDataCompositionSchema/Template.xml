@@ -107,7 +107,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>ВЫБРАТЬ
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
 	Territory.Ссылка КАК Территория,
 	Visit.Ссылка КАК Визит,
 	Visit.SR КАК ТорговыйПредставитель,

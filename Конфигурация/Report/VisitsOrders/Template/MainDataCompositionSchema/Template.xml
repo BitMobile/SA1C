@@ -29,7 +29,7 @@
 			<field>Date</field>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	SUM(OrderSKUs.Amount) AS Amount,
 	OrderSKUs.Ref
 INTO VTOrders
@@ -41,7 +41,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Visit1.Outlet,
 	BEGINOFPERIOD(Visit1.Date, DAY) AS Date,
 	Visit1.SR,

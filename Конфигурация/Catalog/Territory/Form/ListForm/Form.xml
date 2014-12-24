@@ -65,16 +65,11 @@
 					<ContextMenu name="CodeContextMenu" id="24"/>
 					<ExtendedTooltip name="CodeExtendedTooltip" id="25"/>
 				</LabelField>
-				<LabelField name="Owner" id="26">
+				<InputField name="Owner" id="26">
 					<DataPath>List.Owner</DataPath>
 					<ContextMenu name="OwnerContextMenu" id="27"/>
 					<ExtendedTooltip name="OwnerExtendedTooltip" id="28"/>
-				</LabelField>
-				<LabelField name="SR" id="29">
-					<DataPath>List.SR</DataPath>
-					<ContextMenu name="SRContextMenu" id="30"/>
-					<ExtendedTooltip name="SRExtendedTooltip" id="31"/>
-				</LabelField>
+				</InputField>
 			</ChildItems>
 		</Table>
 	</ChildItems>

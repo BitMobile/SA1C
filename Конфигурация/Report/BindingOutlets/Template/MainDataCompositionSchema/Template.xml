@@ -49,7 +49,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	SUM(1) AS Binded,
 	TerritoryOutlets.Outlet
 INTO source1
@@ -61,7 +61,7 @@ GROUP BY
 
 UNION ALL
 
-SELECT
+SELECT 
 	NULL,
 	Outlet.Ref
 FROM
@@ -69,7 +69,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT 
 	SUM(source1.Binded) AS Binded,
 	source1.Outlet,
 	source1.Outlet.Code
@@ -83,7 +83,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	source2.Outlet,
 	NULL AS Ref,
 	NULL AS SR
@@ -94,7 +94,7 @@ WHERE
 
 UNION ALL
 
-SELECT
+SELECT 
 	TerritoryOutlets.Outlet,
 	TerritoryOutlets.Ref,
 	TerritoryOutlets.Ref.SR

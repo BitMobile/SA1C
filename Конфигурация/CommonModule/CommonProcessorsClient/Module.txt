@@ -30,6 +30,18 @@ Procedure UpdateDatabase() Export
 	
 EndProcedure
 
+Procedure CheckAccessToDataBase() Export  
+
+	ErrorText = Users.CheckAccessToDataBase();
+	
+	If ValueIsFilled(ErrorText) Then 
+		
+		ShowMessageBox(New NotifyDescription("ExitSystem", CommonProcessorsClient), ErrorText); 
+		
+	EndIf;
+	
+EndProcedure
+
 Procedure ExitSystem(AdditionalParameter) Export 
 	
 	Terminate();

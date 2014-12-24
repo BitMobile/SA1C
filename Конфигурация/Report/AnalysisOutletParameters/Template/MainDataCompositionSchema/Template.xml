@@ -87,7 +87,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>ВЫБРАТЬ
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
 	OutletParameters.Parameter КАК Параметр,
 	OutletParameters.Value КАК Значение,
 	TerritoryOutlets.Ссылка КАК Территория,

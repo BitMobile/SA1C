@@ -1,17 +1,12 @@
-﻿#Если Сервер Или ТолстыйКлиентОбычноеПриложение Или ВнешнееСоединение Тогда
-
-Процедура УстановкаПараметровСеанса(ИменаПараметровСеанса)
+﻿
+Procedure SessionParametersSetting(RequiredParameters)
 	
-	// СтандартныеПодсистемы
-	СтандартныеПодсистемыСервер.УстановкаПараметровСеанса(ИменаПараметровСеанса);
-	// Конец СтандартныеПодсистемы
-	
+	Users.SetSessionParameters();
+		
 	// Удалить настройки пользователя для формы ввода значений
 	SystemSettingsStorage.Delete("Document.Questionnaire.Form.Input/Taxi/WindowSettings", Undefined, InfoBaseUsers.CurrentUser().Name);
 	SystemSettingsStorage.Delete("Document.Questionnaire.Form.Input/WebClientWindowSettings", Undefined, InfoBaseUsers.CurrentUser().Name);
-			
-КонецПроцедуры
-
-#КонецЕсли
+	
+EndProcedure
 
 

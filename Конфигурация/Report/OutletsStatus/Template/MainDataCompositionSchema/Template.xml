@@ -37,7 +37,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	OutletStatusHistorySliceLast.Outlet AS ТорговаяТочка,
 	OutletStatusHistorySliceLast.Status AS СтатусНаНачалоПериода,
 	OutletStatusHistorySliceLast1.Status AS СтатусНаКонецПериода

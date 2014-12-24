@@ -1,6 +1,5 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -24,53 +23,10 @@ EndProcedure
 &AtServer
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
-	WriteTerritoryInSKUGroups();
-	
-EndProcedure
-
-&AtServer
-Procedure FillSKUGroups()
-	
-	// Заполнить группы SKU
-	SKUGroups.Clear();
-	
-	If ValueIsFilled(Object.Ref) Then 
-	
-		Query = New Query;
-		Query.Text = 
-			"SELECT ALLOWED
-			|	SKUGroupTerritories.Ref AS SKUGroup
-			|FROM
-			|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
-			|WHERE
-			|	SKUGroupTerritories.Territory = &Ref
-			|
-			|ORDER BY
-			|	SKUGroupTerritories.LineNumberInTerritory";
-		
-		Query.SetParameter("Ref", Object.Ref);
-		
-		QueryResult = Query.Execute();
-		
-		Selection = QueryResult.Select();
-		
-		While Selection.Next() Do
-			
-			NewRow = SKUGroups.Add();
-			NewRow.SKUGroup = Selection.SKUGroup;
-			
-		EndDo;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtServer
-Procedure WriteTerritoryInSKUGroups()
-	
+	// Записать территорию в группы номенклатуры
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	SKUGroupTerritories.Ref AS SKUGroup
 		|FROM
 		|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
@@ -105,18 +61,62 @@ Procedure WriteTerritoryInSKUGroups()
 		
 		GroupObject = Row.SKUGroup.GetObject();
 		
-		If GroupObject.Territories.Find(Object.Ref) = Undefined Then 
+		FoundString = GroupObject.Territories.Find(Object.Ref);
+		
+		If FoundString = Undefined Then 
 			
-			NewRow = GroupObject.Territories.Add();
-			NewRow.Territory = Object.Ref;			
+			NewRow							= GroupObject.Territories.Add();
+			NewRow.Territory				= Object.Ref;
 			NewRow.LineNumberInTerritory	= Row.LineNumber;
+			
+		Else 
+			
+			FoundString = Row.LineNumber;
 			
 		EndIf;
 		
 		GroupObject.Write();
 			
 	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure FillSKUGroups()
+	
+	// Заполнить группы SKU
+	SKUGroups.Clear();
+	
+	If ValueIsFilled(Object.Ref) Then 
+	
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED DISTINCT
+			|	SKUGroupTerritories.Ref AS SKUGroup,
+			|	SKUGroupTerritories.LineNumberInTerritory
+			|FROM
+			|	Catalog.SKUGroup.Territories AS SKUGroupTerritories
+			|WHERE
+			|	SKUGroupTerritories.Territory = &Ref
+			|
+			|ORDER BY
+			|	SKUGroupTerritories.LineNumberInTerritory";
 		
+		Query.SetParameter("Ref", Object.Ref);
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		While Selection.Next() Do
+			
+			NewRow = SKUGroups.Add();
+			NewRow.SKUGroup = Selection.SKUGroup;
+			
+		EndDo;
+		
+	EndIf;
+	
 EndProcedure
 
 &AtServer
@@ -134,10 +134,9 @@ Function ItsFolder(Value)
 		
 EndFunction
 
+#EndRegion
 
-
-///////////////////////////////////////////////////////
-// User interface
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
@@ -163,18 +162,6 @@ Procedure OutletsOutletOnChange(Item)
     
     ClientProcessors.UniqueRows(RequestMap);
 
-EndProcedure
-
-&AtClient
-Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	SelectionValue = New Structure("Role", "SR");
-    SelectionParameters = New Structure("Filter", SelectionValue);
-	
-	OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
-	
 EndProcedure
 
 &AtClient
@@ -208,7 +195,7 @@ EndProcedure
 Procedure SKUGroupsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
 	
 	If Not CancelEdit Then 
-	
+		
 		If Not ValueIsFilled(Items.SKUGroups.CurrentData.SKUGroup) Then 
 			
 			Message(NStr("en = 'Value is not selected'; ru = 'Значение не выбрано'"));
@@ -236,10 +223,18 @@ Procedure SKUGroupsOnChange(Item)
 	
 EndProcedure
 
+&AtClient
+Procedure SRsSRStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	SelectionValue = New Structure("Role", "SR");
+	SelectionParameters = New Structure("Filter", SelectionValue);
+	
+	OpenForm("Catalog.User.ChoiceForm", SelectionParameters, Item);
+	
+EndProcedure
 
-
-
-
-
+#EndRegion
 
 

@@ -14,287 +14,6 @@
 		<Event name="OnWriteAtServer">ПриЗаписиНаСервере</Event>
 	</Events>
 	<ChildItems>
-		<UsualGroup name="ГруппаОбщиеНастройки" id="92">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Группа общие настройки</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Группа общие настройки</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="ГруппаОбщиеНастройкиExtendedTooltip" id="125"/>
-			<ChildItems>
-				<UsualGroup name="ГруппаСоответствиеОбъектов" id="50">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Соответствие объектов</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Matching objects</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Группа соответствие объектов</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="ГруппаСоответствиеОбъектовExtendedTooltip" id="126"/>
-					<ChildItems>
-						<UsualGroup name="ГруппаФильтрИСоответствиеОбъектов" id="52">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа фильтр и соответствие объектов</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа фильтр и соответствие объектов</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаФильтрИСоответствиеОбъектовExtendedTooltip" id="127"/>
-							<ChildItems>
-								<UsualGroup name="ГруппаОбъектBitmobile" id="63">
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа объект bitmobile</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа объект bitmobile</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Group>Horizontal</Group>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаОбъектBitmobileExtendedTooltip" id="128"/>
-									<ChildItems>
-										<InputField name="ВидОбъектаBitmobile" id="61">
-											<DataPath>Объект.ВидОбъектаBitmobile</DataPath>
-											<Title>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Объект bitmobile</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Object bitmobile</v8:content>
-												</v8:item>
-											</Title>
-											<ListChoiceMode>true</ListChoiceMode>
-											<TextEdit>false</TextEdit>
-											<ChoiceList>
-												<xr:Item>
-													<xr:Presentation/>
-													<xr:CheckState>0</xr:CheckState>
-													<xr:Value xsi:type="FormChoiceListDesTimeValue">
-														<Presentation>
-															<v8:item>
-																<v8:lang>ru</v8:lang>
-																<v8:content>Catalog</v8:content>
-															</v8:item>
-														</Presentation>
-														<Value xsi:type="xs:string">Catalog</Value>
-													</xr:Value>
-												</xr:Item>
-												<xr:Item>
-													<xr:Presentation/>
-													<xr:CheckState>0</xr:CheckState>
-													<xr:Value xsi:type="FormChoiceListDesTimeValue">
-														<Presentation>
-															<v8:item>
-																<v8:lang>ru</v8:lang>
-																<v8:content>Document</v8:content>
-															</v8:item>
-														</Presentation>
-														<Value xsi:type="xs:string">Document</Value>
-													</xr:Value>
-												</xr:Item>
-											</ChoiceList>
-											<ContextMenu name="ВидОбъектаBitmobileКонтекстноеМеню" id="62"/>
-											<ExtendedTooltip name="ВидОбъектаBitmobileExtendedTooltip" id="129"/>
-											<Events>
-												<Event name="OnChange">ВидОбъектаBitmobileПриИзменении</Event>
-											</Events>
-										</InputField>
-										<InputField name="ОбъектBitmobile" id="3">
-											<DataPath>Объект.Description</DataPath>
-											<Title>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content> </v8:content>
-												</v8:item>
-											</Title>
-											<TitleLocation>None</TitleLocation>
-											<EditMode>EnterOnInput</EditMode>
-											<Width>1</Width>
-											<ContextMenu name="ОбъектBitmobileКонтекстноеМеню" id="4"/>
-											<ExtendedTooltip name="ОбъектBitmobileExtendedTooltip" id="130"/>
-											<Events>
-												<Event name="TextEditEnd">ОбъектBitmobileОкончаниеВводаТекста</Event>
-											</Events>
-										</InputField>
-									</ChildItems>
-								</UsualGroup>
-								<UsualGroup name="ГруппаОбъектКонфинурации" id="93">
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа объект конфинурации</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа объект конфинурации</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Group>Horizontal</Group>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаОбъектКонфинурацииExtendedTooltip" id="131"/>
-									<ChildItems>
-										<InputField name="ОбъектКонфигурации" id="5">
-											<DataPath>Объект.ОбъектКонфигурации</DataPath>
-											<EditMode>EnterOnInput</EditMode>
-											<ChoiceButton>true</ChoiceButton>
-											<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
-											<AutoMarkIncomplete>true</AutoMarkIncomplete>
-											<TextEdit>false</TextEdit>
-											<ContextMenu name="ОбъектКонфигурацииКонтекстноеМеню" id="6"/>
-											<ExtendedTooltip name="ОбъектКонфигурацииExtendedTooltip" id="132"/>
-											<Events>
-												<Event name="StartChoice">ОбъектКонфигурацииНачалоВыбора</Event>
-											</Events>
-										</InputField>
-										<Button name="ОбновитьДанныеОбъекта" id="94">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.ОбновитьДанныеОбъекта</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Refresh</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="ОбновитьДанныеОбъектаExtendedTooltip" id="133"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
-							</ChildItems>
-						</UsualGroup>
-					</ChildItems>
-				</UsualGroup>
-				<UsualGroup name="ГруппаСинхронизация" id="68">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Настройки синхронизации</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Synchronization settings</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Группа синхронизация</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<Representation>StrongSeparation</Representation>
-					<ExtendedTooltip name="ГруппаСинхронизацияExtendedTooltip" id="134"/>
-					<ChildItems>
-						<UsualGroup name="ГруппаДанные" id="69">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа данные</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа данные</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаДанныеExtendedTooltip" id="135"/>
-							<ChildItems>
-								<CheckBoxField name="Выгрузка" id="7">
-									<DataPath>Объект.ВыгрузкаДанных</DataPath>
-									<TitleLocation>Right</TitleLocation>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="ВыгрузкаКонтекстноеМеню" id="8"/>
-									<ExtendedTooltip name="ВыгрузкаExtendedTooltip" id="136"/>
-								</CheckBoxField>
-								<CheckBoxField name="Загрузка" id="9">
-									<DataPath>Объект.ЗагрузкаДанных</DataPath>
-									<TitleLocation>Right</TitleLocation>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
-									<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
-								</CheckBoxField>
-							</ChildItems>
-						</UsualGroup>
-						<UsualGroup name="ГруппаФайлы" id="70">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа файлы</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа файлы</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаФайлыExtendedTooltip" id="138"/>
-							<ChildItems>
-								<CheckBoxField name="ВыгрузкаФайловShared" id="64">
-									<DataPath>Объект.ВыгрузкаФайловShared</DataPath>
-									<TitleLocation>Right</TitleLocation>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="ВыгрузкаФайловSharedКонтекстноеМеню" id="65"/>
-									<ExtendedTooltip name="ВыгрузкаФайловSharedExtendedTooltip" id="139"/>
-								</CheckBoxField>
-								<CheckBoxField name="ЗагрузкаФайловPrivate" id="66">
-									<DataPath>Объект.ЗагрузкаФайловPrivate</DataPath>
-									<TitleLocation>Right</TitleLocation>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="ЗагрузкаФайловPrivateКонтекстноеМеню" id="67"/>
-									<ExtendedTooltip name="ЗагрузкаФайловPrivateExtendedTooltip" id="140"/>
-								</CheckBoxField>
-							</ChildItems>
-						</UsualGroup>
-					</ChildItems>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
 		<Pages name="ГруппаСтраницы" id="56">
 			<Title>
 				<v8:item>
@@ -310,6 +29,390 @@
 			</ToolTip>
 			<ExtendedTooltip name="ГруппаСтраницыExtendedTooltip" id="141"/>
 			<ChildItems>
+				<Page name="ГруппаОсновныеДанные" id="235">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Master data</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные данные</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Группа основные данные</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="ГруппаОсновныеДанныеExtendedTooltip" id="236"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаСоответствиеОбъектов" id="50">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Соответствие объектов</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Matching objects</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа соответствие объектов</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаСоответствиеОбъектовExtendedTooltip" id="126"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаФильтрИСоответствиеОбъектов" id="52">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа фильтр и соответствие объектов</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа фильтр и соответствие объектов</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаФильтрИСоответствиеОбъектовExtendedTooltip" id="127"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаОбъекты" id="237">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Группа объекты</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Группа объекты</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаОбъектыExtendedTooltip" id="238"/>
+											<ChildItems>
+												<UsualGroup name="ГруппаОбъектBitmobile" id="63">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект bitmobile</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект bitmobile</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Group>Horizontal</Group>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаОбъектBitmobileExtendedTooltip" id="128"/>
+													<ChildItems>
+														<InputField name="ВидОбъектаBitmobile" id="61">
+															<DataPath>Объект.ВидОбъектаBitmobile</DataPath>
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Объект bitmobile</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Object bitmobile</v8:content>
+																</v8:item>
+															</Title>
+															<ListChoiceMode>true</ListChoiceMode>
+															<TextEdit>false</TextEdit>
+															<ChoiceList>
+																<xr:Item>
+																	<xr:Presentation/>
+																	<xr:CheckState>0</xr:CheckState>
+																	<xr:Value xsi:type="FormChoiceListDesTimeValue">
+																		<Presentation>
+																			<v8:item>
+																				<v8:lang>ru</v8:lang>
+																				<v8:content>Catalog</v8:content>
+																			</v8:item>
+																		</Presentation>
+																		<Value xsi:type="xs:string">Catalog</Value>
+																	</xr:Value>
+																</xr:Item>
+																<xr:Item>
+																	<xr:Presentation/>
+																	<xr:CheckState>0</xr:CheckState>
+																	<xr:Value xsi:type="FormChoiceListDesTimeValue">
+																		<Presentation>
+																			<v8:item>
+																				<v8:lang>ru</v8:lang>
+																				<v8:content>Document</v8:content>
+																			</v8:item>
+																		</Presentation>
+																		<Value xsi:type="xs:string">Document</Value>
+																	</xr:Value>
+																</xr:Item>
+															</ChoiceList>
+															<ContextMenu name="ВидОбъектаBitmobileКонтекстноеМеню" id="62"/>
+															<ExtendedTooltip name="ВидОбъектаBitmobileExtendedTooltip" id="129"/>
+															<Events>
+																<Event name="OnChange">ВидОбъектаBitmobileПриИзменении</Event>
+															</Events>
+														</InputField>
+														<InputField name="ОбъектBitmobile" id="3">
+															<DataPath>Объект.Description</DataPath>
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content> </v8:content>
+																</v8:item>
+															</Title>
+															<TitleLocation>None</TitleLocation>
+															<EditMode>EnterOnInput</EditMode>
+															<Width>1</Width>
+															<ContextMenu name="ОбъектBitmobileКонтекстноеМеню" id="4"/>
+															<ExtendedTooltip name="ОбъектBitmobileExtendedTooltip" id="130"/>
+															<Events>
+																<Event name="TextEditEnd">ОбъектBitmobileОкончаниеВводаТекста</Event>
+															</Events>
+														</InputField>
+													</ChildItems>
+												</UsualGroup>
+												<UsualGroup name="ГруппаОбъектКонфинурации" id="93">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект конфинурации</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект конфинурации</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Group>Horizontal</Group>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаОбъектКонфинурацииExtendedTooltip" id="131"/>
+													<ChildItems>
+														<InputField name="ОбъектКонфигурации" id="5">
+															<DataPath>Объект.ОбъектКонфигурации</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ChoiceButton>true</ChoiceButton>
+															<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+															<AutoMarkIncomplete>true</AutoMarkIncomplete>
+															<TextEdit>false</TextEdit>
+															<ContextMenu name="ОбъектКонфигурацииКонтекстноеМеню" id="6"/>
+															<ExtendedTooltip name="ОбъектКонфигурацииExtendedTooltip" id="132"/>
+															<Events>
+																<Event name="StartChoice">ОбъектКонфигурацииНачалоВыбора</Event>
+															</Events>
+														</InputField>
+													</ChildItems>
+												</UsualGroup>
+											</ChildItems>
+										</UsualGroup>
+										<Button name="ОбновитьДанныеОбъекта" id="94">
+											<Type>UsualButton</Type>
+											<Representation>Text</Representation>
+											<Width>16</Width>
+											<Height>2</Height>
+											<CommandName>Form.Command.ОбновитьДанныеОбъекта</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Refresh configuration object data</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Обновить данные объекта конфигурации</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ОбновитьДанныеОбъектаExtendedTooltip" id="133"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаСинхронизация" id="68">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Настройки синхронизации</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Synchronization settings</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа синхронизация</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаСинхронизацияExtendedTooltip" id="134"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаДанные" id="69">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа данные</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа данные</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаДанныеExtendedTooltip" id="135"/>
+									<ChildItems>
+										<CheckBoxField name="Выгрузка" id="7">
+											<DataPath>Объект.ВыгрузкаДанных</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="ВыгрузкаКонтекстноеМеню" id="8"/>
+											<ExtendedTooltip name="ВыгрузкаExtendedTooltip" id="136"/>
+										</CheckBoxField>
+										<CheckBoxField name="Загрузка" id="9">
+											<DataPath>Объект.ЗагрузкаДанных</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
+											<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
+										</CheckBoxField>
+										<CheckBoxField name="БлокироватьПриПолнойВыгрузке" id="113">
+											<DataPath>Объект.БлокироватьПриПолнойВыгрузкеДанных</DataPath>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>2</TitleHeight>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="БлокироватьПриПолнойВыгрузкеКонтекстноеМеню" id="114"/>
+											<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеExtendedTooltip" id="217"/>
+										</CheckBoxField>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаФайлы" id="70">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа файлы</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа файлы</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаФайлыExtendedTooltip" id="138"/>
+									<ChildItems>
+										<CheckBoxField name="ВыгрузкаФайловShared" id="64">
+											<DataPath>Объект.ВыгрузкаФайловShared</DataPath>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="ВыгрузкаФайловSharedКонтекстноеМеню" id="65"/>
+											<ExtendedTooltip name="ВыгрузкаФайловSharedExtendedTooltip" id="139"/>
+										</CheckBoxField>
+										<CheckBoxField name="ЗагрузкаФайловPrivate" id="66">
+											<DataPath>Объект.ЗагрузкаФайловPrivate</DataPath>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="ЗагрузкаФайловPrivateКонтекстноеМеню" id="67"/>
+											<ExtendedTooltip name="ЗагрузкаФайловPrivateExtendedTooltip" id="140"/>
+										</CheckBoxField>
+										<CheckBoxField name="ПеремещатьPrivateВShared" id="230">
+											<DataPath>Объект.ПеремещатьPrivateВShared</DataPath>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>2</TitleHeight>
+											<CheckBoxType>Tumbler</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
+											<ContextMenu name="ПеремещатьPrivateВSharedContextMenu" id="231"/>
+											<ExtendedTooltip name="ПеремещатьPrivateВSharedExtendedTooltip" id="232"/>
+										</CheckBoxField>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
 				<Page name="ГруппаСоответствиеРеквизитовШапки" id="54">
 					<Title>
 						<v8:item>
@@ -1054,13 +1157,6 @@
 					</ToolTip>
 					<ExtendedTooltip name="ГруппаФильтрКонфигурацииExtendedTooltip" id="216"/>
 					<ChildItems>
-						<CheckBoxField name="БлокироватьПриПолнойВыгрузке" id="113">
-							<DataPath>Объект.БлокироватьПриПолнойВыгрузкеДанных</DataPath>
-							<TitleLocation>Right</TitleLocation>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="БлокироватьПриПолнойВыгрузкеКонтекстноеМеню" id="114"/>
-							<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеExtendedTooltip" id="217"/>
-						</CheckBoxField>
 						<Table name="КомпоновщикНастройкиОтбор" id="87">
 							<Representation>Tree</Representation>
 							<Autofill>true</Autofill>

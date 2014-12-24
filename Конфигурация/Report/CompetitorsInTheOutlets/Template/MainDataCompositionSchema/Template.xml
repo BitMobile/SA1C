@@ -119,7 +119,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	VisitSKUs.Ref AS Visit,
 	COUNT(DISTINCT VisitSKUs.SKU) AS CountOfSKU
 INTO Visits
@@ -136,7 +136,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	VisitSKUs.SKU,
 	VisitSKUs.Answer,
 	VisitSKUs.Ref AS Visit,

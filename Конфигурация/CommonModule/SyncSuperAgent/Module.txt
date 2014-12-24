@@ -22,7 +22,7 @@ Function CheckEntity(Source) Export
 		
 			Query = New Query;
 			Query.Text = 
-				"SELECT
+				"SELECT ALLOWED
 				|	QuestioningResults.Questionnaire,
 				|	QuestioningResults.Visit,
 				|	QuestioningResults.Outlet,
@@ -188,7 +188,7 @@ Procedure SetStatusOfQuestionnaires() Export
 	// дата начала действия анкеты меньше текущей даты. У этих анкет новый статус
 	// будет "Активна".
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	Questionnaire.Ref AS Questionnaire,
 	|	VALUE(Enum.QuestionnareStatus.Active) AS NewStatus
 	|FROM
@@ -213,7 +213,7 @@ Procedure SetStatusOfQuestionnaires() Export
 	// которых дата конца действия анкеты меньше текущей даты. У этих анкет новый
 	// статус будет "Неактивна".
 	Query.Text = 
-	"SELECT
+	"SELECT ALLOWED
 	|	Questionnaire.Ref AS Questionnaire,
 	|	VALUE(Enum.QuestionnareStatus.Inactive) AS NewStatus
 	|FROM
@@ -521,7 +521,7 @@ EndFunction
 Function GetQuestionnaires()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	Questionnaire.Ref AS Ref
 	|FROM
 	|	Document.Questionnaire AS Questionnaire
@@ -607,7 +607,7 @@ EndFunction
 Procedure SetStatusOfAssortmentMatrix(Date) Export
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrix.Ref AS AM,
 	|	AssortmentMatrix.PeriodUUID AS AMPeriodUUID,
 	|	AssortmentMatrix.Status AS AMStatus,
@@ -619,7 +619,7 @@ Procedure SetStatusOfAssortmentMatrix(Date) Export
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	AssortmentMatrixPeriods.Ref AS AM,
 	|	AssortmentMatrixPeriods.BeginDate AS CurrentPeriodBeginDate,
 	|	AssortmentMatrixPeriods.EndDate AS CurrentPeriodEndDate,
@@ -637,7 +637,7 @@ Procedure SetStatusOfAssortmentMatrix(Date) Export
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	AMs.AM,
 	|	AMs.AMPeriodUUID,
 	|	AMs.AMStatus,
@@ -668,7 +668,7 @@ Procedure SetStatusOfAssortmentMatrix(Date) Export
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	Map.AM,
 	|	Map.NewPeriodBeginDate AS BeginDate,
 	|	Map.NewPeriodEndDate AS EndDate,

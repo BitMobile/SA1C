@@ -122,7 +122,7 @@ Function GetPicture(ID, Connection, Path)
 				
 	Query = New Query;
 	
-	Query.Text = "SELECT
+	Query.Text = "SELECT ALLOWED
 	             |	StorageAdditionalInformation.FileName AS FileName,
 	             |	StorageAdditionalInformation.Storage
 	             |FROM

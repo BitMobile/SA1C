@@ -224,7 +224,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	VisitQuestions.Ref AS VisitRef,
 	VisitQuestions.Question,
 	VisitQuestions.Answer,
@@ -237,7 +237,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Visit.Date,
 	Visit.Outlet,
 	Visit.SR,
@@ -248,7 +248,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	OutletList.Ref,
 	OutletList.Type,
 	OutletList.Class,
@@ -267,7 +267,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Visits.Date,
 	Visits.Outlet,
 	Visits.SR,
@@ -283,7 +283,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	FirstJoin.Date,
 	FirstJoin.Outlet,
 	FirstJoin.SR,

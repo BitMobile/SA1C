@@ -189,7 +189,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	Visits.Ref,
 	Visits.Outlet,
 	Visits.SR,
@@ -215,7 +215,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	SUM(OrderSKUs.Amount) AS Amount,
 	Order.Visit
 INTO ord
@@ -229,7 +229,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Territory.Ref,
 	Territory.SR,
 	TerritoryOutlets.Outlet
@@ -241,7 +241,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Encashment.Visit,
 	SUM(Encashment.EncashmentAmount) AS EncashmentAmount
 INTO Encash
@@ -253,7 +253,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	vs.Ref AS Ref,
 	vs.Outlet,
 	vs.SR,

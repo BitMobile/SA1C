@@ -95,7 +95,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	Visit.SR,
 	Visit.Ref,
 	Visit.Lattitude,
@@ -110,7 +110,7 @@ WHERE
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	SUM(OrderSKUs.Amount) AS Amount,
 	OrderSKUs.Ref.Visit.Ref
 INTO ord
@@ -122,7 +122,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	vis.SR,
 	vis.Outlet,
 	vis.Ref.Ref AS Visit,

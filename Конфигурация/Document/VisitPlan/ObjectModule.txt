@@ -14,7 +14,7 @@
 		WeekNumber = WeekOfYear(CurrentDate());
 	КонецЕсли;
 	
-	СтандартныеПодсистемыСервер.ЗаполнитьРеквизитыПоУмолчанию(ЭтотОбъект, ДанныеЗаполнения);
+	Owner = SessionParameters.CurrentUser;
 	
 КонецПроцедуры
 

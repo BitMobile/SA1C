@@ -77,7 +77,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	Territory.Ref AS Территория,
 	Territory.SR AS ТорговыйАгент,
 	COUNT(DISTINCT TerritoryOutlets.Outlet) AS КоличествоТорговыхТочек,
