@@ -219,7 +219,29 @@ Procedure OnOpen(Cancel)
 			EndIf;
 			
 		Except
-		
+			
+			Try
+				
+				If ValueIsFilled(FormOwner.CurrentData.ParentRowGrouping) Then 
+					
+					Object.Owner = FormOwner.CurrentData.ParentRowGrouping.Key;
+					
+				ElsIf ValueIsFilled(FormOwner.CurrentData.RowGroup) Then 
+					
+					Object.Owner = FormOwner.CurrentData.RowGroup.Key;
+					
+				EndIf;
+				
+				ParamArray = New Array;
+				
+				ParamArray.Add(New ChoiceParameter("Filter.Type", FormOwner.AdditionalCreateParameters.GroupType));
+				
+				Items.Owner.ChoiceParameters = New FixedArray(ParamArray);
+				
+			Except
+				
+			EndTry;
+			
 		EndTry;
 		
 	EndIf;

@@ -33,10 +33,6 @@
 				<Event name="OnChange">OwnerOnChange</Event>
 			</Events>
 		</InputField>
-		<InputField name="Parent" id="32">
-			<ContextMenu name="ParentContextMenu" id="33"/>
-			<ExtendedTooltip name="ParentExtendedTooltip" id="38"/>
-		</InputField>
 		<InputField name="AnswerType" id="7">
 			<DataPath>Object.AnswerType</DataPath>
 			<EditMode>EnterOnInput</EditMode>

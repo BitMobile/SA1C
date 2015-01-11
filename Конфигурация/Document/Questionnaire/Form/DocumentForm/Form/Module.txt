@@ -2075,6 +2075,8 @@ Procedure AddParentQuestion(Command)
 	
 	ChoiseForm = GetForm("Catalog.Question.Form.ChoiceFormWithGroups");
 	
+	ChoiseForm.CurrentItem.AdditionalCreateParameters = New FixedStructure("GroupType", RightValue);
+	
 	FilterOfList = ChoiseForm.List.Filter;
 	
 	FilterElement				= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));

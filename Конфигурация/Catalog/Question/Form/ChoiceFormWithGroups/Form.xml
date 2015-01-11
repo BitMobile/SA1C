@@ -67,6 +67,11 @@
 					<ContextMenu name="CodeContextMenu" id="24"/>
 					<ExtendedTooltip name="CodeExtendedTooltip" id="25"/>
 				</LabelField>
+				<LabelField name="AnswerType" id="26">
+					<DataPath>List.AnswerType</DataPath>
+					<ContextMenu name="AnswerTypeContextMenu" id="27"/>
+					<ExtendedTooltip name="AnswerTypeExtendedTooltip" id="28"/>
+				</LabelField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
