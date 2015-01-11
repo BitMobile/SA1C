@@ -1,10 +1,14 @@
 ﻿&AtClient
 Procedure OnOpen(Cancel)
-    
+	
 	If ValueIsFilled(Report.SR) Then
+		
 		Report.SRList = SROnChangeServer(Report.SR);
-    else
-       Report.SRList = SROnChangeServer(Undefined);
+		
+	Else
+		
+		Report.SRList = SROnChangeServer(Undefined);
+		
 	EndIf;
 
 EndProcedure

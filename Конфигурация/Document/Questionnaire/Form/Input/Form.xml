@@ -93,7 +93,6 @@
 			<ContextMenu name="VListContextMenu" id="11"/>
 			<ExtendedTooltip name="VListExtendedTooltip" id="25"/>
 			<Events>
-				<Event name="StartChoice">VListStartChoice</Event>
 				<Event name="StartListChoice">VListStartListChoice</Event>
 			</Events>
 		</InputField>

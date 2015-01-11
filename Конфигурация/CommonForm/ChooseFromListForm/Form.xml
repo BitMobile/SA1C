@@ -74,7 +74,6 @@
 			</SearchControlAddition>
 			<Events>
 				<Event name="Selection">ListSelection</Event>
-				<Event name="OnActivateRow">ListOnActivateRow</Event>
 			</Events>
 			<ChildItems>
 				<InputField name="ListValue" id="4">
@@ -83,12 +82,6 @@
 					<EditMode>EnterOnInput</EditMode>
 					<ContextMenu name="ListValueContextMenu" id="5"/>
 					<ExtendedTooltip name="ListValueExtendedTooltip" id="7"/>
-					<Events>
-						<Event name="OnChange">ListValueOnChange</Event>
-						<Event name="StartChoice">ListValueStartChoice</Event>
-						<Event name="Tuning">ListValueTuning</Event>
-						<Event name="ChoiceProcessing">ListValueChoiceProcessing</Event>
-					</Events>
 				</InputField>
 			</ChildItems>
 		</Table>

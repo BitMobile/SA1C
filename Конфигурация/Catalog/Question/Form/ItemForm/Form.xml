@@ -42,15 +42,6 @@
 				<Event name="OnChange">AnswerTypeOnChange</Event>
 			</Events>
 		</InputField>
-		<InputField name="Assignment" id="53">
-			<DataPath>Object.Assignment</DataPath>
-			<Visible>false</Visible>
-			<ContextMenu name="AssignmentContextMenu" id="54"/>
-			<ExtendedTooltip name="AssignmentExtendedTooltip" id="55"/>
-			<Events>
-				<Event name="StartChoice">AssignmentStartChoice</Event>
-			</Events>
-		</InputField>
 		<Table name="ValueList" id="9">
 			<Representation>List</Representation>
 			<AutoInsertNewRow>true</AutoInsertNewRow>

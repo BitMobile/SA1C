@@ -7,7 +7,6 @@
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="ChoiceProcessing">ChoiceProcessing</Event>
-		<Event name="AfterWriteAtServer">AfterWriteAtServer</Event>
 		<Event name="NotificationProcessing">NotificationProcessing</Event>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="BeforeWrite">BeforeWrite</Event>
@@ -115,10 +114,7 @@
 					<ExtendedTooltip name="YearExtendedTooltip" id="260"/>
 					<Events>
 						<Event name="OnChange">YearOnChange</Event>
-						<Event name="AutoComplete">YearAutoComplete</Event>
 						<Event name="Tuning">YearTuning</Event>
-						<Event name="StartListChoice">YearStartListChoice</Event>
-						<Event name="TextEditEnd">YearTextEditEnd</Event>
 					</Events>
 				</InputField>
 				<InputField name="WeekNumber" id="227">
@@ -289,9 +285,6 @@
 				<ContextMenu name="ValueTableOutletsSearchControlContextMenu" id="301"/>
 				<ExtendedTooltip name="ValueTableOutletsSearchControlExtendedTooltip" id="302"/>
 			</SearchControlAddition>
-			<Events>
-				<Event name="OnChange">ValueTableOutletsOnChange</Event>
-			</Events>
 			<ChildItems>
 				<InputField name="ValueTableOutlet" id="29">
 					<DataPath>ValueTableOutlets.Outlet</DataPath>

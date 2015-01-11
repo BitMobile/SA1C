@@ -5,11 +5,8 @@
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="AfterWrite">AfterWrite</Event>
-		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
 		<Event name="OnOpen">OnOpen</Event>
-		<Event name="BeforeWrite">ПередЗаписью</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
-		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
 		<Event name="FillCheckProcessingAtServer">FillCheckProcessingAtServer</Event>
 	</Events>
@@ -482,68 +479,6 @@
 			</Columns>
 		</Attribute>
 	</Attributes>
-	<Commands>
-		<Command name="ВключитьРоли" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Включить роли</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Включить роли</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.CheckAll</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>ВключитьРоли</Action>
-			<ModifiesSavedData>true</ModifiesSavedData>
-		</Command>
-		<Command name="ИсключитьРоли" id="2">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Исключить роли</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Исключить роли</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.UncheckAll</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>ИсключитьРоли</Action>
-			<ModifiesSavedData>true</ModifiesSavedData>
-		</Command>
-		<Command name="ПоказатьТолькоВыбранныеРоли" id="3">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Только выбранные роли</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Только выбранные роли</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Показать только выбранные роли</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>ПоказатьТолькоВыбранныеРоли</Action>
-			<Representation>TextPicture</Representation>
-		</Command>
-	</Commands>
 	<Parameters>
 		<Parameter name="UserID">
 			<Type>

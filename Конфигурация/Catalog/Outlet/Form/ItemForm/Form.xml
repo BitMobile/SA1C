@@ -409,7 +409,6 @@
 									<ExtendedTooltip name="TerritoriesListValueExtendedTooltip" id="173"/>
 									<Events>
 										<Event name="OnChange">TerritoriesListValueOnChange</Event>
-										<Event name="Opening">TerritoriesListValueOpening</Event>
 									</Events>
 								</InputField>
 							</ChildItems>
@@ -765,7 +764,6 @@
 							</SearchControlAddition>
 							<Events>
 								<Event name="Selection">SnapshotsSelection</Event>
-								<Event name="BeforeAddRow">SnapshotsBeforeAddRow</Event>
 								<Event name="OnActivateRow">SnapshotsOnActivateRow</Event>
 								<Event name="OnStartEdit">SnapshotsOnStartEdit</Event>
 							</Events>

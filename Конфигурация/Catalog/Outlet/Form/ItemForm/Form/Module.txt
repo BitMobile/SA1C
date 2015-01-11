@@ -260,13 +260,6 @@ Function CheckStatus()
 	
 EndFunction
 
-&AtServer
-Procedure SetClosingCauseVisibility()
-	
-	ThisForm.Items.ClosingCause.Visible = Object.OutletStatus = Enums.OutletStatus.Closed;
-	
-EndProcedure
-
 #EndRegion
 
 #Region Parameters
@@ -583,64 +576,6 @@ Procedure WriteTerritory()
 		EndIf;
 		
 	EndDo;
-	
-EndProcedure
-
-&AtServer
-Procedure DeleteTerritories()
-	
-	Territories 			= GetTerritories();
-	RecordedTerritories 	= Territories.Unload();
-	TerritoriesValueTable 	= TerritoriesList.Unload();
-	
-	For Each Territory In RecordedTerritories Do
-		
-		If TerritoriesValueTable.Find(Territory.Ref, "Value") = Undefined Then
-			
-			TerritoryObject = Territory.Ref.GetObject();
-			
-			Outlets = TerritoryObject.Outlets.Unload();
-			Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
-			
-			TerritoryObject.Outlets.Load(Outlets);
-			TerritoryObject.Write();    
-			
-		EndIf;
-		
-	EndDo;
-	
-EndProcedure
-
-#EndRegion
-
-#Region Files
-
-&AtServer
-Procedure FillFileNameArray(FileNameArray, Table)
-	
-	For Each Element In Table Do 
-		
-		If IsPicture(Element.Parameter) Then 
-			
-			Try
-				
-				SnapShotUUID = New UUID(Element.Value);
-				
-			Except
-				
-				SnapShotUUID = Undefined;	
-				
-			EndTry;
-			
-			If Not SnapShotUUID = Undefined Then 
-				
-				FileNameArray.Add(SnapShotUUID);
-				
-			EndIf;
-			
-		EndIf;
-		
-	EndDo; 
 	
 EndProcedure
 
@@ -1175,13 +1110,6 @@ Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 		EndIf;
 		
 	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure SnapshotsBeforeAddRow(Item, Cancel, Clone, Parent, Folder, Parameter)
-	
-
 	
 EndProcedure
 

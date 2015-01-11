@@ -1,58 +1,8 @@
 ﻿
-Procedure CreateAdminOrClose() Export 
+Procedure CreateAdmin() Export 
 	
-#If WebClient Then 
+	UsersCallServer.CreateFirstAdmin();
 	
-	Terminate(False);	
+	Terminate(True);
 	
-#Else
-		
-	QueryText = NStr("en = 'You cannot start with empty information base users list. Add user Admin 
-					|and restart program?
-					|
-					|Explanation: you can close programm and add to information base users list
-					|account with role ""Admin"" and start program again with his name.
-					|
-					|If you want to go to information base users list, you must open Designer and 
-					|use menu item ""Administration - Users"".'; ru = 'Запуск с пустым списком пользователей информационной базы невозможен.
-					|Добавить пользователя Admin и перезапустить программу?
-					|
-					|Пояснение: также можно завершить работу и вручную добавить в список
-					|пользователей информационной базы учетную запись администратора с ролью
-					|""Admin"" и повторить запуск программы от его имени.
-					|
-					|Для перехода к списку пользователей информационной базы необходимо открыть
-					|Конфигуратор и воспользоваться пунктом меню ""Администрирование - Пользователи"".'");
-	
-	Buttons = New ValueList;
-	
-	Buttons.Add("AddAndRestart", NStr("ru='Добавить и перезапустить';en='Add user and restart'"));
-	Buttons.Add("Close",         NStr("ru='Завершить работу';en='Close program'"));
-	
-	
-	Result = DoQueryBox(QueryText
-						, Buttons
-						, 
-						, "AddAndRestart"
-						, NStr("en = 'Authorization'; ru = 'Авторизация пользователя'")
-						, );
-	
-	If Result = "AddAndRestart" Then 
-		
-		UsersCallServer.CreateFirstAdmin();
-		
-		Terminate(True);
-		
-	ElsIf Result = "Close" Then 
-		
-		Terminate(False);
-		
-	Else 
-		
-		Terminate(False);
-		
-	EndIf;
-	
-#EndIf
-
 КонецПроцедуры

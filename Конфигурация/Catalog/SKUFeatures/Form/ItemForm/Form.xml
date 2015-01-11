@@ -54,9 +54,6 @@
 				<ContextMenu name="FeaturesУправлениеПоискомКонтекстноеМеню" id="24"/>
 				<ExtendedTooltip name="FeaturesУправлениеПоискомРасширеннаяПодсказка" id="25"/>
 			</SearchControlAddition>
-			<Events>
-				<Event name="OnChange">FeaturesOnChange</Event>
-			</Events>
 			<ChildItems>
 				<LabelField name="FeaturesLineNumber" id="8">
 					<DataPath>Object.Features.LineNumber</DataPath>

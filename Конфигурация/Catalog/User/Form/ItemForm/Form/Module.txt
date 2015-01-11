@@ -337,21 +337,6 @@ Function UniqueCheck(Attribute)
 
 EndFunction
 
-&AtServer
-Function ItsFolder(Value)
-	
-	If Value.IsFolder Then 
-		
-		Return True;
-		
-	Else 
-		
-		Return False;
-		
-	EndIf;
-		
-EndFunction
-
 #EndRegion
 
 #Region UserInterface

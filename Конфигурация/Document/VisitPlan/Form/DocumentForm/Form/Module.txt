@@ -28,7 +28,7 @@ Function CheckVisitPlans()
 	Query.SetParameter("WeekNumber",Object.WeekNumber);
 	Query.SetParameter("Ref",Object.Ref);
 	
-	Result = Query.Execute().Choose();
+	Result = Query.Execute().Select();
     	
 	if Result.Next() then
         Message(NStr("en = 'This SR is already have visit plan for this week'; ru = 'Для выбранного SR уже имеется план на выбранную неделю'"));	
@@ -431,14 +431,6 @@ EndProcedure
 Функция ДатаКакНеделяПредставление(ДатаДата) Экспорт
 	Возврат Формат(ДатаДата, "ДФ='гггг'");
 КонецФункции
-
-
-&AtClient
-// Процедура - обработчик события "НачалоВыбораИзСписка" поля ввода периода регистрации.
-//
-Процедура ПериодРегистрацииНачалоВыбораИзСписка(Элемент, СтандартнаяОбработка)
-	
-КонецПроцедуры
 
 &AtClient
 Procedure WeekNumberTuning(Item, Direction, StandardProcessing)
@@ -985,24 +977,6 @@ EndProcedure
 КонецПроцедуры
 
 &AtClient
-Procedure YearAutoComplete(Item, Text, ChoiceData, Wait, StandardProcessing)
-	//ДатаКакМесяцАвтоПодборТекста(Text, ChoiceData, StandardProcessing);
-EndProcedure
-
-&AtClient
-Procedure YearTextEditEnd(Item, Text, ChoiceData, StandardProcessing)
-	
-	//ДатаКакМесяцОкончаниеВводаТекста(Text, ChoiceData, StandardProcessing);
-	//
-	//УстановитьДатыНачалаИОкончанияПериодов();
-	//
-	//УстановитьДоступностьКолонокТаблицы();
-	//ОформитьЗаголовкиДнейМесяца();
-	//
-
-EndProcedure
-
-&AtClient
 Procedure ValueTableDateBoolean1OnChange(Item)
     DateOnChangeCommonHandler(Item);	
 EndProcedure
@@ -1046,7 +1020,6 @@ Procedure DateOnChangeCommonHandler(Item)
     EndIf;    
 EndProcedure
 
-
 &AtClient
 Function FormParameters_(Item)
 	
@@ -1089,41 +1062,6 @@ Procedure CreateTasksFromVisitPlan_(Item,FormParameters_)
 EndProcedure
 
 &AtServer
-Function FindTasks(Parameters)
-	
-	Если Parameters.Свойство("VisitPlan") Тогда
-		
-		//bit_rumyantseva_alena 29/03/2013
-		Query = New Query;
-		Query.Text = "SELECT ALLOWED
-		             |	Task.Ref
-		             |FROM
-		             |	Document.Task AS Task
-		             |WHERE
-		             |	BEGINOFPERIOD(Task.PlanDate, DAY) = BEGINOFPERIOD(&PlanDate, DAY)
-		             |	AND Task.VisitPlan = &VisitPlan
-		             |	AND Task.Outlet = &Outlet
-		             |	AND Task.Territory = &Territory";
-		
-		Query.SetParameter("VisitPlan",Parameters.VisitPlan);
-		Query.SetParameter("Outlet",Parameters.Outlet);
-		Query.SetParameter("Territory",Parameters.Territory);
-		Query.SetParameter("PlanDate",Parameters.PlanDate);		
-        
-		Result = Query.Execute().Choose();
-		
-		if Result.Next() then
-			//Cancel = True;
-			Message(NStr("en = 'Already exist: '; ru = 'Уже есть '") + Result.Ref);
-			// StandardProcessing = Ложь;
-			Возврат Истина;
-		EndIf;
-	КонецЕсли;	
-	Возврат Ложь;
-	
-EndFunction
-
- &AtServer
 Function GetTerritory_(Outlet)
 	Возврат CommonProcessors.GetTerritory(Outlet)	
 EndFunction
@@ -1148,9 +1086,7 @@ Procedure CreateTask(Command)
 		Return;
 	EndIf;
 	
-	//If NOT FindTasks(Parameters_) Then
-		CreateTasksFromVisitPlan_(Item, Parameters_); 
-	//EndIf;
+	CreateTasksFromVisitPlan_(Item, Parameters_); 
 	
 EndProcedure
 // bit_vbobylev

@@ -22,7 +22,6 @@
 	<Events>
 		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
 		<Event name="OnOpen">ПриОткрытии</Event>
-		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
 	</Events>
 	<ChildItems>
 		<Pages name="ГруппаСтраницыНастроек" id="74">
@@ -345,10 +344,6 @@
 									<Height>1</Height>
 									<CommandName>Form.Command.ОткрытьНастройкиСервера</CommandName>
 									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>CommonPicture.bitmobile_Сервер</xr:Ref>
-										<xr:LoadTransparent>false</xr:LoadTransparent>
-									</Picture>
 									<Title>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
@@ -401,10 +396,6 @@
 									<Height>1</Height>
 									<CommandName>Form.Command.ОткрытьНастройкиКонфигурации</CommandName>
 									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.ReportSettings</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
 									<Title>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
@@ -475,10 +466,6 @@
 											<Height>1</Height>
 											<CommandName>Form.Command.ОткрытьНастройкиОтправкиОтчетов</CommandName>
 											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>CommonPicture.bitmobile_Почта</xr:Ref>
-												<xr:LoadTransparent>false</xr:LoadTransparent>
-											</Picture>
 											<Title>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
@@ -498,10 +485,6 @@
 											<Height>1</Height>
 											<CommandName>Form.Command.ОткрытьПолучателейОтчетов</CommandName>
 											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>CommonPicture.bitmobile_Клиент</xr:Ref>
-												<xr:LoadTransparent>false</xr:LoadTransparent>
-											</Picture>
 											<Title>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
@@ -597,10 +580,6 @@
 									<Width>24</Width>
 									<CommandName>Form.Command.ВыгрузитьМетаданныеВФайл</CommandName>
 									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.OpenFile</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
 									<ExtendedTooltip name="ВыгрузитьМетаданныеВФайлРасширеннаяПодсказка" id="279"/>
 								</Button>
 								<Button name="ВыгрузитьДанныеВФайл" id="160">
@@ -609,10 +588,6 @@
 									<Width>24</Width>
 									<CommandName>Form.Command.ВыгрузитьДанныеВФайл</CommandName>
 									<Parameter xsi:nil="true"/>
-									<Picture>
-										<xr:Ref>StdPicture.OpenFile</xr:Ref>
-										<xr:LoadTransparent>true</xr:LoadTransparent>
-									</Picture>
 									<ExtendedTooltip name="ВыгрузитьДанныеВФайлРасширеннаяПодсказка" id="280"/>
 								</Button>
 								<Button name="ТаблицаНастроекВосстановитьНастройкиИзФайла" id="219">
@@ -704,10 +679,6 @@
 														<Representation>PictureAndText</Representation>
 														<CommandName>Form.Command.РассчитатьПорядокВыгрузки</CommandName>
 														<Parameter xsi:nil="true"/>
-														<Picture>
-															<xr:Ref>StdPicture.SortListAsc</xr:Ref>
-															<xr:LoadTransparent>true</xr:LoadTransparent>
-														</Picture>
 														<ExtendedTooltip name="ТаблицаНастроекРассчитатьПорядокВыгрузкиРасширеннаяПодсказка" id="286"/>
 													</Button>
 												</ChildItems>
@@ -794,32 +765,6 @@
 														</LabelField>
 													</ChildItems>
 												</ColumnGroup>
-												<LabelField name="ТаблицаНастроекСтандартнаяКартинка" id="138">
-													<DataPath>ТаблицаНастроек.DefaultPicture</DataPath>
-													<Visible>false</Visible>
-													<TitleLocation>None</TitleLocation>
-													<ContextMenu name="ТаблицаНастроекСтандартнаяКартинкаКонтекстноеМеню" id="139"/>
-													<ExtendedTooltip name="ТаблицаНастроекСтандартнаяКартинкаРасширеннаяПодсказка" id="301"/>
-												</LabelField>
-												<CheckBoxField name="ТаблицаНастроекПометкаУдаления" id="118">
-													<DataPath>1/9</DataPath>
-													<Visible>false</Visible>
-													<CheckBoxType>Auto</CheckBoxType>
-													<ContextMenu name="ТаблицаНастроекПометкаУдаленияКонтекстноеМеню" id="119"/>
-													<ExtendedTooltip name="ТаблицаНастроекПометкаУдаленияРасширеннаяПодсказка" id="303"/>
-												</CheckBoxField>
-												<CheckBoxField name="ТаблицаНастроекПредопределенный" id="122">
-													<DataPath>1/11</DataPath>
-													<CheckBoxType>Auto</CheckBoxType>
-													<ContextMenu name="ТаблицаНастроекПредопределенныйКонтекстноеМеню" id="123"/>
-													<ExtendedTooltip name="ТаблицаНастроекПредопределенныйРасширеннаяПодсказка" id="304"/>
-												</CheckBoxField>
-												<LabelField name="ТаблицаНастроекСсылка" id="124">
-													<DataPath>1/12</DataPath>
-													<Visible>false</Visible>
-													<ContextMenu name="ТаблицаНастроекСсылкаКонтекстноеМеню" id="125"/>
-													<ExtendedTooltip name="ТаблицаНастроекСсылкаРасширеннаяПодсказка" id="305"/>
-												</LabelField>
 												<ColumnGroup name="ТаблицаНастроекГруппаДанные" id="170">
 													<Title>
 														<v8:item>
@@ -1191,11 +1136,17 @@ FROM
 	Catalog.bitmobile_НастройкиСинхронизации AS bitmobile_НастройкиСинхронизации</QueryText>
 				<MainTable>Catalog.bitmobile_НастройкиСинхронизации</MainTable>
 				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
 					<dcsset:order>
 						<dcsset:item xsi:type="dcsset:OrderItemField">
 							<dcsset:field>ПозицияВВыгрузке</dcsset:field>
 							<dcsset:orderType>Asc</dcsset:orderType>
 						</dcsset:item>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
 					</dcsset:order>
 					<dcsset:conditionalAppearance>
 						<dcsset:item>
@@ -1239,7 +1190,11 @@ FROM
 								</dcscor:item>
 							</dcsset:appearance>
 						</dcsset:item>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
 					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
 				</ListSettings>
 			</Settings>
 		</Attribute>
@@ -1253,6 +1208,16 @@ FROM
 			<Type>
 				<v8:Type>cfg:DataProcessorObject.bitmobile_СинхронизацияИНастройки</v8:Type>
 			</Type>
+			<View>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.Admin">true</xr:Value>
+				<xr:Value name="Role.User">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.Admin">true</xr:Value>
+				<xr:Value name="Role.User">true</xr:Value>
+			</Edit>
 			<MainAttribute>true</MainAttribute>
 			<Save>
 				<Field>4/0:1285e639-9fb3-425c-bc8f-6e921ada223d</Field>
@@ -1313,7 +1278,22 @@ FROM
 				<ManualQuery>false</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<MainTable>InformationRegister.bitmobile_СоответствиеПеречислений</MainTable>
-				<ListSettings/>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
 			</Settings>
 		</Attribute>
 		<Attribute name="КонтролируемыеИзмеренияРегистров" id="6">
@@ -1331,12 +1311,24 @@ FROM
 				<DynamicDataRead>true</DynamicDataRead>
 				<MainTable>InformationRegister.bitmobile_КонтролируемыеИзмеренияРегистров</MainTable>
 				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
 					<dcsset:order>
 						<dcsset:item xsi:type="dcsset:OrderItemField">
 							<dcsset:field>ИмяРегистра</dcsset:field>
 							<dcsset:orderType>Asc</dcsset:orderType>
 						</dcsset:item>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
 					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
 				</ListSettings>
 			</Settings>
 		</Attribute>
@@ -1448,7 +1440,22 @@ FROM
 				<ManualQuery>false</ManualQuery>
 				<DynamicDataRead>true</DynamicDataRead>
 				<MainTable>Catalog.bitmobile_НастройкиМобильныхПриложений</MainTable>
-				<ListSettings/>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
 			</Settings>
 		</Attribute>
 		<Attribute name="ВерсияМодуляСинхронизации" id="15">
@@ -1624,6 +1631,10 @@ FROM
 					<v8:content>Выгрузить данные в файл</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.OpenFile</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ВыгрузитьДанныеВФайл</Action>
 		</Command>
 		<Command name="ВыгрузитьМетаданныеВФайл" id="3">
@@ -1643,6 +1654,10 @@ FROM
 					<v8:content>Выгрузить метаданные в файл</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.OpenFile</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ВыгрузитьМетаданныеВФайл</Action>
 		</Command>
 		<Command name="ОткрытьНастройкиОтправкиОтчетов" id="4">
@@ -1662,6 +1677,10 @@ FROM
 					<v8:content>Открыть настройки отправки отчетов</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>CommonPicture.bitmobile_Почта</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ОткрытьНастройкиОтправкиОтчетов</Action>
 		</Command>
 		<Command name="ОткрытьНастройкиСервера" id="2">
@@ -1681,6 +1700,10 @@ FROM
 					<v8:content>Открыть настройки сервера</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>CommonPicture.bitmobile_Сервер</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ОткрытьНастройкиСервера</Action>
 		</Command>
 		<Command name="ОткрытьНастройкиКонфигурации" id="5">
@@ -1700,6 +1723,10 @@ FROM
 					<v8:content>Открыть настройки конфигурации</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.ReportSettings</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ОткрытьНастройкиКонфигурации</Action>
 		</Command>
 		<Command name="ОткрытьПолучателейОтчетов" id="8">
@@ -1719,6 +1746,10 @@ FROM
 					<v8:content>Открыть получателей отчетов</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>CommonPicture.bitmobile_Клиент</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>ОткрытьПолучателейОтчетов</Action>
 		</Command>
 		<Command name="РассчитатьПорядокВыгрузки" id="9">
@@ -1738,6 +1769,10 @@ FROM
 					<v8:content>Рассчитать порядок выгрузки</v8:content>
 				</v8:item>
 			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.SortListAsc</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
 			<Action>РассчитатьПорядокВыгрузки</Action>
 		</Command>
 		<Command name="СохранитьНастройкиВФайл" id="13">

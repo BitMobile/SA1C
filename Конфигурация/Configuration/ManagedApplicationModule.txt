@@ -5,11 +5,7 @@ Procedure BeforeStart(Cancel)
 	
 	If NoUsers Then 
 		
-		Cancel = True;
-		
-		UsersClient.CreateAdminOrClose();
-		
-		Return;
+		UsersClient.CreateAdmin();
 		
 	EndIf;
 	

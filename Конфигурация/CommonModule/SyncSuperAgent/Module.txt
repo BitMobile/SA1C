@@ -502,14 +502,6 @@ Function GetEmptyPeriodicityTable()
 
 EndFunction
 
-Function GetEmptyQuestionnairePeriodicityTable()
-	ValueTable = New ValueTable;
-	ValueTable.Columns.Add("Date");
-	ValueTable.Columns.Add("BeginPeriod");
-	ValueTable.Columns.Add("EndPeriod");
-	Return ValueTable;
-EndFunction
-
 Function GetPeriodicity(Schedule)
 	
 	PeriodicityString = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Schedule, ";")[0];

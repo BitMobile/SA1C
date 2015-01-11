@@ -487,34 +487,4 @@
 			</Columns>
 		</Attribute>
 	</Attributes>
-	<Commands>
-		<Command name="OpenPicture" id="2">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть файл</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть файл</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.Magnifier</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>OpenPicture</Action>
-			<Representation>Picture</Representation>
-		</Command>
-	</Commands>
 </Form>

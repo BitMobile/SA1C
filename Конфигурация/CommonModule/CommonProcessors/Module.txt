@@ -12,7 +12,7 @@ Function GetTerritory(Outlet) Export
 	
 	Query.SetParameter("Outlet", Outlet);
 	
-	Selection = Query.Execute().Choose();
+	Selection = Query.Execute().Select();
 	Selection.Next();
 	
 	Return Selection.Ref;	

@@ -136,7 +136,7 @@ Function GetPicture(ID, Connection, Path)
 	
 	If Not Res.IsEmpty() Then
 		
-		Sel = Res.Choose();
+		Sel = Res.Select();
 		
 		Sel.Next();
 		

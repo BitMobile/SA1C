@@ -27,24 +27,18 @@ EndFunction
 
 Procedure CreateFirstAdmin() Export 
 	
-	ErrorText = UsersCallServer.CheckUsersList(True);
+	SetPrivilegedMode(True);
+		
+	FirstAdmin							= InfoBaseUsers.CreateUser();
+	FirstAdmin.Name						= "Admin";
+	FirstAdmin.FullName					= FirstAdmin.Name;
+	FirstAdmin.Language					= Metadata.Languages.Русский;
+	FirstAdmin.StandardAuthentication	= True;
+	FirstAdmin.ShowInList				= True;
 	
-	If ValueIsFilled(ErrorText) Then 
-		
-		SetPrivilegedMode(True);
-		
-		FirstAdmin							= InfoBaseUsers.CreateUser();
-		FirstAdmin.Name						= "Admin";
-		FirstAdmin.FullName					= FirstAdmin.Name;
-		FirstAdmin.Language					= Metadata.Languages.Русский;
-		FirstAdmin.StandardAuthentication	= True;
-		FirstAdmin.ShowInList				= True;
-		
-		FirstAdmin.Roles.Add(Metadata.Roles.Admin);
-		
-		FirstAdmin.Write();
-		
-	EndIf;
+	FirstAdmin.Roles.Add(Metadata.Roles.Admin);
+	
+	FirstAdmin.Write();
 	
 EndProcedure
 

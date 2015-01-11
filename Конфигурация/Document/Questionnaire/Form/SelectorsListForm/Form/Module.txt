@@ -1,6 +1,5 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -15,9 +14,9 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		For Each Element In Parameters.CurrentValue Do
 			
 			AddRow = Values.Add();
-            AddRow.ValueRow = Element.Value;
+			AddRow.ValueRow = Element.Value;
 			
-		EndDo;    	    
+		EndDo;
 		
 	EndIf;
     
@@ -38,25 +37,9 @@ Function IsOutletParameter(Value)
     
 EndFunction
 
-&AtServer
-Function GetParametersList()
-    
-    List = new ValueList;
-	
-	Table = OutletParameter.ValueList.Unload();
-	
-	For Each Row In Table Do
-		
-		List.Add(row.Value);    	    
-		
-	EndDo;
-	
-	Return List;
-    
-EndFunction
+#EndRegion
 
-///////////////////////////////////////////////////////
-// User interface
+#Region UserInterface
 
 &AtClient
 Procedure Ok(Command)
@@ -123,3 +106,4 @@ Procedure ValuesTableBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
 		
 EndProcedure
 
+#EndRegion

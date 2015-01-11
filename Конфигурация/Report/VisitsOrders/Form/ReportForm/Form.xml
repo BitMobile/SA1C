@@ -11,6 +11,9 @@
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
 	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">OnOpen</Event>
+	</Events>
 	<ChildItems>
 		<UsualGroup name="VariantGroup" id="1">
 			<Title>

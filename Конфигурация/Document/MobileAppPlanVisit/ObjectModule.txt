@@ -11,29 +11,35 @@ EndProcedure
 
 
 Function GetPlanDoc()
-    
-    query = new Query;
-    query.Text = 
-    "SELECT ALLOWED
-    |   VisitPlan.Ref
-    |FROM
-    |   Document.VisitPlan AS VisitPlan
-    |WHERE
-    |   &Date BETWEEN VisitPlan.DateFrom AND ENDOFPERIOD(VisitPlan.DateTo)
-    |   AND VisitPlan.SR = &SR";
-    query.SetParameter("Date", ThisObject.planDate);
-    query.SetParameter("SR", ThisObject.SR);
-    recordset = query.Execute();
-    If recordset.IsEmpty() Then
-        Return CreatePlanDoc();    	    
-    Else
-        r = recordset.Choose();
-        While r.Next() Do
-            Return r.Ref;
-        EndDo; 
-        
-    EndIf;
-    
+	
+	Query = new Query;
+	Query.Text = "SELECT ALLOWED
+				|	VisitPlan.Ref
+				|FROM
+				|	Document.VisitPlan AS VisitPlan
+				|WHERE
+				|	&Date BETWEEN VisitPlan.DateFrom AND ENDOFPERIOD(VisitPlan.DateTo, DAY)
+				|	AND VisitPlan.SR = &SR";
+	
+	Query.SetParameter("Date", ThisObject.planDate);
+	Query.SetParameter("SR", ThisObject.SR);
+	
+	Recordset = Query.Execute();
+	
+	If Recordset.IsEmpty() Then
+		
+		Return CreatePlanDoc();
+		
+	Else
+		
+		SelectedRecord = Recordset.Select();
+		
+		SelectedRecord.Next();
+		
+		Return SelectedRecord.Ref;
+		
+	EndIf;
+	
 EndFunction // GetPlanDoc()
 
 Function CreatePlanDoc()

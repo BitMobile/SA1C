@@ -21,7 +21,7 @@
 	             |WHERE
 	             |	VisitPlan.Ref = &Ref";
 	
-	Выборка = Query.Execute().Choose();
+	Выборка = Query.Execute().Select();
 	Выборка.Next();
 	
 	Реквизиты = Новый Structure("Ref,Date,SR,DateFrom,DateTo");

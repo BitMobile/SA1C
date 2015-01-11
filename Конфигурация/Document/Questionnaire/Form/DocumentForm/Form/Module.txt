@@ -1807,11 +1807,18 @@ Procedure ChangeEndDateInActiveStatus(Result, Parameters) Export
 		
 	ElsIf Result = DialogReturnCode.No Then
 		
-		Object.EndDate = Object.Ref.EndDate;
+		Object.EndDate = GetOldEndDate();
 		
 	EndIf;
 	
 EndProcedure
+
+&AtServer
+Function GetOldEndDate()
+	
+	Return Object.Ref.EndDate;
+	
+EndFunction
 
 #EndRegion
 
@@ -2285,13 +2292,17 @@ Procedure QuestionsDragCheck(Item, DragParameters, StandardProcessing, Row, Fiel
 	
 	For Each IDElement In ArrayIDElements Do 
 		
-		Element = Tree.FindByID(IDElement);
-	
-		If Not DragAvailable(Element, NewParent) Then 
-			
-			DragParameters.Action = DragAction.Cancel;
-			
-			Break;
+		If Not IDElement = Undefined Then
+		
+			Element = Tree.FindByID(IDElement);
+		
+			If Not DragAvailable(Element, NewParent) Then 
+				
+				DragParameters.Action = DragAction.Cancel;
+				
+				Break;
+				
+			EndIf;
 			
 		EndIf;
 		
@@ -2324,13 +2335,17 @@ Procedure QuestionsDrag(Item, DragParameters, StandardProcessing, Row, Field)
 	
 	For Each IDSource In ArrayIDSource Do 
 		
-		Source = Tree.FindByID(IDSource); 
+		If Not IDSource = Undefined Then 
 		
-		NewRow = CopyRow(Tree, Receiver, Source);
-		
-		If Receiver = Undefined And Not NewRow = Undefined Then 
+			Source = Tree.FindByID(IDSource); 
 			
-			ItemElement.Expand(NewRow.GetID(), True);
+			NewRow = CopyRow(Tree, Receiver, Source);
+			
+			If Receiver = Undefined And Not NewRow = Undefined Then 
+				
+				ItemElement.Expand(NewRow.GetID(), True);
+				
+			EndIf;
 			
 		EndIf;
 		
