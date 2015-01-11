@@ -72,11 +72,11 @@ Procedure PickFromDisk(Command)
 	
 	#If WebClient Then
 		
-		BeginPutFile(New NotifyDescription("SelectPictureFromDiskOnWebClientProcessing", ThisForm),
-			,
-			,
-			True,
-			ThisForm.FormOwner.UUID);
+		BeginPutFile(New NotifyDescription("SelectPictureFromDiskOnWebClientProcessing", ThisForm)
+					,
+					,
+					, True
+					, ThisForm.FormOwner.UUID);
 			
 	#Else
 		

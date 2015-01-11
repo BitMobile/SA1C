@@ -14,6 +14,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		ThisForm.ReadOnly = True;
 		
 		Items.RoleOfUser.Visible = False;
+		Items.Password.Visible = False;
+		Items.Manager.Visible = False;
+		Items.Position.Visible = False;
+		Items.EMail.Visible = False;
 		
 	EndIf;
 	

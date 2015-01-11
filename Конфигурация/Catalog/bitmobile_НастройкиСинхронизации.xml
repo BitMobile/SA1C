@@ -768,11 +768,11 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Block at full upload of data</v8:content>
+							<v8:content>Block at full upload</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Не выгружать при полной выгрузке данных</v8:content>
+							<v8:content>Не выгружать при полной выгрузке</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>

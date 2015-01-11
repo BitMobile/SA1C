@@ -43,10 +43,13 @@
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<DataPath>ТаблицаРегламентныеЗадания</DataPath>
 							<CommandSet>
+								<ExcludedCommand>Copy</ExcludedCommand>
 								<ExcludedCommand>SortListAsc</ExcludedCommand>
 								<ExcludedCommand>MoveUp</ExcludedCommand>
 								<ExcludedCommand>SortListDesc</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
 								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Add</ExcludedCommand>
 								<ExcludedCommand>MoveDown</ExcludedCommand>
 							</CommandSet>
 							<SearchStringLocation>None</SearchStringLocation>
@@ -76,14 +79,14 @@
 									<Button name="ТаблицаРегламентныеЗаданияКонтекстноеМенюДобавить" id="166">
 										<Type>CommandBarButton</Type>
 										<Visible>false</Visible>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Add</CommandName>
+										<CommandName>29:b0016a68-ec64-4e6d-b905-c71fd62efc4c</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияКонтекстноеМенюДобавитьРасширеннаяПодсказка" id="181"/>
 									</Button>
 									<Button name="ТаблицаРегламентныеЗаданияКонтекстноеМенюСкопировать" id="167">
 										<Type>CommandBarButton</Type>
 										<Visible>false</Visible>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Copy</CommandName>
+										<CommandName>29:0ae4bea5-23be-42a7-b69e-97b11b29c453</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияКонтекстноеМенюСкопироватьРасширеннаяПодсказка" id="182"/>
 									</Button>
@@ -97,7 +100,7 @@
 									<Button name="ТаблицаРегламентныеЗаданияКонтекстноеМенюУдалить" id="169">
 										<Type>CommandBarButton</Type>
 										<Visible>false</Visible>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Delete</CommandName>
+										<CommandName>29:8d772f97-c0ef-47c0-9cb0-efea28c61341</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияКонтекстноеМенюУдалитьРасширеннаяПодсказка" id="184"/>
 									</Button>
@@ -115,7 +118,7 @@
 									<Button name="ТаблицаРегламентныеЗаданияДобавить" id="157">
 										<Type>CommandBarButton</Type>
 										<Representation>Picture</Representation>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Add</CommandName>
+										<CommandName>29:b0016a68-ec64-4e6d-b905-c71fd62efc4c</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияДобавитьРасширеннаяПодсказка" id="186"/>
 									</Button>
@@ -127,13 +130,13 @@
 									</Button>
 									<Button name="ТаблицаРегламентныеЗаданияСкопировать" id="158">
 										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Copy</CommandName>
+										<CommandName>29:0ae4bea5-23be-42a7-b69e-97b11b29c453</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияСкопироватьРасширеннаяПодсказка" id="188"/>
 									</Button>
 									<Button name="ТаблицаРегламентныеЗаданияУдалить" id="160">
 										<Type>CommandBarButton</Type>
-										<CommandName>Form.Item.ТаблицаРегламентныеЗадания.StandardCommand.Delete</CommandName>
+										<CommandName>29:8d772f97-c0ef-47c0-9cb0-efea28c61341</CommandName>
 										<Parameter xsi:nil="true"/>
 										<ExtendedTooltip name="ТаблицаРегламентныеЗаданияУдалитьРасширеннаяПодсказка" id="189"/>
 									</Button>

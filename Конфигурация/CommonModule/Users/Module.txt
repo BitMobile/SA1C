@@ -19,6 +19,14 @@ Procedure SetSessionParameters() Export
 		
 		CurrentInfoBaseUser = InfoBaseUsers.CurrentUser();
 		
+		If CurrentInfoBaseUser.Language = Undefined Then
+			
+			CurrentInfoBaseUser.Language = Metadata.Languages.Русский;
+			
+			CurrentInfoBaseUser.Write();
+			
+		EndIf;
+		
 		Query = New Query;
 		Query.Text =
 		"SELECT ALLOWED TOP 1
@@ -64,19 +72,10 @@ Procedure SetSessionParameters() Export
 			
 			NewAdmin.SetNewObjectRef(CurrentUser);
 			
-			NewAdmin.Role			= "Admin";
-			NewAdmin.UserName		= CurrentInfoBaseUser.Name;
-			NewAdmin.Password		= CurrentInfoBaseUser.Password;
-			
-			If Not ValueIsFilled(CurrentInfoBaseUser.Language) Then 
-				
-				NewAdmin.InterfaceLanguage	= Metadata.Languages.Русский.Name;
-				
-			Else 
-				
-				NewAdmin.InterfaceLanguage	= CurrentInfoBaseUser.Language.Name;
-				
-			EndIf;
+			NewAdmin.Role				= "Admin";
+			NewAdmin.UserName			= CurrentInfoBaseUser.Name;
+			NewAdmin.UserID				= CurrentInfoBaseUser.UUID;
+			NewAdmin.InterfaceLanguage	= CurrentInfoBaseUser.Language.Name;
 			
 			Try
 				
@@ -118,6 +117,18 @@ Procedure SetSessionParameters() Export
 			ErrorText = StrReplace(ErrorText, "%1", CurrentInfoBaseUser.Name);
 			
 			Raise ErrorText;
+			
+		Else 
+			
+			If Not CurrentUser.InterfaceLanguage = CurrentInfoBaseUser.Language.Name Then 
+				
+				CurrentUserObject = CurrentUser.GetObject();
+				
+				CurrentUserObject.InterfaceLanguage	= CurrentInfoBaseUser.Language.Name;
+				
+				CurrentUserObject.Write();
+				
+			EndIf;
 			
 		EndIf;
 		
@@ -235,19 +246,8 @@ Function CreateUser(Parameters) Export
 	ProcessedUser.Language					= Metadata.Languages.Find(Parameters.InterfaceLanguage);
 	ProcessedUser.Password					= Parameters.Password;
 	
-	If Parameters.Role = "Admin" Then 
-		
-		ProcessedUser.Roles.Clear();
-		
-		ProcessedUser.Roles.Add(Metadata.Roles.Admin);
-		
-	Else 
-		
-		ProcessedUser.Roles.Clear();
-		
-		ProcessedUser.Roles.Add(Metadata.Roles.User);
-		
-	EndIf;
+	ProcessedUser.Roles.Clear();
+	ProcessedUser.Roles.Add(Metadata.Roles.User);
 	
 	ProcessedUser.Write();
 	

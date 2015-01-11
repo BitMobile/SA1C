@@ -1,6 +1,5 @@
 ﻿
-///////////////////////////////////////////////////////
-// Common procedure and functions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -16,8 +15,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
-
-// Files
+#Region Files
 
 &AtServer
 Procedure FillFileNameArray(FileNameArray, Table)
@@ -52,11 +50,11 @@ EndProcedure
 Procedure FillFileTable()
 	
 	// Заполнить таблицу файлов
-	Password 	= Constants.bitmobile_Пароль.Get();
-	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path 		= StrReplace(Path, "admin", "webdav");
-	Port 		= Constants.bitmobile_Порт.Get();
+	Password	= Constants.bitmobile_Пароль.Get();
+	Server		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+	Path		= Constants.bitmobile_ПутьНаСервере.Get();
+	Path		= StrReplace(Path, "admin", "webdav");
+	Port		= Constants.bitmobile_Порт.Get();
 	
 	Try
 	
@@ -66,7 +64,7 @@ Procedure FillFileTable()
 		
 		Connection = Undefined;
 		
-	EndTry;	
+	EndTry;
 	
 	FileNameArray = New Array; 
 	
@@ -100,11 +98,11 @@ Procedure FillFileTable()
  		BinaryDataOfFile = Str.Storage.Get();
 		
 		If ValueIsFilled(BinaryDataOfFile) Then 
-		
-			Ins 				= FileTable.Add();
-			Ins.FileName 		= Str.FileName;
-			Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-			Ins.Extension 		= Str.Extension;
+			
+			Ins					= FileTable.Add();
+			Ins.FileName		= Str.FileName;
+			Ins.StorageAddress	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+			Ins.Extension		= Str.Extension;
 			
 		Else 
 			
@@ -118,11 +116,11 @@ Procedure FillFileTable()
 					
 					BinaryDataOfFile = New BinaryData(WebDAVFile);
 					
-					Ins 				= FileTable.Add();
-					Ins.FileName 		= Str.FileName;
-					Ins.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-					Ins.Extension 		= Str.Extension;
-										
+					Ins					= FileTable.Add();
+					Ins.FileName		= Str.FileName;
+					Ins.StorageAddress	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+					Ins.Extension		= Str.Extension;
+					
 				Except
 				EndTry;
 				
@@ -186,8 +184,9 @@ Function PictureExists(SnapShotUUID)
 
 EndFunction
 
+#EndRegion
 
-// Questions
+#Region Questions
 
 &AtServer
 Procedure FillQuestionsTree(GroupType)
@@ -427,8 +426,9 @@ Procedure LoadSKUAnswers(SKU)
 		
 EndProcedure
 
+#EndRegion
 
-// SKUs
+#Region SKUs
 
 &AtServer
 Procedure FillSKUs()
@@ -449,9 +449,11 @@ Procedure FillSKUs()
 	
 EndProcedure	
 
+#EndRegion
 
-///////////////////////////////////////////////////////
-// User interface
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure OpenPicture(Command)
@@ -584,6 +586,7 @@ Procedure GroupPagesOnCurrentPageChange(Item, CurrentPage)
 	
 EndProcedure
 
+#EndRegion
 
 
 

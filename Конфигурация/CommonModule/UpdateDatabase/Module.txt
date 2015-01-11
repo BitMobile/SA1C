@@ -321,7 +321,7 @@ Procedure ProcessUsers()
 	
 	While Selection.Next() Do
 		
-		UserObject = Selection.User;
+		UserObject = Selection.User.GetObject();
 		
 		If Lower(Selection.Role) = "sr" Then 
 			
@@ -339,7 +339,7 @@ Procedure ProcessUsers()
 			
 		EndIf;
 		
-		UserObject.Write();		
+		UserObject.Write();
 		
 	EndDo;
 	
@@ -358,9 +358,17 @@ Procedure ProcessUsers()
 				NewAdmin.Description	= UserElement.FullName;
 				NewAdmin.Role			= "Admin";
 				NewAdmin.UserName		= UserElement.Name;
-				NewAdmin.Password		= UserElement.Password;
+				NewAdmin.UserID			= UserElement.UUID;
 				
-				If Not ValueIsFilled(UserElement.Language) Then 
+				If UserElement.PasswordIsSet Then 
+				
+					NewAdmin.Password		= UserElement.Password;
+					
+				EndIf;
+				
+				If UserElement.Language = Undefined Then 
+					
+					UserElement.Language		= Metadata.Languages.Русский;
 					
 					NewAdmin.InterfaceLanguage	= Metadata.Languages.Русский.Name;
 					

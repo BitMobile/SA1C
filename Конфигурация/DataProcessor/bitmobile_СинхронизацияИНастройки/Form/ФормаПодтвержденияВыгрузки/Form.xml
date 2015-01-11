@@ -10,37 +10,23 @@
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
 		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="Выгрузить" id="8">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<DefaultButton>true</DefaultButton>
+				<Width>15</Width>
+				<CommandName>Form.Command.Выгрузить</CommandName>
+				<Parameter xsi:nil="true"/>
+				<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+				<ExtendedTooltip name="ВыгрузитьРасширеннаяПодсказка" id="41"/>
+			</Button>
+		</ChildItems>
 	</AutoCommandBar>
 	<Events>
 		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
 	</Events>
 	<ChildItems>
-		<LabelDecoration name="Декорация1" id="5">
-			<Width>45</Width>
-			<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-			<Title formatted="false">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Операция может занять продолжительное время.</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Operation can take a long time.</v8:content>
-				</v8:item>
-			</Title>
-			<ContextMenu name="Декорация1КонтекстноеМеню" id="6"/>
-			<ExtendedTooltip name="Декорация1РасширеннаяПодсказка" id="27"/>
-		</LabelDecoration>
-		<InputField name="ИмяФайла" id="1">
-			<DataPath>ИмяФайла</DataPath>
-			<ChoiceButton>true</ChoiceButton>
-			<TextEdit>false</TextEdit>
-			<ContextMenu name="ИмяФайлаКонтекстноеМеню" id="2"/>
-			<ExtendedTooltip name="ИмяФайлаРасширеннаяПодсказка" id="28"/>
-			<Events>
-				<Event name="StartChoice">ИмяФайлаНачалоВыбора</Event>
-			</Events>
-		</InputField>
 		<UsualGroup name="ГруппаНастройкиВыгрузки" id="17">
 			<Title>
 				<v8:item>
@@ -54,11 +40,11 @@
 					<v8:content>Группа настройки выгрузки</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Representation>StrongSeparation</Representation>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
 			<ExtendedTooltip name="ГруппаНастройкиВыгрузкиРасширеннаяПодсказка" id="29"/>
 			<ChildItems>
 				<LabelDecoration name="Декорация4" id="20">
-					<TextColor>style:FieldSelectionBackColor</TextColor>
 					<Title formatted="false">
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -90,11 +76,6 @@
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="ГруппаПереключателиРасширеннаяПодсказка" id="31"/>
 					<ChildItems>
-						<LabelDecoration name="Декорация5" id="22">
-							<HorizontalStretch>true</HorizontalStretch>
-							<ContextMenu name="Декорация5КонтекстноеМеню" id="23"/>
-							<ExtendedTooltip name="Декорация5РасширеннаяПодсказка" id="32"/>
-						</LabelDecoration>
 						<CheckBoxField name="ВсеДокументы" id="13">
 							<DataPath>ВсеДокументы</DataPath>
 							<Title>
@@ -138,15 +119,14 @@
 					</ChildItems>
 				</UsualGroup>
 				<LabelDecoration name="Декорация3" id="18">
-					<TextColor>style:FieldSelectionBackColor</TextColor>
 					<Title formatted="false">
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Или конкретную настройку:</v8:content>
+							<v8:content>или конкретную настройку:</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Or a specific setting:</v8:content>
+							<v8:content>or a specific setting:</v8:content>
 						</v8:item>
 					</Title>
 					<ContextMenu name="Декорация3КонтекстноеМеню" id="19"/>
@@ -170,13 +150,9 @@
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="ГруппаНастройкаРасширеннаяПодсказка" id="36"/>
 					<ChildItems>
-						<LabelDecoration name="Декорация6" id="25">
-							<HorizontalStretch>true</HorizontalStretch>
-							<ContextMenu name="Декорация6КонтекстноеМеню" id="26"/>
-							<ExtendedTooltip name="Декорация6РасширеннаяПодсказка" id="37"/>
-						</LabelDecoration>
 						<InputField name="Настройка" id="3">
 							<DataPath>Настройка</DataPath>
+							<HorizontalStretch>false</HorizontalStretch>
 							<ContextMenu name="НастройкаКонтекстноеМеню" id="4"/>
 							<ExtendedTooltip name="НастройкаРасширеннаяПодсказка" id="38"/>
 							<Events>
@@ -187,52 +163,22 @@
 				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="ГруппаКнопки" id="7">
-			<Title>
+		<LabelDecoration name="Декорация1" id="5">
+			<Width>45</Width>
+			<TextColor>style:ПоясняющийТекст</TextColor>
+			<Title formatted="false">
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Группа кнопки</v8:content>
+					<v8:content>Операция может занять продолжительное время.</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Operation can take a long time.</v8:content>
 				</v8:item>
 			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Группа кнопки</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<Representation>None</Representation>
-			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="ГруппаКнопкиРасширеннаяПодсказка" id="39"/>
-			<ChildItems>
-				<LabelDecoration name="Декорация2" id="10">
-					<HorizontalStretch>true</HorizontalStretch>
-					<ContextMenu name="Декорация2КонтекстноеМеню" id="11"/>
-					<ExtendedTooltip name="Декорация2РасширеннаяПодсказка" id="40"/>
-				</LabelDecoration>
-				<Button name="Выгрузить" id="8">
-					<Type>UsualButton</Type>
-					<Representation>PictureAndText</Representation>
-					<DefaultButton>true</DefaultButton>
-					<Width>15</Width>
-					<CommandName>Form.Command.Выгрузить</CommandName>
-					<Parameter xsi:nil="true"/>
-					<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
-					<Picture>
-						<xr:Ref>StdPicture.SaveFile</xr:Ref>
-						<xr:LoadTransparent>true</xr:LoadTransparent>
-					</Picture>
-					<ExtendedTooltip name="ВыгрузитьРасширеннаяПодсказка" id="41"/>
-				</Button>
-				<Button name="Закрыть" id="9">
-					<Type>UsualButton</Type>
-					<Width>15</Width>
-					<CommandName>Form.Command.ЗакрытьФорму</CommandName>
-					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="ЗакрытьРасширеннаяПодсказка" id="42"/>
-				</Button>
-			</ChildItems>
-		</UsualGroup>
+			<ContextMenu name="Декорация1КонтекстноеМеню" id="6"/>
+			<ExtendedTooltip name="Декорация1РасширеннаяПодсказка" id="27"/>
+		</LabelDecoration>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
@@ -325,25 +271,6 @@
 				</v8:item>
 			</ToolTip>
 			<Action>Выгрузить</Action>
-		</Command>
-		<Command name="ЗакрытьФорму" id="2">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Exit</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Закрыть</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Закрыть форму</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>ЗакрытьФорму</Action>
 		</Command>
 	</Commands>
 </Form>

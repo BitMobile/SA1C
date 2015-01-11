@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<Customizable>false</Customizable>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
@@ -104,6 +103,39 @@
 											<ShowTitle>false</ShowTitle>
 											<ExtendedTooltip name="ГруппаОбъектыExtendedTooltip" id="238"/>
 											<ChildItems>
+												<UsualGroup name="ГруппаОбъектКонфинурации" id="93">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект конфинурации</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа объект конфинурации</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Group>Horizontal</Group>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаОбъектКонфинурацииExtendedTooltip" id="131"/>
+													<ChildItems>
+														<InputField name="ОбъектКонфигурации" id="5">
+															<DataPath>Объект.ОбъектКонфигурации</DataPath>
+															<EditMode>EnterOnInput</EditMode>
+															<ChoiceButton>true</ChoiceButton>
+															<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+															<AutoMarkIncomplete>true</AutoMarkIncomplete>
+															<TextEdit>false</TextEdit>
+															<ContextMenu name="ОбъектКонфигурацииКонтекстноеМеню" id="6"/>
+															<ExtendedTooltip name="ОбъектКонфигурацииExtendedTooltip" id="132"/>
+															<Events>
+																<Event name="StartChoice">ОбъектКонфигурацииНачалоВыбора</Event>
+															</Events>
+														</InputField>
+													</ChildItems>
+												</UsualGroup>
 												<UsualGroup name="ГруппаОбъектBitmobile" id="63">
 													<Title>
 														<v8:item>
@@ -189,60 +221,50 @@
 														</InputField>
 													</ChildItems>
 												</UsualGroup>
-												<UsualGroup name="ГруппаОбъектКонфинурации" id="93">
-													<Title>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Группа объект конфинурации</v8:content>
-														</v8:item>
-													</Title>
-													<ToolTip>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Группа объект конфинурации</v8:content>
-														</v8:item>
-													</ToolTip>
-													<Group>Horizontal</Group>
-													<Representation>None</Representation>
-													<ShowTitle>false</ShowTitle>
-													<ExtendedTooltip name="ГруппаОбъектКонфинурацииExtendedTooltip" id="131"/>
-													<ChildItems>
-														<InputField name="ОбъектКонфигурации" id="5">
-															<DataPath>Объект.ОбъектКонфигурации</DataPath>
-															<EditMode>EnterOnInput</EditMode>
-															<ChoiceButton>true</ChoiceButton>
-															<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
-															<AutoMarkIncomplete>true</AutoMarkIncomplete>
-															<TextEdit>false</TextEdit>
-															<ContextMenu name="ОбъектКонфигурацииКонтекстноеМеню" id="6"/>
-															<ExtendedTooltip name="ОбъектКонфигурацииExtendedTooltip" id="132"/>
-															<Events>
-																<Event name="StartChoice">ОбъектКонфигурацииНачалоВыбора</Event>
-															</Events>
-														</InputField>
-													</ChildItems>
-												</UsualGroup>
 											</ChildItems>
 										</UsualGroup>
-										<Button name="ОбновитьДанныеОбъекта" id="94">
-											<Type>UsualButton</Type>
-											<Representation>Text</Representation>
-											<Width>16</Width>
-											<Height>2</Height>
-											<CommandName>Form.Command.ОбновитьДанныеОбъекта</CommandName>
-											<Parameter xsi:nil="true"/>
+										<UsualGroup name="ГруппаКнопки" id="239">
 											<Title>
 												<v8:item>
 													<v8:lang>en</v8:lang>
-													<v8:content>Refresh configuration object data</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Обновить данные объекта конфигурации</v8:content>
+													<v8:content>Группа кнопки</v8:content>
 												</v8:item>
 											</Title>
-											<ExtendedTooltip name="ОбновитьДанныеОбъектаExtendedTooltip" id="133"/>
-										</Button>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Группа кнопки</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаКнопкиExtendedTooltip" id="240"/>
+											<ChildItems>
+												<Button name="ОбновитьДанныеОбъекта" id="94">
+													<Type>UsualButton</Type>
+													<Representation>Text</Representation>
+													<Width>27</Width>
+													<Height>1</Height>
+													<CommandName>Form.Command.ОбновитьДанныеОбъекта</CommandName>
+													<Parameter xsi:nil="true"/>
+													<Title>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Refresh configuration object data</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Обновить данные объекта конфигурации</v8:content>
+														</v8:item>
+													</Title>
+													<ExtendedTooltip name="ОбновитьДанныеОбъектаExtendedTooltip" id="133"/>
+												</Button>
+												<LabelDecoration name="Decoration1" id="241">
+													<ContextMenu name="Decoration1ContextMenu" id="242"/>
+													<ExtendedTooltip name="Decoration1ExtendedTooltip" id="243"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
 									</ChildItems>
 								</UsualGroup>
 							</ChildItems>
@@ -1052,7 +1074,6 @@
 					<ExtendedTooltip name="ГруппаСвязанныеДанныеExtendedTooltip" id="201"/>
 					<ChildItems>
 						<Table name="СвязанныеДанные" id="98">
-							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
 							<DataPath>Объект.СвязанныеДанные</DataPath>

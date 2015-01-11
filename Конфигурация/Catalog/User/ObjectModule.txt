@@ -17,18 +17,18 @@ Procedure BeforeWrite(Cancel)
 				
 			EndIf;
 			
+			// Создать пользователя и установить UserID
+			Parameters = New Structure();
+			Parameters.Insert("FullName", Description);
+			Parameters.Insert("UserName", UserName);
+			Parameters.Insert("UserID", UserID);
+			Parameters.Insert("Role", Role);
+			Parameters.Insert("Password", Password);
+			Parameters.Insert("InterfaceLanguage", InterfaceLanguage);
+			
+			UserID = Users.CreateUser(Parameters);
+			
 		EndIf;
-		
-		// Создать пользователя и установить UserID
-		Parameters = New Structure();
-		Parameters.Insert("FullName", Description);
-		Parameters.Insert("UserName", UserName);
-		Parameters.Insert("UserID", UserID);
-		Parameters.Insert("Role", Role);
-		Parameters.Insert("Password", Password);
-		Parameters.Insert("InterfaceLanguage", InterfaceLanguage);
-		
-		UserID = Users.CreateUser(Parameters);
 		
 	EndIf;
 	
