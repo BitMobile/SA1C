@@ -119,7 +119,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	VisitSKUs.Ref AS Visit,
 	COUNT(DISTINCT VisitSKUs.SKU) AS CountOfSKU
 INTO Visits
@@ -128,15 +128,16 @@ FROM
 WHERE
 	VisitSKUs.Ref.Outlet.OutletStatus = VALUE(Enum.OutletStatus.Active)
 	AND NOT VisitSKUs.Ref.DeletionMark
-	AND VisitSKUs.Ref.Date &gt;= BEGINOFPERIOD(&amp;НачалоПериода, DAY)
-	AND VisitSKUs.Ref.Date &lt;= ENDOFPERIOD(&amp;КонецПериода, DAY)
+{WHERE
+	(VisitSKUs.Ref.Date &gt;= BEGINOFPERIOD(&amp;НачалоПериода, DAY)),
+	(VisitSKUs.Ref.Date &lt;= ENDOFPERIOD(&amp;КонецПериода, DAY))}
 
 GROUP BY
 	VisitSKUs.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	VisitSKUs.SKU,
 	VisitSKUs.Answer,
 	VisitSKUs.Ref AS Visit,
@@ -152,7 +153,8 @@ FROM
 			ON VisitSKUs.Question = SKUQuestions.Ref
 		ON Visits.Visit = VisitSKUs.Ref
 WHERE
-	NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.EmptyRef) AND NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.Snapshot)</query>
+	NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.EmptyRef)
+	AND NOT SKUQuestions.Assignment = VALUE(Enum.SKUQuestions.Snapshot)</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Answer</dataPath>
