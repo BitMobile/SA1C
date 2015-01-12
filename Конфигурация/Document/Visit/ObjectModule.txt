@@ -31,3 +31,50 @@ Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
 EndProcedure
 
 
+Procedure OnWrite(Cancel)
+	
+	Query = New Query(
+	"SELECT
+	|	Visit.Date AS Period,
+	|	VisitSKUs.Ref AS Visit,
+	|	VisitSKUs.SKU AS SKU,
+	|	Visit.Outlet AS Outlet,
+	|	VisitSKUs.Question AS Question,
+	|	AllQuestions.AnswerType AS DataType,
+	|	AllQuestions.Assignment AS QuestionAssignment,
+	|	VisitSKUs.Answer AS Answer
+	|FROM
+	|	Document.Visit.SKUs AS VisitSKUs
+	|		LEFT JOIN Document.Visit AS Visit
+	|		ON VisitSKUs.Ref = Visit.Ref
+	|		LEFT JOIN Catalog.Question AS AllQuestions
+	|		ON VisitSKUs.Question = AllQuestions.Ref
+	|WHERE
+	|	VisitSKUs.Ref = &Ref");
+	
+	Query.SetParameter("Ref", ThisObject.Ref);
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Row In QueryResult Do
+		
+		DataType = Row.DataType;
+		Answer = Row.Answer;
+		
+		If DataType = Enums.DataType.Boolean Then
+			
+			Row.Answer = ?(Answer = "Да" OR Answer = "Yes", True, False);
+			
+		ElsIf DataType = Enums.DataType.Decimal 
+			OR DataType = Enums.DataType.Integer Then
+			
+			Row.Answer = Number(Answer);
+			
+		EndIf;
+		
+		RecordManager = InformationRegisters.Answers.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure

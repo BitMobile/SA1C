@@ -389,6 +389,19 @@ Procedure ProcessUsers()
 	
 EndProcedure
 
+Procedure ProcessVisits()
+	
+	Selection = Documents.Visit.Select();
+	
+	While Selection.Next() Do
+		
+		VisitObject = Selection.GetObject();
+		VisitObject.Write(DocumentWriteMode.Write);
+		
+	EndDo;
+	
+EndProcedure
+
 Procedure ProcessSyncSettings()
 
 	DataProcessors.bitmobile_СинхронизацияИНастройки.ВосстановитьНастройкиИзФайла(Undefined, True, True);

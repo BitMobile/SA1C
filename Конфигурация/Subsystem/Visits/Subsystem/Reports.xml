@@ -31,6 +31,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitResults</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsAnalysis</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsOnMap</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsControl</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
