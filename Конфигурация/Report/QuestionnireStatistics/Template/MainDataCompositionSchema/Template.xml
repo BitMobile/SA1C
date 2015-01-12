@@ -224,7 +224,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	VisitQuestions.Ref AS VisitRef,
 	VisitQuestions.Question,
 	VisitQuestions.Answer,
@@ -237,7 +237,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Visit.Date,
 	Visit.Outlet,
 	Visit.SR,
@@ -248,7 +248,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	OutletList.Ref,
 	OutletList.Type,
 	OutletList.Class,
@@ -267,7 +267,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Visits.Date,
 	Visits.Outlet,
 	Visits.SR,
@@ -283,7 +283,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	FirstJoin.Date,
 	FirstJoin.Outlet,
 	FirstJoin.SR,
@@ -303,9 +303,9 @@ FROM
 	FirstJoin AS FirstJoin
 		LEFT JOIN Outlets AS Outlets
 		ON FirstJoin.Outlet = Outlets.Ref
-WHERE
-	FirstJoin.Date &lt;= &amp;КонецПериода
-	AND FirstJoin.Date &gt;= &amp;НачалоПериода</query>
+{WHERE
+	(FirstJoin.Date &lt;= &amp;КонецПериода),
+	(FirstJoin.Date &gt;= &amp;НачалоПериода)}</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Answer</dataPath>
@@ -384,6 +384,7 @@ WHERE
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.Region.EmptyRef</dcsset:right>
@@ -400,6 +401,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.Territory.EmptyRef</dcsset:right>
@@ -416,6 +418,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.Outlet.EmptyRef</dcsset:right>
@@ -432,6 +435,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Class</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.OutletClass.EmptyRef</dcsset:right>
@@ -448,6 +452,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Type</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.OutletType.EmptyRef</dcsset:right>
@@ -464,6 +469,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Question</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.Question.EmptyRef</dcsset:right>
@@ -480,6 +486,7 @@ WHERE
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.User.EmptyRef</dcsset:right>
@@ -499,6 +506,7 @@ WHERE
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Период</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
