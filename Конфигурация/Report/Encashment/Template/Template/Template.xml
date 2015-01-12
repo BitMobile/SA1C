@@ -119,7 +119,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	EncashmentEncashmentDocuments.Ref.Visit.SR AS SR,
 	AccountReceivableReceivableDocuments.Ref.Outlet,
 	EncashmentEncashmentDocuments.Ref.Visit.Outlet.ReceivableLimit AS ReceivableLimit,
@@ -132,21 +132,24 @@ FROM
 	Document.Encashment.EncashmentDocuments AS EncashmentEncashmentDocuments
 		FULL JOIN Document.AccountReceivable.ReceivableDocuments AS AccountReceivableReceivableDocuments
 		ON EncashmentEncashmentDocuments.DocumentName = AccountReceivableReceivableDocuments.DocumentName
-WHERE
-	(EncashmentEncashmentDocuments.Ref.Date BETWEEN &amp;StartDate AND &amp;EndDate
-			OR AccountReceivableReceivableDocuments.Ref.Date BETWEEN &amp;StartDate AND &amp;EndDate)
+{WHERE
+	(EncashmentEncashmentDocuments.Ref.Date &gt;= &amp;StartDate
+			AND AccountReceivableReceivableDocuments.Ref.Date &gt;= &amp;StartDate),
+	(EncashmentEncashmentDocuments.Ref.Date &lt;= &amp;EndDate
+			AND AccountReceivableReceivableDocuments.Ref.Date &lt;= &amp;EndDate)}
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	SUM(OrderSKUs.Amount) AS OrderAmount,
 	OrderSKUs.Ref.Outlet,
 	OrderSKUs.Ref.SR
 INTO Orders
 FROM
 	Document.Order.SKUs AS OrderSKUs
-WHERE
-	OrderSKUs.Ref.Date BETWEEN &amp;StartDate AND &amp;EndDate
+{WHERE
+	(OrderSKUs.Ref.Date &gt;= &amp;StartDate),
+	(OrderSKUs.Ref.Date &lt;= &amp;EndDate)}
 
 GROUP BY
 	OrderSKUs.Ref.Outlet,
@@ -154,7 +157,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Orders.SR AS SR1,
 	CASE
 		WHEN Orders.Outlet IS NULL 
@@ -187,7 +190,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Fin.SR1 AS SR,
 	Fin.Outlet1 AS Outlet,
 	Fin.ReceivableLimit,
