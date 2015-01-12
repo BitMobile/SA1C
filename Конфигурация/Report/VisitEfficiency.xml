@@ -25,7 +25,7 @@
 			</Synonym>
 			<Comment/>
 			<UseStandardCommands>true</UseStandardCommands>
-			<DefaultForm>Report.VisitEfficiency.Form.ReportForm</DefaultForm>
+			<DefaultForm/>
 			<AuxiliaryForm/>
 			<MainDataCompositionSchema>Report.VisitEfficiency.Template.MainDataCompositionSchema</MainDataCompositionSchema>
 			<DefaultSettingsForm/>
@@ -110,7 +110,6 @@
 					<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
 				</Properties>
 			</Attribute>
-			<Form>ReportForm</Form>
 			<Template>MainDataCompositionSchema</Template>
 		</ChildObjects>
 	</Report>
