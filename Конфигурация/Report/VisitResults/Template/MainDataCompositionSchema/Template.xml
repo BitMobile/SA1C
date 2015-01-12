@@ -189,7 +189,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	Visits.Ref,
 	Visits.Outlet,
 	Visits.SR,
@@ -215,7 +215,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	SUM(OrderSKUs.Amount) AS Amount,
 	Order.Visit
 INTO ord
@@ -229,7 +229,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Territory.Ref,
 	Territory.SR,
 	TerritoryOutlets.Outlet
@@ -241,7 +241,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	Encashment.Visit,
 	SUM(Encashment.EncashmentAmount) AS EncashmentAmount
 INTO Encash
@@ -253,7 +253,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
+SELECT
 	vs.Ref AS Ref,
 	vs.Outlet,
 	vs.SR,
@@ -276,35 +276,38 @@ FROM
 			AND vs.SR = Tr.SR
 		LEFT JOIN Encash AS Encash
 		ON vs.Ref = Encash.Visit
-WHERE
-	vs.Date &gt;= &amp;НачалоПериода
-	AND vs.Date &lt;= &amp;КонецПериода</query>
+{WHERE
+	(vs.Date &gt;= &amp;StartDate),
+	(vs.Date &lt;= &amp;EndDate)}</query>
 	</dataSet>
 	<parameter>
-		<name>НачалоПериода</name>
+		<name>Period</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
 				<v8:lang>ru</v8:lang>
-				<v8:content>Начало периода</v8:content>
+				<v8:content>Период</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
+			<v8:Type>v8:StandardPeriod</v8:Type>
 		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
 		<useRestriction>false</useRestriction>
-		<expression>НачалоПериода(&amp;НачалоПериода,"День")</expression>
-		<denyIncompleteValues>true</denyIncompleteValues>
 	</parameter>
 	<parameter>
-		<name>КонецПериода</name>
+		<name>EndDate</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Конец периода</v8:content>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
@@ -314,9 +317,26 @@ WHERE
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>false</useRestriction>
-		<expression>КонецПериода(&amp;КонецПериода,"День")</expression>
-		<denyIncompleteValues>true</denyIncompleteValues>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.EndDate</expression>
+	</parameter>
+	<parameter>
+		<name>StartDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Start date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.StartDate</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -362,6 +382,7 @@ WHERE
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.User.EmptyRef</dcsset:right>
@@ -380,15 +401,18 @@ WHERE
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>НачалоПериода</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardBeginningDate">
-						<v8:variant xsi:type="v8:StandardBeginningDateVariant">Custom</v8:variant>
-						<v8:date>0001-01-01T00:00:00</v8:date>
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
-					<dcsset:userSettingID>17a8bb75-1002-4207-aa7b-11f98dff651f</dcsset:userSettingID>
+					<dcsset:userSettingID>fc11c8d7-cc07-4109-8594-b885adbd1bc3</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>StartDate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>1837403f-0c52-4dc0-911f-56c753f60e5b</dcsset:userSettingID>
 				</dcscor:item>
