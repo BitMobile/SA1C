@@ -72,7 +72,21 @@ Function GetQuestionGroupType(TypeString = "SKUQuestions") Export
 	
 EndFunction
 
-
+Function StringToNumber(String) Export
+	
+	Try
+		
+		Result = Number(String);
+		
+	Except
+		
+		Result = 0;
+		
+	EndTry;
+	
+	Return Result;
+	
+EndFunction
 
 
 

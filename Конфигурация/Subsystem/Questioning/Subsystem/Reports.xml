@@ -25,6 +25,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowQuestionnireStatistics</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSkuChangeAnalysis</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowCompetitorsInTheOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSKUsStockInOutlet</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

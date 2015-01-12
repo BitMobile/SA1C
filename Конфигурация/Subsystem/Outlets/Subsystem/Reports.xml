@@ -28,7 +28,6 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletsStatuses</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowNumberOfOutlets</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletPhotosReport</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSKUsStockInOutlet</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
