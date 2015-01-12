@@ -133,7 +133,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	COUNT(DISTINCT VisitSKUs.SKU) AS Номенклатура,
 	VisitSKUs.Ref AS Визит,
 	VisitSKUs.Ref.Date AS ДатаВизита,
@@ -148,11 +148,12 @@ FROM
 		INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 		ON VisitSKUs.Ref.Outlet = TerritoryOutlets.Outlet
 WHERE
-	VisitSKUs.Ref.Date &gt;= &amp;НачалоПериода
-	AND VisitSKUs.Ref.Date &lt;= &amp;КонецПериода
-	AND VisitSKUs.Question.Assignment = VALUE(Enum.SKUQuestions.Available)
+	VisitSKUs.Question.Assignment = VALUE(Enum.SKUQuestions.Available)
 	AND (VisitSKUs.Answer = "Yes"
 			OR VisitSKUs.Answer = "Да")
+{WHERE
+	(VisitSKUs.Ref.Date &gt;= &amp;StartDate),
+	(VisitSKUs.Ref.Date &lt;= &amp;EndDate)}
 
 GROUP BY
 	VisitSKUs.Ref,
@@ -165,7 +166,7 @@ GROUP BY
 	TerritoryOutlets.Ref.Owner.Manager</query>
 	</dataSet>
 	<parameter>
-		<name>Период</name>
+		<name>Period</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -187,48 +188,40 @@ GROUP BY
 		<useRestriction>false</useRestriction>
 	</parameter>
 	<parameter>
-		<name>НачалоПериода</name>
+		<name>EndDate</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Beginning of period</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Начало периода</v8:content>
+				<v8:content>End date</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
 			<v8:Type>xs:dateTime</v8:Type>
 			<v8:DateQualifiers>
-				<v8:DateFractions>Date</v8:DateFractions>
+				<v8:DateFractions>DateTime</v8:DateFractions>
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаНачала</expression>
+		<expression>&amp;Period.EndDate</expression>
 	</parameter>
 	<parameter>
-		<name>КонецПериода</name>
+		<name>StartDate</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>End of period</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Конец периода</v8:content>
+				<v8:content>Start date</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
 			<v8:Type>xs:dateTime</v8:Type>
 			<v8:DateQualifiers>
-				<v8:DateFractions>Date</v8:DateFractions>
+				<v8:DateFractions>DateTime</v8:DateFractions>
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаОкончания</expression>
+		<expression>&amp;Period.StartDate</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -250,26 +243,31 @@ GROUP BY
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">ТорговаяТочка</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>984d3916-45fe-4552-9d34-ae173c9cd548</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Статус</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>d7fecc55-bedc-4826-b491-9d4f3eb42e65</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Регион</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>a67e990b-b2b1-418b-8fcb-33d7856792c1</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Ответственный</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>096c4e2b-e5fd-4625-8f90-bd37fb3b8425</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Территория</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>1b1d54b9-9347-4680-8d14-6d028c56ee0e</dcsset:userSettingID>
@@ -277,23 +275,18 @@ GROUP BY
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
 						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
-					<dcsset:userSettingID>ed7afe1c-0ee8-4dcf-a8c7-c6882e8b7e57</dcsset:userSettingID>
+					<dcsset:userSettingID>3adeb70d-4938-4eed-b12b-b56eb8d07006</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>НачалоПериода</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
-					<dcsset:userSettingID>d1ae6aba-c371-4821-88d9-ffe700ab1296</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:parameter>StartDate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>422474ec-be9f-4d3e-aec1-3d8bef186153</dcsset:userSettingID>
 				</dcscor:item>

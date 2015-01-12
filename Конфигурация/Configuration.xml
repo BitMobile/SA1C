@@ -312,7 +312,7 @@
 			<Report>Encashment</Report>
 			<Report>NumberOfOutlets</Report>
 			<Report>Orders</Report>
-			<Report>SkuChangeAnalysis</Report>
+			<Report>SKUChangeAnalysis</Report>
 			<Report>VisitEfficiency</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>VisitResults</Report>

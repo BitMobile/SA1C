@@ -6,7 +6,7 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Command>
-		<Command name="Report.SkuChangeAnalysis.StandardCommand.Open">
+		<Command name="Report.SKUChangeAnalysis.StandardCommand.Open">
 			<Visibility>
 				<xr:Common>false</xr:Common>
 			</Visibility>

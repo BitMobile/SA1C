@@ -2733,7 +2733,7 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
-		<name>Report.SkuChangeAnalysis</name>
+		<name>Report.SKUChangeAnalysis</name>
 		<right>
 			<name>Use</name>
 			<value>true</value>
