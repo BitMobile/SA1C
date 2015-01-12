@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.4.0.122</Version>
+			<Version>1.4.0.123</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -197,6 +197,9 @@
 			<CommonCommand>ShowVisitsAnalysis</CommonCommand>
 			<CommonCommand>ShowVisitsOnMap</CommonCommand>
 			<CommonCommand>ShowOrders</CommonCommand>
+			<CommonCommand>ShowVisitsControl</CommonCommand>
+			<CommonCommand>ShowOutletPhotosReport</CommonCommand>
+			<CommonCommand>ShowSKUsStockInOutlet</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
@@ -312,35 +315,40 @@
 			<Report>Encashment</Report>
 			<Report>NumberOfOutlets</Report>
 			<Report>Orders</Report>
+			<Report>OutletPhotosReport</Report>
+			<Report>OutletsStatus</Report>
+			<Report>PriceMonitoring</Report>
+			<Report>QuestionnireStatistics</Report>
 			<Report>SKUChangeAnalysis</Report>
+			<Report>SKUsStockInOutlet</Report>
 			<Report>VisitEfficiency</Report>
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>VisitResults</Report>
 			<Report>Visits</Report>
 			<Report>VisitsAnalysis</Report>
+			<Report>VisitsControl</Report>
 			<Report>VisitsOrders</Report>
-			<Report>OutletsStatus</Report>
-			<Report>QuestionnireStatistics</Report>
+			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
-			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
-			<InformationRegister>StorageAdditionalInformation</InformationRegister>
+			<InformationRegister>Answers</InformationRegister>
+			<InformationRegister>AnsweredQuestions</InformationRegister>
+			<InformationRegister>AssortmentMatrixSKUs</InformationRegister>
+			<InformationRegister>AssortmentMatrixOutlets</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
+			<InformationRegister>QuestioningResults</InformationRegister>
+			<InformationRegister>QuestionnairesSchedule</InformationRegister>
+			<InformationRegister>QuestionsInQuestionnaires</InformationRegister>
+			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
+			<InformationRegister>StorageAdditionalInformation</InformationRegister>
 			<InformationRegister>bitmobile_КонтролируемыеИзмеренияРегистров</InformationRegister>
 			<InformationRegister>bitmobile_АдресаЭлПочтыДляОтчетов</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
-			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
-			<InformationRegister>QuestionsInQuestionnaires</InformationRegister>
-			<InformationRegister>QuestionnairesSchedule</InformationRegister>
-			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
-			<InformationRegister>AnsweredQuestions</InformationRegister>
-			<InformationRegister>QuestioningResults</InformationRegister>
-			<InformationRegister>AssortmentMatrixOutlets</InformationRegister>
-			<InformationRegister>AssortmentMatrixSKUs</InformationRegister>
 			<InformationRegister>ManagersOfRegions</InformationRegister>
+			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

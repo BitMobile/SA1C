@@ -1,0 +1,103 @@
+﻿
+#Region CommonProceduresAndFunctions
+
+&AtServer
+Procedure ResultDetailProcessingServer(Details, StandardProcessing)
+	
+	Fields = GetFields(Details);
+	
+	For Each Field In Fields Do
+		
+		If Field.Field = "Answer" Then
+			
+			StandardProcessing = False;
+			
+			Value = Field.Value;
+			
+			Try
+				
+				SnapshotUUID = New UUID(Value);
+				
+				SetPicture(SnapshotUUID);
+				
+				
+			Except
+				
+				ThisForm.PictureAddress = Undefined;
+				ThisForm.PictureExtension = Undefined;
+				ThisForm.PictureFilename = Undefined;
+				
+			EndTry;
+			
+		Else
+			
+			ThisForm.PictureAddress = Undefined;
+			ThisForm.PictureExtension = Undefined;
+			ThisForm.PictureFilename = Undefined;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure SetPicture(SnapshotUUID)
+	
+	Filter = New Structure;
+	Filter.Insert("FileName", SnapshotUUID);
+	
+	Selection = InformationRegisters.StorageAdditionalInformation.Select(Filter);
+	
+	If Selection.Next() Then
+		
+		ThisForm.PictureAddress = PutToTempStorage(Selection.Storage.Get());
+		ThisForm.PictureExtension = Selection.Extension;
+		ThisForm.PictureFilename = Selection.FileName;
+		
+	Else
+		
+		ThisForm.PictureAddress = Undefined;
+		ThisForm.PictureExtension = Undefined;
+		ThisForm.PictureFilename = Undefined;
+		
+	EndIf;
+	
+EndProcedure
+
+
+&AtServer
+Function GetFields(Details)
+	
+	Return GetFromTempStorage(DetailsData).Items.Get(Details).GetFields();
+	
+EndFunction
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure PictureAddressClick(Item, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	If ValueIsFilled(ThisForm.PictureFilename) Then
+		
+		GetFile(ThisForm.PictureAddress, PictureFilename + PictureExtension, True);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ResultDetailProcessing(Item, Details, StandardProcessing)
+	
+	ResultDetailProcessingServer(Details, StandardProcessing);
+	
+EndProcedure
+
+#EndRegion
+
+
+

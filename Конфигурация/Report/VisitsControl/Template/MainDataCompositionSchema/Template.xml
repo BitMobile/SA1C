@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>DataSource1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Type</dataPath>
+			<field>Type</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Type</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Distributor</dataPath>
+			<field>Distributor</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Distributor</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дистрибьютор</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Class</dataPath>
+			<field>Class</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Class</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Класс</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Outlet</dataPath>
+			<field>Outlet</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	User.Ref AS SR,
+	TerritoryOutlets.Ref.Owner AS Region,
+	TerritoryOutlets.Ref AS Territory,
+	TerritoryOutlets.Outlet AS Outlet
+INTO SRsOutlets
+FROM
+	Catalog.User AS User
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON User.Ref = TerritoryOutlets.Ref.SR
+WHERE
+	User.Role = "SR"
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	COUNT(DISTINCT VisitPlanOutlets.Ref.Ref) AS VisitPlansQty,
+	VisitPlanOutlets.Ref.SR,
+	VisitPlanOutlets.Outlet
+INTO VisitPlans
+FROM
+	Document.VisitPlan.Outlets AS VisitPlanOutlets,
+	SRsOutlets AS SRsOutlets
+WHERE
+	VisitPlanOutlets.Outlet IN (SRsOutlets.Outlet)
+	AND VisitPlanOutlets.Ref.SR IN (SRsOutlets.SR)
+
+GROUP BY
+	VisitPlanOutlets.Ref.SR,
+	VisitPlanOutlets.Outlet
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	Visit.SR,
+	Visit.Outlet,
+	COUNT(DISTINCT Visit.Ref) AS VisitsQty,
+	SUM(CASE
+			WHEN Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
+				THEN 1
+			ELSE 0
+		END) AS UnplannedVisitsQty,
+	SUM(CASE
+			WHEN NOT Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
+				THEN 1
+			ELSE 0
+		END) AS PlannedVisitsQty
+INTO Visits
+FROM
+	Document.Visit AS Visit,
+	SRsOutlets AS SRsOutlets
+WHERE
+	Visit.SR IN (SRsOutlets.SR)
+	AND Visit.Outlet IN (SRsOutlets.Outlet)
+
+GROUP BY
+	Visit.SR,
+	Visit.Outlet
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	SRsOutlets.SR,
+	SRsOutlets.Region,
+	SRsOutlets.Territory,
+	SRsOutlets.Outlet,
+	AllOutlets.Distributor,
+	AllOutlets.Class,
+	AllOutlets.Type
+FROM
+	SRsOutlets AS SRsOutlets
+		LEFT JOIN VisitPlans AS VisitPlans
+		ON SRsOutlets.SR = VisitPlans.SR
+			AND SRsOutlets.Outlet = VisitPlans.Outlet
+		LEFT JOIN Visits AS Visits
+		ON SRsOutlets.SR = Visits.SR
+			AND SRsOutlets.Outlet = Visits.Outlet
+		LEFT JOIN Catalog.Outlet AS AllOutlets
+		ON SRsOutlets.Outlet = AllOutlets.Ref</query>
+	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet2</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>UnplannedVisitsQty</dataPath>
+			<field>UnplannedVisitsQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Unplanned visits qty</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitsQty</dataPath>
+			<field>VisitsQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visits qty</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>PlannedVisitsQty</dataPath>
+			<field>PlannedVisitsQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Planned visits qty</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Date</dataPath>
+			<field>Date</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Date</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitPlansQty</dataPath>
+			<field>VisitPlansQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit plans qty</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field1</dataPath>
+			<field>Field1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field1</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) AS Date,
+	VisitPlan.SR,
+	COUNT(DISTINCT VisitPlanOutlets.Outlet) AS VisitPlansQty
+INTO VisitPlans
+FROM
+	Document.VisitPlan.Outlets AS VisitPlanOutlets
+		LEFT JOIN Document.VisitPlan AS VisitPlan
+		ON VisitPlanOutlets.Ref = VisitPlan.Ref
+
+GROUP BY
+	VisitPlan.SR,
+	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY)
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
+	Visit.SR,
+	COUNT(DISTINCT Visit.Ref) AS VisitsQty,
+	SUM(CASE
+			WHEN Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
+				THEN 1
+			ELSE 0
+		END) AS UnplannedVisitsQty,
+	SUM(CASE
+			WHEN NOT Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
+				THEN 1
+			ELSE 0
+		END) AS PlannedVisitsQty
+INTO Visits
+FROM
+	Document.Visit AS Visit
+
+GROUP BY
+	Visit.SR,
+	BEGINOFPERIOD(Visit.Date, DAY)
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	Visits.Date,
+	Visits.SR,
+	VisitPlans.VisitPlansQty,
+	Visits.VisitsQty,
+	Visits.UnplannedVisitsQty,
+	Visits.PlannedVisitsQty,
+	CASE
+		WHEN VisitPlans.VisitPlansQty = 0
+			THEN "hi"
+		ELSE "hello"
+	END AS Field1
+FROM
+	Visits AS Visits
+		INNER JOIN VisitPlans AS VisitPlans
+		ON Visits.Date = VisitPlans.Date
+			AND Visits.SR = VisitPlans.SR</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>SR</sourceExpression>
+		<destinationExpression>SR</destinationExpression>
+	</dataSetLink>
+	<calculatedField>
+		<dataPath>NotVisited</dataPath>
+		<expression>VisitPlansQty - PlannedVisitsQty</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Not visited</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Не посещено</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>Hi</dataPath>
+		<expression>"Hi"</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Hi</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
+	<totalField>
+		<dataPath>NotVisited</dataPath>
+		<expression>Sum(NotVisited)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>PlannedVisitsQty</dataPath>
+		<expression>Sum(PlannedVisitsQty)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>UnplannedVisitsQty</dataPath>
+		<expression>Sum(UnplannedVisitsQty)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>VisitPlansQty</dataPath>
+		<expression>Sum(VisitPlansQty)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>VisitsQty</dataPath>
+		<expression>Sum(VisitsQty)</expression>
+	</totalField>
+	<parameter>
+		<name>Period</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Default</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Outlet</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Date</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>SR</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemFolder">
+							<dcsset:lwsTitle>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>VisitsInfo</v8:content>
+								</v8:item>
+							</dcsset:lwsTitle>
+							<dcsset:item xsi:type="dcsset:SelectedItemField">
+								<dcsset:field>VisitPlansQty</dcsset:field>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:SelectedItemField">
+								<dcsset:field>VisitsQty</dcsset:field>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:SelectedItemField">
+								<dcsset:field>UnplannedVisitsQty</dcsset:field>
+							</dcsset:item>
+							<dcsset:placement>Together</dcsset:placement>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemField">
+								<dcsset:field>Outlet</dcsset:field>
+							</dcsset:item>
+						</dcsset:selection>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>
