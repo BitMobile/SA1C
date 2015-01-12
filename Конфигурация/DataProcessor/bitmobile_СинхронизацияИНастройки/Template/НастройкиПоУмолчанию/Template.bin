@@ -13,9 +13,9 @@
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Status IN (Select Id FROM [Enum].[AssortmentMatrixStatus] WHERE Name = 'Active') AND getDate() &gt;= T.BeginDate  AND (T.[EndDate] = '0001-01-01 00:00:00.0000000'  OR T.[EndDate] &gt;= getDate()) AND T.Id IN (Select Ref from [Catalog].[AssortmentMatrix_SRs] where SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Status IN (Select Id FROM [Enum].[AssortmentMatrixStatus] WHERE Name = 'Active') AND getDate() &gt;= T.BeginDate AND (T.[EndDate] = '0001-01-01 00:00:00.0000000' OR T.[EndDate] &gt;= getDate()) AND T.Id IN (Select Ref from [Catalog].[AssortmentMatrix_SRs] WHERE SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>20</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>21</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -108,7 +108,8 @@
 	AssortmentMatrixPeriods.Ref,
 	AssortmentMatrixSKUsSliceLast.SKU,
 	AssortmentMatrixSKUsSliceLast.Qty,
-	AssortmentMatrixSKUsSliceLast.Unit
+	AssortmentMatrixSKUsSliceLast.Unit,
+	AssortmentMatrixSKUsSliceLast.BaseUnitQty
 FROM
 	InformationRegister.AssortmentMatrixSKUs.SliceLast(, AssortmentMatrix IN (&amp;RefArray)) AS AssortmentMatrixSKUsSliceLast
 		INNER JOIN Catalog.AssortmentMatrix.Periods AS AssortmentMatrixPeriods
@@ -171,36 +172,6 @@ WHERE
 			</ТабличныеЧасти>
 			<РеквизитыТабличныхЧастей>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Число</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.AssortmentMatrix</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>SR</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>SR</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.User</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
-				</Row>
-				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
@@ -251,6 +222,16 @@ WHERE
 					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>BaseUnitQty</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
@@ -276,6 +257,36 @@ WHERE
 					<РеквизитОбъектаКонфигурации>Outlet</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Catalog.Outlet</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.AssortmentMatrix</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>SR</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>SR</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.User</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>true</КлючевоеПоле>
@@ -421,7 +432,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>21</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>22</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -486,12 +497,12 @@ WHERE
 			<ОбъектКонфигурации>Catalog.Outlet</ОбъектКонфигурации>
 			<ВыгрузкаДанных>true</ВыгрузкаДанных>
 			<ЗагрузкаДанных>true</ЗагрузкаДанных>
-			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
+			<ВыгрузкаФайловShared>true</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>true</ЗагрузкаФайловPrivate>
-			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
+			<ПеремещатьPrivateВShared>true</ПеремещатьPrivateВShared>
+			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>19</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>20</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -673,6 +684,25 @@ WHERE
 			</РеквизитыШапки>
 			<ТабличныеЧасти>
 				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile>AnsweredQuestions</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса>SELECT
+	AnsweredQuestions.Questionaire,
+	AnsweredQuestions.Outlet AS Ref,
+	AnsweredQuestions.Question,
+	AnsweredQuestions.SKU,
+	AnsweredQuestions.Answer,
+	AnsweredQuestions.AnswerDate,
+	1 AS LineNumber
+FROM
+	InformationRegister.AnsweredQuestions AS AnsweredQuestions
+WHERE
+	AnsweredQuestions.Outlet IN(&amp;RefArray)</ТекстЗапроса>
+					<Фильтр/>
+					<Запрос>true</Запрос>
+					<Ключ>Questionaire,Question,SKU</Ключ>
+				</Row>
+				<Row>
 					<ТабличнаяЧастьОбъектаBitmobile>Contacts</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>Contacts</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
@@ -697,23 +727,12 @@ WHERE
 					<Ключ>PriceList</Ключ>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаBitmobile>AnsweredQuestions</ТабличнаяЧастьОбъектаBitmobile>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
-					<ТекстЗапроса>SELECT
-	AnsweredQuestions.Questionaire,
-	AnsweredQuestions.Outlet AS Ref,
-	AnsweredQuestions.Question,
-	AnsweredQuestions.SKU,
-	AnsweredQuestions.Answer,
-	AnsweredQuestions.AnswerDate,
-	1 AS LineNumber
-FROM
-	InformationRegister.AnsweredQuestions AS AnsweredQuestions
-WHERE
-	AnsweredQuestions.Outlet IN(&amp;RefArray)</ТекстЗапроса>
+					<ТабличнаяЧастьОбъектаBitmobile>Snapshots</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Snapshots</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса/>
 					<Фильтр/>
-					<Запрос>true</Запрос>
-					<Ключ>Questionaire,Question,SKU,AnswerDate</Ключ>
+					<Запрос>false</Запрос>
+					<Ключ>FileName</Ключ>
 				</Row>
 			</ТабличныеЧасти>
 			<РеквизитыТабличныхЧастей>
@@ -823,7 +842,7 @@ WHERE
 					<РеквизитОбъектаКонфигурации>Value</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Строка</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
@@ -854,6 +873,36 @@ WHERE
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Document.PriceList</ТипРеквизита>
 					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Snapshots</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Snapshots</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Outlet</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Snapshots</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>FileName</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>FileName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Уникальный идентификатор</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
@@ -915,7 +964,7 @@ WHERE
 					<ТипРеквизита>Дата</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
+					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
@@ -1006,7 +1055,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>12</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>14</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -1178,7 +1227,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>16</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>15</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -1240,9 +1289,17 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>15</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>13</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>PredefinedDataName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
 				<Row>
 					<РеквизитОбъектаBitmobile>Predefined</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Predefined</РеквизитОбъектаКонфигурации>
@@ -1297,6 +1354,14 @@ WHERE
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Enum.DataType</ТипРеквизита>
 					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>Assignment</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Assignment</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Enum.SKUQuestions</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 			</РеквизитыШапки>
@@ -1358,7 +1423,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>14</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>12</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -1428,7 +1493,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>22</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>23</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -1490,7 +1555,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>23</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>24</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -1552,9 +1617,17 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>24</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>25</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>PredefinedDataName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
 				<Row>
 					<РеквизитОбъектаBitmobile>Predefined</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Predefined</РеквизитОбъектаКонфигурации>
@@ -1604,7 +1677,7 @@ WHERE
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 				<Row>
-					<РеквизитОбъектаBitmobile>Manager</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаBitmobile/>
 					<РеквизитОбъектаКонфигурации>Manager</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Catalog.User</ТипРеквизита>
@@ -1612,8 +1685,58 @@ WHERE
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 			</РеквизитыШапки>
-			<ТабличныеЧасти/>
-			<РеквизитыТабличныхЧастей/>
+			<ТабличныеЧасти>
+				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile>Managers</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса/>
+					<Фильтр/>
+					<Запрос>false</Запрос>
+					<Ключ>Manager</Ключ>
+				</Row>
+			</ТабличныеЧасти>
+			<РеквизитыТабличныхЧастей>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Region</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Manager</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Manager</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.User</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>LineNumberInUser</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+			</РеквизитыТабличныхЧастей>
 			<СвязанныеДанные/>
 		</CatalogObject.bitmobile_НастройкиСинхронизации>
 		<CatalogObject.bitmobile_НастройкиСинхронизации>
@@ -1628,7 +1751,7 @@ WHERE
 			<ВыгрузкаФайловShared>true</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Owner] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.[Owner] IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -1961,7 +2084,7 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -2206,7 +2329,7 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory] Territory ON Territory.Id = S.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = S.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>7</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
@@ -2268,11 +2391,19 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.SR = @UserId</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.Id IN (SELECT DISTINCT Ref FROM [Catalog].[Territory_SRs] Territory WHERE Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>25</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>26</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>PredefinedDataName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
 				<Row>
 					<РеквизитОбъектаBitmobile>Predefined</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Predefined</РеквизитОбъектаКонфигурации>
@@ -2322,7 +2453,7 @@ WHERE
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 				<Row>
-					<РеквизитОбъектаBitmobile>SR</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаBitmobile/>
 					<РеквизитОбъектаКонфигурации>SR</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Catalog.User</ТипРеквизита>
@@ -2331,6 +2462,21 @@ WHERE
 				</Row>
 			</РеквизитыШапки>
 			<ТабличныеЧасти>
+				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile>SKUGroups</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса>SELECT
+	SKUGroupTerritories.Ref AS SKUGroup,
+	SKUGroupTerritories.Territory AS Ref,
+	1 AS LineNumber
+FROM
+	Catalog.SKUGroup.Territories AS SKUGroupTerritories
+WHERE
+	SKUGroupTerritories.Territory IN(&amp;RefArray)</ТекстЗапроса>
+					<Фильтр/>
+					<Запрос>true</Запрос>
+					<Ключ>SKUGroup</Ключ>
+				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаBitmobile>Outlets</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>Outlets</ТабличнаяЧастьОбъектаКонфигурации>
@@ -2356,22 +2502,45 @@ WHERE
 					<Ключ>Stock</Ключ>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаBitmobile>SKUGroups</ТабличнаяЧастьОбъектаBitmobile>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
-					<ТекстЗапроса>SELECT
-	SKUGroupTerritories.Ref AS SKUGroup,
-	SKUGroupTerritories.Territory AS Ref,
-	1 AS LineNumber
-FROM
-	Catalog.SKUGroup.Territories AS SKUGroupTerritories
-WHERE
-	SKUGroupTerritories.Territory IN(&amp;RefArray)</ТекстЗапроса>
+					<ТабличнаяЧастьОбъектаBitmobile>SRs</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса/>
 					<Фильтр/>
-					<Запрос>true</Запрос>
-					<Ключ>SKUGroup</Ключ>
+					<Запрос>false</Запрос>
+					<Ключ>SR</Ключ>
 				</Row>
 			</ТабличныеЧасти>
 			<РеквизитыТабличныхЧастей>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>SKUGroup</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>SKUGroup</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.SKUGroup</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Territory</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Outlets</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
@@ -2463,17 +2632,17 @@ WHERE
 					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>SKUGroup</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>SKUGroup</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.SKUGroup</ТипРеквизита>
+					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
+					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>true</СтандартныйРеквизит>
@@ -2483,10 +2652,20 @@ WHERE
 					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>SR</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>SR</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.User</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>LineNumberInUser</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Число</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
@@ -2577,11 +2756,19 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.Id=@UserId</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.Id = @UserId</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>17</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>PredefinedDataName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
 				<Row>
 					<РеквизитОбъектаBitmobile>Predefined</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Predefined</РеквизитОбъектаКонфигурации>
@@ -2659,7 +2846,7 @@ WHERE
 					<РеквизитОбъектаКонфигурации>Role</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Строка</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
 				<Row>
@@ -2686,9 +2873,66 @@ WHERE
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>RoleOfUser</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.RolesOfUsers</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
 			</РеквизитыШапки>
-			<ТабличныеЧасти/>
-			<РеквизитыТабличныхЧастей/>
+			<ТабличныеЧасти>
+				<Row>
+					<ТабличнаяЧастьОбъектаBitmobile>UserRights</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<ТекстЗапроса>SELECT
+	User.Ref AS Ref,
+	RolesOfUsersMobileAppAccessRights.AccessRight AS AccessRight,
+	1 AS LineNumber
+FROM
+	Catalog.User AS User
+		LEFT JOIN Catalog.RolesOfUsers.MobileAppAccessRights AS RolesOfUsersMobileAppAccessRights
+		ON (User.RoleOfUser = RolesOfUsersMobileAppAccessRights.Ref)
+WHERE
+	User.Ref IN (&amp;RefArray)</ТекстЗапроса>
+					<Фильтр/>
+					<Запрос>true</Запрос>
+					<Ключ>Right</Ключ>
+				</Row>
+			</ТабличныеЧасти>
+			<РеквизитыТабличныхЧастей>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.User</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Right</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>AccessRight</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.MobileAppAccessRights</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+			</РеквизитыТабличныхЧастей>
 			<СвязанныеДанные/>
 		</CatalogObject.bitmobile_НастройкиСинхронизации>
 		<CatalogObject.bitmobile_НастройкиСинхронизации>
@@ -2703,9 +2947,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Outlet IN (SELECT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory] Territory ON Territory.Id = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Outlet IN (SELECT DISTINCT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>26</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>27</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -2833,9 +3077,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.Date &gt; (getDate()-30)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.Date &gt; (getDate() - 30)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>30</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>31</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -2987,7 +3231,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>31</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>32</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -3079,9 +3323,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate()-30)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate() - 30)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>32</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>33</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -3331,9 +3575,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Id IN (SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory] TT_ ON TT_.Id=TO_.Ref WHERE TT_.SR=@UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Id IN (SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory_SRs] TT_ ON TT_.Ref=TO_.Ref WHERE TT_.SR=@UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>13</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>19</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -3398,7 +3642,7 @@ WHERE
 					<ТабличнаяЧастьОбъектаBitmobile>Prices</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>Prices</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр>T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)) </Фильтр>
+					<Фильтр>T.SKU IN (SELECT DISTINCT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)) </Фильтр>
 					<Запрос>false</Запрос>
 					<Ключ>SKU</Ключ>
 				</Row>
@@ -3693,7 +3937,7 @@ FROM
 		ON SKUsInQuestionnairesSliceLast.SKU = S.Ref
 WHERE
 	SKUsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)</ТекстЗапроса>
-					<Фильтр>T.SKU IN (SELECT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory] Territory ON Territory.Id = G.Ref AND Territory.SR = @UserId)) </Фильтр>
+					<Фильтр>T.SKU IN (SELECT DISTINCT Id FROM Catalog.SKU WHERE Owner IN (SELECT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)) </Фильтр>
 					<Запрос>true</Запрос>
 					<Ключ>SKU</Ключ>
 				</Row>
@@ -3765,56 +4009,6 @@ WHERE
 				</Row>
 			</ТабличныеЧасти>
 			<РеквизитыТабличныхЧастей>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Date</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Date</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Дата</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Document.Questionnaire</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>BeginAnswerPeriod</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>BeginAnswerPeriod</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Дата</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>EndAnswerPeriod</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>EndAnswerPeriod</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Дата</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Число</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Questions</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
@@ -4036,46 +4230,6 @@ WHERE
 					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Document.Questionnaire</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>SKU</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>SKU</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.SKU</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Description</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Description</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Строка</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Число</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №1</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
@@ -4285,6 +4439,96 @@ WHERE
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Date</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Date</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Дата</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Document.Questionnaire</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>BeginAnswerPeriod</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>BeginAnswerPeriod</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Дата</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>EndAnswerPeriod</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>EndAnswerPeriod</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Дата</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №4</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Document.Questionnaire</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>SKU</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>SKU</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.SKU</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Description</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Description</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
 			</РеквизитыТабличныхЧастей>
 			<СвязанныеДанные/>
 		</CatalogObject.bitmobile_НастройкиСинхронизации>
@@ -4302,7 +4546,7 @@ WHERE
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
 			<ФильтрВBitmobile/>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>28</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>29</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -4426,9 +4670,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>true</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate()-30)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate() - 30)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>29</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>30</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -4860,9 +5104,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate()-90)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>t.SR = @UserId AND t.Date &gt; (getDate() - 90)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
-			<ПозицияВВыгрузке>27</ПозицияВВыгрузке>
+			<ПозицияВВыгрузке>28</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
 			<РеквизитыШапки>
 				<Row>
@@ -5006,6 +5250,76 @@ WHERE
 					<КлючевоеПоле>true</КлючевоеПоле>
 				</Row>
 			</РеквизитыТабличныхЧастей>
+			<СвязанныеДанные/>
+		</CatalogObject.bitmobile_НастройкиСинхронизации>
+		<CatalogObject.bitmobile_НастройкиСинхронизации>
+			<Ref>f53ff126-9a40-11e4-bf02-ac220babbf77</Ref>
+			<DeletionMark>false</DeletionMark>
+			<Code>000000033</Code>
+			<Description>MobileAppAccessRights</Description>
+			<ВидОбъектаBitmobile>Catalog</ВидОбъектаBitmobile>
+			<ОбъектКонфигурации>Catalog.MobileAppAccessRights</ОбъектКонфигурации>
+			<ВыгрузкаДанных>true</ВыгрузкаДанных>
+			<ЗагрузкаДанных>false</ЗагрузкаДанных>
+			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
+			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
+			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
+			<ФильтрВBitmobile/>
+			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
+			<ПозицияВВыгрузке>16</ПозицияВВыгрузке>
+			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
+			<РеквизитыШапки>
+				<Row>
+					<РеквизитОбъектаBitmobile/>
+					<РеквизитОбъектаКонфигурации>PredefinedDataName</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>Predefined</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Predefined</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Булево</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>Id</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.MobileAppAccessRights</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>DeletionMark</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>DeletionMark</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Булево</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>Description</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Description</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+				<Row>
+					<РеквизитОбъектаBitmobile>Code</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Code</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Строка</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+				</Row>
+			</РеквизитыШапки>
+			<ТабличныеЧасти/>
+			<РеквизитыТабличныхЧастей/>
 			<СвязанныеДанные/>
 		</CatalogObject.bitmobile_НастройкиСинхронизации>
 		<CatalogObject.bitmobile_НастройкиМобильныхПриложений>

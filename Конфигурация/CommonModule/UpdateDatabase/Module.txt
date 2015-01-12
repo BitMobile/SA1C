@@ -88,11 +88,12 @@ Function StartUpdate() Export
 				
 			EndIf;
 			
-			If CurrentVersion = "1.4.0" And MetadataVersionForUpdate = "1.5.0" Then 
+			// Убрать комментарий после смены версии
+			//If CurrentVersion = "1.4.0" And MetadataVersionForUpdate = "1.5.0" Then 
 				
 				UpdateForRelease_1_5_0(LastState, Step);
 				
-			EndIf;
+			//EndIf;
 			
 			Constants.bitmobile_ВерсияКонфигурации.Set(MetadataVersion);
 		

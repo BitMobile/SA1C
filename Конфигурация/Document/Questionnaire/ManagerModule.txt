@@ -281,18 +281,20 @@ Function SelectSRs(SelectorsList, PositionList) Export
 	
 	Query = New Query;
 	Query.Text = "SELECT ALLOWED DISTINCT
-	             |	Territory.SR
+	             |	TerritorySRs.SR AS SR
 	             |FROM
-	             |	Catalog.Territory AS Territory
+	             |	Catalog.Territory.SRs AS TerritorySRs
 	             |		LEFT JOIN Catalog.User AS User
 	             |			LEFT JOIN Catalog.Positions AS Positions
 	             |			ON (User.Position = Positions.Ref
 	             |					OR User.Position = VALUE(Catalog.Positions.EmptyRef))
-	             |		ON Territory.SR = User.Ref
+	             |		ON TerritorySRs.SR = User.Ref
+	             |		INNER JOIN Catalog.Territory AS Territory
+	             |		ON TerritorySRs.Ref = Territory.Ref
 	             |WHERE
 	             |	Positions.Ref IN(&PositionsArray)";
 				 
-	Query.SetParameter("PositionsArray", PositionsArray);			 
+	Query.SetParameter("PositionsArray", PositionsArray);
 				 
 	Ind = 0;			 
 				 
@@ -309,13 +311,13 @@ Function SelectSRs(SelectorsList, PositionList) Export
 			
 			Ind = Ind + 1;
 			
-		EndDo;	
+		EndDo;
 		
 		Query.Text = Left(Query.Text, StrLen(Query.Text) - 4);
 		
 		Query.Text = Query.Text + ") ";
 		
-	EndIf;	
+	EndIf;
 	
 	TableTerritoryOr = SelectorsList.Copy(New Structure("Selector, ComparisonType", "Catalog_Territory", Enums.ComparisonType.InList)); 
 	
@@ -330,7 +332,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 			
 			Ind = Ind + 1;
 			
-		EndDo;	
+		EndDo;
 		
 		Query.Text = Left(Query.Text, StrLen(Query.Text) - 4);
 		
@@ -345,15 +347,15 @@ Function SelectSRs(SelectorsList, PositionList) Export
 			If SelectorElement.Selector = "Catalog_Region" Then 
 				
 				If SelectorElement.ComparisonType = Enums.ComparisonType.Equal Then 
-				
+					
 					Query.Text = Query.Text + " AND Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ")"; 
-				
+					
 				Else 
 					
 					Query.Text = Query.Text + " AND NOT Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ")";
 					
-				EndIf;	
-					
+				EndIf;
+				
 				Query.SetParameter("parameter" + String(Ind), SelectorElement.Value);
 				
 				Ind = Ind + 1;
@@ -363,14 +365,14 @@ Function SelectSRs(SelectorsList, PositionList) Export
 			If SelectorElement.Selector = "Catalog_Territory" Then 
 				
 				If SelectorElement.ComparisonType = Enums.ComparisonType.Equal Then
-				
+					
 					Query.Text = Query.Text + " AND Territory.Ref = &parameter" + String(Ind); 
 					
 				Else 
 					
 					Query.Text = Query.Text + " AND Territory.Ref <> &parameter" + String(Ind);
 					
-				EndIf;	
+				EndIf;
 				
 				Query.SetParameter("parameter" + String(Ind), SelectorElement.Value);
 				
@@ -378,14 +380,14 @@ Function SelectSRs(SelectorsList, PositionList) Export
 				
 			EndIf;
 			
-		EndIf;	
+		EndIf;
 		
-	EndDo;	
+	EndDo;
 	
 	ResultTable = Query.Execute().Unload();
-			
+	
 	Return ResultTable;
-			
+	
 EndFunction
 
 

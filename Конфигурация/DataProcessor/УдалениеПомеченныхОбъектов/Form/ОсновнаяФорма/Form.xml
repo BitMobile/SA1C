@@ -30,6 +30,95 @@
 		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
 	</Events>
 	<ChildItems>
+		<CommandBar name="КомандыФормы" id="2">
+			<EnableContentChange>true</EnableContentChange>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Команды формы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Команды формы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="КомандыФормыExtendedTooltip" id="114"/>
+			<ChildItems>
+				<Button name="CommandBack" id="52">
+					<Type>CommandBarButton</Type>
+					<SkipOnInput>false</SkipOnInput>
+					<Enabled>false</Enabled>
+					<CommandName>Form.Command.CommandBack</CommandName>
+					<Parameter xsi:nil="true"/>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>&lt;&lt; Назад</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="CommandBackExtendedTooltip" id="115"/>
+				</Button>
+				<Button name="Forward" id="3">
+					<Type>CommandBarButton</Type>
+					<SkipOnInput>false</SkipOnInput>
+					<Enabled>false</Enabled>
+					<CommandName>Form.Command.Forward</CommandName>
+					<Parameter xsi:nil="true"/>
+					<TextColor>style:ButtonTextColor</TextColor>
+					<BackColor>style:ButtonBackColor</BackColor>
+					<BorderColor>style:BorderColor</BorderColor>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Далее &gt;&gt;</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="ForwardExtendedTooltip" id="116"/>
+				</Button>
+				<Button name="CommandDelete" id="45">
+					<Type>CommandBarButton</Type>
+					<Representation>PictureAndText</Representation>
+					<DefaultButton>true</DefaultButton>
+					<SkipOnInput>false</SkipOnInput>
+					<CommandName>Form.Command.CommandDelete</CommandName>
+					<Parameter xsi:nil="true"/>
+					<TextColor>style:ButtonTextColor</TextColor>
+					<BackColor>style:ButtonBackColor</BackColor>
+					<BorderColor>style:BorderColor</BorderColor>
+					<ExtendedTooltip name="CommandDeleteExtendedTooltip" id="117"/>
+				</Button>
+				<Button name="Закрыть" id="4">
+					<Type>CommandBarButton</Type>
+					<Visible>false</Visible>
+					<Representation>Text</Representation>
+					<SkipOnInput>false</SkipOnInput>
+					<CommandName>Form.StandardCommand.Close</CommandName>
+					<Parameter xsi:nil="true"/>
+					<TextColor>style:ButtonTextColor</TextColor>
+					<BackColor>style:ButtonBackColor</BackColor>
+					<BorderColor>style:BorderColor</BorderColor>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Закрыть</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="ЗакрытьExtendedTooltip" id="118"/>
+				</Button>
+				<Button name="Справка" id="5">
+					<Type>CommandBarButton</Type>
+					<SkipOnInput>false</SkipOnInput>
+					<CommandName>Form.StandardCommand.Help</CommandName>
+					<Parameter xsi:nil="true"/>
+					<TextColor>style:ButtonTextColor</TextColor>
+					<BackColor>style:ButtonBackColor</BackColor>
+					<BorderColor>style:BorderColor</BorderColor>
+					<ExtendedTooltip name="СправкаExtendedTooltip" id="119"/>
+				</Button>
+			</ChildItems>
+		</CommandBar>
 		<Pages name="СтраницыФормы" id="1">
 			<EnableContentChange>true</EnableContentChange>
 			<Title>
@@ -550,96 +639,6 @@
 				</Page>
 			</ChildItems>
 		</Pages>
-		<CommandBar name="КомандыФормы" id="2">
-			<EnableContentChange>true</EnableContentChange>
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Команды формы</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Команды формы</v8:content>
-				</v8:item>
-			</ToolTip>
-			<HorizontalLocation>Right</HorizontalLocation>
-			<ExtendedTooltip name="КомандыФормыExtendedTooltip" id="114"/>
-			<ChildItems>
-				<Button name="CommandBack" id="52">
-					<Type>CommandBarButton</Type>
-					<SkipOnInput>false</SkipOnInput>
-					<Enabled>false</Enabled>
-					<CommandName>Form.Command.CommandBack</CommandName>
-					<Parameter xsi:nil="true"/>
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>&lt;&lt; Назад</v8:content>
-						</v8:item>
-					</Title>
-					<ExtendedTooltip name="CommandBackExtendedTooltip" id="115"/>
-				</Button>
-				<Button name="Forward" id="3">
-					<Type>CommandBarButton</Type>
-					<SkipOnInput>false</SkipOnInput>
-					<Enabled>false</Enabled>
-					<CommandName>Form.Command.Forward</CommandName>
-					<Parameter xsi:nil="true"/>
-					<TextColor>style:ButtonTextColor</TextColor>
-					<BackColor>style:ButtonBackColor</BackColor>
-					<BorderColor>style:BorderColor</BorderColor>
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Далее &gt;&gt;</v8:content>
-						</v8:item>
-					</Title>
-					<ExtendedTooltip name="ForwardExtendedTooltip" id="116"/>
-				</Button>
-				<Button name="CommandDelete" id="45">
-					<Type>CommandBarButton</Type>
-					<Representation>PictureAndText</Representation>
-					<DefaultButton>true</DefaultButton>
-					<SkipOnInput>false</SkipOnInput>
-					<CommandName>Form.Command.CommandDelete</CommandName>
-					<Parameter xsi:nil="true"/>
-					<TextColor>style:ButtonTextColor</TextColor>
-					<BackColor>style:ButtonBackColor</BackColor>
-					<BorderColor>style:BorderColor</BorderColor>
-					<ExtendedTooltip name="CommandDeleteExtendedTooltip" id="117"/>
-				</Button>
-				<Button name="Закрыть" id="4">
-					<Type>CommandBarButton</Type>
-					<Visible>false</Visible>
-					<Representation>Text</Representation>
-					<SkipOnInput>false</SkipOnInput>
-					<CommandName>Form.StandardCommand.Close</CommandName>
-					<Parameter xsi:nil="true"/>
-					<TextColor>style:ButtonTextColor</TextColor>
-					<BackColor>style:ButtonBackColor</BackColor>
-					<BorderColor>style:BorderColor</BorderColor>
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Закрыть</v8:content>
-						</v8:item>
-					</Title>
-					<ExtendedTooltip name="ЗакрытьExtendedTooltip" id="118"/>
-				</Button>
-				<Button name="Справка" id="5">
-					<Type>CommandBarButton</Type>
-					<SkipOnInput>false</SkipOnInput>
-					<CommandName>Form.StandardCommand.Help</CommandName>
-					<Parameter xsi:nil="true"/>
-					<TextColor>style:ButtonTextColor</TextColor>
-					<BackColor>style:ButtonBackColor</BackColor>
-					<BorderColor>style:BorderColor</BorderColor>
-					<ExtendedTooltip name="СправкаExtendedTooltip" id="119"/>
-				</Button>
-			</ChildItems>
-		</CommandBar>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
