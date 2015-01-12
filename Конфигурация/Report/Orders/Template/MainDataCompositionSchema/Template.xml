@@ -83,7 +83,7 @@
 			<field>Qty</field>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
+		<query>SELECT
 	OrderSKUs.Ref.SR,
 	OrderSKUs.Ref.Outlet,
 	OrderSKUs.Ref AS Order,
@@ -95,8 +95,9 @@
 	OrderSKUs.Units
 FROM
 	Document.Order.SKUs AS OrderSKUs
-WHERE
-	OrderSKUs.Ref.Date BETWEEN &amp;DateStart AND &amp;DateEnd</query>
+{WHERE
+	(OrderSKUs.Ref.Date &gt;= &amp;DateStart),
+	(OrderSKUs.Ref.Date &lt;= &amp;DateEnd)}</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Amount</dataPath>
@@ -195,11 +196,13 @@ WHERE
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>ac1906ac-2962-49e1-bc2e-a2b3937faa81</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>d232987b-8b84-4822-a935-5a2bf5a77fea</dcsset:userSettingID>
@@ -207,6 +210,7 @@ WHERE
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">ThisWeek</v8:variant>
