@@ -12,4 +12,10 @@
 		<Description>en = 'Edit parameters in outlet'; ru = 'Редактирование параметров в торговой точке'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="88673410-6d62-4c65-ab64-016f6012803f">
+		<Name>SelectSnapshotFromGallery</Name>
+		<Code>000000003</Code>
+		<Description>en = 'Select snapshots from the gallery'; ru = 'Выбор снимков из галереи'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 </PredefinedData>
