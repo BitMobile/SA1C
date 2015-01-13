@@ -38,7 +38,6 @@
 							<v8:content>Group command</v8:content>
 						</v8:item>
 					</ToolTip>
-					<HorizontalStretch>true</HorizontalStretch>
 					<ExtendedTooltip name="GroupCommandExtendedTooltip" id="152"/>
 					<ChildItems>
 						<Button name="WriteChanges" id="62">
@@ -64,6 +63,11 @@
 						</Button>
 					</ChildItems>
 				</CommandBar>
+				<LabelDecoration name="Decoration1" id="159">
+					<HorizontalStretch>true</HorizontalStretch>
+					<ContextMenu name="Decoration1ContextMenu" id="160"/>
+					<ExtendedTooltip name="Decoration1ExtendedTooltip" id="161"/>
+				</LabelDecoration>
 				<RadioButtonField name="CurrentPageIndex" id="146">
 					<DataPath>CurrentPageIndex</DataPath>
 					<TitleLocation>None</TitleLocation>
