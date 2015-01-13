@@ -28,7 +28,18 @@
 			<SearchControlLocation>None</SearchControlLocation>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="FeaturesContextMenu" id="6"/>
-			<AutoCommandBar name="FeaturesCommandBar" id="7"/>
+			<AutoCommandBar name="FeaturesCommandBar" id="7">
+				<ChildItems>
+					<Button name="FeaturesDelete" id="29">
+						<Type>CommandBarButton</Type>
+						<Representation>Picture</Representation>
+						<OnlyInAllActions>true</OnlyInAllActions>
+						<CommandName>Form.Item.Features.StandardCommand.Delete</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="FeaturesDeleteExtendedTooltip" id="30"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="FeaturesРасширеннаяПодсказка" id="16"/>
 			<SearchStringAddition name="FeaturesСтрокаПоиска" id="17">
 				<Source>

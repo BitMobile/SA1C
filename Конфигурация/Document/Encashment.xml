@@ -181,7 +181,7 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.Encashment.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.Encashment.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
@@ -453,6 +453,7 @@
 				</Properties>
 			</Attribute>
 			<Form>DocumentForm</Form>
+			<Form>ListForm</Form>
 			<TabularSection uuid="b38a3ab6-fda5-4576-a76b-02e924a8cdc1">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.Encashment.EncashmentDocuments" category="TabularSection">

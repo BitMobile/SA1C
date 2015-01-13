@@ -5,6 +5,21 @@
 	<ChildItemsWidth>LeftWide</ChildItemsWidth>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<ChildItems>
+		<UsualGroup name="ListSettingsComposerUserSettings" id="26">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>List settings composer user settings</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>List settings composer user settings</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="ListSettingsComposerUserSettingsExtendedTooltip" id="27"/>
+		</UsualGroup>
 		<Table name="List" id="1">
 			<Representation>List</Representation>
 			<CommandBarLocation>None</CommandBarLocation>
@@ -70,64 +85,6 @@
 					<ContextMenu name="CodeContextMenu" id="24"/>
 					<ExtendedTooltip name="CodeExtendedTooltip" id="25"/>
 				</LabelField>
-			</ChildItems>
-		</Table>
-		<Table name="Territorys" id="26">
-			<Representation>List</Representation>
-			<AutoInsertNewRow>true</AutoInsertNewRow>
-			<EnableStartDrag>true</EnableStartDrag>
-			<EnableDrag>true</EnableDrag>
-			<DataPath>1:02023637-7868-4a5f-8576-835a76e0c9ba/9</DataPath>
-			<CommandSet/>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="TerritorysContextMenu" id="27"/>
-			<AutoCommandBar name="TerritorysCommandBar" id="28"/>
-			<ExtendedTooltip name="TerritorysExtendedTooltip" id="29"/>
-			<SearchStringAddition name="TerritorysSearchString" id="30">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>0</lf:additionId>
-				</Source>
-				<ContextMenu name="TerritorysSearchStringContextMenu" id="33"/>
-				<ExtendedTooltip name="TerritorysSearchStringExtendedTooltip" id="34"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="TerritorysViewStatus" id="35">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>1</lf:additionId>
-				</Source>
-				<ContextMenu name="TerritorysViewStatusContextMenu" id="38"/>
-				<ExtendedTooltip name="TerritorysViewStatusExtendedTooltip" id="39"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="TerritorysSearchControl" id="40">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>2</lf:additionId>
-				</Source>
-				<ContextMenu name="TerritorysSearchControlContextMenu" id="43"/>
-				<ExtendedTooltip name="TerritorysSearchControlExtendedTooltip" id="44"/>
-			</SearchControlAddition>
-			<ChildItems>
-				<InputField name="TerritorysLineNumber" id="54">
-					<DataPath>1:02023637-7868-4a5f-8576-835a76e0c9ba/9/31</DataPath>
-					<Visible>false</Visible>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="TerritorysLineNumberContextMenu" id="55"/>
-					<ExtendedTooltip name="TerritorysLineNumberExtendedTooltip" id="56"/>
-				</InputField>
-				<InputField name="TerritorysRef" id="57">
-					<DataPath>1:02023637-7868-4a5f-8576-835a76e0c9ba/9/32</DataPath>
-					<Visible>false</Visible>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="TerritorysRefContextMenu" id="58"/>
-					<ExtendedTooltip name="TerritorysRefExtendedTooltip" id="59"/>
-				</InputField>
-				<InputField name="TerritorysTerrytory" id="60">
-					<DataPath>1:02023637-7868-4a5f-8576-835a76e0c9ba/9/33</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="TerritorysTerrytoryContextMenu" id="61"/>
-					<ExtendedTooltip name="TerritorysTerrytoryExtendedTooltip" id="62"/>
-				</InputField>
 			</ChildItems>
 		</Table>
 	</ChildItems>

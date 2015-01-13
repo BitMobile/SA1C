@@ -54,6 +54,14 @@
 							<Parameter xsi:nil="true"/>
 							<ExtendedTooltip name="CreateExtendedTooltip" id="154"/>
 						</Button>
+						<Button name="SetDeletionMark" id="157">
+							<Type>CommandBarButton</Type>
+							<Representation>Picture</Representation>
+							<OnlyInAllActions>true</OnlyInAllActions>
+							<CommandName>Form.StandardCommand.SetDeletionMark</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="SetDeletionMarkExtendedTooltip" id="158"/>
+						</Button>
 					</ChildItems>
 				</CommandBar>
 				<RadioButtonField name="CurrentPageIndex" id="146">
@@ -121,6 +129,21 @@
 				</RadioButtonField>
 			</ChildItems>
 		</UsualGroup>
+		<UsualGroup name="RolesOfUsersSettingsComposerUserSettings" id="155">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Roles of users settings composer user settings</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Roles of users settings composer user settings</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="RolesOfUsersSettingsComposerUserSettingsExtendedTooltip" id="156"/>
+		</UsualGroup>
 		<UsualGroup name="GroupFormTables" id="68">
 			<Title>
 				<v8:item>
@@ -159,6 +182,7 @@
 					<ShowRoot>true</ShowRoot>
 					<AllowRootChoice>false</AllowRootChoice>
 					<UpdateOnDataChange>Auto</UpdateOnDataChange>
+					<UserSettingsGroup>RolesOfUsersSettingsComposerUserSettings</UserSettingsGroup>
 					<ContextMenu name="RolesOfUsersContextMenu" id="2"/>
 					<AutoCommandBar name="RolesOfUsersCommandBar" id="3"/>
 					<ExtendedTooltip name="RolesOfUsersExtendedTooltip" id="4"/>

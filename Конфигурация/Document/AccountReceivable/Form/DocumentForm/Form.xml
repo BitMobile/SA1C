@@ -36,7 +36,18 @@
 			<SearchControlLocation>None</SearchControlLocation>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ReceivableDocumentsContextMenu" id="8"/>
-			<AutoCommandBar name="ReceivableDocumentsCommandBar" id="9"/>
+			<AutoCommandBar name="ReceivableDocumentsCommandBar" id="9">
+				<ChildItems>
+					<Button name="ReceivableDocumentsDelete" id="35">
+						<Type>CommandBarButton</Type>
+						<Representation>Picture</Representation>
+						<OnlyInAllActions>true</OnlyInAllActions>
+						<CommandName>Form.Item.ReceivableDocuments.StandardCommand.Delete</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="ReceivableDocumentsDeleteExtendedTooltip" id="36"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="ReceivableDocumentsРасширеннаяПодсказка" id="21"/>
 			<SearchStringAddition name="ReceivableDocumentsСтрокаПоиска" id="22">
 				<Source>

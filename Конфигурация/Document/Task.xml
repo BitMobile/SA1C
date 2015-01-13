@@ -181,7 +181,7 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.Task.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.Task.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
@@ -577,6 +577,7 @@
 			</Attribute>
 			<Form>DocumentForm</Form>
 			<Form>ListFormHistoryTask</Form>
+			<Form>ListForm</Form>
 		</ChildObjects>
 	</Document>
 </MetaDataObject>

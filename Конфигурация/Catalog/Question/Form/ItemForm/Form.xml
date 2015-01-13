@@ -53,7 +53,18 @@
 			<SearchControlLocation>None</SearchControlLocation>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ValueListContextMenu" id="10"/>
-			<AutoCommandBar name="ValueListCommandBar" id="11"/>
+			<AutoCommandBar name="ValueListCommandBar" id="11">
+				<ChildItems>
+					<Button name="ValueListDelete" id="53">
+						<Type>CommandBarButton</Type>
+						<Representation>Picture</Representation>
+						<OnlyInAllActions>true</OnlyInAllActions>
+						<CommandName>Form.Item.ValueList.StandardCommand.Delete</CommandName>
+						<Parameter xsi:nil="true"/>
+						<ExtendedTooltip name="ValueListDeleteExtendedTooltip" id="54"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="ValueListExtendedTooltip" id="41"/>
 			<SearchStringAddition name="ValueListSearchString" id="42">
 				<Source>

@@ -174,7 +174,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="SKUsContextMenu" id="16"/>
-							<AutoCommandBar name="SKUsCommandBar" id="17"/>
+							<AutoCommandBar name="SKUsCommandBar" id="17">
+								<ChildItems>
+									<Button name="SKUsDelete" id="92">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.SKUs.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="SKUsDeleteExtendedTooltip" id="93"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="SKUsРасширеннаяПодсказка" id="60"/>
 							<SearchStringAddition name="SKUsСтрокаПоиска" id="61">
 								<Source>

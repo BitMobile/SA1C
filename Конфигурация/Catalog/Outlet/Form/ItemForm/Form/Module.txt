@@ -1178,5 +1178,73 @@ EndProcedure
 
 #EndRegion
 
+#Region Details
+
+&AtClient
+Procedure PhoneNumberTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessing)
+	
+	PhoneTest = Items.PhoneNumber.EditText;
+	
+	If ValueIsFilled(PhoneTest) Then 
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+		ParamArray.Add(PhoneTest);
+		
+		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+			
+			Items.PhoneNumber.UpdateEditText();
+			
+			ShowMessageBox(New NotifyDescription("PhoneNumberTextEditEndPart", ThisForm)
+							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
+							  , 0
+							  , );
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure PhoneNumberTextEditEndPart(Parameters)
+	
+	CurrentItem = Items.PhoneNumber;
+	
+EndProcedure
+
+&AtClient
+Procedure EmailTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessing)
+	
+	EmailTest = Items.Email.EditText;
+	
+	If ValueIsFilled(EmailTest) Then
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+		ParamArray.Add(EmailTest);
+		
+		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+			
+			Items.Email.UpdateEditText();
+			
+			ShowMessageBox(New NotifyDescription("EmailTextEditEndPart", ThisForm)
+							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
+							  , 0
+							  , );
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure EmailTextEditEndPart(Parameters)
+	
+	CurrentItem = Items.Email;
+	
+EndProcedure
+
+#EndRegion
+
 #EndRegion
 

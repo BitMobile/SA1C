@@ -268,7 +268,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="PackingContextMenu" id="15"/>
-							<AutoCommandBar name="PackingCommandBar" id="16"/>
+							<AutoCommandBar name="PackingCommandBar" id="16">
+								<ChildItems>
+									<Button name="PackingDelete" id="106">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.Packing.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="PackingDeleteExtendedTooltip" id="107"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="PackingExtendedTooltip" id="77"/>
 							<SearchStringAddition name="PackingSearchString" id="88">
 								<Source>
@@ -347,7 +358,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="StocksContextMenu" id="51"/>
-							<AutoCommandBar name="StocksCommandBar" id="52"/>
+							<AutoCommandBar name="StocksCommandBar" id="52">
+								<ChildItems>
+									<Button name="StocksDelete" id="108">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.Stocks.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="StocksDeleteExtendedTooltip" id="109"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="StocksExtendedTooltip" id="82"/>
 							<SearchStringAddition name="StocksSearchString" id="97">
 								<Source>

@@ -230,11 +230,17 @@
 							<DataPath>Object.PhoneNumber</DataPath>
 							<ContextMenu name="PhoneNumberContextMenu" id="102"/>
 							<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="185"/>
+							<Events>
+								<Event name="TextEditEnd">PhoneNumberTextEditEnd</Event>
+							</Events>
 						</InputField>
 						<InputField name="Email" id="103">
 							<DataPath>Object.Email</DataPath>
 							<ContextMenu name="EmailContextMenu" id="104"/>
 							<ExtendedTooltip name="EmailExtendedTooltip" id="186"/>
+							<Events>
+								<Event name="TextEditEnd">EmailTextEditEnd</Event>
+							</Events>
 						</InputField>
 						<InputField name="WebSite" id="105">
 							<DataPath>Object.WebSite</DataPath>
@@ -272,7 +278,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="ContactsContextMenu" id="109"/>
-							<AutoCommandBar name="ContactsCommandBar" id="110"/>
+							<AutoCommandBar name="ContactsCommandBar" id="110">
+								<ChildItems>
+									<Button name="ContactsDelete" id="321">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.Contacts.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="ContactsDeleteExtendedTooltip" id="322"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="ContactsExtendedTooltip" id="189"/>
 							<SearchStringAddition name="ContactsSearchString" id="223">
 								<Source>
@@ -381,7 +398,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="TerritoriesListContextMenu" id="67"/>
-							<AutoCommandBar name="TerritoriesListCommandBar" id="68"/>
+							<AutoCommandBar name="TerritoriesListCommandBar" id="68">
+								<ChildItems>
+									<Button name="TerritoriesListDelete" id="323">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.TerritoriesList.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="TerritoriesListDeleteExtendedTooltip" id="324"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="TerritoriesListExtendedTooltip" id="172"/>
 							<SearchStringAddition name="TerritoriesListSearchString" id="205">
 								<Source>
@@ -450,7 +478,18 @@
 							<SearchControlLocation>None</SearchControlLocation>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="PricesContextMenu" id="82"/>
-							<AutoCommandBar name="PricesCommandBar" id="83"/>
+							<AutoCommandBar name="PricesCommandBar" id="83">
+								<ChildItems>
+									<Button name="PricesDelete" id="325">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.Prices.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="PricesDeleteExtendedTooltip" id="326"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="PricesExtendedTooltip" id="175"/>
 							<SearchStringAddition name="PricesSearchString" id="214">
 								<Source>
@@ -742,7 +781,18 @@
 							<DataPath>Object.Snapshots</DataPath>
 							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="SnapshotsContextMenu" id="278"/>
-							<AutoCommandBar name="SnapshotsCommandBar" id="279"/>
+							<AutoCommandBar name="SnapshotsCommandBar" id="279">
+								<ChildItems>
+									<Button name="SnapshotsDelete" id="327">
+										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
+										<OnlyInAllActions>true</OnlyInAllActions>
+										<CommandName>Form.Item.Snapshots.StandardCommand.Delete</CommandName>
+										<Parameter xsi:nil="true"/>
+										<ExtendedTooltip name="SnapshotsDeleteExtendedTooltip" id="328"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
 							<ExtendedTooltip name="SnapshotsExtendedTooltip" id="280"/>
 							<SearchStringAddition name="SnapshotsSearchString" id="281">
 								<Source>

@@ -181,7 +181,7 @@
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
 			<DefaultObjectForm>Document.PriceList.Form.DocumentForm</DefaultObjectForm>
-			<DefaultListForm/>
+			<DefaultListForm>Document.PriceList.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm>Document.PriceList.Form.ChoiceForm</DefaultChoiceForm>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryListForm/>
@@ -314,6 +314,7 @@
 			</Attribute>
 			<Form>DocumentForm</Form>
 			<Form>ChoiceForm</Form>
+			<Form>ListForm</Form>
 			<TabularSection uuid="c2d299aa-7a92-4370-9133-1b6ff881ba61">
 				<InternalInfo>
 					<xr:GeneratedType name="DocumentTabularSection.PriceList.Prices" category="TabularSection">
