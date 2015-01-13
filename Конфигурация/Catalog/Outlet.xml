@@ -1698,8 +1698,8 @@
 					</Attribute>
 				</ChildObjects>
 			</TabularSection>
-			<Form>ListForm</Form>
 			<Form>ItemForm</Form>
+			<Form>ListForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

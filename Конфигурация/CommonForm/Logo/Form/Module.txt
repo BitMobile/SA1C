@@ -3,16 +3,20 @@
 
 &AtServer
 Procedure OnOpenServer()
-	      
+	
 	If InfoBaseUsers.CurrentUser().Language = Metadata.Languages.Русский Then 
 		
-		Items.Logo.Picture = PictureLib.Logo_Ru;
+		PictAddress = PutToTempStorage(PictureLib.Logo_Ru, ThisForm.UUID);
 		
 	Else 
 		
-		Items.Logo.Picture = PictureLib.Logo_En;
+		PictAddress = PutToTempStorage(PictureLib.Logo_En, ThisForm.UUID);
 		
-	EndIf;		
+	EndIf;
+	
+	LogoText = GetCommonTemplate("Logo").GetText();
+	
+	Logo = StrReplace(LogoText, "//-PictureAddress-//", PictAddress);
 	
 	DBSessions 		= GetInfoBaseSessions();
 	SessionNumber 	= InfoBaseSessionNumber();

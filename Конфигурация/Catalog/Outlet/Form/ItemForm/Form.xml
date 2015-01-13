@@ -298,6 +298,9 @@
 								<ContextMenu name="ContactsSearchControlContextMenu" id="230"/>
 								<ExtendedTooltip name="ContactsSearchControlExtendedTooltip" id="231"/>
 							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeEditEnd">ContactsBeforeEditEnd</Event>
+							</Events>
 							<ChildItems>
 								<LabelField name="ContactsLineNumber" id="111">
 									<DataPath>Object.Contacts.LineNumber</DataPath>
@@ -326,6 +329,9 @@
 									<Width>15</Width>
 									<ContextMenu name="ContactsPhoneNumberContextMenu" id="118"/>
 									<ExtendedTooltip name="ContactsPhoneNumberExtendedTooltip" id="193"/>
+									<Events>
+										<Event name="TextEditEnd">ContactsPhoneNumberTextEditEnd</Event>
+									</Events>
 								</InputField>
 								<InputField name="ContactsEmail" id="119">
 									<DataPath>Object.Contacts.Email</DataPath>

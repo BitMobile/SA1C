@@ -577,6 +577,33 @@ Procedure WriteTerritory()
 		
 	EndDo;
 	
+	DeleteTerritories();
+	
+EndProcedure
+
+&AtServer
+Procedure DeleteTerritories()
+	
+	Territories 			= GetTerritories();
+	RecordedTerritories 	= Territories.Unload();
+	TerritoriesValueTable 	= TerritoriesList.Unload();
+	
+	For Each Territory In RecordedTerritories Do
+		
+		If TerritoriesValueTable.Find(Territory.Ref, "Value") = Undefined Then
+			
+			TerritoryObject = Territory.Ref.GetObject();
+			
+			Outlets = TerritoryObject.Outlets.Unload();
+			Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
+			
+			TerritoryObject.Outlets.Load(Outlets);
+			TerritoryObject.Write();    
+			
+		EndIf;
+		
+	EndDo;
+	
 EndProcedure
 
 #EndRegion
@@ -1108,6 +1135,42 @@ Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 			OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension", GetParametersAliases());
 			
 		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Contacts
+
+&AtClient
+Procedure ContactsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
+	
+	If Item.CurrentItem.Name = "ContactsPhoneNumber" Then 
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+		ParamArray.Add(Item.CurrentData.PhoneNumber);
+		
+		Cancel = Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray);
+		
+	ElsIf Item.CurrentItem.Name = "ContactsEmail" Then 
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+		ParamArray.Add(Item.CurrentData.Email);
+		
+		Cancel = Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray);
+		
+	EndIf;
+	
+	If Cancel Then 
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = 'Incorrect value'; ru = 'Неверное значение'");
+		
+		UserMessage.Message();
 		
 	EndIf;
 	

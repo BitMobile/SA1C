@@ -47,3 +47,49 @@ Procedure ExitSystem(AdditionalParameter) Export
 	Terminate();
 	
 EndProcedure
+
+Function ExecuteJSFunction(FunctionName, ParamArray) Export 
+	
+	StartPage = Undefined;
+	
+	AppWindows = GetWindows();
+	
+	For Each AppWindow in AppWindows Do 
+		
+		If AppWindow.StartPage Then 
+			
+			StartPage = AppWindow.Content[0];
+			
+			Break;
+			
+		EndIf;
+		
+	EndDo;
+	
+	If Not StartPage = Undefined Then 
+		
+		If FunctionName = "checkRegExp" Then 
+			
+			Pattern	= ParamArray[0];
+			Str		= ParamArray[1];
+			
+			StartPage.Items.Logo.document.getElementById("WebClientOperation").value = FunctionName + "(" + Pattern + ",'" + Str + "')";
+			StartPage.Items.Logo.document.getElementById("WebClient").click();
+			
+			Result = StartPage.Items.Logo.document.getElementById("Result").value;
+			
+			If Result = "true" Then 
+				
+				Return True;
+				
+			Else 
+				
+				Return False;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
+		
+EndFunction

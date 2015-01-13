@@ -276,24 +276,16 @@
 				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
-		<PictureDecoration name="Logo" id="295">
-			<HorizontalStretch>true</HorizontalStretch>
-			<VerticalStretch>true</VerticalStretch>
+		<HTMLDocumentField name="Logo" id="1671">
+			<DataPath>Logo</DataPath>
 			<SkipOnInput>true</SkipOnInput>
-			<Title formatted="false">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Logo</v8:content>
-				</v8:item>
-			</Title>
-			<PictureSize>AutoSize</PictureSize>
-			<Picture>
-				<xr:Ref>CommonPicture.Logo_En</xr:Ref>
-				<xr:LoadTransparent>false</xr:LoadTransparent>
-			</Picture>
-			<ContextMenu name="LogoContextMenu" id="296"/>
-			<ExtendedTooltip name="LogoExtendedTooltip" id="1633"/>
-		</PictureDecoration>
+			<TitleLocation>None</TitleLocation>
+			<Width>1</Width>
+			<Height>1</Height>
+			<BorderColor>style:FormBackColor</BorderColor>
+			<ContextMenu name="LogoContextMenu" id="1672"/>
+			<ExtendedTooltip name="LogoExtendedTooltip" id="1673"/>
+		</HTMLDocumentField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="DateUpload" id="1">
@@ -381,6 +373,21 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Последняя синхронизация файлов</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="Logo" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Logo</v8:content>
 				</v8:item>
 			</Title>
 			<Type>
