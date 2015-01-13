@@ -669,9 +669,10 @@ Procedure SetStatusOfAssortmentMatrix(Date) Export
 	|FROM
 	|	Map AS Map
 	|WHERE
-	|	NOT(Map.NewPeriodUUID = Map.AMPeriodUUID
-	|				OR Map.NewPeriodBeginDate = Map.AMBeginDate
-	|				OR Map.AMEndDate = Map.NewPeriodEndDate)");
+	|	(NOT Map.NewPeriodUUID = Map.AMPeriodUUID
+	|			OR NOT Map.NewPeriodBeginDate = Map.AMBeginDate
+	|			OR NOT Map.AMEndDate = Map.NewPeriodEndDate
+	|			OR NOT Map.AMStatus = Map.NewStatus)");
 	
 	Query.SetParameter("CurrentDate", Date);
 	
