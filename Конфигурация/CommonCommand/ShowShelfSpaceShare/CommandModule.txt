@@ -23,7 +23,7 @@ Function HaveRightToRead()
 		
 	Else 
 		
-		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_PriceMonitoring);
+		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_ShelfSpaceShare);
 		
 	EndIf;
 	
