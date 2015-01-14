@@ -122,6 +122,12 @@
 						<Description>en = 'Outlet parameters'; ru = 'Параметры торговых точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="3499ea12-38e7-483e-a81c-4624f8c860da">
+						<Name>Report_OutletPhotosReport</Name>
+						<Code>000000204</Code>
+						<Description>en = 'Outlet photos report'; ru = 'Отчет по фото сделанным в торговой точке'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="33f411c4-cff3-4c05-a7f0-24326b5980bc">
 						<Name>Report_OutletsStatuses</Name>
 						<Code>000000197</Code>
@@ -205,7 +211,7 @@
 					<Item id="d5497ec1-5e37-410f-b737-f096f08cf774">
 						<Name>Report_ShelfSpaceShare</Name>
 						<Code>000000202</Code>
-						<Description>en = 'Shelf space share'; en = 'Отчет о доле полочного пространства'</Description>
+						<Description>en = 'Shelf space share'; ru = 'Отчет о доле полочного пространства'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="1ddf906f-3ca9-48fc-b627-c27dcc539158">
