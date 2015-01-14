@@ -12,9 +12,9 @@
 </style>
 <script type='text/javascript'> 
 	
-	//window.onerror = myOnError;
+	window.onerror = myOnError;
 	
-	//function myOnError(msg, url, lno) {return true}
+	function myOnError(msg, url, lno) {return true}
 	
 	function checkRegExp(pattern, inputstr) {
 		

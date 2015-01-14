@@ -70,6 +70,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillSnapshots();
 	
+	// Запомнить ранее введенные проверяемые данные
+	TempEmail		= Object.Email;
+	TempPhoneNumber	= Object.PhoneNumber;
+	
 EndProcedure
 
 &AtServer
@@ -1193,12 +1197,16 @@ Procedure PhoneNumberTextEditEnd(Item, Text, ChoiceData, Parameters, StandardPro
 		
 		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
 			
-			Items.PhoneNumber.UpdateEditText();
+			Object.PhoneNumber = TempPhoneNumber;
 			
 			ShowMessageBox(New NotifyDescription("PhoneNumberTextEditEndPart", ThisForm)
 							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
 							  , 0
 							  , );
+							  
+		Else 
+			
+			TempPhoneNumber = PhoneTest;
 			
 		EndIf;
 		
@@ -1206,7 +1214,8 @@ Procedure PhoneNumberTextEditEnd(Item, Text, ChoiceData, Parameters, StandardPro
 	
 EndProcedure
 
-Procedure PhoneNumberTextEditEndPart(Parameters)
+&AtClient
+Procedure PhoneNumberTextEditEndPart(Parameters) Export
 	
 	CurrentItem = Items.PhoneNumber;
 	
@@ -1225,12 +1234,15 @@ Procedure EmailTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessin
 		
 		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
 			
-			Items.Email.UpdateEditText();
+			Object.Email = TempEmail;
 			
 			ShowMessageBox(New NotifyDescription("EmailTextEditEndPart", ThisForm)
 							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
 							  , 0
 							  , );
+		Else 
+			
+			TempEmail = EmailTest;
 			
 		EndIf;
 		
@@ -1238,7 +1250,8 @@ Procedure EmailTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessin
 	
 EndProcedure
 
-Procedure EmailTextEditEndPart(Parameters)
+&AtClient
+Procedure EmailTextEditEndPart(Parameters) Export 
 	
 	CurrentItem = Items.Email;
 	
