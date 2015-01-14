@@ -184,6 +184,12 @@
 						<Description>en = 'Analysis of competitors in outlets'; ru = 'Анализ конкурентов в торговых точках'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="4478d122-6765-4501-82c8-238f5475ccec">
+						<Name>Report_PriceMonitoring</Name>
+						<Code>000000201</Code>
+						<Description>en = 'Price monitoring'; ru = 'Мониторинг цен'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="1f74408b-9a3a-4ff6-a48e-a9825479e681">
 						<Name>Report_QuestionnireStatistics</Name>
 						<Code>000000193</Code>
