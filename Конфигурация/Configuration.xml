@@ -316,10 +316,14 @@
 			<Report>Encashment</Report>
 			<Report>NumberOfOutlets</Report>
 			<Report>Orders</Report>
+			<Report>OutletAssortmentAvailability</Report>
 			<Report>OutletPhotosReport</Report>
 			<Report>OutletsStatus</Report>
+			<Report>PlanFactSKUStockReport</Report>
 			<Report>PriceMonitoring</Report>
+			<Report>PromoActionsReport</Report>
 			<Report>QuestionnireStatistics</Report>
+			<Report>ShelfSpaceShare</Report>
 			<Report>SKUChangeAnalysis</Report>
 			<Report>SKUsStockInOutlet</Report>
 			<Report>VisitEfficiency</Report>
