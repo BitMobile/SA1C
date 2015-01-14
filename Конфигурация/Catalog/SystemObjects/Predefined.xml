@@ -196,6 +196,12 @@
 						<Description>en = 'Report on questions in questionnaires (questions on outlets)'; ru = 'Отчет по вопросам анкет (вопросы по ТТ)'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="d5497ec1-5e37-410f-b737-f096f08cf774">
+						<Name>Report_ShelfSpaceShare</Name>
+						<Code>000000202</Code>
+						<Description>en = 'Shelf space share'; en = 'Отчет о доле полочного пространства'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="1ddf906f-3ca9-48fc-b627-c27dcc539158">
 						<Name>Report_SkuChangeAnalysis</Name>
 						<Code>000000192</Code>

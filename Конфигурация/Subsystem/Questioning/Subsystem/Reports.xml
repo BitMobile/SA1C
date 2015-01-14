@@ -27,6 +27,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowCompetitorsInTheOutlets</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSKUsStockInOutlet</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowPriceMonitoring</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowShelfSpaceShare</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

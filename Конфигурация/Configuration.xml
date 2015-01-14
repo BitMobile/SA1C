@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.4.0.134</Version>
+			<Version>1.4.0.135</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -202,6 +202,7 @@
 			<CommonCommand>ShowOutletPhotosReport</CommonCommand>
 			<CommonCommand>ShowSKUsStockInOutlet</CommonCommand>
 			<CommonCommand>ShowPriceMonitoring</CommonCommand>
+			<CommonCommand>ShowShelfSpaceShare</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
