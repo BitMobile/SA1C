@@ -389,19 +389,6 @@ Procedure ProcessUsers()
 	
 EndProcedure
 
-Procedure ProcessVisits()
-	
-	Selection = Documents.Visit.Select();
-	
-	While Selection.Next() Do
-		
-		VisitObject = Selection.GetObject();
-		VisitObject.Write(DocumentWriteMode.Write);
-		
-	EndDo;
-	
-EndProcedure
-
 Procedure ProcessSyncSettings()
 
 	DataProcessors.bitmobile_СинхронизацияИНастройки.ВосстановитьНастройкиИзФайла(Undefined, True, True);
@@ -1122,6 +1109,9 @@ Procedure UpdateForRelease_1_5_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update territories'; ru = 'Обновление территорий'"));
 	ProcessTerritories();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update visits'; ru = 'Обновление визитов'"));
+	ProcessVisits();
+	
 EndProcedure
 
 Procedure ProcessRegions()
@@ -1187,6 +1177,19 @@ Procedure ProcessTerritories()
 		EndIf;
 		
 		TerritoryObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessVisits()
+	
+	Selection = Documents.Visit.Select();
+	
+	While Selection.Next() Do
+		
+		VisitObject = Selection.GetObject();
+		VisitObject.Write(DocumentWriteMode.Write);
 		
 	EndDo;
 	
