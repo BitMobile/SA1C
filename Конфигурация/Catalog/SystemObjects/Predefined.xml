@@ -196,6 +196,12 @@
 						<Description>en = 'Sku change in outlets analysis'; ru = 'Изменения товаров в торговых точках'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="1e66f1a9-2ecc-48ef-a72b-4340c76c534a">
+						<Name>Report_SKUsStockInOutlet</Name>
+						<Code>000000200</Code>
+						<Description>en = 'SKUs stock in outlet'; ru = 'Остатки товара в магазине'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 		</ChildItems>
