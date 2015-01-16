@@ -282,8 +282,11 @@
 			<TitleLocation>None</TitleLocation>
 			<Width>1</Width>
 			<Height>1</Height>
+			<Output>Disable</Output>
 			<BorderColor>style:FormBackColor</BorderColor>
-			<ContextMenu name="LogoContextMenu" id="1672"/>
+			<ContextMenu name="LogoContextMenu" id="1672">
+				<Autofill>false</Autofill>
+			</ContextMenu>
 			<ExtendedTooltip name="LogoExtendedTooltip" id="1673"/>
 		</HTMLDocumentField>
 	</ChildItems>
