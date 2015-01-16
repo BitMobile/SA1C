@@ -627,6 +627,12 @@ Procedure ProcessSKUQuestions()
 	NewAssignment.Question 		= Question;
 	NewAssignment.Assignment 	= Enums.SKUQuestions.Snapshot;
 	
+	Question = CreateQuestion(NStr("en = 'Promo'; ru = 'Промо'"), Enums.DataType.Boolean, Enums.SKUQuestions.Promo, SKUQuestionsGroup);
+	
+	NewAssignment 				= SKUQuestionsAssignment.Add();
+	NewAssignment.Question 		= Question;
+	NewAssignment.Assignment 	= Enums.SKUQuestions.Promo;
+	
 	Query = New Query(
 	"SELECT ALLOWED
 	|	QuestionnaireSKUQuestions1.Ref AS Ref,
