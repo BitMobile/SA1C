@@ -426,11 +426,7 @@
 									<DataPath>Selectors.SelectorRepresent</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
-									<DropListButton>false</DropListButton>
-									<ChoiceButton>false</ChoiceButton>
-									<ClearButton>false</ClearButton>
-									<SpinButton>false</SpinButton>
-									<CreateButton>false</CreateButton>
+									<ChoiceButton>true</ChoiceButton>
 									<AutoMarkIncomplete>true</AutoMarkIncomplete>
 									<ChooseType>false</ChooseType>
 									<TextEdit>false</TextEdit>
@@ -438,7 +434,7 @@
 									<ContextMenu name="SelectorsSelectorRepresentContextMenu" id="65"/>
 									<ExtendedTooltip name="SelectorsSelectorRepresentExtendedTooltip" id="314"/>
 									<Events>
-										<Event name="StartListChoice">SelectorsSelectorRepresentStartListChoice</Event>
+										<Event name="StartChoice">SelectorsSelectorRepresentStartChoice</Event>
 									</Events>
 								</InputField>
 								<InputField name="SelectorsComparisonType" id="58">

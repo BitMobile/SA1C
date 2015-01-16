@@ -1890,7 +1890,7 @@ Procedure SelectorsTableBeforeAddRow(Item, Cancel, Clone, Parent, Folder, Parame
 EndProcedure
 
 &AtClient
-Procedure SelectorsSelectorRepresentStartListChoice(Item, StandardProcessing)
+Procedure SelectorsSelectorRepresentStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	StandardProcessing = False;
 	

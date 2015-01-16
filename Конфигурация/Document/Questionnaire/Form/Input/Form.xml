@@ -88,12 +88,13 @@
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
 			<Width>30</Width>
+			<ChoiceButton>true</ChoiceButton>
 			<TextEdit>false</TextEdit>
 			<ChoiceListButton>true</ChoiceListButton>
 			<ContextMenu name="VListContextMenu" id="11"/>
 			<ExtendedTooltip name="VListExtendedTooltip" id="25"/>
 			<Events>
-				<Event name="StartListChoice">VListStartListChoice</Event>
+				<Event name="StartChoice">VListStartChoice</Event>
 			</Events>
 		</InputField>
 		<InputField name="Integer" id="14">

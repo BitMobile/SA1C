@@ -133,7 +133,7 @@ Procedure Ok(Command)
 EndProcedure
 
 &AtClient
-Procedure VListStartListChoice(Item, StandardProcessing)
+Procedure VListStartChoice(Item, ChoiceData, StandardProcessing)
 	
 	StandardProcessing = False;
 	
