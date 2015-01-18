@@ -182,7 +182,8 @@ Procedure ProcessPredefinedRoles()
 		|FROM
 		|	Catalog.SystemObjects AS SystemObjects
 		|WHERE
-		|	SystemObjects.Predefined = TRUE";
+		|	SystemObjects.Predefined = TRUE
+		|	AND SystemObjects.IsFolder = FALSE";
 	
 	Result = Query.Execute();
 	
