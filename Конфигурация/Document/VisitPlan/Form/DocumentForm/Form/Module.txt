@@ -76,15 +76,17 @@ EndProcedure
 	
 	Query = New Query;
 	Query.Text = 
-	"SELECT ALLOWED
-    |	TerritoryOutlets.Outlet.Ref AS Outlet
-    |FROM
-    |	Catalog.Territory.Outlets AS TerritoryOutlets
-    |WHERE
-    |	TerritoryOutlets.Ref.SR = &SR
+	"SELECT ALLOWED DISTINCT
+	|	TerritoryOutlets.Outlet.Ref AS Outlet
+	|FROM
+	|	Catalog.Territory.Outlets AS TerritoryOutlets
+	|		INNER JOIN Catalog.Territory.SRs AS TerritorySRs
+	|		ON TerritoryOutlets.Ref = TerritorySRs.Ref
+	|WHERE
+	|	TerritorySRs.SR = &SR
 	|
 	|ORDER BY
-	|	Outlet.Description";
+	|	TerritoryOutlets.Outlet.Description";
 	
 	Query.SetParameter("SR", SR);
 	

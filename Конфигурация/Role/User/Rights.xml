@@ -2941,20 +2941,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>AssortmentMatrix WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_AssortmentMatrix")
-	AND AssortmentMatrix.Responsible IN
-			(SELECT
-				Region.Manager
-			FROM
-				Catalog.Region AS Region
-			WHERE
-				Region.Ref IN
-					(SELECT
-						ManagersOfRegions.Region
-					FROM
-						InformationRegister.ManagersOfRegions AS ManagersOfRegions
-					WHERE
-						ManagersOfRegions.Manager = &amp;CurrentUser))</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -2973,7 +2960,20 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
+				<condition>AssortmentMatrix WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")
+	AND AssortmentMatrix.Responsible IN
+			(SELECT
+				Region.Manager
+			FROM
+				Catalog.Region AS Region
+			WHERE
+				Region.Ref IN
+					(SELECT
+						ManagersOfRegions.Region
+					FROM
+						InformationRegister.ManagersOfRegions AS ManagersOfRegions
+					WHERE
+						ManagersOfRegions.Manager = &amp;CurrentUser))</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3321,20 +3321,8 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Questionnaire WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Questionnaire")
-	AND Questionnaire.Owner IN
-			(SELECT
-				Region.Manager
-			FROM
-				Catalog.Region AS Region
-			WHERE
-				Region.Ref IN
-					(SELECT
-						ManagersOfRegions.Region
-					FROM
-						InformationRegister.ManagersOfRegions AS ManagersOfRegions
-					WHERE
-						ManagersOfRegions.Manager = &amp;CurrentUser))</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Questionnaire")
+</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -3356,7 +3344,20 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")</condition>
+				<condition>Questionnaire WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")
+	AND Questionnaire.Owner IN
+			(SELECT
+				Region.Manager
+			FROM
+				Catalog.Region AS Region
+			WHERE
+				Region.Ref IN
+					(SELECT
+						ManagersOfRegions.Region
+					FROM
+						InformationRegister.ManagersOfRegions AS ManagersOfRegions
+					WHERE
+						ManagersOfRegions.Manager = &amp;CurrentUser))</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -4143,7 +4144,9 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 				<condition>QuestioningResults FROM InformationRegister.QuestioningResults AS QuestioningResults
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON QuestioningResults.Outlet = TerritoryOutlets.Outlet
-WHERE TerritoryOutlets.Ref.Owner IN
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit") 
+	AND #HaveRightToRead("Catalog.SystemObjects.Document_Questionnaire")
+	AND TerritoryOutlets.Ref.Owner IN
 			(SELECT
 				ManagersOfRegions.Region
 			FROM

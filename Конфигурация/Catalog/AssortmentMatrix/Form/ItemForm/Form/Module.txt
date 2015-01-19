@@ -58,7 +58,7 @@ EndProcedure
 Procedure FillOutlets()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixOutletsSliceLast.Outlet,
 	|	AssortmentMatrixOutletsSliceLast.UUID
 	|FROM
@@ -92,7 +92,7 @@ Procedure WriteOutlets(CurrentObject)
 	FormOutlets = ThisForm.Outlets.Unload();
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixOutletsSliceLast.Outlet,
 	|	AssortmentMatrixOutletsSliceLast.UUID
 	|FROM
@@ -115,7 +115,7 @@ Procedure WriteOutlets(CurrentObject)
 	RegisterOutlets.LoadColumn(UUIDColumn, "UUID");
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormOutlets.Outlet,
 	|	FormOutlets.UUID
 	|INTO FormOutlets
@@ -124,7 +124,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	RegisterOutlets.Outlet,
 	|	RegisterOutlets.UUID
 	|INTO RegisterOutlets
@@ -133,7 +133,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FormOutlets.Outlet AS FormOutlet,
 	|	FormOutlets.UUID AS FormUUID,
 	|	RegisterOutlets.Outlet AS RegisterOutlet,
@@ -152,7 +152,7 @@ Procedure WriteOutlets(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&CurrentDate AS Period,
 	|	&AssortmentMatrix AS AssortmentMatrix,
 	|	ISNULL(Difference.FormOutlet, Difference.RegisterOutlet) AS Outlet,
@@ -317,7 +317,7 @@ EndProcedure
 Procedure FillSKUs()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
 	|	AssortmentMatrixSKUsSliceLast.Unit,
@@ -357,7 +357,7 @@ Procedure WriteSKUs(CurrentObject)
 	FormSKUs = ThisForm.SKUs.Unload();
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	AssortmentMatrixSKUsSliceLast.SKU,
 	|	AssortmentMatrixSKUsSliceLast.UUID,
 	|	AssortmentMatrixSKUsSliceLast.Qty,
@@ -385,7 +385,7 @@ Procedure WriteSKUs(CurrentObject)
 	RegisterSKUs.LoadColumn(UUIDColumn, "UUID");
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormSKUs.SKU,
 	|	FormSKUs.Qty,
 	|	FormSKUs.Unit,
@@ -397,7 +397,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	RegisterSKUs.SKU,
 	|	RegisterSKUs.Qty,
 	|	RegisterSKUs.Unit,
@@ -409,7 +409,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FormSKUs.SKU AS FormSKU,
 	|	FormSKUs.Qty AS FormQty,
 	|	FormSKUs.Unit AS FormUnit,
@@ -441,7 +441,7 @@ Procedure WriteSKUs(CurrentObject)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&CurrentDate AS Period,
 	|	&AssortmentMatrix AS AssortmentMatrix,
 	|	ISNULL(Difference.FormSKU, Difference.RegisterSKU) AS SKU,
@@ -1327,7 +1327,7 @@ EndProcedure
 Function GetCurrentSKUUnitMultiplier(SKU, Unit)
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	SKUPacking.Multiplier
 	|FROM
 	|	Catalog.SKU.Packing AS SKUPacking
@@ -1352,7 +1352,7 @@ EndFunction
 Function GetAvailableUnits(SKU)
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	SKUPacking.Pack
 	|FROM
 	|	Catalog.SKU.Packing AS SKUPacking

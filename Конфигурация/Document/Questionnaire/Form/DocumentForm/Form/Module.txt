@@ -358,7 +358,7 @@ Procedure CheckBrand(Brand, IsCorrect)
 	
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	SKU.Ref
 		|FROM
 		|	Catalog.SKU AS SKU
@@ -389,7 +389,7 @@ Procedure CheckGroup(Group, IsCorrect)
 	
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT ALLOWED
 		|	SKU.Ref
 		|FROM
 		|	Catalog.SKU AS SKU
