@@ -6,7 +6,7 @@
 	body { height: 100%; overflow: hidden; }
 	img { height: auto; width: auto; }
 	.fig {
-		padding-top: 50mm;
+		margin-top: 50mm;
 		text-align: center;
 	}
 </style>
