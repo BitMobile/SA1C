@@ -4,6 +4,17 @@
 	<setForAttributesByDefault>true</setForAttributesByDefault>
 	<independentRightsOfChildObjects>false</independentRightsOfChildObjects>
 	<object>
+		<name>InformationRegister.Answers.Dimension.Question</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>InformationRegister.AnsweredQuestions</name>
 		<right>
 			<name>Read</name>
@@ -64,6 +75,17 @@ WHERE TerritoryOutlets.Ref.Owner IN
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.Answers.Dimension.Visit</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>CommonForm.Logo</name>
 		<right>
 			<name>View</name>
@@ -116,7 +138,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_Distributors")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Distributors")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -128,14 +150,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Distributors")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Distributors")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Distributors")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Distributors")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -193,7 +215,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 				<condition>AccountReceivable FROM Document.AccountReceivable AS AccountReceivable
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON AccountReceivable.Outlet = TerritoryOutlets.Outlet
-#HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 	AND TerritoryOutlets.Ref.Owner IN
 			(SELECT
 				ManagersOfRegions.Region
@@ -215,14 +237,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_AccountReceivable")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_AccountReceivable")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_AccountReceivable")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_AccountReceivable")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -454,7 +476,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -466,14 +488,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsPropertiesValues")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -716,7 +738,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 				<condition>Orders FROM Document.Order AS Orders
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Orders.Outlet = TerritoryOutlets.Outlet
-#HaveRightToRead("Catalog.SystemObjects.Document_Order")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	AND Orders.SR IN
 			(SELECT
 				Territory.SR
@@ -751,14 +773,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Order")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Order")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Order")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Order")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -867,7 +889,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -879,14 +901,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_RolesOfUsers")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1015,7 +1037,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_Questions")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Questions")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1027,14 +1049,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Questions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Questions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Questions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Questions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1086,7 +1108,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1098,14 +1120,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForVisit")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1193,7 +1215,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Region #HaveRightToRead("Catalog.SystemObjects.Catalog_Regions")
+				<condition>Region WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Regions")
 	AND Region.Ref IN
 			(SELECT
 				ManagersOfRegions.Region
@@ -1212,14 +1234,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Regions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Regions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Regions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Regions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1274,7 +1296,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 				<condition>Outlets FROM Catalog.Outlet AS Outlets
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Outlets.Ref = TerritoryOutlets.Outlet
-#HaveRightToRead("Catalog.SystemObjects.Catalog_Outlets")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Outlets")
 	AND TerritoryOutlets.Ref.Owner IN
 			(SELECT
 				ManagersOfRegions.Region
@@ -1293,14 +1315,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Outlets")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Outlets")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Outlets")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Outlets")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1334,7 +1356,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_Positions")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Positions")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1346,14 +1368,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Positions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Positions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Positions")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Positions")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1390,7 +1412,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 				<condition>Visit FROM Document.Visit AS Visit
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Visit.Outlet = TerritoryOutlets.Outlet
-#HaveRightToRead("Catalog.SystemObjects.Document_Visit")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	AND Visit.SR IN
 			(SELECT
 				Territory.SR
@@ -1425,14 +1447,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Visit")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Visit")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Visit")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Visit")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1507,7 +1529,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1519,14 +1541,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_QuestionsGroups")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1563,6 +1585,61 @@ WHERE TerritoryOutlets.Ref.Owner IN
 		<right>
 			<name>Update</name>
 			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.StandardAttribute.Active</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.StandardAttribute.LineNumber</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.StandardAttribute.Recorder</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.StandardAttribute.Period</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
 		</right>
 	</object>
 	<object>
@@ -1777,6 +1854,17 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.Answers.Dimension.DataType</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Constant.bitmobile_СинхронизацияФайловЗапущена</name>
 		<right>
 			<name>Read</name>
@@ -1840,7 +1928,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1852,14 +1940,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsParameters")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -1918,7 +2006,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -1930,14 +2018,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsClasses")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2181,7 +2269,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Territory #HaveRightToRead("Catalog.SystemObjects.Catalog_Territories")
+				<condition>Territory WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Territories")
 	AND Territory.Owner IN
 			(SELECT
 				ManagersOfRegions.Region
@@ -2200,14 +2288,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Territories")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Territories")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Territories")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Territories")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2241,7 +2329,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -2253,14 +2341,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ReasonsForNotOfTakingOrder")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2352,7 +2440,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -2364,14 +2452,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsTypes")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2405,7 +2493,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Encashment #HaveRightToRead("Catalog.SystemObjects.Document_Encashment")
+				<condition>Encashment WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Encashment")
 	AND Encashment.Visit IN
 			(SELECT
 				Visit.Ref
@@ -2449,14 +2537,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Encashment")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Encashment")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Encashment")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Encashment")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2545,7 +2633,7 @@ WHERE MobileAppPlanVisit.SR IN
 				<condition>Task FROM Document.Task AS Task
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Task.Outlet = TerritoryOutlets.Outlet
-#HaveRightToRead("Catalog.SystemObjects.Document_Task")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	AND Task.Territory.Owner IN
 			(SELECT
 				ManagersOfRegions.Region
@@ -2574,14 +2662,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Task")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Task")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Task")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Task")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2642,7 +2730,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -2654,14 +2742,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_UnitsOfMeasures")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2726,6 +2814,17 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.Answers.Dimension.QuestionAssignment</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Constant.bitmobile_ДопустимыйРазмерФайла</name>
 		<right>
 			<name>Read</name>
@@ -2760,7 +2859,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -2772,14 +2871,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsFeatures")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2842,7 +2941,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>AssortmentMatrix #HaveRightToRead("Catalog.SystemObjects.Catalog_AssortmentMatrix")
+				<condition>AssortmentMatrix WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_AssortmentMatrix")
 	AND AssortmentMatrix.Responsible IN
 			(SELECT
 				Region.Manager
@@ -2867,14 +2966,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -2955,6 +3054,17 @@ WHERE MobileAppPlanVisit.SR IN
 	</object>
 	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации.TabularSection.РеквизитыШапки.Attribute.ПриводитьКСтроке</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.Dimension.SKU</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -3104,7 +3214,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -3116,14 +3226,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsGroups")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3211,7 +3321,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Questionnaire #HaveRightToRead("Catalog.SystemObjects.Document_Questionnaire")
+				<condition>Questionnaire WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Questionnaire")
 	AND Questionnaire.Owner IN
 			(SELECT
 				Region.Manager
@@ -3239,14 +3349,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3325,7 +3435,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_Brands")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Brands")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -3337,14 +3447,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Brands")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Brands")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Brands")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Brands")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3374,6 +3484,17 @@ WHERE MobileAppPlanVisit.SR IN
 	</object>
 	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации.TabularSection.СвязанныеДанные.Attribute.Настройка</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.Answers.Dimension.Outlet</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -3467,7 +3588,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_SKUs")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_SKUs")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -3479,14 +3600,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUs")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUs")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUs")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUs")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3636,7 +3757,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>VisitPlan #HaveRightToRead("Catalog.SystemObjects.Document_VisitPlan")
+				<condition>VisitPlan WHERE #HaveRightToRead("Catalog.SystemObjects.Document_VisitPlan")
 	AND VisitPlan.Owner IN
 			(SELECT
 				Region.Manager
@@ -3677,14 +3798,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_VisitPlan")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_VisitPlan")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_VisitPlan")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_VisitPlan")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3791,6 +3912,17 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.Answers.Resource.Answer</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации.TabularSection.РеквизитыТабличныхЧастей.Attribute.РеквизитОбъектаBitmobile</name>
 		<right>
 			<name>View</name>
@@ -3853,7 +3985,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>User #HaveRightToRead("Catalog.SystemObjects.Catalog_Users")
+				<condition>User WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Users")
 	AND (User.Ref IN
 				(SELECT
 					Territory.SR
@@ -3891,14 +4023,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Users")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Users")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Users")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Users")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -3932,7 +4064,7 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Document_PriceList")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Document_PriceList")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -3947,14 +4079,14 @@ WHERE MobileAppPlanVisit.SR IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_PriceList")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_PriceList")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Document_PriceList")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_PriceList")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -4137,7 +4269,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -4149,14 +4281,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_SKUsProperties")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -4291,7 +4423,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToRead("Catalog.SystemObjects.Catalog_Stocks")</condition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Stocks")</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -4303,14 +4435,14 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Insert</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Stocks")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Stocks")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>#HaveRightToEdit("Catalog.SystemObjects.Catalog_Stocks")</condition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Stocks")</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -4474,9 +4606,7 @@ WHERE TerritoryOutlets.Ref.Owner IN
 	</object>
 	<restrictionTemplate>
 		<name>HaveRightToEdit</name>
-		<condition>WHERE 
-
-CASE WHEN DeletionMark = Ref.DeletionMark THEN
+		<condition>CASE WHEN DeletionMark = Ref.DeletionMark THEN
 	
 	TRUE IN
 	(SELECT TOP 1 TRUE
@@ -4506,7 +4636,7 @@ END</condition>
 	</restrictionTemplate>
 	<restrictionTemplate>
 		<name>HaveRightToRead</name>
-		<condition>WHERE TRUE IN
+		<condition>TRUE IN
 	(SELECT TOP 1 TRUE
 	FROM
 		Catalog.User AS User
