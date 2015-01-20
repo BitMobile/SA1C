@@ -33,7 +33,7 @@ Function CheckEntity(Source, SourceRef) Export
 				|WHERE
 				|	QuestioningResults.Visit = &Visit";
 			
-			Query.SetParameter("Visit", SourceRef);
+			Query.SetParameter("Visit", Source.Ref);
 			
 			QueryResult = Query.Execute();
 			
