@@ -276,7 +276,24 @@ Function SelectPositions(Positions) Export
 EndFunction
 
 Function SelectSRs(SelectorsList, PositionList) Export 
-
+	
+	PositionsEquals = PositionList.Find(Enums.ComparisonType.Equal, "ComparisonType");
+	PositionsInList = PositionList.Find(Enums.ComparisonType.InList, "ComparisonType");
+	
+	NeedEmptyRef = True;
+	
+	If Not PositionsEquals = Undefined Then 
+		
+		NeedEmptyRef = False;
+		
+	EndIf;
+	
+	If Not PositionsInList = Undefined Then 
+		
+		NeedEmptyRef = False;
+		
+	EndIf;
+	
 	PositionsArray = SelectPositions(PositionList);
 	
 	Query = New Query;
@@ -284,20 +301,33 @@ Function SelectSRs(SelectorsList, PositionList) Export
 	             |	TerritorySRs.SR AS SR
 	             |FROM
 	             |	Catalog.Territory.SRs AS TerritorySRs
-	             |		LEFT JOIN Catalog.User AS User
-	             |			LEFT JOIN Catalog.Positions AS Positions
-	             |			ON (User.Position = Positions.Ref
-	             |					OR User.Position = VALUE(Catalog.Positions.EmptyRef))
-	             |		ON TerritorySRs.SR = User.Ref
 	             |		INNER JOIN Catalog.Territory AS Territory
 	             |		ON TerritorySRs.Ref = Territory.Ref
-	             |WHERE
-	             |	Positions.Ref IN(&PositionsArray)";
+	             |		INNER JOIN Catalog.User AS User
+	             |		ON TerritorySRs.SR = User.Ref";
 				 
-	Query.SetParameter("PositionsArray", PositionsArray);
-				 
-	Ind = 0;			 
-				 
+	If PositionList.Count() = 0 And PositionsArray.Count() = 0 Then 
+		
+		Query.Text = Query.Text + " WHERE TRUE";
+		
+	Else 
+		
+		If NeedEmptyRef Then 
+			
+			Query.Text = Query.Text + " WHERE (User.Position IN (&PositionsArray) OR User.Position = VALUE(Catalog.Positions.EmptyRef))";
+			
+		Else 
+			
+			Query.Text = Query.Text + " WHERE User.Position IN (&PositionsArray)";
+			
+		EndIf;
+		
+		Query.SetParameter("PositionsArray", PositionsArray);
+		
+	EndIf;
+	
+	Ind = 0;
+	
 	TableRegionOr = SelectorsList.Copy(New Structure("Selector, ComparisonType", "Catalog_Region", Enums.ComparisonType.InList)); 
 	
 	If Not TableRegionOr.Count() = 0 Then 
@@ -327,7 +357,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 		
 		For Each TableTerritoryOrElement In TableTerritoryOr Do 
 			
-			Query.Text = Query.Text + "Territory.Owner = &parameter" + String(Ind) + " OR "; 
+			Query.Text = Query.Text + "Territory.Ref = &parameter" + String(Ind) + " OR "; 
 			Query.SetParameter("parameter" + String(Ind), TableTerritoryOrElement.Value);	
 			
 			Ind = Ind + 1;
