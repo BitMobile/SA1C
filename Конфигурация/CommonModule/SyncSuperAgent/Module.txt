@@ -1,7 +1,7 @@
 ﻿
 #Region Document_Order__Catalog_Outlet
 
-Function CheckEntity(Source) Export 
+Function CheckEntity(Source, SourceRef) Export 
 
 	If TypeOf(Source) = Type("DocumentObject.Order") Then
 		
@@ -33,7 +33,7 @@ Function CheckEntity(Source) Export
 				|WHERE
 				|	QuestioningResults.Visit = &Visit";
 			
-			Query.SetParameter("Visit", Source.Ref);
+			Query.SetParameter("Visit", SourceRef);
 			
 			QueryResult = Query.Execute();
 			
@@ -53,10 +53,6 @@ Function CheckEntity(Source) Export
 			
 		EndIf;	
 		
-		SourceRefValue = Documents.Visit.GetRef(New UUID);
-		
-		Source.SetNewObjectRef(SourceRefValue);
-				
 		QuestionnaireTable = New ValueTable;
 		QuestionnaireTable.Columns.Add("Questionnaire");
 				
@@ -70,7 +66,7 @@ Function CheckEntity(Source) Export
 				If Str.Questionnaire.Single Then
 					
 					RecordManager 				= InformationRegisters.AnsweredQuestions.CreateRecordManager();
-					RecordManager.Visit 		= SourceRefValue;
+					RecordManager.Visit 		= SourceRef;
 					RecordManager.Questionaire 	= Str.Questionnaire;
 					RecordManager.Outlet 		= Source.Outlet;
 					RecordManager.Question 		= Str.Question;
@@ -96,7 +92,7 @@ Function CheckEntity(Source) Export
 				If Str.Questionnaire.Single Then
 					
 					RecordManager 				= InformationRegisters.AnsweredQuestions.CreateRecordManager();
-					RecordManager.Visit 		= SourceRefValue;
+					RecordManager.Visit 		= SourceRef;
 					RecordManager.Questionaire 	= Str.Questionnaire;
 					RecordManager.Outlet 		= Source.Outlet;
 					RecordManager.Question 		= Str.Question;
@@ -119,7 +115,7 @@ Function CheckEntity(Source) Export
 			
 			RecordManager 				= InformationRegisters.QuestioningResults.CreateRecordManager();		
 			RecordManager.Questionnaire = QuestionnaireElement.Questionnaire;
-			RecordManager.Visit 		= SourceRefValue;
+			RecordManager.Visit 		= SourceRef;
 			RecordManager.Outlet 		= Source.Outlet;
 			RecordManager.SR 			= Source.SR;
 			RecordManager.Date 			= Source.Date;
