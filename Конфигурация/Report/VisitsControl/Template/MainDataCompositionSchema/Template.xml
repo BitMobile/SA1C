@@ -7,60 +7,97 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>DataSet1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Type</dataPath>
-			<field>Type</field>
+			<dataPath>UnplannedVisitsQty</dataPath>
+			<field>UnplannedVisitsQty</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Type</v8:content>
+					<v8:content>Unplan</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Тип</v8:content>
+					<v8:content>Вне плана</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>MarkIncomplete</dcscor:parameter>
+					<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Distributor</dataPath>
-			<field>Distributor</field>
+			<dataPath>PlannedVisitsQty</dataPath>
+			<field>PlannedVisitsQty</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Distributor</v8:content>
+					<v8:content>Fact</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Дистрибьютор</v8:content>
+					<v8:content>Факт</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Date</dataPath>
+			<field>Date</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Date</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Class</dataPath>
-			<field>Class</field>
+			<dataPath>VisitPlansQty</dataPath>
+			<field>VisitPlansQty</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Class</v8:content>
+					<v8:content>Plan</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Класс</v8:content>
+					<v8:content>План</v8:content>
 				</v8:item>
 			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Outlet</dataPath>
@@ -77,289 +114,262 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
+			<dataPath>Photo</dataPath>
+			<field>Photo</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
+					<v8:content>Photo</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitType</dataPath>
+			<field>VisitType</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit type</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitPlan</dataPath>
+			<field>VisitPlan</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit plan</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>PhotosQty</dataPath>
+			<field>PhotosQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Photos qty</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Title</dataPath>
+			<field>Title</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Title</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SR</dataPath>
-			<field>SR</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SR</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Торговый представитель</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<dataSource>DataSource1</dataSource>
-		<query>SELECT
-	User.Ref AS SR,
-	TerritoryOutlets.Ref.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
-	TerritoryOutlets.Outlet AS Outlet
-INTO SRsOutlets
-FROM
-	Catalog.User AS User
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON User.Ref = TerritoryOutlets.Ref.SR
-WHERE
-	User.Role = "SR"
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	COUNT(DISTINCT VisitPlanOutlets.Ref.Ref) AS VisitPlansQty,
-	VisitPlanOutlets.Ref.SR,
-	VisitPlanOutlets.Outlet
-INTO VisitPlans
-FROM
-	Document.VisitPlan.Outlets AS VisitPlanOutlets,
-	SRsOutlets AS SRsOutlets
-WHERE
-	VisitPlanOutlets.Outlet IN (SRsOutlets.Outlet)
-	AND VisitPlanOutlets.Ref.SR IN (SRsOutlets.SR)
-
-GROUP BY
-	VisitPlanOutlets.Ref.SR,
-	VisitPlanOutlets.Outlet
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	Visit.SR,
-	Visit.Outlet,
-	COUNT(DISTINCT Visit.Ref) AS VisitsQty,
-	SUM(CASE
-			WHEN Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
-				THEN 1
-			ELSE 0
-		END) AS UnplannedVisitsQty,
-	SUM(CASE
-			WHEN NOT Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
-				THEN 1
-			ELSE 0
-		END) AS PlannedVisitsQty
-INTO Visits
-FROM
-	Document.Visit AS Visit,
-	SRsOutlets AS SRsOutlets
-WHERE
-	Visit.SR IN (SRsOutlets.SR)
-	AND Visit.Outlet IN (SRsOutlets.Outlet)
-
-GROUP BY
-	Visit.SR,
-	Visit.Outlet
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	SRsOutlets.SR,
-	SRsOutlets.Region,
-	SRsOutlets.Territory,
-	SRsOutlets.Outlet,
-	AllOutlets.Distributor,
-	AllOutlets.Class,
-	AllOutlets.Type
-FROM
-	SRsOutlets AS SRsOutlets
-		LEFT JOIN VisitPlans AS VisitPlans
-		ON SRsOutlets.SR = VisitPlans.SR
-			AND SRsOutlets.Outlet = VisitPlans.Outlet
-		LEFT JOIN Visits AS Visits
-		ON SRsOutlets.SR = Visits.SR
-			AND SRsOutlets.Outlet = Visits.Outlet
-		LEFT JOIN Catalog.Outlet AS AllOutlets
-		ON SRsOutlets.Outlet = AllOutlets.Ref</query>
-	</dataSet>
-	<dataSet xsi:type="DataSetQuery">
-		<name>DataSet2</name>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>UnplannedVisitsQty</dataPath>
-			<field>UnplannedVisitsQty</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Unplanned visits qty</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>VisitsQty</dataPath>
-			<field>VisitsQty</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Visits qty</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SR</dataPath>
-			<field>SR</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>PlannedVisitsQty</dataPath>
-			<field>PlannedVisitsQty</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Planned visits qty</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Date</dataPath>
-			<field>Date</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Date</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>VisitPlansQty</dataPath>
-			<field>VisitPlansQty</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Visit plans qty</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Field1</dataPath>
-			<field>Field1</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Field1</v8:content>
+					<v8:content>Заголовок</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT
 	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) AS Date,
-	VisitPlan.SR,
-	COUNT(DISTINCT VisitPlanOutlets.Outlet) AS VisitPlansQty
+	VisitPlanOutlets.Ref.SR AS SR,
+	COUNT(DISTINCT VisitPlanOutlets.LineNumber) AS VisitPlansQty,
+	VisitPlanOutlets.Outlet,
+	VisitPlanOutlets.Ref
 INTO VisitPlans
 FROM
 	Document.VisitPlan.Outlets AS VisitPlanOutlets
-		LEFT JOIN Document.VisitPlan AS VisitPlan
-		ON VisitPlanOutlets.Ref = VisitPlan.Ref
+WHERE
+	VisitPlanOutlets.Date &gt;= &amp;BeginDate
+	AND VisitPlanOutlets.Date &lt;= &amp;EndDate
 
 GROUP BY
-	VisitPlan.SR,
-	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY)
+	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY),
+	VisitPlanOutlets.Ref.SR,
+	VisitPlanOutlets.Outlet,
+	VisitPlanOutlets.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT
 	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
+	Visit.Plan,
 	Visit.SR,
-	COUNT(DISTINCT Visit.Ref) AS VisitsQty,
 	SUM(CASE
 			WHEN Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
-				THEN 1
-			ELSE 0
-		END) AS UnplannedVisitsQty,
+				THEN 0
+			ELSE 1
+		END) AS PlannedVisitsQty,
 	SUM(CASE
 			WHEN NOT Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
-				THEN 1
-			ELSE 0
-		END) AS PlannedVisitsQty
+				THEN 0
+			ELSE 1
+		END) AS UnplannedVisitsQty,
+	Visit.Outlet,
+	Visit.Ref
 INTO Visits
 FROM
 	Document.Visit AS Visit
+WHERE
+	Visit.Date &gt;= &amp;BeginDate
+	AND Visit.Date &lt;= &amp;EndDate
 
 GROUP BY
 	Visit.SR,
-	BEGINOFPERIOD(Visit.Date, DAY)
+	BEGINOFPERIOD(Visit.Date, DAY),
+	Visit.Plan,
+	Visit.Outlet,
+	Visit.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT
-	Visits.Date,
-	Visits.SR,
-	VisitPlans.VisitPlansQty,
-	Visits.VisitsQty,
-	Visits.UnplannedVisitsQty,
-	Visits.PlannedVisitsQty,
+	ISNULL(VisitPlans.Date, Visits.Date) AS Date,
+	ISNULL(VisitPlans.SR, Visits.SR) AS SR,
+	ISNULL(VisitPlans.VisitPlansQty, 0) AS VisitPlansQty,
+	ISNULL(Visits.PlannedVisitsQty, 0) AS PlannedVisitsQty,
+	ISNULL(Visits.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
+	ISNULL(VisitPlans.Outlet, Visits.Outlet) AS Outlet,
+	Visits.Ref AS Photo,
+	VisitPlans.Date AS VisitPlan,
 	CASE
-		WHEN VisitPlans.VisitPlansQty = 0
-			THEN "hi"
-		ELSE "hello"
-	END AS Field1
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN CASE
+					WHEN NestedSelect.PhotosQty &gt; 0
+						THEN 4
+					ELSE 5
+				END
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN CASE
+					WHEN NestedSelect.PhotosQty &gt; 0
+						THEN 2
+					ELSE 3
+				END
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND Visits.Ref IS NULL 
+			THEN 1
+	END AS VisitType,
+	ISNULL(NestedSelect.PhotosQty, 0) AS PhotosQty,
+	0 AS Title
 FROM
-	Visits AS Visits
-		INNER JOIN VisitPlans AS VisitPlans
-		ON Visits.Date = VisitPlans.Date
-			AND Visits.SR = VisitPlans.SR</query>
+	VisitPlans AS VisitPlans
+		FULL JOIN Visits AS Visits
+			LEFT JOIN (SELECT
+				VisitQuestions.Ref AS Ref,
+				COUNT(DISTINCT ISNULL(VisitQuestions.Question.AnswerType, 0)) AS PhotosQty
+			FROM
+				Document.Visit.Questions AS VisitQuestions
+			WHERE
+				VisitQuestions.Question.AnswerType = VALUE(Enum.DataType.Snapshot)
+				AND VisitQuestions.Ref.Date &gt;= &amp;BeginDate
+				AND VisitQuestions.Ref.Date &lt;= &amp;EndDate
+			
+			GROUP BY
+				VisitQuestions.Ref) AS NestedSelect
+			ON Visits.Ref = NestedSelect.Ref
+		ON (Visits.Date = VisitPlans.Date)
+			AND (Visits.SR = VisitPlans.SR)
+			AND (Visits.Outlet = VisitPlans.Outlet)
+			AND VisitPlans.Ref = Visits.Plan
+
+ORDER BY
+	Date,
+	SR</query>
 	</dataSet>
-	<dataSetLink>
-		<sourceDataSet>DataSet1</sourceDataSet>
-		<destinationDataSet>DataSet2</destinationDataSet>
-		<sourceExpression>SR</sourceExpression>
-		<destinationExpression>SR</destinationExpression>
-	</dataSetLink>
 	<calculatedField>
-		<dataPath>NotVisited</dataPath>
-		<expression>VisitPlansQty - PlannedVisitsQty</expression>
+		<dataPath>Undone</dataPath>
+		<expression/>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Not visited</v8:content>
+				<v8:content>Undone</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
-				<v8:content>Не посещено</v8:content>
+				<v8:content>Не выполненных</v8:content>
 			</v8:item>
 		</title>
 	</calculatedField>
 	<calculatedField>
-		<dataPath>Hi</dataPath>
-		<expression>"Hi"</expression>
+		<dataPath>Percent</dataPath>
+		<expression/>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Hi</v8:content>
+				<v8:content>Percent</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>% выполнения плана</v8:content>
 			</v8:item>
 		</title>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
+			</dcscor:item>
+		</appearance>
 	</calculatedField>
 	<totalField>
-		<dataPath>NotVisited</dataPath>
-		<expression>Sum(NotVisited)</expression>
+		<dataPath>VisitType</dataPath>
+		<expression>Max(VisitType)</expression>
 	</totalField>
 	<totalField>
-		<dataPath>PlannedVisitsQty</dataPath>
-		<expression>Sum(PlannedVisitsQty)</expression>
+		<dataPath>Undone</dataPath>
+		<expression>Sum(VisitPlansQty) - Sum(PlannedVisitsQty)</expression>
 	</totalField>
 	<totalField>
 		<dataPath>UnplannedVisitsQty</dataPath>
 		<expression>Sum(UnplannedVisitsQty)</expression>
 	</totalField>
 	<totalField>
+		<dataPath>PlannedVisitsQty</dataPath>
+		<expression>Sum(PlannedVisitsQty)</expression>
+	</totalField>
+	<totalField>
 		<dataPath>VisitPlansQty</dataPath>
 		<expression>Sum(VisitPlansQty)</expression>
 	</totalField>
 	<totalField>
-		<dataPath>VisitsQty</dataPath>
-		<expression>Sum(VisitsQty)</expression>
+		<dataPath>Percent</dataPath>
+		<expression>CASE WHEN SUM(VISITPLANSQTY) = 0 THEN 0 ELSE Sum(PlannedVisitsQty) / Sum(VisitPlansQty) * 100 END</expression>
 	</totalField>
+	<parameter>
+		<name>BeginDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Begin date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.EndDate</expression>
+	</parameter>
 	<parameter>
 		<name>Period</name>
 		<title xsi:type="v8:LocalStringType">
@@ -386,22 +396,322 @@ FROM
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:userFields>
+				<dcsset:item xsi:type="dcsset:UserFieldExpression">
+					<dcsset:dataPath>UserFields.Field1</dcsset:dataPath>
+					<dcsset:lwsTitle>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content> </v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content> </v8:content>
+						</v8:item>
+					</dcsset:lwsTitle>
+					<dcsset:detailExpression/>
+					<dcsset:detailExpressionPresentation/>
+					<dcsset:totalExpression>Case
+	When Level() = 0
+		Then Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(VisitPlansQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(PlannedVisitsQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(UnplannedVisitsQty)", "Date, SR")), 0), "NZ=0")
+	Else Case
+			When BeginOfPeriod(Date, "Day") = BeginOfPeriod(Photo.Date, "Day") Or BeginOfPeriod(Date, "Day") = BeginOfPeriod(VisitPlan, "Day")
+				Then VisitType
+		End
+End</dcsset:totalExpression>
+					<dcsset:totalExpressionPresentation>Case
+	When Level() = 0
+		Then Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Plan)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Fact)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Unplan)", "Date, SR")), 0), "NZ=0")
+	Else Case
+			When BeginOfPeriod(Date, "Day") = BeginOfPeriod([Photo.Дата], "Day") Or BeginOfPeriod(Date, "Day") = BeginOfPeriod([Visit plan], "Day")
+				Then [Visit type]
+		End
+End</dcsset:totalExpressionPresentation>
+				</dcsset:item>
+			</dcsset:userFields>
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Outlet</dcsset:field>
+					<dcsset:use>false</dcsset:use>
+					<dcsset:field>VisitType</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>a604ae5b-af88-4c52-a982-f1050a7d2ceb</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">VisitType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SystemFields.Level</dcsset:left>
+							<dcsset:comparisonType>Greater</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>BackColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#FFE7E7</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>TextColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Not visited</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Не был</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+					<dcsset:useInOverall>DontUse</dcsset:useInOverall>
+					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
+					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
+					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">VisitType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">2</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SystemFields.Level</dcsset:left>
+							<dcsset:comparisonType>Greater</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>BackColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#FFE7E7</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>TextColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Photo</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Фото</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+					<dcsset:useInOverall>DontUse</dcsset:useInOverall>
+					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
+					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
+					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">VisitType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">3</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SystemFields.Level</dcsset:left>
+							<dcsset:comparisonType>Greater</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>BackColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#DDFADE</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>TextColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>No photo</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Без фото</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+					<dcsset:useInOverall>DontUse</dcsset:useInOverall>
+					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
+					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
+					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">VisitType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">4</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SystemFields.Level</dcsset:left>
+							<dcsset:comparisonType>Greater</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>BackColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#FFFFDD</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>TextColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Photo</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Фото</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+					<dcsset:useInOverall>DontUse</dcsset:useInOverall>
+					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
+					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
+					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">VisitType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">5</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SystemFields.Level</dcsset:left>
+							<dcsset:comparisonType>Greater</dcsset:comparisonType>
+							<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>BackColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#FFFFDD</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>TextColor</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:SpecialTextColor</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>No photo</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Без фото
+</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+					<dcsset:useInOverall>DontUse</dcsset:useInOverall>
+					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
+					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
+					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>TotalsPlacement</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>HorizontalOverallPlacement</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>VerticalOverallPlacement</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedLeft</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
 			</dcsset:outputParameters>
 			<dcsset:item xsi:type="dcsset:StructureItemTable">
@@ -420,6 +730,50 @@ FROM
 					</dcsset:order>
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>UserFields.Field1</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:use>false</dcsset:use>
+							<dcsset:field>Photo</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:outputParameters>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>TitleOutput</dcscor:parameter>
+							<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+						</dcscor:item>
+					</dcsset:outputParameters>
+				</dcsset:column>
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Title</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>VisitPlansQty</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>PlannedVisitsQty</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>Undone</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>UnplannedVisitsQty</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>Percent</dcsset:field>
+						</dcsset:item>
 					</dcsset:selection>
 				</dcsset:column>
 				<dcsset:row>
@@ -436,34 +790,23 @@ FROM
 						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 					</dcsset:order>
 					<dcsset:selection>
-						<dcsset:item xsi:type="dcsset:SelectedItemFolder">
-							<dcsset:lwsTitle>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>VisitsInfo</v8:content>
-								</v8:item>
-							</dcsset:lwsTitle>
-							<dcsset:item xsi:type="dcsset:SelectedItemField">
-								<dcsset:field>VisitPlansQty</dcsset:field>
-							</dcsset:item>
-							<dcsset:item xsi:type="dcsset:SelectedItemField">
-								<dcsset:field>VisitsQty</dcsset:field>
-							</dcsset:item>
-							<dcsset:item xsi:type="dcsset:SelectedItemField">
-								<dcsset:field>UnplannedVisitsQty</dcsset:field>
-							</dcsset:item>
-							<dcsset:placement>Together</dcsset:placement>
-						</dcsset:item>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 					</dcsset:selection>
 					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Outlet</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
 						<dcsset:order>
 							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 						</dcsset:order>
 						<dcsset:selection>
-							<dcsset:item xsi:type="dcsset:SelectedItemField">
-								<dcsset:field>Outlet</dcsset:field>
-							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 						</dcsset:selection>
 					</dcsset:item>
 				</dcsset:row>
