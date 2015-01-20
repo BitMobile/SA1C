@@ -213,8 +213,8 @@ Function SelectPositions(Positions) Export
 	i = 0;
 	
 	For Each Row In Positions Do
-        
-        If Skip = False Then
+	
+		If Skip = False Then
 			
 			If Not Row.ComparisonType = Enums.ComparisonType.InList Then
 				
@@ -222,7 +222,7 @@ Function SelectPositions(Positions) Export
 				
 				String = String + " Ref " + c +  " &Ref" + i;
 				
-				qPositions.SetParameter(String("Ref" + String(i)), Row.Value);        
+				qPositions.SetParameter(String("Ref" + String(i)), Row.Value);
 				
 			Else
 				
@@ -242,30 +242,29 @@ Function SelectPositions(Positions) Export
 					
 				EndDo;
 				
-				
 				EndOfList = ListItem;
 				
 				Skip = True;
 				
 			EndIf;
 			
-        EndIf;
-        
-        If Row = EndOfList Then
+		EndIf;
+		
+		If Row = EndOfList Then
 			
 			Skip = False;
 			
-		EndIf;        
-         
-        i = i + 1;
-            
-    EndDo;
-    	
+		EndIf;
+		
+		i = i + 1;
+		
+	EndDo;
+	
 	Try
 		
 		qPositions.Text = "SELECT ALLOWED Ref AS Position FROM Catalog.Positions " + string;
-
-    	Return qPositions.Execute().Unload().UnloadColumn("Position");
+		
+		Return qPositions.Execute().Unload().UnloadColumn("Position");
 		
 	Except
 		
@@ -305,7 +304,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 	             |		ON TerritorySRs.Ref = Territory.Ref
 	             |		INNER JOIN Catalog.User AS User
 	             |		ON TerritorySRs.SR = User.Ref";
-				 
+	
 	If PositionList.Count() = 0 And PositionsArray.Count() = 0 Then 
 		
 		Query.Text = Query.Text + " WHERE TRUE";
@@ -337,7 +336,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 		For Each TableRegionOrElement In TableRegionOr Do 
 			
 			Query.Text = Query.Text + "Territory.Owner IN HIERARCHY(&parameter" + String(Ind) + ") OR "; 
-			Query.SetParameter("parameter" + String(Ind), TableRegionOrElement.Value);	
+			Query.SetParameter("parameter" + String(Ind), TableRegionOrElement.Value);
 			
 			Ind = Ind + 1;
 			
@@ -358,7 +357,7 @@ Function SelectSRs(SelectorsList, PositionList) Export
 		For Each TableTerritoryOrElement In TableTerritoryOr Do 
 			
 			Query.Text = Query.Text + "Territory.Ref = &parameter" + String(Ind) + " OR "; 
-			Query.SetParameter("parameter" + String(Ind), TableTerritoryOrElement.Value);	
+			Query.SetParameter("parameter" + String(Ind), TableTerritoryOrElement.Value);
 			
 			Ind = Ind + 1;
 			
