@@ -325,8 +325,8 @@ SELECT
 	0 AS Title,
 	Visits.Date AS VisitDate,
 	VisitPlans.Ref AS VisitPlan,
-	TerritoryOutlets.Ref AS Territory,
-	TerritoryOutlets.Ref.Owner AS Region
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	MAX(TerritoryOutlets.Ref.Owner) AS Region
 FROM
 	VisitPlans AS VisitPlans
 		FULL JOIN Visits AS Visits
@@ -349,6 +349,38 @@ FROM
 			AND VisitPlans.Ref = Visits.Plan
 		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 		ON VisitPlans.Outlet = TerritoryOutlets.Outlet
+
+GROUP BY
+	Visits.Ref,
+	VisitPlans.Date,
+	Visits.Date,
+	VisitPlans.Ref,
+	ISNULL(VisitPlans.Date, Visits.Date),
+	ISNULL(VisitPlans.SR, Visits.SR),
+	ISNULL(VisitPlans.Outlet, Visits.Outlet),
+	ISNULL(VisitPlans.VisitPlansQty, 0),
+	ISNULL(Visits.PlannedVisitsQty, 0),
+	ISNULL(Visits.UnplannedVisitsQty, 0),
+	CASE
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN CASE
+					WHEN NestedSelect.PhotosQty &gt; 0
+						THEN 4
+					ELSE 5
+				END
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN CASE
+					WHEN NestedSelect.PhotosQty &gt; 0
+						THEN 2
+					ELSE 3
+				END
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND Visits.Ref IS NULL 
+			THEN 1
+	END,
+	ISNULL(NestedSelect.PhotosQty, 0)
 
 ORDER BY
 	Date,
