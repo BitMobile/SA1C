@@ -115,11 +115,11 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Outlet Type</v8:content>
+							<v8:content>Outlet type</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Тип тоговой точки</v8:content>
+							<v8:content>Тип торговой точки</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment>Type</Comment>
@@ -131,7 +131,7 @@
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Outlet Class</v8:content>
+							<v8:content>Outlet class</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
