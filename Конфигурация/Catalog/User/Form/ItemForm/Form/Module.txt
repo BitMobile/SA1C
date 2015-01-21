@@ -49,7 +49,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 EndProcedure
 
 &AtServer
-Procedure FillCheckProcessingAtServer(Cancel, CheckedAttributes)
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Object.Role = "Admin" Then 
 	
@@ -88,11 +88,6 @@ Procedure FillCheckProcessingAtServer(Cancel, CheckedAttributes)
 		
 	EndIf;
 	
-EndProcedure
-
-&AtServer
-Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
-	
 	// Проверить заполнение таблиц регионов и территорий
 	If Object.RoleOfUser.Role = "SRM_SR" Or Object.RoleOfUser.Role = "SRM" Then 
 		
@@ -123,6 +118,11 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		EndIf;
 		
 	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then 
 	
@@ -321,7 +321,11 @@ EndProcedure
 &AtServer
 Function UniqueCheck(Attribute)
 	
+	SetPrivilegedMode(True);
+	
 	FoundRef = Catalogs.User.FindByAttribute(Attribute, Object[Attribute]);
+	
+	SetPrivilegedMode(False);
 	
 	If FoundRef = Catalogs.User.EmptyRef() Then
 		

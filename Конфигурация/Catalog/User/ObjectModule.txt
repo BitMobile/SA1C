@@ -2,7 +2,7 @@
 Procedure BeforeWrite(Cancel)
 	
 	If Not Cancel Then 
-		
+	
 		If Not Role = "Admin" Then 
 			
 			Role = "SR";
@@ -18,21 +18,24 @@ Procedure BeforeWrite(Cancel)
 			EndIf;
 			
 			// Создать пользователя и установить UserID
-			Parameters = New Structure();
-			Parameters.Insert("FullName", Description);
-			Parameters.Insert("UserName", UserName);
-			Parameters.Insert("UserID", UserID);
-			Parameters.Insert("Role", Role);
-			Parameters.Insert("Password", Password);
-			Parameters.Insert("InterfaceLanguage", InterfaceLanguage);
+			ParametersStructure = New Structure();
+			ParametersStructure.Insert("FullName", Description);
+			ParametersStructure.Insert("UserName", UserName);
+			ParametersStructure.Insert("UserID", UserID);
+			ParametersStructure.Insert("Role", Role);
+			ParametersStructure.Insert("Password", Password);
+			ParametersStructure.Insert("InterfaceLanguage", InterfaceLanguage);
 			
-			UserID = Users.CreateUser(Parameters);
+			UserID = Users.CreateUser(ParametersStructure);
 			
 		EndIf;
 		
 	EndIf;
 	
 EndProcedure
+
+
+
 
 
 

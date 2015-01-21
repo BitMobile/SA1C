@@ -7,8 +7,8 @@
 		<Event name="AfterWrite">AfterWrite</Event>
 		<Event name="OnOpen">OnOpen</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
-		<Event name="FillCheckProcessingAtServer">FillCheckProcessingAtServer</Event>
 	</Events>
 	<ChildItems>
 		<Pages name="Pages" id="130">
@@ -138,6 +138,7 @@
 									<v8:content>Роль пользователя</v8:content>
 								</v8:item>
 							</Title>
+							<AutoMarkIncomplete>true</AutoMarkIncomplete>
 							<ContextMenu name="RoleOfUserContextMenu" id="125"/>
 							<ExtendedTooltip name="RoleOfUserExtendedTooltip" id="126"/>
 						</InputField>
