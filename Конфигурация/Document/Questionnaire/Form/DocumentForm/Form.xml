@@ -427,10 +427,12 @@
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
 									<ChoiceButton>true</ChoiceButton>
+									<QuickChoice>false</QuickChoice>
 									<AutoMarkIncomplete>true</AutoMarkIncomplete>
 									<ChooseType>false</ChooseType>
 									<TextEdit>false</TextEdit>
-									<ChoiceListButton>true</ChoiceListButton>
+									<ChoiceListButton>false</ChoiceListButton>
+									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 									<ContextMenu name="SelectorsSelectorRepresentContextMenu" id="65"/>
 									<ExtendedTooltip name="SelectorsSelectorRepresentExtendedTooltip" id="314"/>
 									<Events>
@@ -454,8 +456,10 @@
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
 									<ChoiceButton>true</ChoiceButton>
+									<QuickChoice>false</QuickChoice>
 									<AutoMarkIncomplete>true</AutoMarkIncomplete>
 									<TextEdit>false</TextEdit>
+									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 									<ContextMenu name="SelectorsValueContextMenu" id="61"/>
 									<ExtendedTooltip name="SelectorsValueExtendedTooltip" id="316"/>
 									<Events>

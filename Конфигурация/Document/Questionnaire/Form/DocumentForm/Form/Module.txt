@@ -1903,11 +1903,15 @@ Procedure SelectorsSelectorRepresentChoiseProcessing(Result, AdditionalParameter
 	
 	Row = Selectors.FindByID(Items.SelectorsTable.CurrentRow);
 	
-	Row.Value = Undefined;
-	
 	If Not Result = Undefined Then
 		
-		Row.Selector = Result.Value;
+		If Not Row.Selector = Result.Value Then 
+			
+			Row.Selector = Result.Value;
+			
+			Row.Value = Undefined;
+			
+		EndIf;
 		
 		If Not IsOutletParameter(Result.Value) Then
 			
