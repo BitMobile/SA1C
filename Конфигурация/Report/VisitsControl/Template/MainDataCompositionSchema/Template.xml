@@ -121,6 +121,10 @@
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit type</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип визита</v8:content>
+				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
@@ -130,6 +134,10 @@
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Photos qty</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество фото</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -155,6 +163,10 @@
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Визит</v8:content>
+				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
@@ -164,6 +176,10 @@
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit date</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата визита</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -175,6 +191,10 @@
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit plan date</v8:content>
 				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата плана</v8:content>
+				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
@@ -184,6 +204,38 @@
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit plan</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>План визитов</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -272,7 +324,9 @@ SELECT
 	ISNULL(NestedSelect.PhotosQty, 0) AS PhotosQty,
 	0 AS Title,
 	Visits.Date AS VisitDate,
-	VisitPlans.Ref AS VisitPlan
+	VisitPlans.Ref AS VisitPlan,
+	TerritoryOutlets.Ref AS Territory,
+	TerritoryOutlets.Ref.Owner AS Region
 FROM
 	VisitPlans AS VisitPlans
 		FULL JOIN Visits AS Visits
@@ -293,6 +347,8 @@ FROM
 			AND (Visits.SR = VisitPlans.SR)
 			AND (Visits.Outlet = VisitPlans.Outlet)
 			AND VisitPlans.Ref = Visits.Plan
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON VisitPlans.Outlet = TerritoryOutlets.Outlet
 
 ORDER BY
 	Date,
@@ -347,7 +403,17 @@ End</expression>
 				<v8:lang>en</v8:lang>
 				<v8:content>Calc visit type</v8:content>
 			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Тип визита</v8:content>
+			</v8:item>
 		</title>
+		<useRestriction>
+			<field>true</field>
+			<condition>true</condition>
+			<group>true</group>
+			<order>true</order>
+		</useRestriction>
 	</calculatedField>
 	<totalField>
 		<dataPath>VisitType</dataPath>
@@ -356,22 +422,27 @@ End</expression>
 	<totalField>
 		<dataPath>Undone</dataPath>
 		<expression>Sum(VisitPlansQty) - Sum(PlannedVisitsQty)</expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>UnplannedVisitsQty</dataPath>
 		<expression>Sum(UnplannedVisitsQty)</expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>PlannedVisitsQty</dataPath>
 		<expression>Sum(PlannedVisitsQty)</expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>VisitPlansQty</dataPath>
 		<expression>Sum(VisitPlansQty)</expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>CASE WHEN SUM(VISITPLANSQTY) = 0 THEN 0 ELSE Sum(PlannedVisitsQty) / Sum(VisitPlansQty) * 100 END</expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>Visit</dataPath>
@@ -498,16 +569,31 @@ End</expression>
 					<dcsset:field>VisitType</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>a29b450d-9b54-4db2-bb10-3422fbcaba42</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>679453cf-9dac-4e76-a521-9aab38d26ef0</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>fc8ff9ae-b13b-4060-9974-1317c36cb5ce</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-					</dcscor:value>
-					<dcsset:userSettingID>a604ae5b-af88-4c52-a982-f1050a7d2ceb</dcsset:userSettingID>
+					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.User.EmptyRef</dcscor:value>
+					<dcsset:userSettingID>78fdf7b0-89d8-484e-91fe-a61ac55f8566</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
@@ -795,6 +881,16 @@ End</expression>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 						<dcsset:item xsi:type="dcsset:SelectedItemField">
 							<dcsset:field>Visit</dcsset:field>
+							<dcsset:lwsTitle>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content> </v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content> </v8:content>
+								</v8:item>
+							</dcsset:lwsTitle>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:outputParameters>
@@ -852,6 +948,7 @@ End</expression>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 					</dcsset:selection>
 					<dcsset:item>
+						<dcsset:name>Outlet</dcsset:name>
 						<dcsset:groupItems>
 							<dcsset:item xsi:type="dcsset:GroupItemField">
 								<dcsset:field>Outlet</dcsset:field>
