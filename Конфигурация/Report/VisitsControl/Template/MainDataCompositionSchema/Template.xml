@@ -114,32 +114,12 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Photo</dataPath>
-			<field>Photo</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Photo</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>VisitType</dataPath>
 			<field>VisitType</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>Visit type</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>VisitPlan</dataPath>
-			<field>VisitPlan</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Visit plan</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -164,6 +144,46 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Заголовок</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Visit</dataPath>
+			<field>Visit</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitDate</dataPath>
+			<field>VisitDate</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit date</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitPlanDate</dataPath>
+			<field>VisitPlanDate</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit plan date</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VisitPlan</dataPath>
+			<field>VisitPlan</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Visit plan</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -228,8 +248,8 @@ SELECT
 	ISNULL(Visits.PlannedVisitsQty, 0) AS PlannedVisitsQty,
 	ISNULL(Visits.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
 	ISNULL(VisitPlans.Outlet, Visits.Outlet) AS Outlet,
-	Visits.Ref AS Photo,
-	VisitPlans.Date AS VisitPlan,
+	Visits.Ref AS Visit,
+	VisitPlans.Date AS VisitPlanDate,
 	CASE
 		WHEN VisitPlans.Ref IS NULL 
 				AND NOT Visits.Ref IS NULL 
@@ -250,7 +270,9 @@ SELECT
 			THEN 1
 	END AS VisitType,
 	ISNULL(NestedSelect.PhotosQty, 0) AS PhotosQty,
-	0 AS Title
+	0 AS Title,
+	Visits.Date AS VisitDate,
+	VisitPlans.Ref AS VisitPlan
 FROM
 	VisitPlans AS VisitPlans
 		FULL JOIN Visits AS Visits
@@ -310,6 +332,23 @@ ORDER BY
 			</dcscor:item>
 		</appearance>
 	</calculatedField>
+	<calculatedField>
+		<dataPath>CalcVisitType</dataPath>
+		<expression>Case
+	When Level() = 0
+		Then Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(VisitPlansQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(PlannedVisitsQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(UnplannedVisitsQty)", "Date, SR")), 0), "NZ=0")
+	Else Case
+			When BeginOfPeriod(Date, "Day") = BeginOfPeriod(VisitDate, "Day") Or BeginOfPeriod(Date, "Day") = BeginOfPeriod(VisitPlanDate, "Day")
+				Then VisitType
+		End
+End</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Calc visit type</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
 	<totalField>
 		<dataPath>VisitType</dataPath>
 		<expression>Max(VisitType)</expression>
@@ -333,6 +372,22 @@ ORDER BY
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>CASE WHEN SUM(VISITPLANSQTY) = 0 THEN 0 ELSE Sum(PlannedVisitsQty) / Sum(VisitPlansQty) * 100 END</expression>
+	</totalField>
+	<totalField>
+		<dataPath>Visit</dataPath>
+		<expression>Visit</expression>
+	</totalField>
+	<totalField>
+		<dataPath>VisitDate</dataPath>
+		<expression>VisitDate</expression>
+	</totalField>
+	<totalField>
+		<dataPath>CalcVisitType</dataPath>
+		<expression>CalcVisitType</expression>
+	</totalField>
+	<totalField>
+		<dataPath>VisitPlan</dataPath>
+		<expression>VisitPlan</expression>
 	</totalField>
 	<parameter>
 		<name>BeginDate</name>
@@ -392,43 +447,51 @@ ORDER BY
 		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
+	<template>
+		<name>Макет1</name>
+		<template xmlns:dcsat="http://v8.1c.ru/8.1/data-composition-system/area-template" xsi:type="dcsat:AreaTemplate">
+			<dcsat:item xsi:type="dcsat:TableRow">
+				<dcsat:tableCell>
+					<dcsat:item xsi:type="dcsat:Field">
+						<dcsat:value xsi:type="dcscor:Parameter">ParamVisitType</dcsat:value>
+					</dcsat:item>
+					<dcsat:appearance>
+						<dcscor:item>
+							<dcscor:parameter>Details</dcscor:parameter>
+							<dcscor:value xsi:type="dcscor:Parameter">Visit</dcscor:value>
+						</dcscor:item>
+					</dcsat:appearance>
+				</dcsat:tableCell>
+			</dcsat:item>
+		</template>
+		<parameter xmlns:dcsat="http://v8.1c.ru/8.1/data-composition-system/area-template" xsi:type="dcsat:DetailsAreaTemplateParameter">
+			<dcsat:name>Visit</dcsat:name>
+			<dcsat:fieldExpression>
+				<dcsat:field>Visit</dcsat:field>
+				<dcsat:expression>Visit</dcsat:expression>
+			</dcsat:fieldExpression>
+			<dcsat:fieldExpression>
+				<dcsat:field>VisitPlan</dcsat:field>
+				<dcsat:expression>VisitPlan</dcsat:expression>
+			</dcsat:fieldExpression>
+			<dcsat:fieldExpression>
+				<dcsat:field>Outlet</dcsat:field>
+				<dcsat:expression>Outlet</dcsat:expression>
+			</dcsat:fieldExpression>
+		</parameter>
+		<parameter xmlns:dcsat="http://v8.1c.ru/8.1/data-composition-system/area-template" xsi:type="dcsat:ExpressionAreaTemplateParameter">
+			<dcsat:name>ParamVisitType</dcsat:name>
+			<dcsat:expression>CalcVisitType</dcsat:expression>
+		</parameter>
+	</template>
+	<fieldTemplate>
+		<field>Visit</field>
+		<template>Макет1</template>
+	</fieldTemplate>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
-			<dcsset:userFields>
-				<dcsset:item xsi:type="dcsset:UserFieldExpression">
-					<dcsset:dataPath>UserFields.Field1</dcsset:dataPath>
-					<dcsset:lwsTitle>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content> </v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content> </v8:content>
-						</v8:item>
-					</dcsset:lwsTitle>
-					<dcsset:detailExpression/>
-					<dcsset:detailExpressionPresentation/>
-					<dcsset:totalExpression>Case
-	When Level() = 0
-		Then Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(VisitPlansQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(PlannedVisitsQty)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(UnplannedVisitsQty)", "Date, SR")), 0), "NZ=0")
-	Else Case
-			When BeginOfPeriod(Date, "Day") = BeginOfPeriod(Photo.Date, "Day") Or BeginOfPeriod(Date, "Day") = BeginOfPeriod(VisitPlan, "Day")
-				Then VisitType
-		End
-End</dcsset:totalExpression>
-					<dcsset:totalExpressionPresentation>Case
-	When Level() = 0
-		Then Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Plan)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Fact)", "Date, SR")), 0), "NZ=0") + " / " + Format(IsNull(Sum(EvalExpressionWithGroupArray("Sum(Unplan)", "Date, SR")), 0), "NZ=0")
-	Else Case
-			When BeginOfPeriod(Date, "Day") = BeginOfPeriod([Photo.Дата], "Day") Or BeginOfPeriod(Date, "Day") = BeginOfPeriod([Visit plan], "Day")
-				Then [Visit type]
-		End
-End</dcsset:totalExpressionPresentation>
-				</dcsset:item>
-			</dcsset:userFields>
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:use>false</dcsset:use>
@@ -451,7 +514,7 @@ End</dcsset:totalExpressionPresentation>
 				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
-							<dcsset:field>UserFields.Field1</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter>
@@ -499,7 +562,7 @@ End</dcsset:totalExpressionPresentation>
 				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
-							<dcsset:field>UserFields.Field1</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter>
@@ -548,7 +611,7 @@ End</dcsset:totalExpressionPresentation>
 				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
-							<dcsset:field>UserFields.Field1</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter>
@@ -596,7 +659,7 @@ End</dcsset:totalExpressionPresentation>
 				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
-							<dcsset:field>UserFields.Field1</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter>
@@ -644,7 +707,7 @@ End</dcsset:totalExpressionPresentation>
 				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
-							<dcsset:field>UserFields.Field1</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter>
@@ -731,11 +794,7 @@ End</dcsset:totalExpressionPresentation>
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>UserFields.Field1</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:use>false</dcsset:use>
-							<dcsset:field>Photo</dcsset:field>
+							<dcsset:field>Visit</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:outputParameters>
