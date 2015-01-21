@@ -8,7 +8,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
     Selector 		= Parameters.Selector;
     DataType 		= Parameters.DataType;
     OutletParameter = Parameters.OutletParameter;
-    
+	Source			= Parameters.Source;
+	
     If TypeOf(Parameters.CurrentValue) = Type("ValueList") Then
 		
 		For Each Element In Parameters.CurrentValue Do
@@ -54,7 +55,7 @@ Procedure Ok(Command)
 
     ReturnStructure = New Structure("StringNumber, List", StringNumber, List);    
 	
-	Notify("ValueListOk", ReturnStructure, ThisForm);
+	Notify(Source, ReturnStructure, ThisForm);
 	
 	Close();
 	
