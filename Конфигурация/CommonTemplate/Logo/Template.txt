@@ -4,7 +4,7 @@
 <style type="text/css">
 	html { height: 100%; overflow: hidden; }
 	body { height: 100%; overflow: hidden; }
-	img { height: auto; width: auto; }
+	img { height: auto; width: 70%; }
 	.fig {
 		margin-top: 10%;
 		text-align: center;
