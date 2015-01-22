@@ -4297,17 +4297,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		</right>
 	</object>
 	<object>
-		<name>Report.VisitsAnalysis</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Constant.bitmobile_РазмерПрикрепляемогоФайла</name>
 		<right>
 			<name>Read</name>
@@ -4382,13 +4371,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		</right>
 		<right>
 			<name>InputByString</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>CommonCommand.ShowVisitsAnalysis</name>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>

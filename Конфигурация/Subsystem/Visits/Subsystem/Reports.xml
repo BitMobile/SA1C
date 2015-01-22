@@ -23,13 +23,13 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitEfficiency</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitResults</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.Encashment</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitsAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">d94bd6a6-0454-4720-9b7d-8e2efe088083</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.VisitsOnMap</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisits</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitEfficiency</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowEncashment</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitResults</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">dfe7bf0d-3e95-4a13-8fa1-097d20bf8541</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsOnMap</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsControl</xr:Item>
 			</Content>

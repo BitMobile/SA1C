@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.5.0.162</Version>
+			<Version>1.5.0.163</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -195,7 +195,6 @@
 			<CommonCommand>ShowVisitEfficiency</CommonCommand>
 			<CommonCommand>ShowEncashment</CommonCommand>
 			<CommonCommand>ShowVisitResults</CommonCommand>
-			<CommonCommand>ShowVisitsAnalysis</CommonCommand>
 			<CommonCommand>ShowVisitsOnMap</CommonCommand>
 			<CommonCommand>ShowOrders</CommonCommand>
 			<CommonCommand>ShowVisitsControl</CommonCommand>
@@ -333,7 +332,6 @@
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>VisitResults</Report>
 			<Report>Visits</Report>
-			<Report>VisitsAnalysis</Report>
 			<Report>VisitsControl</Report>
 			<Report>VisitsOrders</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
