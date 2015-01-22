@@ -33,6 +33,12 @@
 					<v8:content>Заказы без визитов</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>SR</dataPath>
@@ -61,6 +67,12 @@
 					<v8:content>Фактические визиты</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>VisitPlan</dataPath>
@@ -75,6 +87,12 @@
 					<v8:content>Плановые визиты</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>VisitWithOrder</dataPath>
@@ -89,6 +107,12 @@
 					<v8:content>Визиты с заказами</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Unplanned</dataPath>
@@ -103,6 +127,12 @@
 					<v8:content>Незапланированные визиты</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>VisitTotal</dataPath>
@@ -115,6 +145,40 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Итого визитов</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -191,9 +255,23 @@ SELECT ALLOWED
 	SUM(Data.Unplanned) AS Unplanned,
 	SUM(Data.Visit + Data.Unplanned) AS VisitTotal,
 	SUM(Data.VisitWithOrder) AS VisitWithOrder,
-	SUM(Data.JustOrder) AS JustOrder
+	SUM(Data.JustOrder) AS JustOrder,
+	NestedSelect.Ref AS Territory,
+	NestedSelect.Owner AS Region
 FROM
 	Data AS Data
+		LEFT JOIN (SELECT
+			Data.SR AS SR,
+			MAX(TerritorySRs.Ref) AS Ref,
+			MAX(TerritorySRs.Ref.Owner) AS Owner
+		FROM
+			Data AS Data
+				LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
+				ON Data.SR = TerritorySRs.SR
+		
+		GROUP BY
+			Data.SR) AS NestedSelect
+		ON Data.SR = NestedSelect.SR
 {WHERE
 	(Data.SR IN (&amp;SRList)),
 	(Data.Date &gt;= &amp;StartDate),
@@ -201,7 +279,9 @@ FROM
 
 GROUP BY
 	Data.Date,
-	Data.SR</query>
+	Data.SR,
+	NestedSelect.Ref,
+	NestedSelect.Owner</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>VisitRate</dataPath>
@@ -396,6 +476,20 @@ GROUP BY
 					<dcsset:field>OrderRate</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>8a8cdc35-4a42-45a6-af37-cbf8130b066e</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>c22aa276-2f88-47d8-bf01-a4e5a7f31ccd</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
