@@ -51,7 +51,7 @@ EndProcedure
 &AtServer
 Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
-	If Not Object.Role = "Admin" Then 
+	If Not CurrentObject.Role = "Admin" Then 
 	
 		If Not ValueIsFilled(Object.RoleOfUser) Then 
 			
@@ -137,7 +137,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			|	RegionManagers.Manager = &User
 			|	AND NOT RegionManagers.Ref IN (&RGArray)";
 		
-		Query.SetParameter("User", Object.Ref);
+		Query.SetParameter("User", CurrentObject.Ref);
 		Query.SetParameter("RGArray", Regions.Unload().UnloadColumn("Region"));
 		
 		QueryResult = Query.Execute();
@@ -148,7 +148,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 			RGObject = Selection.Region.GetObject();
 			
-			FoundString = RGObject.Managers.Find(Object.Ref);
+			FoundString = RGObject.Managers.Find(CurrentObject.Ref);
 			
 			If Not FoundString = Undefined Then 
 				
@@ -164,12 +164,12 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 			RGObject = Row.Region.GetObject();
 			
-			FoundString = RGObject.Managers.Find(Object.Ref);
+			FoundString = RGObject.Managers.Find(CurrentObject.Ref);
 			
 			If FoundString = Undefined Then 
 				
 				NewRow					= RGObject.Managers.Add();
-				NewRow.Manager			= Object.Ref;
+				NewRow.Manager			= CurrentObject.Ref;
 				NewRow.LineNumberInUser	= Row.LineNumber;
 				
 			Else 
@@ -193,7 +193,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			|	TerritorySRs.SR = &User
 			|	AND NOT TerritorySRs.Ref IN (&TRArray)";
 		
-		Query.SetParameter("User", Object.Ref);
+		Query.SetParameter("User", CurrentObject.Ref);
 		Query.SetParameter("TRArray", Territories.Unload().UnloadColumn("Territory"));
 		
 		QueryResult = Query.Execute();
@@ -220,12 +220,12 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 			TRObject = Row.Territory.GetObject();
 			
-			FoundString = TRObject.SRs.Find(Object.Ref);
+			FoundString = TRObject.SRs.Find(CurrentObject.Ref);
 			
 			If FoundString = Undefined Then 
 				
 				NewRow					= TRObject.SRs.Add();
-				NewRow.SR				= Object.Ref;
+				NewRow.SR				= CurrentObject.Ref;
 				NewRow.LineNumberInUser	= Row.LineNumber;
 				
 			Else 

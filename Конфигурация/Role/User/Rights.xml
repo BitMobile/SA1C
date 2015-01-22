@@ -471,6 +471,17 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.ManagersOfRegions.Dimension.ParentRegion</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.SKUPropertiesValues</name>
 		<right>
 			<name>Read</name>
@@ -741,11 +752,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	AND Orders.SR IN
 			(SELECT
-				Territory.SR
+				TerritorySRs.SR
 			FROM
-				Catalog.Territory AS Territory
+				Catalog.Territory.SRs AS TerritorySRs
 			WHERE
-				Territory.Owner IN
+				TerritorySRs.Ref.Owner IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -1415,11 +1426,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Outlets")
 WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	AND Visit.SR IN
 			(SELECT
-				Territory.SR
+				TerritorySRs.SR
 			FROM
-				Catalog.Territory AS Territory
+				Catalog.Territory.SRs AS TerritorySRs
 			WHERE
-				Territory.Owner IN
+				TerritorySRs.Ref.Owner IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -1653,11 +1664,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	ON MobileAppPlanVisit.Outlet = TerritoryOutlets.Outlet
 WHERE MobileAppPlanVisit.SR IN
 			(SELECT
-				Territory.SR
+				TerritorySRs.SR
 			FROM
-				Catalog.Territory AS Territory
+				Catalog.Territory.SRs AS TerritorySRs
 			WHERE
-				Territory.Owner IN
+				TerritorySRs.Ref.Owner IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -1895,6 +1906,50 @@ WHERE MobileAppPlanVisit.SR IN
 		<right>
 			<name>Update</name>
 			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ManagersOfRegions.StandardAttribute.Active</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ManagersOfRegions.StandardAttribute.LineNumber</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ManagersOfRegions.StandardAttribute.Recorder</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ManagersOfRegions.StandardAttribute.Period</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
 		</right>
 	</object>
 	<object>
@@ -2505,11 +2560,11 @@ WHERE MobileAppPlanVisit.SR IN
 			WHERE
 				Visit.SR IN
 					(SELECT
-						Territory.SR
+						TerritorySRs.SR
 					FROM
-						Catalog.Territory AS Territory
+						Catalog.Territory.SRs AS TerritorySRs
 					WHERE
-						Territory.Owner IN
+						TerritorySRs.Ref.Owner IN
 							(SELECT
 								ManagersOfRegions.Region
 							FROM
@@ -2963,11 +3018,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 				<condition>AssortmentMatrix WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_AssortmentMatrix")
 	AND AssortmentMatrix.Responsible IN
 			(SELECT
-				Region.Manager
+				RegionManagers.Manager
 			FROM
-				Catalog.Region AS Region
+				Catalog.Region.Managers AS RegionManagers
 			WHERE
-				Region.Ref IN
+				RegionManagers.Ref IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -3710,6 +3765,17 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.ManagersOfRegions.Dimension.Region</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>InformationRegister.bitmobile_СоответствиеПеречислений</name>
 		<right>
 			<name>Read</name>
@@ -3761,11 +3827,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 				<condition>VisitPlan WHERE #HaveRightToRead("Catalog.SystemObjects.Document_VisitPlan")
 	AND VisitPlan.Owner IN
 			(SELECT
-				Region.Manager
+				RegionManagers.Manager
 			FROM
-				Catalog.Region AS Region
+				Catalog.Region.Managers AS RegionManagers
 			WHERE
-				Region.Ref IN
+				RegionManagers.Ref IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -3774,11 +3840,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 						ManagersOfRegions.Manager = &amp;CurrentUser))
 	AND VisitPlan.SR IN
 			(SELECT
-				Territory.SR
+				TerritorySRs.SR
 			FROM
-				Catalog.Territory AS Territory
+				Catalog.Territory.SRs AS TerritorySRs
 			WHERE
-				Territory.Owner IN
+				TerritorySRs.Ref.Owner IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -3989,11 +4055,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 				<condition>User WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Users")
 	AND (User.Ref IN
 				(SELECT
-					Territory.SR
+					TerritorySRs.SR
 				FROM
-					Catalog.Territory AS Territory
+					Catalog.Territory.SRs AS TerritorySRs
 				WHERE
-					Territory.Owner IN
+					TerritorySRs.Ref.Owner IN
 						(SELECT
 							ManagersOfRegions.Region
 						FROM
@@ -4002,11 +4068,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 							ManagersOfRegions.Manager = &amp;CurrentUser))
 			OR User.Ref IN
 				(SELECT
-					Region.Manager
+					RegionManagers.Manager
 				FROM
-					Catalog.Region AS Region
+					Catalog.Region.Managers AS RegionManagers
 				WHERE
-					Region.Ref IN
+					RegionManagers.Ref IN
 						(SELECT
 							ManagersOfRegions.Region
 						FROM
@@ -4155,11 +4221,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 				ManagersOfRegions.Manager = &amp;CurrentUser)
 	AND QuestioningResults.SR IN
 			(SELECT
-				Territory.SR
+				TerritorySRs.SR
 			FROM
-				Catalog.Territory AS Territory
+				Catalog.Territory.SRs AS TerritorySRs
 			WHERE
-				Territory.Owner IN
+				TerritorySRs.Ref.Owner IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
@@ -4375,6 +4441,17 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>View</name>
 			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ManagersOfRegions.Dimension.Manager</name>
+		<right>
+			<name>View</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
 		</right>
 	</object>
 	<object>
