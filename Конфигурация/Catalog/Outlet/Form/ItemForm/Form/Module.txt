@@ -1208,6 +1208,8 @@ Procedure PhoneNumberTextEditEnd(Item, Text, ChoiceData, Parameters, StandardPro
 			
 			TempPhoneNumber = PhoneTest;
 			
+			Object.PhoneNumber = PhoneTest;
+			
 		EndIf;
 		
 	EndIf;
@@ -1243,6 +1245,8 @@ Procedure EmailTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessin
 		Else 
 			
 			TempEmail = EmailTest;
+			
+			Object.Email = EmailTest;
 			
 		EndIf;
 		
