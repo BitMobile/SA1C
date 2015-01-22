@@ -125,7 +125,9 @@ EndProcedure
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then 
-	
+		
+		SetPrivilegedMode(True);
+		
 		// Записать пользователя в регионы
 		Query = New Query;
 		Query.Text = 

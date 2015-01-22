@@ -1,6 +1,8 @@
 ﻿
 Procedure OnWrite(Cancel)
 	
+	SetPrivilegedMode(True);
+	
 	RecordSet = InformationRegisters.ManagersOfRegions.CreateRecordSet();
 	RecordSet.Filter.ParentRegion.Value = Ref;
 	RecordSet.Filter.ParentRegion.Use = True;

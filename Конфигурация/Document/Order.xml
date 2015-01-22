@@ -217,7 +217,7 @@
 				</v8:item>
 			</ExtendedListPresentation>
 			<Explanation/>
-			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+			<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 		</Properties>
 		<ChildObjects>
 			<Attribute uuid="5acd7e09-b11e-45d1-aad4-6b9b9bfd6e62">
