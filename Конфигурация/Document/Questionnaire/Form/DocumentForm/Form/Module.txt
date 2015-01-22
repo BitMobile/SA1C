@@ -1331,13 +1331,13 @@ Function FillSelectors()
 	Source = Object.Selectors.Unload();
 	
 	SelectorTable = Source.Copy();
-	SelectorTable.GroupBy("Selector, ComparisonType");
+	SelectorTable.GroupBy("Selector, ComparisonType, AdditionalParameter");
 	
 	For Each SelectorElsement In SelectorTable Do 
 		
 		If SelectorElsement.ComparisonType = Enums.ComparisonType.InList Then 
 			
-			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
+			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType, AdditionalParameter", SelectorElsement.Selector, SelectorElsement.ComparisonType, SelectorElsement.AdditionalParameter));
 					
 			ListOfValues = New ValueList;
 			
@@ -1354,7 +1354,7 @@ Function FillSelectors()
 			
 		Else 
 			
-			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType", SelectorElsement.Selector, SelectorElsement.ComparisonType));
+			FoundedStrings = Source.FindRows(New Structure("Selector, ComparisonType, AdditionalParameter", SelectorElsement.Selector, SelectorElsement.ComparisonType, SelectorElsement.AdditionalParameter));
 			
 			For Each FoundedString In FoundedStrings Do
 				
@@ -1945,8 +1945,14 @@ EndProcedure
 Procedure SelectorsSelectorChoiseProcessing(Result, AdditionalParameter) Export 
 	
 	If Not Result = Undefined Then
-	
+		
 		Row = Selectors.FindByID(Items.SelectorsTable.CurrentRow);
+		
+		If Not Row.SelectorRepresent = Result Then 
+			
+			Row.Value = Undefined;
+			
+		EndIf;
 		
 		Row.SelectorRepresent = Result;
 		
