@@ -603,6 +603,13 @@
 												<Parameter xsi:nil="true"/>
 												<ExtendedTooltip name="UpdateParametersExtendedTooltip" id="265"/>
 											</Button>
+											<Button name="ClearValue" id="273">
+												<Type>CommandBarButton</Type>
+												<Representation>Picture</Representation>
+												<CommandName>Form.Command.ClearValue</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="ClearValueExtendedTooltip" id="274"/>
+											</Button>
 										</ChildItems>
 									</AutoCommandBar>
 									<ExtendedTooltip name="ParametersExtendedTooltip" id="239"/>
@@ -698,58 +705,6 @@
 										<Event name="Click">PictureAddressClick</Event>
 									</Events>
 								</PictureField>
-								<UsualGroup name="GroupPreviewButtons" id="269">
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group preview buttons</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group preview buttons</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupPreviewButtonsExtendedTooltip" id="270"/>
-									<ChildItems>
-										<Button name="EditPicture" id="271">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.EditPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Change</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="EditPictureExtendedTooltip" id="272"/>
-										</Button>
-										<Button name="OpenPicture" id="126">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.OpenPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Magnifier</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="170"/>
-										</Button>
-										<Button name="DeletePicture" id="273">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.DeletePicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Delete</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="DeletePictureExtendedTooltip" id="274"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
 					</ChildItems>
@@ -783,13 +738,13 @@
 							<ContextMenu name="SnapshotsContextMenu" id="278"/>
 							<AutoCommandBar name="SnapshotsCommandBar" id="279">
 								<ChildItems>
-									<Button name="SnapshotsDelete" id="327">
+									<Button name="DeleteSnapshots" id="327">
 										<Type>CommandBarButton</Type>
 										<Representation>Picture</Representation>
 										<OnlyInAllActions>true</OnlyInAllActions>
 										<CommandName>Form.Item.Snapshots.StandardCommand.Delete</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="SnapshotsDeleteExtendedTooltip" id="328"/>
+										<ExtendedTooltip name="DeleteSnapshotsExtendedTooltip" id="328"/>
 									</Button>
 								</ChildItems>
 							</AutoCommandBar>
@@ -822,6 +777,7 @@
 								<Event name="Selection">SnapshotsSelection</Event>
 								<Event name="OnActivateRow">SnapshotsOnActivateRow</Event>
 								<Event name="OnStartEdit">SnapshotsOnStartEdit</Event>
+								<Event name="AfterDeleteRow">SnapshotsAfterDeleteRow</Event>
 							</Events>
 							<ChildItems>
 								<InputField name="SnapshotsPresentation" id="310">
@@ -863,11 +819,11 @@
 									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Add picture</v8:content>
+											<v8:content>No picture</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Добавить изображение</v8:content>
+											<v8:content>Нет изображения</v8:content>
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
@@ -878,58 +834,6 @@
 										<Event name="Click">OutletSnapshotAddressClick</Event>
 									</Events>
 								</PictureField>
-								<UsualGroup name="GroupOutletSnapshotButtons" id="313">
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group outlet snapshot buttons</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group outlet snapshot buttons</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupOutletSnapshotButtonsExtendedTooltip" id="314"/>
-									<ChildItems>
-										<Button name="EditOutletSnapshot" id="315">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.EditPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Change</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="EditOutletSnapshotExtendedTooltip" id="316"/>
-										</Button>
-										<Button name="OpenOutletSnapshot" id="319">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.OpenPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Magnifier</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="OpenOutletSnapshotExtendedTooltip" id="320"/>
-										</Button>
-										<Button name="DeleteOutletSnapshot" id="317">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.DeletePicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Delete</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<ExtendedTooltip name="DeleteOutletSnapshotExtendedTooltip" id="318"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
 					</ChildItems>
@@ -1748,29 +1652,6 @@
 		</ConditionalAppearance>
 	</Attributes>
 	<Commands>
-		<Command name="OpenPicture" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть файл</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть файл</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>OpenPicture</Action>
-		</Command>
 		<Command name="UpdateParameters" id="2">
 			<Title>
 				<v8:item>
@@ -1790,35 +1671,32 @@
 			</ToolTip>
 			<Action>UpdateParameters</Action>
 		</Command>
-		<Command name="EditPicture" id="3">
+		<Command name="ClearValue" id="4">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Edit picture</v8:content>
+					<v8:content>Clear value</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить значение</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Edit picture</v8:content>
+					<v8:content>Clear value</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить значение</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Action>EditPicture</Action>
-		</Command>
-		<Command name="DeletePicture" id="4">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Delete picture</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Delete picture</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>DeletePicture</Action>
+			<Picture>
+				<xr:Ref>StdPicture.Clear</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ClearValue</Action>
 		</Command>
 	</Commands>
 	<Parameters>

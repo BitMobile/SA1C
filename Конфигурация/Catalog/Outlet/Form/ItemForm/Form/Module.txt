@@ -50,9 +50,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		HaveEditParametersRight = False;
 		
 		Items.Snapshots.ReadOnly = True;
-		
-		Items.GroupPreviewButtons.Enabled			= False;
-		Items.GroupOutletSnapshotButtons.Enabled	= False;
+		Items.ClearValue.Enabled = False;
 		
 	Else 
 		
@@ -637,6 +635,8 @@ Procedure AfterWrite(WriteParameters)
 	
 	WriteTerritory();
 	
+	ProcessParameters();
+	
 EndProcedure
 
 &AtClient
@@ -715,12 +715,6 @@ Procedure ParametersOnActivateRow(Item)
 	Items.PictureAddress.NonselectedPictureText = ?(IsPicture, 
 		NStr("en = 'Add picture'; ru = 'Добавить изображение'"),
 		NStr("en = 'No picture'; ru = 'Нет изображения'"));
-		
-	If HaveEditParametersRight Then 
-		
-		Items.GroupPreviewButtons.Enabled = IsPicture;
-		
-	EndIf;
 	
 EndProcedure
 
@@ -853,93 +847,36 @@ EndFunction
 #Region ParametersPictures
 
 &AtClient
-Procedure OpenPicture(Command)
+Procedure ClearValue(Command)
 	
-	FileName = Undefined;
-	
-	If Items.Pages.CurrentPage = Items.GroupParameters Then
+	CurrentData = Items.Parameters.CurrentData;
 		
-		CurrentData = Items.Parameters.CurrentData;
-		FileNameColumnName = "Value";
-		
-	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
-		
-		CurrentData = Items.Snapshots.CurrentData;
-		FileNameColumnName = "FileName";
-		
-	EndIf;
-	
-	If Not CurrentData = Undefined Then
-		
-		If ValueIsFilled(CurrentData[FileNameColumnName]) Then
-			
-			FileName = String(CurrentData[FileNameColumnName]) + String(CurrentData.Extension);
-			
-		EndIf;
-		
-	EndIf;
-	
-	If ValueIsFilled(FileName) Then
-		
-		GetFile(CurrentData.StorageAddress, FileName, True);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure EditPicture(Command)
-	
-	If Items.Pages.CurrentPage = Items.GroupParameters Then
-		
-		OpenPickPictureFromForm("Parameters", "PictureAddress", "PictureExtension", GetParametersAliases());
-		
-	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
-		
-		OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension");
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure DeletePicture(Command)
-	
-	If Items.Pages.CurrentPage = Items.GroupParameters Then
-	
-		CurrentData = Items.Parameters.CurrentData;
-		ValueTableName = "Parameters";
-		FileNameColumnName = "Value";
-		PictureAttributeName = "PictureAddress";
-		ExtensionAttributeName = "PictureExtension";
-		
-	ElsIf Items.Pages.CurrentPage = Items.GroupOutletSnapshots Then
-		
-		CurrentData = Items.Snapshots.CurrentData;
-		ValueTableName = "Snapshots";
-		FileNameColumnName = "FileName";
-		PictureAttributeName = "OutletSnapshotAddress";
-		ExtensionAttributeName = "OutletSnapshotExtension";
-		
-	EndIf;
-	
 	If Not CurrentData = Undefined Then
 			
 		CurrentRowId = CurrentData.GetID();
 		
-		ObjectRow = Object[ValueTableName].FindByID(CurrentRowId);
+		ObjectRow = Object.Parameters.FindByID(CurrentRowId);
 		
-		ObjectRow[FileNameColumnName] = Undefined;
-		ObjectRow.StorageAddress = Undefined;
-		ObjectRow.Extension = Undefined;
-		ObjectRow.Type = "NoSnapshot";
-		
-		ThisForm[PictureAttributeName] = "";
-		ThisForm[ExtensionAttributeName] = "";
+		If CurrentData.IsPicture Then 
+			
+			ObjectRow.Value = Undefined;
+			ObjectRow.StorageAddress = Undefined;
+			ObjectRow.Extension = Undefined;
+			ObjectRow.Type = "NoSnapshot";
+			
+			ThisForm.PictureAddress = "";
+			ThisForm.PictureExtension = "";
+			
+		Else 
+			
+			ObjectRow.Value = Undefined;
+			ObjectRow.Presentation = ObjectRow.Value;
+			
+		EndIf;
 		
 		Modified = True;
 		
-	EndIf;	
+	EndIf;
 	
 EndProcedure
 
@@ -1073,6 +1010,18 @@ Procedure SnapshotsOnActivateRow(Item)
 	
 		ThisForm.OutletSnapshotAddress = Item.CurrentData.StorageAddress;
 		ThisForm.OutletSnapshotExtension = Item.CurrentData.Extension;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SnapshotsAfterDeleteRow(Item)
+	
+	If Item.CurrentData = Undefined Then
+		
+		ThisForm.OutletSnapshotAddress = Undefined;
+		ThisForm.OutletSnapshotExtension = Undefined;
 		
 	EndIf;
 	
