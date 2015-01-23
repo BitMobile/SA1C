@@ -177,8 +177,24 @@ Procedure ProcessPredefinedRoles()
 		"SELECT
 		|	SystemObjects.Ref AS SystemObject,
 		|	TRUE AS Read,
-		|	TRUE AS Edit,
-		|	TRUE AS MarkForDeletion
+		|	CASE
+		|		WHEN SystemObjects.Ref.Parent.Description = ""en = 'Reports'; ru = 'Отчеты'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Reports'; ru = 'Отчеты'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Encashment'; ru = 'Инкассация'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Visit'; ru = 'Визит'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Roles of users'; ru = 'Роли пользователей'""
+		|			THEN FALSE
+		|		ELSE TRUE
+		|	END AS Edit,
+		|	CASE
+		|		WHEN SystemObjects.Ref.Parent.Description = ""en = 'Reports'; ru = 'Отчеты'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Reports'; ru = 'Отчеты'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Encashment'; ru = 'Инкассация'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Visit'; ru = 'Визит'""
+		|				OR SystemObjects.Ref.Description = ""en = 'Roles of users'; ru = 'Роли пользователей'""
+		|			THEN FALSE
+		|		ELSE TRUE
+		|	END AS MarkForDeletion
 		|FROM
 		|	Catalog.SystemObjects AS SystemObjects
 		|WHERE

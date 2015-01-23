@@ -1,59 +1,87 @@
 ﻿
-&AtClient
-Procedure OnOpen(Cancel)
-    
-    OnOpenServer();
+#Region CommonProcedureAndFunctions
 
-EndProcedure
-
+&AtServer
 Procedure OnOpenServer()
 
-	If IsInRole("Admin") = False Then
-        ThisForm.Items.Visit.ReadOnly = True;
-        ThisForm.Items.Outlet.ReadOnly = True;
-        ThisForm.Items.SR.ReadOnly = True;
-        ThisForm.Items.SKUs.ChangeRowSet=False;
-    EndIf;    
+	If Not IsInRole("Admin") Then
+		
+		Items.Number.ReadOnly		= True;
+		Items.Date.ReadOnly			= True;
+		Items.Outlet.ReadOnly		= True;
+		Items.SR.ReadOnly			= True;
+		Items.Visit.ReadOnly		= True;
+		Items.PriceList.ReadOnly	= True;
+		Items.Stock.ReadOnly		= True;
+		Items.Lattitude.ReadOnly	= True;
+		Items.Longitude.ReadOnly	= True;
+		Items.Commentary.ReadOnly	= True;
+		Items.SKUs.ReadOnly			= True;
+		
+	EndIf;
 
-EndProcedure
-
-&AtClient
-Procedure SKUsSKUOnChange(Item)
-	Str = Items.SKUs.CurrentData;
-	Str.Price = GetSKUPrice(Str.SKU);	
-	GetAmount();
 EndProcedure
 
 &AtServer
 Function GetSKUPrice(SKU)
-	Return SKU.Price;	
+	
+	Return SKU.Price;
+	
 EndFunction
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure OnOpen(Cancel)
+	
+	OnOpenServer();
+	
+EndProcedure
 
 &AtClient
 Procedure GetAmount()
-	Str = Items.SKUs.CurrentData;
-	Str.Total = Str.Price*(Str.Discount/100+1);
-    Str.Amount = Str.Total*Str.Qty;
+	
+	Str			= Items.SKUs.CurrentData;
+	Str.Total	= Str.Price * (Str.Discount/100+1);
+	Str.Amount	= Str.Total * Str.Qty;
+	
+EndProcedure
+
+&AtClient
+Procedure SKUsSKUOnChange(Item)
+	
+	GetAmount();
+	
 EndProcedure
 
 &AtClient
 Procedure SKUsQtyOnChange(Item)
+	
 	GetAmount();
+	
 EndProcedure
 
 &AtClient
 Procedure SKUsPriceOnChange(Item)
+	
 	GetAmount();
+	
 EndProcedure
 
 &AtClient
 Procedure SKUsDiscountOnChange(Item)
-    GetAmount();
+	
+	GetAmount();
+	
 EndProcedure
 
 &AtClient
 Procedure SKUsTotalOnChange(Item)
-    GetAmount();
+
+	GetAmount();
+	
 EndProcedure
 
-
+#EndRegion

@@ -18,6 +18,9 @@ Function GetRightsValueTree() Export
 	|	CASE
 	|		WHEN SystemObjects.Ref.Parent.Description = ""en = 'Reports'; ru = 'Отчеты'""
 	|				OR SystemObjects.Ref.Description = ""en = 'Reports'; ru = 'Отчеты'""
+	|				OR SystemObjects.Ref.Description = ""en = 'Encashment'; ru = 'Инкассация'""
+	|				OR SystemObjects.Ref.Description = ""en = 'Visit'; ru = 'Визит'""
+	|				OR SystemObjects.Ref.Description = ""en = 'Roles of users'; ru = 'Роли пользователей'""
 	|			THEN TRUE
 	|		ELSE FALSE
 	|	END AS ItsReport,

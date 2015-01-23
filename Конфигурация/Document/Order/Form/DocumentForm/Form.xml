@@ -63,7 +63,6 @@
 							<ChildItems>
 								<InputField name="Number" id="1">
 									<DataPath>Object.Number</DataPath>
-									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="NumberContextMenu" id="2"/>
 									<ExtendedTooltip name="NumberРасширеннаяПодсказка" id="51"/>
@@ -101,13 +100,11 @@
 						</InputField>
 						<InputField name="PriceList" id="44">
 							<DataPath>Object.PriceList</DataPath>
-							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="PriceListContextMenu" id="45"/>
 							<ExtendedTooltip name="PriceListРасширеннаяПодсказка" id="58"/>
 						</InputField>
 						<InputField name="Stock" id="48">
 							<DataPath>Object.Stock</DataPath>
-							<ReadOnly>true</ReadOnly>
 							<ContextMenu name="StockContextMenu" id="49"/>
 							<ExtendedTooltip name="StockРасширеннаяПодсказка" id="59"/>
 						</InputField>
@@ -222,7 +219,6 @@
 								</LabelField>
 								<InputField name="SKUsSKU" id="20">
 									<DataPath>Object.SKUs.SKU</DataPath>
-									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<HorizontalStretch>true</HorizontalStretch>
 									<ContextMenu name="SKUsSKUContextMenu" id="21"/>
@@ -233,7 +229,6 @@
 								</InputField>
 								<InputField name="SKUsFeature" id="46">
 									<DataPath>Object.SKUs.Feature</DataPath>
-									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="SKUsFeatureContextMenu" id="47"/>
 									<ExtendedTooltip name="SKUsFeatureРасширеннаяПодсказка" id="72"/>
@@ -257,7 +252,6 @@
 								</InputField>
 								<InputField name="SKUsSelectedUnit" id="37">
 									<DataPath>Object.SKUs.Units</DataPath>
-									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
 									<HorizontalStretch>false</HorizontalStretch>
