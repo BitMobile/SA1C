@@ -57,7 +57,7 @@ Function GetOtherRightsTable(CatalogName) Export
 	
 	If ValueIsFilled(CatalogName) Then 
 		
-		RightsSelection = Catalogs[CatalogName].Select();
+		RightsSelection = Catalogs[CatalogName].Select( , , , "Code Asc");
 		
 		While RightsSelection.Next() Do 
 			
