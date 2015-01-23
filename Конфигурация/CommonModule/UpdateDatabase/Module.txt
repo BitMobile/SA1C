@@ -209,6 +209,9 @@ Procedure ProcessPredefinedRoles()
 	InsMobileRights.AccessRight	= Catalogs.MobileAppAccessRights.AccessToMobileApp;
 	
 	InsMobileRights				= SRRole.MobileAppAccessRights.Add();
+	InsMobileRights.AccessRight	= Catalogs.MobileAppAccessRights.AccessToEncashment;
+	
+	InsMobileRights				= SRRole.MobileAppAccessRights.Add();
 	InsMobileRights.AccessRight	= Catalogs.MobileAppAccessRights.EditParametersInOutlet;
 	
 	SRRole.Write();
