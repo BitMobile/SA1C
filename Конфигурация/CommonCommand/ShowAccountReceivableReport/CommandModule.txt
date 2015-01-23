@@ -1,0 +1,22 @@
+﻿
+&AtClient
+Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
+
+	OpenForm("Report.AccountReceivable.Form", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
+
+EndProcedure
+
+&AtServer
+Function HaveRightToRead()
+	
+	If IsInRole("Admin") Then 
+		
+		Return True;
+		
+	Else 
+		
+		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_AccountReceivable);
+		
+	EndIf;
+	
+EndFunction

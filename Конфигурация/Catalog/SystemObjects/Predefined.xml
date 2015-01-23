@@ -412,6 +412,12 @@
 				<Description>en = 'Reports'; ru = 'Отчеты'</Description>
 				<IsFolder>true</IsFolder>
 				<ChildItems>
+					<Item id="910159b4-f805-466a-93db-23e2e7c2bbda">
+						<Name>Report_AccountReceivable</Name>
+						<Code>000000205</Code>
+						<Description>en = 'Account receivable'; ru = 'Дебиторская задолженность'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="f0fe6e31-5dc2-4226-af8c-1f8613a2c6f8">
 						<Name>Report_VisitsAnalysis</Name>
 						<Code>000000184</Code>

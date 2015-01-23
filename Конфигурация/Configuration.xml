@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.5.0.169</Version>
+			<Version>1.5.0.170</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -203,6 +203,7 @@
 			<CommonCommand>ShowPriceMonitoring</CommonCommand>
 			<CommonCommand>ShowShelfSpaceShare</CommonCommand>
 			<CommonCommand>ShowPromoActionsReport</CommonCommand>
+			<CommonCommand>ShowAccountReceivableReport</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
@@ -334,6 +335,7 @@
 			<Report>Visits</Report>
 			<Report>VisitsControl</Report>
 			<Report>VisitsOrders</Report>
+			<Report>AccountReceivable</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
