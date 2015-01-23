@@ -222,6 +222,7 @@
 								</LabelField>
 								<InputField name="SKUsSKU" id="20">
 									<DataPath>Object.SKUs.SKU</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<HorizontalStretch>true</HorizontalStretch>
 									<ContextMenu name="SKUsSKUContextMenu" id="21"/>
@@ -232,6 +233,7 @@
 								</InputField>
 								<InputField name="SKUsFeature" id="46">
 									<DataPath>Object.SKUs.Feature</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="SKUsFeatureContextMenu" id="47"/>
 									<ExtendedTooltip name="SKUsFeatureРасширеннаяПодсказка" id="72"/>
@@ -255,6 +257,7 @@
 								</InputField>
 								<InputField name="SKUsSelectedUnit" id="37">
 									<DataPath>Object.SKUs.Units</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
 									<HorizontalStretch>false</HorizontalStretch>
