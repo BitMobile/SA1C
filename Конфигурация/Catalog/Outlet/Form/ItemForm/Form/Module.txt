@@ -834,27 +834,6 @@ Procedure AddNewParameters(ParametersArray)
 		
 	EndDo;
 	
-	MustShowMessage = ValueIsFilled(Object.Ref) AND ParametersArray.Count() > 0;
-	
-	If MustShowMessage Then
-		
-		ShowMessageBox( , 
-			NStr("en = 'In ""Parameters"" value table of this outlet were added elements of catalog ""Outlet parameters"" that were not present in value table. You must write outlet in order to save changes.'; 
-				|ru = 'В табличную часть ""Параметры"" данной торговой точки были добавлены элементы справочника ""Параметры торговой точки"". Необходимо записать данную точку для сохранения изменений.'"),
-			0,
-			NStr("en = 'Parameters updated'; ru = 'Параметры обновлены'"));
-		
-		
-		For Each Parameter In ParametersArray Do
-			
-			Message(Parameter);
-			
-		EndDo;
-		
-		Modified = True;
-		
-	EndIf;
-	
 EndProcedure
 
 &AtClient

@@ -3,6 +3,25 @@ Procedure BeforeWrite(Cancel)
 	
 	ThisObject.AdditionalProperties.Insert("OldStatus", ThisObject.Ref.OutletStatus);
 	
+	// Очистить табличную часть параметров от незаполненных
+	DeletedRowArray = New Array;
+	
+	For Each StrParameter In Parameters Do 
+		
+		If Not ValueIsFilled(StrParameter.Value) Then
+			
+			DeletedRowArray.Add(StrParameter);
+			
+		EndIf;
+		
+	EndDo;
+	
+	For Each DeletedRow In DeletedRowArray Do 
+		
+		Parameters.Delete(DeletedRow);
+		
+	EndDo;
+	
 EndProcedure
 
 Procedure OnWrite(Cancel)
