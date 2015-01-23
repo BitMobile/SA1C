@@ -7,20 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>DataSet1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>AmountLeft</dataPath>
-			<field>AmountLeft</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Amount left</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Остаток</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>DocumentName</dataPath>
 			<field>DocumentName</field>
 			<title xsi:type="v8:LocalStringType">
@@ -35,34 +21,6 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>EncashmentAmount</dataPath>
-			<field>EncashmentAmount</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Encashment amount</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Сумма инкассации</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>OrderAmount</dataPath>
-			<field>OrderAmount</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Order amount</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Сумма заказов</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Outlet</dataPath>
 			<field>Outlet</field>
 			<title xsi:type="v8:LocalStringType">
@@ -73,20 +31,6 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Торговая точка</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>ReceivableAmount</dataPath>
-			<field>ReceivableAmount</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Receivable amount</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Задолженность</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -118,148 +62,29 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>EncashmentSum</dataPath>
+			<field>EncashmentSum</field>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT
-	EncashmentEncashmentDocuments.Ref.Visit.SR AS SR,
-	AccountReceivableReceivableDocuments.Ref.Outlet,
-	EncashmentEncashmentDocuments.Ref.Visit.Outlet.ReceivableLimit AS ReceivableLimit,
-	AccountReceivableReceivableDocuments.DocumentName,
-	AccountReceivableReceivableDocuments.DocumentSum AS ReceivableSum,
-	EncashmentEncashmentDocuments.EncashmentSum,
-	AccountReceivableReceivableDocuments.DocumentSum - EncashmentEncashmentDocuments.EncashmentSum AS SumLeft
-INTO EncRec
+	Encashment.Visit.SR AS SR,
+	Encashment.Visit.Outlet AS Outlet,
+	Encashment.Visit.Outlet.ReceivableLimit AS ReceivableLimit,
+	EncashmentEncashmentDocuments.DocumentName,
+	EncashmentEncashmentDocuments.EncashmentSum
 FROM
 	Document.Encashment.EncashmentDocuments AS EncashmentEncashmentDocuments
-		FULL JOIN Document.AccountReceivable.ReceivableDocuments AS AccountReceivableReceivableDocuments
-		ON EncashmentEncashmentDocuments.DocumentName = AccountReceivableReceivableDocuments.DocumentName
+		LEFT JOIN Document.Encashment AS Encashment
+		ON EncashmentEncashmentDocuments.Ref = Encashment.Ref
 {WHERE
-	(EncashmentEncashmentDocuments.Ref.Date &gt;= &amp;StartDate
-			AND AccountReceivableReceivableDocuments.Ref.Date &gt;= &amp;StartDate),
-	(EncashmentEncashmentDocuments.Ref.Date &lt;= &amp;EndDate
-			AND AccountReceivableReceivableDocuments.Ref.Date &lt;= &amp;EndDate)}
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	SUM(OrderSKUs.Amount) AS OrderAmount,
-	OrderSKUs.Ref.Outlet,
-	OrderSKUs.Ref.SR
-INTO Orders
-FROM
-	Document.Order.SKUs AS OrderSKUs
-{WHERE
-	(OrderSKUs.Ref.Date &gt;= &amp;StartDate),
-	(OrderSKUs.Ref.Date &lt;= &amp;EndDate)}
-
-GROUP BY
-	OrderSKUs.Ref.Outlet,
-	OrderSKUs.Ref.SR
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	Orders.SR AS SR1,
-	CASE
-		WHEN Orders.Outlet IS NULL 
-			THEN EncRec.Outlet
-		ELSE Orders.Outlet
-	END AS Outlet1,
-	EncRec.ReceivableLimit,
-	Orders.OrderAmount,
-	EncRec.DocumentName,
-	EncRec.ReceivableSum,
-	EncRec.EncashmentSum,
-	EncRec.SumLeft,
-	CASE
-		WHEN Orders.OrderAmount = 0
-				AND EncRec.ReceivableSum IS NULL 
-				AND EncRec.EncashmentSum IS NULL 
-			THEN 1
-		ELSE CASE
-				WHEN Orders.SR IS NULL 
-					THEN 0
-				ELSE Orders.SR
-			END
-	END AS Field1
-INTO Fin
-FROM
-	EncRec AS EncRec
-		FULL JOIN Orders AS Orders
-		ON EncRec.Outlet = Orders.Outlet
-			AND EncRec.SR = Orders.SR
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	Fin.SR1 AS SR,
-	Fin.Outlet1 AS Outlet,
-	Fin.ReceivableLimit,
-	Fin.OrderAmount,
-	Fin.DocumentName,
-	Fin.ReceivableSum AS ReceivableAmount,
-	Fin.EncashmentSum AS EncashmentAmount,
-	Fin.SumLeft AS AmountLeft
-FROM
-	Fin AS Fin
-WHERE
-	Fin.Field1 &lt;&gt; 1</query>
+	(Encashment.Date &gt;= &amp;BeginDate),
+	(Encashment.Date &lt;= &amp;EndDate)}</query>
 	</dataSet>
 	<totalField>
-		<dataPath>ReceivableAmount</dataPath>
-		<expression>Sum(ReceivableAmount)</expression>
+		<dataPath>EncashmentSum</dataPath>
+		<expression>Sum(EncashmentSum)</expression>
 	</totalField>
-	<totalField>
-		<dataPath>EncashmentAmount</dataPath>
-		<expression>Sum(EncashmentAmount)</expression>
-	</totalField>
-	<totalField>
-		<dataPath>AmountLeft</dataPath>
-		<expression>Sum(AmountLeft)</expression>
-	</totalField>
-	<parameter>
-		<name>EndDate</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>End date</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Конечная дата</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period.EndDate</expression>
-	</parameter>
-	<parameter>
-		<name>StartDate</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Start date</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Начальная дата</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period.StartDate</expression>
-	</parameter>
 	<parameter>
 		<name>Period</name>
 		<title xsi:type="v8:LocalStringType">
@@ -282,6 +107,42 @@ WHERE
 		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
+	<parameter>
+		<name>BeginDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Begin date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.EndDate</expression>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Default</dcsset:presentation>
@@ -294,22 +155,10 @@ WHERE
 					<dcsset:field>Outlet</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ReceivableLimit</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>OrderAmount</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>DocumentName</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ReceivableAmount</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>EncashmentAmount</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>AmountLeft</dcsset:field>
+					<dcsset:field>EncashmentSum</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
@@ -328,31 +177,15 @@ WHERE
 					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>c85fe23d-171e-40e2-b995-272dbd4a99ef</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Торговы представитель</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>EndDate</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
-					<dcsset:userSettingID>c8e0a81a-f9cd-4f95-91f8-092e16b068ca</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>StartDate</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
-					<dcsset:userSettingID>f7cc7fcc-d55b-48e0-bc98-4492cdb22ba7</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">ThisWeek</v8:variant>
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>6ab2c372-ddc5-472c-b3d6-fbaa93c959b3</dcsset:userSettingID>
 				</dcscor:item>
@@ -390,13 +223,6 @@ WHERE
 						</dcsset:item>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
 							<dcsset:field>ReceivableLimit</dcsset:field>
-							<dcsset:groupType>Items</dcsset:groupType>
-							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
-							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
-							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>OrderAmount</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
