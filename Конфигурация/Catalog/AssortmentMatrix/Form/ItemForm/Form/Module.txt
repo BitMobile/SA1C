@@ -37,8 +37,6 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	ChangeOutletsSelectQuery();
 	
-	GetOutletsArrayFromDynamicList();
-	
 	FillOutletsSelectFilters();
 	
 EndProcedure

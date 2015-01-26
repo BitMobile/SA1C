@@ -1319,6 +1319,8 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Outlets")
 			<restrictionByCondition>
 				<field>Ref</field>
 				<field>Description</field>
+				<field>Class</field>
+				<field>Type</field>
 				<condition>WHERE TRUE</condition>
 			</restrictionByCondition>
 		</right>
