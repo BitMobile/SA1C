@@ -1,0 +1,37 @@
+﻿
+&AtClient
+Procedure Compose(Command)
+	
+	PeriodParameter = Report.SettingsComposer.Settings.DataParameters.FindParameterValue(New DataCompositionParameter("Period1"));
+	UserSettingsPeriodParameter = Report.SettingsComposer.UserSettings.Items.Find(PeriodParameter.UserSettingID);
+	
+	If UserSettingsPeriodParameter.Use = True Then
+		
+		Variant = CurrentVariantKey;
+		Period = UserSettingsPeriodParameter.Value;
+		
+		If Variant = "Month" Then
+			
+			Period.StartDate = BegOfMonth(Period.StartDate);
+			Period.EndDate = EndOfMonth(Period.EndDate);
+			UserSettingsPeriodParameter.Value = Period;
+			
+		ElsIf Variant = "Month2" Then
+			
+			Period.StartDate = BegOfMonth(?(Month(Period.StartDate) % 2 = 0, AddMonth(Period.StartDate, -1), Period.StartDate));
+			Period.EndDate = EndOfMonth(?(Month(Period.EndDate) % 2 = 0, Period.EndDate, AddMonth(Period.EndDate, 1)));
+			UserSettingsPeriodParameter.Value = Period;
+			
+		ElsIf Variant = "Quarter" Then
+			
+			Period.StartDate = BegOfQuarter(Period.StartDate);
+			Period.EndDate = EndOfQuarter(Period.EndDate);
+			UserSettingsPeriodParameter.Value = Period;
+			
+		EndIf;
+		
+	EndIf;
+	
+	ComposeResult(ResultCompositionMode.Auto);
+	
+EndProcedure

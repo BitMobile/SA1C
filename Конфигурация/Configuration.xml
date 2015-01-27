@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.5.0.174</Version>
+			<Version>1.5.0.175</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -204,6 +204,7 @@
 			<CommonCommand>ShowShelfSpaceShare</CommonCommand>
 			<CommonCommand>ShowPromoActionsReport</CommonCommand>
 			<CommonCommand>ShowAccountReceivableReport</CommonCommand>
+			<CommonCommand>ShowPlanFactSKUStockReport</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
