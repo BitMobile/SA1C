@@ -230,17 +230,11 @@
 							<DataPath>Object.PhoneNumber</DataPath>
 							<ContextMenu name="PhoneNumberContextMenu" id="102"/>
 							<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="185"/>
-							<Events>
-								<Event name="TextEditEnd">PhoneNumberTextEditEnd</Event>
-							</Events>
 						</InputField>
 						<InputField name="Email" id="103">
 							<DataPath>Object.Email</DataPath>
 							<ContextMenu name="EmailContextMenu" id="104"/>
 							<ExtendedTooltip name="EmailExtendedTooltip" id="186"/>
-							<Events>
-								<Event name="TextEditEnd">EmailTextEditEnd</Event>
-							</Events>
 						</InputField>
 						<InputField name="WebSite" id="105">
 							<DataPath>Object.WebSite</DataPath>
@@ -315,9 +309,6 @@
 								<ContextMenu name="ContactsSearchControlContextMenu" id="230"/>
 								<ExtendedTooltip name="ContactsSearchControlExtendedTooltip" id="231"/>
 							</SearchControlAddition>
-							<Events>
-								<Event name="BeforeEditEnd">ContactsBeforeEditEnd</Event>
-							</Events>
 							<ChildItems>
 								<LabelField name="ContactsLineNumber" id="111">
 									<DataPath>Object.Contacts.LineNumber</DataPath>
@@ -1092,36 +1083,6 @@
 			</Title>
 			<Type>
 				<v8:Type>xs:boolean</v8:Type>
-			</Type>
-		</Attribute>
-		<Attribute name="TempPhoneNumber" id="8">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Temp phone number</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
-		</Attribute>
-		<Attribute name="TempEmail" id="9">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Temp email</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
 		<ConditionalAppearance>

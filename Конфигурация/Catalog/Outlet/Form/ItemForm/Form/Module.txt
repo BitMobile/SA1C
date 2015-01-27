@@ -356,8 +356,12 @@ Procedure FillParametersAdditionalInformation()
 		// Если тип данных параметра текущей строки - фотоснимок
 		If IsPicture(Row.Parameter) Then
 			
-			FillPictureInformation(FileTable, Row, "Value");
-			Row.IsPicture = True;
+			If Not ValueIsFilled(Row.StorageAddress) And Not Row.IsPicture Then 
+			
+				FillPictureInformation(FileTable, Row, "Value");
+				Row.IsPicture = True;
+				
+			EndIf;
 			
 		// Если тип данных параметра данной строки - не фотоснимок
 		Else
@@ -627,6 +631,89 @@ EndProcedure
 Procedure BeforeWrite(Cancel, WriteParameters)
 	
 	Cancel = CheckStatus();
+	
+	// Выполнить валидацию телефонного номера
+	If ValueIsFilled(Object.PhoneNumber) Then 
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+		ParamArray.Add(Object.PhoneNumber);
+		
+		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+			
+			Cancel = True;
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number""'; ru = 'Неверное значение в поле ""Телефонный номер""'");
+			
+			UserMessage.Message();
+			
+		EndIf;
+		
+	EndIf;
+	
+	// Выполнить валидацию почты
+	If ValueIsFilled(Object.Email) Then
+		
+		ParamArray = New Array;
+		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+		ParamArray.Add(Object.Email);
+		
+		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+			
+			Cancel = True;
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
+			
+			UserMessage.Message();
+			
+		EndIf;
+		
+	EndIf;
+	
+	// Выполнить валидацию контактов
+	For Each ContactItem In Object.Contacts Do 
+		
+		If ValueIsFilled(ContactItem.PhoneNumber) Then
+		
+			ParamArrayPhone = New Array;
+			ParamArrayPhone.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+			ParamArrayPhone.Add(ContactItem.PhoneNumber);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayPhone) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number"". Line number" + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Телефон"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+		If ValueIsFilled(ContactItem.Email) Then
+		
+			ParamArrayEmail = New Array;
+			ParamArrayEmail.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+			ParamArrayEmail.Add(ContactItem.Email);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayEmail) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""E-mail"". Line number" + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Электронная почта"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndDo;
 	
 EndProcedure
 
@@ -1069,123 +1156,6 @@ Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 		EndIf;
 		
 	EndIf;
-	
-EndProcedure
-
-#EndRegion
-
-#Region Contacts
-
-&AtClient
-Procedure ContactsBeforeEditEnd(Item, NewRow, CancelEdit, Cancel)
-	
-	If Item.CurrentItem.Name = "ContactsPhoneNumber" Then 
-		
-		ParamArray = New Array;
-		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
-		ParamArray.Add(Item.CurrentData.PhoneNumber);
-		
-		Cancel = Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray);
-		
-	ElsIf Item.CurrentItem.Name = "ContactsEmail" Then 
-		
-		ParamArray = New Array;
-		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
-		ParamArray.Add(Item.CurrentData.Email);
-		
-		Cancel = Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray);
-		
-	EndIf;
-	
-	If Cancel Then 
-		
-		UserMessage			= New UserMessage;
-		UserMessage.Text	= NStr("en = 'Incorrect value'; ru = 'Неверное значение'");
-		
-		UserMessage.Message();
-		
-	EndIf;
-	
-EndProcedure
-
-#EndRegion
-
-#Region Details
-
-&AtClient
-Procedure PhoneNumberTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessing)
-	
-	PhoneTest = Items.PhoneNumber.EditText;
-	
-	If ValueIsFilled(PhoneTest) Then 
-		
-		ParamArray = New Array;
-		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
-		ParamArray.Add(PhoneTest);
-		
-		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
-			
-			Object.PhoneNumber = TempPhoneNumber;
-			
-			ShowMessageBox(New NotifyDescription("PhoneNumberTextEditEndPart", ThisForm)
-							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
-							  , 0
-							  , );
-							  
-		Else 
-			
-			TempPhoneNumber = PhoneTest;
-			
-			Object.PhoneNumber = PhoneTest;
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure PhoneNumberTextEditEndPart(Parameters) Export
-	
-	CurrentItem = Items.PhoneNumber;
-	
-EndProcedure
-
-&AtClient
-Procedure EmailTextEditEnd(Item, Text, ChoiceData, Parameters, StandardProcessing)
-	
-	EmailTest = Items.Email.EditText;
-	
-	If ValueIsFilled(EmailTest) Then
-		
-		ParamArray = New Array;
-		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
-		ParamArray.Add(EmailTest);
-		
-		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
-			
-			Object.Email = TempEmail;
-			
-			ShowMessageBox(New NotifyDescription("EmailTextEditEndPart", ThisForm)
-							  , NStr("en = 'Incorrect value'; ru = 'Неверное значение'")
-							  , 0
-							  , );
-		Else 
-			
-			TempEmail = EmailTest;
-			
-			Object.Email = EmailTest;
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure EmailTextEditEndPart(Parameters) Export 
-	
-	CurrentItem = Items.Email;
 	
 EndProcedure
 
