@@ -1138,6 +1138,9 @@ Procedure UpdateForRelease_1_5_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update visits'; ru = 'Обновление визитов'"));
 	ProcessVisits();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update outlets statuses'; ru = 'Обновление статусов торговых точек'"));
+	ProcessOutletsStatuses();
+	
 EndProcedure
 
 Procedure ProcessRegions()
@@ -1216,6 +1219,47 @@ Procedure ProcessVisits()
 		
 		VisitObject = Selection.GetObject();
 		VisitObject.Write(DocumentWriteMode.Write);
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessOutletsStatuses()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	OutletStatusHistorySliceLast.Period,
+		|	OutletStatusHistorySliceLast.Outlet,
+		|	OutletStatusHistorySliceLast.Status
+		|INTO CurrentStatuses
+		|FROM
+		|	InformationRegister.OutletStatusHistory.SliceLast AS OutletStatusHistorySliceLast
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT DISTINCT
+		|	Outlets.Ref AS Outlet,
+		|	Outlets.OutletStatus
+		|FROM
+		|	Catalog.Outlet AS Outlets
+		|		LEFT JOIN CurrentStatuses AS CurrentStatuses
+		|		ON Outlets.Ref = CurrentStatuses.Outlet
+		|WHERE
+		|	NOT Outlets.OutletStatus = CurrentStatuses.Status OR CurrentStatuses.Status IS NULL";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		Record			= InformationRegisters.OutletStatusHistory.CreateRecordManager();
+		Record.Outlet	= Selection.Outlet;
+		Record.Status	= Selection.OutletStatus;
+		Record.Period	= CurrentDate();
+		
+		Record.Write();
 		
 	EndDo;
 	

@@ -163,7 +163,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				RecordManager.Object = CurrentObject.Ref;
 				RecordManager.SyncDirection = Enums.SyncDirections.Shared;
 				RecordManager.Action = Enums.SyncAction.AddFile;
-				RecordManager.FileName = Row.FileName;
+				RecordManager.FileName = New UUID(Row.FileName);
 				RecordManager.Extension = Row.Extension;
 				RecordManager.Storage = New ValueStorage(BinaryData);
 				RecordManager.Size = CheckFileSize.Size();
@@ -178,7 +178,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			ElsIf Row.Type = "Private" Then
 				
 				SelectionStructure = New Structure("FileName");
-				SelectionStructure.FileName = Row.FileName;
+				SelectionStructure.FileName = New UUID(Row.FileName);
 				
 				Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
 				
