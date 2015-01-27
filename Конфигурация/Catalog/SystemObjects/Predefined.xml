@@ -134,6 +134,12 @@
 						<Description>en = 'Outlets statuses'; ru = 'Статусы торговых точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="97ddb6a5-f1f5-4ca3-b475-8b6118981339">
+						<Name>Report_PlanFactSKUStockReport</Name>
+						<Code>000000206</Code>
+						<Description>en = 'Plan fact SKU stock report'; ru = 'Отчет о соответствии фактических товарных остатков плановым показателям'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 		</ChildItems>
