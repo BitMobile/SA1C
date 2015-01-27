@@ -110,6 +110,7 @@
 			<Visible>false</Visible>
 			<TitleLocation>None</TitleLocation>
 			<Width>30</Width>
+			<ChoiceButton>true</ChoiceButton>
 			<TextEdit>false</TextEdit>
 			<ChoiceListButton>true</ChoiceListButton>
 			<ContextMenu name="ValueListContextMenu" id="11"/>

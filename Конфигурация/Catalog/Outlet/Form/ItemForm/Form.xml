@@ -217,7 +217,6 @@
 						</InputField>
 						<InputField name="INN" id="97">
 							<DataPath>Object.INN</DataPath>
-							<HorizontalAlign>Right</HorizontalAlign>
 							<ContextMenu name="INNContextMenu" id="98"/>
 							<ExtendedTooltip name="INNExtendedTooltip" id="183"/>
 						</InputField>
