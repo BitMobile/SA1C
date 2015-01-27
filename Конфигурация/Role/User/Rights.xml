@@ -3404,11 +3404,11 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 				<condition>Questionnaire WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Questionnaire")
 	AND Questionnaire.Owner IN
 			(SELECT
-				Region.Manager
+				RegionManagers.Manager
 			FROM
-				Catalog.Region AS Region
+				Catalog.Region.Managers AS RegionManagers
 			WHERE
-				Region.Ref IN
+				RegionManagers.Ref IN
 					(SELECT
 						ManagersOfRegions.Region
 					FROM
