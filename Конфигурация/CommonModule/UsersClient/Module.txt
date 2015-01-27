@@ -3,6 +3,6 @@ Procedure CreateAdmin() Export
 	
 	UsersCallServer.CreateFirstAdmin();
 	
-	Terminate(True);
+	Raise "Обнаружен запуск с пустым списком пользователей. Создан пользователь ""Admin"" с пустым паролем. Повторите запуск системы.";
 	
-КонецПроцедуры
+EndProcedure
