@@ -2674,15 +2674,19 @@ EndProcedure
 &AtClient
 Procedure SKUsValueTableOnEditEnd(Item, NewRow, CancelEdit)
 	
-	ID	= Item.CurrentRow;
-	Row	= SKUsValueTable.FindByID(ID);
+	If Not CancelEdit Then 
 	
-	If ValueIsFilled(Row.SKU) Then
+		ID	= Item.CurrentRow;
+		Row	= SKUsValueTable.FindByID(ID);
 		
-		Row.SourceType = TypeOf(Row.SKU);
+		If ValueIsFilled(Row.SKU) Then
+			
+			Row.SourceType = TypeOf(Row.SKU);
+			
+		EndIf;
 		
 	EndIf;
-		
+	
 EndProcedure
 
 &AtClient
