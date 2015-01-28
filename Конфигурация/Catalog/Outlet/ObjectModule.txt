@@ -23,11 +23,29 @@ Procedure BeforeWrite(Cancel)
 	EndDo;
 	
 	// Снять недоступность изображений, считается что файлы уже переместились в shared
+	RemoveProperty = False;
+	
 	For Each StrSnapshot In Snapshots Do 
 		
-		StrSnapshot.Unavailable = False;
+		If StrSnapshot.Unavailable Then 
+			
+			RemoveProperty = True;
+			
+			StrSnapshot.Unavailable = False;
+			
+		EndIf;
 		
 	EndDo;
+	
+	If RemoveProperty Then 
+		
+		If AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+			
+			AdditionalProperties.Delete("ЗагрузкаBitmobile");
+			
+		EndIf;
+		
+	EndIf;
 	
 EndProcedure
 
