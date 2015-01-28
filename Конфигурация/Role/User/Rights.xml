@@ -2691,13 +2691,6 @@ WHERE MobileAppPlanVisit.SR IN
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Task.Outlet = TerritoryOutlets.Outlet
 WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
-	AND Task.Territory.Owner IN
-			(SELECT
-				ManagersOfRegions.Region
-			FROM
-				InformationRegister.ManagersOfRegions AS ManagersOfRegions
-			WHERE
-				ManagersOfRegions.Manager = &amp;CurrentUser)
 	AND TerritoryOutlets.Ref.Owner IN
 			(SELECT
 				ManagersOfRegions.Region

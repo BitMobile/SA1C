@@ -215,6 +215,12 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		EndDo;
 		
+		SetPrivilegedMode(True);
+		
+		WriteTerritory(CurrentObject);
+		
+		SetPrivilegedMode(False);
+		
 	EndIf;
 	
 EndProcedure
@@ -557,7 +563,7 @@ Function GetTerritories()
 EndFunction
 
 &AtServer
-Procedure WriteTerritory()
+Procedure WriteTerritory(CurrObject)
 	
 	WrittenTerritories = GetTerritories().Unload();
 	
@@ -574,7 +580,7 @@ Procedure WriteTerritory()
 			Outlets = Territory.Outlets.Unload();
 			
 			NewRow 			= Outlets.Add();
-			NewRow.Outlet 	= Object.Ref;
+			NewRow.Outlet 	= CurrObject.Ref;
 			
 			Territory.Outlets.Load(Outlets);
 			Territory.Write();
@@ -583,12 +589,12 @@ Procedure WriteTerritory()
 		
 	EndDo;
 	
-	DeleteTerritories();
+	DeleteTerritories(CurrObject);
 	
 EndProcedure
 
 &AtServer
-Procedure DeleteTerritories()
+Procedure DeleteTerritories(CurrObject)
 	
 	Territories 			= GetTerritories();
 	RecordedTerritories 	= Territories.Unload();
@@ -601,10 +607,10 @@ Procedure DeleteTerritories()
 			TerritoryObject = Territory.Ref.GetObject();
 			
 			Outlets = TerritoryObject.Outlets.Unload();
-			Outlets.Delete(Outlets.Find(Object.Ref, "Outlet").LineNumber - 1);
+			Outlets.Delete(Outlets.Find(CurrObject.Ref, "Outlet").LineNumber - 1);
 			
 			TerritoryObject.Outlets.Load(Outlets);
-			TerritoryObject.Write();    
+			TerritoryObject.Write();
 			
 		EndIf;
 		
@@ -719,8 +725,6 @@ EndProcedure
 
 &AtClient
 Procedure AfterWrite(WriteParameters)
-	
-	WriteTerritory();
 	
 	ProcessParameters();
 	

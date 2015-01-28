@@ -3,11 +3,48 @@ Procedure OnWrite(Cancel)
 	
 	SetPrivilegedMode(True);
 	
-	RecordSet = InformationRegisters.ManagersOfRegions.CreateRecordSet();
-	RecordSet.Filter.ParentRegion.Value = Ref;
-	RecordSet.Filter.ParentRegion.Use = True;
-	RecordSet.Write();
+	// Удалить все записи связанные с этим регионом
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	ManagersOfRegions.ParentRegion,
+		|	ManagersOfRegions.Region,
+		|	ManagersOfRegions.Manager
+		|FROM
+		|	InformationRegister.ManagersOfRegions AS ManagersOfRegions
+		|WHERE
+		|	(ManagersOfRegions.ParentRegion = &Ref
+		|			OR ManagersOfRegions.Region = &Ref)";
 	
+	Query.SetParameter("Ref", Ref);
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	ManagerForDeletion = InformationRegisters.ManagersOfRegions.CreateRecordManager();
+	
+	While Selection.Next() Do
+		
+		FillPropertyValues(ManagerForDeletion, Selection);
+		
+		ManagerForDeletion.Read();
+		
+		If ManagerForDeletion.Selected() Then 
+			
+			Try
+				
+				ManagerForDeletion.Delete();
+				
+			Except
+			
+			EndTry;
+			
+		EndIf;
+		
+	EndDo;
+	
+	// Записать дочерние регионы
 	Query = New Query;
 	Query.Text = 
 		"SELECT ALLOWED DISTINCT
@@ -26,24 +63,29 @@ Procedure OnWrite(Cancel)
 	
 	Selection = Result.Select();
 	
-	RecordSet = InformationRegisters.ManagersOfRegions.CreateRecordSet();
-	RecordSet.Filter.ParentRegion.Value = Ref;
-	RecordSet.Filter.ParentRegion.Use = True;
-	
 	While Selection.Next() Do 
 		
 		For Each ItemManager In Managers Do 
 			
-			Ins					= RecordSet.Add();
-			Ins.ParentRegion	= Ref;
-			Ins.Region			= Selection.Region;
-			Ins.Manager			= ItemManager.Manager;
+			RecordManager					= InformationRegisters.ManagersOfRegions.CreateRecordManager();
+			RecordManager.ParentRegion		= Ref;
+			RecordManager.Region			= Selection.Region;
+			RecordManager.Manager			= ItemManager.Manager;
+			
+			RecordManager.Write();
 			
 		EndDo;
 		
 	EndDo;
 	
-	RecordSet.Write();
+	// Перезаписать родительский регион для запуска восстановления дерева регионов
+	If ValueIsFilled(Parent) Then 
+		
+		ParentObject = Parent.GetObject();
+		
+		ParentObject.Write();
+		
+	EndIf;
 	
 EndProcedure
 
