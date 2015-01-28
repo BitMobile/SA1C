@@ -201,14 +201,15 @@ Procedure SetRolesOfUsers(RoleOfUsers) Export
 	
 	While Selection.Next() Do
 		
+		UserObject = Selection.User.GetObject();
+		
 		If Not Selection.User.Role = RoleToSet And Not Selection.User.Role = "Admin" Then 
 			
-			UserObject		= Selection.User.GetObject();
 			UserObject.Role	= RoleToSet;
 			
-			UserObject.Write();
-			
 		EndIf;
+		
+		UserObject.Write();
 		
 	EndDo;
 	
