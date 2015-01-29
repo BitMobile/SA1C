@@ -1,8 +1,1667 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>DataSource1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Day</dataPath>
+			<field>Day</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Day</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKU</dataPath>
+			<field>SKU</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Outlet</dataPath>
+			<field>Outlet</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>BaseUnitQty</dataPath>
+			<field>BaseUnitQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Base unit qty</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Brand</dataPath>
+			<field>Brand</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Brand</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Брэнд</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKUGroup</dataPath>
+			<field>SKUGroup</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKUGroup</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа номенклатуры</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Answer</dataPath>
+			<field>Answer</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Answer</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ответ</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>PlanFactQty</dataPath>
+			<field>PlanFactQty</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Plan fact qty</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletDistributor</dataPath>
+			<field>OutletDistributor</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet distributor</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дистрибьютор</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletType</dataPath>
+			<field>OutletType</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet type</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletClass</dataPath>
+			<field>OutletClass</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet class</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Класс</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Month</dataPath>
+			<field>Month</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Month</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Month2</dataPath>
+			<field>Month2</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Month2</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Quarter</dataPath>
+			<field>Quarter</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Quarter</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
+	AnswersSliceLast.Outlet,
+	AnswersSliceLast.SKU,
+	CASE
+		WHEN AnswersSliceLast.Answer = "Да"
+				OR AnswersSliceLast.Answer = "Yes"
+			THEN 1
+		WHEN AnswersSliceLast.Answer = "Нет"
+				OR AnswersSliceLast.Answer = "No"
+			THEN 0
+	END AS Answer
+INTO Fact
+FROM
+	InformationRegister.Answers.SliceLast AS AnswersSliceLast
+WHERE
+	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Available)
+{WHERE
+	(AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate),
+	(AnswersSliceLast.Visit.Date &lt;= &amp;EndDate)}
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	AssortmentMatrixOutletsSliceLast.Outlet,
+	AssortmentMatrixSKUsSliceLast.SKU,
+	MAX(AssortmentMatrixSKUsSliceLast.BaseUnitQty) AS BaseUnitQty,
+	AssortmentMatrixPeriods.BeginDate,
+	AssortmentMatrixPeriods.EndDate
+INTO Plan
+FROM
+	InformationRegister.AssortmentMatrixSKUs.SliceLast AS AssortmentMatrixSKUsSliceLast
+		FULL JOIN Catalog.AssortmentMatrix.Periods AS AssortmentMatrixPeriods
+		ON AssortmentMatrixSKUsSliceLast.AssortmentMatrix = AssortmentMatrixPeriods.Ref
+			AND AssortmentMatrixSKUsSliceLast.UUID = AssortmentMatrixPeriods.UUID
+		FULL JOIN InformationRegister.AssortmentMatrixOutlets.SliceLast AS AssortmentMatrixOutletsSliceLast
+		ON AssortmentMatrixSKUsSliceLast.AssortmentMatrix = AssortmentMatrixOutletsSliceLast.AssortmentMatrix
+			AND AssortmentMatrixSKUsSliceLast.UUID = AssortmentMatrixOutletsSliceLast.UUID
+WHERE
+	NOT AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	AND NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
+{WHERE
+	(AssortmentMatrixPeriods.BeginDate &gt;= &amp;BeginDate),
+	(AssortmentMatrixPeriods.EndDate &gt;= &amp;EndDate)}
+
+GROUP BY
+	AssortmentMatrixPeriods.EndDate,
+	AssortmentMatrixPeriods.BeginDate,
+	AssortmentMatrixOutletsSliceLast.Outlet,
+	AssortmentMatrixSKUsSliceLast.SKU
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	Fact.Day,
+	ISNULL(Fact.Outlet, Plan.Outlet) AS Outlet,
+	ISNULL(Fact.SKU, Plan.SKU) AS SKU,
+	Fact.Answer AS Answer,
+	CASE
+		WHEN Plan.BaseUnitQty IS NULL 
+			THEN 0
+		ELSE 1
+	END AS BaseUnitQty
+INTO PlanFact
+FROM
+	Fact AS Fact
+		FULL JOIN Plan AS Plan
+		ON Fact.Outlet = Plan.Outlet
+			AND Fact.SKU = Plan.SKU
+			AND Fact.Day &gt;= Plan.BeginDate
+			AND Fact.Day &lt;= Plan.EndDate
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	PlanFact.Day,
+	PlanFact.Outlet.Distributor,
+	PlanFact.Outlet.Class,
+	PlanFact.Outlet.Type,
+	PlanFact.Outlet,
+	PlanFact.SKU.Brand AS Brand,
+	PlanFact.SKU.Owner AS SKUGroup,
+	PlanFact.SKU,
+	PlanFact.Answer,
+	PlanFact.BaseUnitQty,
+	CASE
+		WHEN PlanFact.BaseUnitQty = 1
+				AND PlanFact.Answer = 1
+			THEN 1
+		WHEN PlanFact.BaseUnitQty = 1
+				AND PlanFact.Answer = 0
+			THEN 0
+		ELSE NULL
+	END AS PlanFactQty,
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	MAX(TerritoryOutlets.Ref.Owner) AS Region
+INTO PlanFactTerritory
+FROM
+	PlanFact AS PlanFact
+		INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON PlanFact.Outlet = TerritoryOutlets.Outlet
+WHERE
+	NOT PlanFact.Day IS NULL 
+
+GROUP BY
+	PlanFact.Day,
+	PlanFact.Outlet,
+	PlanFact.SKU,
+	PlanFact.Outlet.Distributor,
+	PlanFact.Outlet.Class,
+	PlanFact.Outlet.Type,
+	PlanFact.SKU.Brand,
+	PlanFact.SKU.Owner,
+	PlanFact.Answer,
+	PlanFact.BaseUnitQty,
+	CASE
+		WHEN PlanFact.BaseUnitQty = 1
+				AND PlanFact.Answer = 1
+			THEN 1
+		WHEN PlanFact.BaseUnitQty = 1
+				AND PlanFact.Answer = 0
+			THEN 0
+		ELSE NULL
+	END
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	PlanFactTerritory.Day,
+	BEGINOFPERIOD(PlanFactTerritory.Day, MONTH) AS Month,
+	CASE
+		WHEN MONTH(PlanFactTerritory.Day) IN (2, 4, 6, 8, 10, 12)
+			THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Day, MONTH, -1), MONTH)
+		ELSE BEGINOFPERIOD(PlanFactTerritory.Day, MONTH)
+	END AS Month2,
+	BEGINOFPERIOD(PlanFactTerritory.Day, QUARTER) AS Quarter,
+	PlanFactTerritory.OutletDistributor,
+	PlanFactTerritory.OutletClass,
+	PlanFactTerritory.OutletType,
+	PlanFactTerritory.Outlet,
+	PlanFactTerritory.Brand,
+	PlanFactTerritory.SKUGroup,
+	PlanFactTerritory.SKU,
+	PlanFactTerritory.Answer,
+	PlanFactTerritory.BaseUnitQty,
+	PlanFactTerritory.PlanFactQty,
+	PlanFactTerritory.Territory,
+	PlanFactTerritory.Region
+FROM
+	PlanFactTerritory AS PlanFactTerritory</query>
+	</dataSet>
+	<calculatedField>
+		<dataPath>Fact</dataPath>
+		<expression>Answer</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Fact</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Факт</v8:content>
+			</v8:item>
+		</title>
+		<presentationExpression>CASE WHEN ANSWER = 1 THEN "ДА" WHEN Answer = 0 THEN "НЕТ" END</presentationExpression>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>Plan</dataPath>
+		<expression>Sum(BaseUnitQty)</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Plan</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>План</v8:content>
+			</v8:item>
+		</title>
+		<presentationExpression>CASE WHEN Sum(BaseUnitQty) &gt;= 1 THEN "ДА" WHEN Sum(BaseUnitQty) = 0 THEN "НЕТ" END</presentationExpression>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+			</dcscor:item>
+		</appearance>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>Percent</dataPath>
+		<expression>Case when sum(PlanFactQty) = 0 then 0 else sum(PlanFactQty) / sum(BaseUnitQty) * 100 end</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>%</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>%</v8:content>
+			</v8:item>
+		</title>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
+			</dcscor:item>
+		</appearance>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>PlannedVisitsQty</dataPath>
+		<expression>Case when BaseUnitQty = 0 Then Null Else Answer End</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Planned visits qty</v8:content>
+			</v8:item>
+		</title>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NZ=0</dcscor:value>
+			</dcscor:item>
+		</appearance>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>MonthPercent</dataPath>
+		<expression>avg(Case when PlanFactQty = 0 then 0 else PlanFactQty / BaseUnitQty * 100 end)</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Fact</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Факт</v8:content>
+			</v8:item>
+		</title>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
+			</dcscor:item>
+		</appearance>
+	</calculatedField>
+	<totalField>
+		<dataPath>Plan</dataPath>
+		<expression>Plan</expression>
+		<group>SKU</group>
+	</totalField>
+	<totalField>
+		<dataPath>Fact</dataPath>
+		<expression>Sum(Fact)</expression>
+		<group>SKU</group>
+	</totalField>
+	<totalField>
+		<dataPath>Percent</dataPath>
+		<expression>Percent</expression>
+	</totalField>
+	<totalField>
+		<dataPath>PlanFactQty</dataPath>
+		<expression>Sum(PlanFactQty)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>PlannedVisitsQty</dataPath>
+		<expression>Sum(PlannedVisitsQty)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>MonthPercent</dataPath>
+		<expression>MonthPercent</expression>
+	</totalField>
+	<parameter>
+		<name>Period</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>BeginDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Begin date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.EndDate</expression>
+	</parameter>
+	<parameter>
+		<name>Period1</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period1</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
 	<settingsVariant>
-		<dcsset:name>Default</dcsset:name>
-		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
-		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows"/>
+		<dcsset:name>Day</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Day</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>День</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Fact</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Percent</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period1</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Day</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Region</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Territory</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+						<dcsset:item>
+							<dcsset:groupItems>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+							</dcsset:groupItems>
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+							<dcsset:item>
+								<dcsset:groupItems>
+									<dcsset:item xsi:type="dcsset:GroupItemField">
+										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:groupType>Items</dcsset:groupType>
+										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+										<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+									</dcsset:item>
+								</dcsset:groupItems>
+								<dcsset:order>
+									<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+								</dcsset:order>
+								<dcsset:selection>
+									<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+								</dcsset:selection>
+								<dcsset:item>
+									<dcsset:groupItems>
+										<dcsset:item xsi:type="dcsset:GroupItemField">
+											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:groupType>Items</dcsset:groupType>
+											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+											<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+										</dcsset:item>
+									</dcsset:groupItems>
+									<dcsset:order>
+										<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+									</dcsset:order>
+									<dcsset:selection>
+										<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+									</dcsset:selection>
+									<dcsset:item>
+										<dcsset:groupItems>
+											<dcsset:item xsi:type="dcsset:GroupItemField">
+												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:groupType>Items</dcsset:groupType>
+												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+												<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+											</dcsset:item>
+										</dcsset:groupItems>
+										<dcsset:order>
+											<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+										</dcsset:order>
+										<dcsset:selection>
+											<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+										</dcsset:selection>
+										<dcsset:item>
+											<dcsset:groupItems>
+												<dcsset:item xsi:type="dcsset:GroupItemField">
+													<dcsset:field>Brand</dcsset:field>
+													<dcsset:groupType>Items</dcsset:groupType>
+													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+													<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+												</dcsset:item>
+											</dcsset:groupItems>
+											<dcsset:order>
+												<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+											</dcsset:order>
+											<dcsset:selection>
+												<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+											</dcsset:selection>
+											<dcsset:item>
+												<dcsset:groupItems>
+													<dcsset:item xsi:type="dcsset:GroupItemField">
+														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:groupType>Items</dcsset:groupType>
+														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+														<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+													</dcsset:item>
+												</dcsset:groupItems>
+												<dcsset:order>
+													<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+												</dcsset:order>
+												<dcsset:selection>
+													<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+												</dcsset:selection>
+												<dcsset:item>
+													<dcsset:groupItems>
+														<dcsset:item xsi:type="dcsset:GroupItemField">
+															<dcsset:field>SKU</dcsset:field>
+															<dcsset:groupType>Items</dcsset:groupType>
+															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+															<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+														</dcsset:item>
+													</dcsset:groupItems>
+													<dcsset:order>
+														<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+													</dcsset:order>
+													<dcsset:selection>
+														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+													</dcsset:selection>
+												</dcsset:item>
+											</dcsset:item>
+										</dcsset:item>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+	<settingsVariant>
+		<dcsset:name>Month</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Month</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Месяц</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>MonthPercent</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>a9fd068c-a0e9-46ed-8166-274409156cea</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>df2cfc89-73ee-4a8a-b082-021307fdb7f1</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletDistributor</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6646564d-d4e4-44a8-9436-18eefe973936</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletClass</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9bc40153-125e-474e-b254-3e6595cab445</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletType</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f9c38802-664c-428a-8fda-2878c88643db</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>c722123f-f490-4637-869a-7d730f55d803</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Brand</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f712a33f-bfc3-4cda-993d-0581d279038f</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>7d3a5d86-64cf-4e36-95ca-67ef089fdd01</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9a243d69-dccc-406f-a3de-499b612f3009</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period1</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>MonthPercent</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+							<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.SKU.EmptyRef</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="xs:string"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedTop</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Month</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Region</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Territory</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+						<dcsset:item>
+							<dcsset:groupItems>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+							</dcsset:groupItems>
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+							<dcsset:item>
+								<dcsset:groupItems>
+									<dcsset:item xsi:type="dcsset:GroupItemField">
+										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:groupType>Items</dcsset:groupType>
+										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+										<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+									</dcsset:item>
+								</dcsset:groupItems>
+								<dcsset:order>
+									<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+								</dcsset:order>
+								<dcsset:selection>
+									<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+								</dcsset:selection>
+								<dcsset:item>
+									<dcsset:groupItems>
+										<dcsset:item xsi:type="dcsset:GroupItemField">
+											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:groupType>Items</dcsset:groupType>
+											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+											<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+										</dcsset:item>
+									</dcsset:groupItems>
+									<dcsset:order>
+										<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+									</dcsset:order>
+									<dcsset:selection>
+										<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+									</dcsset:selection>
+									<dcsset:item>
+										<dcsset:groupItems>
+											<dcsset:item xsi:type="dcsset:GroupItemField">
+												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:groupType>Items</dcsset:groupType>
+												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+												<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+											</dcsset:item>
+										</dcsset:groupItems>
+										<dcsset:order>
+											<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+										</dcsset:order>
+										<dcsset:selection>
+											<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+										</dcsset:selection>
+										<dcsset:item>
+											<dcsset:groupItems>
+												<dcsset:item xsi:type="dcsset:GroupItemField">
+													<dcsset:field>Brand</dcsset:field>
+													<dcsset:groupType>Items</dcsset:groupType>
+													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+													<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+												</dcsset:item>
+											</dcsset:groupItems>
+											<dcsset:order>
+												<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+											</dcsset:order>
+											<dcsset:selection>
+												<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+											</dcsset:selection>
+											<dcsset:item>
+												<dcsset:groupItems>
+													<dcsset:item xsi:type="dcsset:GroupItemField">
+														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:groupType>Items</dcsset:groupType>
+														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+														<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+													</dcsset:item>
+												</dcsset:groupItems>
+												<dcsset:order>
+													<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+												</dcsset:order>
+												<dcsset:selection>
+													<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+												</dcsset:selection>
+												<dcsset:item>
+													<dcsset:groupItems>
+														<dcsset:item xsi:type="dcsset:GroupItemField">
+															<dcsset:field>SKU</dcsset:field>
+															<dcsset:groupType>Items</dcsset:groupType>
+															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+															<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+														</dcsset:item>
+													</dcsset:groupItems>
+													<dcsset:order>
+														<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+													</dcsset:order>
+													<dcsset:selection>
+														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+													</dcsset:selection>
+												</dcsset:item>
+											</dcsset:item>
+										</dcsset:item>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+	<settingsVariant>
+		<dcsset:name>Month2</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>2 Months</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>2 месяца</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>MonthPercent</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>a9fd068c-a0e9-46ed-8166-274409156cea</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>df2cfc89-73ee-4a8a-b082-021307fdb7f1</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletDistributor</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6646564d-d4e4-44a8-9436-18eefe973936</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletClass</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9bc40153-125e-474e-b254-3e6595cab445</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletType</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f9c38802-664c-428a-8fda-2878c88643db</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>c722123f-f490-4637-869a-7d730f55d803</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Brand</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f712a33f-bfc3-4cda-993d-0581d279038f</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>7d3a5d86-64cf-4e36-95ca-67ef089fdd01</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9a243d69-dccc-406f-a3de-499b612f3009</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period1</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>MonthPercent</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+							<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.SKU.EmptyRef</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="xs:string"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedTop</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Month2</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Region</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Territory</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+						<dcsset:item>
+							<dcsset:groupItems>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+							</dcsset:groupItems>
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+							<dcsset:item>
+								<dcsset:groupItems>
+									<dcsset:item xsi:type="dcsset:GroupItemField">
+										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:groupType>Items</dcsset:groupType>
+										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+										<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+									</dcsset:item>
+								</dcsset:groupItems>
+								<dcsset:order>
+									<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+								</dcsset:order>
+								<dcsset:selection>
+									<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+								</dcsset:selection>
+								<dcsset:item>
+									<dcsset:groupItems>
+										<dcsset:item xsi:type="dcsset:GroupItemField">
+											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:groupType>Items</dcsset:groupType>
+											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+											<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+										</dcsset:item>
+									</dcsset:groupItems>
+									<dcsset:order>
+										<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+									</dcsset:order>
+									<dcsset:selection>
+										<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+									</dcsset:selection>
+									<dcsset:item>
+										<dcsset:groupItems>
+											<dcsset:item xsi:type="dcsset:GroupItemField">
+												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:groupType>Items</dcsset:groupType>
+												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+												<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+											</dcsset:item>
+										</dcsset:groupItems>
+										<dcsset:order>
+											<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+										</dcsset:order>
+										<dcsset:selection>
+											<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+										</dcsset:selection>
+										<dcsset:item>
+											<dcsset:groupItems>
+												<dcsset:item xsi:type="dcsset:GroupItemField">
+													<dcsset:field>Brand</dcsset:field>
+													<dcsset:groupType>Items</dcsset:groupType>
+													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+													<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+												</dcsset:item>
+											</dcsset:groupItems>
+											<dcsset:order>
+												<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+											</dcsset:order>
+											<dcsset:selection>
+												<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+											</dcsset:selection>
+											<dcsset:item>
+												<dcsset:groupItems>
+													<dcsset:item xsi:type="dcsset:GroupItemField">
+														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:groupType>Items</dcsset:groupType>
+														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+														<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+													</dcsset:item>
+												</dcsset:groupItems>
+												<dcsset:order>
+													<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+												</dcsset:order>
+												<dcsset:selection>
+													<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+												</dcsset:selection>
+												<dcsset:item>
+													<dcsset:groupItems>
+														<dcsset:item xsi:type="dcsset:GroupItemField">
+															<dcsset:field>SKU</dcsset:field>
+															<dcsset:groupType>Items</dcsset:groupType>
+															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+															<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+														</dcsset:item>
+													</dcsset:groupItems>
+													<dcsset:order>
+														<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+													</dcsset:order>
+													<dcsset:selection>
+														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+													</dcsset:selection>
+												</dcsset:item>
+											</dcsset:item>
+										</dcsset:item>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+	<settingsVariant>
+		<dcsset:name>Quarter</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Quarter</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Квартал</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>MonthPercent</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>a9fd068c-a0e9-46ed-8166-274409156cea</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>df2cfc89-73ee-4a8a-b082-021307fdb7f1</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletDistributor</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6646564d-d4e4-44a8-9436-18eefe973936</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletClass</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9bc40153-125e-474e-b254-3e6595cab445</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletType</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f9c38802-664c-428a-8fda-2878c88643db</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>c722123f-f490-4637-869a-7d730f55d803</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Brand</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>f712a33f-bfc3-4cda-993d-0581d279038f</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>7d3a5d86-64cf-4e36-95ca-67ef089fdd01</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9a243d69-dccc-406f-a3de-499b612f3009</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period1</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>MonthPercent</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">SKU</dcsset:left>
+							<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Catalog.SKU.EmptyRef</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Text</dcscor:parameter>
+							<dcscor:value xsi:type="xs:string"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedTop</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Quarter</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Region</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Territory</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+						<dcsset:item>
+							<dcsset:groupItems>
+								<dcsset:item xsi:type="dcsset:GroupItemField">
+									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:groupType>Items</dcsset:groupType>
+									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+									<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+								</dcsset:item>
+							</dcsset:groupItems>
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+							<dcsset:item>
+								<dcsset:groupItems>
+									<dcsset:item xsi:type="dcsset:GroupItemField">
+										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:groupType>Items</dcsset:groupType>
+										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+										<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+									</dcsset:item>
+								</dcsset:groupItems>
+								<dcsset:order>
+									<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+								</dcsset:order>
+								<dcsset:selection>
+									<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+								</dcsset:selection>
+								<dcsset:item>
+									<dcsset:groupItems>
+										<dcsset:item xsi:type="dcsset:GroupItemField">
+											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:groupType>Items</dcsset:groupType>
+											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+											<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+										</dcsset:item>
+									</dcsset:groupItems>
+									<dcsset:order>
+										<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+									</dcsset:order>
+									<dcsset:selection>
+										<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+									</dcsset:selection>
+									<dcsset:item>
+										<dcsset:groupItems>
+											<dcsset:item xsi:type="dcsset:GroupItemField">
+												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:groupType>Items</dcsset:groupType>
+												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+												<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+											</dcsset:item>
+										</dcsset:groupItems>
+										<dcsset:order>
+											<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+										</dcsset:order>
+										<dcsset:selection>
+											<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+										</dcsset:selection>
+										<dcsset:item>
+											<dcsset:groupItems>
+												<dcsset:item xsi:type="dcsset:GroupItemField">
+													<dcsset:field>Brand</dcsset:field>
+													<dcsset:groupType>Items</dcsset:groupType>
+													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+													<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+												</dcsset:item>
+											</dcsset:groupItems>
+											<dcsset:order>
+												<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+											</dcsset:order>
+											<dcsset:selection>
+												<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+											</dcsset:selection>
+											<dcsset:item>
+												<dcsset:groupItems>
+													<dcsset:item xsi:type="dcsset:GroupItemField">
+														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:groupType>Items</dcsset:groupType>
+														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+														<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+													</dcsset:item>
+												</dcsset:groupItems>
+												<dcsset:order>
+													<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+												</dcsset:order>
+												<dcsset:selection>
+													<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+												</dcsset:selection>
+												<dcsset:item>
+													<dcsset:groupItems>
+														<dcsset:item xsi:type="dcsset:GroupItemField">
+															<dcsset:field>SKU</dcsset:field>
+															<dcsset:groupType>Items</dcsset:groupType>
+															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+															<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+														</dcsset:item>
+													</dcsset:groupItems>
+													<dcsset:order>
+														<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+													</dcsset:order>
+													<dcsset:selection>
+														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+													</dcsset:selection>
+												</dcsset:item>
+											</dcsset:item>
+										</dcsset:item>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
 	</settingsVariant>
 </DataCompositionSchema>

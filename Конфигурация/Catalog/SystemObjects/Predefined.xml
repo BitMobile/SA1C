@@ -116,6 +116,12 @@
 						<Description>en = 'Number of outlets'; ru = 'Общее количество точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="cad96052-e5af-4844-862a-77302300892e">
+						<Name>Report_OutletAssortmentAvailability</Name>
+						<Code>000000207</Code>
+						<Description>en = 'Outlet assortment availability'; ru = 'Отчет о наличии ассортимента в ТТ'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="6580f779-18d8-41d1-992e-5a893cdba02a">
 						<Name>Report_AnalysisOutletParameters</Name>
 						<Code>000000195</Code>

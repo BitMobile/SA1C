@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.5.0.190</Version>
+			<Version>1.5.0.191</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -179,7 +179,6 @@
 			<FunctionalOption>Stocks</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
 			<CommonCommand>HistoryTask</CommonCommand>
-			<CommonCommand>ShowSKUQuestions</CommonCommand>
 			<CommonCommand>ShowRegularQuestions</CommonCommand>
 			<CommonCommand>ShowSyncAndSettings</CommonCommand>
 			<CommonCommand>ShowDeleteObjects</CommonCommand>
@@ -204,6 +203,8 @@
 			<CommonCommand>ShowPromoActionsReport</CommonCommand>
 			<CommonCommand>ShowAccountReceivableReport</CommonCommand>
 			<CommonCommand>ShowPlanFactSKUStockReport</CommonCommand>
+			<CommonCommand>ShowSKUQuestions</CommonCommand>
+			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>

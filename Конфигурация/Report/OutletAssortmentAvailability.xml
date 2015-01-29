@@ -25,7 +25,7 @@
 			</Synonym>
 			<Comment/>
 			<UseStandardCommands>true</UseStandardCommands>
-			<DefaultForm/>
+			<DefaultForm>Report.OutletAssortmentAvailability.Form.ReportForm</DefaultForm>
 			<AuxiliaryForm/>
 			<MainDataCompositionSchema>Report.OutletAssortmentAvailability.Template.MainDataCompositionSchema</MainDataCompositionSchema>
 			<DefaultSettingsForm/>
@@ -38,6 +38,7 @@
 			<Explanation/>
 		</Properties>
 		<ChildObjects>
+			<Form>ReportForm</Form>
 			<Template>MainDataCompositionSchema</Template>
 		</ChildObjects>
 	</Report>
