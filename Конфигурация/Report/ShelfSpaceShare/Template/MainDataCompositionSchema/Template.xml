@@ -204,6 +204,20 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Value</dataPath>
+			<field>Value</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Канал сбыта</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS Region,
@@ -318,7 +332,8 @@ SELECT ALLOWED
 	CurrentBrand.CurrentBrandStock,
 	SKUGroups.SKUGroupStock,
 	0 AS Percent,
-	Average.AvgStock
+	Average.AvgStock,
+	OutletParameters.Value
 FROM
 	AllBrands AS AllBrands
 		LEFT JOIN CurrentBrand AS CurrentBrand
@@ -348,7 +363,11 @@ FROM
 			AND AllBrands.Outlet = Average.Outlet
 			AND AllBrands.SKUBrand = Average.SKUBrand
 			AND AllBrands.SKUGroup = Average.SKUGroup
-			AND AllBrands.SKU = Average.SKU</query>
+			AND AllBrands.SKU = Average.SKU
+		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
+		ON AllBrands.Outlet = OutletParameters.Ref
+WHERE
+	OutletParameters.Parameter = &amp;Parameter</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Stock</dataPath>
@@ -443,6 +462,25 @@ FROM
 		<useRestriction>false</useRestriction>
 		<use>Always</use>
 	</parameter>
+	<parameter>
+		<name>Parameter</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Parameter</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Параметр "Канал сбыта"</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.OutletParameter</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<use>Always</use>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -469,6 +507,12 @@ FROM
 					<dcscor:parameter>Brand</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.Brands.EmptyRef</dcscor:value>
 					<dcsset:userSettingID>d5294dec-bf3d-4e9f-922c-049cdfcfff27</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>3aeaca11-c924-48c0-b49d-7998744fde31</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>
@@ -516,7 +560,7 @@ FROM
 					<dcsset:item xsi:type="dcsset:StructureItemGroup">
 						<dcsset:groupItems>
 							<dcsset:item xsi:type="dcsset:GroupItemField">
-								<dcsset:field>OutletDistributor</dcsset:field>
+								<dcsset:field>Value</dcsset:field>
 								<dcsset:groupType>Items</dcsset:groupType>
 								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -532,7 +576,7 @@ FROM
 						<dcsset:item xsi:type="dcsset:StructureItemGroup">
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletClass</dcsset:field>
+									<dcsset:field>OutletDistributor</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -548,7 +592,7 @@ FROM
 							<dcsset:item xsi:type="dcsset:StructureItemGroup">
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletType</dcsset:field>
+										<dcsset:field>OutletClass</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -564,7 +608,7 @@ FROM
 								<dcsset:item xsi:type="dcsset:StructureItemGroup">
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>Outlet</dcsset:field>
+											<dcsset:field>OutletType</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -580,7 +624,7 @@ FROM
 									<dcsset:item xsi:type="dcsset:StructureItemGroup">
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
-												<dcsset:field>SKUBrand</dcsset:field>
+												<dcsset:field>Outlet</dcsset:field>
 												<dcsset:groupType>Items</dcsset:groupType>
 												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -596,7 +640,7 @@ FROM
 										<dcsset:item xsi:type="dcsset:StructureItemGroup">
 											<dcsset:groupItems>
 												<dcsset:item xsi:type="dcsset:GroupItemField">
-													<dcsset:field>SKUGroup</dcsset:field>
+													<dcsset:field>SKUBrand</dcsset:field>
 													<dcsset:groupType>Items</dcsset:groupType>
 													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -612,7 +656,7 @@ FROM
 											<dcsset:item xsi:type="dcsset:StructureItemGroup">
 												<dcsset:groupItems>
 													<dcsset:item xsi:type="dcsset:GroupItemField">
-														<dcsset:field>SKU</dcsset:field>
+														<dcsset:field>SKUGroup</dcsset:field>
 														<dcsset:groupType>Items</dcsset:groupType>
 														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -625,6 +669,23 @@ FROM
 												<dcsset:selection>
 													<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 												</dcsset:selection>
+												<dcsset:item xsi:type="dcsset:StructureItemGroup">
+													<dcsset:groupItems>
+														<dcsset:item xsi:type="dcsset:GroupItemField">
+															<dcsset:field>SKU</dcsset:field>
+															<dcsset:groupType>Items</dcsset:groupType>
+															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+															<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+														</dcsset:item>
+													</dcsset:groupItems>
+													<dcsset:order>
+														<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+													</dcsset:order>
+													<dcsset:selection>
+														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+													</dcsset:selection>
+												</dcsset:item>
 											</dcsset:item>
 										</dcsset:item>
 									</dcsset:item>

@@ -232,17 +232,49 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Value</dataPath>
+			<field>Value</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Trade channel</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Канал сбыта</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field1</dataPath>
+			<field>Field1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field1</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field3</dataPath>
+			<field>Field3</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field3</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
 	CASE
-		WHEN AnswersSliceLast.Answer = "Да"
-				OR AnswersSliceLast.Answer = "Yes"
+		WHEN AnswersSliceLast.Answer = TRUE
 			THEN 1
-		WHEN AnswersSliceLast.Answer = "Нет"
-				OR AnswersSliceLast.Answer = "No"
+		WHEN AnswersSliceLast.Answer = FALSE
 			THEN 0
 	END AS Answer,
 	AnswersSliceLast.Visit.SR AS SR
@@ -252,8 +284,8 @@ FROM
 WHERE
 	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Available)
 {WHERE
-	(AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate),
-	(AnswersSliceLast.Visit.Date &lt;= &amp;EndDate)}
+	(AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate) AS Field1,
+	(AnswersSliceLast.Visit.Date &lt;= &amp;EndDate) AS Field3}
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -276,8 +308,8 @@ WHERE
 	NOT AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
 	AND NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
 {WHERE
-	(AssortmentMatrixPeriods.BeginDate &gt;= &amp;BeginDate),
-	(AssortmentMatrixPeriods.EndDate &gt;= &amp;EndDate)}
+	(AssortmentMatrixPeriods.BeginDate &gt;= &amp;BeginDate) AS Field1,
+	(AssortmentMatrixPeriods.EndDate &gt;= &amp;EndDate) AS Field3}
 
 GROUP BY
 	AssortmentMatrixPeriods.EndDate,
@@ -331,14 +363,18 @@ SELECT ALLOWED
 	END AS PlanFactQty,
 	MAX(TerritoryOutlets.Ref) AS Territory,
 	MAX(TerritoryOutlets.Ref.Owner) AS Region,
-	PlanFact.SR
+	PlanFact.SR,
+	OutletParameters.Value
 INTO PlanFactTerritory
 FROM
 	PlanFact AS PlanFact
 		INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 		ON PlanFact.Outlet = TerritoryOutlets.Outlet
+		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
+		ON PlanFact.Outlet = OutletParameters.Ref
 WHERE
 	NOT PlanFact.Day IS NULL 
+	AND OutletParameters.Parameter = &amp;Parameter
 
 GROUP BY
 	PlanFact.Day,
@@ -351,7 +387,8 @@ GROUP BY
 	PlanFact.SKU.Owner,
 	PlanFact.Answer,
 	PlanFact.BaseUnitQty,
-	PlanFact.SR
+	PlanFact.SR,
+	OutletParameters.Value
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -376,7 +413,8 @@ SELECT ALLOWED
 	PlanFactTerritory.PlanFactQty,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
-	PlanFactTerritory.SR
+	PlanFactTerritory.SR,
+	PlanFactTerritory.Value
 FROM
 	PlanFactTerritory AS PlanFactTerritory</query>
 	</dataSet>
@@ -516,42 +554,6 @@ FROM
 		<useRestriction>true</useRestriction>
 	</parameter>
 	<parameter>
-		<name>BeginDate</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Begin date</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period1.StartDate</expression>
-	</parameter>
-	<parameter>
-		<name>EndDate</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>End date</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period1.EndDate</expression>
-	</parameter>
-	<parameter>
 		<name>Period1</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
@@ -572,6 +574,25 @@ FROM
 			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 		</value>
 		<useRestriction>false</useRestriction>
+	</parameter>
+	<parameter>
+		<name>Parameter</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Parameter</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Параметр "Канал сбыта"</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.OutletParameter</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<use>Always</use>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Day</dcsset:name>
@@ -657,11 +678,21 @@ FROM
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
 				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>49a7853d-3fca-4e7b-b0f2-6cdbe116560b</dcsset:userSettingID>
+				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedTop</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
 			</dcsset:outputParameters>
 			<dcsset:item xsi:type="dcsset:StructureItemTable">
@@ -717,7 +748,7 @@ FROM
 						<dcsset:item>
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:field>Value</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -733,7 +764,7 @@ FROM
 							<dcsset:item>
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:field>OutletDistributor</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -749,7 +780,7 @@ FROM
 								<dcsset:item>
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:field>OutletClass</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -765,7 +796,7 @@ FROM
 									<dcsset:item>
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
-												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:field>OutletType</dcsset:field>
 												<dcsset:groupType>Items</dcsset:groupType>
 												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -781,7 +812,7 @@ FROM
 										<dcsset:item>
 											<dcsset:groupItems>
 												<dcsset:item xsi:type="dcsset:GroupItemField">
-													<dcsset:field>Brand</dcsset:field>
+													<dcsset:field>Outlet</dcsset:field>
 													<dcsset:groupType>Items</dcsset:groupType>
 													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -797,7 +828,7 @@ FROM
 											<dcsset:item>
 												<dcsset:groupItems>
 													<dcsset:item xsi:type="dcsset:GroupItemField">
-														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:field>Brand</dcsset:field>
 														<dcsset:groupType>Items</dcsset:groupType>
 														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -813,7 +844,7 @@ FROM
 												<dcsset:item>
 													<dcsset:groupItems>
 														<dcsset:item xsi:type="dcsset:GroupItemField">
-															<dcsset:field>SKU</dcsset:field>
+															<dcsset:field>SKUGroup</dcsset:field>
 															<dcsset:groupType>Items</dcsset:groupType>
 															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -826,6 +857,23 @@ FROM
 													<dcsset:selection>
 														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 													</dcsset:selection>
+													<dcsset:item>
+														<dcsset:groupItems>
+															<dcsset:item xsi:type="dcsset:GroupItemField">
+																<dcsset:field>SKU</dcsset:field>
+																<dcsset:groupType>Items</dcsset:groupType>
+																<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+																<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+																<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+															</dcsset:item>
+														</dcsset:groupItems>
+														<dcsset:order>
+															<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+														</dcsset:order>
+														<dcsset:selection>
+															<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+														</dcsset:selection>
+													</dcsset:item>
 												</dcsset:item>
 											</dcsset:item>
 										</dcsset:item>
@@ -926,6 +974,12 @@ FROM
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
 				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>63019dec-77f8-4c84-a874-5d6fabb3c8cc</dcsset:userSettingID>
+				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
 				<dcsset:item>
@@ -1012,7 +1066,7 @@ FROM
 						<dcsset:item>
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:field>Value</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1028,7 +1082,7 @@ FROM
 							<dcsset:item>
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:field>OutletDistributor</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1044,7 +1098,7 @@ FROM
 								<dcsset:item>
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:field>OutletClass</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1060,7 +1114,7 @@ FROM
 									<dcsset:item>
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
-												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:field>OutletType</dcsset:field>
 												<dcsset:groupType>Items</dcsset:groupType>
 												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1076,7 +1130,7 @@ FROM
 										<dcsset:item>
 											<dcsset:groupItems>
 												<dcsset:item xsi:type="dcsset:GroupItemField">
-													<dcsset:field>Brand</dcsset:field>
+													<dcsset:field>Outlet</dcsset:field>
 													<dcsset:groupType>Items</dcsset:groupType>
 													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1092,7 +1146,7 @@ FROM
 											<dcsset:item>
 												<dcsset:groupItems>
 													<dcsset:item xsi:type="dcsset:GroupItemField">
-														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:field>Brand</dcsset:field>
 														<dcsset:groupType>Items</dcsset:groupType>
 														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1108,7 +1162,7 @@ FROM
 												<dcsset:item>
 													<dcsset:groupItems>
 														<dcsset:item xsi:type="dcsset:GroupItemField">
-															<dcsset:field>SKU</dcsset:field>
+															<dcsset:field>SKUGroup</dcsset:field>
 															<dcsset:groupType>Items</dcsset:groupType>
 															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1121,6 +1175,23 @@ FROM
 													<dcsset:selection>
 														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 													</dcsset:selection>
+													<dcsset:item>
+														<dcsset:groupItems>
+															<dcsset:item xsi:type="dcsset:GroupItemField">
+																<dcsset:field>SKU</dcsset:field>
+																<dcsset:groupType>Items</dcsset:groupType>
+																<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+																<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+																<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+															</dcsset:item>
+														</dcsset:groupItems>
+														<dcsset:order>
+															<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+														</dcsset:order>
+														<dcsset:selection>
+															<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+														</dcsset:selection>
+													</dcsset:item>
 												</dcsset:item>
 											</dcsset:item>
 										</dcsset:item>
@@ -1221,6 +1292,12 @@ FROM
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
 				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>a53cb801-61d4-436d-a59d-1d4f8029c6a8</dcsset:userSettingID>
+				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
 				<dcsset:item>
@@ -1307,7 +1384,7 @@ FROM
 						<dcsset:item>
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:field>Value</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1323,7 +1400,7 @@ FROM
 							<dcsset:item>
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:field>OutletDistributor</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1339,7 +1416,7 @@ FROM
 								<dcsset:item>
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:field>OutletClass</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1355,7 +1432,7 @@ FROM
 									<dcsset:item>
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
-												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:field>OutletType</dcsset:field>
 												<dcsset:groupType>Items</dcsset:groupType>
 												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1371,7 +1448,7 @@ FROM
 										<dcsset:item>
 											<dcsset:groupItems>
 												<dcsset:item xsi:type="dcsset:GroupItemField">
-													<dcsset:field>Brand</dcsset:field>
+													<dcsset:field>Outlet</dcsset:field>
 													<dcsset:groupType>Items</dcsset:groupType>
 													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1387,7 +1464,7 @@ FROM
 											<dcsset:item>
 												<dcsset:groupItems>
 													<dcsset:item xsi:type="dcsset:GroupItemField">
-														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:field>Brand</dcsset:field>
 														<dcsset:groupType>Items</dcsset:groupType>
 														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1403,7 +1480,7 @@ FROM
 												<dcsset:item>
 													<dcsset:groupItems>
 														<dcsset:item xsi:type="dcsset:GroupItemField">
-															<dcsset:field>SKU</dcsset:field>
+															<dcsset:field>SKUGroup</dcsset:field>
 															<dcsset:groupType>Items</dcsset:groupType>
 															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1416,6 +1493,23 @@ FROM
 													<dcsset:selection>
 														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 													</dcsset:selection>
+													<dcsset:item>
+														<dcsset:groupItems>
+															<dcsset:item xsi:type="dcsset:GroupItemField">
+																<dcsset:field>SKU</dcsset:field>
+																<dcsset:groupType>Items</dcsset:groupType>
+																<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+																<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+																<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+															</dcsset:item>
+														</dcsset:groupItems>
+														<dcsset:order>
+															<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+														</dcsset:order>
+														<dcsset:selection>
+															<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+														</dcsset:selection>
+													</dcsset:item>
 												</dcsset:item>
 											</dcsset:item>
 										</dcsset:item>
@@ -1516,6 +1610,12 @@ FROM
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
 				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>b857f5fd-bb98-442c-9f44-fa0a0ea0993b</dcsset:userSettingID>
+				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
 				<dcsset:item>
@@ -1602,7 +1702,7 @@ FROM
 						<dcsset:item>
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:field>Value</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1618,7 +1718,7 @@ FROM
 							<dcsset:item>
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:field>OutletDistributor</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1634,7 +1734,7 @@ FROM
 								<dcsset:item>
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:field>OutletClass</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1650,7 +1750,7 @@ FROM
 									<dcsset:item>
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
-												<dcsset:field>Outlet</dcsset:field>
+												<dcsset:field>OutletType</dcsset:field>
 												<dcsset:groupType>Items</dcsset:groupType>
 												<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 												<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1666,7 +1766,7 @@ FROM
 										<dcsset:item>
 											<dcsset:groupItems>
 												<dcsset:item xsi:type="dcsset:GroupItemField">
-													<dcsset:field>Brand</dcsset:field>
+													<dcsset:field>Outlet</dcsset:field>
 													<dcsset:groupType>Items</dcsset:groupType>
 													<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 													<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1682,7 +1782,7 @@ FROM
 											<dcsset:item>
 												<dcsset:groupItems>
 													<dcsset:item xsi:type="dcsset:GroupItemField">
-														<dcsset:field>SKUGroup</dcsset:field>
+														<dcsset:field>Brand</dcsset:field>
 														<dcsset:groupType>Items</dcsset:groupType>
 														<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 														<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1698,7 +1798,7 @@ FROM
 												<dcsset:item>
 													<dcsset:groupItems>
 														<dcsset:item xsi:type="dcsset:GroupItemField">
-															<dcsset:field>SKU</dcsset:field>
+															<dcsset:field>SKUGroup</dcsset:field>
 															<dcsset:groupType>Items</dcsset:groupType>
 															<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 															<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -1711,6 +1811,23 @@ FROM
 													<dcsset:selection>
 														<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 													</dcsset:selection>
+													<dcsset:item>
+														<dcsset:groupItems>
+															<dcsset:item xsi:type="dcsset:GroupItemField">
+																<dcsset:field>SKU</dcsset:field>
+																<dcsset:groupType>Items</dcsset:groupType>
+																<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+																<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+																<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+															</dcsset:item>
+														</dcsset:groupItems>
+														<dcsset:order>
+															<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+														</dcsset:order>
+														<dcsset:selection>
+															<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+														</dcsset:selection>
+													</dcsset:item>
 												</dcsset:item>
 											</dcsset:item>
 										</dcsset:item>
