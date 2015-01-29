@@ -104,6 +104,12 @@
 				<Description>en = 'Reports'; ru = 'Отчеты'</Description>
 				<IsFolder>true</IsFolder>
 				<ChildItems>
+					<Item id="6580f779-18d8-41d1-992e-5a893cdba02a">
+						<Name>Report_AnalysisOutletParameters</Name>
+						<Code>000000195</Code>
+						<Description>en = 'Additional outlet parameters'; ru = 'Дополнительные параметры торговых точек'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="36bcab3a-5a0b-45e5-9a28-8266d24a5daf">
 						<Name>Report_BindingOutlets</Name>
 						<Code>000000196</Code>
@@ -120,12 +126,6 @@
 						<Name>Report_OutletAssortmentAvailability</Name>
 						<Code>000000207</Code>
 						<Description>en = 'Outlet assortment availability'; ru = 'Отчет о наличии ассортимента в ТТ'</Description>
-						<IsFolder>false</IsFolder>
-					</Item>
-					<Item id="6580f779-18d8-41d1-992e-5a893cdba02a">
-						<Name>Report_AnalysisOutletParameters</Name>
-						<Code>000000195</Code>
-						<Description>en = 'Outlet parameters'; ru = 'Параметры торговых точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="3499ea12-38e7-483e-a81c-4624f8c860da">
@@ -199,7 +199,7 @@
 					<Item id="44889c2f-64ac-4b8a-84f2-2c8601b6da6b">
 						<Name>Report_CompetitorsInTheOutlets</Name>
 						<Code>000000191</Code>
-						<Description>en = 'Analysis of competitors in outlets'; ru = 'Анализ конкурентов в торговых точках'</Description>
+						<Description>en = 'Competitors in outlets'; ru = 'Конкуренты в торговых точках'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="4478d122-6765-4501-82c8-238f5475ccec">

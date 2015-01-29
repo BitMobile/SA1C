@@ -87,19 +87,21 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
-	OutletParameters.Parameter КАК Параметр,
-	OutletParameters.Value КАК Значение,
-	TerritoryOutlets.Ссылка КАК Территория,
-	TerritoryOutlets.Ссылка.Владелец КАК Регион,
-	OutletParameters.Ссылка КАК ТорговаяТочка,
-	OutletParameters.Ссылка.Class КАК Класс,
-	OutletParameters.Ссылка.Type КАК Тип,
-	TerritoryOutlets.Ссылка.SR КАК ТорговыйАгент
-ИЗ
-	Справочник.Outlet.Parameters КАК OutletParameters
-		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Territory.Outlets КАК TerritoryOutlets
-		ПО OutletParameters.Ссылка = TerritoryOutlets.Outlet</query>
+		<query>SELECT ALLOWED
+	OutletParameters.Parameter AS Параметр,
+	OutletParameters.Value AS Значение,
+	TerritoryOutlets.Ref AS Территория,
+	TerritoryOutlets.Ref.Owner AS Регион,
+	OutletParameters.Ref AS ТорговаяТочка,
+	OutletParameters.Ref.Class AS Класс,
+	OutletParameters.Ref.Type AS Тип,
+	TerritorySRs.SR AS ТорговыйАгент
+FROM
+	Catalog.Outlet.Parameters AS OutletParameters
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+			LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
+			ON TerritoryOutlets.Ref = TerritorySRs.Ref
+		ON OutletParameters.Ref = TerritoryOutlets.Outlet</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Значение</dataPath>
@@ -149,6 +151,16 @@
 					<dcsset:left xsi:type="dcscor:Field">ТорговыйАгент</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>bf396657-a203-432f-a791-bd314565ef69</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SR</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Торговый представитель</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:outputParameters>

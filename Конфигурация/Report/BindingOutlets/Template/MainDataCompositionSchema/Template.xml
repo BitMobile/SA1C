@@ -22,7 +22,7 @@
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Territory</dataPath>
-			<field>Ref</field>
+			<field>Territory</field>
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -30,76 +30,18 @@
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SR</dataPath>
-			<field>SR</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SR</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Торговый представитель</v8:content>
+					<v8:content>Торговая точка</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
-	SUM(1) AS Binded,
-	TerritoryOutlets.Outlet
-INTO source1
+		<query>SELECT
+	Outlets.Ref AS Outlet,
+	TerritoryOutlets.Ref AS Territory
 FROM
-	Catalog.Territory.Outlets AS TerritoryOutlets
-
-GROUP BY
-	TerritoryOutlets.Outlet
-
-UNION ALL
-
-SELECT 
-	NULL,
-	Outlet.Ref
-FROM
-	Catalog.Outlet AS Outlet
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
-	SUM(source1.Binded) AS Binded,
-	source1.Outlet,
-	source1.Outlet.Code
-INTO source2
-FROM
-	source1 AS source1
-
-GROUP BY
-	source1.Outlet,
-	source1.Outlet.Code
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
-	source2.Outlet,
-	NULL AS Ref,
-	NULL AS SR
-FROM
-	source2 AS source2
-WHERE
-	source2.Binded IS NULL 
-
-UNION ALL
-
-SELECT 
-	TerritoryOutlets.Outlet,
-	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.SR
-FROM
-	Catalog.Territory.Outlets AS TerritoryOutlets</query>
+	Catalog.Outlet AS Outlets
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON Outlets.Ref = TerritoryOutlets.Outlet</query>
 	</dataSet>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -110,6 +52,20 @@ FROM
 					<dcsset:field>Outlet</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>53e35829-d1d8-4dc6-80b3-5d23b2e36d50</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>e4eb7179-73a1-4418-9b57-ff4c2b48d4e3</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
@@ -125,13 +81,6 @@ FROM
 						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
 						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
 					</dcsset:item>
-					<dcsset:item xsi:type="dcsset:GroupItemField">
-						<dcsset:field>SR</dcsset:field>
-						<dcsset:groupType>Items</dcsset:groupType>
-						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
-						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
-						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
-					</dcsset:item>
 				</dcsset:groupItems>
 				<dcsset:order>
 					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
@@ -140,6 +89,15 @@ FROM
 					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 				</dcsset:selection>
 				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Outlet</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
 					<dcsset:order>
 						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 					</dcsset:order>

@@ -256,13 +256,15 @@ GROUP BY
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
 	Territory.Ref,
-	Territory.SR,
-	TerritoryOutlets.Outlet
+	TerritoryOutlets.Outlet,
+	TerritorySRs.SR AS SR
 INTO Tr
 FROM
-	Catalog.Territory.Outlets AS TerritoryOutlets
-		LEFT JOIN Catalog.Territory AS Territory
-		ON TerritoryOutlets.Ref = Territory.Ref
+	Catalog.Territory AS Territory
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON Territory.Ref = TerritoryOutlets.Ref
+		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
+		ON Territory.Ref = TerritorySRs.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
