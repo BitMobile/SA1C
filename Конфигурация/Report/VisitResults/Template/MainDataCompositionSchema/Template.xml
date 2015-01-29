@@ -188,12 +188,37 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Longitude</dataPath>
+			<field>Longitude</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>GPSDifference</dataPath>
+			<field>GPSDifference</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>GPS difference, m</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Разница GPS-координат</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Lattitude</dataPath>
+			<field>Lattitude</field>
+		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	Visits.Ref,
 	Visits.Outlet,
 	Visits.SR,
 	Visits.Outlet.Address,
+	Visits.Lattitude,
+	Visits.Longitude,
+	Visits.GPSDifference,
 	CASE
 		WHEN Visits.Lattitude &lt;&gt; 0
 				AND Visits.Longitude &lt;&gt; 0
@@ -215,7 +240,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	SUM(OrderSKUs.Amount) AS Amount,
 	Order.Visit
 INTO ord
@@ -229,7 +254,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Territory.Ref,
 	Territory.SR,
 	TerritoryOutlets.Outlet
@@ -241,7 +266,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Encashment.Visit,
 	SUM(Encashment.EncashmentAmount) AS EncashmentAmount
 INTO Encash
@@ -253,12 +278,19 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	vs.Ref AS Ref,
 	vs.Outlet,
 	vs.SR,
 	vs.OutletAddress,
 	vs.GPS,
+	vs.Lattitude,
+	vs.Longitude,
+	CASE
+		WHEN vs.GPS = "Зафиксированы координаты"
+			THEN vs.GPSDifference
+		ELSE 0
+	END AS GPSDifference,
 	vs.KindOfVisit,
 	vs.StartTime,
 	vs.EndTime,
@@ -363,6 +395,15 @@ FROM
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>GPS</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Longitude</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Lattitude</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>GPSDifference</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>StartTime</dcsset:field>

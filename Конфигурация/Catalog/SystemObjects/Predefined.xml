@@ -454,12 +454,6 @@
 						<Description>en = 'Visits on map'; ru = 'Визиты на карте'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
-					<Item id="804347d9-290d-4ebb-954f-a3be8a5247ad">
-						<Name>Report_Visits</Name>
-						<Code>000000187</Code>
-						<Description>en = 'Visits report'; ru = 'Отчет по визитам'</Description>
-						<IsFolder>false</IsFolder>
-					</Item>
 				</ChildItems>
 			</Item>
 		</ChildItems>
