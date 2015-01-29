@@ -239,6 +239,48 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletDistributor</dataPath>
+			<field>OutletDistributor</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Distributor</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дистрибьютор</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletType</dataPath>
+			<field>OutletType</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Type</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>OutletClass</dataPath>
+			<field>OutletClass</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Class</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Класс</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT
 	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) AS Date,
@@ -327,6 +369,7 @@ SELECT
 	VisitPlans.Ref AS VisitPlan,
 	MAX(TerritoryOutlets.Ref) AS Territory,
 	MAX(TerritoryOutlets.Ref.Owner) AS Region
+INTO VisitsPlanVisits
 FROM
 	VisitPlans AS VisitPlans
 		FULL JOIN Visits AS Visits
@@ -381,10 +424,30 @@ GROUP BY
 			THEN 1
 	END,
 	ISNULL(NestedSelect.PhotosQty, 0)
+;
 
-ORDER BY
-	Date,
-	SR</query>
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	VisitsPlanVisits.Date,
+	VisitsPlanVisits.SR,
+	VisitsPlanVisits.VisitPlansQty,
+	VisitsPlanVisits.PlannedVisitsQty,
+	VisitsPlanVisits.UnplannedVisitsQty,
+	VisitsPlanVisits.Outlet,
+	VisitsPlanVisits.Visit,
+	VisitsPlanVisits.VisitPlanDate,
+	VisitsPlanVisits.VisitType,
+	VisitsPlanVisits.PhotosQty,
+	VisitsPlanVisits.Title,
+	VisitsPlanVisits.VisitDate,
+	VisitsPlanVisits.VisitPlan,
+	VisitsPlanVisits.Territory,
+	VisitsPlanVisits.Region,
+	VisitsPlanVisits.Outlet.Distributor,
+	VisitsPlanVisits.Outlet.Class,
+	VisitsPlanVisits.Outlet.Type
+FROM
+	VisitsPlanVisits AS VisitsPlanVisits</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Undone</dataPath>
@@ -984,6 +1047,27 @@ End</expression>
 						<dcsset:groupItems>
 							<dcsset:item xsi:type="dcsset:GroupItemField">
 								<dcsset:field>Outlet</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>OutletDistributor</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>OutletClass</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>OutletType</dcsset:field>
 								<dcsset:groupType>Items</dcsset:groupType>
 								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
