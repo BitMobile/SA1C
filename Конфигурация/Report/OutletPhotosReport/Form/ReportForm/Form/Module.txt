@@ -4,6 +4,22 @@
 &AtServer
 Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 	
+	Password 	= Constants.bitmobile_Пароль.Get();
+	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
+	Path 		= StrReplace(Path, "admin", "webdav");
+	Port 		= Constants.bitmobile_Порт.Get();
+	
+	Try
+	
+		Connection = New HTTPConnection(Server, Port, "admin", Password);
+		
+	Except
+		
+		Connection = Undefined;
+		
+	EndTry;
+	
 	Fields = GetFields(Details);
 	
 	For Each Field In Fields Do
@@ -18,8 +34,7 @@ Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 				
 				SnapshotUUID = New UUID(Value);
 				
-				SetPicture(SnapshotUUID);
-				
+				SetPicture(SnapshotUUID, Connection, Path);
 				
 			Except
 				
@@ -42,18 +57,56 @@ Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 EndProcedure
 
 &AtServer
-Procedure SetPicture(SnapshotUUID)
+Procedure SetPicture(ID, Connection, Path)
 	
 	Filter = New Structure;
-	Filter.Insert("FileName", SnapshotUUID);
+	Filter.Insert("FileName", ID);
 	
-	Selection = InformationRegisters.StorageAdditionalInformation.Select(Filter);
+	Sel = InformationRegisters.StorageAdditionalInformation.Select(Filter);
 	
-	If Selection.Next() Then
+	If Sel.Next() Then
 		
-		ThisForm.PictureAddress = PutToTempStorage(Selection.Storage.Get());
-		ThisForm.PictureExtension = Selection.Extension;
-		ThisForm.PictureFilename = Selection.FileName;
+		BinaryDataOfFile = Sel.Storage.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then
+		
+			ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
+			ThisForm.PictureExtension = Sel.Extension;
+			ThisForm.PictureFilename = Sel.FileName;
+			
+		Else 
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(Sel.Extension);
+					
+					Connection.Get(Path + Sel.FullFileName, WebDAVFile);
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
+					ThisForm.PictureExtension = Sel.Extension;
+					ThisForm.PictureFilename = Sel.FileName;
+					
+				Except
+					
+					ThisForm.PictureAddress = Undefined;
+					ThisForm.PictureExtension = Undefined;
+					ThisForm.PictureFilename = Undefined;
+					
+				EndTry;
+				
+			Else 
+				
+				ThisForm.PictureAddress = Undefined;
+				ThisForm.PictureExtension = Undefined;
+				ThisForm.PictureFilename = Undefined;
+				
+			EndIf;
+						
+		EndIf;	
 		
 	Else
 		

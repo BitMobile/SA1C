@@ -174,4 +174,3 @@ Function GetPicture(ID, Connection, Path)
 	EndIf;
 		
 EndFunction;
-
