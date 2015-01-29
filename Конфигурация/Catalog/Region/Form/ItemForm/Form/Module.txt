@@ -1,0 +1,16 @@
+﻿
+&AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If IsInRole("User") And Not ValueIsFilled(CurrentObject.Parent) Then 
+		
+		Cancel = True;
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = 'Creating a top-level regions is available only to administrators'; ru = 'Создание регионов верхнего уровня доступно только администраторам'");
+		
+		UserMessage.Message();
+		
+	EndIf;
+	
+EndProcedure
