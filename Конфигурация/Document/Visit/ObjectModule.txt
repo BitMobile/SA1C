@@ -62,17 +62,18 @@ Procedure OnWrite(Cancel)
 		
 		If DataType = Enums.DataType.Boolean Then
 			
-			Row.Answer = ?(Answer = "Да" OR Answer = "Yes", True, False);
+			TypedAnswer = ?(Answer = "Да" OR Answer = "Yes", True, False);
 			
 		ElsIf DataType = Enums.DataType.Decimal 
 			OR DataType = Enums.DataType.Integer Then
 			
-			Row.Answer = Number(Answer);
+			TypedAnswer = Number(Answer);
 			
 		EndIf;
 		
 		RecordManager = InformationRegisters.Answers.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
+		RecordManager.Answer = TypedAnswer;
+		FillPropertyValues(RecordManager, Row, , "Answer");
 		RecordManager.Write();
 		
 	EndDo;
