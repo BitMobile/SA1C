@@ -69,7 +69,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT 
+SELECT ALLOWED
 	SUM(source1.Binded) AS Binded,
 	source1.Outlet,
 	source1.Outlet.Code

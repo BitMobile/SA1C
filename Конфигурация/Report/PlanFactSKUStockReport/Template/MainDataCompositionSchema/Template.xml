@@ -219,7 +219,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Date,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
@@ -234,7 +234,7 @@ WHERE
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	AssortmentMatrixOutletsSliceLast.Outlet,
 	AssortmentMatrixSKUsSliceLast.SKU,
 	MAX(AssortmentMatrixSKUsSliceLast.BaseUnitQty) AS BaseUnitQty,
@@ -263,7 +263,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Fact.Date,
 	Fact.Outlet,
 	Fact.SKU,
@@ -280,7 +280,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Result.Date,
 	Result.Outlet.Distributor,
 	Result.Outlet.Class,
@@ -314,7 +314,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	PlanFactTerritory.Date,
 	BEGINOFPERIOD(PlanFactTerritory.Date, MONTH) AS BegOfMonth,
 	CASE

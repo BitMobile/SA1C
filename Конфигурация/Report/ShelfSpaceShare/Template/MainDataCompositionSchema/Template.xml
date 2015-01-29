@@ -205,7 +205,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS Region,
 	TerritoryOutlets.Ref AS Territory,
 	Answers.Outlet.Distributor,
@@ -238,7 +238,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS Region,
 	TerritoryOutlets.Ref AS Territory,
 	AnswersSliceLast.Outlet.Distributor,
@@ -257,7 +257,7 @@ FROM
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS Region,
 	TerritoryOutlets.Ref AS Territory,
 	AnswersSliceLast.Outlet.Distributor,
@@ -278,7 +278,7 @@ WHERE
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS Region,
 	TerritoryOutlets.Ref AS Territory,
 	AnswersSliceLast.Outlet.Distributor,
@@ -304,7 +304,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	AllBrands.Region,
 	AllBrands.Territory,
 	AllBrands.OutletDistributor,

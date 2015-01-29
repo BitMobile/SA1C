@@ -140,7 +140,7 @@
 			</valueType>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	Visit.Date AS Date,
 	Territory.Owner AS Region,
 	TerritoryOutlets.Ref AS Territory,

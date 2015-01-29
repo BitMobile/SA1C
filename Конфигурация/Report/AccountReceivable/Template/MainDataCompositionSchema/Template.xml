@@ -19,7 +19,7 @@
 			<field>DocumentSum</field>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	AccountReceivable.Outlet,
 	AccountReceivableReceivableDocuments.DocumentName,
 	AccountReceivableReceivableDocuments.DocumentSum
@@ -105,6 +105,25 @@ FROM
 					<dcsset:field>DocumentSum</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6cef591f-9063-43bf-bafb-3e92113b002d</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Period</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>f1d74646-6952-40c3-be54-c7f4696ee309</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>

@@ -91,7 +91,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	BEGINOFPERIOD(VisitSKUs.Ref.Date, DAY) AS Date,
 	VisitSKUs.Ref.Outlet,
 	VisitSKUs.SKU.Brand,

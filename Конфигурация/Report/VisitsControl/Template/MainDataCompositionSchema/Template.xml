@@ -282,7 +282,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) AS Date,
 	VisitPlanOutlets.Ref.SR AS SR,
 	COUNT(DISTINCT VisitPlanOutlets.LineNumber) AS VisitPlansQty,
@@ -303,7 +303,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
 	Visit.Plan,
 	Visit.SR,
@@ -335,7 +335,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	ISNULL(VisitPlans.Date, Visits.Date) AS Date,
 	ISNULL(VisitPlans.SR, Visits.SR) AS SR,
 	ISNULL(VisitPlans.VisitPlansQty, 0) AS VisitPlansQty,
@@ -427,7 +427,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	VisitsPlanVisits.Date,
 	VisitsPlanVisits.SR,
 	VisitsPlanVisits.VisitPlansQty,

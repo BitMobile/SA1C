@@ -99,7 +99,7 @@
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT DISTINCT
+		<query>SELECT ALLOWED DISTINCT
 	Visit.Outlet,
 	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
 	VisitSKUs.SKU,
