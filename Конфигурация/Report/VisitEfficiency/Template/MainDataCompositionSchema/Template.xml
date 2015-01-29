@@ -298,6 +298,7 @@ GROUP BY
 		</title>
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:use>false</dcscor:use>
 				<dcscor:parameter>Font</dcscor:parameter>
 				<dcscor:value xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 			</dcscor:item>
@@ -322,6 +323,7 @@ GROUP BY
 		</title>
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:use>false</dcscor:use>
 				<dcscor:parameter>Font</dcscor:parameter>
 				<dcscor:value xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 			</dcscor:item>
