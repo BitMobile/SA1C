@@ -218,6 +218,20 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
@@ -230,7 +244,8 @@
 		WHEN AnswersSliceLast.Answer = "Нет"
 				OR AnswersSliceLast.Answer = "No"
 			THEN 0
-	END AS Answer
+	END AS Answer,
+	AnswersSliceLast.Visit.SR AS SR
 INTO Fact
 FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
@@ -281,7 +296,8 @@ SELECT ALLOWED
 		WHEN Plan.BaseUnitQty IS NULL 
 			THEN 0
 		ELSE 1
-	END AS BaseUnitQty
+	END AS BaseUnitQty,
+	Fact.SR
 INTO PlanFact
 FROM
 	Fact AS Fact
@@ -314,7 +330,8 @@ SELECT ALLOWED
 		ELSE NULL
 	END AS PlanFactQty,
 	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region
+	MAX(TerritoryOutlets.Ref.Owner) AS Region,
+	PlanFact.SR
 INTO PlanFactTerritory
 FROM
 	PlanFact AS PlanFact
@@ -334,15 +351,7 @@ GROUP BY
 	PlanFact.SKU.Owner,
 	PlanFact.Answer,
 	PlanFact.BaseUnitQty,
-	CASE
-		WHEN PlanFact.BaseUnitQty = 1
-				AND PlanFact.Answer = 1
-			THEN 1
-		WHEN PlanFact.BaseUnitQty = 1
-				AND PlanFact.Answer = 0
-			THEN 0
-		ELSE NULL
-	END
+	PlanFact.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -366,7 +375,8 @@ SELECT ALLOWED
 	PlanFactTerritory.BaseUnitQty,
 	PlanFactTerritory.PlanFactQty,
 	PlanFactTerritory.Territory,
-	PlanFactTerritory.Region
+	PlanFactTerritory.Region,
+	PlanFactTerritory.SR
 FROM
 	PlanFactTerritory AS PlanFactTerritory</query>
 	</dataSet>
@@ -587,6 +597,55 @@ FROM
 					<dcsset:field>Percent</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>7c3f5a30-838f-4edc-aa8e-0242e1f48229</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>ce5510ec-24da-4497-a4e5-5f7b1fed934c</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>2cacc2a9-0123-488b-b92d-8e4a51ed3250</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletClass</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>43e867a2-3299-48fc-8ba4-c5f9d2b4adb0</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletType</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>12ed375a-b2c2-408f-a68b-a2b158a83ac2</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">OutletDistributor</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6547db8b-9b13-4054-856a-b193018a66da</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Brand</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>9a176a8d-e033-4274-94a4-57043fa73412</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
