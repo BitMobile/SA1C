@@ -430,6 +430,12 @@ GROUP BY
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>330ccbdd-4524-4767-8f95-ed65c6752acf</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>8a8cdc35-4a42-45a6-af37-cbf8130b066e</dcsset:userSettingID>
