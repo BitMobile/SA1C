@@ -33,7 +33,6 @@
 					<v8:content>Заказы без визитов</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(JustOrder, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -68,7 +67,6 @@
 					<v8:content>Фактические визиты</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(Visit, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -89,7 +87,6 @@
 					<v8:content>Плановые визиты</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(VisitPlan, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -110,7 +107,6 @@
 					<v8:content>Визиты с заказами</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(VisitWithOrder, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -131,7 +127,6 @@
 					<v8:content>Незапланированные визиты</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(Unplanned, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -152,7 +147,6 @@
 					<v8:content>Итого визитов</v8:content>
 				</v8:item>
 			</title>
-			<presentationExpression>ISNULL(VisitTotal, 0)</presentationExpression>
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
@@ -214,12 +208,12 @@ SELECT
 	COUNT(CASE
 			WHEN Visit.Plan &lt;&gt; VALUE(Document.VisitPlan.EmptyRef)
 				THEN 1
-			ELSE 0
+			ELSE NULL
 		END),
 	COUNT(CASE
 			WHEN Visit.Plan = VALUE(Document.VisitPlan.EmptyRef)
 				THEN 1
-			ELSE 0
+			ELSE NULL
 		END),
 	NULL,
 	NULL
@@ -242,7 +236,7 @@ SELECT
 	COUNT(CASE
 			WHEN Order.Visit = VALUE(Document.Visit.EmptyRef)
 				THEN 1
-			ELSE 0
+			ELSE NULL
 		END)
 FROM
 	Document.Order AS Order
@@ -256,12 +250,12 @@ GROUP BY
 SELECT ALLOWED
 	Data.Date,
 	Data.SR,
-	SUM(Data.VisitPlan) AS VisitPlan,
-	SUM(Data.Visit) AS Visit,
-	SUM(Data.Unplanned) AS Unplanned,
-	SUM(Data.Visit + Data.Unplanned) AS VisitTotal,
-	SUM(Data.VisitWithOrder) AS VisitWithOrder,
-	SUM(Data.JustOrder) AS JustOrder,
+	SUM(ISNULL(Data.VisitPlan, 0)) AS VisitPlan,
+	SUM(ISNULL(Data.Visit, 0)) AS Visit,
+	SUM(ISNULL(Data.Unplanned, 0)) AS Unplanned,
+	SUM(ISNULL(Data.Visit, 0) + ISNULL(Data.Unplanned, 0)) AS VisitTotal,
+	SUM(ISNULL(Data.VisitWithOrder, 0)) AS VisitWithOrder,
+	SUM(ISNULL(Data.JustOrder, 0)) AS JustOrder,
 	NestedSelect.Ref AS Territory,
 	NestedSelect.Owner AS Region
 FROM
@@ -278,6 +272,10 @@ FROM
 		GROUP BY
 			Data.SR) AS NestedSelect
 		ON Data.SR = NestedSelect.SR
+{WHERE
+	(Data.SR IN (&amp;SRList)),
+	(Data.Date &gt;= &amp;StartDate),
+	(Data.Date &lt;= &amp;EndDate)}
 
 GROUP BY
 	Data.Date,
@@ -287,7 +285,7 @@ GROUP BY
 	</dataSet>
 	<calculatedField>
 		<dataPath>VisitRate</dataPath>
-		<expression>Visit/VisitPlan*100</expression>
+		<expression>CASE WHEN VISITPLAN = 0 then 0 else Visit/VisitPlan*100 end</expression>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -298,7 +296,6 @@ GROUP BY
 				<v8:content>Визиты, %</v8:content>
 			</v8:item>
 		</title>
-		<presentationExpression>ISNULL(Visit/VisitPlan*100, 0)</presentationExpression>
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:use>false</dcscor:use>
@@ -313,7 +310,7 @@ GROUP BY
 	</calculatedField>
 	<calculatedField>
 		<dataPath>OrderRate</dataPath>
-		<expression>(VisitWithOrder)/(Unplanned+Visit)*100</expression>
+		<expression>CASE WHEN UNPLANNED + VISIT = 0 THEN 0 ELSE (VisitWithOrder)/(Unplanned+Visit)*100 END</expression>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -324,7 +321,6 @@ GROUP BY
 				<v8:content>Заказы, %</v8:content>
 			</v8:item>
 		</title>
-		<presentationExpression>ISNULL((VisitWithOrder)/(Unplanned+Visit)*100, 0)</presentationExpression>
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:use>false</dcscor:use>
@@ -369,6 +365,61 @@ GROUP BY
 		<dataPath>VisitRate</dataPath>
 		<expression>Avg(VisitRate)</expression>
 	</totalField>
+	<parameter>
+		<name>StartDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Start date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.EndDate</expression>
+	</parameter>
+	<parameter>
+		<name>SRList</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>SR</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Торговый представитель</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.User</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<use>Always</use>
+	</parameter>
 	<parameter>
 		<name>Period</name>
 		<title xsi:type="v8:LocalStringType">
@@ -430,12 +481,6 @@ GROUP BY
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
-					<dcsset:comparisonType>Equal</dcsset:comparisonType>
-					<dcsset:userSettingID>330ccbdd-4524-4767-8f95-ed65c6752acf</dcsset:userSettingID>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:FilterItemComparison">
-					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>8a8cdc35-4a42-45a6-af37-cbf8130b066e</dcsset:userSettingID>
@@ -448,6 +493,45 @@ GROUP BY
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>StartDate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcsset:userSettingID>9abfaf05-7c03-4028-a5aa-d67dc6ce587d</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начальная дата</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>EndDate</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcsset:userSettingID>e0af321c-25e7-4141-a693-a5d454b9c97b</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Конечная дата</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>SRList</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>e7e74308-d182-439a-9603-aead21db8c3f</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SR</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Торговый представитель</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
+				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
