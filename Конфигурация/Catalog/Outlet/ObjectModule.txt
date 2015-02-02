@@ -31,7 +31,7 @@ Procedure BeforeWrite(Cancel)
 	
 	For Each StrSnapshot In Snapshots Do 
 		
-		If Not ValueIsFilled(StrSnapshot.FileName) Then
+		If StrSnapshot.Deleted Then
 			
 			RemoveProperty = True;
 			
