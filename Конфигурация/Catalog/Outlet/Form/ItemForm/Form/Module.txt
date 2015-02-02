@@ -64,13 +64,20 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	// Запомнить ранее введенные проверяемые данные
+	TempEmail		= Object.Email;
+	TempPhoneNumber	= Object.PhoneNumber;
+	
+EndProcedure
+
+&AtServer
+Procedure OnReadAtServer(CurrentObject)
+	
 	FillTerritories();
 	
 	FillSnapshots();
 	
-	// Запомнить ранее введенные проверяемые данные
-	TempEmail		= Object.Email;
-	TempPhoneNumber	= Object.PhoneNumber;
+	FillParameters();
 	
 EndProcedure
 
@@ -271,6 +278,33 @@ EndFunction
 #EndRegion
 
 #Region Parameters
+
+&AtServer
+Procedure FillParameters()
+	
+	NewParametersArray = GetNewParameters();
+	
+	AddNewParameters(NewParametersArray);
+	
+	FillParametersAdditionalInformation();
+	
+EndProcedure
+
+&AtServer
+Procedure AddNewParameters(ParametersArray)
+	
+	// Строка добавленных параметров. Нужна для вывода сообщения.
+	AddedParameters = New Array;
+	
+	// Новые параметры добавляются в конец таблицы параметров.
+	For Each Parameter In ParametersArray Do
+		
+		NewRow = Object.Parameters.Add();
+		NewRow.Parameter = Parameter;
+		
+	EndDo;
+	
+EndProcedure
 
 &AtServerNoContext
 Function GetParametersRight()
@@ -629,8 +663,6 @@ Procedure OnOpen(Cancel)
 	
 	OutletStatusOnChange(Undefined);
 	
-	ProcessParameters();
-	
 EndProcedure
 
 &AtClient
@@ -726,7 +758,7 @@ EndProcedure
 &AtClient
 Procedure AfterWrite(WriteParameters)
 	
-	ProcessParameters();
+	FillParameters();
 	
 EndProcedure
 
@@ -735,7 +767,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	
 	If EventName = "OutletParameterCreated" Then
 		
-		ProcessParameters();
+		FillParameters();
 		
 	EndIf;
 	
@@ -790,7 +822,7 @@ EndFunction
 &AtClient
 Procedure UpdateParameters(Command)
 	
-	ProcessParameters();
+	FillParameters();
 	
 EndProcedure
 
@@ -893,33 +925,6 @@ Procedure OutletParameterValueInputProcessing(Result, AdditionalParameter) Expor
 	EndIf;
 	
 EndProcedure 
-
-&AtClient
-Procedure ProcessParameters()
-	
-	NewParametersArray = GetNewParameters();
-	
-	AddNewParameters(NewParametersArray);
-	
-	FillParametersAdditionalInformation();
-	
-EndProcedure
-
-&AtClient
-Procedure AddNewParameters(ParametersArray)
-	
-	// Строка добавленных параметров. Нужна для вывода сообщения.
-	AddedParameters = New Array;
-	
-	// Новые параметры добавляются в конец таблицы параметров.
-	For Each Parameter In ParametersArray Do
-		
-		NewRow = Object.Parameters.Add();
-		NewRow.Parameter = Parameter;
-		
-	EndDo;
-	
-EndProcedure
 
 &AtClient
 Function GetInputFormParameters(CurrentData)
