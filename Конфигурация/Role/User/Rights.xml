@@ -73,6 +73,10 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Update</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
 	</object>
 	<object>
 		<name>Subsystem.Users.Subsystem.Catalogs</name>
