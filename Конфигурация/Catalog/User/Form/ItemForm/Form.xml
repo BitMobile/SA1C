@@ -147,11 +147,11 @@
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Interface language</v8:content>
+									<v8:content>Interface language CMS</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Язык интерфейса</v8:content>
+									<v8:content>Язык интерфейса ЦУП</v8:content>
 								</v8:item>
 							</Title>
 							<HorizontalStretch>true</HorizontalStretch>

@@ -3,12 +3,16 @@ Procedure BeforeWrite(Cancel)
 	
 	ThisObject.AdditionalProperties.Insert("OldStatus", ThisObject.Ref.OutletStatus);
 	
+	RemoveProperty = False;
+	
 	// Очистить табличную часть параметров от незаполненных
 	DeletedRowArray = New Array;
 	
 	For Each StrParameter In Parameters Do 
 		
 		If Not ValueIsFilled(StrParameter.Value) Then
+			
+			RemoveProperty = True;
 			
 			DeletedRowArray.Add(StrParameter);
 			
@@ -22,9 +26,28 @@ Procedure BeforeWrite(Cancel)
 		
 	EndDo;
 	
-	// Снять недоступность изображений, считается что файлы уже переместились в shared
-	RemoveProperty = False;
+	// Очистить табличную часть изображений от незаполненных
+	DeletedRowArray = New Array;
 	
+	For Each StrSnapshot In Snapshots Do 
+		
+		If Not ValueIsFilled(StrSnapshot.FileName) Then
+			
+			RemoveProperty = True;
+			
+			DeletedRowArray.Add(StrSnapshot);
+			
+		EndIf;
+		
+	EndDo;
+	
+	For Each DeletedRow In DeletedRowArray Do 
+		
+		Snapshots.Delete(DeletedRow);
+		
+	EndDo;
+	
+	// Снять недоступность изображений, считается что файлы уже переместились в shared
 	For Each StrSnapshot In Snapshots Do 
 		
 		If StrSnapshot.Unavailable Then 
