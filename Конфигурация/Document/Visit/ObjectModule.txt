@@ -67,7 +67,7 @@ Procedure OnWrite(Cancel)
 		ElsIf DataType = Enums.DataType.Decimal 
 			OR DataType = Enums.DataType.Integer Then
 			
-			TypedAnswer = Number(Answer);
+			TypedAnswer = ?(Answer = "", 0, Number(Answer));
 			
 		EndIf;
 		
