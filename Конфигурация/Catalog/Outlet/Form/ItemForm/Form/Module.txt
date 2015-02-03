@@ -694,7 +694,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 	If ValueIsFilled(Object.Email) Then
 		
 		ParamArray = New Array;
-		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
 		ParamArray.Add(Object.Email);
 		
 		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
@@ -735,7 +735,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 		If ValueIsFilled(ContactItem.Email) Then
 		
 			ParamArrayEmail = New Array;
-			ParamArrayEmail.Add("/^([A-za-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/");
+			ParamArrayEmail.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
 			ParamArrayEmail.Add(ContactItem.Email);
 			
 			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayEmail) Then 
