@@ -38,39 +38,18 @@
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
-	OutletStatusHistorySliceLast.Outlet AS ТорговаяТочка,
+	ISNULL(OutletStatusHistorySliceLast.Outlet, OutletStatusHistorySliceLast1.Outlet) AS ТорговаяТочка,
 	OutletStatusHistorySliceLast.Status AS СтатусНаНачалоПериода,
 	OutletStatusHistorySliceLast1.Status AS СтатусНаКонецПериода
 FROM
-	InformationRegister.OutletStatusHistory.SliceLast(&amp;НачалоПериода, ) AS OutletStatusHistorySliceLast
-		LEFT JOIN InformationRegister.OutletStatusHistory.SliceLast(&amp;КонецПериода, ) AS OutletStatusHistorySliceLast1
-		ON OutletStatusHistorySliceLast.Outlet = OutletStatusHistorySliceLast1.Outlet
+	InformationRegister.OutletStatusHistory.SliceLast({(&amp;КонецПериода)}, ) AS OutletStatusHistorySliceLast1
+		FULL JOIN InformationRegister.OutletStatusHistory.SliceLast({(&amp;НачалоПериода)}, ) AS OutletStatusHistorySliceLast
+		ON (OutletStatusHistorySliceLast.Outlet = OutletStatusHistorySliceLast1.Outlet)
 
 ORDER BY
 	СтатусНаНачалоПериода DESC,
 	СтатусНаКонецПериода DESC</query>
 	</dataSet>
-	<parameter>
-		<name>Period</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Period</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Период</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>Date</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-	</parameter>
 	<parameter>
 		<name>НачалоПериода</name>
 		<title xsi:type="v8:LocalStringType">
@@ -90,7 +69,8 @@ ORDER BY
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>false</useRestriction>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.StartDate</expression>
 	</parameter>
 	<parameter>
 		<name>КонецПериода</name>
@@ -111,6 +91,29 @@ ORDER BY
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.EndDate</expression>
+	</parameter>
+	<parameter>
+		<name>Period1</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
 	<settingsVariant>
@@ -139,25 +142,25 @@ ORDER BY
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Period</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
-					<dcsset:userSettingID>d56f7178-0db1-4bd2-8f7e-7a1c87820b81</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>НачалоПериода</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardBeginningDate">
-						<v8:variant xsi:type="v8:StandardBeginningDateVariant">Custom</v8:variant>
-						<v8:date>0001-01-01T00:00:00</v8:date>
-					</dcscor:value>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>98ee3c47-6453-444f-9288-d34b3db9eefd</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>КонецПериода</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardBeginningDate">
-						<v8:variant xsi:type="v8:StandardBeginningDateVariant">Custom</v8:variant>
-						<v8:date>0001-01-01T00:00:00</v8:date>
-					</dcscor:value>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
 					<dcsset:userSettingID>74526f94-f784-4aca-ac04-8aab6ec6fe53</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Period1</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
+					<dcsset:userSettingID>00e51a25-46db-4c71-b153-5505ed728526</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>
