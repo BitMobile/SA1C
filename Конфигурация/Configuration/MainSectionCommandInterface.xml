@@ -61,7 +61,7 @@
 				<xr:Common>true</xr:Common>
 			</Visibility>
 		</Command>
-		<Command name="Report.VisitsOrders.StandardCommand.Open">
+		<Command name="0:0507a9d7-5075-4b6c-9272-566644871bad">
 			<Visibility>
 				<xr:Common>false</xr:Common>
 			</Visibility>
@@ -126,7 +126,7 @@
 			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 			<Placement>Manual</Placement>
 		</Command>
-		<Command name="Report.VisitsOrders.StandardCommand.Open">
+		<Command name="0:0507a9d7-5075-4b6c-9272-566644871bad">
 			<CommandGroup>ActionsPanelReports</CommandGroup>
 			<Placement>Manual</Placement>
 		</Command>
@@ -176,7 +176,7 @@
 		<Command name="Catalog.SKUGroup.StandardCommand.OpenList">
 			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
-		<Command name="Report.VisitsOrders.StandardCommand.Open">
+		<Command name="0:0507a9d7-5075-4b6c-9272-566644871bad">
 			<CommandGroup>ActionsPanelReports</CommandGroup>
 		</Command>
 		<Command name="Report.VisitPlansVisitsOrders.StandardCommand.Open">

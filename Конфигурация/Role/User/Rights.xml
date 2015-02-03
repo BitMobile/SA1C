@@ -33,17 +33,6 @@
 		</right>
 	</object>
 	<object>
-		<name>Report.VisitsOrders</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>CommonCommand.ShowAnalysisOutletParameters</name>
 		<right>
 			<name>View</name>
@@ -2543,13 +2532,6 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
-		<name>Report.VisitsOrders.Attribute.SR</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
 		<name>CommonCommand.ShowBindingOutlets</name>
 		<right>
 			<name>View</name>
@@ -3084,13 +3066,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		<right>
 			<name>View</name>
 			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Report.VisitsOrders.Attribute.SRList</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
 		</right>
 	</object>
 	<object>

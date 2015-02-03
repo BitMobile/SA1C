@@ -334,7 +334,6 @@
 			<Report>VisitPlansVisitsOrders</Report>
 			<Report>VisitResults</Report>
 			<Report>VisitsControl</Report>
-			<Report>VisitsOrders</Report>
 			<Report>AccountReceivable</Report>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
