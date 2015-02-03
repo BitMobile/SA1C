@@ -2,7 +2,13 @@
 Procedure BeforeWrite(Cancel)
 	
 	If Not Cancel Then 
-	
+		
+		If Not ValueIsFilled(RoleOfUser) Then 
+			
+			Role = "Admin";
+			
+		EndIf;
+		
 		If Not Role = "Admin" Then 
 			
 			Role = "SR";

@@ -71,27 +71,56 @@ Function StartUpdate() Export
 		
 		Try
 		
-			UserMessage			= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'");
+			VersionListForThisRelease = New ValueList;
+			VersionListForThisRelease.Add("");
+			VersionListForThisRelease.Add("1.4.0");
+			VersionListForThisRelease.Add("1.5.0");
 			
-			UserMessage.Message();
-			
-			Step = 0;
-			
-			// Общие обработчики для всех релизов
-			UpdateForAllReleases(LastState, Step);
-			
-			// Специальные обработчики для релизов
-			If Not ValueIsFilled(CurrentVersion) And MetadataVersionForUpdate = "1.4.0" Then 
+			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
 				
-				UpdateForRelease_1_4_0(LastState, Step);
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Database update is started'; ru = 'Выполняется обновление базы данных'");
 				
-			EndIf;
-			
-			// Убрать комментарий после смены версии
-			If CurrentVersion = "1.4.0" And MetadataVersionForUpdate = "1.5.0" Then 
+				UserMessage.Message();
 				
-				UpdateForRelease_1_5_0(LastState, Step);
+				Step = 0;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Common processors'; ru = 'Общие обработчики'");
+				
+				UserMessage.Message();
+				
+				// Общие обработчики для всех релизов
+				UpdateForAllReleases(LastState, Step);
+				
+				If Not ValueIsFilled(CurrentVersion) Then
+				
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.4.0'; ru = 'Версия 1.4.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_4_0(LastState, Step);
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.6.0'; ru = 'Версия 1.6.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_6_0(LastState, Step);
+					
+				EndIf;
+				
+				If CurrentVersion = "1.4.0" Or CurrentVersion = "1.5.0" Then 
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.6.0'; ru = 'Версия 1.6.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_6_0(LastState, Step);
+					
+				EndIf;
 				
 			EndIf;
 			
@@ -1125,9 +1154,9 @@ EndProcedure
 
 #EndRegion
 
-#Region Release_1_5_0
+#Region Release_1_6_0
 
-Procedure UpdateForRelease_1_5_0(LastState, Step)
+Procedure UpdateForRelease_1_6_0(LastState, Step)
 
 	WriteProtocol(LastState, Step, NStr("en = 'Update regions'; ru = 'Обновление регионов'"));
 	ProcessRegions();
