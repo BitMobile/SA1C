@@ -733,7 +733,10 @@
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Status IN (Select Id FROM [Enum].[QuestionnareStatus] WHERE Name = 'Active') AND T.Id IN (Select Ref FROM [Document].[Questionnaire_SRs] SRs WHERE SRs.SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Id IN (Select Q.Id FROM [Document].[Questionnaire] Q 
+JOIN [Document].[Questionnaire_SRs] SRs ON Q.Id = SRs.Ref  
+JOIN [Enum].[QuestionnareStatus] QS ON QS.Id = Q.Status
+WHERE SRs.SR = @UserId AND QS.Name = 'Active')</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>18</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
@@ -1574,15 +1577,9 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Id IN (
-
-SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory_SRs] TT_ ON TT_.Ref=TO_.Ref WHERE TT_.SR=@UserId
-
+			<ФильтрВBitmobile>T.Id IN (SELECT PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.Outlet=OP.Ref JOIN [Catalog].[Territory_SRs] TT_ ON TT_.Ref=TO_.Ref WHERE TT_.SR=@UserId
 UNION
-
-SELECT P.Id AS PriceList FROM [Document].[PriceList] P WHERE P.DefaultPriceList = 1
-
-)</ФильтрВBitmobile>
+SELECT P.Id AS PriceList FROM [Document].[PriceList] P WHERE P.DefaultPriceList = 1)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>19</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
@@ -2894,7 +2891,7 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = S.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Id IN (SELECT DISTINCT Stock FROM [Catalog].[Territory_Stocks] S JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = S.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>15</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
@@ -3080,7 +3077,7 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.Id IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -3313,7 +3310,7 @@ WHERE
 			<ВыгрузкаФайловShared>true</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Owner] IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
+			<ФильтрВBitmobile>T.Owner IN (SELECT DISTINCT SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = G.Ref AND Territory.SR = @UserId)
 
 
 </ФильтрВBitmobile>
@@ -4294,7 +4291,7 @@ WHERE
 			<ВыгрузкаФайловShared>true</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>true</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>true</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT DISTINCT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Id IN (SELECT DISTINCT Outlet FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory_SRs] Territory ON Territory.Ref = O.Ref AND Territory.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>20</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
@@ -5007,7 +5004,11 @@ WHERE
 			<ВыгрузкаФайловShared>false</ВыгрузкаФайловShared>
 			<ЗагрузкаФайловPrivate>false</ЗагрузкаФайловPrivate>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.Status IN (Select Id FROM [Enum].[AssortmentMatrixStatus] WHERE Name = 'Active') AND getDate() &gt;= T.BeginDate AND (T.[EndDate] = '0001-01-01 00:00:00.0000000' OR T.[EndDate] &gt;= getDate()) AND T.Id IN (Select Ref from [Catalog].[AssortmentMatrix_SRs] WHERE SR = @UserId)</ФильтрВBitmobile>
+			<ФильтрВBitmobile>T.Id IN (SELECT DISTINCT AM.Id
+FROM [Catalog].[AssortmentMatrix] AM
+JOIN [Enum].[AssortmentMatrixStatus] AMS ON AM.Status = AMS.Id
+JOIN [Catalog].[AssortmentMatrix_SRs] AMSR ON AM.Id = AMSR.Ref
+WHERE AMS.Name = 'Active' AND getDate() &gt;= AM.BeginDate AND (AM.EndDate = '0001-01-01 00:00:00.0000000' OR AM.EndDate &gt;= getDate()) AND AMSR.SR = @UserId)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>33</ПозицияВВыгрузке>
 			<БлокироватьПриПолнойВыгрузкеДанных>false</БлокироватьПриПолнойВыгрузкеДанных>
