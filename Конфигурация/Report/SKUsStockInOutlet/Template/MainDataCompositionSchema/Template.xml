@@ -98,6 +98,104 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Type</dataPath>
+			<field>Type</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Type</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Distributor</dataPath>
+			<field>Distributor</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Distributor</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дистрибьютор</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Class</dataPath>
+			<field>Class</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Class</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Класс</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Value</dataPath>
+			<field>Value</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметр ТТ "Канал сбыта"</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED DISTINCT
 	Visit.Outlet,
@@ -105,7 +203,11 @@
 	VisitSKUs.SKU,
 	VisitSKUs.Answer AS Answer,
 	Brands.Ref AS Brand,
-	SKUGroup.Ref AS SKUGroup
+	SKUGroup.Ref AS SKUGroup,
+	Visit.Outlet.Class AS Class,
+	Visit.Outlet.Type AS Type,
+	Visit.Outlet.Distributor AS Distributor
+INTO Visits
 FROM
 	Document.Visit.SKUs AS VisitSKUs
 		LEFT JOIN Document.Visit AS Visit
@@ -118,7 +220,81 @@ WHERE
 	VisitSKUs.Question.Assignment = VALUE(Enum.SKUQuestions.Stock)
 {WHERE
 	(Visit.Date &gt;= &amp;StartDate),
-	(Visit.Date &lt;= &amp;EndDate)}</query>
+	(Visit.Date &lt;= &amp;EndDate)}
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT ALLOWED DISTINCT
+	MAX(TerritoryOutlets.Ref.Owner) AS Region,
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	Visits.Outlet,
+	Visits.Date,
+	Visits.SKU,
+	Visits.Answer,
+	Visits.Brand,
+	Visits.SKUGroup,
+	Visits.Class,
+	Visits.Type,
+	Visits.Distributor
+INTO TerritoryVisits
+FROM
+	Visits AS Visits
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON Visits.Outlet = TerritoryOutlets.Outlet
+
+GROUP BY
+	Visits.Outlet,
+	Visits.Date,
+	Visits.SKU,
+	Visits.Answer,
+	Visits.Brand,
+	Visits.SKUGroup,
+	Visits.Class,
+	Visits.Type,
+	Visits.Distributor
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	TerritoryVisits.Region,
+	TerritoryVisits.Territory,
+	TerritoryVisits.Outlet,
+	TerritoryVisits.Date,
+	TerritoryVisits.SKU,
+	TerritoryVisits.Answer,
+	TerritoryVisits.Brand,
+	TerritoryVisits.SKUGroup,
+	TerritoryVisits.Class,
+	TerritoryVisits.Type,
+	TerritoryVisits.Distributor,
+	TerritorySRs.SR
+INTO TerritoryVisitsSRs
+FROM
+	TerritoryVisits AS TerritoryVisits
+		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
+		ON TerritoryVisits.Territory = TerritorySRs.Ref
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT
+	TerritoryVisitsSRs.Region,
+	TerritoryVisitsSRs.Territory,
+	TerritoryVisitsSRs.Outlet,
+	TerritoryVisitsSRs.Date,
+	TerritoryVisitsSRs.SKU,
+	TerritoryVisitsSRs.Answer,
+	TerritoryVisitsSRs.Brand,
+	TerritoryVisitsSRs.SKUGroup,
+	TerritoryVisitsSRs.Class,
+	TerritoryVisitsSRs.Type,
+	TerritoryVisitsSRs.Distributor,
+	TerritoryVisitsSRs.SR,
+	OutletParameters.Value
+FROM
+	TerritoryVisitsSRs AS TerritoryVisitsSRs,
+	Catalog.Outlet.Parameters AS OutletParameters
+{WHERE
+	(OutletParameters.Parameter = &amp;Parameter)}</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Stock</dataPath>
@@ -205,10 +381,84 @@ WHERE
 		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
+	<parameter>
+		<name>Parameter</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Parameter</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Параметр ТТ "Канал сбыта"</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.OutletParameter</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>faee9913-1294-419a-a244-725aec233190</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>bffba2e0-c3d2-440f-82bb-2b5b46b5ba62</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>011ca7cc-10c2-4f4a-9c91-5bfc435bc0c3</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Class</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>e655d55f-82de-4c49-b3b1-971915e68052</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Type</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>4cb586b4-12da-4b0c-85c3-911e31029634</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Distributor</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>03944fc0-9a75-4916-9529-82943e0c3fb4</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>6efc5992-3ec9-4d07-8e9e-156b52eafe4f</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Brand</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>32619dd4-5dc6-4491-8698-3e9118c4d797</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>0669cf38-263b-4cdb-a2b6-5d18aff962d3</dcsset:userSettingID>
+				</dcsset:item>
+			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
@@ -219,6 +469,12 @@ WHERE
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>4b024b61-f354-45ac-afc9-e27aa9cd045f</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.OutletParameter.EmptyRef</dcscor:value>
+					<dcsset:userSettingID>981b2ff3-94ab-4004-9fcf-9ad53c8592ce</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
