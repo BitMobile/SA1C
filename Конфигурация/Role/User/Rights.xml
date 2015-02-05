@@ -3928,19 +3928,32 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<value>true</value>
 			<restrictionByCondition>
 				<condition>VisitPlan WHERE #HaveRightToRead("Catalog.SystemObjects.Document_VisitPlan")
-	AND VisitPlan.Owner IN
-			(SELECT
-				RegionManagers.Manager
-			FROM
-				Catalog.Region.Managers AS RegionManagers
-			WHERE
-				RegionManagers.Ref IN
-					(SELECT
-						ManagersOfRegions.Region
-					FROM
-						InformationRegister.ManagersOfRegions AS ManagersOfRegions
-					WHERE
-						ManagersOfRegions.Manager = &amp;CurrentUser))
+	AND (VisitPlan.Owner IN
+				(SELECT
+					TerritorySRs.SR
+				FROM
+					Catalog.Territory.SRs AS TerritorySRs
+				WHERE
+					TerritorySRs.Ref.Owner IN
+						(SELECT
+							ManagersOfRegions.Region
+						FROM
+							InformationRegister.ManagersOfRegions AS ManagersOfRegions
+						WHERE
+							ManagersOfRegions.Manager = &amp;CurrentUser))
+			OR VisitPlan.Owner IN
+				(SELECT
+					RegionManagers.Manager
+				FROM
+					Catalog.Region.Managers AS RegionManagers
+				WHERE
+					RegionManagers.Ref IN
+						(SELECT
+							ManagersOfRegions.Region
+						FROM
+							InformationRegister.ManagersOfRegions AS ManagersOfRegions
+						WHERE
+							ManagersOfRegions.Manager = &amp;CurrentUser)))
 	AND VisitPlan.SR IN
 			(SELECT
 				TerritorySRs.SR
