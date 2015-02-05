@@ -24,10 +24,10 @@
 			<Content/>
 		</Properties>
 		<ChildObjects>
-			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>Documents</Subsystem>
-			<Subsystem>InformationRegisters</Subsystem>
+			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>Reports</Subsystem>
+			<Subsystem>InformationRegisters</Subsystem>
 		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

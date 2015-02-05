@@ -24,8 +24,8 @@
 			<Content/>
 		</Properties>
 		<ChildObjects>
-			<Subsystem>InformationRegisters</Subsystem>
 			<Subsystem>DataProcessors</Subsystem>
+			<Subsystem>InformationRegisters</Subsystem>
 		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

@@ -27,9 +27,10 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowAnalysisOutletParameters</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletsStatuses</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowNumberOfOutlets</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletPhotosReport</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowPlanFactSKUStockReport</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletAssortmentAvailability</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.OutletAssortmentAvailability</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.PlanFactSKUStockReport</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

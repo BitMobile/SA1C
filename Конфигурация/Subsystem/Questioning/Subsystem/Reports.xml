@@ -29,6 +29,12 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowPriceMonitoring</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowShelfSpaceShare</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowPromoActionsReport</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOutletPhotosReport</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.OutletPhotosReport</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.PriceMonitoring</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.PromoActionsReport</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.ShelfSpaceShare</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.SKUsStockInOutlet</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

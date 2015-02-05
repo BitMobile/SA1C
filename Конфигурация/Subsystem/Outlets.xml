@@ -24,9 +24,9 @@
 			<Content/>
 		</Properties>
 		<ChildObjects>
+			<Subsystem>Documents</Subsystem>
 			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>Reports</Subsystem>
-			<Subsystem>Documents</Subsystem>
 		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

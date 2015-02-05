@@ -19,12 +19,10 @@
 			<Explanation/>
 			<Picture/>
 			<Content>
-				<xr:Item xsi:type="xr:MDObjectRef">1198f333-3709-450f-b882-70c64bfbe2bb</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitEfficiency</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitResults</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.Encashment</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.VisitsOnMap</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">b85fd9cc-3d3e-4b61-87d0-0fb8350bca9a</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitEfficiency</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowEncashment</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitResults</xr:Item>
@@ -32,6 +30,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsControl</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.AccountReceivable</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowAccountReceivableReport</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitsControl</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

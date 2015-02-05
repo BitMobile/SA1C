@@ -11,7 +11,7 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Command>
-		<Command name="0:1198f333-3709-450f-b882-70c64bfbe2bb">
+		<Command name="Report.VisitsControl.StandardCommand.Open">
 			<Visibility>
 				<xr:Common>false</xr:Common>
 			</Visibility>

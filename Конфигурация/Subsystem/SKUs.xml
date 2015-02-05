@@ -24,8 +24,8 @@
 			<Content/>
 		</Properties>
 		<ChildObjects>
-			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>Documents</Subsystem>
+			<Subsystem>Catalogs</Subsystem>
 			<Subsystem>Reports</Subsystem>
 		</ChildObjects>
 	</Subsystem>
