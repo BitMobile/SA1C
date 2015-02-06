@@ -1801,7 +1801,7 @@ Procedure ChangeEndDateInActiveStatus(Result, Parameters) Export
 		SetStatusTo("Inactive");
 		
 		WriteParameters = New Structure;
-		WriteParameters.Insert("WriteMode", DocumentWriteMode.Posting);
+		WriteParameters.Insert("WriteMode", DocumentWriteMode.Write);
 		
 		ThisForm.Write(WriteParameters);
 		
