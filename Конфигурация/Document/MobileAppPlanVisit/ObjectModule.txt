@@ -1,6 +1,18 @@
 ﻿
 Procedure BeforeWrite(Cancel)
-    TransformIntoVisitPlans();
+
+	If IsNew() Then 
+		
+		If AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+			
+			AdditionalProperties.Delete("ЗагрузкаBitmobile");
+			
+		EndIf;
+		
+	EndIf;
+	
+	TransformIntoVisitPlans();
+	
 EndProcedure
 
 Procedure TransformIntoVisitPlans()
@@ -8,7 +20,6 @@ Procedure TransformIntoVisitPlans()
     CreatePlan(planDoc);
     ThisObject.Transformed = True;
 EndProcedure
-
 
 Function GetPlanDoc()
 	
