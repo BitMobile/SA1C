@@ -291,9 +291,9 @@
 INTO VisitPlans
 FROM
 	Document.VisitPlan.Outlets AS VisitPlanOutlets
-WHERE
-	VisitPlanOutlets.Date &gt;= &amp;BeginDate
-	AND VisitPlanOutlets.Date &lt;= &amp;EndDate
+{WHERE
+	(VisitPlanOutlets.Date &gt;= &amp;BeginDate),
+	(VisitPlanOutlets.Date &lt;= &amp;EndDate)}
 
 GROUP BY
 	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY),
@@ -322,9 +322,9 @@ SELECT ALLOWED
 INTO Visits
 FROM
 	Document.Visit AS Visit
-WHERE
-	Visit.Date &gt;= &amp;BeginDate
-	AND Visit.Date &lt;= &amp;EndDate
+{WHERE
+	(Visit.Date &gt;= &amp;BeginDate),
+	(Visit.Date &lt;= &amp;EndDate)}
 
 GROUP BY
 	Visit.SR,
@@ -380,8 +380,9 @@ FROM
 				Document.Visit.Questions AS VisitQuestions
 			WHERE
 				VisitQuestions.Question.AnswerType = VALUE(Enum.DataType.Snapshot)
-				AND VisitQuestions.Ref.Date &gt;= &amp;BeginDate
-				AND VisitQuestions.Ref.Date &lt;= &amp;EndDate
+			{WHERE
+				(VisitQuestions.Ref.Date &gt;= &amp;BeginDate),
+				(VisitQuestions.Ref.Date &lt;= &amp;EndDate)}
 			
 			GROUP BY
 				VisitQuestions.Ref) AS NestedSelect
@@ -686,6 +687,7 @@ End</expression>
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.User.EmptyRef</dcscor:value>
 					<dcsset:userSettingID>78fdf7b0-89d8-484e-91fe-a61ac55f8566</dcsset:userSettingID>
