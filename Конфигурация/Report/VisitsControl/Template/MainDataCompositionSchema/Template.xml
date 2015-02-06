@@ -303,6 +303,29 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
+SELECT
+	VisitPlans.Date,
+	VisitPlans.SR,
+	VisitPlans.VisitPlansQty,
+	VisitPlans.Outlet,
+	VisitPlans.Ref,
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	MAX(TerritoryOutlets.Ref.Owner) AS Region
+INTO VisitPlansTerritory
+FROM
+	VisitPlans AS VisitPlans
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON VisitPlans.Outlet = TerritoryOutlets.Outlet
+
+GROUP BY
+	VisitPlans.Date,
+	VisitPlans.Ref,
+	VisitPlans.Outlet,
+	VisitPlans.SR,
+	VisitPlans.VisitPlansQty
+;
+
+////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
 	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
 	Visit.Plan,
@@ -335,44 +358,70 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
+SELECT
+	Visits.Date,
+	Visits.Plan,
+	Visits.SR,
+	Visits.PlannedVisitsQty,
+	Visits.UnplannedVisitsQty,
+	Visits.Outlet,
+	Visits.Ref,
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	MAX(TerritoryOutlets.Ref.Owner) AS Region
+INTO VisitsTerritory
+FROM
+	Visits AS Visits,
+	Catalog.Territory.Outlets AS TerritoryOutlets
+
+GROUP BY
+	Visits.Date,
+	Visits.Plan,
+	Visits.SR,
+	Visits.PlannedVisitsQty,
+	Visits.UnplannedVisitsQty,
+	Visits.Outlet,
+	Visits.Ref
+;
+
+////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	ISNULL(VisitPlans.Date, Visits.Date) AS Date,
-	ISNULL(VisitPlans.SR, Visits.SR) AS SR,
-	ISNULL(VisitPlans.VisitPlansQty, 0) AS VisitPlansQty,
-	ISNULL(Visits.PlannedVisitsQty, 0) AS PlannedVisitsQty,
-	ISNULL(Visits.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
-	ISNULL(VisitPlans.Outlet, Visits.Outlet) AS Outlet,
-	Visits.Ref AS Visit,
-	VisitPlans.Date AS VisitPlanDate,
+	ISNULL(VisitPlansTerritory.Date, VisitsTerritory.Date) AS Date,
+	ISNULL(VisitPlansTerritory.SR, VisitsTerritory.SR) AS SR,
+	ISNULL(VisitPlansTerritory.VisitPlansQty, 0) AS VisitPlansQty,
+	ISNULL(VisitsTerritory.PlannedVisitsQty, 0) AS PlannedVisitsQty,
+	ISNULL(VisitsTerritory.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
+	ISNULL(VisitPlansTerritory.Outlet, VisitsTerritory.Outlet) AS Outlet,
+	VisitsTerritory.Ref AS Visit,
+	VisitPlansTerritory.Date AS VisitPlanDate,
 	CASE
-		WHEN VisitPlans.Ref IS NULL 
-				AND NOT Visits.Ref IS NULL 
+		WHEN VisitPlansTerritory.Ref IS NULL 
+				AND NOT VisitsTerritory.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 4
 					ELSE 5
 				END
-		WHEN NOT VisitPlans.Ref IS NULL 
-				AND NOT Visits.Ref IS NULL 
+		WHEN NOT VisitPlansTerritory.Ref IS NULL 
+				AND NOT VisitsTerritory.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 2
 					ELSE 3
 				END
-		WHEN NOT VisitPlans.Ref IS NULL 
-				AND Visits.Ref IS NULL 
+		WHEN NOT VisitPlansTerritory.Ref IS NULL 
+				AND VisitsTerritory.Ref IS NULL 
 			THEN 1
 	END AS VisitType,
 	ISNULL(NestedSelect.PhotosQty, 0) AS PhotosQty,
 	0 AS Title,
-	Visits.Date AS VisitDate,
-	VisitPlans.Ref AS VisitPlan,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region
+	VisitsTerritory.Date AS VisitDate,
+	VisitPlansTerritory.Ref AS VisitPlan,
+	ISNULL(VisitPlansTerritory.Territory, VisitsTerritory.Territory) AS Territory,
+	ISNULL(VisitPlansTerritory.Region, VisitsTerritory.Region) AS Region
 INTO VisitsPlanVisits
 FROM
-	VisitPlans AS VisitPlans
-		FULL JOIN Visits AS Visits
+	VisitPlansTerritory AS VisitPlansTerritory
+		FULL JOIN VisitsTerritory AS VisitsTerritory
 			LEFT JOIN (SELECT
 				VisitQuestions.Ref AS Ref,
 				COUNT(DISTINCT ISNULL(VisitQuestions.Question.AnswerType, 0)) AS PhotosQty
@@ -386,45 +435,44 @@ FROM
 			
 			GROUP BY
 				VisitQuestions.Ref) AS NestedSelect
-			ON Visits.Ref = NestedSelect.Ref
-		ON (Visits.Date = VisitPlans.Date)
-			AND (Visits.SR = VisitPlans.SR)
-			AND (Visits.Outlet = VisitPlans.Outlet)
-			AND VisitPlans.Ref = Visits.Plan
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON VisitPlans.Outlet = TerritoryOutlets.Outlet
+			ON VisitsTerritory.Ref = NestedSelect.Ref
+		ON VisitPlansTerritory.Ref = VisitsTerritory.Plan
+			AND VisitPlansTerritory.Date = VisitsTerritory.Date
+			AND VisitPlansTerritory.SR = VisitsTerritory.SR
+			AND VisitPlansTerritory.Outlet = VisitsTerritory.Outlet
 
 GROUP BY
-	Visits.Ref,
-	VisitPlans.Date,
-	Visits.Date,
-	VisitPlans.Ref,
-	ISNULL(VisitPlans.Date, Visits.Date),
-	ISNULL(VisitPlans.SR, Visits.SR),
-	ISNULL(VisitPlans.Outlet, Visits.Outlet),
-	ISNULL(VisitPlans.VisitPlansQty, 0),
-	ISNULL(Visits.PlannedVisitsQty, 0),
-	ISNULL(Visits.UnplannedVisitsQty, 0),
+	VisitsTerritory.Ref,
+	VisitPlansTerritory.Date,
+	VisitsTerritory.Date,
+	VisitPlansTerritory.Ref,
+	ISNULL(NestedSelect.PhotosQty, 0),
+	ISNULL(VisitPlansTerritory.SR, VisitsTerritory.SR),
+	ISNULL(VisitPlansTerritory.VisitPlansQty, 0),
+	ISNULL(VisitsTerritory.PlannedVisitsQty, 0),
+	ISNULL(VisitsTerritory.UnplannedVisitsQty, 0),
+	ISNULL(VisitPlansTerritory.Outlet, VisitsTerritory.Outlet),
 	CASE
-		WHEN VisitPlans.Ref IS NULL 
-				AND NOT Visits.Ref IS NULL 
+		WHEN VisitPlansTerritory.Ref IS NULL 
+				AND NOT VisitsTerritory.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 4
 					ELSE 5
 				END
-		WHEN NOT VisitPlans.Ref IS NULL 
-				AND NOT Visits.Ref IS NULL 
+		WHEN NOT VisitPlansTerritory.Ref IS NULL 
+				AND NOT VisitsTerritory.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 2
 					ELSE 3
 				END
-		WHEN NOT VisitPlans.Ref IS NULL 
-				AND Visits.Ref IS NULL 
+		WHEN NOT VisitPlansTerritory.Ref IS NULL 
+				AND VisitsTerritory.Ref IS NULL 
 			THEN 1
 	END,
-	ISNULL(NestedSelect.PhotosQty, 0)
+	ISNULL(VisitPlansTerritory.Territory, VisitsTerritory.Territory),
+	ISNULL(VisitPlansTerritory.Region, VisitsTerritory.Region)
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -442,11 +490,11 @@ SELECT ALLOWED
 	VisitsPlanVisits.Title,
 	VisitsPlanVisits.VisitDate,
 	VisitsPlanVisits.VisitPlan,
-	VisitsPlanVisits.Territory,
-	VisitsPlanVisits.Region,
 	VisitsPlanVisits.Outlet.Distributor,
 	VisitsPlanVisits.Outlet.Class,
-	VisitsPlanVisits.Outlet.Type
+	VisitsPlanVisits.Outlet.Type,
+	VisitsPlanVisits.Territory,
+	VisitsPlanVisits.Region
 FROM
 	VisitsPlanVisits AS VisitsPlanVisits</query>
 	</dataSet>
