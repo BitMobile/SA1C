@@ -5,6 +5,12 @@ Procedure BeforeWrite(Cancel)
 	
 	RemoveProperty = False;
 	
+	If IsNew() Then 
+		
+		RemoveProperty = True;
+		
+	EndIf;
+	
 	// Очистить табличную часть параметров от незаполненных
 	DeletedRowArray = New Array;
 	
