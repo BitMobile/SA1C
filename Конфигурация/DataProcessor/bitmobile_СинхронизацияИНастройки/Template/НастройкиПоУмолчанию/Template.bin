@@ -970,7 +970,7 @@ FROM
 		ON SKUsInQuestionnairesSliceLast.SKU = S.Ref
 WHERE
 	SKUsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)</ТекстЗапроса>
-					<Фильтр>T.[SKU] IN (SELECT DISTINCT SK.Id FROM [Catalog].[SKU] SK WHERE SK.Owner IN (SELECT G.SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = G.[Ref] AND Territory.[SR] = @UserId)) </Фильтр>
+					<Фильтр>T.[SKU] IN (SELECT DISTINCT SK.Id FROM [Catalog].[SKU] SK WHERE SK.[Owner] IN (SELECT G.SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = G.[Ref] WHERE Territory.[SR] = @UserId)) </Фильтр>
 					<Запрос>true</Запрос>
 					<Ключ>SKU</Ключ>
 				</Row>
@@ -1036,7 +1036,7 @@ WHERE
 					<ТабличнаяЧастьОбъектаBitmobile>SRs</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр/>
+					<Фильтр>T.[SR] = @UserId</Фильтр>
 					<Запрос>false</Запрос>
 					<Ключ>SR</Ключ>
 				</Row>
@@ -1646,7 +1646,7 @@ SELECT P.[Id] AS PriceList FROM [Document].[PriceList] P WHERE P.[DefaultPriceLi
 					<ТабличнаяЧастьОбъектаBitmobile>Prices</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>Prices</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр>T.[SKU] IN (SELECT DISTINCT SK.[Id] FROM [Catalog].[SKU] SK WHERE SK.[Owner] IN (SELECT G.[SKUGroup] FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = G.[Ref] AND Territory.[SR] = @UserId)) </Фильтр>
+					<Фильтр>T.[SKU] IN (SELECT DISTINCT SK.Id FROM [Catalog].[SKU] SK WHERE SK.[Owner] IN (SELECT G.SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = G.[Ref] WHERE Territory.[SR] = @UserId)) </Фильтр>
 					<Запрос>false</Запрос>
 					<Ключ>SKU</Ключ>
 				</Row>
@@ -2710,7 +2710,7 @@ WHERE
 					<ТабличнаяЧастьОбъектаBitmobile>SRs</ТабличнаяЧастьОбъектаBitmobile>
 					<ТабличнаяЧастьОбъектаКонфигурации>SRs</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр/>
+					<Фильтр>T.[SR] = @UserId</Фильтр>
 					<Запрос>false</Запрос>
 					<Ключ>SR</Ключ>
 				</Row>
@@ -3600,12 +3600,12 @@ WHERE
 			</РеквизитыШапки>
 			<ТабличныеЧасти>
 				<Row>
-					<ТабличнаяЧастьОбъектаBitmobile>Managers</ТабличнаяЧастьОбъектаBitmobile>
+					<ТабличнаяЧастьОбъектаBitmobile/>
 					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
 					<ТекстЗапроса/>
-					<Фильтр/>
+					<Фильтр>T.[Manager] = @UserId</Фильтр>
 					<Запрос>false</Запрос>
-					<Ключ>Manager</Ключ>
+					<Ключ/>
 				</Row>
 			</ТабличныеЧасти>
 			<РеквизитыТабличныхЧастей>
@@ -3637,7 +3637,7 @@ WHERE
 					<ТипРеквизита>Catalog.User</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
+					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
 				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Managers</ТабличнаяЧастьОбъектаКонфигурации>
@@ -5115,7 +5115,7 @@ WHERE
 			ELSE ENDOFPERIOD(AssortmentMatrixPeriods.EndDate, DAY)
 		END &gt;= &amp;CurrentDate
 	AND NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValuetableRowStatuses.Deleted)</ТекстЗапроса>
-					<Фильтр/>
+					<Фильтр>T.[SKU] IN (SELECT DISTINCT SK.Id FROM [Catalog].[SKU] SK WHERE SK.[Owner] IN (SELECT G.SKUGroup FROM [Catalog].[Territory_SKUGroups] G JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = G.[Ref] WHERE Territory.[SR] = @UserId)) </Фильтр>
 					<Запрос>true</Запрос>
 					<Ключ>SKU,Unit</Ключ>
 				</Row>
@@ -5139,7 +5139,7 @@ WHERE
 			ELSE ENDOFPERIOD(AssortmentMatrixPeriods.EndDate, DAY)
 		END &gt;= &amp;CurrentDate
 	AND NOT AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)</ТекстЗапроса>
-					<Фильтр/>
+					<Фильтр>T.[Outlet] IN (SELECT DISTINCT O.[Outlet] FROM [Catalog].[Territory_Outlets] O JOIN [Catalog].[Territory_SRs] Territory ON Territory.[Ref] = O.[Ref] AND Territory.[SR] = @UserId)</Фильтр>
 					<Запрос>true</Запрос>
 					<Ключ>Outlet</Ключ>
 				</Row>
@@ -5166,7 +5166,7 @@ WHERE
 GROUP BY
 	AssortmentMatrixPeriods.Ref,
 	TerritorySRs.SR</ТекстЗапроса>
-					<Фильтр/>
+					<Фильтр>T.[SR] = @UserId</Фильтр>
 					<Запрос>true</Запрос>
 					<Ключ>SR</Ключ>
 				</Row>
@@ -5233,36 +5233,6 @@ GROUP BY
 					<КлючевоеПоле>false</КлючевоеПоле>
 				</Row>
 				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Число</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>true</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.AssortmentMatrix</ТипРеквизита>
-					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>false</КлючевоеПоле>
-				</Row>
-				<Row>
-					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
-					<РеквизитОбъектаBitmobile>Outlet</РеквизитОбъектаBitmobile>
-					<РеквизитОбъектаКонфигурации>Outlet</РеквизитОбъектаКонфигурации>
-					<СтандартныйРеквизит>false</СтандартныйРеквизит>
-					<ТипРеквизита>Catalog.Outlet</ТипРеквизита>
-					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
-					<ПриводитьКСтроке>false</ПриводитьКСтроке>
-					<КлючевоеПоле>true</КлючевоеПоле>
-				</Row>
-				<Row>
 					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №3</ТабличнаяЧастьОбъектаКонфигурации>
 					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
 					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
@@ -5288,6 +5258,36 @@ GROUP BY
 					<РеквизитОбъектаКонфигурации>SR</РеквизитОбъектаКонфигурации>
 					<СтандартныйРеквизит>false</СтандартныйРеквизит>
 					<ТипРеквизита>Catalog.User</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>true</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>LineNumber</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>LineNumber</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Число</ТипРеквизита>
+					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Ref</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Ref</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>true</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.AssortmentMatrix</ТипРеквизита>
+					<ПроверятьЗаполнение>true</ПроверятьЗаполнение>
+					<ПриводитьКСтроке>false</ПриводитьКСтроке>
+					<КлючевоеПоле>false</КлючевоеПоле>
+				</Row>
+				<Row>
+					<ТабличнаяЧастьОбъектаКонфигурации>Запрос №2</ТабличнаяЧастьОбъектаКонфигурации>
+					<РеквизитОбъектаBitmobile>Outlet</РеквизитОбъектаBitmobile>
+					<РеквизитОбъектаКонфигурации>Outlet</РеквизитОбъектаКонфигурации>
+					<СтандартныйРеквизит>false</СтандартныйРеквизит>
+					<ТипРеквизита>Catalog.Outlet</ТипРеквизита>
 					<ПроверятьЗаполнение>false</ПроверятьЗаполнение>
 					<ПриводитьКСтроке>false</ПриводитьКСтроке>
 					<КлючевоеПоле>true</КлючевоеПоле>
