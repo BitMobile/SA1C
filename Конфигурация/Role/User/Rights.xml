@@ -33,6 +33,13 @@
 		</right>
 	</object>
 	<object>
+		<name>CommonCommand.ShowOutletAssortmentAvailability</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>CommonCommand.ShowAnalysisOutletParameters</name>
 		<right>
 			<name>View</name>
