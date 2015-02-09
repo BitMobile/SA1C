@@ -303,7 +303,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	VisitPlans.Date,
 	VisitPlans.SR,
 	VisitPlans.VisitPlansQty,
@@ -358,7 +358,7 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
+SELECT ALLOWED
 	Visits.Date,
 	Visits.Plan,
 	Visits.SR,
@@ -370,8 +370,9 @@ SELECT
 	MAX(TerritoryOutlets.Ref.Owner) AS Region
 INTO VisitsTerritory
 FROM
-	Visits AS Visits,
-	Catalog.Territory.Outlets AS TerritoryOutlets
+	Visits AS Visits
+		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+		ON Visits.Outlet = TerritoryOutlets.Outlet
 
 GROUP BY
 	Visits.Date,
