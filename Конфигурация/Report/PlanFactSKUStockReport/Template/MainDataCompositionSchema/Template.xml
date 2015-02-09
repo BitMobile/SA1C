@@ -307,7 +307,7 @@ SELECT ALLOWED
 	Result.Plan,
 	MAX(TerritoryOutlets.Ref) AS Territory,
 	MAX(TerritoryOutlets.Ref.Owner) AS Region,
-	COUNT(DISTINCT TerritoryOutlets.Ref.SR) AS SR,
+	TerritoryOutlets.Ref.SR AS SR,
 	OutletParameters.Value
 INTO PlanFactTerritory
 FROM
@@ -330,7 +330,8 @@ GROUP BY
 	Result.SKU.Owner,
 	Result.Fact,
 	Result.Plan,
-	OutletParameters.Value
+	OutletParameters.Value,
+	TerritoryOutlets.Ref.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////

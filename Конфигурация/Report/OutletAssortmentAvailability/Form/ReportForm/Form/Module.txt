@@ -12,20 +12,20 @@ Procedure Compose(Command)
 		
 		If Variant = "Month" Then
 			
-			Period.StartDate = BegOfMonth(Period.StartDate);
-			Period.EndDate = EndOfMonth(Period.EndDate);
+			Period.StartDate = ?(Period.StartDate <> '00010101', BegOfMonth(Period.StartDate), Period.StartDate);
+			Period.EndDate = ?(Period.EndDate <> '00010101', EndOfMonth(Period.EndDate), Period.EndDate);
 			UserSettingsPeriodParameter.Value = Period;
 			
 		ElsIf Variant = "Month2" Then
 			
-			Period.StartDate = BegOfMonth(?(Month(Period.StartDate) % 2 = 0, AddMonth(Period.StartDate, -1), Period.StartDate));
-			Period.EndDate = EndOfMonth(?(Month(Period.EndDate) % 2 = 0, Period.EndDate, AddMonth(Period.EndDate, 1)));
+			Period.StartDate = ?(Period.StartDate <> '00010101', BegOfMonth(?(Month(Period.StartDate) % 2 = 0, AddMonth(Period.StartDate, -1), Period.StartDate)), Period.StartDate);
+			Period.EndDate = ?(Period.EndDate <> '00010101', EndOfMonth(?(Month(Period.EndDate) % 2 = 0, Period.EndDate, AddMonth(Period.EndDate, 1))), Period.EndDate);
 			UserSettingsPeriodParameter.Value = Period;
 			
 		ElsIf Variant = "Quarter" Then
 			
-			Period.StartDate = BegOfQuarter(Period.StartDate);
-			Period.EndDate = EndOfQuarter(Period.EndDate);
+			Period.StartDate = ?(Period.StartDate <> '00010101', BegOfQuarter(Period.StartDate), Period.StartDate);
+			Period.EndDate = ?(Period.EndDate <> '00010101', EndOfQuarter(Period.EndDate), Period.EndDate);
 			UserSettingsPeriodParameter.Value = Period;
 			
 		EndIf;

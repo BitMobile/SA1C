@@ -6,10 +6,6 @@
 	<object>
 		<name>InformationRegister.Answers.Dimension.Question</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -83,10 +79,6 @@ WHERE TerritoryOutlets.Ref.Owner IN
 	</object>
 	<object>
 		<name>InformationRegister.Answers.Dimension.Visit</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1007,13 +999,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 			<name>Update</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.StandardAttribute.Active</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1022,20 +1014,12 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.StandardAttribute.LineNumber</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.StandardAttribute.Recorder</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1044,20 +1028,12 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.StandardAttribute.Period</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.Resource.Unit</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1072,10 +1048,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.Dimension.AssortmentMatrix</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1250,10 +1222,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.Dimension.AssortmentMatrix</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1667,13 +1635,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 			<name>Update</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
 	</object>
 	<object>
 		<name>InformationRegister.Answers.StandardAttribute.Active</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1682,10 +1650,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	<object>
 		<name>InformationRegister.Answers.StandardAttribute.LineNumber</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -1693,20 +1657,12 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	<object>
 		<name>InformationRegister.Answers.StandardAttribute.Recorder</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
 	</object>
 	<object>
 		<name>InformationRegister.Answers.StandardAttribute.Period</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -1943,10 +1899,6 @@ WHERE MobileAppPlanVisit.SR IN
 	</object>
 	<object>
 		<name>InformationRegister.Answers.Dimension.DataType</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -2952,10 +2904,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	<object>
 		<name>InformationRegister.Answers.Dimension.QuestionAssignment</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -3151,10 +3099,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.Resource.OutletStatus</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -3223,10 +3167,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	</object>
 	<object>
 		<name>InformationRegister.Answers.Dimension.SKU</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -3673,10 +3613,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	<object>
 		<name>InformationRegister.Answers.Dimension.Outlet</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -3825,10 +3761,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.Dimension.Outlet</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -4104,10 +4036,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.Dimension.SKU</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -4121,10 +4049,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	</object>
 	<object>
 		<name>InformationRegister.Answers.Resource.Answer</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -4447,10 +4371,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	<object>
 		<name>InformationRegister.AssortmentMatrixSKUs.Resource.Qty</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -4708,13 +4628,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 			<name>Update</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.StandardAttribute.Active</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -4723,10 +4643,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.StandardAttribute.LineNumber</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
@@ -4734,20 +4650,12 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.StandardAttribute.Recorder</name>
 		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
 			<name>Edit</name>
 			<value>false</value>
 		</right>
 	</object>
 	<object>
 		<name>InformationRegister.AssortmentMatrixOutlets.StandardAttribute.Period</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
