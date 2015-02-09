@@ -36,12 +36,88 @@
 					<Parameter xsi:nil="true"/>
 					<ExtendedTooltip name="ComposeExtendedTooltip" id="9"/>
 				</Button>
-				<Button name="LoadVariant" id="12">
+				<ButtonGroup name="Group1" id="38">
+					<ExtendedTooltip name="Group1ExtendedTooltip" id="39"/>
+					<ChildItems>
+						<Button name="ReportSettings" id="14">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.ReportSettings</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="ReportSettingsExtendedTooltip" id="15"/>
+						</Button>
+						<Button name="LoadReportSettings" id="16">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.LoadReportSettings</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="LoadReportSettingsExtendedTooltip" id="17"/>
+						</Button>
+						<Button name="SaveReportSettings" id="18">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.SaveReportSettings</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="SaveReportSettingsExtendedTooltip" id="19"/>
+						</Button>
+						<Button name="StandardSettings" id="20">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.StandardSettings</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="StandardSettingsExtendedTooltip" id="21"/>
+						</Button>
+					</ChildItems>
+				</ButtonGroup>
+				<ButtonGroup name="Group2" id="40">
+					<ExtendedTooltip name="Group2ExtendedTooltip" id="41"/>
+					<ChildItems>
+						<Button name="ChangeVariant" id="22">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.ChangeVariant</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="ChangeVariantExtendedTooltip" id="23"/>
+						</Button>
+						<Button name="LoadVariant" id="12">
+							<Type>CommandBarButton</Type>
+							<OnlyInAllActions>true</OnlyInAllActions>
+							<CommandName>Form.StandardCommand.LoadVariant</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="LoadVariantExtendedTooltip" id="13"/>
+						</Button>
+						<Button name="SaveVariant" id="24">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.SaveVariant</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="SaveVariantExtendedTooltip" id="25"/>
+						</Button>
+					</ChildItems>
+				</ButtonGroup>
+				<Button name="NewWindow" id="28">
 					<Type>CommandBarButton</Type>
-					<OnlyInAllActions>true</OnlyInAllActions>
-					<CommandName>Form.StandardCommand.LoadVariant</CommandName>
+					<CommandName>Form.StandardCommand.NewWindow</CommandName>
 					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="LoadVariantExtendedTooltip" id="13"/>
+					<ExtendedTooltip name="NewWindowExtendedTooltip" id="29"/>
+				</Button>
+				<Button name="Save" id="30">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.StandardCommand.Save</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="SaveExtendedTooltip" id="31"/>
+				</Button>
+				<Button name="Print" id="32">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.StandardCommand.Print</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="PrintExtendedTooltip" id="33"/>
+				</Button>
+				<Button name="ChangeSettingsStructure" id="34">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.StandardCommand.ChangeSettingsStructure</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ChangeSettingsStructureExtendedTooltip" id="35"/>
+				</Button>
+				<Button name="Help" id="36">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.StandardCommand.Help</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="HelpExtendedTooltip" id="37"/>
 				</Button>
 			</ChildItems>
 		</CommandBar>

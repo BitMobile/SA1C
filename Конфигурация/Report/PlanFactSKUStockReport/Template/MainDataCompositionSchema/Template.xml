@@ -316,8 +316,8 @@ FROM
 		ON Result.Outlet = TerritoryOutlets.Outlet
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON Result.Outlet = OutletParameters.Ref
-WHERE
-	OutletParameters.Parameter = &amp;Parameter
+{WHERE
+	(OutletParameters.Parameter = &amp;Parameter)}
 
 GROUP BY
 	Result.SKU,
@@ -675,6 +675,7 @@ FROM
 					<dcsset:userSettingID>988e1214-155d-4748-ac55-8cee2b0df377</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
@@ -686,7 +687,7 @@ FROM
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
+					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.OutletParameter.EmptyRef</dcscor:value>
 					<dcsset:userSettingID>b7a882cc-bb32-42cd-88fb-f7332f183b36</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
