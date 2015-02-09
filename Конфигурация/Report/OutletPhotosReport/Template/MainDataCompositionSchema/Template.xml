@@ -139,6 +139,20 @@
 				</v8:DateQualifiers>
 			</valueType>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Value</dataPath>
+			<field>Value</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Канал сбыта</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	Visit.Date AS Date,
@@ -149,7 +163,8 @@
 	VisitQuestions.Answer AS Answer,
 	AllOutlets.Class,
 	AllOutlets.Type,
-	Visit.SR
+	Visit.SR,
+	OutletParameters.Value
 FROM
 	Document.Visit.Questions AS VisitQuestions
 		LEFT JOIN Document.Visit AS Visit
@@ -158,13 +173,16 @@ FROM
 					LEFT JOIN Catalog.Territory AS Territory
 					ON TerritoryOutlets.Ref = Territory.Ref
 				ON AllOutlets.Ref = TerritoryOutlets.Outlet
+				LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
+				ON AllOutlets.Ref = OutletParameters.Ref
 			ON Visit.Outlet = AllOutlets.Ref
 		ON VisitQuestions.Ref = Visit.Ref
 WHERE
 	VisitQuestions.Question.AnswerType = VALUE(Enum.DataType.Snapshot)
 {WHERE
 	(Visit.Date &gt;= &amp;StartDate),
-	(Visit.Date &lt;= &amp;EndDate)}
+	(Visit.Date &lt;= &amp;EndDate),
+	(OutletParameters.Parameter = &amp;Parameter)}
 
 GROUP BY
 	Visit.Date,
@@ -175,7 +193,8 @@ GROUP BY
 	VisitQuestions.Answer,
 	AllOutlets.Class,
 	AllOutlets.Type,
-	Visit.SR</query>
+	Visit.SR,
+	OutletParameters.Value</query>
 	</dataSet>
 	<parameter>
 		<name>EndDate</name>
@@ -235,6 +254,24 @@ GROUP BY
 		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
+	<parameter>
+		<name>Parameter</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Parameter</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Параметр ТТ "Канал сбыта"</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.OutletParameter</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -248,6 +285,13 @@ GROUP BY
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
+					<dcsset:comparisonType>Contains</dcsset:comparisonType>
+					<dcsset:right xsi:type="xs:string"/>
+					<dcsset:userSettingID>2cb7d7d9-f4bc-43cc-95b9-e00f2d9ac2d7</dcsset:userSettingID>
+				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
@@ -301,6 +345,12 @@ GROUP BY
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>40888fc1-6d06-40ec-b2bf-5b6e6987ee18</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.OutletParameter.EmptyRef</dcscor:value>
+					<dcsset:userSettingID>7729a62d-4c2c-4b86-bc5b-7d65b2af64eb</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
