@@ -266,7 +266,6 @@ FROM
 WHERE
 	AssortmentMatrixSKUsSliceLast.SKUStatus &lt;&gt; VALUE(ENum.ValueTableRowStatuses.Deleted)
 	AND AssortmentMatrixOutletsSliceLast.OutletStatus &lt;&gt; VALUE(ENum.ValueTableRowStatuses.Deleted)
-	AND AssortmentMatrixPeriods.BeginDate &gt;= &amp;StartDate
 	AND AssortmentMatrixPeriods.EndDate &lt;= &amp;EndDate
 
 GROUP BY
@@ -588,6 +587,7 @@ FROM
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
+		<use>Always</use>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Day</dcsset:name>
@@ -695,7 +695,7 @@ FROM
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
-					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.OutletParameter.EmptyRef</dcscor:value>
+					<dcscor:value xsi:nil="true"/>
 					<dcsset:userSettingID>b7a882cc-bb32-42cd-88fb-f7332f183b36</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
