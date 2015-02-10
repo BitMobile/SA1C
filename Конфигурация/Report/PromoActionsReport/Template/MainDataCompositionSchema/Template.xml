@@ -365,7 +365,7 @@ FROM
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Parameter</v8:content>
+				<v8:content>Parameter "Distribution channel"</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
@@ -377,6 +377,12 @@ FROM
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ChoiceForm</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -388,6 +394,23 @@ FROM
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
+					<dcsset:comparisonType>Contains</dcsset:comparisonType>
+					<dcsset:right xsi:type="xs:string"/>
+					<dcsset:userSettingID>e9ee3256-ef69-4ba1-a656-6bf5e25b5c4d</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distribution channel</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Канал сбыта</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
+				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
 					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>

@@ -1170,6 +1170,17 @@ Procedure UpdateForRelease_1_6_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update outlets statuses'; ru = 'Обновление статусов торговых точек'"));
 	ProcessOutletsStatuses();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update SKU questions'; ru = 'Обновление вопросов по номенклатуре'"));
+	ProcessPromoQuestion();
+	
+EndProcedure
+
+Procedure ProcessPromoQuestion()
+	
+	SKUQuestionsGroup = GetSKUQuestionsGroup();
+	
+	Question = CreateQuestion(NStr("en = 'Promo'; ru = 'Промо'"), Enums.DataType.Boolean, Enums.SKUQuestions.Promo, SKUQuestionsGroup);
+	
 EndProcedure
 
 Procedure ProcessRegions()

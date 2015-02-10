@@ -259,7 +259,7 @@ GROUP BY
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Parameter</v8:content>
+				<v8:content>Parameter "Distribution channel"</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
@@ -271,6 +271,12 @@ GROUP BY
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ChoiceForm</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -291,6 +297,16 @@ GROUP BY
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
 					<dcsset:userSettingID>2cb7d7d9-f4bc-43cc-95b9-e00f2d9ac2d7</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distribution channel</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Канал сбыта</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
