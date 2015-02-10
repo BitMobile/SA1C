@@ -351,13 +351,35 @@ SELECT ALLOWED
 	PlanFactTerritory.SKUGroup,
 	PlanFactTerritory.SKU,
 	PlanFactTerritory.Fact,
-	PlanFactTerritory.Plan,
+	MAX(PlanFactTerritory.Plan) AS Plan,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
 	PlanFactTerritory.SR,
 	PlanFactTerritory.Value
 FROM
-	PlanFactTerritory AS PlanFactTerritory</query>
+	PlanFactTerritory AS PlanFactTerritory
+
+GROUP BY
+	PlanFactTerritory.Date,
+	PlanFactTerritory.OutletDistributor,
+	PlanFactTerritory.OutletClass,
+	PlanFactTerritory.OutletType,
+	PlanFactTerritory.Outlet,
+	PlanFactTerritory.Brand,
+	PlanFactTerritory.SKUGroup,
+	PlanFactTerritory.SKU,
+	PlanFactTerritory.Territory,
+	PlanFactTerritory.Region,
+	PlanFactTerritory.SR,
+	PlanFactTerritory.Value,
+	BEGINOFPERIOD(PlanFactTerritory.Date, MONTH),
+	CASE
+		WHEN MONTH(PlanFactTerritory.Date) IN (2, 4, 6, 8, 10, 12)
+			THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Date, MONTH, -1), MONTH)
+		ELSE BEGINOFPERIOD(PlanFactTerritory.Date, MONTH)
+	END,
+	BEGINOFPERIOD(PlanFactTerritory.Date, QUARTER),
+	PlanFactTerritory.Fact</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Fact</dataPath>
