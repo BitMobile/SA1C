@@ -219,7 +219,8 @@ SELECT
 	ChildQuestions.ChildQuestion,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
-	AnswersSliceLast.Answer
+	AnswersSliceLast.Answer,
+	AnswersSliceLast.Visit.SR AS SR
 INTO Answers
 FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
@@ -240,7 +241,8 @@ SELECT
 	Answers.SKU,
 	Answers.Answer,
 	MAX(TerritoryOutlets.Ref) AS Region,
-	MAX(TerritoryOutlets.Ref.Owner) AS Territory
+	MAX(TerritoryOutlets.Ref.Owner) AS Territory,
+	Answers.SR
 INTO AnswersTerritory
 FROM
 	Answers AS Answers
@@ -252,7 +254,8 @@ GROUP BY
 	Answers.ChildQuestion,
 	Answers.SKU,
 	Answers.Outlet,
-	Answers.Answer
+	Answers.Answer,
+	Answers.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -264,17 +267,15 @@ SELECT
 	AnswersTerritory.Answer,
 	AnswersTerritory.Region,
 	AnswersTerritory.Territory,
-	TerritorySRs.SR,
 	AnswersTerritory.Outlet.Distributor,
 	AnswersTerritory.Outlet.Class,
 	AnswersTerritory.Outlet.Type,
 	AnswersTerritory.SKU.Brand AS Brand,
 	AnswersTerritory.SKU.Owner AS SKUGroup,
-	OutletParameters.Value
+	OutletParameters.Value,
+	AnswersTerritory.SR
 FROM
 	AnswersTerritory AS AnswersTerritory
-		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-		ON AnswersTerritory.Territory = TerritorySRs.Ref
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON AnswersTerritory.Outlet = OutletParameters.Ref
 {WHERE

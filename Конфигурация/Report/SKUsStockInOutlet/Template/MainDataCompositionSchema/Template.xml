@@ -206,7 +206,8 @@
 	SKUGroup.Ref AS SKUGroup,
 	Visit.Outlet.Class AS Class,
 	Visit.Outlet.Type AS Type,
-	Visit.Outlet.Distributor AS Distributor
+	Visit.Outlet.Distributor AS Distributor,
+	Visit.SR
 INTO Visits
 FROM
 	Document.Visit.SKUs AS VisitSKUs
@@ -235,7 +236,8 @@ SELECT ALLOWED DISTINCT
 	Visits.SKUGroup,
 	Visits.Class,
 	Visits.Type,
-	Visits.Distributor
+	Visits.Distributor,
+	Visits.SR
 INTO TerritoryVisits
 FROM
 	Visits AS Visits
@@ -251,7 +253,8 @@ GROUP BY
 	Visits.SKUGroup,
 	Visits.Class,
 	Visits.Type,
-	Visits.Distributor
+	Visits.Distributor,
+	Visits.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -267,12 +270,10 @@ SELECT
 	TerritoryVisits.Class,
 	TerritoryVisits.Type,
 	TerritoryVisits.Distributor,
-	TerritorySRs.SR
+	TerritoryVisits.SR
 INTO TerritoryVisitsSRs
 FROM
 	TerritoryVisits AS TerritoryVisits
-		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-		ON TerritoryVisits.Territory = TerritorySRs.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -288,8 +289,8 @@ SELECT
 	TerritoryVisitsSRs.Class,
 	TerritoryVisitsSRs.Type,
 	TerritoryVisitsSRs.Distributor,
-	TerritoryVisitsSRs.SR,
-	OutletParameters.Value
+	OutletParameters.Value,
+	TerritoryVisitsSRs.SR
 FROM
 	TerritoryVisitsSRs AS TerritoryVisitsSRs,
 	Catalog.Outlet.Parameters AS OutletParameters
