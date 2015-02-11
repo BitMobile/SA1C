@@ -131,6 +131,18 @@
 					<v8:content>Ответственный</v8:content>
 				</v8:item>
 			</title>
+			<inputParameters>
+				<dcscor:item>
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ChoiceParameters</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:ChoiceParameters">
+						<dcscor:item>
+							<dcscor:choiceParameter>RoleOfUser.Role</dcscor:choiceParameter>
+							<dcscor:value xsi:type="xs:string">SRM_SR</dcscor:value>
+						</dcscor:item>
+					</dcscor:value>
+				</dcscor:item>
+			</inputParameters>
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
@@ -140,12 +152,14 @@
 	VisitSKUs.Ref.SR AS ТорговыйАгент,
 	VisitSKUs.Ref.Outlet AS ТорговаяТочка,
 	VisitSKUs.Ref.Outlet.OutletStatus AS Статус,
-	TerritoryOutlets.Ref.Owner AS Регион,
 	TerritoryOutlets.Ref AS Территория,
-	TerritoryOutlets.Ref.Owner.Manager AS Ответственный
+	RegionManagers.Manager AS Ответственный,
+	RegionManagers.Ref AS Регион
 FROM
 	Document.Visit.SKUs AS VisitSKUs
 		INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+			INNER JOIN Catalog.Region.Managers AS RegionManagers
+			ON TerritoryOutlets.Ref.Owner = RegionManagers.Ref
 		ON VisitSKUs.Ref.Outlet = TerritoryOutlets.Outlet
 WHERE
 	VisitSKUs.Question.Assignment = VALUE(Enum.SKUQuestions.Available)
@@ -161,9 +175,9 @@ GROUP BY
 	VisitSKUs.Ref.SR,
 	VisitSKUs.Ref.Outlet,
 	VisitSKUs.Ref.Outlet.OutletStatus,
-	TerritoryOutlets.Ref.Owner,
 	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.Owner.Manager</query>
+	RegionManagers.Manager,
+	RegionManagers.Ref</query>
 	</dataSet>
 	<parameter>
 		<name>Period</name>
