@@ -51,7 +51,7 @@ Procedure ListValueChoice(Item, Value, StandardProcessing)
 				Or OwnerForm.FormName = "Report.PlanFactSKUStockReport.Form.ReportForm" Or OwnerForm.FormName = "Report.PlanFactSKUStockReport.SettingsForm"
 				Or OwnerForm.FormName = "Report.PriceMonitoring.Form" Or OwnerForm.FormName = "Report.PriceMonitoring.SettingsForm"
 				Or OwnerForm.FormName = "Report.ShelfSpaceShare.Form" Or OwnerForm.FormName = "Report.ShelfSpaceShare.SettingsForm"
-				Or OwnerForm.FormName = "Report.SKUsStockInOutlet.Form" Or OwnerForm.FormName = "Report.SKUsStockInOutlet.SettingsForm" Then 
+				Or OwnerForm.FormName = "Report.SKUsStockInOutlet.ObjectForm" Or OwnerForm.FormName = "Report.SKUsStockInOutlet.SettingsForm" Then 
 				
 				OwnerForm.Report.SettingsComposer.Settings.FilterAvailableFields.Items.Find("Value").AvailableValues = GetParameterValues(Value);
 				
