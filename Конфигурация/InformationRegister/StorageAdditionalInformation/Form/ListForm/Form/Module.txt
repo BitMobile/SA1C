@@ -28,7 +28,7 @@ Procedure ShowPreview()
 			
 			Try
 	
-				Connection = New HTTPConnection(Server, Port, "admin", Password);
+				Connection = New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
 				
 			Except
 				
