@@ -221,6 +221,16 @@
 		<field xsi:type="DataSetFieldField">
 			<dataPath>SR</dataPath>
 			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
+				</v8:item>
+			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
@@ -266,7 +276,8 @@ SELECT ALLOWED
 	AnswersSliceLast.SKU.Brand,
 	AnswersSliceLast.SKU.Owner AS SKUGroup,
 	AnswersSliceLast.SKU,
-	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock
+	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock,
+	AnswersSliceLast.Visit.SR
 INTO AllBrands
 FROM
 	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)) AS AnswersSliceLast
@@ -338,7 +349,7 @@ SELECT ALLOWED
 	0 AS Percent,
 	Average.AvgStock,
 	OutletParameters.Value,
-	TerritorySRs.SR
+	AllBrands.VisitSR AS SR
 FROM
 	AllBrands AS AllBrands
 		LEFT JOIN CurrentBrand AS CurrentBrand
@@ -371,8 +382,6 @@ FROM
 			AND AllBrands.SKU = Average.SKU
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON AllBrands.Outlet = OutletParameters.Ref
-		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-		ON AllBrands.Territory = TerritorySRs.Ref
 WHERE
 	OutletParameters.Parameter = &amp;Parameter</query>
 	</dataSet>
