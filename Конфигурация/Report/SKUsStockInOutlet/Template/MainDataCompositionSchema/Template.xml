@@ -292,8 +292,9 @@ SELECT
 	OutletParameters.Value,
 	TerritoryVisitsSRs.SR
 FROM
-	TerritoryVisitsSRs AS TerritoryVisitsSRs,
-	Catalog.Outlet.Parameters AS OutletParameters
+	TerritoryVisitsSRs AS TerritoryVisitsSRs
+		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
+		ON TerritoryVisitsSRs.Outlet = OutletParameters.Ref
 {WHERE
 	(OutletParameters.Parameter = &amp;Parameter)}</query>
 	</dataSet>
