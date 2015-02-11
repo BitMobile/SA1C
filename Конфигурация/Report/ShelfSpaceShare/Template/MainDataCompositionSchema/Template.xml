@@ -397,32 +397,7 @@ WHERE
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
-		<expression>Sum(Stock) / EvalExpression("Sum(Stock)", "Outlet") * 100</expression>
-		<group>SKUBrand</group>
-	</totalField>
-	<totalField>
-		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", "OutletType") * 100</expression>
-		<group>Outlet</group>
-	</totalField>
-	<totalField>
-		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", "OutletClass") * 100</expression>
-		<group>OutletType</group>
-	</totalField>
-	<totalField>
-		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", "OutletDistributor") * 100</expression>
-		<group>OutletClass</group>
-	</totalField>
-	<totalField>
-		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", "Region") * 100</expression>
-		<group>Territory</group>
-	</totalField>
-	<totalField>
-		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", "ОбщийИтог") * 100</expression>
+		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100</expression>
 		<group>Region</group>
 	</totalField>
 	<totalField>
@@ -507,6 +482,12 @@ WHERE
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Percent</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>CurrentBrandStock</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>SKUGroupStock</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
