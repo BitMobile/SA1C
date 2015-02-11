@@ -232,6 +232,16 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field1</dataPath>
+			<field>Field1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field1</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Date,
@@ -266,7 +276,12 @@ FROM
 WHERE
 	AssortmentMatrixSKUsSliceLast.SKUStatus &lt;&gt; VALUE(ENum.ValueTableRowStatuses.Deleted)
 	AND AssortmentMatrixOutletsSliceLast.OutletStatus &lt;&gt; VALUE(ENum.ValueTableRowStatuses.Deleted)
-	AND AssortmentMatrixPeriods.EndDate &lt;= &amp;EndDate
+	AND AssortmentMatrixPeriods.BeginDate &lt;= &amp;EndDate
+	AND CASE
+			WHEN AssortmentMatrixPeriods.EndDate = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE AssortmentMatrixPeriods.EndDate &gt;= &amp;StartDate
+		END
 
 GROUP BY
 	AssortmentMatrixSKUsSliceLast.SKU,
@@ -316,7 +331,7 @@ FROM
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON Result.Outlet = OutletParameters.Ref
 {WHERE
-	(OutletParameters.Parameter = &amp;Parameter)}
+	(OutletParameters.Parameter = &amp;Parameter) AS Field1}
 
 GROUP BY
 	Result.SKU,
@@ -592,31 +607,6 @@ GROUP BY
 		<useRestriction>false</useRestriction>
 		<use>Always</use>
 	</parameter>
-	<parameter>
-		<name>Parameter</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Parameter "Distribution channel"</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Параметр "Канал сбыта"</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.OutletParameter</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>false</useRestriction>
-		<inputParameters>
-			<dcscor:item>
-				<dcscor:parameter>ChoiceForm</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
-			</dcscor:item>
-		</inputParameters>
-		<use>Always</use>
-	</parameter>
 	<settingsVariant>
 		<dcsset:name>Day</dcsset:name>
 		<dcsset:presentation xsi:type="v8:LocalStringType">
@@ -723,16 +713,6 @@ GROUP BY
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-					</dcscor:value>
-					<dcsset:userSettingID>d193ba93-07b3-482e-9fad-510e2e290062</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
 					<dcsset:userSettingID>b7a882cc-bb32-42cd-88fb-f7332f183b36</dcsset:userSettingID>
 				</dcscor:item>
