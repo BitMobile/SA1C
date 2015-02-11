@@ -186,7 +186,11 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>SKUGroup stock</v8:content>
+					<v8:content>SKU Group stock</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Остаток по группе номенклатуры</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -203,6 +207,12 @@
 					<v8:content>Среднее за 2 месяца</v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NFD=2</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Value</dataPath>
@@ -221,16 +231,6 @@
 		<field xsi:type="DataSetFieldField">
 			<dataPath>SR</dataPath>
 			<field>SR</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SR</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Торговый представитель</v8:content>
-				</v8:item>
-			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
@@ -276,8 +276,7 @@ SELECT ALLOWED
 	AnswersSliceLast.SKU.Brand,
 	AnswersSliceLast.SKU.Owner AS SKUGroup,
 	AnswersSliceLast.SKU,
-	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock,
-	AnswersSliceLast.Visit.SR
+	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock
 INTO AllBrands
 FROM
 	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)) AS AnswersSliceLast
@@ -349,7 +348,7 @@ SELECT ALLOWED
 	0 AS Percent,
 	Average.AvgStock,
 	OutletParameters.Value,
-	AllBrands.VisitSR AS SR
+	TerritorySRs.SR
 FROM
 	AllBrands AS AllBrands
 		LEFT JOIN CurrentBrand AS CurrentBrand
@@ -382,6 +381,8 @@ FROM
 			AND AllBrands.SKU = Average.SKU
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON AllBrands.Outlet = OutletParameters.Ref
+		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
+		ON AllBrands.Territory = TerritorySRs.Ref
 WHERE
 	OutletParameters.Parameter = &amp;Parameter</query>
 	</dataSet>
@@ -401,12 +402,25 @@ WHERE
 	<totalField>
 		<dataPath>SKUGroupStock</dataPath>
 		<expression>SKUGroupStock</expression>
-		<group>SKU</group>
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100</expression>
+		<group>AvgStock</group>
+		<group>CurrentBrandStock</group>
+		<group>Outlet</group>
+		<group>OutletClass</group>
+		<group>OutletDistributor</group>
+		<group>OutletType</group>
+		<group>Percent</group>
 		<group>Region</group>
+		<group>Region Hierarchy</group>
+		<group>SKUBrand</group>
+		<group>SR</group>
+		<group>Stock</group>
+		<group>Territory</group>
+		<group>Value</group>
+		<group>Overall</group>
 	</totalField>
 	<totalField>
 		<dataPath>AvgStock</dataPath>
