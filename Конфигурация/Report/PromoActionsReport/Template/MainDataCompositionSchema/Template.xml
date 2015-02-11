@@ -61,6 +61,12 @@
 					<v8:content> </v8:content>
 				</v8:item>
 			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">BF=НЕТ; BT=ДА</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Date</dataPath>
@@ -264,7 +270,13 @@ SELECT
 	AnswersTerritory.ChildQuestion,
 	AnswersTerritory.Outlet,
 	AnswersTerritory.SKU,
-	AnswersTerritory.Answer,
+	CASE
+		WHEN AnswersTerritory.Answer = TRUE
+			THEN "ДА"
+		WHEN AnswersTerritory.Answer = FALSE
+			THEN "НЕТ"
+		ELSE AnswersTerritory.Answer
+	END AS Answer,
 	AnswersTerritory.Outlet.Distributor,
 	AnswersTerritory.Outlet.Class,
 	AnswersTerritory.Outlet.Type,
@@ -491,6 +503,33 @@ FROM
 					<dcsset:userSettingID>b83c78da-f260-4a99-a946-cd85e98968fb</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Answer</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">ChildQuestion.AnswerType</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Enum.DataType.Boolean</dcsset:right>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Format</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>BF=НЕТ; BT=ДА</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
