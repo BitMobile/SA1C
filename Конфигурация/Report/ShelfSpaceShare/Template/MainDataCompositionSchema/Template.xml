@@ -387,7 +387,6 @@ WHERE
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>Sum(Stock) / SKUGroupStock * 100</expression>
-		<group>SKU</group>
 		<group>SKUGroup</group>
 	</totalField>
 	<totalField>
@@ -482,12 +481,6 @@ WHERE
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Percent</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>CurrentBrandStock</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>SKUGroupStock</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
