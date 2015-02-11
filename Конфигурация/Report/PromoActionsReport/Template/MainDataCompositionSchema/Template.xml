@@ -77,34 +77,6 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>SR</dataPath>
 			<field>SR</field>
 			<title xsi:type="v8:LocalStringType">
@@ -202,6 +174,34 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Territory</dataPath>
+			<field>Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Region</dataPath>
+			<field>Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT
 	QuestionsInQuestionnairesSliceLast.ChildQuestion
@@ -240,8 +240,8 @@ SELECT
 	Answers.Outlet,
 	Answers.SKU,
 	Answers.Answer,
-	MAX(TerritoryOutlets.Ref) AS Region,
-	MAX(TerritoryOutlets.Ref.Owner) AS Territory,
+	MAX(TerritoryOutlets.Ref) AS Territory,
+	MAX(TerritoryOutlets.Ref.Owner) AS Region,
 	Answers.SR
 INTO AnswersTerritory
 FROM
@@ -265,15 +265,15 @@ SELECT
 	AnswersTerritory.Outlet,
 	AnswersTerritory.SKU,
 	AnswersTerritory.Answer,
-	AnswersTerritory.Region,
-	AnswersTerritory.Territory,
 	AnswersTerritory.Outlet.Distributor,
 	AnswersTerritory.Outlet.Class,
 	AnswersTerritory.Outlet.Type,
 	AnswersTerritory.SKU.Brand AS Brand,
 	AnswersTerritory.SKU.Owner AS SKUGroup,
 	OutletParameters.Value,
-	AnswersTerritory.SR
+	AnswersTerritory.SR,
+	AnswersTerritory.Territory,
+	AnswersTerritory.Region
 FROM
 	AnswersTerritory AS AnswersTerritory
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
