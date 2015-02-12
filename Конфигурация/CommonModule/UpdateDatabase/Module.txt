@@ -75,6 +75,7 @@ Function StartUpdate() Export
 			VersionListForThisRelease.Add("");
 			VersionListForThisRelease.Add("1.4.0");
 			VersionListForThisRelease.Add("1.5.0");
+			VersionListForThisRelease.Add("1.5.1");
 			
 			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
 				
@@ -111,7 +112,7 @@ Function StartUpdate() Export
 					
 				EndIf;
 				
-				If CurrentVersion = "1.4.0" Or CurrentVersion = "1.5.0" Then 
+				If CurrentVersion = "1.4.0" Or CurrentVersion = "1.5.0" Or CurrentVersion = "1.5.1" Then 
 					
 					UserMessage			= New UserMessage;
 					UserMessage.Text	= NStr("en = 'Version 1.6.0'; ru = 'Версия 1.6.0'");
