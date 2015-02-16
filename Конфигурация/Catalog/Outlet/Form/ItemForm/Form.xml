@@ -337,9 +337,6 @@
 									<Width>15</Width>
 									<ContextMenu name="ContactsPhoneNumberContextMenu" id="118"/>
 									<ExtendedTooltip name="ContactsPhoneNumberExtendedTooltip" id="193"/>
-									<Events>
-										<Event name="TextEditEnd">ContactsPhoneNumberTextEditEnd</Event>
-									</Events>
 								</InputField>
 								<InputField name="ContactsEmail" id="119">
 									<DataPath>Object.Contacts.Email</DataPath>

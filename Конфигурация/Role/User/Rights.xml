@@ -1054,17 +1054,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 		</right>
 	</object>
 	<object>
-		<name>Constant.bitmobile_ПодтвержденнаяДатаВыгрузки</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.Question</name>
 		<right>
 			<name>Read</name>
@@ -4495,17 +4484,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 	</object>
 	<object>
 		<name>Constant.bitmobile_ДатаПоследнейСинхронизацииФайлов</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Constant.bitmobile_НеподтвержденнаяДатаВыгрузки</name>
 		<right>
 			<name>Read</name>
 			<value>true</value>

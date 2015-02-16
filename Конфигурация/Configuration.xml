@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.6.0.255</Version>
+			<Version>1.6.0.256</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -173,7 +173,6 @@
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
-			<ScheduledJob>bitmobile_ОчисткаДанных</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
@@ -231,8 +230,7 @@
 			<Constant>bitmobile_СтатусПоследнейЗагрузкиДанных</Constant>
 			<Constant>bitmobile_СинхронизацияЗапущена</Constant>
 			<Constant>bitmobile_IDВыгрузки</Constant>
-			<Constant>bitmobile_НеподтвержденнаяДатаВыгрузки</Constant>
-			<Constant>bitmobile_ПодтвержденнаяДатаВыгрузки</Constant>
+			<Constant>bitmobile_КоличествоОбъектовВВыгрузке</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
 			<Constant>bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</Constant>

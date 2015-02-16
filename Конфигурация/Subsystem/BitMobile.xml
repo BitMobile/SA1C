@@ -59,8 +59,6 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияЗапущена</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_IDВыгрузки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейЗагрузкиДанных</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеподтвержденнаяДатаВыгрузки</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПодтвержденнаяДатаВыгрузки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.bitmobile_НастройкиМобильныхПриложений</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанныеПриЗагрузке</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ПротоколыПередачиФайлов</xr:Item>
@@ -72,11 +70,11 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейЗагрузкиДанных</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДопустимыйРазмерФайла</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_Синхронизация</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_ОчисткаДанных</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_СинхронизацияФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.bitmobile_ПриЗаписиСправочникаДокумента</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.bitmobile_ПриЗаписиРегистра</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_КоличествоОбъектовВВыгрузке</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

@@ -22,13 +22,6 @@ Procedure OnOpenServer()
 
 EndProcedure
 
-&AtServer
-Function GetSKUPrice(SKU)
-	
-	Return SKU.Price;
-	
-EndFunction
-
 #EndRegion
 
 #Region UserInterface

@@ -284,6 +284,14 @@ Procedure FillConfigurationData()
 		
 	EndIf;
 	
+	UploadObjectsCount = Constants.bitmobile_КоличествоОбъектовВВыгрузке.Get();
+	
+	If UploadObjectsCount = 0 Then 
+		
+		Constants.bitmobile_КоличествоОбъектовВВыгрузке.Set(200);
+		
+	EndIf;
+	
 EndProcedure
 
 Procedure FillInProcessing()
