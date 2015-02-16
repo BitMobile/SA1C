@@ -179,6 +179,9 @@ EndProcedure
 
 Procedure UpdateForAllReleases(LastState, Step)
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update sync settings'; ru = 'Обновление настроек синхронизации'"));  
+	ProcessSyncSettings();
+	
 	WriteProtocol(LastState, Step, NStr("en = 'Filling database'; ru = 'Заполнение базы данных'"));  
 	FillInProcessing();
 	
@@ -189,9 +192,6 @@ Procedure UpdateForAllReleases(LastState, Step)
 	
 	WriteProtocol(LastState, Step, NStr("en = 'Update users'; ru = 'Обновление пользователей'"));  
 	ProcessUsers();
-	
-	WriteProtocol(LastState, Step, NStr("en = 'Update sync settings'; ru = 'Обновление настроек синхронизации'"));  
-	ProcessSyncSettings();
 	
 EndProcedure
 
