@@ -8,6 +8,11 @@
 			<ContextMenu name="СсылкаContextMenu" id="2"/>
 			<ExtendedTooltip name="СсылкаExtendedTooltip" id="3"/>
 		</InputField>
+		<InputField name="Порядок" id="4">
+			<DataPath>Record.Порядок</DataPath>
+			<ContextMenu name="ПорядокContextMenu" id="5"/>
+			<ExtendedTooltip name="ПорядокExtendedTooltip" id="6"/>
+		</InputField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Record" id="1">

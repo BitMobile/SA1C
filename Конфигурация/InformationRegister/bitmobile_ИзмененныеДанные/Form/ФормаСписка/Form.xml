@@ -79,6 +79,11 @@
 					<ContextMenu name="ОбрабатываетсяContextMenu" id="29"/>
 					<ExtendedTooltip name="ОбрабатываетсяExtendedTooltip" id="30"/>
 				</CheckBoxField>
+				<InputField name="Порядок" id="31">
+					<DataPath>List.Порядок</DataPath>
+					<ContextMenu name="ПорядокContextMenu" id="32"/>
+					<ExtendedTooltip name="ПорядокExtendedTooltip" id="33"/>
+				</InputField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
