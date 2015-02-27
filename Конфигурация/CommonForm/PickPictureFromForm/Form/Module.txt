@@ -51,10 +51,12 @@ EndFunction
 &AtServerNoContext
 Function GetFieldsStructure(StorageAddress, FileName, Extension, Type)
 	
+	File = New File(Extension);
+	
 	FieldsStructure = New Structure;
 	FieldsStructure.Insert("StorageAddress", StorageAddress);
 	FieldsStructure.Insert("FileName", FileName);
-	FieldsStructure.Insert("Extension", Extension);
+	FieldsStructure.Insert("Extension", File.Extension);
 	FieldsStructure.Insert("Type", Type);
 	
 	Return FieldsStructure;
@@ -111,9 +113,17 @@ Procedure SelectPictureFromDiskOnWebClientProcessing(Result, TempStorageAddress,
 		
 	EndIf;
 	
-	File = New File(FileName);
+	SlashPosition = Find(FileName,"\");
 	
-	FieldsStructure = GetFieldsStructure(TempStorageAddress, New UUID(), File.Extension, "New");
+	While SlashPosition > 0 Do 
+		
+		FileName = Mid(FileName, SlashPosition + 1);
+		
+		SlashPosition = Find(FileName,"\");
+		
+	КонецЦикла;
+	
+	FieldsStructure = GetFieldsStructure(TempStorageAddress, New UUID(), FileName, "New");
 	
 	Close(GetCloseParameter(FieldsStructure));
 	
