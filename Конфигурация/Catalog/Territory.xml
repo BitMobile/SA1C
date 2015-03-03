@@ -353,7 +353,7 @@
 							<v8:content>Торговый представитель</v8:content>
 						</v8:item>
 					</Synonym>
-					<Comment/>
+					<Comment>Не используется начиная с 30 релиза</Comment>
 					<Type>
 						<v8:Type>cfg:CatalogRef.User</v8:Type>
 					</Type>

@@ -27,7 +27,7 @@
 					<v8:content>ВопросыПоНоменклатуре</v8:content>
 				</v8:item>
 			</Synonym>
-			<Comment/>
+			<Comment>Добавлено в релизе 31</Comment>
 			<UseStandardCommands>false</UseStandardCommands>
 			<StandardAttributes>
 				<xr:StandardAttribute name="Order">
@@ -218,7 +218,7 @@
 							<v8:content>Промо</v8:content>
 						</v8:item>
 					</Synonym>
-					<Comment/>
+					<Comment>Добавлено в 31 релизе</Comment>
 				</Properties>
 			</EnumValue>
 		</ChildObjects>

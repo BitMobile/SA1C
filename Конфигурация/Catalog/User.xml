@@ -493,7 +493,7 @@
 							<v8:content>Имя пользователя</v8:content>
 						</v8:item>
 					</Synonym>
-					<Comment/>
+					<Comment>Для логина выполняется проверка на уникальность в пределах всего справочника</Comment>
 					<Type>
 						<v8:Type>xs:string</v8:Type>
 						<v8:StringQualifiers>
