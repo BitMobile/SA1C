@@ -91,11 +91,23 @@
 				</Table>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="Group1" id="32">
+		<UsualGroup name="GroupResult" id="32">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group result</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group result</v8:content>
+				</v8:item>
+			</ToolTip>
 			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="Group1ExtendedTooltip" id="33"/>
+			<ExtendedTooltip name="GroupResultExtendedTooltip" id="33"/>
 			<ChildItems>
 				<SpreadSheetDocumentField name="Result" id="29">
 					<DataPath>Result</DataPath>
@@ -137,7 +149,7 @@
 	<Attributes>
 		<Attribute name="Report" id="1">
 			<Type>
-				<v8:Type>cfg:ReportObject.OutletPhotosReport</v8:Type>
+				<v8:Type>cfg:ReportObject</v8:Type>
 			</Type>
 			<MainAttribute>true</MainAttribute>
 		</Attribute>

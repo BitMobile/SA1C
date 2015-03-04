@@ -118,7 +118,6 @@ Procedure SetPicture(ID, Connection, Path)
 	
 EndProcedure
 
-
 &AtServer
 Function GetFields(Details)
 	

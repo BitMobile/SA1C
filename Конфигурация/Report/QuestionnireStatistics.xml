@@ -25,7 +25,7 @@
 			</Synonym>
 			<Comment/>
 			<UseStandardCommands>true</UseStandardCommands>
-			<DefaultForm/>
+			<DefaultForm>CommonForm.ReportFormWithPicturePreview</DefaultForm>
 			<AuxiliaryForm/>
 			<MainDataCompositionSchema>Report.QuestionnireStatistics.Template.MainDataCompositionSchema</MainDataCompositionSchema>
 			<DefaultSettingsForm/>

@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.6.0.270</Version>
+			<Version>1.6.0.271</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -247,6 +247,7 @@
 			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
 			<CommonForm>OutletParameterValueInputForm</CommonForm>
 			<CommonForm>PickPictureFromForm</CommonForm>
+			<CommonForm>ReportFormWithPicturePreview</CommonForm>
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
