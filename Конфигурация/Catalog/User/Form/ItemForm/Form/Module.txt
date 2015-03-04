@@ -36,10 +36,15 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 		
-	// Первоначальное заполнение пользователя
 	If Not ValueIsFilled(Object.Ref) Then 
 		
+		// Первоначальное заполнение пользователя
 		Object.InterfaceLanguage = Metadata.Languages.Русский.Name;
+		
+	Else 
+		
+		// Запрет изменения логина у уже записанного пользователя
+		Items.Login.ReadOnly = True;
 		
 	EndIf;
 	
@@ -361,6 +366,9 @@ Procedure AfterWrite(WriteParameters)
 	TerritoriesOnChange(Items.Territories);
 	RegionsOnChange(Items.Regions);
 	
+	// Запрет изменения логина у уже записанного пользователя
+	Items.Login.ReadOnly = True;
+		
 EndProcedure
 
 &AtClient
