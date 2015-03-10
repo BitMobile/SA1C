@@ -246,26 +246,6 @@
 				</v8:item>
 			</title>
 		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Field1</dataPath>
-			<field>Field1</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Field1</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Field3</dataPath>
-			<field>Field3</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Field3</v8:content>
-				</v8:item>
-			</title>
-		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
@@ -283,9 +263,16 @@ FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
 WHERE
 	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Available)
-{WHERE
-	(AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate) AS Field1,
-	(AnswersSliceLast.Visit.Date &lt;= &amp;EndDate) AS Field3}
+	AND CASE
+			WHEN &amp;BeginDate = DATETIME(1, 1, 1, 0, 0, 0)
+				THEN TRUE
+			ELSE AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate
+		END
+	AND CASE
+			WHEN &amp;EndDate = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE AnswersSliceLast.Visit.Date &lt;= &amp;EndDate
+		END
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -308,8 +295,16 @@ WHERE
 	NOT AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
 	AND NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
 {WHERE
-	(AssortmentMatrixPeriods.BeginDate &gt;= &amp;BeginDate) AS Field1,
-	(AssortmentMatrixPeriods.EndDate &gt;= &amp;EndDate) AS Field3}
+	(CASE
+			WHEN &amp;EndDate = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE AssortmentMatrixPeriods.BeginDate &lt;= &amp;EndDate
+		END),
+	(CASE
+			WHEN AssortmentMatrixPeriods.EndDate &gt; DATETIME(1, 1, 1)
+				THEN AssortmentMatrixPeriods.EndDate &gt;= &amp;BeginDate
+			ELSE TRUE
+		END)}
 
 GROUP BY
 	AssortmentMatrixPeriods.EndDate,
@@ -574,6 +569,7 @@ FROM
 			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 		</value>
 		<useRestriction>false</useRestriction>
+		<use>Always</use>
 	</parameter>
 	<parameter>
 		<name>Parameter</name>
@@ -599,6 +595,42 @@ FROM
 			</dcscor:item>
 		</inputParameters>
 		<use>Always</use>
+	</parameter>
+	<parameter>
+		<name>BeginDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Begin date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.EndDate</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Day</dcsset:name>
