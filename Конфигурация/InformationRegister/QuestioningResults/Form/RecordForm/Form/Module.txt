@@ -7,9 +7,14 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	FillFileTable();
 	
 	FillQuestionsTree(Enums.QuestionGroupTypes.RegularQuestions);
-	FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
 	
 	FillSKUs();
+	
+	If Not SKUs.Count() = 0 Then 
+		
+		FillQuestionsTree(Enums.QuestionGroupTypes.SKUQuestions);
+		
+	EndIf;
 	
 	ThisForm.Title = NStr("en = 'Result for ""'; ru = 'Результат для ""'") + String(Record.Questionnaire) + """";
 	
@@ -433,19 +438,23 @@ EndProcedure
 &AtServer
 Procedure FillSKUs()
 	
-	SKUsValueTable = New ValueTable;
-	SKUsValueTable.Columns.Add("SKU");
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKUsInQuestionnairesSliceLast.SKU
+		|FROM
+		|	InformationRegister.SKUsInQuestionnaires.SliceLast(, Questionnaire = &Questionnaire) AS SKUsInQuestionnairesSliceLast
+		|WHERE
+		|	SKUsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
+		|	AND SKUsInQuestionnairesSliceLast.SKU IN(&SKUArray)
+		|
+		|GROUP BY
+		|	SKUsInQuestionnairesSliceLast.SKU";
 	
-	For Each SKUElement In Record.Visit.SKUs Do 
-		
-		Ins 	= SKUsValueTable.Add();
-		Ins.SKU = SKUElement.SKU;		
-		
-	EndDo;
+	Query.SetParameter("Questionnaire", Record.Questionnaire);
+	Query.SetParameter("SKUArray", Record.Visit.SKUs.UnloadColumn("SKU"));
 	
-	SKUsValueTable.GroupBy("SKU");
-	
-	SKUs.Load(SKUsValueTable);
+	SKUs.Load(Query.Execute().Unload());
 	
 EndProcedure	
 
