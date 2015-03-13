@@ -933,7 +933,6 @@
 								<InputField name="SKUsUnit" id="332">
 									<DataPath>SKUs.Unit</DataPath>
 									<EditMode>EnterOnInput</EditMode>
-									<TextEdit>false</TextEdit>
 									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 									<ContextMenu name="SKUsUnitContextMenu" id="333"/>
 									<ExtendedTooltip name="SKUsUnitExtendedTooltip" id="334"/>
