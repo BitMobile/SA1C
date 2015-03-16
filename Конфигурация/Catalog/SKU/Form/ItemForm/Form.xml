@@ -305,6 +305,10 @@
 								<ContextMenu name="PackingSearchControlContextMenu" id="95"/>
 								<ExtendedTooltip name="PackingSearchControlExtendedTooltip" id="96"/>
 							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeDeleteRow">PackingBeforeDeleteRow</Event>
+								<Event name="BeforeRowChange">PackingBeforeRowChange</Event>
+							</Events>
 							<ChildItems>
 								<LabelField name="PackingLineNumber" id="17">
 									<DataPath>Object.Packing.LineNumber</DataPath>
@@ -528,25 +532,6 @@
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="ShowPacking" id="1">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Show packing</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Упаковки номенклатуры</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Show packing</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>ShowPacking</Action>
-		</Command>
 		<Command name="DeletePicture" id="4">
 			<Title>
 				<v8:item>

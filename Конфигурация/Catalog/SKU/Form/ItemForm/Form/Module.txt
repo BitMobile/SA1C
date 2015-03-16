@@ -187,6 +187,65 @@ Function GetConstant()
 	Return Constants.SKUFeaturesRegistration.Get();
 EndFunction // ()
 
+&AtServer
+Function ChangePackAvailable(mPack)
+	
+	If ValueIsFilled(Object.Ref) Then 
+		
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	AssortmentMatrixSKUs.AssortmentMatrix AS AM,
+			|	AssortmentMatrixSKUs.AssortmentMatrix.Code AS Code
+			|FROM
+			|	InformationRegister.AssortmentMatrixSKUs AS AssortmentMatrixSKUs
+			|WHERE
+			|	AssortmentMatrixSKUs.SKU = &SKU
+			|	AND AssortmentMatrixSKUs.Unit = &Pack
+			|
+			|GROUP BY
+			|	AssortmentMatrixSKUs.AssortmentMatrix,
+			|	AssortmentMatrixSKUs.AssortmentMatrix.Code";
+		
+		Query.SetParameter("SKU", Object.Ref);
+		Query.SetParameter("Pack", mPack);
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		ReturnResult = True;
+		
+		While Selection.Next() Do
+			
+			ReturnResult = False;
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'SKU and Packing used in the assortment matrix " + String(Selection.Code) + " - """ + String(Selection.AM) + """.'; ru = 'Номенклатура и упаковка используются в ассортиментной матрице " + String(Selection.Code) + " - """ + String(Selection.AM) + """.'");
+			
+			UserMessage.Message();
+			
+		EndDo;
+		
+		If Not ReturnResult Then 
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'Change prohibited.'; ru = 'Изменение запрещено.'");
+			
+			UserMessage.Message();
+			
+		EndIf;
+		
+		Return ReturnResult;
+		
+	Else 
+		
+		Return True;
+		
+	EndIf;
+	
+EndFunction
+
 #EndRegion
 
 #Region UserInterface
@@ -199,22 +258,35 @@ Procedure OnOpen(Cancel)
 EndProcedure
 
 &AtClient
-Procedure ShowPacking(Command)
+Procedure BaseUnitOnChange(Item)
 	
-	If ThisForm.Items.Packing.Visible=False Then
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Hide packing settigns'; ru = 'Скрыть настройки упаковок'");
-        ThisForm.Items.Packing.Visible=True;
-    Else
-        ThisForm.Items.ShowPacking.Title=NStr("en = 'Show packing'; ru = 'Показать настройки упаковок'");
-        ThisForm.Items.Packing.Visible=False;
+	CheckBaseUnitAndMultiplier();
+	
+EndProcedure
+
+&AtClient
+Procedure PackingBeforeDeleteRow(Item, Cancel)
+	
+	If Not Items.Packing.CurrentData = Undefined Then 
+		
+		Cancel = Not ChangePackAvailable(Items.Packing.CurrentData.Pack);
+		
 	EndIf;
 	
 EndProcedure
 
 &AtClient
-Procedure BaseUnitOnChange(Item)
+Procedure PackingBeforeRowChange(Item, Cancel)
 	
-	CheckBaseUnitAndMultiplier();
+	If Item.CurrentItem = Items.PackingPack Then 
+	
+		If Not Items.Packing.CurrentData = Undefined Then 
+			
+			Cancel = Not ChangePackAvailable(Items.Packing.CurrentData.Pack);
+			
+		EndIf;
+		
+	EndIf;
 	
 EndProcedure
 
