@@ -1294,6 +1294,15 @@ Procedure SKUsUnitStartChoice(Item, ChoiceData, StandardProcessing)
 EndProcedure
 
 &AtClient
+Procedure SKUsUnitAutoComplete(Item, Text, ChoiceData, Parameters, Wait, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	ChoiceData = GetAvailableUnits(Item.Parent.CurrentData.SKU);
+	
+EndProcedure
+
+&AtClient
 Procedure SKUsUnitOnChange(Item)
 	
 	RecountBaseUnitQty(Item);

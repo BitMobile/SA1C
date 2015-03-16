@@ -938,6 +938,7 @@
 									<ExtendedTooltip name="SKUsUnitExtendedTooltip" id="334"/>
 									<Events>
 										<Event name="OnChange">SKUsUnitOnChange</Event>
+										<Event name="AutoComplete">SKUsUnitAutoComplete</Event>
 										<Event name="StartChoice">SKUsUnitStartChoice</Event>
 									</Events>
 								</InputField>
