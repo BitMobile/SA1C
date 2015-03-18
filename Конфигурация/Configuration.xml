@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.6.0.282</Version>
+			<Version>1.6.0.283</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -59,7 +59,7 @@
 			<FormDataSettingsStorage/>
 			<DynamicListsUserSettingsStorage/>
 			<Content/>
-			<DefaultReportForm/>
+			<DefaultReportForm>CommonForm.CommonReportForm</DefaultReportForm>
 			<DefaultReportVariantForm/>
 			<DefaultReportSettingsForm/>
 			<DefaultDynamicListSettingsForm/>
@@ -247,7 +247,7 @@
 			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
 			<CommonForm>OutletParameterValueInputForm</CommonForm>
 			<CommonForm>PickPictureFromForm</CommonForm>
-			<CommonForm>ReportFormWithPicturePreview</CommonForm>
+			<CommonForm>CommonReportForm</CommonForm>
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
@@ -329,7 +329,6 @@
 			<Report>SKUChangeAnalysis</Report>
 			<Report>SKUsStockInOutlet</Report>
 			<Report>VisitEfficiency</Report>
-			<Report>VisitPlansVisitsOrders</Report>
 			<Report>VisitResults</Report>
 			<Report>VisitsControl</Report>
 			<Report>AccountReceivable</Report>

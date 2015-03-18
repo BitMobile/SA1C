@@ -238,11 +238,11 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Trade channel</v8:content>
+					<v8:content>Outlet parameter value</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Канал сбыта</v8:content>
+					<v8:content>Значение параметра торговой точки</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -576,11 +576,11 @@ FROM
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Parameter "Distribution channel"</v8:content>
+				<v8:content>Outlet parameter</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
-				<v8:content>Параметр "Канал сбыта"</v8:content>
+				<v8:content>Параметр торговой точки</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
@@ -588,12 +588,6 @@ FROM
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
-		<inputParameters>
-			<dcscor:item>
-				<dcscor:parameter>ChoiceForm</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
-			</dcscor:item>
-		</inputParameters>
 		<use>Always</use>
 	</parameter>
 	<parameter>

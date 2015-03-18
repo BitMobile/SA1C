@@ -476,7 +476,6 @@
 			</TabularSection>
 			<Form>ItemForm</Form>
 			<Form>ListForm</Form>
-			<Form>ChoiceFormForReports</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

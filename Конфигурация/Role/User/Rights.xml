@@ -3525,17 +3525,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
-		<name>Report.VisitPlansVisitsOrders</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.Brands</name>
 		<right>
 			<name>Read</name>
@@ -3601,13 +3590,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	</object>
 	<object>
 		<name>InformationRegister.Answers.Dimension.Outlet</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>Report.VisitPlansVisitsOrders.Attribute.SR</name>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -4455,13 +4437,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>View</name>
 			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Report.VisitPlansVisitsOrders.Attribute.SRList</name>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
 		</right>
 	</object>
 	<object>

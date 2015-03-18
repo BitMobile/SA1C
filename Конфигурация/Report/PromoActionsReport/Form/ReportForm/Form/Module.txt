@@ -2,7 +2,7 @@
 &AtClient
 Var TypesMap;
 
-#Region CommonProceduresAndFunctions
+#Region CommonProcedureAndFunctions
 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
@@ -19,153 +19,9 @@ Function GetReturnStructure(Value, TypesMap)
 	
 EndFunction
 
-&AtServer
-Procedure ResultDetailProcessingServer(Details, StandardProcessing)
-	
-	Password 	= Constants.bitmobile_Пароль.Get();
-	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path 		= StrReplace(Path, "admin", "webdav");
-	Port 		= Constants.bitmobile_Порт.Get();
-	
-	Try
-	
-		Connection = New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
-		
-	Except
-		
-		Connection = Undefined;
-		
-	EndTry;
-	
-	Fields = GetFields(Details);
-	
-	For Each Field In Fields Do
-		
-		If Field.Field = "Answer" Then
-			
-			StandardProcessing = False;
-			
-			Value = Field.Value;
-			
-			Try
-				
-				SnapshotUUID = New UUID(Value);
-				
-				SetPicture(SnapshotUUID, Connection, Path);
-				
-			Except
-				
-				ThisForm.PictureAddress = Undefined;
-				ThisForm.PictureExtension = Undefined;
-				ThisForm.PictureFilename = Undefined;
-				
-			EndTry;
-			
-		Else
-			
-			ThisForm.PictureAddress = Undefined;
-			ThisForm.PictureExtension = Undefined;
-			ThisForm.PictureFilename = Undefined;
-			
-		EndIf;
-		
-	EndDo;
-	
-EndProcedure
-
-&AtServer
-Procedure SetPicture(ID, Connection, Path)
-	
-	Filter = New Structure;
-	Filter.Insert("FileName", ID);
-	
-	Sel = InformationRegisters.StorageAdditionalInformation.Select(Filter);
-	
-	If Sel.Next() Then
-		
-		BinaryDataOfFile = Sel.Storage.Get();
-		
-		If ValueIsFilled(BinaryDataOfFile) Then
-		
-			ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-			ThisForm.PictureExtension = Sel.Extension;
-			ThisForm.PictureFilename = Sel.FileName;
-			
-		Else 
-			
-			If Not Connection = Undefined Then 
-			
-				Try
-					
-					WebDAVFile = GetTempFileName(Sel.Extension);
-					
-					Connection.Get(Path + Sel.FullFileName, WebDAVFile);
-					
-					BinaryDataOfFile = New BinaryData(WebDAVFile);
-					
-					ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-					ThisForm.PictureExtension = Sel.Extension;
-					ThisForm.PictureFilename = Sel.FileName;
-					
-				Except
-					
-					ThisForm.PictureAddress = Undefined;
-					ThisForm.PictureExtension = Undefined;
-					ThisForm.PictureFilename = Undefined;
-					
-				EndTry;
-				
-			Else 
-				
-				ThisForm.PictureAddress = Undefined;
-				ThisForm.PictureExtension = Undefined;
-				ThisForm.PictureFilename = Undefined;
-				
-			EndIf;
-						
-		EndIf;	
-		
-	Else
-		
-		ThisForm.PictureAddress = Undefined;
-		ThisForm.PictureExtension = Undefined;
-		ThisForm.PictureFilename = Undefined;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtServer
-Function GetFields(Details)
-	
-	Return GetFromTempStorage(DetailsData).Items.Get(Details).GetFields();
-	
-EndFunction
-
 #EndRegion
 
 #Region UserInterface
-
-&AtClient
-Procedure PictureAddressClick(Item, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	If ValueIsFilled(ThisForm.PictureFilename) Then
-		
-		GetFile(ThisForm.PictureAddress, PictureFilename + PictureExtension, True);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure ResultDetailProcessing(Item, Details, StandardProcessing)
-	
-	ResultDetailProcessingServer(Details, StandardProcessing);
-	
-EndProcedure
 
 &AtClient
 Function GetOutletParameterStructure()
@@ -291,4 +147,3 @@ TypesMap.Insert("Date time", "Date time");
 TypesMap.Insert("Дата и время", "Date time");
 TypesMap.Insert("Value list", "Value list");
 TypesMap.Insert("Список значений", "Value list");
-

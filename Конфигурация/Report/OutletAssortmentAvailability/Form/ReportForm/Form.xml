@@ -6,10 +6,13 @@
 	<ReportFormType>Main</ReportFormType>
 	<VariantAppearance/>
 	<AutoShowState>Auto</AutoShowState>
-	<CustomSettingsFolder xsi:type="xs:string">SettingsComposerUserSettings</CustomSettingsFolder>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
 	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">NotificationProcessing</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
 	<ChildItems>
 		<CommandBar name="CommandBar" id="8">
 			<Title>
@@ -127,12 +130,57 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Группа пользовательских настроек</v8:content>
+					<v8:content>User settings</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пользовательские настройки</v8:content>
 				</v8:item>
 			</Title>
 			<VerticalStretch>false</VerticalStretch>
-			<ShowTitle>false</ShowTitle>
+			<Behavior>Collapsible</Behavior>
+			<ControlRepresentation>Picture</ControlRepresentation>
 			<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="4"/>
+			<ChildItems>
+				<Table name="SettingsComposerUserSettingsTable" id="44">
+					<CommandBarLocation>None</CommandBarLocation>
+					<Autofill>true</Autofill>
+					<DataPath>Report.SettingsComposer.UserSettings</DataPath>
+					<CommandSet>
+						<ExcludedCommand>HierarchicalList</ExcludedCommand>
+						<ExcludedCommand>Tree</ExcludedCommand>
+						<ExcludedCommand>List</ExcludedCommand>
+					</CommandSet>
+					<ViewMode>All</ViewMode>
+					<ContextMenu name="SettingsComposerUserSettingsTableContextMenu" id="45"/>
+					<AutoCommandBar name="SettingsComposerUserSettingsTableCommandBar" id="46"/>
+					<ExtendedTooltip name="SettingsComposerUserSettingsTableExtendedTooltip" id="47"/>
+					<SearchStringAddition name="SettingsComposerUserSettingsTableSearchString" id="48">
+						<Source>
+							<lf:elementId>44</lf:elementId>
+							<lf:additionId>0</lf:additionId>
+						</Source>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchStringContextMenu" id="51"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchStringExtendedTooltip" id="52"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="SettingsComposerUserSettingsTableViewStatus" id="53">
+						<Source>
+							<lf:elementId>44</lf:elementId>
+							<lf:additionId>1</lf:additionId>
+						</Source>
+						<ContextMenu name="SettingsComposerUserSettingsTableViewStatusContextMenu" id="56"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableViewStatusExtendedTooltip" id="57"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="SettingsComposerUserSettingsTableSearchControl" id="58">
+						<Source>
+							<lf:elementId>44</lf:elementId>
+							<lf:additionId>2</lf:additionId>
+						</Source>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchControlContextMenu" id="61"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchControlExtendedTooltip" id="62"/>
+					</SearchControlAddition>
+				</Table>
+			</ChildItems>
 		</UsualGroup>
 		<SpreadSheetDocumentField name="Result" id="5">
 			<DataPath>Result</DataPath>

@@ -9,6 +9,10 @@
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
 	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">NotificationProcessing</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
 	<ChildItems>
 		<CommandBar name="MainCommandBar" id="8">
 			<Title>
@@ -20,7 +24,7 @@
 			<CommandSource>Form</CommandSource>
 			<ExtendedTooltip name="MainCommandBarExtendedTooltip" id="9"/>
 		</CommandBar>
-		<UsualGroup name="GroupUserSettings" id="37">
+		<UsualGroup name="SettingsComposerUserSettings" id="37">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -34,16 +38,16 @@
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Group user settings</v8:content>
+					<v8:content>Settings composer user settings</v8:content>
 				</v8:item>
 			</ToolTip>
 			<Behavior>Collapsible</Behavior>
 			<Collapsed>true</Collapsed>
 			<ControlRepresentation>Picture</ControlRepresentation>
 			<ShowLeftMargin>false</ShowLeftMargin>
-			<ExtendedTooltip name="GroupUserSettingsExtendedTooltip" id="38"/>
+			<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="38"/>
 			<ChildItems>
-				<Table name="SettingsComposerUserSettings" id="10">
+				<Table name="SettingsComposerUserSettingsTable" id="10">
 					<CommandBarLocation>None</CommandBarLocation>
 					<Autofill>true</Autofill>
 					<Header>false</Header>
@@ -61,32 +65,32 @@
 						<ExcludedCommand>List</ExcludedCommand>
 					</CommandSet>
 					<ViewMode>QuickAccess</ViewMode>
-					<ContextMenu name="SettingsComposerUserSettingsContextMenu" id="11"/>
-					<AutoCommandBar name="SettingsComposerUserSettingsCommandBar" id="12"/>
-					<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="13"/>
-					<SearchStringAddition name="SettingsComposerUserSettingsSearchString" id="14">
+					<ContextMenu name="SettingsComposerUserSettingsTableContextMenu" id="11"/>
+					<AutoCommandBar name="SettingsComposerUserSettingsTableCommandBar" id="12"/>
+					<ExtendedTooltip name="SettingsComposerUserSettingsTableExtendedTooltip" id="13"/>
+					<SearchStringAddition name="SettingsComposerUserSettingsTableSearchString" id="14">
 						<Source>
 							<lf:elementId>10</lf:elementId>
 							<lf:additionId>0</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsSearchStringContextMenu" id="17"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsSearchStringExtendedTooltip" id="18"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchStringContextMenu" id="17"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchStringExtendedTooltip" id="18"/>
 					</SearchStringAddition>
-					<ViewStatusAddition name="SettingsComposerUserSettingsViewStatus" id="19">
+					<ViewStatusAddition name="SettingsComposerUserSettingsTableViewStatus" id="19">
 						<Source>
 							<lf:elementId>10</lf:elementId>
 							<lf:additionId>1</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsViewStatusContextMenu" id="22"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsViewStatusExtendedTooltip" id="23"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableViewStatusContextMenu" id="22"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableViewStatusExtendedTooltip" id="23"/>
 					</ViewStatusAddition>
-					<SearchControlAddition name="SettingsComposerUserSettingsSearchControl" id="24">
+					<SearchControlAddition name="SettingsComposerUserSettingsTableSearchControl" id="24">
 						<Source>
 							<lf:elementId>10</lf:elementId>
 							<lf:additionId>2</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsSearchControlContextMenu" id="27"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsSearchControlExtendedTooltip" id="28"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchControlContextMenu" id="27"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchControlExtendedTooltip" id="28"/>
 					</SearchControlAddition>
 				</Table>
 			</ChildItems>

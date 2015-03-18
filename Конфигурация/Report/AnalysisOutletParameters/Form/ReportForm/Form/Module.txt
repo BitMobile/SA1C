@@ -24,7 +24,7 @@ Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 	
 	For Each Field In Fields Do
 		
-		If Field.Field = "Answer" Then
+		If Field.Field = "Value" Then
 			
 			StandardProcessing = False;
 			

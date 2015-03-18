@@ -220,11 +220,11 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Value</v8:content>
+					<v8:content>Outlet parameter value</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Канал сбыта</v8:content>
+					<v8:content>Значение параметра торговой точки</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -471,11 +471,11 @@ WHERE
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Parameter "Distribution channel"</v8:content>
+				<v8:content>Outlet parameter</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
-				<v8:content>Параметр "Канал сбыта"</v8:content>
+				<v8:content>Параметр торговой точки</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
@@ -483,12 +483,6 @@ WHERE
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
-		<inputParameters>
-			<dcscor:item>
-				<dcscor:parameter>ChoiceForm</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
-			</dcscor:item>
-		</inputParameters>
 		<use>Always</use>
 	</parameter>
 	<settingsVariant>
@@ -513,16 +507,6 @@ WHERE
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
 					<dcsset:userSettingID>a353f62d-54f5-433d-ad5a-d61570280c96</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Distribution channel</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Канал сбыта</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
