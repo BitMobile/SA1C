@@ -1,1139 +1,437 @@
-﻿&AtServer
-Перем ДниНедели;
+﻿&AtClient
+Var PrevTime;
 
-&AtClient
-Procedure BeforeWrite(Cancel, WriteParameters)
-    
-    Cancel = CheckVisitPlans();
+#Region CommonProceduresAndFunctions
 
-EndProcedure
-
-Function CheckVisitPlans()
-
-	Query = New Query;
-	Query.Text = "SELECT ALLOWED
-	             |	VisitPlan.SR,
-	             |	VisitPlan.Year,
-	             |	VisitPlan.WeekNumber
-	             |FROM
-	             |	Document.VisitPlan AS VisitPlan
-	             |WHERE
-	             |	VisitPlan.SR = &SR
-	             |	AND YEAR(VisitPlan.Year) = &Year
-	             |	AND VisitPlan.WeekNumber = &WeekNumber
-	             |	AND VisitPlan.Ref <> &Ref";
-				 
-	Query.SetParameter("SR",Object.SR);
-	Query.SetParameter("Year",Year(Object.Year));
-	Query.SetParameter("WeekNumber",Object.WeekNumber);
-	Query.SetParameter("Ref",Object.Ref);
-	
-	Result = Query.Execute().Select();
-    	
-	if Result.Next() then
-        Message(NStr("en = 'This SR is already have visit plan for this week'; ru = 'Для выбранного SR уже имеется план на выбранную неделю'"));	
-        Return True;
-	EndIf;
-    
-    Return False;
-    
-EndFunction // CheckVisitPlans()
- 
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	Если НЕ Object.SR.IsEmpty() Тогда
-		ResultТаб = ПолучитьЗначенияSR(Object.SR);
-		// bit_vbobylev 30.05.2013 +++
-		УстановитьЗначенияРеквизитовФормыПриИзмененииSR(ResultТаб);
-		// bit_vbobylev ---
-	КонецЕсли;
+	FillValueTableOutlets();
 	
-	Если  Object.ref.IsEmpty() Тогда
-		УстановитьЗначенияРеквизитовФормы(ResultТаб);
-	Иначе
-		УстановитьЗначенияРеквизитовФормы(ResultТаб);
-	КонецЕсли;
-	
-	YearNumber = Format(Year(Object.Year), "NG=");
-	
-	//bit_rumyantseva_alena 29/03/2013
-	Если НЕ Object.SR.IsEmpty() И НЕ ValueTableOutlets.Count() Тогда
-		УстановитьЗначенияРеквизитовФормыПриИзмененииSR(ResultТаб);
-	КонецЕсли;
-    
-    PredefinedItems = New Map;
-    PredefinedItems.Insert("Catalog.User", "SR");
-    ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
-    For Each Item In ItemsCollection Do
-        Object[Item.Key] = Item.Value;
-    EndDo;
+	ThisForm.YearNumber = Format(Year(Object.Year), "NG=");
 	
 EndProcedure
 
 &AtServer
-Функция ПолучитьЗначенияSR(SR)
+Procedure FillValueTableOutlets()
 	
-	Query = New Query;
-	Query.Text = 
+	Query = New Query(
 	"SELECT ALLOWED DISTINCT
-	|	TerritoryOutlets.Outlet.Ref AS Outlet
+	|	TerritoryOutlets.Outlet
+	|INTO SRsOutlets
 	|FROM
 	|	Catalog.Territory.Outlets AS TerritoryOutlets
 	|		INNER JOIN Catalog.Territory.SRs AS TerritorySRs
 	|		ON TerritoryOutlets.Ref = TerritorySRs.Ref
 	|WHERE
-	|	TerritorySRs.SR = &SR
+	|	&SR IN (TerritorySRs.SR)
+	|;
 	|
-	|ORDER BY
-	|	TerritoryOutlets.Outlet.Description";
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	VisitPlanOutlets.Outlet,
+	|	VisitPlanOutlets.Date
+	|INTO VisitPlanOutlets
+	|FROM
+	|	&VisitPlanOutlets AS VisitPlanOutlets
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	SRsOutlets.Outlet AS Outlet,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 1
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean1,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 2
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean2,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 3
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean3,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 4
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean4,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 5
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean5,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 6
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean6,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 7
+	|				THEN TRUE
+	|			ELSE FALSE
+	|		END) AS DateBoolean7,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 1
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time1,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 2
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time2,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 3
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time3,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 4
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time4,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 5
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time5,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 6
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time6,
+	|	MAX(CASE
+	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 7
+	|				THEN VisitPlanOutlets.Date
+	|		END) AS Time7
+	|FROM
+	|	SRsOutlets AS SRsOutlets
+	|		LEFT JOIN VisitPlanOutlets AS VisitPlanOutlets
+	|		ON SRsOutlets.Outlet = VisitPlanOutlets.Outlet
+	|
+	|GROUP BY
+	|	SRsOutlets.Outlet
+	|AUTOORDER");
 	
-	Query.SetParameter("SR", SR);
+	Query.SetParameter("VisitPlanOutlets", Object.Outlets.Unload());
+	Query.SetParameter("SR", Object.SR);
 	
-	ResultТаб = Query.Execute().Unload();
-	Return  ResultТаб;//.UnloadColumn("Outlet");
+	Result = Query.Execute().Unload();
 	
-КонецФункции
-
-&AtClient
-Procedure SROnChange(Item)
-	
-	Если ValueTableOutlets.Count() > 0 Тогда
-		//Режим = РежимДиалогаВопрос.ДаНет;
-		//Текст = "ru = ""табличная часть будет очищена.
-		//|Продолжить выполнение операции?"";"
-		//+ " en = ""The tabular section will be cleaned. 
-		//|Are you sure you want to continue?""";
-		//Ответ = Вопрос(НСтр(Текст), Режим, 0);
-		//Если Ответ = КодВозвратаДиалога.Нет Тогда
-		//	Возврат;
-		//КонецЕсли;
-	КонецЕсли;
-	УстановитьЗначениеРеквизита();
+	ValueTableOutlets.Load(Result);
 	
 EndProcedure
 
-&AtClient
-Procedure DateFromOnChange(Item)
+&AtServer
+Procedure FillOutletsUsing(VisitPlan)
 	
-	Если НачалоМесяца(Object.DateFrom) = НачалоМесяца(Object.Date) Тогда
-		ПредыдущаяДатаНачалаПериода = Object.DateFrom;
-		УстановитьДоступностьКолонокТаблицы();
-	Иначе
-		Message("Указанная дата ("+Формат(Object.DateFrom, "ДЛФ=Д")+") не из периода " + Object.Date, 10);
-		Object.DateFrom = ПредыдущаяДатаНачалаПериода;
-		ТекущийЭлемент = Item;
-		Возврат;
-	КонецЕсли;
+	Query = New Query(
+	"SELECT
+	|	VisitPlanOutlets.Outlet,
+	|	DATEADD(&DateFrom, SECOND, (WEEKDAY(VisitPlanOutlets.Date) - 1) * 60 * 60 * 24 + SECOND(VisitPlanOutlets.Date) + 60 * MINUTE(VisitPlanOutlets.Date) + 60 * 60 * HOUR(VisitPlanOutlets.Date)) AS Date
+	|FROM
+	|	Document.VisitPlan.Outlets AS VisitPlanOutlets
+	|WHERE
+	|	VisitPlanOutlets.Ref = &VisitPlan");
 	
-	Если BegOfDay(Object.DateFrom) < BegOfDay(CurrentDate()) Тогда  
-		Message("Указанная дата ("+Формат(Object.DateFrom, "ДЛФ=Д")+") меньше текущей " + Формат(CurrentDate(), "ДЛФ=Д"), 10);
-		Object.DateFrom = CurrentDate();
-		УстановитьДоступностьКолонокТаблицы();
-	КонецЕсли;
+	Query.SetParameter("VisitPlan", VisitPlan);
+	Query.SetParameter("DateFrom", Object.DateFrom);
 	
-КонецПроцедуры
-
-&AtClient
-Procedure DateToOnChange(Item)
+	QueryResult = Query.Execute().Unload();
 	
-	Если НачалоМесяца(Object.DateTo) = НачалоМесяца(Object.Date) Тогда
-		ПредыдущаяДатаОкончанияПериода = Object.DateTo;
-		УстановитьДоступностьКолонокТаблицы();
-	Иначе
-		Message("Указанная дата ("+Формат(Object.DateTo, "ДЛФ=Д")+") не из периода " + Object.Date, 10);
-		Object.DateTo = ПредыдущаяДатаОкончанияПериода;
-		ТекущийЭлемент = Item;
-	КонецЕсли;
+	Object.Outlets.Load(QueryResult);
 	
-	//УстановитьЗаголовокФормыДокумента();
-
+	FillValueTableOutlets();
+	
 EndProcedure
 
-&AtClient
-// процедура устанавливает видимсоть колонок таблицы значений
-//
-Процедура УстановитьДоступностьКолонокТаблицы()
-    
-    УстановитьДоступность();		
+// Забираем неделю года на сервере. потому что в зависимости от локали 
+// алгоритм вычисления может варьироваться и мы считаем локаль сервера
+// приоритетной
+&AtServerNoContext
+Function GetWeekOfYear(Value)
 	
-    //For Each row In Items.ValueTableOutlets Do
-    //    For i=1 To 7 Do
-    //        container = row.ChildItems["Group"+i];
-    //        container.ChildItems["ValueTableOutletsTime"+i].ReadOnly = ?(ValueTableOutlets["DateBoolean"+i],False,True);        
-    //    EndDo;    	    
-    //EndDo;	
-    
-КонецПроцедуры
+	Return WeekOfYear(Value);
+	
+EndFunction
 
-&AtServer
-Процедура УстановитьДоступность()
+// Функция возвращает дату первого дня недели по переданному в функцию номеру 
+// недели в переданном в функцию году
+&AtServerNoContext
+Function BeginOfWeekInYear(WeekNumber, YearDate)
 	
-	ТаблицаДнейНедели = ТаблицуДнейНедели();
-	Для Каждого Строка ИЗ ТаблицаДнейНедели Цикл
-		Items["Group" + Строка(Строка.WeekDay)].ReadOnly = Строка.ReadOnly;
-	КонецЦикла;
-    	
-КонецПроцедуры
+	YearFirstDay = BegOfYear(YearDate);
+	DateInGivenWeek = YearFirstDay + 60 * 60 * 24 * 7 * (WeekNumber - 1);
+	BeginOfGivenWeek = BegOfWeek(DateInGivenWeek);
+	Return BeginOfGivenWeek;
+	
+EndFunction
 
-// Устанавливает значения реквизитов формы заполнения, согласно данным ранее
-//
-&AtServer
-Процедура УстановитьЗначенияРеквизитовФормы(ResultТаб) Export
-	
-	МенеджерВременныхТаблиц = Новый МенеджерВременныхТаблиц;
-	
-	Query = New Query;
-	Query.TempTablesManager =   МенеджерВременныхТаблиц;
-	Query.Text = 
-		"SELECT ALLOWED
-		|	VisitPlanOutlets.Outlet AS Outlet,
-		|	WEEKDAY(VisitPlanOutlets.Date) AS ИндексДня,
-        |   VisitPlanOutlets.Date AS Time,
-		|	VisitPlanOutlets.LineNumber AS LineNumber
-		|INTO Таблица
-		|FROM
-		|	&OutletsТ AS VisitPlanOutlets
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT ALLOWED
-		|	Таблица.Outlet AS Outlet,
-		|	Таблица.ИндексДня,
-        |   Таблица.Time,
-		|	Таблица.LineNumber AS LineNumber
-		|FROM
-		|	Таблица AS Таблица
-		|
-		|ORDER BY
-		|	LineNumber
-		|TOTALS BY
-		|	Outlet";
+#EndRegion
 
-//	Query.SetParameter("Ref", Object.Ref);
-	
-    ДокументОбъект = РеквизитФормыВЗначение("Object");
-	
-	OutletsТ = ДокументОбъект.Outlets.Unload();
-	
-	Query.SetParameter("OutletsТ", OutletsТ);
-	
-	ResultValueTree = Query.Execute().Unload(QueryResultIteration.ByGroups);
-	
-	Outlets = Object.Outlets;
-	Outlets.Clear();
-	Для каждого СтрокаДерева Из  ResultValueTree.Rows Цикл
-		// bit_vbobylev 30.05.2013 +++
-		// before:
-		//НоваяСтрока = ValueTableOutlets.Add();
-		//НоваяСтрока.Outlet = СтрокаДерева.Outlet;
-		//Для каждого Строка Из СтрокаДерева.Rows Цикл
-		//	НоваяСтрока["DateBoolean"+Строка.ИндексДня] = Истина;
-		//КонецЦикла;
-		// after:
-		Rows = ValueTableOutlets.FindRows(New Structure("Outlet", СтрокаДерева.Outlet));
-		If Rows.Count() Then
-			CurrentRow = Rows[0];
-			For Each TreeRow In СтрокаДерева.Rows Do
-				CurrentRow["DateBoolean" + TreeRow.ИндексДня] = True;
-                CurrentRow["Time" + TreeRow.ИндексДня] = TreeRow.Time;
-			EndDo;
-		EndIf;	
-		// bit_vbobylev ---
-	КонецЦикла;
-	
-КонецПроцедуры
-
-// Устанавливает значения реквизитов формы заполнения, согласно данным ранее
-//
-&AtServer
-Процедура УстановитьЗначенияРеквизитовФормыПриИзмененииSR(ResultТаб)
-	
-	ValueTableOutlets.Очистить();
-	
-	ValueTableOutlets.Load(ResultТаб);
-
-КонецПроцедуры
-
-&НаСервере
-Процедура УстановитьЗначениеРеквизита()
-	
-    ResultТаб = ПолучитьЗначенияSR(Object.SR);
-
-	УстановитьЗначенияРеквизитовФормыПриИзмененииSR(ResultТаб);
-
-КонецПроцедуры
-
-// Преобразовает данные в форме заполнения в данные табличной части 
-//
-&НаСервере
-Процедура ПреобразоватьРезультатыЗаполненияВТабличнуюЧасть(CurrentObject)
-	
-	Для каждого СтрокаТаблицы Из ValueTableOutlets Цикл
-		
-		//Удаление из табличной части предыдущей информации
-		НайденныеСтроки = CurrentObject.Outlets.НайтиСтроки(Новый Структура("Outlet",СтрокаТаблицы.Outlet));
-		Для каждого НайденнаяСтрока Из НайденныеСтроки Цикл
-			CurrentObject.Outlets.Удалить(НайденнаяСтрока);
-		КонецЦикла;
-		
-	КонецЦикла;
-	
-	КоличествоСтрок = ValueTableOutlets.Count()-1;
-	СписокДат  = СписокДат(); 
-	
-	Для  ИндексСтроки = 0 По КоличествоСтрок Цикл
-		Для Каждого Строка Из СписокДат Цикл
-			ОбрабатываемаяДата =  Строка.Value; 
-			Если ValueTableOutlets[ИндексСтроки]["DateBoolean" + WeekDay(ОбрабатываемаяДата)] Тогда
-				НоваяСтрока                   = CurrentObject.Outlets.Add();
-				НоваяСтрока .Outlet 	      = ValueTableOutlets[ИндексСтроки].Outlet;				                
-                time = ValueTableOutlets[ИндексСтроки]["Time" + WeekDay(ОбрабатываемаяДата)];
-                НоваяСтрока .Date             = ОбрабатываемаяДата + Hour(time)*60*60 + Minute(time)*60  + Second(time);
-			КонецЕсли;
-		КонецЦикла;	
-	КонецЦикла;		
-	
-	
- КонецПроцедуры
-
-&AtServer
-Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
-	 ПреобразоватьРезультатыЗаполненияВТабличнуюЧасть(CurrentObject);
- EndProcedure
+#Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	ПредыдущаяДатаНачалаПериода = Object.DateFrom;
-	ПредыдущаяДатаОкончанияПериода = Object.DateTo;
-	
-	// Заполним реквизит формы YearString.
-	YearString = ДатаКакГодПредставление(Object.Year);
-		
-	//УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-	
-EndProcedure
-
-//&AtClient
-// Процедура надписывает колонки т.п. в зависимости от способа ввода данных
-// и количества дней в месяце
-Процедура ОформитьЗаголовкиДнейМесяца()
-	
-	// Устанавливаем заголовки дней месяца
-	БледноКрасныйЦвет = Новый Цвет(255, 176, 176);
-	СерыйЦвет = Новый Цвет(234, 229, 216);
-	
-	
-	ДеньНеделиМесяца = ДеньНедели(Object.DateFrom);
-	НомерКолонки = 0;
-    СписокДней  = СписокДней(); 
-	
-	Для Каждого Строка Из СписокДней Цикл
-		
-		//Для ДеньМесяца = День(Object.DateFrom) по День(Object.DateTo) Цикл//КонецМесяца(Object.Date)) Цикл
-		
-		НомерКолонки = НомерКолонки + 1;		
-        
-		Container = Items["Group" + Строка(НомерКолонки)];
-		
-		Container.Title = Строка(Строка.Value) + Символы.ПС + ДниНедели[ДеньНеделиМесяца];
-        For Each Колонка In Container.ChildItems Do
-            Если ДеньНеделиМесяца = 6 Или ДеньНеделиМесяца = 7 Тогда
-                Колонка.TitleTextColor = ЦветаСтиля.ЦветОсобогоТекста;
-                Колонка.TitleFont = ШрифтыСтиля.ШрифтВажнойНадписи;
-                Колонка.BackColor = Новый Цвет(245, 204, 204);
-            Иначе
-                Колонка.TitleTextColor = Новый Цвет();	
-                Колонка.TitleFont = Новый Шрифт();
-            КонецЕсли;
-        EndDo;
-				
-		ДеньНеделиМесяца = (ДеньНеделиМесяца%7)+1;
-		
-	КонецЦикла;
-	
-КонецПроцедуры // ОформитьЗаголовкиДнейМесяца()
-
-&AtClient
-Procedure DateOnChange(Item)
-	
-	Если ValueTableOutlets.Count() > 0 Тогда
-		//Режим = РежимДиалогаВопрос.ДаНет;
-		//Текст = "ru = ""Продолжить выполнение операции?"";"
-		//+ " en = ""Do you want to continue?""";
-		//Ответ = Вопрос(НСтр(Текст), Режим, 0);
-		//Если Ответ = КодВозвратаДиалога.Нет Тогда
-		//	Возврат;
-		//КонецЕсли;
-		Message(NStr("en = 'The tabular section is cleaned.'; ru = 'Табличная часть очищена.'"));
-		ValueTableOutlets.Clear();
-	КонецЕсли;
-	
-	УстановитьЗначениеРеквизита();
-	
-	УстановитьДатыНачалаИОкончанияПериодов();
-
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
+	ChangeValueTableOutletsTitles();
+	SetColumnsAvailability();
 	
 EndProcedure
 
 &AtClient
-Процедура УстановитьДатыНачалаИОкончанияПериодов()
+Procedure ChoiceProcessing(SelectedValue, ChoiceSource)
 	
-	//Если  BegOfWeek(Object.Date) = EndOfWeek(CurrentDate()) Тогда   
-	//	Object.DateFrom = ?(BegOfWeek(Object.Date) <CurrentDate(),CurrentDate(),BegOfWeek(Object.Date));
-	//Иначе
-	//	Object.DateFrom = BegOfWeek(Object.Date);
-	//КонецЕсли;
+	If ChoiceSource.FormName = "Document.VisitPlan.Form.ChoiceForm" Then
+		
+		FillOutletsUsing(SelectedValue);
+		
+	EndIf;
 	
-	Object.DateTo = EndOfWeek(Object.DateFrom);
-	
-	ПредыдущаяДатаНачалаПериода = Object.DateFrom;
-	ПредыдущаяДатаОкончанияПериода = Object.DateTo;
-	
-КонецПроцедуры 
+EndProcedure
 
 &AtClient
 Procedure YearTuning(Item, Direction, StandardProcessing)
 	
-	Object.Year = ?(Direction = 1, EndOfYear(Object.Year)+1, BegOfYear(Object.Year)-1);
-	Если  BegOfYear(Object.Year) < BegOfYear(CurrentDate()) Тогда
-		Object.Year = BegOfYear(CurrentDate());	
-	КонецЕСли;
+	Object.Year = ?(Direction = 1, EndOfYear(Object.Year) + 1 , BegOfYear(Object.Year) - 1);
 	
-	YearNumber = ДатаКакГодПредставление(EndOfYear(Object.Year));
-
-	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
-	Если Object.WeekNumber = 0 Тогда
-		Object.WeekNumber = 1;
-	ИначеЕсли 	Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
-	КонецЕсли;	
+	// Планируемый год не может быть меньше чем текущий год
+	If BegOfYear(Object.Year) < BegOfYear(CurrentDate()) Then
+		
+		Object.Year = BegOfYear(CurrentDate());
+		
+	EndIf;
 	
-	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
-
+	ThisForm.YearNumber = Format(Object.Year, "DF=yyyy");
 	
-	УстановитьДатыНачалаИОкончанияПериодов();
-	
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-	
-EndProcedure
-
-&AtClient
-Функция ДатаКакГодПредставление(ДатаДата) Экспорт
-	Возврат Формат(ДатаДата, "ДФ='гггг'");
-КонецФункции
-
-&AtClient
-Функция ДатаКакНеделяПредставление(ДатаДата) Экспорт
-	Возврат Формат(ДатаДата, "ДФ='гггг'");
-КонецФункции
-
-&AtClient
-Procedure WeekNumberTuning(Item, Direction, StandardProcessing)
-	
-	StandardProcessing = Ложь;
-	
-	lWeekNumber = Object.WeekNumber + Direction;
-	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
-	Если Object.WeekNumber = 0 Тогда
-		Object.WeekNumber  = 1;
-	ИначеЕсли 	Year(Object.Year) <= Year(CurrentDate()) И Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
-	КонецЕсли;	
-	
-	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
-	
-	
-	УстановитьДатыНачалаИОкончанияПериодов();
-	
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-	
+	ClearOutlets();
+	ProcessWeekNumberAndYearChange();
 	
 EndProcedure
 
 &AtClient
 Procedure WeekNumberOnChange(Item)
 	
- 	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber);
-	Если Object.WeekNumber = 0 Тогда
-		Object.WeekNumber = 1;
-	ИначеЕсли Year(Object.Year) <= Year(CurrentDate()) И  Object.WeekNumber <  GetWeekOfYear(CurrentDate()) Тогда
-		Object.WeekNumber  = GetWeekOfYear(CurrentDate());
-	КонецЕсли;	
-	
-	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
-
-	УстановитьДатыНачалаИОкончанияПериодов();
-	
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-	
-EndProcedure
-
-Функция ДатаПоНомеруНедели(НомерНедели, Год)
-	
-	Год =СтрЗаменить(Строка(Год),Символы.НПП,"");
-    СоответствиеНедель = Новый Соответствие;    
-    КоличествоНедель = НеделяГода(КонецГода((Дата(Год+"0101"))));///или дату с годом
- 
-
-    Для Месяц=1 По 12 Цикл
-        ТекМес = Формат(Месяц, "ЧЦ=2; ЧВН="); //с лидирующими нулями
- 
-        ЧилоДнейВМесяце = День(КонецМесяца(Дата(Год+ТекМес+"01")));
-        Для ДеньМес=1 по ЧилоДнейВМесяце Цикл
-            ТекДеньМес =  Формат(ДеньМес, "ЧЦ=2; ЧВН="); //с лидирующими нулями
- 
-            НеделяГод = Формат(НеделяГода(Дата(Год+ТекМес+ТекДеньМес)),"ЧЦ=2; ЧВН=");  //с лидирующими нулями
- 
-            Если СоответствиеНедель.Получить(НеделяГод)=Неопределено тогда
-                СоответствиеНедель.Вставить(НеделяГод,Дата(Год+ТекМес+ТекДеньМес));     
-            КонецЕсли;
-        КонецЦикла;
-    КонецЦикла;
-
-    Возврат НачалоНедели(СоответствиеНедель.Получить(Формат(НомерНедели,"ЧЦ=2; ЧВН=")));
-    
-КонецФункции
-
-&НаСервере
-Функция ТаблицуДнейНедели()
-	
-	ДеньНачалаПериода = WeekDay(Object.DateFrom);
-	ДеньОкончанияПериода = WeekDay(Object.DateTo);
-	DateFrom  = Object.DateFrom;
-	ValueTableДней = New ValueTable;
-	ValueTableДней.Columns.Add("WeekDay");
-	ValueTableДней.Columns.Add("ReadOnly");
-	
-	Для Д = ДеньНачалаПериода по ДеньОкончанияПериода Цикл
-		НоваяСтрока = ValueTableДней.Add();
-		Если BegOfDay(DateFrom) < BegOfDay(CurrentDate()) Тогда
-			Если  Д = 1 Тогда
-				НоваяСтрока.WeekDay = (WeekDay(DateFrom));
-				НоваяСтрока.ReadOnly = Истина;
-			Иначе
-				//DateFrom = DateFrom + 24*60*60;
-				НоваяСтрока.WeekDay = (WeekDay(DateFrom));
-				НоваяСтрока.ReadOnly = Истина;
-			КонецЕсли;
-		Иначе
-			Если  Д = 1 Тогда
-				НоваяСтрока.WeekDay = (WeekDay(DateFrom));
-				НоваяСтрока.ReadOnly = Ложь;
-			Иначе
-				НоваяСтрока.WeekDay = (WeekDay(DateFrom));
-				НоваяСтрока.ReadOnly = Ложь;
-			КонецЕсли;
-		КонецЕсли;
-		DateFrom = DateFrom + 24*60*60;
-	КонецЦикла;
-	
-	Возврат ValueTableДней;
-	
-КонецФункции	
-
-&НаСервере
-Функция СписокДней() 
-	
-	ДеньНачалаПериода = WeekDay(Object.DateFrom);
-	ДеньОкончанияПериода = WeekDay(Object.DateTo);
-	DateFrom  = Object.DateFrom;
-	СписокДней = New ValueList;
-	Для Д = ДеньНачалаПериода по ДеньОкончанияПериода Цикл
-		Если  Д = 1 Тогда
-			СписокДней.Add(День(DateFrom));	
-		Иначе
-			DateFrom = DateFrom + 24*60*60;
-			СписокДней.Add(День(DateFrom));	
-		КонецЕсли;
-	КонецЦикла;
-	
-	Возврат СписокДней;
-
-КонецФункции
-
-&НаСервере
-Функция СписокДат() 
-	
-	ДеньНачалаПериода = WeekDay(Object.DateFrom);
-	ДеньОкончанияПериода = WeekDay(Object.DateTo);
-	DateFrom  = Object.DateFrom;
-	СписокДней = New ValueList;
-	Для Д = ДеньНачалаПериода по ДеньОкончанияПериода Цикл
-		Если  Д = 1 Тогда
-			СписокДней.Add(DateFrom);	
-		Иначе
-			DateFrom = DateFrom + 24*60*60;
-			СписокДней.Add(DateFrom);	
-		КонецЕсли;
-	КонецЦикла;
-	
-	Возврат СписокДней;
-
-КонецФункции
-
-&AtClient
-Procedure WeekNumberStartListChoice(Item, StandardProcessing)
-	
-	НачалоВыбораИзСпискаПредставленияWeekNumber(Item, StandardProcessing,Object.WeekNumber, Object.Year, ThisForm);
-	
-	lWeekNumber = Object.WeekNumber;
-	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
-	Если Object.WeekNumber = 0 Тогда
-		Object.WeekNumber = 1;
-	КонецЕсли;	
-
-	УстановитьДатыНачалаИОкончанияПериодов();
-	
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-	
+	ClearOutlets();
+	ProcessWeekNumberAndYearChange();
 	
 EndProcedure
 
 &AtClient
-// Процедура обрабатывает событие начала выбора из списка в поле периода регистрации
-// Процедура исполняется только на клиенте
-//
-Процедура НачалоВыбораИзСпискаПредставленияWeekNumber(Элемент, СтандартнаяОбработка, WeekNumber, ПериодРегистрации, ЭтаФорма, НачальноеЗначение = Неопределено) Экспорт
+Procedure ChangeValueTableOutletsTitles()
 	
-	СтандартнаяОбработка = Ложь;
+	For WeekDay = 1 To 7 Do
+		
+		CurrentGroup = Items["Group" + WeekDay];
+		CurrentDate = Object.DateFrom + (WeekDay - 1)* 60 * 60 * 24;
+		WeekDayName = Lower(Format(CurrentDate, "DF=ddd"));
+		MonthDay = Day(CurrentDate);
+		
+		CurrentGroup.Title = String(MonthDay) + "   |   " + WeekDayName;
+		
+	EndDo;
 	
-	Если НачальноеЗначение = Неопределено Тогда
-		НачальноеЗначение = ПериодРегистрации;
-	КонецЕсли; 		
-	PeriodListStuct = GetPeriodList(WeekNumber, ПериодРегистрации);
-	ВыбранныйЭлемент = OpenForm("CommonForm.ChooseFromListForm", new Structure("List, Source", PeriodListStuct.ValueList, "GetWeek"));
-	
-КонецПроцедуры
+EndProcedure
 
-&AtServerNoContext
-Function GetWeekOfYear(Value)
+&AtClient
+Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	SelectionValue = New Structure("Role", "SR");
+	SelectionParameters = New Structure("Filter", SelectionValue);
+	OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);
+	
+EndProcedure
 
-	Return WeekOfYear(Value);
+&AtClient
+Procedure SROnChange(Item)
 	
-EndFunction
+	ClearOutlets();
+	FillValueTableOutlets();
+	
+EndProcedure
 
-// bit_vbobylev 18.06.2013 Заполнение списка выбора перенесено на сервер
-&AtServerNoContext
-Function GetPeriodList(WeekNumber, ПериодРегистрации)
+&AtClient
+Procedure ValueTableOnChange(Item)
 	
-	НачалоТекущегоНедели = ДатаПоНомеруНеделиНаСервере(WeekNumber,Year(ПериодРегистрации));
+	CurrentData = Items.ValueTableOutlets.CurrentData;
 	
-	СписокВыбора = Новый СписокЗначений;
-	ЭлементПоУмолчанию = Неопределено;
+	DayOfWeek = Right(Item.Name, 1);
 	
-	Для а = 1 По WeekOfYear(EndOfYear(ПериодРегистрации)) Цикл
-		Если Year(ПериодРегистрации) > Year(CurrentDate())  Тогда
-			НачалоНеделиЗаполнения = ДатаПоНомеруНеделиНаСервере(а,Year(ПериодРегистрации));
-			If CurrentSystemLanguage() = "ru" Then
-				ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения, Строка(а)+ "   (с " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " по " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") + ")" );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)//ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения,"Номер недели: "+Строка(а)+ " с " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " по " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)
-			Else 
-				ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения, Строка(а)+ "   (from " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " to " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") + ")" );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)
-			EndIf;
+	CurrentDate = BegOfDay(Object.DateFrom) + 60 * 60 * 24 * (DayOfWeek - 1);
+	
+	PrevTime = ?(PrevTime = Undefined, Date(1, 1, 1), PrevTime);
+	PrevDateTime = CurrentDate + Second(PrevTime) + Minute(PrevTime) * 60 + Hour(PrevTime) * 3600;
+	
+	CurrentTime = CurrentData["Time" + DayOfWeek];
+	CurrentDateTime = CurrentDate + Second(CurrentTime) + Minute(CurrentTime) * 60 + Hour(CurrentTime) * 3600;
+	
+	FilterParameters = New Structure;
+	FilterParameters.Insert("Outlet", CurrentData.Outlet);
+	FilterParameters.Insert("Date", PrevDateTime);
+	
+	Rows = Object.Outlets.FindRows(FilterParameters);
+	
+	If Rows.Count() Then
+		
+		For Each Row In Rows Do
 			
-			Если НачалоТекущегоНедели = НачалоНеделиЗаполнения Тогда
-				ЭлементПоУмолчанию = ДобавленныйЭлемент;
-			КонецЕсли; 
-		Иначе
-			Если а >= WeekOfYear(CurrentDate()) Тогда
-				НачалоНеделиЗаполнения = ДатаПоНомеруНеделиНаСервере(а,Year(ПериодРегистрации));
-				If CurrentSystemLanguage() = "ru" Then
-					ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения, Строка(а)+ "   (с " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " по " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") + ")" );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)//ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения,"Номер недели: "+Строка(а)+ " с " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " по " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)
-				Else 
-					ДобавленныйЭлемент = СписокВыбора.Добавить(НачалоНеделиЗаполнения, Строка(а)+ "   (from " + Формат(НачалоНеделиЗаполнения,"ДЛФ=Д") + " to " + Формат(КонецНедели(НачалоНеделиЗаполнения),"ДЛФ=Д") + ")" );//ДатаКакНеделяПредставление(НачалоМесяцаЗаполнения)
-				EndIf;
-				
-				Если НачалоТекущегоНедели = НачалоНеделиЗаполнения Тогда
-					ЭлементПоУмолчанию = ДобавленныйЭлемент;
-				КонецЕсли; 
-			КонецЕсли;
-		КонецЕсли;
-	КонецЦикла;
+			Object.Outlets.Delete(Object.Outlets.IndexOf(Row));
+			
+		EndDo;
+		
+	EndIf;
 	
-	Return New Structure("ValueList, DefaultElement", 
-					   СписокВыбора, ?(ЭлементПоУмолчанию = Undefined, 0, СписокВыбора.IndexOf(ЭлементПоУмолчанию)));
+	Checked = CurrentData["DateBoolean" + DayOfWeek];
 	
-EndFunction // GetPeriodList()
+	If Checked Then
+		
+		NewRow = Object.Outlets.Add();
+		NewRow.Outlet = CurrentData.Outlet;
+		NewRow.Date = CurrentDateTime;
+		
+	Else
+		
+		CurrentData["Time" + DayOfWeek] = Date(1, 1, 1);
+		
+	EndIf;
+	
+EndProcedure
 
-&AtServerNoContext
-Function ДатаПоНомеруНеделиНаСервере(НомерНедели, Год)
+&AtClient
+Procedure ValueTableOutletsOnStartEdit(Item, NewRow, Clone)
 	
-	Год = СтрЗаменить(Строка(Год),Символы.НПП,"");
-    СоответствиеНедель = Новый Соответствие;    
-    КоличествоНедель = НеделяГода(КонецГода((Дата(Год+"0101"))));///или дату с годом
- 
-    Для Месяц=1 По 12 Цикл
-        ТекМес = Формат(Месяц, "ЧЦ=2; ЧВН="); //с лидирующими нулями
- 
-        ЧилоДнейВМесяце = День(КонецМесяца(Дата(Год+ТекМес+"01")));
-        Для ДеньМес=1 по ЧилоДнейВМесяце Цикл
-            ТекДеньМес =  Формат(ДеньМес, "ЧЦ=2; ЧВН="); //с лидирующими нулями
- 
-            НеделяГод = Формат(НеделяГода(Дата(Год+ТекМес+ТекДеньМес)),"ЧЦ=2; ЧВН=");  //с лидирующими нулями
- 
-            Если СоответствиеНедель.Получить(НеделяГод)=Неопределено тогда
-                СоответствиеНедель.Вставить(НеделяГод,Дата(Год+ТекМес+ТекДеньМес));     
-            КонецЕсли;
-        КонецЦикла;
-    КонецЦикла;
-
-    Возврат НачалоНедели(СоответствиеНедель.Получить(Формат(НомерНедели,"ЧЦ=2; ЧВН=")));
-    
-EndFunction
-// bit_vbobylev ---
+	If Find(Item.CurrentItem.Name, "Date") OR Find(Item.CurrentItem.Name, "Time") Then
+		
+		DayOfWeek = Right(Item.CurrentItem.Name, 1);
+		CurrentData = Items.ValueTableOutlets.CurrentData;
+		
+		PrevTime = CurrentData["Time" + DayOfWeek];
+		
+	EndIf;
+	
+EndProcedure
 
 &AtClient
 Procedure Clear(Command)
-	//bit_rumyantseva_alena 29/03/2013
 	
-	if ValueTableOutlets.Count()> 0 then
-	   for each Str in ValueTableOutlets Do
-		   for i = 1 to 7 do
-			   Str["DateBoolean"+ i] = False;
-               Str["Time" + i] = Date(0001,01,01,00,00,00);
-		   enddo;
-	   EndDo;
-   endIf;
+	ClearOutlets();
+	
 EndProcedure
 
 &AtClient
 Procedure FillTableUsing(Command)
 	
-	ЗначениеОтбора = Новый Структура("SR", ThisForm.Object.SR);
-	//ЗначениеОтбора.Insert("YEAR", ThisForm.Object.Year);
-	ПараметрыВыбора = Новый Структура("Отбор", ЗначениеОтбора);
+	FilterValue = New Structure("SR", ThisForm.Object.SR);
+	ChoiceParameters = New Structure("Filter", FilterValue);
 	
-	ФормаВыбора = ПолучитьФорму("Document.VisitPlan.ChoiceForm",ПараметрыВыбора);
-	ФормаВыбора.FormOwner = ThisForm; 
-	ФормаВыбора.Открыть();
-	
+	ChoiceForm = GetForm("Document.VisitPlan.ChoiceForm", ChoiceParameters);
+	ChoiceForm.FormOwner = ThisForm;
+	ChoiceForm.Open();
 	
 EndProcedure
 
-&AtClient
-Procedure ChoiceProcessing(SelectedValue, ChoiceSource)
-	if ChoiceSource.FormName = "Document.VisitPlan.Form.ChoiceForm" Then
-	   ЗаполнитьПоДокументу(SelectedValue);
-	EndIf
-	
-
-EndProcedure
-
-&AtServer
-Procedure ЗаполнитьПоДокументу (DocRef)
-	
-	МенеджерВременныхТаблиц = Новый МенеджерВременныхТаблиц;
-	
-	Query = New Query;
-	Query.TempTablesManager =   МенеджерВременныхТаблиц;
-	Query.Text = 
-		"SELECT ALLOWED
-		|	VisitPlanOutlets.Outlet AS Outlet,
-		|	WEEKDAY(VisitPlanOutlets.Date) AS ИндексДня,
-        |   VisitPlanOutlets.Date AS Time,
-		|	VisitPlanOutlets.LineNumber AS LineNumber
-		|INTO Таблица
-		|FROM
-		|	&OutletsТ AS VisitPlanOutlets
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT ALLOWED
-		|	Таблица.Outlet AS Outlet,
-		|	Таблица.ИндексДня,
-        |   Таблица.Time,
-		|	Таблица.LineNumber AS LineNumber
-		|FROM
-		|	Таблица AS Таблица
-		|
-		|ORDER BY
-		|	LineNumber
-		|TOTALS BY
-		|	Outlet";
-
-//	Query.SetParameter("Ref", Object.Ref);
-	
-    //ДокументОбъект = РеквизитФормыВЗначение("Object");
-	
-	OutletsТ = DocRef.Outlets.Unload();
-	
-	Query.SetParameter("OutletsТ", OutletsТ);
-	
-	ResultValueTree = Query.Execute().Unload(QueryResultIteration.ByGroups);
-	
-	Outlets = Object.Outlets;
-    Outlets.Clear();
-    Для каждого СтрокаДерева Из  ResultValueTree.Rows Цикл        
-        ValueTable = ValueTableOutlets.Unload();
-        FoundRow = ValueTable.Find(СтрокаДерева.Outlet, "Outlet");
-        If FoundRow<>Undefined Then
-            For i=1 To 7 Do //clear date values
-                FoundRow[i] = False;
-            EndDo;
-            For i=8 To 14 Do
-                FoundRow[i] =  Date(0001,01,01,00,00,00); //clear time values           	            
-            EndDo;
-            Для каждого Строка Из СтрокаДерева.Rows Цикл //fill date values
-                FoundRow["DateBoolean"+Строка.ИндексДня] = Истина;
-                FoundRow["Time" + Строка.ИндексДня] = Строка.Time;
-            КонецЦикла;
-        EndIf;
-        ValueTableOutlets.Load(ValueTable);
-    КонецЦикла;  
-    
-EndProcedure
-
-&AtClient
-Procedure YearOnChange(Item)
-	
-	lYear = Object.Year;
-	Object.Year = ?(YearNumber > 2051,YearNumber - 1,YearNumber);
-	Если YearNumber < 2000 Тогда
-		Object.Year = Дата(2000,1,1);
-		YearNumber  = Year(Дата(2000,1,1));
-	ИначеЕсли YearNumber <  Year(CurrentDate()) Тогда
-		Object.Year  = BegOfYear(CurrentDate());
-		YearNumber   = Year(BegOfYear(CurrentDate()));
-	Иначе
-		Object.Year  = Дата(YearNumber,1,1);
-	КонецЕсли;	
-	
-	//YearNumber = ДатаКакГодПредставление(EndOfYear(Object.Year));
-
-	Object.DateFrom = ДатаПоНомеруНедели(Object.WeekNumber,Year(Object.Year));
-
-	УстановитьДатыНачалаИОкончанияПериодов();
-	
-	УстановитьДоступностьКолонокТаблицы();
-	ОформитьЗаголовкиДнейМесяца();
-
-	
-	//ДатаКакМесяцПодобратьДатуПоТексту(Object.Year, Object.Year);
-	//Object.Year = ДатаКакГодПредставление(Object.Year);
-	//
-	//УстановитьДатыНачалаИОкончанияПериодов();
-	//
-	//УстановитьДоступностьКолонокТаблицы();
-	//ОформитьЗаголовкиДнейМесяца();
-	
-EndProcedure
-
-// подбирает массив номеров месяцев, соответствующих переданной строке
-// например, для строки "ма" это будут 3 и 5, для "а" - 4 и 8
-// используется в ПодобратьДатуПоТексту
-//
-Функция   СписокМесяцевПоСтроке(Текст)
-	
-	СписокМесяцев = Новый СписокЗначений;
-	Месяцы = Новый Соответствие;
-	МесяцыВозврата = Новый Массив;
-	
-	//КомпонентаСклоненияФИО = глЗначениеПеременной("глКомпонентаСклоненияФИО");
-	//
-	//Для Счетчик = 1 По 12 Цикл
-	//	Представление = Формат(Дата(2000, Счетчик, 1), "ДФ='ММММ'");
-	//	СписокМесяцев.Добавить(Счетчик, Представление);
-	//	УниверсальныеМеханизмы.Просклонять(КомпонентаСклоненияФИО, Представление, 2, , Представление);
-	//	СписокМесяцев.Добавить(Счетчик, Представление);
-	//	Представление = Формат(Дата(2000, Счетчик, 1), "ДФ='МММ'");
-	//	СписокМесяцев.Добавить(Счетчик, Представление);
-	//КонецЦикла;
-	
-	//Для Каждого ЭлементСписка Из СписокМесяцев Цикл
-	//	Если ВРег(Текст) = ВРег(Лев(ЭлементСписка.Представление, СтрДлина(Текст))) Тогда
-	//		Месяцы[ЭлементСписка.Значение] = 0;
-	//	КонецЕсли;
-	//КонецЦикла;
-	//
-	//Для Каждого Элемент Из Месяцы Цикл
-	//	МесяцыВозврата.Добавить(Элемент.Ключ);
-	//КонецЦикла;
-	//
-	Возврат МесяцыВозврата;
-	
-КонецФункции
-
-// Предназначена для реализации "произвольного" ввода даты-месяца
-// подбирает по переданному тексту строку-представление даты или список таких строк
-// в переданный параметр ДатаПоТексту возвращает подобранную по тексту дату
-Функция   ДатаКакМесяцПодобратьДатуПоТексту(Текст, ДатаПоТексту = НеОпределено) ЭКспорт
-	СписокВозврата = Новый СписокЗначений;
-	ТекущийГод = Год(ТекущаяДата());
-	
-	Если ПустаяСтрока(Текст) Тогда
-		Возврат СписокВозврата;
-	КонецЕсли;
-	Если Найти(Текст, ".") <> 0 Тогда
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, ".");
-	ИначеЕсли Найти(Текст, ",") <> 0 Тогда
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, ",");
-	ИначеЕсли Найти(Текст, "-") <> 0 Тогда
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, "-");
-	ИначеЕсли Найти(Текст, "/") <> 0 Тогда
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, "/");
-	ИначеЕсли Найти(Текст, "\") <> 0 Тогда
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, "\");
-	Иначе
-		Подстроки = ОбщегоНазначения.РазложитьСтрокуВМассивПодстрок(Текст, " ");
-	КонецЕсли;
-	Если Подстроки.Количество() = 1 Тогда
-		// единственное слово - пытаемся получить месяц
-		Если ОбщегоНазначения.ТолькоЦифрыВСтроке(Текст) Тогда
-			МесяцЧислом = Число(Текст);
-			Если МесяцЧислом >= 1 и МесяцЧислом <=12 Тогда
-				ДатаПоТексту = Дата(ТекущийГод, МесяцЧислом, 1);
-				Если СтрДлина(Текст) = 1 Тогда
-					СписокВозврата.Добавить(Формат(ДатаПоТексту, "ДФ='М/гг'"));
-				Иначе
-					СписокВозврата.Добавить(Формат(ДатаПоТексту, "ДФ='ММ/гг'"));
-				КонецЕсли;
-			Иначе
-				Возврат СписокВозврата;
-			КонецЕсли;                
-		Иначе
-			СписокМесяцев = СписокМесяцевПоСтроке(Текст);
-			Для Каждого Месяц Из СписокМесяцев Цикл
-				ДатаПоТексту = Дата(ТекущийГод, Месяц, 1);
-				СписокВозврата.Добавить(Формат(ДатаПоТексту, "ДФ='ММММ гг'"));
-			КонецЦикла;
-		КонецЕсли;
-	ИначеЕсли Подстроки.Количество() = 2 Тогда
-		// два слова - первое считаем месяцем, второе - годом
-		Если ОбщегоНазначения.ТолькоЦифрыВСтроке(Подстроки[1]) Тогда
-			Если ПустаяСтрока(Подстроки[1]) Тогда
-				ГодЧислом = 0;
-				Подстроки[1] = "0";
-				ТекстВозврата = Текст + "0";
-			Иначе
-				ГодЧислом = Число(Подстроки[1]);
-				ТекстВозврата = "";
-			КонецЕсли;
-			Если ГодЧислом > 3000 Тогда
-				Возврат СписокВозврата;
-			КонецЕсли;
-			Если СтрДлина(Подстроки[1]) <= 1 Тогда
-				ГодЧислом = Число(Лев(Формат(ТекущийГод, "ЧГ="), 3) + Подстроки[1]);
-				СтрокаФорматированияГода = "г";
-			ИначеЕсли СтрДлина(Подстроки[1]) = 2 Тогда
-				ГодЧислом = Число(Лев(Формат(ТекущийГод, "ЧГ="), 2) + Подстроки[1]);
-				СтрокаФорматированияГода = "гг";
-			ИначеЕсли СтрДлина(Подстроки[1]) = 3 Тогда
-				ГодЧислом = Число(Лев(Формат(ТекущийГод, "ЧГ="), 1) + Подстроки[1]);
-				СтрокаФорматированияГода = "гггг";
-			КонецЕсли;                    
-		Иначе
-			// второе слово может быть только годом
-			Возврат СписокВозврата;
-		КонецЕсли;                
-		Если ЗначениеЗаполнено(Подстроки[0]) И ОбщегоНазначения.ТолькоЦифрыВСтроке(Подстроки[0]) Тогда
-			МесяцЧислом = Число(Подстроки[0]);
-			Если МесяцЧислом >= 1 и МесяцЧислом <= 12 Тогда
-				// если "правильный" месяц и год
-				ДатаПоТексту = Дата(ГодЧислом, МесяцЧислом, 1);
-				СписокВозврата.Добавить(ТекстВозврата);
-			Иначе
-				Возврат СписокВозврата;
-			КонецЕсли;                
-		Иначе
-			СписокМесяцев = СписокМесяцевПоСтроке(Подстроки[0]);
-			Если СписокМесяцев.Количество() = 1 Тогда
-				ДатаПоТексту = Дата(ГодЧислом, СписокМесяцев[0], 1);
-				СписокВозврата.Добавить("");
-			Иначе
-				Для Каждого Месяц Из СписокМесяцев Цикл
-					ДатаПоТексту = Дата(ГодЧислом, Месяц, 1);
-					СписокВозврата.Добавить(Формат(Дата(ГодЧислом, Месяц, 1), "ДФ='ММММ гг'"));
-				КонецЦикла;
-			КонецЕсли;
-		КонецЕсли;
-	КонецЕсли;
-	Возврат СписокВозврата;
-КонецФункции
-
-Процедура ДатаКакМесяцАвтоПодборТекста(Текст, ТекстАвтоПодбора, СтандартнаяОбработка) Экспорт
-	Список = ДатаКакМесяцПодобратьДатуПоТексту(Текст);
-	Если Список.Количество() = 1 Тогда
-		ТекстАвтоПодбора = Список[0].Значение;
-	КонецЕсли;
-	СтандартнаяОбработка = Ложь;
-КонецПроцедуры
-
-Процедура ДатаКакМесяцОкончаниеВводаТекста(Текст, Значение, СтандартнаяОбработка) Экспорт
-	Список = ДатаКакМесяцПодобратьДатуПоТексту(Текст);
-	Если Список.Количество() = 1 Тогда
-		Значение = Текст;
-	Иначе
-		Значение = Список;
-	КонецЕсли;
-	СтандартнаяОбработка = Ложь;
-КонецПроцедуры
-
-&AtClient
-Procedure ValueTableDateBoolean1OnChange(Item)
-    DateOnChangeCommonHandler(Item);	
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean2OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean3OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean4OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean5OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean6OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure ValueTableDateBoolean7OnChange(Item)
-    DateOnChangeCommonHandler(Item);
-EndProcedure
-
-&AtClient
-Procedure DateOnChangeCommonHandler(Item)    
-    i = Right(Item.Name, 1);
-    row = items.ValueTableOutlets.currentdata;
-    If NOT row["DateBoolean" + i] Then
-        row["Time" + i] = Date(0001,01,01,00,00,00);    	    
-    EndIf;    
-EndProcedure
-
-&AtClient
-Function FormParameters_(Item)
-	
-	//FormParameters = New Structure();
-
-	//Если Item.Parent.CurrentData["DateBoolean" +Прав(Item.Name,1)] Тогда
-		СписокДат  = СписокДат(); 
-		//ИндексСтроки = 1;
-		Для Каждого Строка Из СписокДат Цикл
-			ОбрабатываемаяДата =  Строка.Value; 
-			ЕСли Прав(Item.Name,1) =  Строка(WeekDay(ОбрабатываемаяДата)) Тогда
-				//Если ValueTableOutlets[Item.Parent.CurrentRow]["DateBoolean" + WeekDay(ОбрабатываемаяДата)] Тогда
-				Date             = ОбрабатываемаяДата;
-			КонецЕсли;
-		КонецЦикла;	
-		
-		Outlet = Items.ValueTableOutlets.CurrentData.Outlet;
-		Territory = GetTerritory_(Outlet);
-		FormParameters = New Structure("Outlet,Territory,VisitPlan,PlanDate", Outlet,Territory,Object.Ref,Date);
-		
-	//КонецЕсли;
-	
-	Возврат FormParameters;
-
-EndFunction	
-
-&AtClient
-Procedure CreateTasksFromVisitPlan_(Item,FormParameters_) 
-	
-	Если Object.Ref.IsEmpty() Тогда
-		Сообщить("Нужно записать документ!");
-		Items.ValueTableOutlets.CurrentData["DateBoolean" +Прав(Item.Name,1)] = Ложь;		
-		Возврат; 
-	КонецЕсли;	
-	
-	Если Items.ValueTableOutlets.CurrentData["DateBoolean" +Прав(Item.Name,1)] Тогда
-		OpenForm("Document.Task.ObjectForm", FormParameters_);
-	КонецЕсли;
-	
-EndProcedure
-
-&AtServer
-Function GetTerritory_(Outlet)
-	Возврат CommonProcessors.GetTerritory(Outlet)	
-EndFunction
-
-// bit_vbobylev 30.05.2013 +++
 &AtClient
 Procedure CreateTask(Command)
 	
 	Modified = True;
 	
-	Item = Items.ValueTableOutlets.CurrentItem;
-	// 18.06.2013
-	If Items.ValueTableOutlets.CurrentData = Undefined Then
-		Message("Необходимо выбрать конкретный день!");
-		Return;
-	EndIf;
+	CurrentTableItem = Items.ValueTableOutlets.CurrentItem;
+	CurrentData = Items.ValueTableOutlets.CurrentData;
 	
-	Parameters_ = FormParameters_(Item);	
-	// 18.06.2013
-	If NOT ValueIsFilled(Parameters_.PlanDate) Then
-		Message("Необходимо выбрать конкретный день!");
-		Return;
+	If Find(CurrentTableItem.Name, "Date") OR Find(CurrentTableItem.Name, "Time") Then
+		
+		If Not CurrentData = Undefined Then
+			
+			If Object.Ref.IsEmpty() Then
+				
+				Message(NStr("en = 'Document must be saved before creating task'; ru = 'Документ должен быть записан перед созданием задачи'"));
+				
+			Else
+			
+				DayOfWeek = Right(CurrentTableItem.Name, 1);
+				
+				PlanDate = BegOfDay(Object.DateFrom) + 60 * 60 * 24 * (DayOfWeek - 1);
+				Outlet = CurrentData.Outlet;
+				Territory = CommonProcessors.GetTerritory(Outlet);
+				
+				FormParameters = New Structure;
+				FormParameters.Insert("Outlet", Outlet);
+				FormParameters.Insert("Territory", Territory);
+				FormParameters.Insert("VisitPlan", Object.Ref);
+				FormParameters.Insert("PlanDate", PlanDate);
+				
+				OpenForm("Document.Task.ObjectForm", FormParameters);
+				
+			EndIf;
+			
+		EndIf;
+		
+	Else
+		
+		Message(NStr("en = 'Choose particlular date'; ru = 'Выберите конкретную дату'"));
+		
 	EndIf;
-	
-	CreateTasksFromVisitPlan_(Item, Parameters_); 
 	
 EndProcedure
-// bit_vbobylev
 
 &AtClient
-Procedure SRStartChoice(Item, ChoiceData, StandardProcessing)
-    
-    StandardProcessing = False;
-  
-    SelectionValue = New Structure("Role", "SR");
-    SelectionParameters = New Structure("Filter", SelectionValue);
-    OpenForm("Catalog.User.ChoiceForm", SelectionParameters, ThisForm.Items.SR);    
-
+Procedure ProcessWeekNumberAndYearChange()
+	
+	lWeekNumber = Object.WeekNumber;
+	// Обрабатываем случай, когда неделя года последняя, изменяется планируемый
+	// год и в новом году недель меньше чем в предыдущем.
+	Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)), GetWeekOfYear(EndOfYear(Object.Year)), lWeekNumber);
+	
+	If Object.WeekNumber = 0 Then
+		
+		Object.WeekNumber = 1;
+		
+	ElsIf Object.WeekNumber < GetWeekOfYear(CurrentDate()) Then
+		
+		// В случае если новый год равен текущему, тогда номер недели не может быть 
+		// меньше чем номер текущей недели
+		Object.WeekNumber = ?(Year(Object.Year) <= Year(CurrentDate()), GetWeekOfYear(CurrentDate()), Object.WeekNumber);
+		
+	EndIf;
+	
+	Object.DateFrom = BeginOfWeekInYear(Object.WeekNumber, Object.Year);
+	Object.DateTo = EndOfWeek(Object.DateFrom);
+	
+	SetColumnsAvailability();
+	ChangeValueTableOutletsTitles();
+	ClearOutlets();
+	
 EndProcedure
 
 &AtClient
-Procedure NotificationProcessing(EventName, Parameter, Source)
+Procedure SetColumnsAvailability()
 	
-	if EventName="GetWeek" Then
+	ColumnDate = Object.DateFrom;
+	For WeekDay = 1 To 7 Do
 		
-		ВыбранныйЭлемент = Parameter;
-		Object.WeekNumber = GetWeekOfYear(ВыбранныйЭлемент.Значение);
-		WeekNumber = GetWeekOfYear(ВыбранныйЭлемент.Значение);
-		Object.DateFrom = ВыбранныйЭлемент.Значение;
+		Items["Group" + WeekDay].ReadOnly = BegOfDay(ColumnDate) < BegOfDay(CurrentDate());
+		ColumnDate = ColumnDate + 60 * 60 * 24;
 		
-		lWeekNumber = Object.WeekNumber;
-		Object.WeekNumber = ?(lWeekNumber > GetWeekOfYear(EndOfYear(Object.Year)),lWeekNumber-1,lWeekNumber);
-		Если Object.WeekNumber = 0 Тогда
-			Object.WeekNumber = 1;
-		КонецЕсли;	
-
-		УстановитьДатыНачалаИОкончанияПериодов();
-		
-		УстановитьДоступностьКолонокТаблицы();
-		ОформитьЗаголовкиДнейМесяца();
-	EndIf;
+	EndDo;
 	
 EndProcedure
 
+&AtClient
+Procedure ClearOutlets()
+	
+	For Each Row In ValueTableOutlets Do
+		
+		For Index = 1 To 7 Do
+			
+			Row["DateBoolean" + Index] = False;
+			Row["Time" + Index] = Date(1, 1, 1);
+			
+		EndDo;
+	
+	EndDo;
+	
+	Object.Outlets.Clear();
+	
+EndProcedure
 
-ДлинаСуток = 86400;
-ПерваяДата = НачалоДня(CurrentDate());
-ПерваяДата = ПерваяДата - ДеньНедели(ПерваяДата) * ДлинаСуток;
-ДниНедели = Новый Соответствие;
-Для ДеньНедели = 1 По 7 Цикл
-	ДниНедели.Вставить(ДеньНедели, НРег(Формат(ПерваяДата + ДеньНедели * ДлинаСуток,NStr("en = ""Л = en_GB; ДФ=ддд""; ru = ""L = ru_RU; ДФ=ддд"""))));
-КонецЦикла;
-
+#EndRegion
