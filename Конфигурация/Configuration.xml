@@ -170,10 +170,12 @@
 			<CommonModule>СтандартныеПодсистемыПовтИсп</CommonModule>
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
+			<ExchangePlan>bitmobile_ОбменСУчетнымиСистемами</ExchangePlan>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
+			<ScheduledJob>bitmobile_СинхронизацияСУчетнымиСистемами</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
@@ -332,9 +334,11 @@
 			<Report>VisitResults</Report>
 			<Report>VisitsControl</Report>
 			<Report>AccountReceivable</Report>
-			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
+			<DataProcessor>РегистрацияИзмененийДляОбменаДанными</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
+			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
+			<DataProcessor>УниверсальныйОбменДаннымиXML</DataProcessor>
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
 			<InformationRegister>Answers</InformationRegister>
 			<InformationRegister>AnsweredQuestions</InformationRegister>
