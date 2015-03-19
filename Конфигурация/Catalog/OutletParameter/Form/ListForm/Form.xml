@@ -76,6 +76,9 @@
 				<ContextMenu name="ListSearchControlContextMenu" id="20"/>
 				<ExtendedTooltip name="ListSearchControlExtendedTooltip" id="21"/>
 			</SearchControlAddition>
+			<Events>
+				<Event name="BeforeRowChange">ListBeforeRowChange</Event>
+			</Events>
 			<ChildItems>
 				<LabelField name="Description" id="22">
 					<DataPath>List.Description</DataPath>
@@ -93,6 +96,20 @@
 					<ContextMenu name="DataTypeContextMenu" id="29"/>
 					<ExtendedTooltip name="DataTypeExtendedTooltip" id="30"/>
 				</LabelField>
+				<CheckBoxField name="EditableInMA" id="33">
+					<DataPath>List.EditableInMA</DataPath>
+					<EditMode>Directly</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="EditableInMAContextMenu" id="34"/>
+					<ExtendedTooltip name="EditableInMAExtendedTooltip" id="35"/>
+				</CheckBoxField>
+				<CheckBoxField name="VisibleInMA" id="36">
+					<DataPath>List.VisibleInMA</DataPath>
+					<EditMode>Directly</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="VisibleInMAContextMenu" id="37"/>
+					<ExtendedTooltip name="VisibleInMAExtendedTooltip" id="38"/>
+				</CheckBoxField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
