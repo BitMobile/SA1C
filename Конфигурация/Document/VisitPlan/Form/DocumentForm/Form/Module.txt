@@ -143,6 +143,34 @@ Procedure FillOutletsUsing(VisitPlan)
 	
 EndProcedure
 
+&AtServer
+Procedure RecountOutlets()
+	
+	Query = New Query(
+	"SELECT
+	|	Outlets.Outlet,
+	|	DATEADD(&DateFrom, SECOND, (WEEKDAY(Outlets.Date) - 1) * 60 * 60 * 24 + HOUR(Outlets.Date) * 60 * 60 + MINUTE(Outlets.Date) * 60 + SECOND(Outlets.Date)) AS Date
+	|INTO OutletsVT
+	|FROM
+	|	&Outlets AS Outlets
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	OutletsVT.Outlet,
+	|	OutletsVT.Date
+	|FROM
+	|	OutletsVT AS OutletsVT");
+	
+	Query.SetParameter("Outlets", Object.Outlets.Unload());
+	Query.SetParameter("DateFrom", Object.DateFrom);
+	
+	QueryResult = Query.Execute().Unload();
+	
+	Object.Outlets.Load(QueryResult);
+	
+EndProcedure
+
 // Забираем неделю года на сервере. потому что в зависимости от локали 
 // алгоритм вычисления может варьироваться и мы считаем локаль сервера
 // приоритетной
@@ -188,6 +216,8 @@ Procedure ChoiceProcessing(SelectedValue, ChoiceSource)
 	
 EndProcedure
 
+#Region Header
+
 &AtClient
 Procedure YearTuning(Item, Direction, StandardProcessing)
 	
@@ -202,7 +232,6 @@ Procedure YearTuning(Item, Direction, StandardProcessing)
 	
 	ThisForm.YearNumber = Format(Object.Year, "DF=yyyy");
 	
-	ClearOutlets();
 	ProcessWeekNumberAndYearChange();
 	
 EndProcedure
@@ -210,24 +239,7 @@ EndProcedure
 &AtClient
 Procedure WeekNumberOnChange(Item)
 	
-	ClearOutlets();
 	ProcessWeekNumberAndYearChange();
-	
-EndProcedure
-
-&AtClient
-Procedure ChangeValueTableOutletsTitles()
-	
-	For WeekDay = 1 To 7 Do
-		
-		CurrentGroup = Items["Group" + WeekDay];
-		CurrentDate = Object.DateFrom + (WeekDay - 1)* 60 * 60 * 24;
-		WeekDayName = Lower(Format(CurrentDate, "DF=ddd"));
-		MonthDay = Day(CurrentDate);
-		
-		CurrentGroup.Title = String(MonthDay) + "   |   " + WeekDayName;
-		
-	EndDo;
 	
 EndProcedure
 
@@ -245,10 +257,14 @@ EndProcedure
 &AtClient
 Procedure SROnChange(Item)
 	
-	ClearOutlets();
 	FillValueTableOutlets();
+	ClearOutlets();
 	
 EndProcedure
+
+#EndRegion
+
+#Region ValueTable
 
 &AtClient
 Procedure ValueTableOnChange(Item)
@@ -310,6 +326,10 @@ Procedure ValueTableOutletsOnStartEdit(Item, NewRow, Clone)
 	EndIf;
 	
 EndProcedure
+
+#EndRegion
+
+#Region Commands
 
 &AtClient
 Procedure Clear(Command)
@@ -374,6 +394,18 @@ Procedure CreateTask(Command)
 	
 EndProcedure
 
+#EndRegion
+
+#Region Helpers
+
+&AtClient
+Procedure ClearOutlets()
+	
+	Object.Outlets.Clear();
+	FillValueTableOutlets();
+	
+EndProcedure
+
 &AtClient
 Procedure ProcessWeekNumberAndYearChange()
 	
@@ -398,8 +430,24 @@ Procedure ProcessWeekNumberAndYearChange()
 	Object.DateTo = EndOfWeek(Object.DateFrom);
 	
 	SetColumnsAvailability();
+	RecountOutlets();
 	ChangeValueTableOutletsTitles();
-	ClearOutlets();
+	
+EndProcedure
+
+&AtClient
+Procedure ChangeValueTableOutletsTitles()
+	
+	For WeekDay = 1 To 7 Do
+		
+		CurrentGroup = Items["Group" + WeekDay];
+		CurrentDate = Object.DateFrom + (WeekDay - 1)* 60 * 60 * 24;
+		WeekDayName = Lower(Format(CurrentDate, "DF=ddd"));
+		MonthDay = Day(CurrentDate);
+		
+		CurrentGroup.Title = String(MonthDay) + "   |   " + WeekDayName;
+		
+	EndDo;
 	
 EndProcedure
 
@@ -416,22 +464,6 @@ Procedure SetColumnsAvailability()
 	
 EndProcedure
 
-&AtClient
-Procedure ClearOutlets()
-	
-	For Each Row In ValueTableOutlets Do
-		
-		For Index = 1 To 7 Do
-			
-			Row["DateBoolean" + Index] = False;
-			Row["Time" + Index] = Date(1, 1, 1);
-			
-		EndDo;
-	
-	EndDo;
-	
-	Object.Outlets.Clear();
-	
-EndProcedure
+#EndRegion
 
 #EndRegion
