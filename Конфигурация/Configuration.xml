@@ -335,7 +335,6 @@
 			<Report>VisitsControl</Report>
 			<Report>AccountReceivable</Report>
 			<DataProcessor>VisitsOnMap</DataProcessor>
-			<DataProcessor>РегистрацияИзмененийДляОбменаДанными</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>УниверсальныйОбменДаннымиXML</DataProcessor>
