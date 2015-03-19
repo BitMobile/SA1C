@@ -278,6 +278,7 @@
 			<Catalog>User</Catalog>
 			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
 			<Catalog>bitmobile_НастройкиМобильныхПриложений</Catalog>
+			<Catalog>OutletsPrimaryParametersSettings</Catalog>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
