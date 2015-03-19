@@ -258,6 +258,7 @@
 			<Catalog>Outlet</Catalog>
 			<Catalog>OutletClass</Catalog>
 			<Catalog>OutletParameter</Catalog>
+			<Catalog>OutletsPrimaryParametersSettings</Catalog>
 			<Catalog>OutletType</Catalog>
 			<Catalog>Positions</Catalog>
 			<Catalog>Question</Catalog>
@@ -278,7 +279,6 @@
 			<Catalog>User</Catalog>
 			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
 			<Catalog>bitmobile_НастройкиМобильныхПриложений</Catalog>
-			<Catalog>OutletsPrimaryParametersSettings</Catalog>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
