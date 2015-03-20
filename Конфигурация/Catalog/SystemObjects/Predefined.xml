@@ -96,6 +96,12 @@
 						<Description>en = 'Territories'; ru = 'Территории'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="bc6a26ee-317b-48ea-a205-023fd63765d6">
+						<Name>Catalog_OutletsPrimaryParametersSettings</Name>
+						<Code>000000208</Code>
+						<Description>en = 'Outlets primary parameters settings'; ru = 'Настройки основных параметров торговых точек'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 			<Item id="0f89d18f-b79b-46cb-a32a-fb8916ea4328">
