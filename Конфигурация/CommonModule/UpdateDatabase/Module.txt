@@ -1393,6 +1393,9 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update encashments'; ru = 'Обновление инкассаций'"));
 	ProcessEncashments();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update outlets primary parameters settings'; ru = 'Обновление настроек основных параметров торговых точек'"));
+	ProcessOutletsPrimaryParametersSettings();
+	
 EndProcedure
 
 Procedure ProcessEncashments()
@@ -1428,6 +1431,21 @@ Procedure ProcessEncashments()
 			EncashmentObject.Write();
 			
 		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessOutletsPrimaryParametersSettings()
+	
+	Selection = Catalogs.OutletsPrimaryParametersSettings.Select();
+	
+	While Selection.Next() Do
+		
+		Object = Selection.GetObject();
+		Object.EditableInMA = NOT (Selection.Ref = Catalogs.OutletsPrimaryParametersSettings.Description OR 
+								 Selection.Ref = Catalogs.OutletsPrimaryParametersSettings.Address);
+		Object.Write();
 		
 	EndDo;
 	
