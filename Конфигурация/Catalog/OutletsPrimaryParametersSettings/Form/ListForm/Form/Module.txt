@@ -1,0 +1,41 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	Query = New Query(
+	"SELECT
+	|	OutletsPrimaryParametersSettings.Ref,
+	|	OutletsPrimaryParametersSettings.Description,
+	|	OutletsPrimaryParametersSettings.EditableInMA
+	|FROM
+	|	Catalog.OutletsPrimaryParametersSettings AS OutletsPrimaryParametersSettings");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Row In QueryResult Do
+		
+		Row.Description = NStr(Row.Description);
+		
+	EndDo;
+	
+	ValueToFormAttribute(QueryResult, "OutletsPrimaryParameters");
+	
+EndProcedure
+
+&AtClient
+Procedure OutletPrimaryParametersEditableInMAOnChange(Item)
+	
+	CurrentData = Items.OutletPrimaryParameters.CurrentData;
+	ParameterRef = CurrentData.Ref;
+	ChangeParameter(ParameterRef);
+	
+EndProcedure
+
+Procedure ChangeParameter(ParameterRef)
+	
+	ParameterObject = ParameterRef.GetObject();
+	ParameterObject.EditableInMA = Not ParameterObject.EditableInMA;
+	ParameterObject.Write();
+	
+EndProcedure
+
