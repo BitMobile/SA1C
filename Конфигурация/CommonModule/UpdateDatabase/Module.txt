@@ -319,6 +319,20 @@ Procedure FillConfigurationData()
 		
 	EndIf;
 	
+	For Each ExchangePlan In Metadata.ExchangePlans Do
+		
+		ExchangePlanProc = ExchangePlans[ExchangePlan.Name];
+		
+		ThisNodeRef = ExchangePlanProc.ThisNode();
+	
+		ThisNodeObject				= ThisNodeRef.GetObject();
+		ThisNodeObject.Code			= "SAgent";
+		ThisNodeObject.Description	= "SuperAgent";
+		
+		ThisNodeObject.Write();
+		
+	EndDo;
+	
 EndProcedure
 
 Procedure FillInProcessing()

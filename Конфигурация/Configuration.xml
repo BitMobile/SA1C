@@ -206,6 +206,7 @@
 			<CommonCommand>ShowPlanFactSKUStockReport</CommonCommand>
 			<CommonCommand>ShowSKUQuestions</CommonCommand>
 			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
+			<CommonCommand>ShowExchangePlans</CommonCommand>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
@@ -247,6 +248,7 @@
 			<CommonForm>bitmobile_НастройкиОтправкиОтчетов</CommonForm>
 			<CommonForm>bitmobile_НастройкиСервера</CommonForm>
 			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
+			<CommonForm>bitmobile_ПланыОбмена</CommonForm>
 			<CommonForm>OutletParameterValueInputForm</CommonForm>
 			<CommonForm>PickPictureFromForm</CommonForm>
 			<CommonForm>CommonReportForm</CommonForm>

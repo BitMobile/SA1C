@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Code" id="1">
+			<DataPath>Объект.Code</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Code</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Код</v8:content>
+				</v8:item>
+			</Title>
+			<EditMode>EnterOnInput</EditMode>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ContextMenu name="CodeContextMenu" id="2"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
+		</InputField>
+		<InputField name="Description" id="4">
+			<DataPath>Объект.Description</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Description</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Наименование</v8:content>
+				</v8:item>
+			</Title>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="5"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
+		</InputField>
+		<InputField name="ВариантОбмена" id="21">
+			<DataPath>Объект.ВариантОбмена</DataPath>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ListChoiceMode>true</ListChoiceMode>
+			<ChoiceList>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Disabled</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Отключен</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">0</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Using the directory on the server "bitmobile"</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Используя каталог на сервере "bitmobile"</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">1</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Using the directory on the FTP server</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Используя каталог на FTP сервере</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">2</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Using the directory on disk</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Используя каталог на диске</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">3</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Using a direct connection</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Используя прямое подключение</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">4</Value>
+					</xr:Value>
+				</xr:Item>
+			</ChoiceList>
+			<ContextMenu name="ВариантОбменаContextMenu" id="22"/>
+			<ExtendedTooltip name="ВариантОбменаExtendedTooltip" id="23"/>
+		</InputField>
+		<Pages name="Страницы" id="24">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Страницы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Страницы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ExtendedTooltip name="СтраницыExtendedTooltip" id="25"/>
+			<ChildItems>
+				<Page name="СтраницаBitmobile" id="30">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Bitmobile Server</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сервер bitmobile</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Страница bitmobile</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаBitmobileExtendedTooltip" id="31"/>
+					<ChildItems>
+						<InputField name="СерверBitmobile_Путь" id="46">
+							<DataPath>Объект.СерверBitmobile_Путь</DataPath>
+							<ContextMenu name="СерверBitmobile_ПутьContextMenu" id="47"/>
+							<ExtendedTooltip name="СерверBitmobile_ПутьExtendedTooltip" id="48"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаFTP" id="26">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>FTP server</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>FTP сервер</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Страница FTP</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаFTPExtendedTooltip" id="27"/>
+					<ChildItems>
+						<InputField name="FTP_Сервер" id="34">
+							<DataPath>Объект.FTP_Сервер</DataPath>
+							<ContextMenu name="FTP_СерверContextMenu" id="35"/>
+							<ExtendedTooltip name="FTP_СерверExtendedTooltip" id="36"/>
+						</InputField>
+						<InputField name="FTP_Каталог" id="37">
+							<DataPath>Объект.FTP_Путь</DataPath>
+							<ContextMenu name="FTP_КаталогContextMenu" id="38"/>
+							<ExtendedTooltip name="FTP_КаталогExtendedTooltip" id="39"/>
+						</InputField>
+						<InputField name="FTP_Пользователь" id="40">
+							<DataPath>Объект.FTP_Пользователь</DataPath>
+							<ContextMenu name="FTP_ПользовательContextMenu" id="41"/>
+							<ExtendedTooltip name="FTP_ПользовательExtendedTooltip" id="42"/>
+						</InputField>
+						<InputField name="FTP_Пароль" id="43">
+							<DataPath>Объект.FTP_Пароль</DataPath>
+							<ContextMenu name="FTP_ПарольContextMenu" id="44"/>
+							<ExtendedTooltip name="FTP_ПарольExtendedTooltip" id="45"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаДиск" id="28">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Directory on disk</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Каталог на диске</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Страница диск</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаДискExtendedTooltip" id="29"/>
+					<ChildItems>
+						<InputField name="Диск_Каталог" id="49">
+							<DataPath>Объект.Диск_Каталог</DataPath>
+							<ChoiceButton>true</ChoiceButton>
+							<ContextMenu name="Диск_КаталогContextMenu" id="50"/>
+							<ExtendedTooltip name="Диск_КаталогExtendedTooltip" id="51"/>
+							<Events>
+								<Event name="StartChoice">Диск_КаталогНачалоВыбора</Event>
+							</Events>
+						</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаПрямоеПодключение" id="32">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Direct connection</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прямое подключение</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Страница прямое подключение</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаПрямоеПодключениеExtendedTooltip" id="33"/>
+					<ChildItems>
+						<CheckBoxField name="ПрямоеПодключение_ТипИБ" id="52">
+							<DataPath>Объект.ПрямоеПодключение_ТипИБ</DataPath>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ПрямоеПодключение_ТипИБContextMenu" id="53"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ТипИБExtendedTooltip" id="54"/>
+						</CheckBoxField>
+						<InputField name="ПрямоеПодключение_ВерсияПлатформы" id="55">
+							<DataPath>Объект.ПрямоеПодключение_ВерсияПлатформы</DataPath>
+							<ContextMenu name="ПрямоеПодключение_ВерсияПлатформыContextMenu" id="56"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ВерсияПлатформыExtendedTooltip" id="57"/>
+						</InputField>
+						<InputField name="ПрямоеПодключение_Каталог" id="58">
+							<DataPath>Объект.ПрямоеПодключение_Каталог</DataPath>
+							<ContextMenu name="ПрямоеПодключение_КаталогContextMenu" id="59"/>
+							<ExtendedTooltip name="ПрямоеПодключение_КаталогExtendedTooltip" id="60"/>
+						</InputField>
+						<InputField name="ПрямоеПодключение_ИмяСервера" id="61">
+							<DataPath>Объект.ПрямоеПодключение_ИмяСервера</DataPath>
+							<ContextMenu name="ПрямоеПодключение_ИмяСервераContextMenu" id="62"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ИмяСервераExtendedTooltip" id="63"/>
+						</InputField>
+						<InputField name="ПрямоеПодключение_ИБ" id="64">
+							<DataPath>Объект.ПрямоеПодключение_ИБ</DataPath>
+							<ContextMenu name="ПрямоеПодключение_ИБContextMenu" id="65"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ИБExtendedTooltip" id="66"/>
+						</InputField>
+						<CheckBoxField name="ПрямоеПодключение_АутентификацияWindows" id="67">
+							<DataPath>Объект.ПрямоеПодключение_АутентификацияWindows</DataPath>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ПрямоеПодключение_АутентификацияWindowsContextMenu" id="68"/>
+							<ExtendedTooltip name="ПрямоеПодключение_АутентификацияWindowsExtendedTooltip" id="69"/>
+						</CheckBoxField>
+						<InputField name="ПрямоеПодключение_Пользователь" id="70">
+							<DataPath>Объект.ПрямоеПодключение_Пользователь</DataPath>
+							<ContextMenu name="ПрямоеПодключение_ПользовательContextMenu" id="71"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ПользовательExtendedTooltip" id="72"/>
+						</InputField>
+						<InputField name="ПрямоеПодключение_Пароль" id="73">
+							<DataPath>Объект.ПрямоеПодключение_Пароль</DataPath>
+							<ContextMenu name="ПрямоеПодключение_ПарольContextMenu" id="74"/>
+							<ExtendedTooltip name="ПрямоеПодключение_ПарольExtendedTooltip" id="75"/>
+						</InputField>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+		<Button name="ЗагрузитьПравила" id="19">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.ЗагрузитьПравила</CommandName>
+			<Parameter xsi:nil="true"/>
+			<ExtendedTooltip name="ЗагрузитьПравилаExtendedTooltip" id="20"/>
+		</Button>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Объект</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:ExchangePlanObject.bitmobile_ОбменСУчетнымиСистемами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="АдресФайла" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Адрес файла</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗагрузитьПравила" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Upload rules</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить правила</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Загрузить правила</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗагрузитьПравила</Action>
+		</Command>
+	</Commands>
+</Form>
