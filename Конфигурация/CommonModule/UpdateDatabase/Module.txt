@@ -326,7 +326,7 @@ Procedure FillConfigurationData()
 		ThisNodeRef = ExchangePlanProc.ThisNode();
 	
 		ThisNodeObject				= ThisNodeRef.GetObject();
-		ThisNodeObject.Code			= "SAgent";
+		ThisNodeObject.Code			= "sagent";
 		ThisNodeObject.Description	= "SuperAgent";
 		
 		ThisNodeObject.Write();

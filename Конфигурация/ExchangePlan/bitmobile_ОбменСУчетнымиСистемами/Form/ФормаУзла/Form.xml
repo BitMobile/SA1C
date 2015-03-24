@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
-	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<AutoCommandBar name="FormCommandBar" id="-1">
+		<ChildItems>
+			<Button name="ЗагрузитьПравила" id="19">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗагрузитьПравила</CommandName>
+				<Parameter xsi:nil="true"/>
+				<ExtendedTooltip name="ЗагрузитьПравилаExtendedTooltip" id="20"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
 	<Events>
 		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
-		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
+		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
 	</Events>
 	<ChildItems>
 		<InputField name="Code" id="1">
@@ -69,11 +78,11 @@
 						<Presentation>
 							<v8:item>
 								<v8:lang>en</v8:lang>
-								<v8:content>Using the directory on the server "bitmobile"</v8:content>
+								<v8:content>Using the directory on the server bitmobile</v8:content>
 							</v8:item>
 							<v8:item>
 								<v8:lang>ru</v8:lang>
-								<v8:content>Используя каталог на сервере "bitmobile"</v8:content>
+								<v8:content>Используя каталог на сервере bitmobile</v8:content>
 							</v8:item>
 						</Presentation>
 						<Value xsi:type="xs:decimal">1</Value>
@@ -169,7 +178,7 @@
 					<ExtendedTooltip name="СтраницаBitmobileExtendedTooltip" id="31"/>
 					<ChildItems>
 						<InputField name="СерверBitmobile_Путь" id="46">
-							<DataPath>Объект.СерверBitmobile_Путь</DataPath>
+							<DataPath>Объект.СерверBitmobile_Протокол</DataPath>
 							<ContextMenu name="СерверBitmobile_ПутьContextMenu" id="47"/>
 							<ExtendedTooltip name="СерверBitmobile_ПутьExtendedTooltip" id="48"/>
 						</InputField>
@@ -265,21 +274,103 @@
 					</ToolTip>
 					<ExtendedTooltip name="СтраницаПрямоеПодключениеExtendedTooltip" id="33"/>
 					<ChildItems>
-						<CheckBoxField name="ПрямоеПодключение_ТипИБ" id="52">
+						<InputField name="ПрямоеПодключение_ТипИБ" id="52">
 							<DataPath>Объект.ПрямоеПодключение_ТипИБ</DataPath>
-							<CheckBoxType>Auto</CheckBoxType>
+							<HorizontalStretch>true</HorizontalStretch>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ChoiceList>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>On the server 1C:Enterprise</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>На сервере 1С:Предприятия</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:boolean">false</Value>
+									</xr:Value>
+								</xr:Item>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>This computer or a computer on the LAN</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>На данном компьютере или на компьютере в локальной сети</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:boolean">true</Value>
+									</xr:Value>
+								</xr:Item>
+							</ChoiceList>
 							<ContextMenu name="ПрямоеПодключение_ТипИБContextMenu" id="53"/>
 							<ExtendedTooltip name="ПрямоеПодключение_ТипИБExtendedTooltip" id="54"/>
-						</CheckBoxField>
+							<Events>
+								<Event name="OnChange">ПрямоеПодключение_ТипИБПриИзменении</Event>
+							</Events>
+						</InputField>
 						<InputField name="ПрямоеПодключение_ВерсияПлатформы" id="55">
 							<DataPath>Объект.ПрямоеПодключение_ВерсияПлатформы</DataPath>
+							<HorizontalStretch>true</HorizontalStretch>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ChoiceList>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>8.2</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>8.2</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:string">V82</Value>
+									</xr:Value>
+								</xr:Item>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>8.3</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>8.3</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xs:string">V83</Value>
+									</xr:Value>
+								</xr:Item>
+							</ChoiceList>
 							<ContextMenu name="ПрямоеПодключение_ВерсияПлатформыContextMenu" id="56"/>
 							<ExtendedTooltip name="ПрямоеПодключение_ВерсияПлатформыExtendedTooltip" id="57"/>
 						</InputField>
 						<InputField name="ПрямоеПодключение_Каталог" id="58">
 							<DataPath>Объект.ПрямоеПодключение_Каталог</DataPath>
+							<ChoiceButton>true</ChoiceButton>
 							<ContextMenu name="ПрямоеПодключение_КаталогContextMenu" id="59"/>
 							<ExtendedTooltip name="ПрямоеПодключение_КаталогExtendedTooltip" id="60"/>
+							<Events>
+								<Event name="StartChoice">ПрямоеПодключение_КаталогНачалоВыбора</Event>
+							</Events>
 						</InputField>
 						<InputField name="ПрямоеПодключение_ИмяСервера" id="61">
 							<DataPath>Объект.ПрямоеПодключение_ИмяСервера</DataPath>
@@ -307,16 +398,40 @@
 							<ContextMenu name="ПрямоеПодключение_ПарольContextMenu" id="74"/>
 							<ExtendedTooltip name="ПрямоеПодключение_ПарольExtendedTooltip" id="75"/>
 						</InputField>
+						<UsualGroup name="ГруппаПроверкаСоединения" id="78">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа проверка соединения</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа проверка соединения</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаПроверкаСоединенияExtendedTooltip" id="79"/>
+							<ChildItems>
+								<LabelDecoration name="Decoration1" id="80">
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="Decoration1ContextMenu" id="81"/>
+									<ExtendedTooltip name="Decoration1ExtendedTooltip" id="82"/>
+								</LabelDecoration>
+								<Button name="ПроверитьСоединение" id="76">
+									<Type>UsualButton</Type>
+									<CommandName>Form.Command.ПроверитьСоединение</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="ПроверитьСоединениеExtendedTooltip" id="77"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
 					</ChildItems>
 				</Page>
 			</ChildItems>
 		</Pages>
-		<Button name="ЗагрузитьПравила" id="19">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.ЗагрузитьПравила</CommandName>
-			<Parameter xsi:nil="true"/>
-			<ExtendedTooltip name="ЗагрузитьПравилаExtendedTooltip" id="20"/>
-		</Button>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
@@ -353,11 +468,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Upload rules</v8:content>
+					<v8:content>Upload exchange rules</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Загрузить правила</v8:content>
+					<v8:content>Загрузить правила обмена</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
@@ -367,6 +482,25 @@
 				</v8:item>
 			</ToolTip>
 			<Action>ЗагрузитьПравила</Action>
+		</Command>
+		<Command name="ПроверитьСоединение" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Check connection</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проверить соединение</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Проверить соединение</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПроверитьСоединение</Action>
 		</Command>
 	</Commands>
 </Form>

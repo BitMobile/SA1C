@@ -77,11 +77,6 @@
 					<ContextMenu name="DescriptionContextMenu" id="26"/>
 					<ExtendedTooltip name="DescriptionExtendedTooltip" id="27"/>
 				</LabelField>
-				<LabelField name="ВариантОбмена" id="34">
-					<DataPath>List.ВариантОбмена</DataPath>
-					<ContextMenu name="ВариантОбменаContextMenu" id="35"/>
-					<ExtendedTooltip name="ВариантОбменаExtendedTooltip" id="36"/>
-				</LabelField>
 				<LabelField name="SentNo" id="28">
 					<DataPath>List.SentNo</DataPath>
 					<ContextMenu name="SentNoContextMenu" id="29"/>
