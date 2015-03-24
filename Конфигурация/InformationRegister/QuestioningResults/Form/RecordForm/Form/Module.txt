@@ -244,21 +244,23 @@ Procedure FillQuestionsTree(GroupType)
 			ParentRow.AnswerType        = ParentQuestionRow.ChildQuestion.AnswerType;
 			
 			If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
-					
-				FoundedAnswer = Record.Visit.Questions.Find(ParentRow.Question, "Question");
 				
-				If Not FoundedAnswer = Undefined Then 
+				FoundStructure = New Structure("Questionnaire, Question", Record.Questionnaire, ParentRow.Question);
+				
+				FoundedAnswers = Record.Visit.Questions.FindRows(FoundStructure);
+				
+				If Not FoundedAnswers.Count() = 0 Then 
 				
 					If ItsPicture(ParentRow.Question) Then
 					
 						Try
 							
-							SnapShotUUID = New UUID(FoundedAnswer.Answer);
+							SnapShotUUID = New UUID(FoundedAnswers[0].Answer);
 							
 							If PictureExists(SnapShotUUID) Then
 							
 				            	ParentRow.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-				            	ParentRow.SnapShotUUID 		= FoundedAnswer.Answer;
+				            	ParentRow.SnapShotUUID 		= FoundedAnswers[0].Answer;
 								
 							Else
 								
@@ -274,7 +276,7 @@ Procedure FillQuestionsTree(GroupType)
 						
 					Else 
 	            
-			            ParentRow.Answer = FoundedAnswer.Answer;
+			            ParentRow.Answer = FoundedAnswers[0].Answer;
 			            
 					EndIf;
 					
@@ -295,20 +297,22 @@ Procedure FillQuestionsTree(GroupType)
 				
 				If GroupType = Enums.QuestionGroupTypes.RegularQuestions Then 
 					
-					FoundedAnswer = Record.Visit.Questions.Find(ChildRow.Question, "Question");
+					FoundStructure = New Structure("Questionnaire, Question", Record.Questionnaire, ChildRow.Question);
 					
-					If Not FoundedAnswer = Undefined Then 
+					FoundedAnswers = Record.Visit.Questions.FindRows(FoundStructure);
+					
+					If Not FoundedAnswers.Count() = 0 Then 
 					
 						If ItsPicture(ChildRow.Question) Then
 						
 							Try
 								
-								SnapShotUUID = New UUID(FoundedAnswer.Answer);
+								SnapShotUUID = New UUID(FoundedAnswers[0].Answer);
 								
 								If PictureExists(SnapShotUUID) Then
 								
 					            	ChildRow.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-					            	ChildRow.SnapShotUUID 		= FoundedAnswer.Answer;
+					            	ChildRow.SnapShotUUID 		= FoundedAnswers[0].Answer;
 									
 								Else
 									
@@ -324,7 +328,7 @@ Procedure FillQuestionsTree(GroupType)
 							
 						Else 
 		            
-				            ChildRow.Answer = FoundedAnswer.Answer;
+				            ChildRow.Answer = FoundedAnswers[0].Answer;
 				            
 						EndIf;
 						
@@ -348,7 +352,7 @@ Procedure LoadSKUAnswers(SKU)
 		ParentQuestionElement.Answer 			= "";
 		ParentQuestionElement.SKUSnapShotUUID 	= "";
 		
-		FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Question, SKU", ParentQuestionElement.Question, SKU));       
+		FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Questionnaire, Question, SKU", Record.Questionnaire, ParentQuestionElement.Question, SKU));       
 		
 		If Not FoundedAnswers.Count() = 0 Then 
 		
@@ -390,7 +394,7 @@ Procedure LoadSKUAnswers(SKU)
 			ChildQuestionElement.Answer 			= "";
 			ChildQuestionElement.SKUSnapShotUUID 	= "";
 		
-			FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Question, SKU", ChildQuestionElement.Question, SKU));       
+			FoundedAnswers = Record.Visit.SKUs.FindRows(New Structure("Questionnaire, Question, SKU", Record.Questionnaire, ChildQuestionElement.Question, SKU));       
 		
 			If Not FoundedAnswers.Count() = 0 Then 
 			
