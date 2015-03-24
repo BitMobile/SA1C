@@ -657,16 +657,6 @@ FROM
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
 					<dcsset:userSettingID>afd3c0fe-8e78-46c0-b8af-5f19de32482c</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Distribution channel</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Канал сбыта</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
