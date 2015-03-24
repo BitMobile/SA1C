@@ -25,6 +25,7 @@ Procedure FillValueTableOutlets()
 	|		ON TerritoryOutlets.Ref = TerritorySRs.Ref
 	|WHERE
 	|	&SR IN (TerritorySRs.SR)
+	|	AND NOT TerritoryOutlets.Outlet = VALUE(Catalog.Outlet.EmptyRef)
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
