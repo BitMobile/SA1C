@@ -231,7 +231,7 @@ Function CreateUser(Parameters) Export
 		
 	EndIf;
 	
-	If ProcessedUser = Undefined Then 
+	If ProcessedUser = Undefined Or Not ValueIsFilled(ProcessedUser.Name) Then 
 		
 		ProcessedUser = InfoBaseUsers.CreateUser();
 		
