@@ -30,7 +30,6 @@ Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
 		
 EndProcedure
 
-
 Procedure OnWrite(Cancel)
 	
 	Query = New Query(
