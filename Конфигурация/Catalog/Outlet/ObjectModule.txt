@@ -66,6 +66,18 @@ Procedure BeforeWrite(Cancel)
 		
 	EndDo;
 	
+	For Each StrParameter In Parameters Do 
+		
+		If StrParameter.Unavailable Then 
+			
+			RemoveProperty = True;
+			
+			StrParameter.Unavailable = False;
+			
+		EndIf;
+		
+	EndDo;
+	
 	If RemoveProperty Then 
 		
 		If AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
