@@ -82,7 +82,7 @@ Procedure BeforeWrite(Cancel)
 		
 		If AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
 			
-			AdditionalProperties.Delete("ЗагрузкаBitmobile");
+			AdditionalProperties.Insert("DeleteЗагрузкаBitmobile", True);
 			
 		EndIf;
 		

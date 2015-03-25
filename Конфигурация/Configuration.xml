@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.6.0.296</Version>
+			<Version>1.6.0.297</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -171,6 +171,8 @@
 			<CommonModule>СтроковыеФункцииКлиентСервер</CommonModule>
 			<CommonModule>bitmobile_ОбработчикиСинхронизацииИПодписок</CommonModule>
 			<ExchangePlan>bitmobile_ОбменСУчетнымиСистемами</ExchangePlan>
+			<EventSubscription>FillDefaultValues_Document</EventSubscription>
+			<EventSubscription>FillDefaultValues_Catalog</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
@@ -359,6 +361,7 @@
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
 			<InformationRegister>ManagersOfRegions</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
+			<InformationRegister>DefaultValues</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

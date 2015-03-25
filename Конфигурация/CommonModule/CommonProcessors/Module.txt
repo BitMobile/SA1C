@@ -88,5 +88,127 @@ Function StringToNumber(String) Export
 	
 EndFunction
 
+Procedure FillDefaultValues_DocumentBeforeWrite(Source, Cancel, WriteMode, PostingMode) Export
+	
+	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+		
+		FillDefaultValues(Source, Source.AdditionalProperties.Property("ЗагрузкаBitmobile"));
+		
+	EndIf;
+	
+EndProcedure
 
+Procedure FillDefaultValues_CatalogBeforeWrite(Source, Cancel) Export
+	
+	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+		
+		FillDefaultValues(Source, Source.AdditionalProperties.Property("ЗагрузкаBitmobile"));
+		
+	EndIf;
+	
+	If TypeOf(Source) = Type("CatalogObject.Outlet") Then 
+		
+		If Source.AdditionalProperties.Property("DeleteЗагрузкаBitmobile") And Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+			
+			Source.AdditionalProperties.Delete("ЗагрузкаBitmobile");
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure FillDefaultValues(Source, IsBMLoad)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	DefaultValues.Object AS Object,
+		|	DefaultValues.TabularSection AS TabularSection,
+		|	DefaultValues.Attribute AS Attribute,
+		|	DefaultValues.Value,
+		|	DefaultValues.TypeName
+		|FROM
+		|	InformationRegister.DefaultValues AS DefaultValues
+		|WHERE
+		|	DefaultValues.Object = &ObjectName
+		|
+		|ORDER BY
+		|	Object,
+		|	TabularSection,
+		|	Attribute";
+	
+	Query.SetParameter("ObjectName", Source.Metadata().Name);
+	
+	DefaultValuesTable = Query.Execute().Unload();
+	
+	TabularSectionsTable = DefaultValuesTable.Copy();
+	
+	TabularSectionsTable.GroupBy("TabularSection");
+	
+	For Each TabularSectionsRow In TabularSectionsTable Do 
+		
+		ProcessedData = DefaultValuesTable.FindRows(New Structure("TabularSection", TabularSectionsRow.TabularSection));
+		
+		If ValueIsFilled(TabularSectionsRow.TabularSection) Then // TS attributes 
+			
+			For Each TSItem In Source[TabularSectionsRow.TabularSection] Do 
+				
+				For Each ProcessedValue In ProcessedData Do  
+				
+					If ValueIsFilled(ProcessedValue.Value) And Not ValueIsFilled(TSItem[ProcessedValue.Attribute]) Then 
+						
+						Try
+							
+							TSItem[ProcessedValue.Attribute] = ProcessedValue.Value;
+							
+						Except
+						
+						EndTry;
+						
+						If IsBMLoad Then 
+							
+							Source.AdditionalProperties.Delete("ЗагрузкаBitmobile");
+							
+							IsBMLoad = False;
+							
+						EndIf;
+						
+					EndIf;
+					
+				EndDo;
+				
+			EndDo;
+			
+		Else // Object attributes
+			
+			For Each ProcessedValue In ProcessedData Do  
+				
+				If ValueIsFilled(ProcessedValue.Value) And Not ValueIsFilled(Source[ProcessedValue.Attribute]) Then 
+					
+					Try
+						
+						Source[ProcessedValue.Attribute] = ProcessedValue.Value;
+						
+					Except
+					
+					EndTry;
+					
+					If IsBMLoad Then 
+						
+						Source.AdditionalProperties.Delete("ЗагрузкаBitmobile");
+						
+						IsBMLoad = False;
+						
+					EndIf;
+					
+				EndIf;
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
 
