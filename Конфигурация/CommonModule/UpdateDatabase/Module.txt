@@ -1396,6 +1396,9 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update outlets primary parameters settings'; ru = 'Обновление настроек основных параметров торговых точек'"));
 	ProcessOutletsPrimaryParametersSettings();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update outlets parameters'; ru = 'Обновление параметров торговых точек'"));
+	ProcessOutletsParametersVisible();
+	
 EndProcedure
 
 Procedure ProcessEncashments()
@@ -1446,6 +1449,30 @@ Procedure ProcessOutletsPrimaryParametersSettings()
 		Object.EditableInMA = NOT (Selection.Ref = Catalogs.OutletsPrimaryParametersSettings.Description OR 
 								 Selection.Ref = Catalogs.OutletsPrimaryParametersSettings.Address);
 		Object.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessOutletsParametersVisible()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	OutletParameter.Ref AS Parameter
+		|FROM
+		|	Catalog.OutletParameter AS OutletParameter";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		ParameterObject				= Selection.Parameter.GetObject();
+		ParameterObject.VisibleInMA	= True;
+		
+		ParameterObject.Write();
 		
 	EndDo;
 	
