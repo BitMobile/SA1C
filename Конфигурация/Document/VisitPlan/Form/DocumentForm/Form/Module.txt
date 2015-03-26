@@ -13,6 +13,13 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 EndProcedure
 
 &AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	Cancel = CheckVisitPlans();
+	
+EndProcedure
+
+&AtServer
 Procedure FillValueTableOutlets()
 	
 	Query = New Query(
@@ -171,6 +178,37 @@ Procedure RecountOutlets()
 	Object.Outlets.Load(QueryResult);
 	
 EndProcedure
+
+Function CheckVisitPlans()
+	
+	Query = New Query;
+	Query.Text = "SELECT ALLOWED
+	|	VisitPlan.SR,
+	|	VisitPlan.Year,
+	|	VisitPlan.WeekNumber
+	|FROM
+	|	Document.VisitPlan AS VisitPlan
+	|WHERE
+	|	VisitPlan.SR = &SR
+	|	AND YEAR(VisitPlan.Year) = &Year
+	|	AND VisitPlan.WeekNumber = &WeekNumber
+	|	AND VisitPlan.Ref <> &Ref";
+	
+	Query.SetParameter("SR",Object.SR);
+	Query.SetParameter("Year",Year(Object.Year));
+	Query.SetParameter("WeekNumber",Object.WeekNumber);
+	Query.SetParameter("Ref",Object.Ref);
+	
+	Result = Query.Execute().Select();
+	
+	if Result.Next() then
+		Message(NStr("en = 'This SR is already have visit plan for this week'; ru = 'Для выбранного SR уже имеется план на выбранную неделю'"));	
+		Return True;
+	EndIf;
+	
+	Return False;
+	
+EndFunction // CheckVisitPlans()
 
 // Забираем неделю года на сервере. потому что в зависимости от локали 
 // алгоритм вычисления может варьироваться и мы считаем локаль сервера
