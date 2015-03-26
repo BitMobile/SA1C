@@ -366,6 +366,14 @@ Procedure ValueTableOutletsOnStartEdit(Item, NewRow, Clone)
 	
 EndProcedure
 
+&AtClient
+Procedure ValueTableOutletsOnActivateCell(Item)
+	
+	ItemName = Item.CurrentItem.Name;
+	Items.CreateTask.Enabled = ?(ItemName = "ValueTableOutlet", False, Not ThisForm["Attribute" + Right(Item.CurrentItem.Name, 1)]);
+	
+EndProcedure
+
 #EndRegion
 
 #Region Commands

@@ -285,6 +285,7 @@
 			<Events>
 				<Event name="BeforeRowChange">ValueTableOutletsBeforeRowChange</Event>
 				<Event name="OnStartEdit">ValueTableOutletsOnStartEdit</Event>
+				<Event name="OnActivateCell">ValueTableOutletsOnActivateCell</Event>
 			</Events>
 			<ChildItems>
 				<InputField name="ValueTableOutlet" id="29">
