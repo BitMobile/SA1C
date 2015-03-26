@@ -496,7 +496,8 @@ Procedure SetColumnsAvailability()
 	ColumnDate = Object.DateFrom;
 	For WeekDay = 1 To 7 Do
 		
-		Items["Group" + WeekDay].ReadOnly = BegOfDay(ColumnDate) < BegOfDay(CurrentDate());
+		Value = BegOfDay(ColumnDate) < BegOfDay(CurrentDate());
+		ThisForm["Attribute" + WeekDay] = Value;
 		ColumnDate = ColumnDate + 60 * 60 * 24;
 		
 	EndDo;
