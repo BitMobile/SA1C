@@ -1399,6 +1399,9 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update outlets parameters'; ru = 'Обновление параметров торговых точек'"));
 	ProcessOutletsParametersVisible();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update skus'; ru = 'Обновление номенклатуры'"));
+	ProcessSKUPacking();
+	
 EndProcedure
 
 Procedure ProcessEncashments()
@@ -1473,6 +1476,29 @@ Procedure ProcessOutletsParametersVisible()
 		ParameterObject.VisibleInMA	= True;
 		
 		ParameterObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessSKUPacking()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SKU.Ref AS SKU
+		|FROM
+		|	Catalog.SKU AS SKU";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		SKUObject = Selection.SKU.GetObject();
+		
+		SKUObject.Write();
 		
 	EndDo;
 	

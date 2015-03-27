@@ -7,22 +7,18 @@ Procedure BeforeWrite(Cancel)
 	ThisObject.AdditionalProperties.Insert("OldSKUGroup", ThisObject.Ref.Owner);
 	
 	// Проверить наличие упаковки
-	If IsNew() Then 
+	ParameterFilter = new Structure;
+	ParameterFilter.Insert("Pack", BaseUnit);
+	
+	FoundRow = Packing.FindRows(ParameterFilter);
+	
+	If FoundRow.Count() = 0 Then
 		
-		ParameterFilter = new Structure;
-		ParameterFilter.Insert("Pack", BaseUnit);
+		NewRow 				= Packing.Add();
+		NewRow.Pack 		= BaseUnit;
+		NewRow.Multiplier 	= 1;
 		
-		FoundRow = Packing.FindRows(ParameterFilter);
-		
-		If FoundRow.Count() = 0 Then
-			
-			NewRow 				= Packing.Add();
-			NewRow.Pack 		= BaseUnit;
-			NewRow.Multiplier 	= 1;
-			
-		EndIf;
-		
-	EndIf;	
+	EndIf;
 	
 	// Перезаполнить остатки
 	If Constants.SKUFeaturesRegistration.Get() Then
