@@ -238,11 +238,11 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Outlet parameter value</v8:content>
+					<v8:content>Trade channel</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Значение параметра торговой точки</v8:content>
+					<v8:content>Канал сбыта</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -252,18 +252,27 @@
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
 	CASE
-		WHEN AnswersSliceLast.Answer = TRUE
-			THEN 1
-		WHEN AnswersSliceLast.Answer = FALSE
-			THEN 0
+		WHEN AnswersSliceLast.DataType = VALUE(Enum.DataType.Boolean)
+			THEN CASE
+					WHEN AnswersSliceLast.Answer = TRUE
+						THEN 1
+					WHEN AnswersSliceLast.Answer = FALSE
+						THEN 0
+				END
+		WHEN AnswersSliceLast.DataType = VALUE(Enum.DataType.Integer)
+				OR AnswersSliceLast.DataType = VALUE(Enum.DataType.Decimal)
+			THEN CASE
+					WHEN AnswersSliceLast.Answer = 0
+						THEN 0
+					ELSE 1
+				END
 	END AS Answer,
 	AnswersSliceLast.Visit.SR AS SR
 INTO Fact
 FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
 WHERE
-	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Available)
-	AND CASE
+	CASE
 			WHEN &amp;BeginDate = DATETIME(1, 1, 1, 0, 0, 0)
 				THEN TRUE
 			ELSE AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate
@@ -272,6 +281,11 @@ WHERE
 			WHEN &amp;EndDate = DATETIME(1, 1, 1)
 				THEN TRUE
 			ELSE AnswersSliceLast.Visit.Date &lt;= &amp;EndDate
+		END
+	AND CASE
+			WHEN &amp;Question = VALUE(Catalog.Question.EmptyRef)
+				THEN FALSE
+			ELSE AnswersSliceLast.Question = &amp;Question
 		END
 ;
 
@@ -441,7 +455,7 @@ FROM
 				<v8:content>План</v8:content>
 			</v8:item>
 		</title>
-		<presentationExpression>CASE WHEN Sum(BaseUnitQty) &gt;= 1 THEN "ДА" WHEN Sum(BaseUnitQty) = 0 THEN "НЕТ" END</presentationExpression>
+		<presentationExpression>CASE WHEN Sum(BaseUnitQty) &gt;= 1 THEN "ДА" WHEN Sum(BaseUnitQty) = 0 OR Sum(BaseUnitQty) IS NULL THEN "НЕТ" END</presentationExpression>
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:parameter>Format</dcscor:parameter>
@@ -572,15 +586,47 @@ FROM
 		<use>Always</use>
 	</parameter>
 	<parameter>
+		<name>Question</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Question</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Вопрос</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Question</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ChoiceParameters</dcscor:parameter>
+				<dcscor:value xsi:type="dcscor:ChoiceParameters">
+					<dcscor:item>
+						<dcscor:choiceParameter>Filter.AnswerType</dcscor:choiceParameter>
+						<dcscor:value xsi:type="dcscor:DesignTimeValue">Enum.DataType.Boolean</dcscor:value>
+						<dcscor:value xsi:type="dcscor:DesignTimeValue">Enum.DataType.Decimal</dcscor:value>
+						<dcscor:value xsi:type="dcscor:DesignTimeValue">Enum.DataType.Integer</dcscor:value>
+					</dcscor:item>
+				</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
+		<use>Always</use>
+	</parameter>
+	<parameter>
 		<name>Parameter</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
-				<v8:content>Outlet parameter</v8:content>
+				<v8:content>Parameter "Distribution channel"</v8:content>
 			</v8:item>
 			<v8:item>
 				<v8:lang>ru</v8:lang>
-				<v8:content>Параметр торговой точки</v8:content>
+				<v8:content>Параметр "Канал сбыта"</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
@@ -588,6 +634,12 @@ FROM
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ChoiceForm</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">Catalog.OutletParameter.Form.ChoiceFormForReports</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
 		<use>Always</use>
 	</parameter>
 	<parameter>
@@ -657,6 +709,16 @@ FROM
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
 					<dcsset:userSettingID>afd3c0fe-8e78-46c0-b8af-5f19de32482c</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distribution channel</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Канал сбыта</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -720,6 +782,12 @@ FROM
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Question</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>606595d9-6c77-4337-a229-71ba7ef67c5f</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
 					<dcsset:userSettingID>49a7853d-3fca-4e7b-b0f2-6cdbe116560b</dcsset:userSettingID>
@@ -729,6 +797,10 @@ FROM
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedLeft</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedTop</dcscor:parameter>
@@ -1014,6 +1086,12 @@ FROM
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Question</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>9677ed67-11e2-40b2-ad42-8cde102fe395</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
@@ -1336,6 +1414,12 @@ FROM
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Question</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>00948581-9629-49de-b678-4732e11409db</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
 					<dcsset:userSettingID>a53cb801-61d4-436d-a59d-1d4f8029c6a8</dcsset:userSettingID>
@@ -1652,6 +1736,12 @@ FROM
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>48a9517d-8edc-4ab1-9fd7-019e1c3773b0</dcsset:userSettingID>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Question</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>b4a52e78-45b2-413e-b1d0-ec992f91a020</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
