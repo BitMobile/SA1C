@@ -41,7 +41,8 @@ Procedure ReadMetadataCollection(Collection, OldValues)
 			Or ItemMetadata.Name = "SystemObjects"
 			Or ItemMetadata.Name = "RolesOfUsers"
 			Or ItemMetadata.Name = "MobileAppAccessRights"
-			Or ItemMetadata.Name = "AdditionalAccessRights" Then 
+			Or ItemMetadata.Name = "AdditionalAccessRights" 
+			Or ItemMetadata.Name = "Guestbook" Then 
 			
 			Continue;
 			
