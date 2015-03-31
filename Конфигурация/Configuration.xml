@@ -223,6 +223,7 @@
 			<Constant>bitmobile_ПользовательSMTP</Constant>
 			<Constant>bitmobile_ПарольSMTP</Constant>
 			<Constant>bitmobile_АутентификацияSMTP</Constant>
+			<Constant>bitmobile_ИспользуетсяSSLSMTP</Constant>
 			<Constant>bitmobile_ПрикреплятьФайлДанных</Constant>
 			<Constant>bitmobile_РазмерПрикрепляемогоФайла</Constant>
 			<Constant>bitmobile_ИспользоватьОтправкуОтчета</Constant>

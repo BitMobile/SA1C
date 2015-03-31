@@ -58,6 +58,22 @@
 			<ContextMenu name="bitmobile_ПортSMTPКонтекстноеМеню" id="4"/>
 			<ExtendedTooltip name="bitmobile_ПортSMTPРасширеннаяПодсказка" id="20"/>
 		</InputField>
+		<CheckBoxField name="bitmobile_ИспользуетсяSSL_SMTP" id="27">
+			<DataPath>НаборКонстант.bitmobile_ИспользуетсяSSLSMTP</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Use SSL</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Используется SSL</v8:content>
+				</v8:item>
+			</Title>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="bitmobile_ИспользуетсяSSL_SMTPContextMenu" id="28"/>
+			<ExtendedTooltip name="bitmobile_ИспользуетсяSSL_SMTPExtendedTooltip" id="29"/>
+		</CheckBoxField>
 		<CheckBoxField name="bitmobile_АутентификацияSMTP" id="9">
 			<DataPath>НаборКонстант.bitmobile_АутентификацияSMTP</DataPath>
 			<Title>
