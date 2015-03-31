@@ -80,11 +80,7 @@ Procedure BeforeWrite(Cancel)
 	
 	If RemoveProperty Then 
 		
-		If AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
-			
-			AdditionalProperties.Insert("DeleteЗагрузкаBitmobile", True);
-			
-		EndIf;
+		AdditionalProperties.Delete("ЗагрузкаBitmobile");
 		
 	EndIf;
 	

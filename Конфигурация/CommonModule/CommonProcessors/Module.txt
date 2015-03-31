@@ -90,7 +90,7 @@ EndFunction
 
 Procedure FillDefaultValues_DocumentBeforeWrite(Source, Cancel, WriteMode, PostingMode) Export
 	
-	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("FillDefaultValues") Then 
 		
 		FillDefaultValues(Source, Source.AdditionalProperties.Property("ЗагрузкаBitmobile"));
 		
@@ -100,19 +100,9 @@ EndProcedure
 
 Procedure FillDefaultValues_CatalogBeforeWrite(Source, Cancel) Export
 	
-	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
+	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("FillDefaultValues") Then 
 		
 		FillDefaultValues(Source, Source.AdditionalProperties.Property("ЗагрузкаBitmobile"));
-		
-	EndIf;
-	
-	If TypeOf(Source) = Type("CatalogObject.Outlet") Then 
-		
-		If Source.AdditionalProperties.Property("DeleteЗагрузкаBitmobile") And Source.AdditionalProperties.Property("ЗагрузкаBitmobile") Then 
-			
-			Source.AdditionalProperties.Delete("ЗагрузкаBitmobile");
-			
-		EndIf;
 		
 	EndIf;
 	

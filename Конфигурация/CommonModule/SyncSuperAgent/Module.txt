@@ -1,8 +1,10 @@
 ﻿
-#Region Document_Order__Catalog_Outlet
+#Region CommonProcessors
 
 Function CheckEntity(Source, SourceRef) Export 
-
+	
+	Source.AdditionalProperties.Insert("FillDefaultValues", True);
+	
 	If TypeOf(Source) = Type("DocumentObject.Order") Then
 		
 		Source = SetStatus(Source);
