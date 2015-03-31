@@ -7,20 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>DataSet1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>SKU</dataPath>
-			<field>SKU</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SKU</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Номенклатура</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Outlet</dataPath>
 			<field>Outlet</field>
 			<title xsi:type="v8:LocalStringType">
@@ -31,48 +17,6 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Торговая точка</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>OutletType</dataPath>
-			<field>OutletType</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Type</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Тип</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>OutletClass</dataPath>
-			<field>OutletClass</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Class</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Класс</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>OutletDistributor</dataPath>
-			<field>OutletDistributor</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Distributor</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Дистрибьютор</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -89,20 +33,12 @@
 					<v8:content>Фактический остаток</v8:content>
 				</v8:item>
 			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SKUGroup</dataPath>
-			<field>SKUGroup</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SKUGroup</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Группа номенклатуры</v8:content>
-				</v8:item>
-			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Format</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">NFD=2; NZ=0,00</dcscor:value>
+				</dcscor:item>
+			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Territory</dataPath>
@@ -162,23 +98,9 @@
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
-					<dcscor:value xsi:type="xs:string">NFD=2</dcscor:value>
+					<dcscor:value xsi:type="xs:string">NFD=2; NZ=0,00</dcscor:value>
 				</dcscor:item>
 			</appearance>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SKUBrand</dataPath>
-			<field>SKUBrand</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Brand</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Брэнд</v8:content>
-				</v8:item>
-			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>SKUGroupStock</dataPath>
@@ -210,9 +132,29 @@
 			<appearance>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>Format</dcscor:parameter>
-					<dcscor:value xsi:type="xs:string">NFD=2</dcscor:value>
+					<dcscor:value xsi:type="xs:string">NFD=2; NZ=0,00</dcscor:value>
 				</dcscor:item>
 			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field1</dataPath>
+			<field>Field1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field1</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Field3</dataPath>
+			<field>Field3</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Field3</v8:content>
+				</v8:item>
+			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>Value</dataPath>
@@ -220,169 +162,173 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Outlet parameter value</v8:content>
+					<v8:content>Distribution channel</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Значение параметра торговой точки</v8:content>
+					<v8:content>Канал сбыта</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKUGroup</dataPath>
+			<field>SKUGroup</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU Group</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа номенклатуры</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKU</dataPath>
+			<field>SKU</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKUBrand</dataPath>
+			<field>SKUBrand</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Brand</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Брэнд</v8:content>
 				</v8:item>
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>SR</dataPath>
 			<field>SR</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SR</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговый представитель</v8:content>
+				</v8:item>
+			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
-	TerritoryOutlets.Ref.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
-	Answers.Outlet.Distributor,
-	Answers.Outlet.Class,
-	Answers.Outlet.Type,
 	Answers.Outlet,
-	Answers.SKU.Brand,
-	Answers.SKU.Owner AS SKUGroup,
 	Answers.SKU,
 	AVG(CAST(Answers.Answer AS NUMBER)) AS AvgStock
 INTO Average
 FROM
 	InformationRegister.Answers AS Answers
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON Answers.Outlet = TerritoryOutlets.Outlet
+WHERE
+	Answers.QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)
 {WHERE
-	(Answers.Period &lt;= &amp;Period),
-	(Answers.Period &gt;= DATEADD(&amp;Period, MONTH, -2))}
+	(Answers.Period &lt;= &amp;Period) AS Field1,
+	(Answers.Period &gt;= DATEADD(&amp;Period, MONTH, -2)) AS Field3}
 
 GROUP BY
 	Answers.Outlet,
-	Answers.SKU,
-	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.Owner,
-	Answers.Outlet.Distributor,
-	Answers.Outlet.Class,
-	Answers.Outlet.Type,
-	Answers.SKU.Brand,
-	Answers.SKU.Owner
+	Answers.SKU
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	TerritoryOutlets.Ref.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
-	AnswersSliceLast.Outlet.Distributor,
-	AnswersSliceLast.Outlet.Class,
-	AnswersSliceLast.Outlet.Type,
 	AnswersSliceLast.Outlet,
-	AnswersSliceLast.SKU.Brand,
-	AnswersSliceLast.SKU.Owner AS SKUGroup,
 	AnswersSliceLast.SKU,
-	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock
+	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS Stock,
+	AnswersSliceLast.Visit.SR
 INTO AllBrands
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)) AS AnswersSliceLast
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON AnswersSliceLast.Outlet = TerritoryOutlets.Outlet
+	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+
+GROUP BY
+	AnswersSliceLast.SKU,
+	AnswersSliceLast.Outlet,
+	AnswersSliceLast.Visit.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	TerritoryOutlets.Ref.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
-	AnswersSliceLast.Outlet.Distributor,
-	AnswersSliceLast.Outlet.Class,
-	AnswersSliceLast.Outlet.Type,
 	AnswersSliceLast.Outlet,
-	AnswersSliceLast.SKU.Brand,
-	AnswersSliceLast.SKU.Owner AS SKUGroup,
 	AnswersSliceLast.SKU,
-	CAST(AnswersSliceLast.Answer AS NUMBER) AS CurrentBrandStock
+	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS CurrentBrandStock
 INTO CurrentBrand
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)) AS AnswersSliceLast
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON AnswersSliceLast.Outlet = TerritoryOutlets.Outlet
+	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
 WHERE
 	AnswersSliceLast.SKU.Brand = &amp;Brand
+
+GROUP BY
+	AnswersSliceLast.Outlet,
+	AnswersSliceLast.SKU
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	TerritoryOutlets.Ref.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
-	AnswersSliceLast.Outlet.Distributor,
-	AnswersSliceLast.Outlet.Class,
-	AnswersSliceLast.Outlet.Type,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU.Owner AS SKUGroup,
 	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS SKUGroupStock
 INTO SKUGroups
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)) AS AnswersSliceLast
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON AnswersSliceLast.Outlet = TerritoryOutlets.Outlet
+	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
 
 GROUP BY
 	AnswersSliceLast.SKU.Owner,
-	AnswersSliceLast.Outlet,
-	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.Owner,
-	AnswersSliceLast.Outlet.Distributor,
-	AnswersSliceLast.Outlet.Class,
-	AnswersSliceLast.Outlet.Type
+	AnswersSliceLast.Outlet
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	AllBrands.Region,
-	AllBrands.Territory,
-	AllBrands.OutletDistributor,
-	AllBrands.OutletClass,
-	AllBrands.OutletType,
-	AllBrands.Outlet,
-	AllBrands.SKUBrand,
-	AllBrands.SKUGroup,
-	AllBrands.SKU,
+	NestedSelect.Region,
+	NestedSelect.Territory,
+	AllBrands.Outlet AS Outlet,
+	AllBrands.SKU.Brand,
+	SKUGroups.SKUGroup,
+	AllBrands.SKU AS SKU,
 	AllBrands.Stock,
 	CurrentBrand.CurrentBrandStock,
 	SKUGroups.SKUGroupStock,
 	0 AS Percent,
 	Average.AvgStock,
 	OutletParameters.Value,
-	TerritorySRs.SR
+	AllBrands.VisitSR AS SR
 FROM
 	AllBrands AS AllBrands
-		LEFT JOIN CurrentBrand AS CurrentBrand
-		ON AllBrands.Region = CurrentBrand.Region
-			AND AllBrands.Territory = CurrentBrand.Territory
-			AND AllBrands.OutletDistributor = CurrentBrand.OutletDistributor
-			AND AllBrands.OutletClass = CurrentBrand.OutletClass
-			AND AllBrands.OutletType = CurrentBrand.OutletType
-			AND AllBrands.Outlet = CurrentBrand.Outlet
-			AND AllBrands.SKUBrand = CurrentBrand.SKUBrand
-			AND AllBrands.SKUGroup = CurrentBrand.SKUGroup
-			AND AllBrands.SKU = CurrentBrand.SKU
 		LEFT JOIN SKUGroups AS SKUGroups
-		ON AllBrands.Region = SKUGroups.Region
-			AND AllBrands.Territory = SKUGroups.Territory
-			AND AllBrands.OutletDistributor = SKUGroups.OutletDistributor
-			AND AllBrands.OutletClass = SKUGroups.OutletClass
-			AND AllBrands.OutletType = SKUGroups.OutletType
+		ON AllBrands.SKU.Owner = SKUGroups.SKUGroup
 			AND AllBrands.Outlet = SKUGroups.Outlet
-			AND AllBrands.SKUGroup = SKUGroups.SKUGroup
 		LEFT JOIN Average AS Average
-		ON AllBrands.Region = Average.Region
-			AND AllBrands.Territory = Average.Territory
-			AND AllBrands.OutletDistributor = Average.OutletDistributor
-			AND AllBrands.OutletClass = Average.OutletClass
-			AND AllBrands.OutletType = Average.OutletType
-			AND AllBrands.Outlet = Average.Outlet
-			AND AllBrands.SKUBrand = Average.SKUBrand
-			AND AllBrands.SKUGroup = Average.SKUGroup
+		ON AllBrands.Outlet = Average.Outlet
 			AND AllBrands.SKU = Average.SKU
+		LEFT JOIN (SELECT
+			MAX(TerritoryOutlets.Ref.Owner) AS Region,
+			MAX(TerritoryOutlets.Ref) AS Territory,
+			TerritoryOutlets.Outlet AS Outlet
+		FROM
+			Catalog.Territory.Outlets AS TerritoryOutlets
+		
+		GROUP BY
+			TerritoryOutlets.Outlet) AS NestedSelect
+		ON AllBrands.Outlet = NestedSelect.Outlet
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON AllBrands.Outlet = OutletParameters.Ref
-		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-		ON AllBrands.Territory = TerritorySRs.Ref
+		LEFT JOIN CurrentBrand AS CurrentBrand
+		ON AllBrands.Outlet = CurrentBrand.Outlet
+			AND AllBrands.SKU = CurrentBrand.SKU
 WHERE
 	OutletParameters.Parameter = &amp;Parameter</query>
 	</dataSet>
@@ -393,10 +339,19 @@ WHERE
 	<totalField>
 		<dataPath>CurrentBrandStock</dataPath>
 		<expression>Sum(CurrentBrandStock)</expression>
+		<group>AvgStock</group>
+		<group>CurrentBrandStock</group>
+		<group>Outlet</group>
+		<group>Percent</group>
+		<group>Region</group>
+		<group>Region Hierarchy</group>
+		<group>Stock</group>
+		<group>Territory</group>
+		<group>Value</group>
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
-		<expression>Sum(Stock) / SKUGroupStock * 100</expression>
+		<expression>CASE WHEN SKUGroupStock = 0 THEN 0 ELSE Sum(Stock) / SKUGroupStock * 100 END</expression>
 		<group>SKUGroup</group>
 	</totalField>
 	<totalField>
@@ -405,22 +360,12 @@ WHERE
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
-		<expression>Sum(CurrentBrandStock) / EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100</expression>
-		<group>AvgStock</group>
-		<group>CurrentBrandStock</group>
+		<expression>CASE WHEN EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") = 0 THEN 0 ELSE Sum(CurrentBrandStock) /  EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100 END</expression>
 		<group>Outlet</group>
-		<group>OutletClass</group>
-		<group>OutletDistributor</group>
-		<group>OutletType</group>
-		<group>Percent</group>
 		<group>Region</group>
 		<group>Region Hierarchy</group>
-		<group>SKUBrand</group>
-		<group>SR</group>
-		<group>Stock</group>
 		<group>Territory</group>
 		<group>Value</group>
-		<group>Overall</group>
 	</totalField>
 	<totalField>
 		<dataPath>AvgStock</dataPath>
@@ -507,6 +452,16 @@ WHERE
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
 					<dcsset:userSettingID>a353f62d-54f5-433d-ad5a-d61570280c96</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distribution channel</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Канал сбыта</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -528,21 +483,51 @@ WHERE
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">OutletClass</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">Outlet.Class</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>9303218d-f40f-4d41-9dcb-efdf0c2d7f77</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Class</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Класс</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">OutletType</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">Outlet.Type</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>1218f5c4-a8c6-4e11-a705-5c711bf5692c</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Type</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">OutletDistributor</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">Outlet.Distributor</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>2697506e-0a15-4055-af41-7a32e46c49b4</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distributor</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дистрибьютор</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -552,15 +537,35 @@ WHERE
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">SKUGroup</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">SKU.Owner</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>d641a535-3855-4a47-94b9-8e897f567bef</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SKU Group</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа номенклатуры</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">SKUBrand</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">SKU.Brand</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>18868198-4c2a-4e06-9a6b-e5791ebeccb1</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Brand</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Брэнд</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
@@ -571,15 +576,16 @@ WHERE
 					<dcsset:userSettingID>dc9f9687-a5e5-4ca7-a544-448ea0fcdd76</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Brand</dcscor:parameter>
-					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.Brands.EmptyRef</dcscor:value>
-					<dcsset:userSettingID>d5294dec-bf3d-4e9f-922c-049cdfcfff27</dcsset:userSettingID>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>3aeaca11-c924-48c0-b49d-7998744fde31</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>3aeaca11-c924-48c0-b49d-7998744fde31</dcsset:userSettingID>
+					<dcsset:userSettingID>245c03e7-11e0-4fc5-9320-ae650b218ea4</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:outputParameters>
@@ -643,7 +649,7 @@ WHERE
 						<dcsset:item xsi:type="dcsset:StructureItemGroup">
 							<dcsset:groupItems>
 								<dcsset:item xsi:type="dcsset:GroupItemField">
-									<dcsset:field>OutletDistributor</dcsset:field>
+									<dcsset:field>Outlet.Distributor</dcsset:field>
 									<dcsset:groupType>Items</dcsset:groupType>
 									<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 									<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -656,10 +662,30 @@ WHERE
 							<dcsset:selection>
 								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 							</dcsset:selection>
+							<dcsset:outputParameters>
+								<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+									<dcscor:parameter>FieldsTitleType</dcscor:parameter>
+									<dcscor:value xsi:type="dcscor:DataCompositionFieldsTitleType">Short</dcscor:value>
+								</dcscor:item>
+								<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+									<dcscor:use>false</dcscor:use>
+									<dcscor:parameter>Title</dcscor:parameter>
+									<dcscor:value xsi:type="v8:LocalStringType">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Distributor</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Дистрибьютор</v8:content>
+										</v8:item>
+									</dcscor:value>
+								</dcscor:item>
+							</dcsset:outputParameters>
 							<dcsset:item xsi:type="dcsset:StructureItemGroup">
 								<dcsset:groupItems>
 									<dcsset:item xsi:type="dcsset:GroupItemField">
-										<dcsset:field>OutletClass</dcsset:field>
+										<dcsset:field>Outlet.Class</dcsset:field>
 										<dcsset:groupType>Items</dcsset:groupType>
 										<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 										<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -672,10 +698,30 @@ WHERE
 								<dcsset:selection>
 									<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 								</dcsset:selection>
+								<dcsset:outputParameters>
+									<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+										<dcscor:parameter>FieldsTitleType</dcscor:parameter>
+										<dcscor:value xsi:type="dcscor:DataCompositionFieldsTitleType">Short</dcscor:value>
+									</dcscor:item>
+									<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+										<dcscor:use>false</dcscor:use>
+										<dcscor:parameter>Title</dcscor:parameter>
+										<dcscor:value xsi:type="v8:LocalStringType">
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Class</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Класс</v8:content>
+											</v8:item>
+										</dcscor:value>
+									</dcscor:item>
+								</dcsset:outputParameters>
 								<dcsset:item xsi:type="dcsset:StructureItemGroup">
 									<dcsset:groupItems>
 										<dcsset:item xsi:type="dcsset:GroupItemField">
-											<dcsset:field>OutletType</dcsset:field>
+											<dcsset:field>Outlet.Type</dcsset:field>
 											<dcsset:groupType>Items</dcsset:groupType>
 											<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 											<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -688,6 +734,26 @@ WHERE
 									<dcsset:selection>
 										<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 									</dcsset:selection>
+									<dcsset:outputParameters>
+										<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+											<dcscor:parameter>FieldsTitleType</dcscor:parameter>
+											<dcscor:value xsi:type="dcscor:DataCompositionFieldsTitleType">Short</dcscor:value>
+										</dcscor:item>
+										<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+											<dcscor:use>false</dcscor:use>
+											<dcscor:parameter>Title</dcscor:parameter>
+											<dcscor:value xsi:type="v8:LocalStringType">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Type</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Тип</v8:content>
+												</v8:item>
+											</dcscor:value>
+										</dcscor:item>
+									</dcsset:outputParameters>
 									<dcsset:item xsi:type="dcsset:StructureItemGroup">
 										<dcsset:groupItems>
 											<dcsset:item xsi:type="dcsset:GroupItemField">
