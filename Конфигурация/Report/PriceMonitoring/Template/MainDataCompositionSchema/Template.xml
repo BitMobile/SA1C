@@ -200,7 +200,8 @@
 	MAX(TerritoryOutlets.Ref.Owner) AS Region,
 	VisitSKUs.Ref.Outlet.Distributor,
 	VisitSKUs.Ref.Outlet.Class,
-	VisitSKUs.Ref.Outlet.Type
+	VisitSKUs.Ref.Outlet.Type,
+	VisitSKUs.Ref.SR
 INTO VisitTerritory
 FROM
 	Document.Visit.SKUs AS VisitSKUs
@@ -218,7 +219,11 @@ GROUP BY
 	VisitSKUs.SKU,
 	VisitSKUs.Answer,
 	VisitSKUs.SKU.Brand,
-	VisitSKUs.SKU.Owner
+	VisitSKUs.SKU.Owner,
+	VisitSKUs.Ref.Outlet.Distributor,
+	VisitSKUs.Ref.Outlet.Class,
+	VisitSKUs.Ref.Outlet.Type,
+	VisitSKUs.Ref.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -229,17 +234,15 @@ SELECT ALLOWED
 	VisitTerritory.SKUOwner,
 	VisitTerritory.SKU,
 	VisitTerritory.Answer,
-	TerritorySRs.SR,
 	VisitTerritory.Territory,
 	VisitTerritory.Region,
 	VisitTerritory.OutletDistributor,
 	VisitTerritory.OutletClass,
-	VisitTerritory.OutletType
+	VisitTerritory.OutletType,
+	VisitTerritory.SR
 INTO VisitTerritorySRs
 FROM
 	VisitTerritory AS VisitTerritory
-		LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-		ON VisitTerritory.Territory = TerritorySRs.Ref
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -250,13 +253,13 @@ SELECT ALLOWED
 	VisitTerritorySRs.SKUOwner,
 	VisitTerritorySRs.SKU,
 	VisitTerritorySRs.Answer,
-	VisitTerritorySRs.SR,
 	VisitTerritorySRs.Territory,
 	VisitTerritorySRs.Region,
 	OutletParameters.Value,
 	VisitTerritorySRs.OutletDistributor,
 	VisitTerritorySRs.OutletClass,
-	VisitTerritorySRs.OutletType
+	VisitTerritorySRs.OutletType,
+	VisitTerritorySRs.SR
 FROM
 	VisitTerritorySRs AS VisitTerritorySRs
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
