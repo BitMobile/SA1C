@@ -24,6 +24,9 @@
 				</v8:item>
 			</Title>
 			<ExtendedTooltip name="PagesExtendedTooltip" id="317"/>
+			<Events>
+				<Event name="OnCurrentPageChange">PagesOnCurrentPageChange</Event>
+			</Events>
 			<ChildItems>
 				<Page name="GroupMasterData" id="499">
 					<Title>

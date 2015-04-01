@@ -1522,6 +1522,17 @@ Procedure OnOpen(Cancel)
 EndProcedure
 
 &AtClient
+Procedure PagesOnCurrentPageChange(Item, CurrentPage)
+	
+	# If WebClient Then
+	
+	QuestionsOnActivateRow(CurrentPage);
+	
+	# EndIf
+	
+EndProcedure
+
+&AtClient
 Procedure NotificationProcessing(EventName, Parameter, Source)
 
 	If EventName = "QuestionnaireForm" + String(ThisForm.UUID) Then
