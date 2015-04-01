@@ -1,4 +1,6 @@
 ﻿
+#Region CommonProcedureAndFunctions
+
 &AtServer
 Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
@@ -14,3 +16,5 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	EndIf;
 	
 EndProcedure
+
+#EndRegion

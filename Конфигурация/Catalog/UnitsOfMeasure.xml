@@ -330,7 +330,7 @@
 			<ExtendedListPresentation/>
 			<Explanation/>
 			<CreateOnInput>DontUse</CreateOnInput>
-			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
+			<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 		</Properties>
 		<ChildObjects>
 			<Attribute uuid="119aadf4-9bf7-4740-8710-bf2b6ff52b6a">

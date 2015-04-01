@@ -294,7 +294,7 @@
 			<DefaultObjectForm>Catalog.User.Form.ItemForm</DefaultObjectForm>
 			<DefaultFolderForm/>
 			<DefaultListForm>Catalog.User.Form.ListForm</DefaultListForm>
-			<DefaultChoiceForm/>
+			<DefaultChoiceForm>Catalog.User.Form.ChoiceForm</DefaultChoiceForm>
 			<DefaultFolderChoiceForm/>
 			<AuxiliaryObjectForm/>
 			<AuxiliaryFolderForm/>
@@ -334,7 +334,7 @@
 			</ListPresentation>
 			<ExtendedListPresentation/>
 			<Explanation/>
-			<CreateOnInput>Use</CreateOnInput>
+			<CreateOnInput>DontUse</CreateOnInput>
 			<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 		</Properties>
 		<ChildObjects>
@@ -752,6 +752,7 @@
 			</Attribute>
 			<Form>ItemForm</Form>
 			<Form>ListForm</Form>
+			<Form>ChoiceForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>

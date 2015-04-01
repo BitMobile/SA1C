@@ -116,13 +116,16 @@
 								<InputField name="SRsSR" id="124">
 									<DataPath>Object.SRs.SR</DataPath>
 									<EditMode>EnterOnInput</EditMode>
-									<QuickChoice>false</QuickChoice>
-									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
+									<ChoiceParameters>
+										<app:item name="Role">
+											<app:value xsi:type="FormChoiceListDesTimeValue">
+												<Presentation/>
+												<Value xsi:type="xs:string">SR</Value>
+											</app:value>
+										</app:item>
+									</ChoiceParameters>
 									<ContextMenu name="SRsSRContextMenu" id="125"/>
 									<ExtendedTooltip name="SRsSRExtendedTooltip" id="126"/>
-									<Events>
-										<Event name="StartChoice">SRsSRStartChoice</Event>
-									</Events>
 								</InputField>
 							</ChildItems>
 						</Table>

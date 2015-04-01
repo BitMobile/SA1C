@@ -95,6 +95,17 @@
 					<v8:content>Торговый представитель</v8:content>
 				</v8:item>
 			</title>
+			<inputParameters>
+				<dcscor:item>
+					<dcscor:parameter>ChoiceParameters</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:ChoiceParameters">
+						<dcscor:item>
+							<dcscor:choiceParameter>Role</dcscor:choiceParameter>
+							<dcscor:value xsi:type="xs:string">SR</dcscor:value>
+						</dcscor:item>
+					</dcscor:value>
+				</dcscor:item>
+			</inputParameters>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>OutletDistributor</dataPath>

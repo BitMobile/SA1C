@@ -5,6 +5,7 @@
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
 	</Events>
 	<ChildItems>
@@ -81,6 +82,14 @@
 				<InputField name="ManagersManager" id="35">
 					<DataPath>Object.Managers.Manager</DataPath>
 					<EditMode>EnterOnInput</EditMode>
+					<ChoiceParameters>
+						<app:item name="Role">
+							<app:value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xs:string">SRM</Value>
+							</app:value>
+						</app:item>
+					</ChoiceParameters>
 					<ContextMenu name="ManagersManagerContextMenu" id="36"/>
 					<ExtendedTooltip name="ManagersManagerExtendedTooltip" id="37"/>
 				</InputField>

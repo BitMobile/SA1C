@@ -174,11 +174,16 @@
 								</v8:item>
 							</Title>
 							<EditMode>EnterOnInput</EditMode>
+							<ChoiceParameters>
+								<app:item name="Role">
+									<app:value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation/>
+										<Value xsi:type="xs:string">SRM</Value>
+									</app:value>
+								</app:item>
+							</ChoiceParameters>
 							<ContextMenu name="ManagerContextMenu" id="6"/>
 							<ExtendedTooltip name="ManagerExtendedTooltip" id="108"/>
-							<Events>
-								<Event name="StartChoice">ManagerStartChoice</Event>
-							</Events>
 						</InputField>
 						<InputField name="EMail" id="7">
 							<DataPath>Object.EMail</DataPath>

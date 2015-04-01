@@ -2,13 +2,7 @@
 #Region CommonProcedureAndFunctions
 
 &AtServer
-Procedure OnOpenServer()
-
-	If Not IsInRole("Admin") Then
-		
-		ThisForm.ReadOnly = True;
-		
-	EndIf;
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	If ValueIsFilled(Object.Ref) Then 
 		
@@ -41,13 +35,6 @@ EndFunction
 #EndRegion
 
 #Region UserInterface
-
-&AtClient
-Procedure OnOpen(Cancel)
-	
-	OnOpenServer();
-	
-EndProcedure
 
 &AtClient
 Procedure TempQuestionairesSelection(Item, SelectedRow, Field, StandardProcessing)

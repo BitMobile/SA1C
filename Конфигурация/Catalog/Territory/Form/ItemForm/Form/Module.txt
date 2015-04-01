@@ -223,18 +223,6 @@ Procedure SKUGroupsOnChange(Item)
 	
 EndProcedure
 
-&AtClient
-Procedure SRsSRStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	SelectionValue = New Structure("Role", "SR");
-	SelectionParameters = New Structure("Filter", SelectionValue);
-	
-	OpenForm("Catalog.User.ChoiceForm", SelectionParameters, Item);
-	
-EndProcedure
-
 #EndRegion
 
 

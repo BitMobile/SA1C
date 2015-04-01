@@ -176,7 +176,7 @@
 			<InputByString>
 				<xr:Field>Document.Visit.StandardAttribute.Number</xr:Field>
 			</InputByString>
-			<CreateOnInput>Use</CreateOnInput>
+			<CreateOnInput>DontUse</CreateOnInput>
 			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>

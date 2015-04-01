@@ -412,34 +412,6 @@ Function UserNameChecked()
 EndFunction
 
 &AtClient
-Procedure ManagerStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	ChoiseForm = GetForm("Catalog.User.ChoiceForm");
-	
-	FilterOfList = ChoiseForm.List.Filter;
-	
-	ListOfValues = New ValueList;
-	ListOfValues.Add("SRM_SR");
-	ListOfValues.Add("SRM");
-	
-	FilterElement					= FilterOfList.Items.Add(Type("DataCompositionFilterItem"));
-	FilterElement.LeftValue			= New DataCompositionField("RoleOfUser.Role");
-	FilterElement.ComparisonType	= DataCompositionComparisonType.InList;
-	FilterElement.Use				= True;
-	FilterElement.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-	FilterElement.RightValue		= ListOfValues;
-	
-	ChoiseForm.FormOwner			= Item;
-	ChoiseForm.CloseOnChoice		= True;
-	ChoiseForm.CloseOnOwnerClose	= True;
-	
-	ChoiseForm.Open();	
-		
-EndProcedure
-
-&AtClient
 Procedure TerritoriesOnChange(Item)
 	
 	SetLineNumbers(Territories);
