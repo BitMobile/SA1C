@@ -1,0 +1,10 @@
+﻿
+Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
+	
+	If IsNew() Then 
+		
+		AdditionalProperties.Delete("ЗагрузкаBitmobile");
+		
+	EndIf;
+	
+EndProcedure
