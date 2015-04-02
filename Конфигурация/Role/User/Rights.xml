@@ -43,6 +43,45 @@
 		</right>
 	</object>
 	<object>
+		<name>Catalog.OutletsStatusesSettings</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveInsert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveSetDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveClearDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InputByString</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>InformationRegister.OutletStatusHistory</name>
 		<right>
 			<name>Read</name>
@@ -217,6 +256,13 @@ WHERE TerritoryOutlets.Ref.Owner IN
 		</right>
 	</object>
 	<object>
+		<name>Constant.bitmobile_СрокХраненияЖурналаРегистрации</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>CommonCommand.ShowAccountReceivableReport</name>
 		<right>
 			<name>View</name>
@@ -317,6 +363,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 		<right>
 			<name>Set</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Constant.bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</name>
+		<right>
+			<name>Read</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -2480,6 +2533,13 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
+		<name>Constant.bitmobile_КоличествоОбъектовВВыгрузке</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>CommonCommand.ShowBindingOutlets</name>
 		<right>
 			<name>View</name>
@@ -2674,6 +2734,13 @@ WHERE MobileAppPlanVisit.SR IN
 		<right>
 			<name>Edit</name>
 			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Constant.bitmobile_ИспользуетсяSSLSMTP</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
 		</right>
 	</object>
 	<object>
@@ -3130,6 +3197,45 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.OutletsPrimaryParametersSettings</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveInsert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveSetDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveClearDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InputByString</name>
+			<value>true</value>
 		</right>
 	</object>
 	<object>
@@ -4454,6 +4560,45 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<name>CommonCommand.CreateTasks</name>
 		<right>
 			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.OrderParameters</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveInsert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveSetDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveClearDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InputByString</name>
 			<value>true</value>
 		</right>
 	</object>

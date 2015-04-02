@@ -244,6 +244,8 @@
 			<Constant>bitmobile_СтатусПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
+			<Constant>bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</Constant>
+			<Constant>bitmobile_СрокХраненияЖурналаРегистрации</Constant>
 			<CommonForm>Logo</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>

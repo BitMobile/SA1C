@@ -215,6 +215,93 @@
 						</InputField>
 					</ChildItems>
 				</Page>
+				<Page name="СтраницаЖурнал" id="47">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Log event</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Журнал регистрации</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Страница журнал</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаЖурналExtendedTooltip" id="48"/>
+					<ChildItems>
+						<CheckBoxField name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал" id="49">
+							<DataPath>НаборКонстант.bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Write synchronization event log</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Записывать события синхронизации в журнал</v8:content>
+								</v8:item>
+							</Title>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурналContextMenu" id="50"/>
+							<ExtendedTooltip name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурналExtendedTooltip" id="51"/>
+						</CheckBoxField>
+						<UsualGroup name="ГруппаСрокХранения" id="55">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа срок хранения</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа срок хранения</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаСрокХраненияExtendedTooltip" id="56"/>
+							<ChildItems>
+								<InputField name="bitmobile_СрокХраненияЖурналаРегистрации" id="52">
+									<DataPath>НаборКонстант.bitmobile_СрокХраненияЖурналаРегистрации</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Shelf life log</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Срок хранения журнала регистрации</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="bitmobile_СрокХраненияЖурналаРегистрацииContextMenu" id="53"/>
+									<ExtendedTooltip name="bitmobile_СрокХраненияЖурналаРегистрацииExtendedTooltip" id="54"/>
+								</InputField>
+								<LabelDecoration name="Decoration2" id="57">
+									<TextColor>style:SpecialTextColor</TextColor>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>0 - Control disabled</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>0 - Контроль отключен</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="Decoration2ContextMenu" id="58"/>
+									<ExtendedTooltip name="Decoration2ExtendedTooltip" id="59"/>
+								</LabelDecoration>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
 				<Page name="СтраницаПрочие" id="45">
 					<Title>
 						<v8:item>

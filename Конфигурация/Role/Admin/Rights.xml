@@ -4,6 +4,17 @@
 	<setForAttributesByDefault>true</setForAttributesByDefault>
 	<independentRightsOfChildObjects>false</independentRightsOfChildObjects>
 	<object>
+		<name>Catalog.OutletsStatusesSettings</name>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>InteractiveDeletePredefinedData</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.Distributor</name>
 		<right>
 			<name>InteractiveDelete</name>
@@ -694,6 +705,17 @@
 		</right>
 	</object>
 	<object>
+		<name>Catalog.OutletsPrimaryParametersSettings</name>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>InteractiveDeletePredefinedData</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации</name>
 		<right>
 			<name>InteractiveDelete</name>
@@ -771,6 +793,17 @@
 	</object>
 	<object>
 		<name>Catalog.SKUProperties</name>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>InteractiveDeletePredefinedData</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.OrderParameters</name>
 		<right>
 			<name>InteractiveDelete</name>
 			<value>false</value>
