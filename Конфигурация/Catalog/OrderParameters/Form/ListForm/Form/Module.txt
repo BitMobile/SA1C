@@ -1,0 +1,28 @@
+﻿
+&AtClient
+Procedure ListBeforeRowChange(Item, Cancel)
+	
+	FlagName = Item.CurrentItem.Name;
+	
+	If FlagName = "VisibleInMA" OR FlagName = "EditableInMA" Then
+		
+		Cancel = True;
+		
+		ParameterRef = Item.CurrentRow;
+		
+		ChangeFlag(FlagName, ParameterRef);
+		
+	EndIf;
+	
+	Items.List.Refresh();
+	
+EndProcedure
+
+&AtServer
+Procedure ChangeFlag(FlagName, ParameterRef)
+	
+	ParameterObject = ParameterRef.GetObject();
+	ParameterObject[FlagName] = Not ParameterObject[FlagName];
+	ParameterObject.Write();
+	
+EndProcedure
