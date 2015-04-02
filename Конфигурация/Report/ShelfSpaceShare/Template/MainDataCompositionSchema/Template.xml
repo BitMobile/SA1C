@@ -264,7 +264,7 @@ SELECT ALLOWED
 	AnswersSliceLast.Visit.SR
 INTO AllBrands
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
 
 GROUP BY
 	AnswersSliceLast.SKU,
@@ -279,7 +279,7 @@ SELECT ALLOWED
 	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS CurrentBrandStock
 INTO CurrentBrand
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
 WHERE
 	AnswersSliceLast.SKU.Brand = &amp;Brand
 
@@ -295,7 +295,7 @@ SELECT ALLOWED
 	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS SKUGroupStock
 INTO SKUGroups
 FROM
-	InformationRegister.Answers.SliceLast(, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
 
 GROUP BY
 	AnswersSliceLast.SKU.Owner,
