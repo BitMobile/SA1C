@@ -6,6 +6,20 @@
 		<Description>en = 'Orders'; ru = 'Заказы'</Description>
 		<IsFolder>true</IsFolder>
 		<ChildItems>
+			<Item id="ae7fe580-00ea-432f-af7d-625be728f601">
+				<Name>Catalogs_Section_Orders</Name>
+				<Code>000000210</Code>
+				<Description>en = 'Catalogs'; ru = 'Справочники'</Description>
+				<IsFolder>true</IsFolder>
+				<ChildItems>
+					<Item id="0d02df1b-a734-4a4d-ac09-9551d9a69d50">
+						<Name>Catalog_OrderParameters</Name>
+						<Code>000000211</Code>
+						<Description>en = 'Order parameters'; ru = 'Параметры заказа'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
+				</ChildItems>
+			</Item>
 			<Item id="9ceca6fd-281a-4228-87fb-c80d7d316c90">
 				<Name>Documents_Section_Orders</Name>
 				<Code>000000169</Code>
