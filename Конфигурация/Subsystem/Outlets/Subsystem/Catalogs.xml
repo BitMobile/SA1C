@@ -28,6 +28,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.Distributor</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.AssortmentMatrix</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.OutletsPrimaryParametersSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.OutletsStatusesSettings</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

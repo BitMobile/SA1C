@@ -72,6 +72,18 @@
 						<Description>en = 'Outlets parameters'; ru = 'Параметры торговых точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="bc6a26ee-317b-48ea-a205-023fd63765d6">
+						<Name>Catalog_OutletsPrimaryParametersSettings</Name>
+						<Code>000000208</Code>
+						<Description>en = 'Outlets primary parameters settings'; ru = 'Настройки основных параметров торговых точек'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
+					<Item id="22d0c42f-a1e8-480d-bc0a-6de08829f8e9">
+						<Name>Catalog_OutletsStatusesSettings</Name>
+						<Code>000000209</Code>
+						<Description>en = 'Outlets statuses settings'; ru = 'Настройки статусов торговых точек'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="cf2f007c-93c0-4f21-bfcb-a69d344ce8e7">
 						<Name>Catalog_OutletsTypes</Name>
 						<Code>000000145</Code>
@@ -94,12 +106,6 @@
 						<Name>Catalog_Territories</Name>
 						<Code>000000148</Code>
 						<Description>en = 'Territories'; ru = 'Территории'</Description>
-						<IsFolder>false</IsFolder>
-					</Item>
-					<Item id="bc6a26ee-317b-48ea-a205-023fd63765d6">
-						<Name>Catalog_OutletsPrimaryParametersSettings</Name>
-						<Code>000000208</Code>
-						<Description>en = 'Outlets primary parameters settings'; ru = 'Настройки основных параметров торговых точек'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 				</ChildItems>

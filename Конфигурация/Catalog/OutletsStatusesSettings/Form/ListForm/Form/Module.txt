@@ -1,0 +1,46 @@
+﻿
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	Query = New Query(
+	"SELECT
+	|	OutletsStatusesSettings.Description,
+	|	OutletsStatusesSettings.ShowOutletInMA,
+	|	OutletsStatusesSettings.DoVisitInMA,
+	|	OutletsStatusesSettings.CreateOrderInMA,
+	|	OutletsStatusesSettings.FillQuestionnaireInMA,
+	|	OutletsStatusesSettings.DoEncashmentInMA,
+	|	OutletsStatusesSettings.Ref
+	|FROM
+	|	Catalog.OutletsStatusesSettings AS OutletsStatusesSettings");
+	
+	QueryResult = Query.Execute().Unload();
+	
+	For Each Row In QueryResult Do
+		
+		Row.Description = NStr(Row.Description);
+		
+	EndDo;
+	
+	OutletStatuses.Load(QueryResult);
+	
+EndProcedure
+
+&AtClient
+Procedure OutletStatusesAttributeOnChange(Item)
+	
+	CurrentData = Items.OutletStatuses.CurrentData;
+	SettingRef = CurrentData.Ref;
+	AttributeName = Item.Name;
+	ChangeStatus(SettingRef, AttributeName);
+	
+EndProcedure
+
+&AtServer
+Procedure ChangeStatus(SettingRef, AttributeName)
+	
+	SettingObject = SettingRef.GetObject();
+	SettingObject[AttributeName] = NOT SettingObject[AttributeName];
+	SettingObject.Write();
+	
+EndProcedure

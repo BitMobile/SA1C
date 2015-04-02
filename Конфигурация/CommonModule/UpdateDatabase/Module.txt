@@ -1405,6 +1405,9 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update sku questions'; ru = 'Обновление вопросов по номенклатуре'"));
 	ProcessSKUQuestionsRename();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update outlet statuses settings'; ru = 'Обновление настроек статусов торговых точек'"));
+	ProcessOutletsStatusesSettings();
+	
 EndProcedure
 
 Procedure ProcessEncashments()
@@ -1538,5 +1541,32 @@ Procedure ProcessSKUQuestionsRename()
 	
 EndProcedure
 
+Procedure ProcessOutletsStatusesSettings()
+	
+	PotentialObject = Catalogs.OutletsStatusesSettings.Potential.GetObject();
+	PotentialObject.ShowOutletInMA = True;
+	PotentialObject.DoVisitInMA = True;
+	PotentialObject.CreateOrderInMA = False;
+	PotentialObject.FillQuestionnaireInMA = True;
+	PotentialObject.DoEncashmentInMA = False;
+	PotentialObject.Write();
+	
+	ActiveObject = Catalogs.OutletsStatusesSettings.Active.GetObject();
+	ActiveObject.ShowOutletInMA = True;
+	ActiveObject.DoVisitInMA = True;
+	ActiveObject.CreateOrderInMA = True;
+	ActiveObject.FillQuestionnaireInMA = True;
+	ActiveObject.DoEncashmentInMA = True;
+	ActiveObject.Write();
+	
+	ClosedObject = Catalogs.OutletsStatusesSettings.Closed.GetObject();
+	ClosedObject.ShowOutletInMA = False;
+	ClosedObject.DoVisitInMA = False;
+	ClosedObject.CreateOrderInMA = False;
+	ClosedObject.FillQuestionnaireInMA = False;
+	ClosedObject.DoEncashmentInMA = False;
+	ClosedObject.Write();
+	
+EndProcedure
 
 #EndRegion
