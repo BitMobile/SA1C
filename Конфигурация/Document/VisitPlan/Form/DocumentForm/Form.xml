@@ -65,6 +65,45 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
+		<UsualGroup name="GroupSRClearData" id="230">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group SRClear data</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group SRClear data</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupSRClearDataExtendedTooltip" id="265"/>
+			<ChildItems>
+				<InputField name="SR" id="9">
+					<DataPath>Object.SR</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<Width>30</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ChoiceParameters>
+						<app:item name="Role">
+							<app:value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xs:string">SR</Value>
+							</app:value>
+						</app:item>
+					</ChoiceParameters>
+					<ContextMenu name="SRContextMenu" id="10"/>
+					<ExtendedTooltip name="SRExtendedTooltip" id="266"/>
+					<Events>
+						<Event name="OnChange">SROnChange</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
 		<UsualGroup name="GroupPeriod" id="23">
 			<Title>
 				<v8:item>
@@ -86,50 +125,7 @@
 			<ShowTitle>false</ShowTitle>
 			<ExtendedTooltip name="GroupPeriodExtendedTooltip" id="259"/>
 			<ChildItems>
-				<InputField name="Year" id="224">
-					<DataPath>YearNumber</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Year</v8:content>
-						</v8:item>
-					</Title>
-					<HorizontalAlign>Left</HorizontalAlign>
-					<Width>11</Width>
-					<HorizontalStretch>false</HorizontalStretch>
-					<ExtendedEdit>false</ExtendedEdit>
-					<SpinButton>true</SpinButton>
-					<EditFormat>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>NG=</v8:content>
-						</v8:item>
-					</EditFormat>
-					<TextEdit>false</TextEdit>
-					<MinValue xsi:type="xs:decimal">2000</MinValue>
-					<MaxValue xsi:type="xs:decimal">2051</MaxValue>
-					<ChoiceListButton>false</ChoiceListButton>
-					<ContextMenu name="YearContextMenu" id="225"/>
-					<ExtendedTooltip name="YearExtendedTooltip" id="260"/>
-					<Events>
-						<Event name="Tuning">YearTuning</Event>
-					</Events>
-				</InputField>
-				<InputField name="WeekNumber" id="227">
-					<DataPath>Object.WeekNumber</DataPath>
-					<DefaultItem>true</DefaultItem>
-					<Width>30</Width>
-					<SpinButton>true</SpinButton>
-					<ChoiceListButton>true</ChoiceListButton>
-					<ContextMenu name="WeekNumberContextMenu" id="228"/>
-					<ExtendedTooltip name="WeekNumberExtendedTooltip" id="261"/>
-					<Events>
-						<Event name="OnChange">WeekNumberOnChange</Event>
-						<Event name="Tuning">WeekNumberTuning</Event>
-					</Events>
-				</InputField>
 				<UsualGroup name="GroupSubPeriod" id="226">
-					<Visible>false</Visible>
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -155,476 +151,615 @@
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="GroupSubPeriodExtendedTooltip" id="262"/>
 					<ChildItems>
-						<InputField name="DateFrom" id="5">
+						<LabelField name="DateFrom" id="5">
 							<DataPath>Object.DateFrom</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>From</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>С</v8:content>
+								</v8:item>
+							</Title>
 							<EditMode>EnterOnInput</EditMode>
+							<HorizontalStretch>false</HorizontalStretch>
 							<ContextMenu name="DateFromContextMenu" id="6"/>
 							<ExtendedTooltip name="DateFromExtendedTooltip" id="263"/>
 							<Events>
 								<Event name="OnChange">DateFromOnChange</Event>
 							</Events>
-						</InputField>
-						<InputField name="DateTo" id="7">
+						</LabelField>
+						<LabelField name="DateTo" id="7">
 							<DataPath>Object.DateTo</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>to</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>по</v8:content>
+								</v8:item>
+							</Title>
 							<EditMode>EnterOnInput</EditMode>
 							<ContextMenu name="DateToContextMenu" id="8"/>
 							<ExtendedTooltip name="DateToExtendedTooltip" id="264"/>
 							<Events>
 								<Event name="OnChange">DateToOnChange</Event>
 							</Events>
-						</InputField>
+						</LabelField>
+						<Button name="Clear" id="229">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.Clear</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="ClearExtendedTooltip" id="267"/>
+						</Button>
+						<Button name="FillTableUsing" id="231">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.FillTableUsing</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="FillTableUsingExtendedTooltip" id="268"/>
+						</Button>
+						<Button name="CreateTask" id="232">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.CreateTask</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="CreateTaskExtendedTooltip" id="269"/>
+						</Button>
 					</ChildItems>
 				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="GroupSRClearData" id="230">
+		<UsualGroup name="ValueTablesGroup" id="325">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Group SRClear data</v8:content>
+					<v8:content>Value tables group</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Group SRClear data</v8:content>
+					<v8:content>Value tables group</v8:content>
 				</v8:item>
 			</ToolTip>
 			<Group>Horizontal</Group>
 			<Representation>None</Representation>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="GroupSRClearDataExtendedTooltip" id="265"/>
+			<ExtendedTooltip name="ValueTablesGroupExtendedTooltip" id="326"/>
 			<ChildItems>
-				<InputField name="SR" id="9">
-					<DataPath>Object.SR</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<Width>30</Width>
-					<HorizontalStretch>false</HorizontalStretch>
-					<ContextMenu name="SRContextMenu" id="10"/>
-					<ExtendedTooltip name="SRExtendedTooltip" id="266"/>
-					<Events>
-						<Event name="OnChange">SROnChange</Event>
-						<Event name="StartChoice">SRStartChoice</Event>
-					</Events>
-				</InputField>
-				<Button name="Clear" id="229">
-					<Type>UsualButton</Type>
-					<CommandName>Form.Command.Clear</CommandName>
-					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="ClearExtendedTooltip" id="267"/>
-				</Button>
-				<Button name="FillTableUsing" id="231">
-					<Type>UsualButton</Type>
-					<CommandName>Form.Command.FillTableUsing</CommandName>
-					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="FillTableUsingExtendedTooltip" id="268"/>
-				</Button>
-				<Button name="CreateTask" id="232">
-					<Type>UsualButton</Type>
-					<CommandName>Form.Command.CreateTask</CommandName>
-					<Parameter xsi:nil="true"/>
-					<ExtendedTooltip name="CreateTaskExtendedTooltip" id="269"/>
-				</Button>
+				<UsualGroup name="Group9" id="329">
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="Group9ExtendedTooltip" id="330"/>
+					<ChildItems>
+						<InputField name="Year" id="224">
+							<DataPath>YearNumber</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Year</v8:content>
+								</v8:item>
+							</Title>
+							<TitleLocation>None</TitleLocation>
+							<HorizontalAlign>Left</HorizontalAlign>
+							<Width>7</Width>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ExtendedEdit>false</ExtendedEdit>
+							<SpinButton>true</SpinButton>
+							<EditFormat>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>NG=</v8:content>
+								</v8:item>
+							</EditFormat>
+							<TextEdit>false</TextEdit>
+							<MinValue xsi:type="xs:decimal">2000</MinValue>
+							<MaxValue xsi:type="xs:decimal">2051</MaxValue>
+							<ChoiceListButton>false</ChoiceListButton>
+							<ContextMenu name="YearContextMenu" id="225"/>
+							<ExtendedTooltip name="YearExtendedTooltip" id="260"/>
+							<Events>
+								<Event name="Tuning">YearTuning</Event>
+							</Events>
+						</InputField>
+						<Table name="WeekChooser" id="303">
+							<Representation>List</Representation>
+							<CommandBarLocation>None</CommandBarLocation>
+							<ReadOnly>true</ReadOnly>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<Width>8</Width>
+							<Header>false</Header>
+							<HorizontalScrollBar>DontUse</HorizontalScrollBar>
+							<VerticalScrollBar>DontUse</VerticalScrollBar>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<HorizontalStretch>false</HorizontalStretch>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>WeekChooser</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="WeekChooserContextMenu" id="304"/>
+							<AutoCommandBar name="WeekChooserCommandBar" id="305"/>
+							<ExtendedTooltip name="WeekChooserExtendedTooltip" id="306"/>
+							<SearchStringAddition name="WeekChooserSearchString" id="307">
+								<Source>
+									<lf:elementId>303</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="WeekChooserSearchStringContextMenu" id="310"/>
+								<ExtendedTooltip name="WeekChooserSearchStringExtendedTooltip" id="311"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="WeekChooserViewStatus" id="312">
+								<Source>
+									<lf:elementId>303</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="WeekChooserViewStatusContextMenu" id="315"/>
+								<ExtendedTooltip name="WeekChooserViewStatusExtendedTooltip" id="316"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="WeekChooserSearchControl" id="317">
+								<Source>
+									<lf:elementId>303</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="WeekChooserSearchControlContextMenu" id="320"/>
+								<ExtendedTooltip name="WeekChooserSearchControlExtendedTooltip" id="321"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnActivateCell">WeekChooserOnActivateCell</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="WeekChooserWeekNumber" id="322">
+									<DataPath>WeekChooser.WeekNumber</DataPath>
+									<HorizontalAlign>Center</HorizontalAlign>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>6</Width>
+									<ContextMenu name="WeekChooserWeekNumberContextMenu" id="323"/>
+									<ExtendedTooltip name="WeekChooserWeekNumberExtendedTooltip" id="324"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="Group8" id="327">
+					<Group>Horizontal</Group>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="Group8ExtendedTooltip" id="328"/>
+					<ChildItems>
+						<Table name="ValueTableOutlets" id="26">
+							<Representation>List</Representation>
+							<CommandBarLocation>None</CommandBarLocation>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<DataPath>ValueTableOutlets</DataPath>
+							<CommandSet>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>SortListAsc</ExcludedCommand>
+								<ExcludedCommand>MoveUp</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>SelectAll</ExcludedCommand>
+								<ExcludedCommand>SortListDesc</ExcludedCommand>
+								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Add</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>MoveDown</ExcludedCommand>
+							</CommandSet>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ValueTableOutletsContextMenu" id="27"/>
+							<AutoCommandBar name="ValueTableOutletsCommandBar" id="28">
+								<Autofill>false</Autofill>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ValueTableOutletsExtendedTooltip" id="270"/>
+							<SearchStringAddition name="ValueTableOutletsSearchString" id="294">
+								<Source>
+									<lf:elementId>26</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="ValueTableOutletsSearchStringContextMenu" id="295"/>
+								<ExtendedTooltip name="ValueTableOutletsSearchStringExtendedTooltip" id="296"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ValueTableOutletsViewStatus" id="297">
+								<Source>
+									<lf:elementId>26</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="ValueTableOutletsViewStatusContextMenu" id="298"/>
+								<ExtendedTooltip name="ValueTableOutletsViewStatusExtendedTooltip" id="299"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ValueTableOutletsSearchControl" id="300">
+								<Source>
+									<lf:elementId>26</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="ValueTableOutletsSearchControlContextMenu" id="301"/>
+								<ExtendedTooltip name="ValueTableOutletsSearchControlExtendedTooltip" id="302"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="BeforeRowChange">ValueTableOutletsBeforeRowChange</Event>
+								<Event name="OnStartEdit">ValueTableOutletsOnStartEdit</Event>
+								<Event name="OnActivateCell">ValueTableOutletsOnActivateCell</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="ValueTableOutlet" id="29">
+									<DataPath>ValueTableOutlets.Outlet</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<FixingInTable>Left</FixingInTable>
+									<Width>18</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<ContextMenu name="ValueTableOutletContextMenu" id="30"/>
+									<ExtendedTooltip name="ValueTableOutletExtendedTooltip" id="271"/>
+								</InputField>
+								<ColumnGroup name="Group1" id="233">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>mon</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>пн</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group1</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group1ExtendedTooltip" id="272"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean1" id="31">
+											<DataPath>ValueTableOutlets.DateBoolean1</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>1</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean1ContextMenu" id="32"/>
+											<ExtendedTooltip name="ValueTableDateBoolean1ExtendedTooltip" id="273"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime1" id="237">
+											<DataPath>ValueTableOutlets.Time1</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<ContextMenu name="ValueTableOutletsTime1ContextMenu" id="238"/>
+											<ExtendedTooltip name="ValueTableOutletsTime1ExtendedTooltip" id="274"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group2" id="236">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>tue</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>вт</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group2</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group2ExtendedTooltip" id="275"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean2" id="33">
+											<DataPath>ValueTableOutlets.DateBoolean2</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>2</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean2ContextMenu" id="34"/>
+											<ExtendedTooltip name="ValueTableDateBoolean2ExtendedTooltip" id="276"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime2" id="239">
+											<DataPath>ValueTableOutlets.Time2</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<ContextMenu name="ValueTableOutletsTime2ContextMenu" id="240"/>
+											<ExtendedTooltip name="ValueTableOutletsTime2ExtendedTooltip" id="277"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group3" id="241">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>wed</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ср</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group3</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group3ExtendedTooltip" id="278"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean3" id="35">
+											<DataPath>ValueTableOutlets.DateBoolean3</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>3</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean3ContextMenu" id="36"/>
+											<ExtendedTooltip name="ValueTableDateBoolean3ExtendedTooltip" id="279"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime3" id="242">
+											<DataPath>ValueTableOutlets.Time3</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<ContextMenu name="ValueTableOutletsTime3ContextMenu" id="243"/>
+											<ExtendedTooltip name="ValueTableOutletsTime3ExtendedTooltip" id="280"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group4" id="244">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>thu</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>чт</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group4</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group4ExtendedTooltip" id="281"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean4" id="37">
+											<DataPath>ValueTableOutlets.DateBoolean4</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>4</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean4ContextMenu" id="38"/>
+											<ExtendedTooltip name="ValueTableDateBoolean4ExtendedTooltip" id="282"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime4" id="245">
+											<DataPath>ValueTableOutlets.Time4</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<ContextMenu name="ValueTableOutletsTime4ContextMenu" id="246"/>
+											<ExtendedTooltip name="ValueTableOutletsTime4ExtendedTooltip" id="283"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group5" id="247">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>fri</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>пт</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group5</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group5ExtendedTooltip" id="284"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean5" id="39">
+											<DataPath>ValueTableOutlets.DateBoolean5</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>5</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean5ContextMenu" id="40"/>
+											<ExtendedTooltip name="ValueTableDateBoolean5ExtendedTooltip" id="285"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime5" id="248">
+											<DataPath>ValueTableOutlets.Time5</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<ContextMenu name="ValueTableOutletsTime5ContextMenu" id="249"/>
+											<ExtendedTooltip name="ValueTableOutletsTime5ExtendedTooltip" id="286"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group6" id="250">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>sat</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>сб</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group6</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group6ExtendedTooltip" id="287"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean6" id="41">
+											<DataPath>ValueTableOutlets.DateBoolean6</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>6</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean6ContextMenu" id="42"/>
+											<ExtendedTooltip name="ValueTableDateBoolean6ExtendedTooltip" id="288"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime6" id="251">
+											<DataPath>ValueTableOutlets.Time6</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<BackColor>#F5CCCC</BackColor>
+											<ContextMenu name="ValueTableOutletsTime6ContextMenu" id="252"/>
+											<ExtendedTooltip name="ValueTableOutletsTime6ExtendedTooltip" id="289"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="Group7" id="253">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>sun</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>вс</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group7</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Horizontal</Group>
+									<ShowInHeader>true</ShowInHeader>
+									<ExtendedTooltip name="Group7ExtendedTooltip" id="290"/>
+									<ChildItems>
+										<CheckBoxField name="ValueTableDateBoolean7" id="43">
+											<DataPath>ValueTableOutlets.DateBoolean7</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>7</v8:content>
+												</v8:item>
+											</Title>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ValueTableDateBoolean7ContextMenu" id="44"/>
+											<ExtendedTooltip name="ValueTableDateBoolean7ExtendedTooltip" id="291"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</CheckBoxField>
+										<InputField name="ValueTableOutletsTime7" id="254">
+											<DataPath>ValueTableOutlets.Time7</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<BackColor>#F5CCCC</BackColor>
+											<ContextMenu name="ValueTableOutletsTime7ContextMenu" id="255"/>
+											<ExtendedTooltip name="ValueTableOutletsTime7ExtendedTooltip" id="292"/>
+											<Events>
+												<Event name="OnChange">ValueTableOnChange</Event>
+											</Events>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
-		<Table name="ValueTableOutlets" id="26">
-			<Representation>List</Representation>
-			<CommandBarLocation>None</CommandBarLocation>
-			<ChangeRowSet>false</ChangeRowSet>
-			<ChangeRowOrder>false</ChangeRowOrder>
-			<DataPath>ValueTableOutlets</DataPath>
-			<CommandSet>
-				<ExcludedCommand>Copy</ExcludedCommand>
-				<ExcludedCommand>SortListAsc</ExcludedCommand>
-				<ExcludedCommand>MoveUp</ExcludedCommand>
-				<ExcludedCommand>CancelSearch</ExcludedCommand>
-				<ExcludedCommand>OutputList</ExcludedCommand>
-				<ExcludedCommand>SelectAll</ExcludedCommand>
-				<ExcludedCommand>SortListDesc</ExcludedCommand>
-				<ExcludedCommand>CopyToClipboard</ExcludedCommand>
-				<ExcludedCommand>Delete</ExcludedCommand>
-				<ExcludedCommand>EndEdit</ExcludedCommand>
-				<ExcludedCommand>Add</ExcludedCommand>
-				<ExcludedCommand>Change</ExcludedCommand>
-				<ExcludedCommand>Find</ExcludedCommand>
-				<ExcludedCommand>MoveDown</ExcludedCommand>
-			</CommandSet>
-			<SearchStringLocation>None</SearchStringLocation>
-			<ViewStatusLocation>None</ViewStatusLocation>
-			<SearchControlLocation>None</SearchControlLocation>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="ValueTableOutletsContextMenu" id="27"/>
-			<AutoCommandBar name="ValueTableOutletsCommandBar" id="28">
-				<Autofill>false</Autofill>
-			</AutoCommandBar>
-			<ExtendedTooltip name="ValueTableOutletsExtendedTooltip" id="270"/>
-			<SearchStringAddition name="ValueTableOutletsSearchString" id="294">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>0</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueTableOutletsSearchStringContextMenu" id="295"/>
-				<ExtendedTooltip name="ValueTableOutletsSearchStringExtendedTooltip" id="296"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="ValueTableOutletsViewStatus" id="297">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>1</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueTableOutletsViewStatusContextMenu" id="298"/>
-				<ExtendedTooltip name="ValueTableOutletsViewStatusExtendedTooltip" id="299"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="ValueTableOutletsSearchControl" id="300">
-				<Source>
-					<lf:elementId>26</lf:elementId>
-					<lf:additionId>2</lf:additionId>
-				</Source>
-				<ContextMenu name="ValueTableOutletsSearchControlContextMenu" id="301"/>
-				<ExtendedTooltip name="ValueTableOutletsSearchControlExtendedTooltip" id="302"/>
-			</SearchControlAddition>
-			<Events>
-				<Event name="BeforeRowChange">ValueTableOutletsBeforeRowChange</Event>
-				<Event name="OnStartEdit">ValueTableOutletsOnStartEdit</Event>
-				<Event name="OnActivateCell">ValueTableOutletsOnActivateCell</Event>
-			</Events>
-			<ChildItems>
-				<InputField name="ValueTableOutlet" id="29">
-					<DataPath>ValueTableOutlets.Outlet</DataPath>
-					<ReadOnly>true</ReadOnly>
-					<EditMode>EnterOnInput</EditMode>
-					<FixingInTable>Left</FixingInTable>
-					<Width>18</Width>
-					<HorizontalStretch>false</HorizontalStretch>
-					<VerticalStretch>false</VerticalStretch>
-					<ContextMenu name="ValueTableOutletContextMenu" id="30"/>
-					<ExtendedTooltip name="ValueTableOutletExtendedTooltip" id="271"/>
-				</InputField>
-				<ColumnGroup name="Group1" id="233">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group1</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group1</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group1ExtendedTooltip" id="272"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean1" id="31">
-							<DataPath>ValueTableOutlets.DateBoolean1</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>1</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean1ContextMenu" id="32"/>
-							<ExtendedTooltip name="ValueTableDateBoolean1ExtendedTooltip" id="273"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime1" id="237">
-							<DataPath>ValueTableOutlets.Time1</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<ContextMenu name="ValueTableOutletsTime1ContextMenu" id="238"/>
-							<ExtendedTooltip name="ValueTableOutletsTime1ExtendedTooltip" id="274"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group2" id="236">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group2</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group2</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group2ExtendedTooltip" id="275"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean2" id="33">
-							<DataPath>ValueTableOutlets.DateBoolean2</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>2</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean2ContextMenu" id="34"/>
-							<ExtendedTooltip name="ValueTableDateBoolean2ExtendedTooltip" id="276"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime2" id="239">
-							<DataPath>ValueTableOutlets.Time2</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<ContextMenu name="ValueTableOutletsTime2ContextMenu" id="240"/>
-							<ExtendedTooltip name="ValueTableOutletsTime2ExtendedTooltip" id="277"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group3" id="241">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group3</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group3</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group3ExtendedTooltip" id="278"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean3" id="35">
-							<DataPath>ValueTableOutlets.DateBoolean3</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>3</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean3ContextMenu" id="36"/>
-							<ExtendedTooltip name="ValueTableDateBoolean3ExtendedTooltip" id="279"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime3" id="242">
-							<DataPath>ValueTableOutlets.Time3</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<ContextMenu name="ValueTableOutletsTime3ContextMenu" id="243"/>
-							<ExtendedTooltip name="ValueTableOutletsTime3ExtendedTooltip" id="280"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group4" id="244">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group4</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group4</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group4ExtendedTooltip" id="281"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean4" id="37">
-							<DataPath>ValueTableOutlets.DateBoolean4</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>4</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean4ContextMenu" id="38"/>
-							<ExtendedTooltip name="ValueTableDateBoolean4ExtendedTooltip" id="282"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime4" id="245">
-							<DataPath>ValueTableOutlets.Time4</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<ContextMenu name="ValueTableOutletsTime4ContextMenu" id="246"/>
-							<ExtendedTooltip name="ValueTableOutletsTime4ExtendedTooltip" id="283"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group5" id="247">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group5</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group5</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group5ExtendedTooltip" id="284"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean5" id="39">
-							<DataPath>ValueTableOutlets.DateBoolean5</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>5</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean5ContextMenu" id="40"/>
-							<ExtendedTooltip name="ValueTableDateBoolean5ExtendedTooltip" id="285"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime5" id="248">
-							<DataPath>ValueTableOutlets.Time5</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<ContextMenu name="ValueTableOutletsTime5ContextMenu" id="249"/>
-							<ExtendedTooltip name="ValueTableOutletsTime5ExtendedTooltip" id="286"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group6" id="250">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group6</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group6</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group6ExtendedTooltip" id="287"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean6" id="41">
-							<DataPath>ValueTableOutlets.DateBoolean6</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>6</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean6ContextMenu" id="42"/>
-							<ExtendedTooltip name="ValueTableDateBoolean6ExtendedTooltip" id="288"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime6" id="251">
-							<DataPath>ValueTableOutlets.Time6</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<BackColor>#F5CCCC</BackColor>
-							<ContextMenu name="ValueTableOutletsTime6ContextMenu" id="252"/>
-							<ExtendedTooltip name="ValueTableOutletsTime6ExtendedTooltip" id="289"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-				<ColumnGroup name="Group7" id="253">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group7</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group7</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Group>Horizontal</Group>
-					<ShowInHeader>true</ShowInHeader>
-					<ExtendedTooltip name="Group7ExtendedTooltip" id="290"/>
-					<ChildItems>
-						<CheckBoxField name="ValueTableDateBoolean7" id="43">
-							<DataPath>ValueTableOutlets.DateBoolean7</DataPath>
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>7</v8:content>
-								</v8:item>
-							</Title>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="ValueTableDateBoolean7ContextMenu" id="44"/>
-							<ExtendedTooltip name="ValueTableDateBoolean7ExtendedTooltip" id="291"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</CheckBoxField>
-						<InputField name="ValueTableOutletsTime7" id="254">
-							<DataPath>ValueTableOutlets.Time7</DataPath>
-							<EditMode>EnterOnInput</EditMode>
-							<ShowInHeader>false</ShowInHeader>
-							<BackColor>#F5CCCC</BackColor>
-							<ContextMenu name="ValueTableOutletsTime7ContextMenu" id="255"/>
-							<ExtendedTooltip name="ValueTableOutletsTime7ExtendedTooltip" id="292"/>
-							<Events>
-								<Event name="OnChange">ValueTableOnChange</Event>
-							</Events>
-						</InputField>
-					</ChildItems>
-				</ColumnGroup>
-			</ChildItems>
-		</Table>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
@@ -878,6 +1013,120 @@
 		<Attribute name="Attribute7" id="12">
 			<Type>
 				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="WeekChooser" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Week chooser</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="WeekNumber" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Week number</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="WeekBeginDate" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Week begin date</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="WeekEndDate" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Week end date</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="VisitPlan" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Visit plan</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="CurrentWeekNumber" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Current week number</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ObjectWeekNumber" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Object week number</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>0</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ObjectYear" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Object year</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
 			</Type>
 		</Attribute>
 		<ConditionalAppearance>
@@ -1179,6 +1428,164 @@
 					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 						<dcscor:parameter>ReadOnly</dcscor:parameter>
 						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekEndDate</dcsset:left>
+						<dcsset:comparisonType>LessOrEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisWeek</v8:variant>
+						</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>BackColor</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">web:Cream</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekBeginDate</dcsset:left>
+						<dcsset:comparisonType>LessOrEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisDay</v8:variant>
+						</dcsset:right>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekEndDate</dcsset:left>
+						<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisDay</v8:variant>
+						</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>BackColor</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">web:HoneyDew</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekEndDate</dcsset:left>
+						<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfNextWeek</v8:variant>
+						</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>BackColor</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">web:AliceBlue</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.VisitPlan</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">true</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:use>false</dcscor:use>
+						<dcscor:parameter>BackColor</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">web:LightSalmon</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Visible</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:use>false</dcscor:use>
+						<dcscor:parameter>Enabled</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekNumber</dcsset:left>
+						<dcsset:comparisonType>Less</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">CurrentWeekNumber</dcsset:right>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekNumber</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">Object.WeekNumber</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Visible</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>WeekChooserWeekNumber</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">WeekChooser.WeekNumber</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">Object.WeekNumber</dcsset:right>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">Object.Year</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">ObjectYear</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>BackColor</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">web:PaleGreen</dcscor:value>
 					</dcscor:item>
 				</dcsset:appearance>
 			</dcsset:item>
