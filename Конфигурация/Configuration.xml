@@ -178,6 +178,7 @@
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияСУчетнымиСистемами</ScheduledJob>
+			<ScheduledJob>bitmobile_ОчисткаЖурналаРегистрации</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>

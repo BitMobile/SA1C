@@ -75,6 +75,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">EventSubscription.bitmobile_ПриЗаписиРегистра</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonModule.bitmobile_ОбработчикиСинхронизацииИПодписок</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_КоличествоОбъектовВВыгрузке</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_ОчисткаЖурналаРегистрации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_СинхронизацияСУчетнымиСистемами</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
