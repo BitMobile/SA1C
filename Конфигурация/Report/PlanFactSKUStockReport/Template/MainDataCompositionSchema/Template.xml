@@ -258,7 +258,8 @@
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Date,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
-	AnswersSliceLast.Answer
+	AnswersSliceLast.Answer,
+	AnswersSliceLast.Visit.SR AS SR
 INTO Fact
 FROM
 	InformationRegister.Answers.SliceLast(, ) AS AnswersSliceLast
@@ -307,7 +308,8 @@ SELECT ALLOWED
 	Fact.Outlet,
 	Fact.SKU,
 	Fact.Answer AS Fact,
-	Plan.BaseUnitQty AS Plan
+	Plan.BaseUnitQty AS Plan,
+	Fact.SR
 INTO PlanFact
 FROM
 	Fact AS Fact
@@ -332,8 +334,8 @@ SELECT ALLOWED
 	Result.Plan,
 	MAX(TerritoryOutlets.Ref) AS Territory,
 	MAX(TerritoryOutlets.Ref.Owner) AS Region,
-	TerritoryOutlets.Ref.SR AS SR,
-	OutletParameters.Value
+	OutletParameters.Value,
+	Result.SR
 INTO PlanFactTerritory
 FROM
 	PlanFact AS Result
@@ -356,7 +358,7 @@ GROUP BY
 	Result.Fact,
 	Result.Plan,
 	OutletParameters.Value,
-	TerritoryOutlets.Ref.SR
+	Result.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -380,8 +382,8 @@ SELECT ALLOWED
 	MAX(PlanFactTerritory.Plan) AS Plan,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
-	PlanFactTerritory.SR,
-	PlanFactTerritory.Value
+	PlanFactTerritory.Value,
+	PlanFactTerritory.SR
 FROM
 	PlanFactTerritory AS PlanFactTerritory
 
@@ -396,16 +398,9 @@ GROUP BY
 	PlanFactTerritory.SKU,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
-	PlanFactTerritory.SR,
 	PlanFactTerritory.Value,
-	BEGINOFPERIOD(PlanFactTerritory.Date, MONTH),
-	CASE
-		WHEN MONTH(PlanFactTerritory.Date) IN (2, 4, 6, 8, 10, 12)
-			THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Date, MONTH, -1), MONTH)
-		ELSE BEGINOFPERIOD(PlanFactTerritory.Date, MONTH)
-	END,
-	BEGINOFPERIOD(PlanFactTerritory.Date, QUARTER),
-	PlanFactTerritory.Fact</query>
+	PlanFactTerritory.Fact,
+	PlanFactTerritory.SR</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Fact</dataPath>
