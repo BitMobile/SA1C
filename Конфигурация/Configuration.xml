@@ -261,6 +261,7 @@
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>MobileAppAccessRights</Catalog>
+			<Catalog>OrderParameters</Catalog>
 			<Catalog>Outlet</Catalog>
 			<Catalog>OutletClass</Catalog>
 			<Catalog>OutletParameter</Catalog>
