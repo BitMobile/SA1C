@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.6.0.318</Version>
+			<Version>1.6.0.319</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -244,7 +244,7 @@
 			<Constant>bitmobile_СтатусПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
-			<Constant>bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</Constant>
+			<Constant>bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</Constant>
 			<Constant>bitmobile_СрокХраненияЖурналаРегистрации</Constant>
 			<CommonForm>Logo</CommonForm>
 			<CommonForm>ScheduleForm</CommonForm>

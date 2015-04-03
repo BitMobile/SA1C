@@ -234,21 +234,21 @@
 					</ToolTip>
 					<ExtendedTooltip name="СтраницаЖурналExtendedTooltip" id="48"/>
 					<ChildItems>
-						<CheckBoxField name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал" id="49">
-							<DataPath>НаборКонстант.bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</DataPath>
+						<CheckBoxField name="bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал" id="49">
+							<DataPath>НаборКонстант.bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</DataPath>
 							<Title>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Write synchronization event log</v8:content>
+									<v8:content>Do not write synchronization event log</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Записывать события синхронизации в журнал</v8:content>
+									<v8:content>Не записывать события синхронизации в журнал</v8:content>
 								</v8:item>
 							</Title>
 							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурналContextMenu" id="50"/>
-							<ExtendedTooltip name="bitmobile_ЗаписыватьСобытияСинхронизацииВЖурналExtendedTooltip" id="51"/>
+							<ContextMenu name="bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурналContextMenu" id="50"/>
+							<ExtendedTooltip name="bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурналExtendedTooltip" id="51"/>
 						</CheckBoxField>
 						<UsualGroup name="ГруппаСрокХранения" id="55">
 							<Title>
@@ -273,11 +273,11 @@
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Shelf life log</v8:content>
+											<v8:content>Shelf life log (days)</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Срок хранения журнала регистрации</v8:content>
+											<v8:content>Срок хранения журнала регистрации (дни)</v8:content>
 										</v8:item>
 									</Title>
 									<ContextMenu name="bitmobile_СрокХраненияЖурналаРегистрацииContextMenu" id="53"/>

@@ -367,7 +367,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Constant.bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</name>
+		<name>Constant.bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</name>
 		<right>
 			<name>Read</name>
 			<value>true</value>

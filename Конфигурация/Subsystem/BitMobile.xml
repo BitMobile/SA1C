@@ -77,7 +77,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_КоличествоОбъектовВВыгрузке</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_ОчисткаЖурналаРегистрации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_СинхронизацияСУчетнымиСистемами</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ЗаписыватьСобытияСинхронизацииВЖурнал</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СрокХраненияЖурналаРегистрации</xr:Item>
 			</Content>
 		</Properties>
