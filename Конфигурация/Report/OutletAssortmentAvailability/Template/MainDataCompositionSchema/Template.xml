@@ -7,16 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>DataSet1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Day</dataPath>
-			<field>Day</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Day</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>SKU</dataPath>
 			<field>SKU</field>
 			<title xsi:type="v8:LocalStringType">
@@ -257,6 +247,16 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Day</dataPath>
+			<field>Day</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Day</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
@@ -284,7 +284,7 @@ FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
 WHERE
 	CASE
-			WHEN &amp;BeginDate = DATETIME(1, 1, 1, 0, 0, 0)
+			WHEN &amp;BeginDate = DATETIME(1, 1, 1)
 				THEN TRUE
 			ELSE AnswersSliceLast.Visit.Date &gt;= &amp;BeginDate
 		END
@@ -298,6 +298,14 @@ WHERE
 				THEN FALSE
 			ELSE AnswersSliceLast.Question = &amp;Question
 		END
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT DISTINCT
+	Fact.Day
+INTO Dates
+FROM
+	Fact AS Fact
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -319,17 +327,16 @@ FROM
 WHERE
 	NOT AssortmentMatrixOutletsSliceLast.OutletStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
 	AND NOT AssortmentMatrixSKUsSliceLast.SKUStatus = VALUE(Enum.ValueTableRowStatuses.Deleted)
-{WHERE
-	(CASE
+	AND CASE
 			WHEN &amp;EndDate = DATETIME(1, 1, 1)
 				THEN TRUE
 			ELSE AssortmentMatrixPeriods.BeginDate &lt;= &amp;EndDate
-		END),
-	(CASE
+		END
+	AND CASE
 			WHEN AssortmentMatrixPeriods.EndDate &gt; DATETIME(1, 1, 1)
 				THEN AssortmentMatrixPeriods.EndDate &gt;= &amp;BeginDate
 			ELSE TRUE
-		END)}
+		END
 
 GROUP BY
 	AssortmentMatrixPeriods.EndDate,
@@ -339,13 +346,42 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
+SELECT
+	Dates.Day,
+	Plan.Outlet,
+	Plan.SKU,
+	MAX(Plan.BaseUnitQty) AS BaseUnitQty,
+	Plan.BeginDate,
+	Plan.EndDate
+INTO PlanDates
+FROM
+	Plan AS Plan
+		LEFT JOIN Dates AS Dates
+		ON Plan.BeginDate &lt;= Dates.Day
+			AND (CASE
+				WHEN Plan.EndDate = DATETIME(1, 1, 1)
+					THEN TRUE
+				ELSE Plan.EndDate &gt;= Dates.Day
+			END)
+WHERE
+	NOT Dates.Day IS NULL 
+
+GROUP BY
+	Dates.Day,
+	Plan.Outlet,
+	Plan.SKU,
+	Plan.BeginDate,
+	Plan.EndDate
+;
+
+////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	Fact.Day,
-	ISNULL(Fact.Outlet, Plan.Outlet) AS Outlet,
-	ISNULL(Fact.SKU, Plan.SKU) AS SKU,
-	Fact.Answer AS Answer,
+	ISNULL(Fact.Day, PlanDates.Day) AS Day,
+	ISNULL(Fact.Outlet, PlanDates.Outlet) AS Outlet,
+	ISNULL(Fact.SKU, PlanDates.SKU) AS SKU,
+	ISNULL(Fact.Answer, 0) AS Answer,
 	CASE
-		WHEN Plan.BaseUnitQty IS NULL 
+		WHEN PlanDates.BaseUnitQty IS NULL 
 			THEN 0
 		ELSE 1
 	END AS BaseUnitQty,
@@ -353,11 +389,11 @@ SELECT ALLOWED
 INTO PlanFact
 FROM
 	Fact AS Fact
-		FULL JOIN Plan AS Plan
-		ON Fact.Outlet = Plan.Outlet
-			AND Fact.SKU = Plan.SKU
-			AND Fact.Day &gt;= Plan.BeginDate
-			AND Fact.Day &lt;= Plan.EndDate
+		FULL JOIN PlanDates AS PlanDates
+		ON Fact.Outlet = PlanDates.Outlet
+			AND Fact.SKU = PlanDates.SKU
+			AND Fact.Day &gt;= PlanDates.BeginDate
+			AND Fact.Day &lt;= PlanDates.EndDate
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -393,8 +429,7 @@ FROM
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON PlanFact.Outlet = OutletParameters.Ref
 WHERE
-	NOT PlanFact.Day IS NULL 
-	AND OutletParameters.Parameter = &amp;Parameter
+	OutletParameters.Parameter = &amp;Parameter
 
 GROUP BY
 	PlanFact.Day,
@@ -413,14 +448,18 @@ GROUP BY
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	PlanFactTerritory.Day,
-	BEGINOFPERIOD(PlanFactTerritory.Day, MONTH) AS Month,
-	CASE
-		WHEN MONTH(PlanFactTerritory.Day) IN (2, 4, 6, 8, 10, 12)
-			THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Day, MONTH, -1), MONTH)
-		ELSE BEGINOFPERIOD(PlanFactTerritory.Day, MONTH)
-	END AS Month2,
-	BEGINOFPERIOD(PlanFactTerritory.Day, QUARTER) AS Quarter,
+	ISNULL(PlanFactTerritory.Day, MAX(PlanFactTerritory.Day)) AS Day,
+	ISNULL(BEGINOFPERIOD(PlanFactTerritory.Day, MONTH), MAX(BEGINOFPERIOD(PlanFactTerritory.Day, MONTH))) AS Month,
+	ISNULL(CASE
+			WHEN MONTH(PlanFactTerritory.Day) IN (2, 4, 6, 8, 10, 12)
+				THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Day, MONTH, -1), MONTH)
+			ELSE BEGINOFPERIOD(PlanFactTerritory.Day, MONTH)
+		END, MAX(CASE
+				WHEN MONTH(PlanFactTerritory.Day) IN (2, 4, 6, 8, 10, 12)
+					THEN BEGINOFPERIOD(DATEADD(PlanFactTerritory.Day, MONTH, -1), MONTH)
+				ELSE BEGINOFPERIOD(PlanFactTerritory.Day, MONTH)
+			END)) AS Month2,
+	ISNULL(BEGINOFPERIOD(PlanFactTerritory.Day, QUARTER), MAX(BEGINOFPERIOD(PlanFactTerritory.Day, QUARTER))) AS Quarter,
 	PlanFactTerritory.OutletDistributor,
 	PlanFactTerritory.OutletClass,
 	PlanFactTerritory.OutletType,
@@ -428,15 +467,28 @@ SELECT ALLOWED
 	PlanFactTerritory.Brand,
 	PlanFactTerritory.SKUGroup,
 	PlanFactTerritory.SKU,
-	PlanFactTerritory.Answer,
-	PlanFactTerritory.BaseUnitQty,
-	PlanFactTerritory.PlanFactQty,
+	MAX(PlanFactTerritory.Answer) AS Answer,
+	MAX(PlanFactTerritory.BaseUnitQty) AS BaseUnitQty,
+	MAX(PlanFactTerritory.PlanFactQty) AS PlanFactQty,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
-	PlanFactTerritory.SR,
+	MAX(PlanFactTerritory.SR) AS SR,
 	PlanFactTerritory.Value
 FROM
-	PlanFactTerritory AS PlanFactTerritory</query>
+	PlanFactTerritory AS PlanFactTerritory
+
+GROUP BY
+	PlanFactTerritory.OutletDistributor,
+	PlanFactTerritory.OutletClass,
+	PlanFactTerritory.OutletType,
+	PlanFactTerritory.Outlet,
+	PlanFactTerritory.Brand,
+	PlanFactTerritory.SKUGroup,
+	PlanFactTerritory.SKU,
+	PlanFactTerritory.Territory,
+	PlanFactTerritory.Region,
+	PlanFactTerritory.Value,
+	PlanFactTerritory.Day</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Fact</dataPath>
@@ -490,7 +542,7 @@ FROM
 		<appearance>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:parameter>Format</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
+				<dcscor:value xsi:type="xs:string">NFD=2</dcscor:value>
 			</dcscor:item>
 		</appearance>
 	</calculatedField>
@@ -512,7 +564,7 @@ FROM
 	</calculatedField>
 	<calculatedField>
 		<dataPath>MonthPercent</dataPath>
-		<expression>avg(Case when PlanFactQty = 0 then 0 else PlanFactQty / BaseUnitQty * 100 end)</expression>
+		<expression>Case when BaseUnitQty = 0 then 0 else PlanFactQty / BaseUnitQty * 100 end</expression>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -546,7 +598,7 @@ FROM
 	</totalField>
 	<totalField>
 		<dataPath>PlanFactQty</dataPath>
-		<expression>Sum(PlanFactQty)</expression>
+		<expression>CASE WHEN  PlanFactQty Is NULL THEN 0 ELSE Sum(PlanFactQty) END</expression>
 	</totalField>
 	<totalField>
 		<dataPath>PlannedVisitsQty</dataPath>
@@ -554,7 +606,11 @@ FROM
 	</totalField>
 	<totalField>
 		<dataPath>MonthPercent</dataPath>
-		<expression>MonthPercent</expression>
+		<expression>Avg(MonthPercent)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>BaseUnitQty</dataPath>
+		<expression>CASE WHEN BaseUnitQty IS NULL THEN 0 ELSE BaseUnitQty END</expression>
 	</totalField>
 	<parameter>
 		<name>Period</name>
@@ -1123,6 +1179,10 @@ FROM
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedLeft</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedTop</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
@@ -1448,6 +1508,10 @@ FROM
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedLeft</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedTop</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
@@ -1771,6 +1835,10 @@ FROM
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FixedLeft</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedTop</dcscor:parameter>
