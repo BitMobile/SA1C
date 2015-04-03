@@ -392,8 +392,7 @@ FROM
 		FULL JOIN PlanDates AS PlanDates
 		ON Fact.Outlet = PlanDates.Outlet
 			AND Fact.SKU = PlanDates.SKU
-			AND Fact.Day &gt;= PlanDates.BeginDate
-			AND Fact.Day &lt;= PlanDates.EndDate
+			AND Fact.Day = PlanDates.Day
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -409,13 +408,10 @@ SELECT ALLOWED
 	PlanFact.Answer,
 	PlanFact.BaseUnitQty,
 	CASE
-		WHEN PlanFact.BaseUnitQty = 1
+		WHEN PlanFact.BaseUnitQty &gt; 0
 				AND PlanFact.Answer = 1
 			THEN 1
-		WHEN PlanFact.BaseUnitQty = 1
-				AND PlanFact.Answer = 0
-			THEN 0
-		ELSE NULL
+		ELSE 0
 	END AS PlanFactQty,
 	MAX(TerritoryOutlets.Ref) AS Territory,
 	MAX(TerritoryOutlets.Ref.Owner) AS Region,
