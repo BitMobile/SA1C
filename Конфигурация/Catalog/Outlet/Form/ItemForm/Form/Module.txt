@@ -724,7 +724,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 				Cancel = True;
 				
 				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number"". Line number" + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Телефон"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Телефон"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
 				
 				UserMessage.Message();
 				
@@ -743,7 +743,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 				Cancel = True;
 				
 				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'Incorrect value in the ""E-mail"". Line number" + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Электронная почта"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""E-mail"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Электронная почта"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
 				
 				UserMessage.Message();
 				
