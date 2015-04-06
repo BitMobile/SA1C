@@ -6,6 +6,17 @@ Var PrevTime;
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
+	PredefinedItems = New Map;
+	PredefinedItems.Insert("Catalog.User", "SR");
+	
+	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
+	
+	For Each Item In ItemsCollection Do
+		
+		Object[Item.Key] = Item.Value;
+		
+	EndDo;
+	
 	ObjectWeekNumber = Object.WeekNumber;
 	ObjectYear = Object.Year;
 	

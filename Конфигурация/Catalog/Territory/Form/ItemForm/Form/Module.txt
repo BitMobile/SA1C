@@ -5,14 +5,36 @@
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	PredefinedItems = New Map;
-    PredefinedItems.Insert("Catalog.User", "SR");
-    PredefinedItems.Insert("Catalog.Region", "Owner");
+	PredefinedItems.Insert("Catalog.User", "SRs");
+	PredefinedItems.Insert("Catalog.Region", "Owner");
 	
 	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
 	
 	For Each Item In ItemsCollection Do
 		
-		Object[Item.Key] = Item.Value;
+		If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then
+			
+			If Object[Item.Key].Count() = 0 Then
+			
+				NewRow = Object[Item.Key].Add();
+				
+				For Each Attribute In Metadata.Catalogs.Territory.TabularSections[Item.Key].Attributes Do
+					
+					If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
+						
+						NewRow[Attribute.Name] = Item.Value;
+						
+					EndIf;
+					
+				EndDo;
+				
+			EndIf;
+			
+		Else
+			
+			Object[Item.Key] = Item.Value;
+				
+		EndIf;
 		
 	EndDo;
 	

@@ -4,45 +4,41 @@
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	#Region Commented
+	PredefinedItems = New Map;
+	PredefinedItems.Insert("Catalog.OutletType", "Type");
+	PredefinedItems.Insert("Catalog.OutletClass", "Class");
+	PredefinedItems.Insert("Catalog.Distributor", "Distributor");
+	PredefinedItems.Insert("Document.PriceList", "Prices");
 	
-	//PredefinedItems = New Map;
-	//PredefinedItems.Insert("Catalog.OutletType", "Type");
-	//PredefinedItems.Insert("Catalog.OutletClass", "Class");
-	//PredefinedItems.Insert("Catalog.Distributor", "Distributor");
-	//PredefinedItems.Insert("Document.PriceList", "Prices");
-	//
-	//ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
-	//
-	//For Each Item In ItemsCollection Do
-	//	
-	//	If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then
-	//		
-	//		If Object[Item.Key].Count() = 0 Then
-	//			
-	//			NewRow = Object[Item.Key].Add();
-	//			
-	//			For Each Attribute In Metadata.Catalogs.Outlet.TabularSections[Item.Key].Attributes Do
-	//				
-	//				If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
-	//					
-	//					NewRow[Attribute.Name] = Item.Value;
-	//					
-	//				EndIf;
-	//				
-	//			EndDo;
-	//			
-	//		EndIf;
-	//		
-	//	Else 
-	//		
-	//		Object[Item.Key] = Item.Value;
-	//		
-	//	EndIf;
-	//	
-	//EndDo;
+	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
 	
-	#EndRegion
+	For Each Item In ItemsCollection Do
+		
+		If TypeOf(Object[Item.Key]) = Type("FormDataCollection") Then
+			
+			If Object[Item.Key].Count() = 0 Then
+				
+				NewRow = Object[Item.Key].Add();
+				
+				For Each Attribute In Metadata.Catalogs.Outlet.TabularSections[Item.Key].Attributes Do
+					
+					If TypeOf(NewRow[Attribute.Name]) = TypeOf(Item.Value) Then
+						
+						NewRow[Attribute.Name] = Item.Value;
+						
+					EndIf;
+					
+				EndDo;
+				
+			EndIf;
+			
+		Else 
+			
+			Object[Item.Key] = Item.Value;
+			
+		EndIf;
+		
+	EndDo;
 	
 	// Проверить возможность редактирования параметров торговой точки
 	If Not Users.HaveAdditionalRight(GetParametersRight()) Then 
