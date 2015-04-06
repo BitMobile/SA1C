@@ -78,6 +78,8 @@ Function StartUpdate() Export
 			VersionListForThisRelease.Add("1.5.1");
 			VersionListForThisRelease.Add("1.6.0");
 			VersionListForThisRelease.Add("1.6.T");
+			VersionListForThisRelease.Add("1.7.0");
+			VersionListForThisRelease.Add("1.7.T");
 			
 			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
 				
@@ -147,6 +149,17 @@ Function StartUpdate() Export
 					UserMessage.Message();
 					
 					UpdateForRelease_1_7_0(LastState, Step);
+					
+				EndIf;
+				
+				If CurrentVersion = "1.7.0" OR CurrentVersion = "1.7.T" Then
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.8.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_8_0(LastState, Step);
 					
 				EndIf;
 				
@@ -1541,9 +1554,21 @@ Procedure ProcessSKUQuestionsRename()
 	
 EndProcedure
 
+#EndRegion
+
+#Region Release_1_8_0
+
+Procedure UpdateForRelease_1_8_0(LastState, Step)
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update outlet statuses settings'; ru = 'Обновление настроек статусов торговых точек'"));
+	ProcessOutletsStatusesSettings();
+	
+EndProcedure
+
 Procedure ProcessOutletsStatusesSettings()
 	
 	PotentialObject = Catalogs.OutletsStatusesSettings.Potential.GetObject();
+	PotentialObject.Status = Enums.OutletStatus.Potential;
 	PotentialObject.ShowOutletInMA = True;
 	PotentialObject.DoVisitInMA = True;
 	PotentialObject.CreateOrderInMA = False;
@@ -1552,6 +1577,7 @@ Procedure ProcessOutletsStatusesSettings()
 	PotentialObject.Write();
 	
 	ActiveObject = Catalogs.OutletsStatusesSettings.Active.GetObject();
+	ActiveObject.Status = Enums.OutletStatus.Active;
 	ActiveObject.ShowOutletInMA = True;
 	ActiveObject.DoVisitInMA = True;
 	ActiveObject.CreateOrderInMA = True;
@@ -1560,6 +1586,7 @@ Procedure ProcessOutletsStatusesSettings()
 	ActiveObject.Write();
 	
 	ClosedObject = Catalogs.OutletsStatusesSettings.Closed.GetObject();
+	ClosedObject.Status = Enums.OutletStatus.Closed;
 	ClosedObject.ShowOutletInMA = False;
 	ClosedObject.DoVisitInMA = False;
 	ClosedObject.CreateOrderInMA = False;
