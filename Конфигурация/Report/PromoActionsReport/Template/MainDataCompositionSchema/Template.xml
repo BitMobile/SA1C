@@ -219,90 +219,147 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Visit</dataPath>
+			<field>Visit</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Questionnaire</dataPath>
+			<field>Questionnaire</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
-	QuestionsInQuestionnairesSliceLast.ChildQuestion
+		<query>SELECT DISTINCT
+	QuestionsInQuestionnairesSliceLast.Questionnaire AS Questionnaire,
+	QuestionsInQuestionnairesSliceLast.Questionnaire.BeginDate,
+	QuestionsInQuestionnairesSliceLast.Questionnaire.EndDate,
+	QuestionsInQuestionnairesSliceLast.ChildQuestion,
+	SKUsInQuestionnairesSliceLast.SKU
 INTO ChildQuestions
 FROM
-	InformationRegister.QuestionsInQuestionnaires.SliceLast AS QuestionsInQuestionnairesSliceLast
+	InformationRegister.QuestionsInQuestionnaires.SliceLast(, ) AS QuestionsInQuestionnairesSliceLast
+		INNER JOIN InformationRegister.SKUsInQuestionnaires.SliceLast(, ) AS SKUsInQuestionnairesSliceLast
+		ON QuestionsInQuestionnairesSliceLast.Questionnaire = SKUsInQuestionnairesSliceLast.Questionnaire
 WHERE
-	QuestionsInQuestionnairesSliceLast.ParentQuestion.Assignment = VALUE(Enum.SKUQUestions.Promo)
-	AND QuestionsInQuestionnairesSliceLast.Status &lt;&gt; VALUE(Enum.ValueTableRowStatuses.Deleted)
+	QuestionsInQuestionnairesSliceLast.ParentQuestion.Assignment = VALUE(Enum.SKUQuestions.Promo)
+	AND NOT QuestionsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	AND NOT SKUsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+{WHERE
+	(CASE
+			WHEN &amp;EndDate = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE QuestionsInQuestionnairesSliceLast.Questionnaire.BeginDate &lt;= &amp;EndDate
+					AND SKUsInQuestionnairesSliceLast.Questionnaire.BeginDate &lt;= &amp;EndDate
+		END),
+	(CASE
+			WHEN &amp;BeginDate = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE CASE
+					WHEN QuestionsInQuestionnairesSliceLast.Questionnaire.EndDate = DATETIME(1, 1, 1)
+						THEN TRUE
+					ELSE QuestionsInQuestionnairesSliceLast.Questionnaire.EndDate &gt;= &amp;BeginDate
+							AND SKUsInQuestionnairesSliceLast.Questionnaire.EndDate &gt;= &amp;BeginDate
+				END
+		END)}
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
-SELECT
-	BEGINOFPERIOD(AnswersSliceLast.Period, DAY) AS Date,
+SELECT DISTINCT
+	QuestioningResults.Questionnaire AS Questionnaire,
+	QuestioningResults.Visit AS Visit,
+	QuestioningResults.Outlet,
 	ChildQuestions.ChildQuestion,
+	ChildQuestions.SKU
+INTO QuestionsVisits
+FROM
+	ChildQuestions AS ChildQuestions
+		INNER JOIN InformationRegister.QuestioningResults AS QuestioningResults
+		ON ChildQuestions.Questionnaire = QuestioningResults.Questionnaire
+			AND ChildQuestions.QuestionnaireBeginDate &lt;= QuestioningResults.Date
+			AND (CASE
+				WHEN ChildQuestions.QuestionnaireEndDate = DATETIME(1, 1, 1)
+					THEN TRUE
+				ELSE ChildQuestions.QuestionnaireEndDate &gt;= QuestioningResults.Date
+			END)
+{WHERE
+	(QuestioningResults.Date &lt;= &amp;EndDate),
+	(QuestioningResults.Date &gt;= &amp;BeginDate)}
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT DISTINCT
+	AnswersSliceLast.Period AS Date,
+	AnswersSliceLast.Question AS ChildQuestion,
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU,
+	QuestioningResults.Questionnaire,
+	AnswersSliceLast.Visit AS Visit,
 	AnswersSliceLast.Answer,
-	AnswersSliceLast.Visit.SR AS SR
+	QuestionsVisits.Visit.SR AS SR
 INTO Answers
 FROM
-	InformationRegister.Answers.SliceLast AS AnswersSliceLast
-		LEFT JOIN ChildQuestions AS ChildQuestions
-		ON AnswersSliceLast.Question = ChildQuestions.ChildQuestion
-WHERE
-	NOT ChildQuestions.ChildQuestion IS NULL 
-{WHERE
-	(AnswersSliceLast.Period &gt;= &amp;StartPeriod),
-	(AnswersSliceLast.Period &lt;= &amp;EndPeriod)}
+	InformationRegister.Answers.SliceLast(, ) AS AnswersSliceLast
+		INNER JOIN QuestionsVisits AS QuestionsVisits
+		ON AnswersSliceLast.Visit = QuestionsVisits.Visit
+			AND AnswersSliceLast.Outlet = QuestionsVisits.Outlet
+			AND AnswersSliceLast.SKU = QuestionsVisits.SKU
+			AND AnswersSliceLast.Question = QuestionsVisits.ChildQuestion
+		INNER JOIN InformationRegister.QuestioningResults AS QuestioningResults
+		ON AnswersSliceLast.Visit = QuestioningResults.Visit
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT
-	Answers.Date,
+	BEGINOFPERIOD(Answers.Date, DAY) AS Date,
 	Answers.ChildQuestion,
-	Answers.Outlet,
+	MAX(Answers.Outlet) AS Outlet,
 	Answers.SKU,
+	Answers.Questionnaire,
+	Answers.Visit,
 	Answers.Answer,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region,
-	Answers.SR
-INTO AnswersTerritory
+	Answers.SR,
+	OutletParameters.Value,
+	NestedSelect.Territory,
+	NestedSelect.Region,
+	Answers.Outlet.Distributor,
+	Answers.Outlet.Class,
+	Answers.Outlet.Type,
+	Answers.SKU.Brand AS Brand,
+	Answers.SKU.Owner AS SKUGroup
 FROM
 	Answers AS Answers
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON Answers.Outlet = TerritoryOutlets.Outlet
+		INNER JOIN Catalog.Outlet.Parameters AS OutletParameters
+		ON Answers.Outlet = OutletParameters.Ref
+		INNER JOIN (SELECT TOP 1
+			TerritoryOutlets.Ref.Owner AS Region,
+			TerritoryOutlets.Ref AS Territory,
+			Answers.Outlet AS Outlet
+		FROM
+			Answers AS Answers
+				LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+				ON Answers.Outlet = TerritoryOutlets.Outlet) AS NestedSelect
+		ON Answers.Outlet = NestedSelect.Outlet
+WHERE
+	OutletParameters.Parameter = &amp;Parameter
 
 GROUP BY
-	Answers.Date,
+	Answers.SR,
 	Answers.ChildQuestion,
 	Answers.SKU,
-	Answers.Outlet,
+	Answers.Questionnaire,
+	Answers.Visit,
 	Answers.Answer,
-	Answers.SR
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT
-	AnswersTerritory.Date,
-	AnswersTerritory.ChildQuestion,
-	AnswersTerritory.Outlet,
-	AnswersTerritory.SKU,
-	CASE
-		WHEN AnswersTerritory.Answer = TRUE
-			THEN "ДА"
-		WHEN AnswersTerritory.Answer = FALSE
-			THEN "НЕТ"
-		ELSE AnswersTerritory.Answer
-	END AS Answer,
-	AnswersTerritory.Outlet.Distributor,
-	AnswersTerritory.Outlet.Class,
-	AnswersTerritory.Outlet.Type,
-	AnswersTerritory.SKU.Brand AS Brand,
-	AnswersTerritory.SKU.Owner AS SKUGroup,
 	OutletParameters.Value,
-	AnswersTerritory.SR,
-	AnswersTerritory.Territory,
-	AnswersTerritory.Region
-FROM
-	AnswersTerritory AS AnswersTerritory
-		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
-		ON AnswersTerritory.Outlet = OutletParameters.Ref
-{WHERE
-	(OutletParameters.Parameter = &amp;Parameter)}</query>
+	NestedSelect.Territory,
+	NestedSelect.Region,
+	Answers.Outlet.Distributor,
+	Answers.Outlet.Class,
+	Answers.Outlet.Type,
+	BEGINOFPERIOD(Answers.Date, DAY),
+	Answers.SKU.Brand,
+	Answers.SKU.Owner</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Answer</dataPath>
@@ -325,42 +382,6 @@ FROM
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>true</useRestriction>
-	</parameter>
-	<parameter>
-		<name>StartPeriod</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Start period</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period1.StartDate</expression>
-	</parameter>
-	<parameter>
-		<name>EndPeriod</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>End period</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Period1.EndDate</expression>
 	</parameter>
 	<parameter>
 		<name>Period1</name>
@@ -401,6 +422,43 @@ FROM
 		</valueType>
 		<value xsi:nil="true"/>
 		<useRestriction>false</useRestriction>
+		<use>Always</use>
+	</parameter>
+	<parameter>
+		<name>BeginDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Begin date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.StartDate</expression>
+	</parameter>
+	<parameter>
+		<name>EndDate</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>End date</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period1.EndDate</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -475,12 +533,6 @@ FROM
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>StartPeriod</dcscor:parameter>
-					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
-					<dcsset:userSettingID>925ab1f7-cf82-4024-a915-cdf89f0e8788</dcsset:userSettingID>
-				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
