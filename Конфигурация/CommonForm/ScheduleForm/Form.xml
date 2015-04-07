@@ -28,40 +28,6 @@
 	<ChildItems>
 		<InputField name="ScheduleType" id="1">
 			<DataPath>ScheduleType</DataPath>
-			<ChoiceList>
-				<xr:Item>
-					<xr:Presentation/>
-					<xr:CheckState>0</xr:CheckState>
-					<xr:Value xsi:type="FormChoiceListDesTimeValue">
-						<Presentation/>
-						<Value xsi:type="xr:DesignTimeRef">Enum.ScheduleTypes.EnumValue.Day</Value>
-					</xr:Value>
-				</xr:Item>
-				<xr:Item>
-					<xr:Presentation/>
-					<xr:CheckState>0</xr:CheckState>
-					<xr:Value xsi:type="FormChoiceListDesTimeValue">
-						<Presentation/>
-						<Value xsi:type="xr:DesignTimeRef">Enum.ScheduleTypes.EnumValue.Week</Value>
-					</xr:Value>
-				</xr:Item>
-				<xr:Item>
-					<xr:Presentation/>
-					<xr:CheckState>0</xr:CheckState>
-					<xr:Value xsi:type="FormChoiceListDesTimeValue">
-						<Presentation/>
-						<Value xsi:type="xr:DesignTimeRef">Enum.ScheduleTypes.EnumValue.Month</Value>
-					</xr:Value>
-				</xr:Item>
-				<xr:Item>
-					<xr:Presentation/>
-					<xr:CheckState>0</xr:CheckState>
-					<xr:Value xsi:type="FormChoiceListDesTimeValue">
-						<Presentation/>
-						<Value xsi:type="xr:DesignTimeRef">Enum.ScheduleTypes.EnumValue.Year</Value>
-					</xr:Value>
-				</xr:Item>
-			</ChoiceList>
 			<ContextMenu name="ScheduleTypeContextMenu" id="2"/>
 			<ExtendedTooltip name="ScheduleTypeExtendedTooltip" id="3"/>
 			<Events>
@@ -210,32 +176,6 @@
 				<InputField name="MonthScheduleType" id="43">
 					<DataPath>MonthScheduleType</DataPath>
 					<TextEdit>false</TextEdit>
-					<ChoiceList>
-						<xr:Item>
-							<xr:Presentation/>
-							<xr:CheckState>0</xr:CheckState>
-							<xr:Value xsi:type="FormChoiceListDesTimeValue">
-								<Presentation/>
-								<Value xsi:type="xr:DesignTimeRef">Enum.MonthScheduleTypes.EnumValue.Period</Value>
-							</xr:Value>
-						</xr:Item>
-						<xr:Item>
-							<xr:Presentation/>
-							<xr:CheckState>0</xr:CheckState>
-							<xr:Value xsi:type="FormChoiceListDesTimeValue">
-								<Presentation/>
-								<Value xsi:type="xr:DesignTimeRef">Enum.MonthScheduleTypes.EnumValue.First</Value>
-							</xr:Value>
-						</xr:Item>
-						<xr:Item>
-							<xr:Presentation/>
-							<xr:CheckState>0</xr:CheckState>
-							<xr:Value xsi:type="FormChoiceListDesTimeValue">
-								<Presentation/>
-								<Value xsi:type="xr:DesignTimeRef">Enum.MonthScheduleTypes.EnumValue.Last</Value>
-							</xr:Value>
-						</xr:Item>
-					</ChoiceList>
 					<ContextMenu name="MonthScheduleTypeContextMenu" id="44"/>
 					<ExtendedTooltip name="MonthScheduleTypeExtendedTooltip" id="45"/>
 					<Events>
