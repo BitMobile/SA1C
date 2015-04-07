@@ -264,7 +264,7 @@ INTO Fact
 FROM
 	InformationRegister.Answers.SliceLast(, ) AS AnswersSliceLast
 WHERE
-	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Stock)
+	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)
 	AND AnswersSliceLast.Visit.Date &gt;= &amp;StartDate
 	AND AnswersSliceLast.Visit.Date &lt;= &amp;EndDate
 ;

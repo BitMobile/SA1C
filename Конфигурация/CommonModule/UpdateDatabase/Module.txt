@@ -1415,9 +1415,6 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update skus'; ru = 'Обновление номенклатуры'"));
 	ProcessSKUPacking();
 	
-	WriteProtocol(LastState, Step, NStr("en = 'Update sku questions'; ru = 'Обновление вопросов по номенклатуре'"));
-	ProcessSKUQuestionsRename();
-	
 	WriteProtocol(LastState, Step, NStr("en = 'Update outlet statuses settings'; ru = 'Обновление настроек статусов торговых точек'"));
 	ProcessOutletsStatusesSettings();
 	
@@ -1518,37 +1515,6 @@ Procedure ProcessSKUPacking()
 		SKUObject = Selection.SKU.GetObject();
 		
 		SKUObject.Write();
-		
-	EndDo;
-	
-EndProcedure
-
-Procedure ProcessSKUQuestionsRename()
-	
-	Query = New Query(
-	"SELECT
-	|	Question.Ref,
-	|	CASE
-	|		WHEN Question.Assignment = VALUE(Enum.SKUQuestions.Stock)
-	|			THEN ""en = 'Outlet stock'; ru = 'Остаток в ТТ'""
-	|		WHEN Question.Assignment = VALUE(Enum.SKUQuestions.Facing)
-	|			THEN ""en = 'Shelf stock'; ru = 'Остаток на полке'""
-	|	END AS NewDescription
-	|FROM
-	|	Catalog.Question AS Question
-	|WHERE
-	|	(Question.Assignment = VALUE(Enum.SkuQuestions.Stock)
-	|			OR Question.Assignment = VALUE(Enum.SkuQuestions.Facing))");
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		QuestionRef = Row.Ref;
-		NewQuestionDescription = Row.NewDescription;
-		QuestionObject = QuestionRef.GetObject();
-		QuestionObject.Description = NStr(NewQuestionDescription);
-		QuestionObject.Write();
 		
 	EndDo;
 	
