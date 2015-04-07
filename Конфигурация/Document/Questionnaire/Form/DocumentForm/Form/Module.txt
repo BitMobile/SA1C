@@ -738,13 +738,6 @@ Function GUIDFromEnumValue(Value)
 EndFunction
 
 &AtServerNoContext
-Function GetStringDate(Date)
-
-	Return Format(Date, "DF=ггггММддЧЧмм");
-	
-EndFunction
-
-&AtServerNoContext
 Function GetStringFromValue(Value) 
 	
 	TypeOfValue = TypeOf(Value);
@@ -761,10 +754,6 @@ Function GetStringFromValue(Value)
 			
 		EndIf;
 				
-	ElsIf TypeOfValue = Type("Date") Then 
-		
-		Return GetStringDate(Value);
-		
 	ElsIf TypeOfValue = Type("Number") Then 
 		
 		Value = Строка(Value);

@@ -1000,12 +1000,6 @@ Function GUIDFromEnumValue(Value)
 	
 EndFunction
 
-Function GetStringDate(Date)
-
-	Return Format(Date, "DF=ггггММддЧЧмм");
-		
-EndFunction
-
 Function GetStringFromValue(Value) 
 	
 	TypeOfValue = TypeOf(Value);
@@ -1022,10 +1016,6 @@ Function GetStringFromValue(Value)
 				
 		EndIf;
 				
-	ElsIf TypeOfValue = Type("Date") Then 
-				
-		Return GetStringDate(Value);
-						
 	ElsIf TypeOfValue = Type("Number") Then 
 				
 	    Value = Строка(Value);
@@ -1415,8 +1405,8 @@ Procedure UpdateForRelease_1_7_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update skus'; ru = 'Обновление номенклатуры'"));
 	ProcessSKUPacking();
 	
-	WriteProtocol(LastState, Step, NStr("en = 'Update outlet statuses settings'; ru = 'Обновление настроек статусов торговых точек'"));
-	ProcessOutletsStatusesSettings();
+	WriteProtocol(LastState, Step, NStr("en = 'Update selectors in questionnaires'; ru = 'Обновление параметров отбора в анкетах'"));
+	ProcessDateSelectors();
 	
 EndProcedure
 
@@ -1515,6 +1505,47 @@ Procedure ProcessSKUPacking()
 		SKUObject = Selection.SKU.GetObject();
 		
 		SKUObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessDateSelectors()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Questionnaire.Ref AS Questionnaire
+		|FROM
+		|	Document.Questionnaire.Selectors AS QuestionnaireSelectors
+		|		LEFT JOIN Document.Questionnaire AS Questionnaire
+		|		ON QuestionnaireSelectors.Ref = Questionnaire.Ref
+		|WHERE
+		|	QuestionnaireSelectors.AdditionalParameter.DataType = VALUE(Enum.DataType.DateTime)";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		QuestionnaireObject = Selection.Questionnaire.GetObject();
+		
+		For Each StrSelector In QuestionnaireObject.Selectors Do
+			
+			If ValueIsFilled(StrSelector.AdditionalParameter) Then 
+				
+				If StrSelector.AdditionalParameter.DataType = Enums.DataType.DateTime And ValueIsFilled(StrSelector.Value) Then 
+					
+					StrSelector.StringValue = String(StrSelector.Value);
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndDo;
+		
+		QuestionnaireObject.Write();
 		
 	EndDo;
 	
