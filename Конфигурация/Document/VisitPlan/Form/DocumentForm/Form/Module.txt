@@ -227,14 +227,26 @@ Procedure FillWeekNumbers()
 	|		ON FormTable.WeekNumber = VisitPlans.WeekNumber
 	|WHERE
 	|	VisitPlans.VisitPlan IS NULL 
-	|	AND FormTable.WeekNumber >= &MinWeekNumber");
+	|	AND CASE
+	|			WHEN YEAR(&Year) = YEAR(&ThisYear)
+	|				THEN FormTable.WeekNumber >= &MinWeekNumber
+	|						OR FormTable.WeekNumber = &ThisWeekNumber
+	|			ELSE TRUE
+	|		END");
 	
 	Query.SetParameter("FormTable", FormAttributeToValue("WeekChooser"));
 	Query.SetParameter("SR", Object.SR);
 	Query.SetParameter("Year", BegOfYear(Object.Year));
+	Query.SetParameter("ThisYear", BegOfYear(CurrentDate()));
 	Query.SetParameter("ThisVisitPlan", Object.Ref);
 	Query.SetParameter("MinWeekNumber", GetWeekOfYear(CurrentDate()));
+	Query.SetParameter("ThisWeekNumber", Object.WeekNumber);
+	
+	SetPrivilegedMode(True);
+	
 	Result = Query.Execute().Unload();
+	
+	SetPrivilegedMode(False);
 	
 	ThisForm.WeekChooser.Load(Result);
 	
