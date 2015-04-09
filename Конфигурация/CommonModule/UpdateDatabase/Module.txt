@@ -1018,10 +1018,9 @@ Function GetStringFromValue(Value)
 				
 	ElsIf TypeOfValue = Type("Number") Then 
 				
-	    Value = Строка(Value);
+	    Value = String(Value);
         Value = StrReplace(Value, " ", "");
         Value = StrReplace(Value, Chars.NBSp, "");
-		Value = StrReplace(Value, ",", ".");
 		
 		Return Value;
 				

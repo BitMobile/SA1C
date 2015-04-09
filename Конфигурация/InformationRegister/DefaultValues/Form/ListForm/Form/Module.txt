@@ -42,7 +42,9 @@ Procedure ReadMetadataCollection(Collection, OldValues)
 			Or ItemMetadata.Name = "RolesOfUsers"
 			Or ItemMetadata.Name = "MobileAppAccessRights"
 			Or ItemMetadata.Name = "AdditionalAccessRights" 
-			Or ItemMetadata.Name = "Guestbook" Then 
+			Or ItemMetadata.Name = "Guestbook"
+			Or ItemMetadata.Name = "VisitPlan" 
+			Or ItemMetadata.Name = "Questionnaire" Then 
 			
 			Continue;
 			

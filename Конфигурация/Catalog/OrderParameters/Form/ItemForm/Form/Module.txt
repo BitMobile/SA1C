@@ -26,7 +26,6 @@ Procedure OnOpen(Cancel)
 	
 EndProcedure
 
-
 &AtClient
 Procedure BeforeWrite(Cancel, WriteParameters)
 	
@@ -37,7 +36,6 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 	EndIf;
 	
 EndProcedure
-
 
 &AtClient
 Procedure DataTypeOnChange(Item)

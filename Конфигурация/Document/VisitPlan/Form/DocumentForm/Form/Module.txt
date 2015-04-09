@@ -178,6 +178,8 @@ Procedure FillWeekNumbers()
 	FirstWeekNumber = GetWeekOfYear(BegOfYear(Object.Year));
 	LastWeekNumber = GetWeekOfYear(EndOfYear(Object.Year));
 	
+	ThisForm.WeekChooser.Clear();
+	
 	For WeekNumber = FirstWeekNumber To LastWeekNumber Do
 		
 		NewRow = ThisForm.WeekChooser.Add();
@@ -231,13 +233,12 @@ Procedure FillWeekNumbers()
 	Query.SetParameter("SR", Object.SR);
 	Query.SetParameter("Year", BegOfYear(Object.Year));
 	Query.SetParameter("ThisVisitPlan", Object.Ref);
-	Query.SetParameter("MinWeekNumber", ObjectWeekNumber);
+	Query.SetParameter("MinWeekNumber", GetWeekOfYear(CurrentDate()));
 	Result = Query.Execute().Unload();
 	
 	ThisForm.WeekChooser.Load(Result);
 	
 	FilterParameters = New Structure;
-	//Filter
 	FilterParameters.Insert("WeekNumber", Object.WeekNumber);
 	FilterParameters.Insert("VisitPlan", False);
 	WeekRows = ThisForm.WeekChooser.FindRows(FilterParameters);
