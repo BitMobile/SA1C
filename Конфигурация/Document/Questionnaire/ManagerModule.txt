@@ -200,11 +200,11 @@ Function CreateOutletParametersMap()
 			
 		ElsIf Item.Name = "Catalog_OutletType" Then
 			
-			sMap.Insert(Item.Name, "OutletType");
+			sMap.Insert(Item.Name, "Type");
 			
 		ElsIf Item.Name = "Catalog_OutletClass" Then
 			
-			sMap.Insert(Item.Name, "OutletClass");
+			sMap.Insert(Item.Name, "Class");
 			
 		ElsIf Item.Name = "Catalog_Distributor" Then
 			
