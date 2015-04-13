@@ -181,9 +181,10 @@ GROUP BY
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT
-	Docs.VisitOutlet AS Outlet,
-	Docs.VisitSR AS SR,
-	Docs.VisitOutletReceivableLimit AS ReceivableLimit,
+	ISNULL(Docs.VisitOutlet, Common.Outlet) AS Outlet,
+	ISNULL(Docs.VisitOutletReceivableLimit, Common.ReceivableLimit) AS ReceivableLimit,
+	ISNULL(Docs.VisitSR, Common.SR) AS SR,
+	ISNULL(Docs.Ref, Common.Ref) AS Encashment,
 	CASE
 		WHEN NOT Docs.DocumentName IS NULL 
 			THEN Docs.DocumentName
@@ -191,35 +192,34 @@ SELECT
 	SUM(CASE
 			WHEN NOT Docs.DocumentName IS NULL 
 				THEN Docs.EncashmentSum
-			ELSE Common.EncashmentAmount - Docs.EncashmentSum
+			ELSE Common.EncashmentAmount - ISNULL(Docs.EncashmentSum, 0)
 		END) AS EncashmentSum,
 	CASE
 		WHEN Docs.DocumentName IS NULL 
 			THEN 0
 		ELSE 1
-	END AS OrderNumber,
-	Docs.Ref AS Encashment
+	END AS OrderNumber
 FROM
 	Docs AS Docs
-		LEFT JOIN Common AS Common
+		FULL JOIN Common AS Common
 		ON Docs.Ref = Common.Ref
 WHERE
-	Common.EncashmentAmount - Docs.EncashmentSum &gt; 0
+	NOT Common.EncashmentAmount - ISNULL(Docs.EncashmentSum, 0) = 0
 
 GROUP BY
 	CASE
 		WHEN NOT Docs.DocumentName IS NULL 
 			THEN Docs.DocumentName
 	END,
-	Docs.VisitOutlet,
-	Docs.VisitSR,
-	Docs.VisitOutletReceivableLimit,
 	CASE
 		WHEN Docs.DocumentName IS NULL 
 			THEN 0
 		ELSE 1
 	END,
-	Docs.Ref</query>
+	ISNULL(Docs.VisitOutlet, Common.Outlet),
+	ISNULL(Docs.VisitSR, Common.SR),
+	ISNULL(Docs.VisitOutletReceivableLimit, Common.ReceivableLimit),
+	ISNULL(Docs.Ref, Common.Ref)</query>
 	</dataSet>
 	<totalField>
 		<dataPath>EncashmentSum</dataPath>
