@@ -194,7 +194,27 @@ Function CreateOutletParametersMap()
 	
 	For Each Item In Metadata.Enums.QuestionnaireSelectors.EnumValues Do
 		
-		sMap.Insert(Item.Name, Item.Comment);    	    
+		If Item.Name = "Enum_OutletStatus" Then
+			
+			sMap.Insert(Item.Name, "OutletStatus");
+			
+		ElsIf Item.Name = "Catalog_OutletType" Then
+			
+			sMap.Insert(Item.Name, "OutletType");
+			
+		ElsIf Item.Name = "Catalog_OutletClass" Then
+			
+			sMap.Insert(Item.Name, "OutletClass");
+			
+		ElsIf Item.Name = "Catalog_Distributor" Then
+			
+			sMap.Insert(Item.Name, "Distributor");
+			
+		ElsIf Item.Name = "Catalog_Outlet" Then
+			
+			sMap.Insert(Item.Name, "Ref");
+			
+		EndIf;
 		
 	EndDo;
 	
