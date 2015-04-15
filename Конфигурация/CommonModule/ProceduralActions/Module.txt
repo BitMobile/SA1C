@@ -1,0 +1,19 @@
+﻿&AtServer
+Procedure UpdateFullTextSearchIndex() Export
+	
+	UpdateIndex(False);
+	
+EndProcedure
+
+&AtServer
+Procedure JoinFullTextSearchIndex() Export
+	
+	UpdateIndex(True);
+	
+EndProcedure
+
+Procedure UpdateIndex(EnableJoining = False)
+	
+	FullTextSearch.UpdateIndex(EnableJoining);
+	
+EndProcedure
