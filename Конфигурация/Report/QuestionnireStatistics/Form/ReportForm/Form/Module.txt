@@ -125,6 +125,28 @@ Function GetFields(Details)
 	
 EndFunction
 
+&AtServer
+Function GetFilter(DataCompositionField)
+	
+	ReportObject = FormDataToValue(Report, Type("ReportObject"));
+	DataCompositionSchema = ReportObject.DataCompositionSchema;
+	DataSets = DataCompositionSchema.DataSets;
+	DataSet = DataSets[0];
+	Field = DataSet.Fields.Find(DataCompositionField);
+	ParameterValue = Field.EditParameters.Items.Find("ChoiceParameters").Value;
+	
+	Filter = New Map;
+	
+	For Each ChoiceParameter In ParameterValue Do
+		
+		Filter.Insert(ChoiceParameter.Name, ChoiceParameter.Value);
+		
+	EndDo;
+	
+	Return Filter;
+	
+EndFunction
+
 #EndRegion
 
 #Region UserInterface
@@ -149,7 +171,63 @@ Procedure ResultDetailProcessing(Item, Details, StandardProcessing)
 	
 EndProcedure
 
+&AtClient
+Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	CurrentId = Item.Parent.Parent.CurrentRow;
+	CurrentUserSetting = ThisForm.Report.SettingsComposer.UserSettings.GetObjectByID(CurrentId);
+	CurrentUserSettingId = CurrentUserSetting.UserSettingID;
+	CurrentSetting = Undefined;
+	
+	For Each Element In ThisForm.Report.SettingsComposer.Settings.Filter.Items Do
+		
+		If Element.UserSettingID = CurrentUserSettingId Then
+			
+			CurrentSetting = Element;
+			
+		EndIf;
+		
+	EndDo;
+	
+	If NOT CurrentSetting = Undefined Then
+		
+		If CurrentUserSetting.ComparisonType = DataCompositionComparisonType.InList OR 
+			CurrentUserSetting.ComparisonType = DataCompositionComparisonType.InListByHierarchy OR
+			CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInList OR
+			CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInListByHierarchy Then
+			
+			Filter = GetFilter(CurrentSetting.LeftValue);
+			ValueType = CurrentUserSetting.RightValue.ValueType;
+			
+			FormParameters = New Structure;
+			
+			If Not ValueIsFilled(ValueType) = Undefined Then
+				
+				StandardProcessing = False;
+				
+				FormParameters.Insert("FieldValueType", ValueType);
+				
+				Form = GetForm("CommonForm.ValueListForm", FormParameters, Item, , WindowOpenVariant.SingleWindow);
+				
+				For Each Row In Filter Do
+						
+					NewRow = Form.Filter.Add();
+					NewRow.FilterName = Row.Key;
+					NewRow.Value = Row.Value;
+						
+				EndDo;
+				
+				Form.ValueList.LoadValues(CurrentUserSetting.RightValue.UnloadValues());
+				
+				Form.Open();
+				
+			EndIf;
+			
+			
+		EndIf;
+			
+	EndIf;
+	
+EndProcedure
+
 #EndRegion
-
-
-
