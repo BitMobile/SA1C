@@ -7,15 +7,20 @@ Function GetFilter(DataCompositionField)
 	DataSets = DataCompositionSchema.DataSets;
 	DataSet = DataSets[0];
 	Field = DataSet.Fields.Find(DataCompositionField);
-	ParameterValue = Field.EditParameters.Items.Find("ChoiceParameters").Value;
-	
+		
 	Filter = New Map;
 	
-	For Each ChoiceParameter In ParameterValue Do
+	If Not Field = Undefined Then
+	
+		ParameterValue = Field.EditParameters.Items.Find("ChoiceParameters").Value;
 		
-		Filter.Insert(ChoiceParameter.Name, ChoiceParameter.Value);
+		For Each ChoiceParameter In ParameterValue Do
+			
+			Filter.Insert(ChoiceParameter.Name, ChoiceParameter.Value);
+			
+		EndDo;
 		
-	EndDo;
+	EndIf;
 	
 	Return Filter;
 	
