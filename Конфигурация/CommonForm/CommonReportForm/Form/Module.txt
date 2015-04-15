@@ -1,9 +1,4 @@
-﻿&AtClient
-Var FIELD_VALUE_TYPE;
-
-&AtServer
-Var FIELD_VALUE_TYPE;
-
+﻿
 &AtServer
 Function GetFilter(DataCompositionField)
 	
@@ -21,12 +16,6 @@ Function GetFilter(DataCompositionField)
 		Filter.Insert(ChoiceParameter.Name, ChoiceParameter.Value);
 		
 	EndDo;
-	
-	If ValueIsFilled(Field.ValueType) Then
-		
-		Filter.Insert(FIELD_VALUE_TYPE, Field.ValueType);
-		
-	EndIf;
 	
 	Return Filter;
 	
@@ -58,27 +47,24 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 			CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInListByHierarchy Then
 			
 			Filter = GetFilter(CurrentSetting.LeftValue);
+			ValueType = CurrentUserSetting.RightValue.ValueType;
 			
 			FormParameters = New Structure;
 			
-			If Not Filter.Get(FIELD_VALUE_TYPE) = Undefined Then
+			If Not ValueIsFilled(ValueType) = Undefined Then
 				
 				StandardProcessing = False;
 				
-				FormParameters.Insert(FIELD_VALUE_TYPE, Filter.Get(FIELD_VALUE_TYPE));
+				FormParameters.Insert("FieldValueType", ValueType);
 				
 				Form = GetForm("CommonForm.ValueListForm", FormParameters, Item, , WindowOpenVariant.SingleWindow);
 				
 				For Each Row In Filter Do
-					
-					If Not Row.Key = "FieldValueType" Then
 						
-						NewRow = Form.Filter.Add();
-						NewRow.FilterName = Row.Key;
-						NewRow.Value = Row.Value;
+					NewRow = Form.Filter.Add();
+					NewRow.FilterName = Row.Key;
+					NewRow.Value = Row.Value;
 						
-					EndIf;
-					
 				EndDo;
 				
 				Form.ValueList.LoadValues(CurrentUserSetting.RightValue.UnloadValues());
@@ -93,5 +79,3 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 	EndIf;
 	
 EndProcedure
-
-FIELD_VALUE_TYPE = "FieldValueType";
