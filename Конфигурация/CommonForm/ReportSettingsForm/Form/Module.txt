@@ -1,4 +1,6 @@
 ﻿
+#Region CommonProcedureAndFunctions
+
 &AtServer
 Function GetFilter(DataCompositionField)
 	
@@ -20,6 +22,10 @@ Function GetFilter(DataCompositionField)
 	Return Filter;
 	
 EndFunction
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure SettingsComposerUserSettingsValueStartChoice(Item, ChoiceData, StandardProcessing)
@@ -83,3 +89,5 @@ Procedure SettingsComposerUserSettingsValueStartChoice(Item, ChoiceData, Standar
 	EndIf;
 	
 EndProcedure
+
+#EndRegion
