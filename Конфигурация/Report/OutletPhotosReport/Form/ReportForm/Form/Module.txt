@@ -293,33 +293,37 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 				CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInList OR
 				CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInListByHierarchy Then
 				
-				Filter = GetFilter(CurrentSetting.LeftValue);
-				ValueType = CurrentUserSetting.RightValue.ValueType;
-				
-				FormParameters = New Structure;
-				
-				If Not ValueIsFilled(ValueType) = Undefined Then
+				Try
 					
-					StandardProcessing = False;
+					Filter = GetFilter(CurrentSetting.LeftValue);
+					ValueType = CurrentUserSetting.RightValue.ValueType;
 					
-					FormParameters.Insert("FieldValueType", ValueType);
+					FormParameters = New Structure;
 					
-					Form = GetForm("CommonForm.ValueListForm", FormParameters, Item, , WindowOpenVariant.SingleWindow);
-					
-					For Each Row In Filter Do
+					If Not ValueIsFilled(ValueType) = Undefined Then
 						
-						NewRow = Form.Filter.Add();
-						NewRow.FilterName = Row.Key;
-						NewRow.Value = Row.Value;
+						StandardProcessing = False;
 						
-					EndDo;
+						FormParameters.Insert("FieldValueType", ValueType);
+						
+						Form = GetForm("CommonForm.ValueListForm", FormParameters, Item, , WindowOpenVariant.SingleWindow);
+						
+						For Each Row In Filter Do
+							
+							NewRow = Form.Filter.Add();
+							NewRow.FilterName = Row.Key;
+							NewRow.Value = Row.Value;
+							
+						EndDo;
+						
+						Form.ValueList.LoadValues(CurrentUserSetting.RightValue.UnloadValues());
+						
+						Form.Open();
+						
+					EndIf;
 					
-					Form.ValueList.LoadValues(CurrentUserSetting.RightValue.UnloadValues());
-					
-					Form.Open();
-					
-				EndIf;
-				
+				Except
+				EndTry;
 				
 			EndIf;
 				
