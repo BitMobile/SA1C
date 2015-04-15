@@ -10,6 +10,7 @@
 			<v8:content>Список значений</v8:content>
 		</v8:item>
 	</Title>
+	<WindowOpeningMode>LockWholeInterface</WindowOpeningMode>
 	<AutoTitle>false</AutoTitle>
 	<Customizable>false</Customizable>
 	<CommandBarLocation>None</CommandBarLocation>
@@ -169,10 +170,14 @@
 						<ContextMenu name="ValueListSearchControlContextMenu" id="18"/>
 						<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="19"/>
 					</SearchControlAddition>
+					<Events>
+						<Event name="ChoiceProcessing">ValueListChoiceProcessing</Event>
+					</Events>
 					<ChildItems>
 						<InputField name="ValueListValue" id="20">
 							<DataPath>ValueList.Value</DataPath>
 							<EditMode>EnterOnInput</EditMode>
+							<ChooseType>false</ChooseType>
 							<TextEdit>false</TextEdit>
 							<ContextMenu name="ValueListValueContextMenu" id="21"/>
 							<ExtendedTooltip name="ValueListValueExtendedTooltip" id="22"/>

@@ -1,24 +1,24 @@
 ﻿
-&AtClient
-Procedure ValueListValueStartChoice(Item, ChoiceData, StandardProcessing)
+#Region CommonProcedureAndFunctions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	StandardProcessing = False;
-	FormParameters = New Structure;
-	FormParameters.Insert("CloseOnChoice", True);
-	FormParameters.Insert("CloseOnOwnerClose", True);
-	OpenChoiceForm(FormParameters, Item);
+	ThisForm.Items.ValueListValue.TypeRestriction = Parameters.FieldValueType;
+	ThisForm.TypeDescription = Parameters.FieldValueType;
 	
 EndProcedure
 
-&AtClient
-Procedure Select(Command)
+&AtServerNoContext
+Function GetName(Ref)
 	
-	FormParameters = New Structure;
-	FormParameters.Insert("CloseOnChoice", False);
-	FormParameters.Insert("CloseOnOwnerClose", True);
-	OpenChoiceForm(FormParameters, ThisForm.Items.ValueList);
+	Return Ref.Metadata().FullName();
 	
-EndProcedure
+EndFunction
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure OpenChoiceForm(FormParameters, FormOwner)
@@ -41,22 +41,37 @@ Procedure OpenChoiceForm(FormParameters, FormOwner)
 		
 	EndDo;
 	
-	OpenForm(ObjectName + ".ChoiceForm", FormParameters, FormOwner, , WindowOpenVariant.SingleWindow);
+	OpenForm(ObjectName + ".ChoiceForm", FormParameters, FormOwner, , , , , FormWindowOpeningMode.LockWholeInterface);
 	
 EndProcedure
 
-&AtServerNoContext
-Function GetName(Ref)
+&AtClient
+Procedure ValueListValueStartChoice(Item, ChoiceData, StandardProcessing)
 	
-	Return Ref.Metadata().FullName();
+	StandardProcessing = False;
+	FormParameters = New Structure;
+	FormParameters.Insert("CloseOnChoice", True);
+	FormParameters.Insert("CloseOnOwnerClose", True);
+	OpenChoiceForm(FormParameters, Item);
 	
-EndFunction
+EndProcedure
 
-&AtServer
-Procedure OnCreateAtServer(Cancel, StandardProcessing)
+&AtClient
+Procedure ValueListChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
-	ThisForm.Items.ValueListValue.TypeRestriction = Parameters.FieldValueType;
-	ThisForm.TypeDescription = Parameters.FieldValueType;
+	StandardProcessing = False;
+	
+	ValueList.Add(SelectedValue);
+	
+EndProcedure
+
+&AtClient
+Procedure Select(Command)
+	
+	FormParameters = New Structure;
+	FormParameters.Insert("CloseOnChoice", False);
+	FormParameters.Insert("CloseOnOwnerClose", True);
+	OpenChoiceForm(FormParameters, ThisForm.Items.ValueList);
 	
 EndProcedure
 
@@ -73,3 +88,5 @@ Procedure Cancel(Command)
 	Close();
 	
 EndProcedure
+
+#EndRegion
