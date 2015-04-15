@@ -61,7 +61,7 @@
 			<Content/>
 			<DefaultReportForm>CommonForm.CommonReportForm</DefaultReportForm>
 			<DefaultReportVariantForm/>
-			<DefaultReportSettingsForm/>
+			<DefaultReportSettingsForm>CommonForm.ReportSettingsForm</DefaultReportSettingsForm>
 			<DefaultDynamicListSettingsForm/>
 			<DefaultSearchForm/>
 			<RequiredMobileApplicationPermissions>
@@ -259,6 +259,7 @@
 			<CommonForm>PickPictureFromForm</CommonForm>
 			<CommonForm>CommonReportForm</CommonForm>
 			<CommonForm>ValueListForm</CommonForm>
+			<CommonForm>ReportSettingsForm</CommonForm>
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>

@@ -63,7 +63,7 @@ EndProcedure
 &AtClient
 Procedure OK(Command)
 	
-	NotifyChoice(ThisForm.ValueList.UnloadValues());
+	NotifyChoice(ThisForm.ValueList);
 	
 EndProcedure
 
