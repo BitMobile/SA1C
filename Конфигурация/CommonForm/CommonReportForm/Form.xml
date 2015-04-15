@@ -38,7 +38,6 @@
 			<ChildItems>
 				<Table name="SettingsComposerUserSettingsTable" id="8">
 					<CommandBarLocation>None</CommandBarLocation>
-					<Autofill>true</Autofill>
 					<DataPath>Report.SettingsComposer.UserSettings</DataPath>
 					<CommandSet>
 						<ExcludedCommand>HierarchicalList</ExcludedCommand>
@@ -73,6 +72,93 @@
 						<ContextMenu name="SettingsComposerUserSettingsTableSearchControlContextMenu" id="25"/>
 						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchControlExtendedTooltip" id="26"/>
 					</SearchControlAddition>
+					<Events>
+						<Event name="BeforeRowChange">SettingsComposerUserSettingsTableBeforeRowChange</Event>
+					</Events>
+					<ChildItems>
+						<CheckBoxField name="SettingsComposerUserSettingsTableUse" id="27">
+							<DataPath>Report.SettingsComposer.UserSettings.Use</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<EditMode>Directly</EditMode>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="SettingsComposerUserSettingsTableUseContextMenu" id="28"/>
+							<ExtendedTooltip name="SettingsComposerUserSettingsTableUseExtendedTooltip" id="29"/>
+						</CheckBoxField>
+						<ColumnGroup name="SettingsComposerUserSettingsTableColumnGroupSettings" id="30">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Настройки</v8:content>
+								</v8:item>
+							</Title>
+							<Group>InCell</Group>
+							<ExtendedTooltip name="SettingsComposerUserSettingsTableColumnGroupSettingsExtendedTooltip" id="31"/>
+							<ChildItems>
+								<PictureField name="SettingsComposerUserSettingsTableSettingPicture" id="32">
+									<DataPath>Report.SettingsComposer.UserSettings.SettingPicture</DataPath>
+									<ShowInHeader>false</ShowInHeader>
+									<ShowInFooter>false</ShowInFooter>
+									<ContextMenu name="SettingsComposerUserSettingsTableSettingPictureContextMenu" id="33"/>
+									<ExtendedTooltip name="SettingsComposerUserSettingsTableSettingPictureExtendedTooltip" id="34"/>
+								</PictureField>
+								<InputField name="SettingsComposerUserSettingsTableSetting" id="35">
+									<DataPath>Report.SettingsComposer.UserSettings.Setting</DataPath>
+									<Width>15</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="SettingsComposerUserSettingsTableSettingContextMenu" id="36"/>
+									<ExtendedTooltip name="SettingsComposerUserSettingsTableSettingExtendedTooltip" id="37"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<InputField name="SettingsComposerUserSettingsTableComparisonType" id="38">
+							<DataPath>Report.SettingsComposer.UserSettings.ComparisonType</DataPath>
+							<EditMode>Directly</EditMode>
+							<ContextMenu name="SettingsComposerUserSettingsTableComparisonTypeContextMenu" id="39"/>
+							<ExtendedTooltip name="SettingsComposerUserSettingsTableComparisonTypeExtendedTooltip" id="40"/>
+						</InputField>
+						<ColumnGroup name="SettingsComposerUserSettingsTableColumnGroupValues" id="41">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Значения</v8:content>
+								</v8:item>
+							</Title>
+							<Group>InCell</Group>
+							<ExtendedTooltip name="SettingsComposerUserSettingsTableColumnGroupValuesExtendedTooltip" id="42"/>
+							<ChildItems>
+								<PictureField name="SettingsComposerUserSettingsTableValuePicture" id="43">
+									<DataPath>Report.SettingsComposer.UserSettings.ValuePicture</DataPath>
+									<ShowInHeader>false</ShowInHeader>
+									<ShowInFooter>false</ShowInFooter>
+									<ContextMenu name="SettingsComposerUserSettingsTableValuePictureContextMenu" id="44"/>
+									<ExtendedTooltip name="SettingsComposerUserSettingsTableValuePictureExtendedTooltip" id="45"/>
+								</PictureField>
+								<InputField name="SettingsComposerUserSettingsTableValue" id="46">
+									<DataPath>Report.SettingsComposer.UserSettings.Value</DataPath>
+									<DefaultItem>true</DefaultItem>
+									<EditMode>Directly</EditMode>
+									<Width>15</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
+									<ContextMenu name="SettingsComposerUserSettingsTableValueContextMenu" id="47"/>
+									<ExtendedTooltip name="SettingsComposerUserSettingsTableValueExtendedTooltip" id="48"/>
+									<Events>
+										<Event name="StartChoice">SettingsComposerUserSettingsTableValueStartChoice</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<CheckBoxField name="SettingsComposerUserSettingsTableEditInReportForm" id="49">
+							<DataPath>Report.SettingsComposer.UserSettings.EditInReportForm</DataPath>
+							<UserVisible>
+								<xr:Common>false</xr:Common>
+							</UserVisible>
+							<EditMode>Directly</EditMode>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="SettingsComposerUserSettingsTableEditInReportFormContextMenu" id="50"/>
+							<ExtendedTooltip name="SettingsComposerUserSettingsTableEditInReportFormExtendedTooltip" id="51"/>
+						</CheckBoxField>
+					</ChildItems>
 				</Table>
 			</ChildItems>
 		</UsualGroup>

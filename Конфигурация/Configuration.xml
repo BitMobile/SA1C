@@ -258,6 +258,7 @@
 			<CommonForm>OutletParameterValueInputForm</CommonForm>
 			<CommonForm>PickPictureFromForm</CommonForm>
 			<CommonForm>CommonReportForm</CommonForm>
+			<CommonForm>ValueListForm</CommonForm>
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>

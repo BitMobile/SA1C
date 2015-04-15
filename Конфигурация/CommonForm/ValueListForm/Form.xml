@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Title>
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>Value list</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Список значений</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<Customizable>false</Customizable>
+	<CommandBarLocation>None</CommandBarLocation>
+	<AutoCommandBar name="FormCommandBar" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
+	<ChildItems>
+		<CommandBar name="CommandPanelGroup" id="43">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Command panel group</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Command panel group</v8:content>
+				</v8:item>
+			</ToolTip>
+			<CommandSource>Item.ValueList</CommandSource>
+			<ExtendedTooltip name="CommandPanelGroupExtendedTooltip" id="44"/>
+			<ChildItems>
+				<Button name="ValueListAdd" id="25">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.Add</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListAddExtendedTooltip" id="26"/>
+				</Button>
+				<Button name="ValueListCopy" id="29">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.Copy</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListCopyExtendedTooltip" id="30"/>
+				</Button>
+				<Button name="ValueListChange" id="31">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.Change</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListChangeExtendedTooltip" id="32"/>
+				</Button>
+				<Button name="ValueListDelete" id="33">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.Delete</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListDeleteExtendedTooltip" id="34"/>
+				</Button>
+				<Button name="ValueListEndEdit" id="27">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>true</OnlyInAllActions>
+					<CommandName>Form.Item.ValueList.StandardCommand.EndEdit</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListEndEditExtendedTooltip" id="28"/>
+				</Button>
+				<Button name="Select" id="23">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>true</OnlyInAllActions>
+					<CommandName>Form.Command.Select</CommandName>
+					<Parameter xsi:nil="true"/>
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Select</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подбор</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="SelectExtendedTooltip" id="24"/>
+				</Button>
+				<Button name="ValueListMoveUp" id="35">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.MoveUp</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListMoveUpExtendedTooltip" id="36"/>
+				</Button>
+				<Button name="ValueListMoveDown" id="37">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.MoveDown</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListMoveDownExtendedTooltip" id="38"/>
+				</Button>
+				<Button name="ValueListSortListAsc" id="39">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.SortListAsc</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListSortListAscExtendedTooltip" id="40"/>
+				</Button>
+				<Button name="ValueListSortListDesc" id="41">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Item.ValueList.StandardCommand.SortListDesc</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ValueListSortListDescExtendedTooltip" id="42"/>
+				</Button>
+			</ChildItems>
+		</CommandBar>
+		<UsualGroup name="ValueListButtonsGroup" id="45">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value list buttons group</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value list buttons group</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ValueListButtonsGroupExtendedTooltip" id="46"/>
+			<ChildItems>
+				<Table name="ValueList" id="1">
+					<Representation>List</Representation>
+					<CommandBarLocation>None</CommandBarLocation>
+					<Header>false</Header>
+					<HorizontalLines>false</HorizontalLines>
+					<VerticalLines>false</VerticalLines>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<DataPath>ValueList</DataPath>
+					<RowPictureDataPath>ValueList.Picture</RowPictureDataPath>
+					<CommandSet>
+						<ExcludedCommand>Pickup</ExcludedCommand>
+					</CommandSet>
+					<ContextMenu name="ValueListContextMenu" id="2"/>
+					<AutoCommandBar name="ValueListCommandBar" id="3">
+						<Autofill>false</Autofill>
+					</AutoCommandBar>
+					<ExtendedTooltip name="ValueListExtendedTooltip" id="4"/>
+					<SearchStringAddition name="ValueListSearchString" id="5">
+						<Source>
+							<lf:elementId>1</lf:elementId>
+							<lf:additionId>0</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListSearchStringContextMenu" id="8"/>
+						<ExtendedTooltip name="ValueListSearchStringExtendedTooltip" id="9"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ValueListViewStatus" id="10">
+						<Source>
+							<lf:elementId>1</lf:elementId>
+							<lf:additionId>1</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListViewStatusContextMenu" id="13"/>
+						<ExtendedTooltip name="ValueListViewStatusExtendedTooltip" id="14"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ValueListSearchControl" id="15">
+						<Source>
+							<lf:elementId>1</lf:elementId>
+							<lf:additionId>2</lf:additionId>
+						</Source>
+						<ContextMenu name="ValueListSearchControlContextMenu" id="18"/>
+						<ExtendedTooltip name="ValueListSearchControlExtendedTooltip" id="19"/>
+					</SearchControlAddition>
+					<ChildItems>
+						<InputField name="ValueListValue" id="20">
+							<DataPath>ValueList.Value</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<TextEdit>false</TextEdit>
+							<ContextMenu name="ValueListValueContextMenu" id="21"/>
+							<ExtendedTooltip name="ValueListValueExtendedTooltip" id="22"/>
+							<Events>
+								<Event name="StartChoice">ValueListValueStartChoice</Event>
+								<Event name="ChoiceProcessing">ValueListValueChoiceProcessing</Event>
+							</Events>
+						</InputField>
+					</ChildItems>
+				</Table>
+				<UsualGroup name="ButtonsGroup" id="51">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Buttons group</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Buttons group</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ButtonsGroupExtendedTooltip" id="52"/>
+					<ChildItems>
+						<Button name="OK" id="47">
+							<Type>UsualButton</Type>
+							<DefaultButton>true</DefaultButton>
+							<CommandName>Form.Command.OK</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="OKExtendedTooltip" id="48"/>
+						</Button>
+						<Button name="Cancel" id="49">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.Cancel</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="CancelExtendedTooltip" id="50"/>
+						</Button>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ValueList" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Value list</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueListType</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Filter" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Filter</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="FilterName" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Filter name</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Value" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Value</v8:content>
+						</v8:item>
+					</Title>
+					<Type/>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="TypeDescription" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Type description</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:TypeDescription</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Select" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Select</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Select</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Select</Action>
+		</Command>
+		<Command name="OK" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>OK</Action>
+		</Command>
+		<Command name="Cancel" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Cancel</Action>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="FieldValueType">
+			<Type>
+				<v8:Type>v8:TypeDescription</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

@@ -33,6 +33,17 @@
 					<v8:content>Торговая точка</v8:content>
 				</v8:item>
 			</title>
+			<inputParameters>
+				<dcscor:item>
+					<dcscor:parameter>ChoiceParameters</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:ChoiceParameters">
+						<dcscor:item>
+							<dcscor:choiceParameter>Filter.OutletStatus</dcscor:choiceParameter>
+							<dcscor:value xsi:type="dcscor:DesignTimeValue">Enum.OutletStatus.Active</dcscor:value>
+						</dcscor:item>
+					</dcscor:value>
+				</dcscor:item>
+			</inputParameters>
 		</field>
 		<field xsi:type="DataSetFieldField">
 			<dataPath>ReceivableLimit</dataPath>
@@ -67,6 +78,9 @@
 					<v8:content>Торговый представитель</v8:content>
 				</v8:item>
 			</title>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.User</v8:Type>
+			</valueType>
 			<inputParameters>
 				<dcscor:item>
 					<dcscor:parameter>ChoiceParameters</dcscor:parameter>
