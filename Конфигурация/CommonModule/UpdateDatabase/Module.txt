@@ -657,7 +657,7 @@ Procedure RefillMobileAppSetting(SettingObject, OldSetting)
 	
 	SettingObject.DataType = Enums.DataType.Boolean;
 	
-	If Not OldSetting = Undefined Then 
+	If ValueIsFilled(OldSetting) Then 
 		
 		SettingObject.LogicValue = OldSetting.LogicValue;
 		
@@ -1654,6 +1654,9 @@ Procedure UpdateForRelease_1_8_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update outlet statuses settings'; ru = 'Обновление настроек статусов торговых точек'"));
 	ProcessOutletsStatusesSettings();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update mobile apps settings'; ru = 'Обновление настроек мобильных приложений'"));  
+	ProcessSnapshotSize();
+	
 EndProcedure
 
 Procedure ProcessOutletsStatusesSettings()
@@ -1684,6 +1687,14 @@ Procedure ProcessOutletsStatusesSettings()
 	ClosedObject.FillQuestionnaireInMA = False;
 	ClosedObject.DoEncashmentInMA = False;
 	ClosedObject.Write();
+	
+EndProcedure
+
+Procedure ProcessSnapshotSize()
+	
+	SettingObject = Catalogs.MobileAppSettings.SnapshotSize.GetObject();
+	SettingObject.NumericValue = 300;
+	SettingObject.Write();
 	
 EndProcedure
 
