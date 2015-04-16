@@ -35,7 +35,7 @@ Procedure ReadMetadataCollection(Collection, OldValues)
 	
 	For Each ItemMetadata In Collection Do 
 		
-		If ItemMetadata.Name = "bitmobile_НастройкиМобильныхПриложений"
+		If ItemMetadata.Name = "MobileAppSettings"
 			Or ItemMetadata.Name = "bitmobile_НастройкиСинхронизации"
 			Or ItemMetadata.Name = "OutletsPrimaryParametersSettings"
 			Or ItemMetadata.Name = "SystemObjects"

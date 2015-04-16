@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.7.0.341</Version>
+			<Version>1.7.0.342</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -115,22 +115,10 @@
 			<Subsystem>Bitmobile</Subsystem>
 			<StyleItem>ШрифтВажнойНадписи</StyleItem>
 			<StyleItem>ПоясняющийТекст</StyleItem>
-			<CommonPicture>ДлительнаяОперация48</CommonPicture>
-			<CommonPicture>КоллекцияДляПомеченныхНаУдалениеОбъектов</CommonPicture>
-			<CommonPicture>ВыполнитьРегламентноеЗаданиеВручную</CommonPicture>
-			<CommonPicture>ЗапуститьОтдельныйСеансДляВыполненияРегламентныхЗаданий</CommonPicture>
-			<CommonPicture>НастройкаВыполненияРегламентныхЗаданий</CommonPicture>
-			<CommonPicture>ОшибкаВыполненияРегламентныхЗаданий</CommonPicture>
-			<CommonPicture>Reload</CommonPicture>
 			<CommonPicture>CatalogHierarchy</CommonPicture>
-			<CommonPicture>bitmobile_Информация</CommonPicture>
-			<CommonPicture>bitmobile_Сервер</CommonPicture>
-			<CommonPicture>bitmobile_Клиент</CommonPicture>
-			<CommonPicture>bitmobile_Информация16</CommonPicture>
-			<CommonPicture>bitmobile_Почта</CommonPicture>
-			<CommonPicture>bitmobile_ПерейтиККарте</CommonPicture>
-			<CommonPicture>bitmobile_ДобавитьНаКарту</CommonPicture>
-			<CommonPicture>bitmobile_ГруппаЭлемент</CommonPicture>
+			<CommonPicture>Logo_Ru</CommonPicture>
+			<CommonPicture>Logo_En</CommonPicture>
+			<CommonPicture>Reload</CommonPicture>
 			<CommonPicture>SectionQuestioning</CommonPicture>
 			<CommonPicture>SectionUsers</CommonPicture>
 			<CommonPicture>SectionOrders</CommonPicture>
@@ -138,8 +126,12 @@
 			<CommonPicture>SectionOutlets</CommonPicture>
 			<CommonPicture>SectionSKUs</CommonPicture>
 			<CommonPicture>SectionSynchronisationAndSettings</CommonPicture>
-			<CommonPicture>Logo_Ru</CommonPicture>
-			<CommonPicture>Logo_En</CommonPicture>
+			<CommonPicture>ВыполнитьРегламентноеЗаданиеВручную</CommonPicture>
+			<CommonPicture>ДлительнаяОперация48</CommonPicture>
+			<CommonPicture>ЗапуститьОтдельныйСеансДляВыполненияРегламентныхЗаданий</CommonPicture>
+			<CommonPicture>КоллекцияДляПомеченныхНаУдалениеОбъектов</CommonPicture>
+			<CommonPicture>НастройкаВыполненияРегламентныхЗаданий</CommonPicture>
+			<CommonPicture>ОшибкаВыполненияРегламентныхЗаданий</CommonPicture>
 			<SessionParameter>CurrentUser</SessionParameter>
 			<Role>Admin</Role>
 			<Role>User</Role>
@@ -176,12 +168,12 @@
 			<EventSubscription>FillDefaultValues_Catalog</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиСправочникаДокумента</EventSubscription>
 			<EventSubscription>bitmobile_ПриЗаписиРегистра</EventSubscription>
+			<ScheduledJob>JoinFullTextSearchIndex</ScheduledJob>
+			<ScheduledJob>UpdateFullTextSearchIndex</ScheduledJob>
 			<ScheduledJob>bitmobile_Синхронизация</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияСУчетнымиСистемами</ScheduledJob>
 			<ScheduledJob>bitmobile_ОчисткаЖурналаРегистрации</ScheduledJob>
-			<ScheduledJob>UpdateFullTextSearchIndex</ScheduledJob>
-			<ScheduledJob>JoinFullTextSearchIndex</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
@@ -213,8 +205,9 @@
 			<CommonCommand>ShowSKUQuestions</CommonCommand>
 			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
 			<CommonCommand>ShowExchangePlans</CommonCommand>
-			<Constant>SKUFeaturesRegistration</Constant>
+			<CommonCommand>ShowConfigurationSettings</CommonCommand>
 			<Constant>MultiStock</Constant>
+			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>bitmobile_Сервер</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииУдаленныхДанных</Constant>
@@ -243,31 +236,28 @@
 			<Constant>bitmobile_КоличествоОбъектовВВыгрузке</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
 			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
-			<Constant>bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</Constant>
 			<Constant>bitmobile_СтатусПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
 			<Constant>bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</Constant>
 			<Constant>bitmobile_СрокХраненияЖурналаРегистрации</Constant>
-			<CommonForm>Logo</CommonForm>
-			<CommonForm>ScheduleForm</CommonForm>
-			<CommonForm>DoQueryBox</CommonForm>
+			<CommonForm>CommonReportForm</CommonForm>
 			<CommonForm>ChooseFromListForm</CommonForm>
-			<CommonForm>ДлительнаяОперация</CommonForm>
-			<CommonForm>bitmobile_НастройкиОтправкиОтчетов</CommonForm>
-			<CommonForm>bitmobile_НастройкиСервера</CommonForm>
-			<CommonForm>bitmobile_НастройкиКонфигурации</CommonForm>
-			<CommonForm>bitmobile_ПланыОбмена</CommonForm>
+			<CommonForm>DoQueryBox</CommonForm>
+			<CommonForm>ExchangePlans</CommonForm>
+			<CommonForm>Logo</CommonForm>
 			<CommonForm>OutletParameterValueInputForm</CommonForm>
 			<CommonForm>PickPictureFromForm</CommonForm>
-			<CommonForm>CommonReportForm</CommonForm>
-			<CommonForm>ValueListForm</CommonForm>
 			<CommonForm>ReportSettingsForm</CommonForm>
+			<CommonForm>ScheduleForm</CommonForm>
+			<CommonForm>ValueListForm</CommonForm>
+			<CommonForm>ДлительнаяОперация</CommonForm>
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>MobileAppAccessRights</Catalog>
+			<Catalog>MobileAppSettings</Catalog>
 			<Catalog>OrderParameters</Catalog>
 			<Catalog>Outlet</Catalog>
 			<Catalog>OutletClass</Catalog>
@@ -293,7 +283,6 @@
 			<Catalog>UnitsOfMeasure</Catalog>
 			<Catalog>User</Catalog>
 			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
-			<Catalog>bitmobile_НастройкиМобильныхПриложений</Catalog>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
@@ -307,29 +296,30 @@
 			<Enum>AssortmentMatrixStatus</Enum>
 			<Enum>ClosingCause</Enum>
 			<Enum>ComparisonType</Enum>
+			<Enum>DataStatus</Enum>
 			<Enum>DataType</Enum>
 			<Enum>LogicAnswers</Enum>
 			<Enum>MonthScheduleTypes</Enum>
 			<Enum>OrderSatus</Enum>
 			<Enum>OutletStatus</Enum>
 			<Enum>OwnershipType</Enum>
+			<Enum>Periodicity</Enum>
 			<Enum>QuestionnaireSelectors</Enum>
 			<Enum>QuestionnareStatus</Enum>
-			<Enum>Periodicity</Enum>
-			<Enum>QuestionGroupTypes</Enum>
 			<Enum>QuestionnaireScale</Enum>
+			<Enum>QuestionGroupTypes</Enum>
+			<Enum>QuestionsSaveIntervals</Enum>
+			<Enum>ScheduleTypes</Enum>
 			<Enum>SKUQuestions</Enum>
 			<Enum>SKUSourceTypes</Enum>
 			<Enum>StatusTask</Enum>
-			<Enum>SyncAction</Enum>
-			<Enum>SyncDirections</Enum>
-			<Enum>VisitStatus</Enum>
-			<Enum>ScheduleTypes</Enum>
-			<Enum>DataStatus</Enum>
-			<Enum>YearScheduleTypes</Enum>
 			<Enum>ValueTableRowStatuses</Enum>
-			<Enum>QuestionsSaveIntervals</Enum>
+			<Enum>VisitStatus</Enum>
+			<Enum>YearScheduleTypes</Enum>
+			<Enum>bitmobile_ДействияПриСинхронизации</Enum>
+			<Enum>bitmobile_НаправленияСинхронизации</Enum>
 			<Enum>bitmobile_ПротоколыПередачиФайлов</Enum>
+			<Report>AccountReceivable</Report>
 			<Report>AnalysisOutletParameters</Report>
 			<Report>BindingOutlets</Report>
 			<Report>CompetitorsInTheOutlets</Report>
@@ -349,7 +339,7 @@
 			<Report>VisitEfficiency</Report>
 			<Report>VisitResults</Report>
 			<Report>VisitsControl</Report>
-			<Report>AccountReceivable</Report>
+			<DataProcessor>ConfigurationSettings</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
@@ -364,14 +354,14 @@
 			<InformationRegister>QuestioningResults</InformationRegister>
 			<InformationRegister>QuestionnairesSchedule</InformationRegister>
 			<InformationRegister>QuestionsInQuestionnaires</InformationRegister>
+			<InformationRegister>ManagersOfRegions</InformationRegister>
 			<InformationRegister>SKUsInQuestionnaires</InformationRegister>
-			<InformationRegister>StorageAdditionalInformation</InformationRegister>
+			<InformationRegister>bitmobile_ХранилищеФайлов</InformationRegister>
 			<InformationRegister>bitmobile_КонтролируемыеИзмеренияРегистров</InformationRegister>
 			<InformationRegister>bitmobile_АдресаЭлПочтыДляОтчетов</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
-			<InformationRegister>ManagersOfRegions</InformationRegister>
 			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
 		</ChildObjects>
 	</Configuration>

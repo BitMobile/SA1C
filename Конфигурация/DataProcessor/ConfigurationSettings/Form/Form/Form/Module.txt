@@ -1,0 +1,78 @@
+﻿
+#Region CommonProceduresAndFunctions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	ControlOrderReasonEnabled	= Catalogs.MobileAppSettings.ControlOrderReasonEnabled.LogicValue;
+	ControlVisitReasonEnabled	= Catalogs.MobileAppSettings.ControlVisitReasonEnabled.LogicValue;
+	CoordinateControlEnabled	= Catalogs.MobileAppSettings.CoordinateControlEnabled.LogicValue;
+	EmptyStockEnabled			= Catalogs.MobileAppSettings.EmptyStockEnabled.LogicValue;
+	MultistockEnabled			= Catalogs.MobileAppSettings.MultistockEnabled.LogicValue;
+	PlanVisitEnabled			= Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
+	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
+	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
+	
+EndProcedure
+
+&AtServer
+Procedure SaveSettingsServer()
+	
+	ControlOrderReasonEnabledObject				= Catalogs.MobileAppSettings.ControlOrderReasonEnabled.GetObject();
+	ControlOrderReasonEnabledObject.LogicValue	= ControlOrderReasonEnabled;
+	
+	ControlOrderReasonEnabledObject.Write();
+	
+	ControlVisitReasonEnabledObject				= Catalogs.MobileAppSettings.ControlVisitReasonEnabled.GetObject();
+	ControlVisitReasonEnabledObject.LogicValue	= ControlVisitReasonEnabled;
+	
+	ControlVisitReasonEnabledObject.Write();
+	
+	CoordinateControlEnabledObject				= Catalogs.MobileAppSettings.CoordinateControlEnabled.GetObject();
+	CoordinateControlEnabledObject.LogicValue	= CoordinateControlEnabled;
+	
+	CoordinateControlEnabledObject.Write();
+	
+	EmptyStockEnabledObject						= Catalogs.MobileAppSettings.EmptyStockEnabled.GetObject();
+	EmptyStockEnabledObject.LogicValue			= EmptyStockEnabled;
+	
+	EmptyStockEnabledObject.Write();
+	
+	MultistockEnabledObject						= Catalogs.MobileAppSettings.MultistockEnabled.GetObject();
+	MultistockEnabledObject.LogicValue			= MultistockEnabled;
+	
+	MultistockEnabledObject.Write();
+	
+	Constants.MultiStock.Set(MultistockEnabled);
+	
+	PlanVisitEnabledObject						= Catalogs.MobileAppSettings.PlanVisitEnabled.GetObject();
+	PlanVisitEnabledObject.LogicValue			= PlanVisitEnabled;
+	
+	PlanVisitEnabledObject.Write();
+	
+	RecOrderEnabledObject						= Catalogs.MobileAppSettings.RecOrderEnabled.GetObject();
+	RecOrderEnabledObject.LogicValue			= RecOrderEnabled;
+	
+	RecOrderEnabledObject.Write();
+	
+	SnapshotSizeObject							= Catalogs.MobileAppSettings.SnapshotSize.GetObject();
+	SnapshotSizeObject.NumericValue				= SnapshotSize;
+	
+	SnapshotSizeObject.Write();
+	
+EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure SaveSettings(Command)
+	
+	SaveSettingsServer();
+	
+	RefreshInterface();
+	
+EndProcedure
+
+#EndRegion

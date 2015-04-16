@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<AutoCommandBar name="FormCommandBar" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
+	<ChildItems>
+		<Button name="SaveSettings" id="31">
+			<Type>UsualButton</Type>
+			<DefaultItem>true</DefaultItem>
+			<CommandName>Form.Command.SaveSettings</CommandName>
+			<Parameter xsi:nil="true"/>
+			<ExtendedTooltip name="SaveSettingsExtendedTooltip" id="32"/>
+		</Button>
+		<LabelDecoration name="Decoration1" id="1">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings for configuration and mobile apps</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки для конфигурации и мобильных приложений</v8:content>
+				</v8:item>
+			</Title>
+			<Border width="1">
+				<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+			</Border>
+			<ContextMenu name="Decoration1ContextMenu" id="2"/>
+			<ExtendedTooltip name="Decoration1ExtendedTooltip" id="3"/>
+		</LabelDecoration>
+		<CheckBoxField name="MultistockEnabled" id="7">
+			<DataPath>MultistockEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="MultistockEnabledContextMenu" id="8"/>
+			<ExtendedTooltip name="MultistockEnabledExtendedTooltip" id="9"/>
+		</CheckBoxField>
+		<LabelDecoration name="Decoration2" id="4">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings for mobile apps</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки для мобильных приложений</v8:content>
+				</v8:item>
+			</Title>
+			<Border width="1">
+				<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+			</Border>
+			<ContextMenu name="Decoration2ContextMenu" id="5"/>
+			<ExtendedTooltip name="Decoration2ExtendedTooltip" id="6"/>
+		</LabelDecoration>
+		<CheckBoxField name="ControlOrderReasonEnabled" id="10">
+			<DataPath>ControlOrderReasonEnabled</DataPath>
+			<CheckBoxType>CheckBox</CheckBoxType>
+			<ContextMenu name="ControlOrderReasonEnabledContextMenu" id="11"/>
+			<ExtendedTooltip name="ControlOrderReasonEnabledExtendedTooltip" id="12"/>
+		</CheckBoxField>
+		<CheckBoxField name="ControlVisitReasonEnabled" id="13">
+			<DataPath>ControlVisitReasonEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ControlVisitReasonEnabledContextMenu" id="14"/>
+			<ExtendedTooltip name="ControlVisitReasonEnabledExtendedTooltip" id="15"/>
+		</CheckBoxField>
+		<CheckBoxField name="CoordinateControlEnabled" id="16">
+			<DataPath>CoordinateControlEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="CoordinateControlEnabledContextMenu" id="17"/>
+			<ExtendedTooltip name="CoordinateControlEnabledExtendedTooltip" id="18"/>
+		</CheckBoxField>
+		<CheckBoxField name="EmptyStockEnabled" id="19">
+			<DataPath>EmptyStockEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="EmptyStockEnabledContextMenu" id="20"/>
+			<ExtendedTooltip name="EmptyStockEnabledExtendedTooltip" id="21"/>
+		</CheckBoxField>
+		<CheckBoxField name="PlanVisitEnabled" id="22">
+			<DataPath>PlanVisitEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="PlanVisitEnabledContextMenu" id="23"/>
+			<ExtendedTooltip name="PlanVisitEnabledExtendedTooltip" id="24"/>
+		</CheckBoxField>
+		<CheckBoxField name="RecOrderEnabled" id="25">
+			<DataPath>RecOrderEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="RecOrderEnabledContextMenu" id="26"/>
+			<ExtendedTooltip name="RecOrderEnabledExtendedTooltip" id="27"/>
+		</CheckBoxField>
+		<InputField name="SnapshotSize" id="28">
+			<DataPath>SnapshotSize</DataPath>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>0 - Using the default value "300"</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>0 - Используется значение по умолчанию "300"</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+			<ContextMenu name="SnapshotSizeContextMenu" id="29"/>
+			<ExtendedTooltip name="SnapshotSizeExtendedTooltip" id="30"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.ConfigurationSettings</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="ControlOrderReasonEnabled" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Check to specify reasons for not taking orders at planned visit</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проверять указание причины не взятия заказа при плановом визите</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ControlVisitReasonEnabled" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Check to specify reasons for an unscheduled visit</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проверять указание причины внепланового визита</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="CoordinateControlEnabled" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Control for received coordinates of scheduled visit</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контроль получения координат планового визита</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="EmptyStockEnabled" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU with zero balance available for order</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура с нулевым остатком доступна для заказа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="MultistockEnabled" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Multistock</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Многоскладской учет</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="SnapshotSize" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Size of snapshot created in mobile app</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Размер снимка создаваемого в мобильном приложении</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="PlanVisitEnabled" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Creating a scheduled visit from a mobile application</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Cоздание планового визита из мобильного приложения</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="RecOrderEnabled" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Calculate recommended order</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Рассчитывать рекомендованный заказ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="SaveSettings" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Save settings</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить настройки</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Save settings</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>SaveSettings</Action>
+		</Command>
+	</Commands>
+</Form>

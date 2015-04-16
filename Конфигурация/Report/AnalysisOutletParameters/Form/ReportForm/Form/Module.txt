@@ -86,19 +86,19 @@ EndProcedure
 Procedure SetPicture(ID, Connection, Path)
 	
 	Filter = New Structure;
-	Filter.Insert("FileName", ID);
+	Filter.Insert("ИмяФайла", ID);
 	
-	Sel = InformationRegisters.StorageAdditionalInformation.Select(Filter);
+	Sel = InformationRegisters.bitmobile_ХранилищеФайлов.Select(Filter);
 	
 	If Sel.Next() Then
 		
-		BinaryDataOfFile = Sel.Storage.Get();
+		BinaryDataOfFile = Sel.Хранилище.Get();
 		
 		If ValueIsFilled(BinaryDataOfFile) Then
 		
 			ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-			ThisForm.PictureExtension = Sel.Extension;
-			ThisForm.PictureFilename = Sel.FileName;
+			ThisForm.PictureExtension = Sel.Расширение;
+			ThisForm.PictureFilename = Sel.ИмяФайла;
 			
 		Else 
 			
@@ -106,15 +106,15 @@ Procedure SetPicture(ID, Connection, Path)
 			
 				Try
 					
-					WebDAVFile = GetTempFileName(Sel.Extension);
+					WebDAVFile = GetTempFileName(Sel.Расширение);
 					
-					Connection.Get(Path + Sel.FullFileName, WebDAVFile);
+					Connection.Get(Path + Sel.ПолноеИмяФайла, WebDAVFile);
 					
 					BinaryDataOfFile = New BinaryData(WebDAVFile);
 					
 					ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-					ThisForm.PictureExtension = Sel.Extension;
-					ThisForm.PictureFilename = Sel.FileName;
+					ThisForm.PictureExtension = Sel.Расширение;
+					ThisForm.PictureFilename = Sel.ИмяФайла;
 					
 				Except
 					
@@ -131,8 +131,8 @@ Procedure SetPicture(ID, Connection, Path)
 				ThisForm.PictureFilename = Undefined;
 				
 			EndIf;
-						
-		EndIf;	
+			
+		EndIf;
 		
 	Else
 		

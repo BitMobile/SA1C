@@ -308,34 +308,14 @@
 										<CheckBoxField name="Выгрузка" id="7">
 											<DataPath>Объект.ВыгрузкаДанных</DataPath>
 											<EditMode>EnterOnInput</EditMode>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="ВыгрузкаКонтекстноеМеню" id="8"/>
 											<ExtendedTooltip name="ВыгрузкаExtendedTooltip" id="136"/>
 										</CheckBoxField>
 										<CheckBoxField name="Загрузка" id="9">
 											<DataPath>Объект.ЗагрузкаДанных</DataPath>
 											<EditMode>EnterOnInput</EditMode>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
 											<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
 										</CheckBoxField>
@@ -343,17 +323,7 @@
 											<DataPath>Объект.БлокироватьПриПолнойВыгрузкеДанных</DataPath>
 											<TitleLocation>Left</TitleLocation>
 											<TitleHeight>2</TitleHeight>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="БлокироватьПриПолнойВыгрузкеКонтекстноеМеню" id="114"/>
 											<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеExtendedTooltip" id="217"/>
 										</CheckBoxField>
@@ -378,33 +348,13 @@
 									<ChildItems>
 										<CheckBoxField name="ВыгрузкаФайловShared" id="64">
 											<DataPath>Объект.ВыгрузкаФайловShared</DataPath>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="ВыгрузкаФайловSharedКонтекстноеМеню" id="65"/>
 											<ExtendedTooltip name="ВыгрузкаФайловSharedExtendedTooltip" id="139"/>
 										</CheckBoxField>
 										<CheckBoxField name="ЗагрузкаФайловPrivate" id="66">
 											<DataPath>Объект.ЗагрузкаФайловPrivate</DataPath>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="ЗагрузкаФайловPrivateКонтекстноеМеню" id="67"/>
 											<ExtendedTooltip name="ЗагрузкаФайловPrivateExtendedTooltip" id="140"/>
 										</CheckBoxField>
@@ -412,17 +362,7 @@
 											<DataPath>Объект.ПеремещатьPrivateВShared</DataPath>
 											<TitleLocation>Left</TitleLocation>
 											<TitleHeight>2</TitleHeight>
-											<CheckBoxType>Tumbler</CheckBoxType>
-											<EditFormat>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>BF=No; BT=Yes</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>BF=Нет; BT=Да</v8:content>
-												</v8:item>
-											</EditFormat>
+											<CheckBoxType>CheckBox</CheckBoxType>
 											<ContextMenu name="ПеремещатьPrivateВSharedContextMenu" id="231"/>
 											<ExtendedTooltip name="ПеремещатьPrivateВSharedExtendedTooltip" id="232"/>
 										</CheckBoxField>

@@ -233,6 +233,9 @@ Procedure UpdateForAllReleases(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update users'; ru = 'Обновление пользователей'"));  
 	ProcessUsers();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update mobile apps settings'; ru = 'Обновление настроек мобильных приложений'"));  
+	ProcessMobileAppSettings();
+	
 EndProcedure
 
 Procedure ProcessPredefinedRoles()
@@ -531,9 +534,9 @@ Procedure ProcessUsers()
 EndProcedure
 
 Procedure ProcessSyncSettings()
-
+	
 	DataProcessors.bitmobile_СинхронизацияИНастройки.ВосстановитьНастройкиИзФайла(Undefined, True, True);
-
+	
 EndProcedure
 
 Function NoItems(EntityName)
@@ -573,6 +576,98 @@ Function AddInValueTable(EntityElements, Entity, Value)
 	Return EntityElements;
     
 EndFunction 
+
+Procedure ProcessMobileAppSettings()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	MobileAppSettings.Ref AS Setting,
+		|	MobileAppSettings.Description
+		|FROM
+		|	Catalog.MobileAppSettings AS MobileAppSettings
+		|WHERE
+		|	MobileAppSettings.Predefined = TRUE";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		SettingObject = Selection.Setting.GetObject();
+		
+		OldSetting = Undefined;
+		
+		If Selection.Description = "ControlOrderReasonEnabled" Then 
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("NOR");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "ControlVisitReasonEnabled" Then
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("UVR");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "CoordinateControlEnabled" Then
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("CoordCtrl");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "EmptyStockEnabled" Then
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("NoStkEnbl");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "MultistockEnabled" Then
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("MultStck");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "PlanVisitEnabled" Then
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("PlanEnbl");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "RecOrderEnabled" Then 
+			
+			OldSetting = Catalogs.MobileAppSettings.FindByCode("OrderCalc");
+			
+			RefillMobileAppSetting(SettingObject, OldSetting);
+			
+		ElsIf Selection.Description = "SnapshotSize" Then 
+			
+			SettingObject.DataType = Enums.DataType.Integer;
+			
+		EndIf;
+		
+		SettingObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure RefillMobileAppSetting(SettingObject, OldSetting)
+	
+	SettingObject.DataType = Enums.DataType.Boolean;
+	
+	If Not OldSetting = Undefined Then 
+		
+		SettingObject.LogicValue = OldSetting.LogicValue;
+		
+		OldSettingObject = OldSetting.GetObject();
+		
+		OldSettingObject.Delete();
+		
+	EndIf;
+	
+EndProcedure
 
 #EndRegion
 

@@ -1,31 +1,13 @@
 ﻿
 Procedure OnWrite(Cancel)
-    query = new Query;
-    query.Text =
-    "SELECT
-    |   bitmobile_НастройкиМобильныхПриложений.Ref,
-    |   bitmobile_НастройкиМобильныхПриложений.Code,
-    |   bitmobile_НастройкиМобильныхПриложений.Используется,
-    |   bitmobile_НастройкиМобильныхПриложений.DeletionMark
-    |FROM
-    |   Catalog.bitmobile_НастройкиМобильныхПриложений AS bitmobile_НастройкиМобильныхПриложений
-    |WHERE
-    |   bitmobile_НастройкиМобильныхПриложений.Код = &Code";
-    query.SetParameter("Code", "MultStck");
-    result = query.Execute();
-    If result.IsEmpty() Then
-        setting = Catalogs.bitmobile_НастройкиМобильныхПриложений.CreateItem();
-    	setting.Code = "MultStck";
-        setting.Description = "Многоскладской учет";
-        setting.Используется = True;
-        setting.Write();
-    Else
-        row = result.Unload();        
-        //If NOT row[0].Use Then
-            obj = row[0].Ref.GetObject();
-            obj.Используется = ThisObject.Value;
-            obj.DeletionMark = False;
-        	obj.Write();        
-        //EndIf;    	    
-    EndIf;
+	
+	If Not ThisObject.Value = Catalogs.MobileAppSettings.MultistockEnabled.LogicValue Then 
+		
+		MultistockEnabledObject				= Catalogs.MobileAppSettings.MultistockEnabled.GetObject();
+		MultistockEnabledObject.LogicValue	= ThisObject.Value;
+		
+		MultistockEnabledObject.Write();
+		
+	EndIf;
+	
 EndProcedure

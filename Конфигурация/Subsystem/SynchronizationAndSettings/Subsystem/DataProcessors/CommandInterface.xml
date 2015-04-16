@@ -5,32 +5,36 @@
 			<Visibility>
 				<xr:Common>false</xr:Common>
 				<xr:Value name="Role.User">false</xr:Value>
-				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
-				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="CommonCommand.ShowSyncAndSettings">
 			<Visibility>
 				<xr:Common>true</xr:Common>
 				<xr:Value name="Role.User">false</xr:Value>
-				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
-				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
+			</Visibility>
+		</Command>
+		<Command name="CommonCommand.ShowConfigurationSettings">
+			<Visibility>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.User">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="CommonCommand.ShowScheduledJobs">
 			<Visibility>
 				<xr:Common>true</xr:Common>
 				<xr:Value name="Role.User">false</xr:Value>
-				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
-				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="CommonCommand.ShowDeleteObjects">
 			<Visibility>
 				<xr:Common>true</xr:Common>
 				<xr:Value name="Role.User">false</xr:Value>
-				<xr:Value name="e8da9fdb-dc42-437e-8248-690be49dbdf7">false</xr:Value>
-				<xr:Value name="453b0486-4ce4-4cf2-89c7-cea6c92dea3c">false</xr:Value>
+			</Visibility>
+		</Command>
+		<Command name="DataProcessor.ConfigurationSettings.StandardCommand.Open">
+			<Visibility>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.User">true</xr:Value>
 			</Visibility>
 		</Command>
 		<Command name="DataProcessor.РегламентныеИФоновыеЗадания.StandardCommand.Open">
@@ -54,6 +58,9 @@
 			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
 		<Command name="CommonCommand.ShowSyncAndSettings">
+			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
+		</Command>
+		<Command name="CommonCommand.ShowConfigurationSettings">
 			<CommandGroup>NavigationPanelOrdinary</CommandGroup>
 		</Command>
 		<Command name="CommonCommand.ShowScheduledJobs">

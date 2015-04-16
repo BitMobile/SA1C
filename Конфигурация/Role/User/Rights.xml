@@ -655,14 +655,14 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений</name>
+		<name>Catalog.MobileAppSettings</name>
 		<right>
 			<name>Read</name>
 			<value>true</value>
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.PredefinedDataName</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.PredefinedDataName</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -673,7 +673,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Predefined</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Predefined</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -684,7 +684,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Ref</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Ref</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -695,7 +695,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.DeletionMark</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.DeletionMark</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -706,7 +706,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.IsFolder</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.IsFolder</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -717,7 +717,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Owner</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Owner</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -728,7 +728,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Parent</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Parent</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -739,7 +739,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Description</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Description</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -750,7 +750,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.StandardAttribute.Code</name>
+		<name>Catalog.MobileAppSettings.StandardAttribute.Code</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -942,7 +942,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 		</right>
 	</object>
 	<object>
-		<name>InformationRegister.StorageAdditionalInformation</name>
+		<name>InformationRegister.bitmobile_ХранилищеФайлов</name>
 		<right>
 			<name>Read</name>
 			<value>true</value>
@@ -1933,13 +1933,6 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
-		<name>CommonForm.bitmobile_НастройкиКонфигурации</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>InformationRegister.Answers.Dimension.DataType</name>
 		<right>
 			<name>Edit</name>
@@ -2031,7 +2024,7 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиМобильныхПриложений.Attribute.Используется</name>
+		<name>Catalog.MobileAppSettings.Attribute.LogicValue</name>
 		<right>
 			<name>View</name>
 			<value>false</value>
@@ -3402,13 +3395,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
-		<name>CommonForm.bitmobile_НастройкиСервера</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.SKUGroup</name>
 		<right>
 			<name>Read</name>
@@ -3632,13 +3618,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>CommonForm.bitmobile_НастройкиОтправкиОтчетов</name>
-		<right>
-			<name>View</name>
-			<value>true</value>
 		</right>
 	</object>
 	<object>
@@ -3943,6 +3922,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 	</object>
 	<object>
 		<name>Subsystem.Orders</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>CommonCommand.ShowConfigurationSettings</name>
 		<right>
 			<name>View</name>
 			<value>true</value>
@@ -4797,13 +4783,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>Constant.bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
 		</right>
 	</object>
 	<object>

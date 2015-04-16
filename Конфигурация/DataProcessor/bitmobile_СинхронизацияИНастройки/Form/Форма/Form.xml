@@ -7,6 +7,7 @@
 	<CommandSet>
 		<ExcludedCommand>No</ExcludedCommand>
 		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>WriteAndClose</ExcludedCommand>
 		<ExcludedCommand>Close</ExcludedCommand>
 		<ExcludedCommand>Abort</ExcludedCommand>
 		<ExcludedCommand>Retry</ExcludedCommand>
@@ -15,6 +16,7 @@
 		<ExcludedCommand>RestoreValues</ExcludedCommand>
 		<ExcludedCommand>Ignore</ExcludedCommand>
 		<ExcludedCommand>OK</ExcludedCommand>
+		<ExcludedCommand>Write</ExcludedCommand>
 	</CommandSet>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
@@ -51,11 +53,11 @@
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Information</v8:content>
+							<v8:content>Information and general settings</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Информация</v8:content>
+							<v8:content>Информация и основные настройки</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -68,469 +70,858 @@
 							<v8:content>Группа синхронизация</v8:content>
 						</v8:item>
 					</ToolTip>
-					<Group>Horizontal</Group>
 					<ExtendedTooltip name="ГруппаСинхронизацияРасширеннаяПодсказка" id="246"/>
 					<ChildItems>
-						<UsualGroup name="ГруппаИнформация" id="51">
-							<EnableContentChange>true</EnableContentChange>
-							<Title>
+						<LabelDecoration name="Decoration8" id="462">
+							<HorizontalStretch>true</HorizontalStretch>
+							<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+							<Title formatted="false">
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Info</v8:content>
+									<v8:content>Information</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
 									<v8:content>Информация</v8:content>
 								</v8:item>
 							</Title>
+							<Border width="1">
+								<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+							</Border>
+							<ContextMenu name="Decoration8ContextMenu" id="463"/>
+							<ExtendedTooltip name="Decoration8ExtendedTooltip" id="464"/>
+						</LabelDecoration>
+						<UsualGroup name="ГруппаИнформацияИКнопки" id="358">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа информация и кнопки</v8:content>
+								</v8:item>
+							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Group info</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа информация</v8:content>
+									<v8:content>Группа информация и кнопки</v8:content>
 								</v8:item>
 							</ToolTip>
-							<Width>60</Width>
-							<Height>5</Height>
+							<Group>Horizontal</Group>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаИнформацияРасширеннаяПодсказка" id="247"/>
+							<ExtendedTooltip name="ГруппаИнформацияИКнопкиExtendedTooltip" id="359"/>
 							<ChildItems>
-								<LabelField name="ДатаПоследнейВыгрузкиДанных" id="220">
-									<DataPath>ДатаПоследнейВыгрузкиДанных</DataPath>
-									<DefaultItem>true</DefaultItem>
-									<ReadOnly>true</ReadOnly>
+								<UsualGroup name="ГруппаИнформация" id="51">
+									<EnableContentChange>true</EnableContentChange>
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Data Upload</v8:content>
+											<v8:content>Info</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Выгрузка данных</v8:content>
-										</v8:item>
-									</Title>
-									<TitleTextColor>#805E06</TitleTextColor>
-									<ContextMenu name="ДатаПоследнейВыгрузкиДанныхКонтекстноеМеню" id="221"/>
-									<ExtendedTooltip name="ДатаПоследнейВыгрузкиДанныхРасширеннаяПодсказка" id="251"/>
-								</LabelField>
-								<LabelField name="ДатаПоследнейЗагрузкиДанных" id="49">
-									<DataPath>ДатаПоследнейЗагрузкиДанных</DataPath>
-									<ReadOnly>true</ReadOnly>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Data download</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Загрузка данных</v8:content>
-										</v8:item>
-									</Title>
-									<TitleTextColor>#805E06</TitleTextColor>
-									<ContextMenu name="ДатаПоследнейЗагрузкиДанныхКонтекстноеМеню" id="50"/>
-									<ExtendedTooltip name="ДатаПоследнейЗагрузкиДанныхРасширеннаяПодсказка" id="253"/>
-								</LabelField>
-								<LabelField name="ДатаПоследнейСинхронизацииФайлов" id="352">
-									<DataPath>ДатаПоследнейСинхронизацииФайлов</DataPath>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Sync files</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Синхронизация файлов</v8:content>
-										</v8:item>
-									</Title>
-									<TitleTextColor>#805E06</TitleTextColor>
-									<HorizontalStretch>true</HorizontalStretch>
-									<ContextMenu name="ДатаПоследнейСинхронизацииФайловContextMenu" id="353"/>
-									<ExtendedTooltip name="ДатаПоследнейСинхронизацииФайловExtendedTooltip" id="354"/>
-								</LabelField>
-								<LabelField name="ДатаПоследнейСинхронизацииУдаленныхДанных" id="56">
-									<DataPath>ДатаПоследнейСинхронизацииУдаленныхДанных</DataPath>
-									<UserVisible>
-										<xr:Common>true</xr:Common>
-										<xr:Value name="Role.Admin">true</xr:Value>
-										<xr:Value name="Role.User">true</xr:Value>
-									</UserVisible>
-									<ReadOnly>true</ReadOnly>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Sync deleted data</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Синхронизация удаленных данных</v8:content>
-										</v8:item>
-									</Title>
-									<TitleTextColor>#805E06</TitleTextColor>
-									<ContextMenu name="ДатаПоследнейСинхронизацииУдаленныхДанныхКонтекстноеМеню" id="57"/>
-									<ExtendedTooltip name="ДатаПоследнейСинхронизацииУдаленныхДанныхРасширеннаяПодсказка" id="254"/>
-								</LabelField>
-							</ChildItems>
-						</UsualGroup>
-						<UsualGroup name="ГруппаКнопки" id="46">
-							<Title>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Actions</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Действия</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Group data</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа данные</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Height>3</Height>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаКнопкиExtendedTooltip" id="255"/>
-							<ChildItems>
-								<Button name="СинхронизироватьДанные" id="47">
-									<Type>UsualButton</Type>
-									<Representation>PictureAndText</Representation>
-									<CommandName>Form.Command.СинхронизироватьДанные</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Syncronize data</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Синхронизировать данные</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="СинхронизироватьДанныеРасширеннаяПодсказка" id="256"/>
-								</Button>
-								<Button name="СинхронизироватьФайлы" id="43">
-									<Type>UsualButton</Type>
-									<Representation>PictureAndText</Representation>
-									<CommandName>Form.Command.СинхронизироватьФайлы</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Синхронизировать файлы</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Syncronize files</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="СинхронизироватьФайлыРасширеннаяПодсказка" id="259"/>
-								</Button>
-								<Button name="ВыгрузитьВсеФайлы" id="44">
-									<Type>UsualButton</Type>
-									<UserVisible>
-										<xr:Common>true</xr:Common>
-										<xr:Value name="Role.Admin">true</xr:Value>
-										<xr:Value name="Role.User">true</xr:Value>
-									</UserVisible>
-									<Representation>PictureAndText</Representation>
-									<CommandName>Form.Command.ВыгрузитьВсеФайлы</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Выгрузить все файлы</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Upload all files</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="ВыгрузитьВсеФайлыРасширеннаяПодсказка" id="260"/>
-								</Button>
-								<Button name="СинхронизироватьУдаленныеДанные" id="53">
-									<Type>UsualButton</Type>
-									<UserVisible>
-										<xr:Common>true</xr:Common>
-										<xr:Value name="Role.Admin">true</xr:Value>
-										<xr:Value name="Role.User">true</xr:Value>
-									</UserVisible>
-									<Representation>PictureAndText</Representation>
-									<CommandName>Form.Command.СинхронизироватьУдаленныеДанные</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Synchronize deleted data</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Синхронизировать удалённые данные</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="СинхронизироватьУдаленныеДанныеExtendedTooltip" id="257"/>
-								</Button>
-							</ChildItems>
-						</UsualGroup>
-					</ChildItems>
-				</Page>
-				<Page name="ГруппаНастройкиСервераИКонфигурации" id="75">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Настройки сервера и конфигурации</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Settings of server and configuration</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Group server settings</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Группа настройки сервера и конфигурации</v8:content>
-						</v8:item>
-					</ToolTip>
-					<ExtendedTooltip name="ГруппаНастройкиСервераИКонфигурацииРасширеннаяПодсказка" id="263"/>
-					<ChildItems>
-						<UsualGroup name="ГруппаСервер" id="201">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Настройки сервера</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Server settings</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа сервер</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Group>Horizontal</Group>
-							<ExtendedTooltip name="ГруппаСерверРасширеннаяПодсказка" id="264"/>
-							<ChildItems>
-								<LabelField name="Сервер" id="202">
-									<DataPath>Сервер</DataPath>
-									<SkipOnInput>true</SkipOnInput>
-									<TitleLocation>None</TitleLocation>
-									<Height>2</Height>
-									<VerticalStretch>false</VerticalStretch>
-									<BackColor>style:FormBackColor</BackColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="СерверКонтекстноеМеню" id="203"/>
-									<ExtendedTooltip name="СерверРасширеннаяПодсказка" id="265"/>
-								</LabelField>
-								<Button name="ОткрытьНастройкиСервера" id="198">
-									<Type>UsualButton</Type>
-									<Representation>PictureAndText</Representation>
-									<Width>12</Width>
-									<Height>1</Height>
-									<CommandName>Form.Command.ОткрытьНастройкиСервера</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Настройки</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Settings</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="ОткрытьНастройкиСервераРасширеннаяПодсказка" id="266"/>
-								</Button>
-							</ChildItems>
-						</UsualGroup>
-						<UsualGroup name="ГруппаКонфигурация" id="204">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Настройки конфигурации</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Settings of configuration</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа конфигурация</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Group>Horizontal</Group>
-							<ExtendedTooltip name="ГруппаКонфигурацияРасширеннаяПодсказка" id="267"/>
-							<ChildItems>
-								<LabelField name="Конфигурация" id="205">
-									<DataPath>Конфигурация</DataPath>
-									<SkipOnInput>true</SkipOnInput>
-									<TitleLocation>None</TitleLocation>
-									<Height>2</Height>
-									<VerticalStretch>false</VerticalStretch>
-									<BackColor>style:FormBackColor</BackColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="КонфигурацияКонтекстноеМеню" id="206"/>
-									<ExtendedTooltip name="КонфигурацияРасширеннаяПодсказка" id="268"/>
-								</LabelField>
-								<Button name="ОткрытьНастройкиКонфигурации" id="199">
-									<Type>UsualButton</Type>
-									<Representation>PictureAndText</Representation>
-									<Width>12</Width>
-									<Height>1</Height>
-									<CommandName>Form.Command.ОткрытьНастройкиКонфигурации</CommandName>
-									<Parameter xsi:nil="true"/>
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Настройки</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Settings</v8:content>
-										</v8:item>
-									</Title>
-									<ExtendedTooltip name="ОткрытьНастройкиКонфигурацииРасширеннаяПодсказка" id="269"/>
-								</Button>
-							</ChildItems>
-						</UsualGroup>
-						<UsualGroup name="ГруппаОтчетыОбОшибках" id="207">
-							<Title>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Настройки отчетов об ошибках</v8:content>
-								</v8:item>
-								<v8:item>
-									<v8:lang>en</v8:lang>
-									<v8:content>Configure error reporting</v8:content>
-								</v8:item>
-							</Title>
-							<ToolTip>
-								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа отчеты об ошибках</v8:content>
-								</v8:item>
-							</ToolTip>
-							<Group>Horizontal</Group>
-							<ExtendedTooltip name="ГруппаОтчетыОбОшибкахРасширеннаяПодсказка" id="270"/>
-							<ChildItems>
-								<LabelField name="ОтчетыОбОшибках" id="208">
-									<DataPath>ОтчетыОбОшибках</DataPath>
-									<SkipOnInput>true</SkipOnInput>
-									<TitleLocation>None</TitleLocation>
-									<Height>2</Height>
-									<VerticalStretch>false</VerticalStretch>
-									<TextColor>style:FormTextColor</TextColor>
-									<BackColor>style:FormBackColor</BackColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="ОтчетыОбОшибкахКонтекстноеМеню" id="209"/>
-									<ExtendedTooltip name="ОтчетыОбОшибкахРасширеннаяПодсказка" id="271"/>
-								</LabelField>
-								<UsualGroup name="ГруппаОтчетыКнопки" id="213">
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа отчеты кнопки</v8:content>
+											<v8:content>Информация</v8:content>
 										</v8:item>
 									</Title>
 									<ToolTip>
 										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group info</v8:content>
+										</v8:item>
+										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Группа отчеты кнопки</v8:content>
+											<v8:content>Группа информация</v8:content>
 										</v8:item>
 									</ToolTip>
+									<Width>60</Width>
+									<Height>5</Height>
 									<Representation>None</Representation>
 									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="ГруппаОтчетыКнопкиРасширеннаяПодсказка" id="272"/>
+									<ExtendedTooltip name="ГруппаИнформацияРасширеннаяПодсказка" id="247"/>
 									<ChildItems>
-										<Button name="ОткрытьНастройкиОтправки" id="197">
+										<LabelField name="ДатаПоследнейВыгрузкиДанных" id="220">
+											<DataPath>ДатаПоследнейВыгрузкиДанных</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Data upload</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Выгрузка данных</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДатаПоследнейВыгрузкиДанныхКонтекстноеМеню" id="221"/>
+											<ExtendedTooltip name="ДатаПоследнейВыгрузкиДанныхРасширеннаяПодсказка" id="251"/>
+										</LabelField>
+										<LabelField name="ДатаПоследнейЗагрузкиДанных" id="49">
+											<DataPath>ДатаПоследнейЗагрузкиДанных</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Data download</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Загрузка данных</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДатаПоследнейЗагрузкиДанныхКонтекстноеМеню" id="50"/>
+											<ExtendedTooltip name="ДатаПоследнейЗагрузкиДанныхРасширеннаяПодсказка" id="253"/>
+										</LabelField>
+										<LabelField name="ДатаПоследнейСинхронизацииФайлов" id="352">
+											<DataPath>ДатаПоследнейСинхронизацииФайлов</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Sync files</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синхронизация файлов</v8:content>
+												</v8:item>
+											</Title>
+											<HorizontalStretch>true</HorizontalStretch>
+											<ContextMenu name="ДатаПоследнейСинхронизацииФайловContextMenu" id="353"/>
+											<ExtendedTooltip name="ДатаПоследнейСинхронизацииФайловExtendedTooltip" id="354"/>
+										</LabelField>
+										<LabelField name="ДатаПоследнейСинхронизацииУдаленныхДанных" id="56">
+											<DataPath>ДатаПоследнейСинхронизацииУдаленныхДанных</DataPath>
+											<UserVisible>
+												<xr:Common>true</xr:Common>
+												<xr:Value name="Role.Admin">true</xr:Value>
+												<xr:Value name="Role.User">true</xr:Value>
+											</UserVisible>
+											<ReadOnly>true</ReadOnly>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Sync deleted data</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синхронизация удаленных данных</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДатаПоследнейСинхронизацииУдаленныхДанныхКонтекстноеМеню" id="57"/>
+											<ExtendedTooltip name="ДатаПоследнейСинхронизацииУдаленныхДанныхРасширеннаяПодсказка" id="254"/>
+										</LabelField>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаКнопки" id="46">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Actions</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Действия</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group data</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа данные</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Height>3</Height>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаКнопкиExtendedTooltip" id="255"/>
+									<ChildItems>
+										<Button name="СинхронизироватьДанные" id="47">
 											<Type>UsualButton</Type>
 											<Representation>PictureAndText</Representation>
-											<Width>12</Width>
-											<Height>1</Height>
-											<CommandName>Form.Command.ОткрытьНастройкиОтправкиОтчетов</CommandName>
+											<CommandName>Form.Command.СинхронизироватьДанные</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Title>
 												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Настройки</v8:content>
+													<v8:lang>en</v8:lang>
+													<v8:content>Syncronize data</v8:content>
 												</v8:item>
 												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Settings</v8:content>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синхронизировать данные</v8:content>
 												</v8:item>
 											</Title>
-											<ExtendedTooltip name="ОткрытьНастройкиОтправкиРасширеннаяПодсказка" id="273"/>
+											<ExtendedTooltip name="СинхронизироватьДанныеРасширеннаяПодсказка" id="256"/>
 										</Button>
-										<Button name="ОткрытьПолучателейОтчетов" id="200">
+										<Button name="СинхронизироватьФайлы" id="43">
 											<Type>UsualButton</Type>
 											<Representation>PictureAndText</Representation>
-											<Width>12</Width>
-											<Height>1</Height>
-											<CommandName>Form.Command.ОткрытьПолучателейОтчетов</CommandName>
+											<CommandName>Form.Command.СинхронизироватьФайлы</CommandName>
 											<Parameter xsi:nil="true"/>
 											<Title>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
-													<v8:content>Получатели</v8:content>
+													<v8:content>Синхронизировать файлы</v8:content>
 												</v8:item>
 												<v8:item>
 													<v8:lang>en</v8:lang>
-													<v8:content>Recipients</v8:content>
+													<v8:content>Syncronize files</v8:content>
 												</v8:item>
 											</Title>
-											<ExtendedTooltip name="ОткрытьПолучателейОтчетовРасширеннаяПодсказка" id="274"/>
+											<ExtendedTooltip name="СинхронизироватьФайлыРасширеннаяПодсказка" id="259"/>
+										</Button>
+										<Button name="ВыгрузитьВсеФайлы" id="44">
+											<Type>UsualButton</Type>
+											<UserVisible>
+												<xr:Common>true</xr:Common>
+												<xr:Value name="Role.Admin">true</xr:Value>
+												<xr:Value name="Role.User">true</xr:Value>
+											</UserVisible>
+											<Representation>PictureAndText</Representation>
+											<CommandName>Form.Command.ВыгрузитьВсеФайлы</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Выгрузить все файлы</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Upload all files</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ВыгрузитьВсеФайлыРасширеннаяПодсказка" id="260"/>
+										</Button>
+										<Button name="СинхронизироватьУдаленныеДанные" id="53">
+											<Type>UsualButton</Type>
+											<UserVisible>
+												<xr:Common>true</xr:Common>
+												<xr:Value name="Role.Admin">true</xr:Value>
+												<xr:Value name="Role.User">true</xr:Value>
+											</UserVisible>
+											<Representation>PictureAndText</Representation>
+											<CommandName>Form.Command.СинхронизироватьУдаленныеДанные</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Synchronize deleted data</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синхронизировать удалённые данные</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="СинхронизироватьУдаленныеДанныеExtendedTooltip" id="257"/>
 										</Button>
 									</ChildItems>
 								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
-						<UsualGroup name="ГруппаВерсия" id="240">
+						<Button name="СохранитьОбщиеНастройки" id="474">
+							<Type>UsualButton</Type>
+							<SkipOnInput>false</SkipOnInput>
+							<DefaultItem>true</DefaultItem>
+							<CommandName>Form.Command.СохранитьОбщиеНастройки</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="СохранитьОбщиеНастройкиExtendedTooltip" id="475"/>
+						</Button>
+						<UsualGroup name="ГруппаОбщиеНастройки" id="360">
 							<Title>
 								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Версия модуля синхронизации</v8:content>
-								</v8:item>
-								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Version of the synchronization module</v8:content>
+									<v8:content>Группа общие настройки</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
-									<v8:lang>ru</v8:lang>
-									<v8:content>Группа версия</v8:content>
+									<v8:lang>en</v8:lang>
+									<v8:content>Группа общие настройки</v8:content>
 								</v8:item>
 							</ToolTip>
-							<ExtendedTooltip name="ГруппаВерсияРасширеннаяПодсказка" id="275"/>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ChildItemsWidth>Equal</ChildItemsWidth>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаОбщиеНастройкиExtendedTooltip" id="361"/>
 							<ChildItems>
-								<LabelField name="ВерсияМодуляСинхронизации" id="243">
-									<DataPath>ВерсияМодуляСинхронизации</DataPath>
-									<SkipOnInput>true</SkipOnInput>
-									<TitleLocation>None</TitleLocation>
-									<Height>2</Height>
-									<VerticalStretch>false</VerticalStretch>
-									<BackColor>style:FormBackColor</BackColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="ВерсияМодуляСинхронизацииКонтекстноеМеню" id="244"/>
-									<ExtendedTooltip name="ВерсияМодуляСинхронизацииРасширеннаяПодсказка" id="276"/>
-								</LabelField>
+								<UsualGroup name="ГруппаЛево" id="384">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Группа лево</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Группа лево</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаЛевоExtendedTooltip" id="385"/>
+									<ChildItems>
+										<LabelDecoration name="Декорация5" id="453">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Server</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Сервер</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация5ContextMenu" id="454"/>
+											<ExtendedTooltip name="Декорация5ExtendedTooltip" id="455"/>
+										</LabelDecoration>
+										<InputField name="НаборКонстантbitmobile_Сервер" id="366">
+											<DataPath>НаборКонстант.bitmobile_Сервер</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Server</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Сервер</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_СерверContextMenu" id="367"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_СерверExtendedTooltip" id="368"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_Порт" id="369">
+											<DataPath>НаборКонстант.bitmobile_Порт</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Port</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Порт</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Using port "80"</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Используется порт "80"</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_ПортContextMenu" id="370"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПортExtendedTooltip" id="371"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_ПутьНаСервере" id="375">
+											<DataPath>НаборКонстант.bitmobile_ПутьНаСервере</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Path</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Путь</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ПутьНаСервереContextMenu" id="376"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПутьНаСервереExtendedTooltip" id="377"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_Пароль" id="372">
+											<DataPath>НаборКонстант.bitmobile_Пароль</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Password</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пароль</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ПарольContextMenu" id="373"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПарольExtendedTooltip" id="374"/>
+										</InputField>
+										<LabelDecoration name="Декорация6" id="456">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Error Reporting</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отчеты об ошибках</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация6ContextMenu" id="457"/>
+											<ExtendedTooltip name="Декорация6ExtendedTooltip" id="458"/>
+										</LabelDecoration>
+										<Button name="ОткрытьПолучателейОтчетов" id="476">
+											<Type>UsualButton</Type>
+											<CommandName>Form.Command.ОткрытьПолучателейОтчетов</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="ОткрытьПолучателейОтчетовExtendedTooltip" id="477"/>
+										</Button>
+										<CheckBoxField name="НаборКонстантbitmobile_ИспользоватьОтправкуОтчета" id="438">
+											<DataPath>НаборКонстант.bitmobile_ИспользоватьОтправкуОтчета</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Use sending report</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отправлять отчеты</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>1</TitleHeight>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_ИспользоватьОтправкуОтчетаContextMenu" id="439"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ИспользоватьОтправкуОтчетаExtendedTooltip" id="440"/>
+										</CheckBoxField>
+										<InputField name="НаборКонстантbitmobile_АдресСервераSMTP" id="414">
+											<DataPath>НаборКонстант.bitmobile_АдресСервераSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>SMTP server</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Сервер SMTP</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_АдресСервераSMTPContextMenu" id="415"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_АдресСервераSMTPExtendedTooltip" id="416"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_ПортSMTP" id="417">
+											<DataPath>НаборКонстант.bitmobile_ПортSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Port</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Порт</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Using port "25"</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Используется порт "25"</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_ПортSMTPContextMenu" id="418"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПортSMTPExtendedTooltip" id="419"/>
+										</InputField>
+										<CheckBoxField name="НаборКонстантbitmobile_ИспользуетсяSSLSMTP" id="429">
+											<DataPath>НаборКонстант.bitmobile_ИспользуетсяSSLSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Use SSL</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Использовать SSL</v8:content>
+												</v8:item>
+											</Title>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_ИспользуетсяSSLSMTPContextMenu" id="430"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ИспользуетсяSSLSMTPExtendedTooltip" id="431"/>
+										</CheckBoxField>
+										<CheckBoxField name="НаборКонстантbitmobile_АутентификацияSMTP" id="426">
+											<DataPath>НаборКонстант.bitmobile_АутентификацияSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Authentification</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Аутентификация</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>1</TitleHeight>
+											<VerticalAlign>Center</VerticalAlign>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_АутентификацияSMTPContextMenu" id="427"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_АутентификацияSMTPExtendedTooltip" id="428"/>
+										</CheckBoxField>
+										<InputField name="НаборКонстантbitmobile_ПользовательSMTP" id="420">
+											<DataPath>НаборКонстант.bitmobile_ПользовательSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>User</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пользователь</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ПользовательSMTPContextMenu" id="421"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПользовательSMTPExtendedTooltip" id="422"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_ПарольSMTP" id="423">
+											<DataPath>НаборКонстант.bitmobile_ПарольSMTP</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Password</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пароль</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ПарольSMTPContextMenu" id="424"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПарольSMTPExtendedTooltip" id="425"/>
+										</InputField>
+										<CheckBoxField name="НаборКонстантbitmobile_ПрикреплятьФайлДанных" id="432">
+											<DataPath>НаборКонстант.bitmobile_ПрикреплятьФайлДанных</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Attach the data file</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Прикреплять файл данных</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>1</TitleHeight>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_ПрикреплятьФайлДанныхContextMenu" id="433"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПрикреплятьФайлДанныхExtendedTooltip" id="434"/>
+										</CheckBoxField>
+										<InputField name="НаборКонстантbitmobile_РазмерПрикрепляемогоФайла" id="435">
+											<DataPath>НаборКонстант.bitmobile_РазмерПрикрепляемогоФайла</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Size of attached file is not more than (MB)</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Размер прикрепляемого файла не более (МБ)</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>1</TitleHeight>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Disabled</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Отключено</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_РазмерПрикрепляемогоФайлаContextMenu" id="436"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_РазмерПрикрепляемогоФайлаExtendedTooltip" id="437"/>
+										</InputField>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПраво" id="386">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Группа право</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Группа право</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПравоExtendedTooltip" id="387"/>
+									<ChildItems>
+										<LabelDecoration name="Декорация1" id="441">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Configuration</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Конфигурация</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация1ContextMenu" id="442"/>
+											<ExtendedTooltip name="Декорация1ExtendedTooltip" id="443"/>
+										</LabelDecoration>
+										<InputField name="НаборКонстантbitmobile_ИмяКонфигурации" id="406">
+											<DataPath>НаборКонстант.bitmobile_ИмяКонфигурации</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Configuration name</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Имя конфигурации</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ИмяКонфигурацииContextMenu" id="407"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ИмяКонфигурацииExtendedTooltip" id="408"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_ВерсияКонфигурации" id="409">
+											<DataPath>НаборКонстант.bitmobile_ВерсияКонфигурации</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Version</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Версия</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ВерсияКонфигурацииContextMenu" id="410"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ВерсияКонфигурацииExtendedTooltip" id="411"/>
+										</InputField>
+										<LabelDecoration name="Декорация2" id="444">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Data upload</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Выгрузка данных</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация2ContextMenu" id="445"/>
+											<ExtendedTooltip name="Декорация2ExtendedTooltip" id="446"/>
+										</LabelDecoration>
+										<CheckBoxField name="НаборКонстантbitmobile_ОтключитьПодпискиНаСобытия" id="381">
+											<DataPath>НаборКонстант.bitmobile_ОтключитьПодпискиНаСобытия</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Disable registration changes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отключить регистрацию изменений</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_ОтключитьПодпискиНаСобытияContextMenu" id="382"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ОтключитьПодпискиНаСобытияExtendedTooltip" id="383"/>
+										</CheckBoxField>
+										<InputField name="НаборКонстантbitmobile_КоличествоОбъектовВВыгрузке" id="378">
+											<DataPath>НаборКонстант.bitmobile_КоличествоОбъектовВВыгрузке</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Number of objects in upload</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Количество объектов в выгрузке</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Disabled</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Отключено</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_КоличествоОбъектовВВыгрузкеContextMenu" id="379"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_КоличествоОбъектовВВыгрузкеExtendedTooltip" id="380"/>
+										</InputField>
+										<LabelDecoration name="Декорация4" id="450">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Log event</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Журнал регистрации</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация4ContextMenu" id="451"/>
+											<ExtendedTooltip name="Декорация4ExtendedTooltip" id="452"/>
+										</LabelDecoration>
+										<CheckBoxField name="НаборКонстантbitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал" id="398">
+											<DataPath>НаборКонстант.bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Do not write synchronization event log</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Не записывать события синхронизации в журнал</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="НаборКонстантbitmobile_НеЗаписыватьСобытияСинхронизацииВЖурналContextMenu" id="399"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_НеЗаписыватьСобытияСинхронизацииВЖурналExtendedTooltip" id="400"/>
+										</CheckBoxField>
+										<InputField name="НаборКонстантbitmobile_СрокХраненияЖурналаРегистрации" id="401">
+											<DataPath>НаборКонстант.bitmobile_СрокХраненияЖурналаРегистрации</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Shelf life log (days)</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Срок хранения журнала регистрации (дни)</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<TitleHeight>1</TitleHeight>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Disabled</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Отключено</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_СрокХраненияЖурналаРегистрацииContextMenu" id="402"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_СрокХраненияЖурналаРегистрацииExtendedTooltip" id="403"/>
+										</InputField>
+										<LabelDecoration name="Декорация3" id="447">
+											<HorizontalStretch>true</HorizontalStretch>
+											<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Synchronization of files</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синхронизация файлов</v8:content>
+												</v8:item>
+											</Title>
+											<Border width="1">
+												<v8ui:style xsi:type="v8ui:ControlBorderType">Underline</v8ui:style>
+											</Border>
+											<ContextMenu name="Декорация3ContextMenu" id="448"/>
+											<ExtendedTooltip name="Декорация3ExtendedTooltip" id="449"/>
+										</LabelDecoration>
+										<InputField name="НаборКонстантbitmobile_ПротоколПередачиФайлов" id="390">
+											<DataPath>НаборКонстант.bitmobile_ПротоколПередачиФайлов</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Transfer protocol</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Протокол передачи</v8:content>
+												</v8:item>
+											</Title>
+											<Width>25</Width>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ContextMenu name="НаборКонстантbitmobile_ПротоколПередачиФайловContextMenu" id="391"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ПротоколПередачиФайловExtendedTooltip" id="392"/>
+										</InputField>
+										<InputField name="НаборКонстантbitmobile_ДопустимыйРазмерФайла" id="393">
+											<DataPath>НаборКонстант.bitmobile_ДопустимыйРазмерФайла</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Size of file is not more than (KB)</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Размер файла не более (КБ)</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Left</TitleLocation>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>0 - Disabled</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>0 - Отключено</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
+											<ContextMenu name="НаборКонстантbitmobile_ДопустимыйРазмерФайлаContextMenu" id="394"/>
+											<ExtendedTooltip name="НаборКонстантbitmobile_ДопустимыйРазмерФайлаExtendedTooltip" id="395"/>
+										</InputField>
+									</ChildItems>
+								</UsualGroup>
 							</ChildItems>
 						</UsualGroup>
 					</ChildItems>
@@ -1008,94 +1399,6 @@
 										</Table>
 									</ChildItems>
 								</Page>
-								<Page name="ГруппаНастройкиМобильныхПриложений" id="229">
-									<Title>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Настройки мобильных приложений</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Settings of mobile applications</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Группа настройки мобильных приложений</v8:content>
-										</v8:item>
-									</ToolTip>
-									<ExtendedTooltip name="ГруппаНастройкиМобильныхПриложенийРасширеннаяПодсказка" id="338"/>
-									<ChildItems>
-										<Table name="НастройкиМобильныхПриложений" id="230">
-											<UseAlternationRowColor>true</UseAlternationRowColor>
-											<EnableStartDrag>true</EnableStartDrag>
-											<DataPath>НастройкиМобильныхПриложений</DataPath>
-											<RowPictureDataPath>НастройкиМобильныхПриложений.DefaultPicture</RowPictureDataPath>
-											<SearchStringLocation>None</SearchStringLocation>
-											<ViewStatusLocation>None</ViewStatusLocation>
-											<SearchControlLocation>None</SearchControlLocation>
-											<AutoRefresh>false</AutoRefresh>
-											<AutoRefreshPeriod>60</AutoRefreshPeriod>
-											<Period xsi:type="v8:StandardPeriod">
-												<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-												<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-												<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-											</Period>
-											<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
-											<RestoreCurrentRow>false</RestoreCurrentRow>
-											<TopLevelParent xsi:nil="true"/>
-											<ShowRoot>true</ShowRoot>
-											<AllowRootChoice>false</AllowRootChoice>
-											<UpdateOnDataChange>Auto</UpdateOnDataChange>
-											<ContextMenu name="НастройкиМобильныхПриложенийКонтекстноеМеню" id="231"/>
-											<AutoCommandBar name="НастройкиМобильныхПриложенийКоманднаяПанель" id="232"/>
-											<ExtendedTooltip name="НастройкиМобильныхПриложенийРасширеннаяПодсказка" id="339"/>
-											<SearchStringAddition name="НастройкиМобильныхПриложенийСтрокаПоиска" id="340">
-												<Source>
-													<lf:elementId>230</lf:elementId>
-													<lf:additionId>0</lf:additionId>
-												</Source>
-												<ContextMenu name="НастройкиМобильныхПриложенийСтрокаПоискаКонтекстноеМеню" id="341"/>
-												<ExtendedTooltip name="НастройкиМобильныхПриложенийСтрокаПоискаРасширеннаяПодсказка" id="342"/>
-											</SearchStringAddition>
-											<ViewStatusAddition name="НастройкиМобильныхПриложенийСостояниеПросмотра" id="343">
-												<Source>
-													<lf:elementId>230</lf:elementId>
-													<lf:additionId>1</lf:additionId>
-												</Source>
-												<ContextMenu name="НастройкиМобильныхПриложенийСостояниеПросмотраКонтекстноеМеню" id="344"/>
-												<ExtendedTooltip name="НастройкиМобильныхПриложенийСостояниеПросмотраРасширеннаяПодсказка" id="345"/>
-											</ViewStatusAddition>
-											<SearchControlAddition name="НастройкиМобильныхПриложенийУправлениеПоиском" id="346">
-												<Source>
-													<lf:elementId>230</lf:elementId>
-													<lf:additionId>2</lf:additionId>
-												</Source>
-												<ContextMenu name="НастройкиМобильныхПриложенийУправлениеПоискомКонтекстноеМеню" id="347"/>
-												<ExtendedTooltip name="НастройкиМобильныхПриложенийУправлениеПоискомРасширеннаяПодсказка" id="348"/>
-											</SearchControlAddition>
-											<ChildItems>
-												<LabelField name="НастройкиМобильныхПриложенийКод" id="235">
-													<DataPath>НастройкиМобильныхПриложений.Code</DataPath>
-													<ContextMenu name="НастройкиМобильныхПриложенийКодКонтекстноеМеню" id="236"/>
-													<ExtendedTooltip name="НастройкиМобильныхПриложенийКодРасширеннаяПодсказка" id="349"/>
-												</LabelField>
-												<LabelField name="НастройкиМобильныхПриложенийНаименование" id="233">
-													<DataPath>НастройкиМобильныхПриложений.Description</DataPath>
-													<ContextMenu name="НастройкиМобильныхПриложенийНаименованиеКонтекстноеМеню" id="234"/>
-													<ExtendedTooltip name="НастройкиМобильныхПриложенийНаименованиеРасширеннаяПодсказка" id="350"/>
-												</LabelField>
-												<CheckBoxField name="НастройкиМобильныхПриложенийИспользуется" id="237">
-													<DataPath>НастройкиМобильныхПриложений.Используется</DataPath>
-													<CheckBoxType>Auto</CheckBoxType>
-													<ContextMenu name="НастройкиМобильныхПриложенийИспользуетсяКонтекстноеМеню" id="238"/>
-													<ExtendedTooltip name="НастройкиМобильныхПриложенийИспользуетсяРасширеннаяПодсказка" id="351"/>
-												</CheckBoxField>
-											</ChildItems>
-										</Table>
-									</ChildItems>
-								</Page>
 							</ChildItems>
 						</Pages>
 					</ChildItems>
@@ -1218,7 +1521,6 @@ FROM
 				<xr:Value name="Role.Admin">true</xr:Value>
 				<xr:Value name="Role.User">true</xr:Value>
 			</Edit>
-			<MainAttribute>true</MainAttribute>
 			<Save>
 				<Field>4/0:1285e639-9fb3-425c-bc8f-6e921ada223d</Field>
 				<Field>4/0:1e0e744f-1495-49c7-a5e0-812ca16c2947</Field>
@@ -1332,51 +1634,6 @@ FROM
 				</ListSettings>
 			</Settings>
 		</Attribute>
-		<Attribute name="Сервер" id="7">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Сервер</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
-		</Attribute>
-		<Attribute name="Конфигурация" id="8">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Конфигурация</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
-		</Attribute>
-		<Attribute name="ОтчетыОбОшибках" id="9">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Отчеты об ошибках</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
-		</Attribute>
 		<Attribute name="IDСеанса" id="11">
 			<Title>
 				<v8:item>
@@ -1426,53 +1683,6 @@ FROM
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="НастройкиМобильныхПриложений" id="14">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Настройки мобильных приложений</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>cfg:DynamicList</v8:Type>
-			</Type>
-			<Settings xsi:type="DynamicList">
-				<ManualQuery>false</ManualQuery>
-				<DynamicDataRead>true</DynamicDataRead>
-				<MainTable>Catalog.bitmobile_НастройкиМобильныхПриложений</MainTable>
-				<ListSettings>
-					<dcsset:filter>
-						<dcsset:viewMode>Normal</dcsset:viewMode>
-						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
-					</dcsset:filter>
-					<dcsset:order>
-						<dcsset:viewMode>Normal</dcsset:viewMode>
-						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
-					</dcsset:order>
-					<dcsset:conditionalAppearance>
-						<dcsset:viewMode>Normal</dcsset:viewMode>
-						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
-					</dcsset:conditionalAppearance>
-					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
-					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
-				</ListSettings>
-			</Settings>
-		</Attribute>
-		<Attribute name="ВерсияМодуляСинхронизации" id="15">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Версия модуля синхронизации</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
-		</Attribute>
 		<Attribute name="ДатаПоследнейСинхронизацииФайлов" id="10">
 			<Title>
 				<v8:item>
@@ -1491,6 +1701,18 @@ FROM
 					<v8:AllowedLength>Variable</v8:AllowedLength>
 				</v8:StringQualifiers>
 			</Type>
+		</Attribute>
+		<Attribute name="НаборКонстант" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Набор констант</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:ConstantsSet</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
 		</Attribute>
 	</Attributes>
 	<Commands>
@@ -1515,10 +1737,6 @@ FROM
 					<v8:content>Загрузить настройки по умолчанию</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.RestoreValues</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>НастройкиСинхронизацииПоУмолчанию</Action>
 			<Representation>TextPicture</Representation>
 		</Command>
@@ -1631,10 +1849,6 @@ FROM
 					<v8:content>Выгрузить данные в файл</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.OpenFile</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>ВыгрузитьДанныеВФайл</Action>
 		</Command>
 		<Command name="ВыгрузитьМетаданныеВФайл" id="3">
@@ -1654,90 +1868,17 @@ FROM
 					<v8:content>Выгрузить метаданные в файл</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.OpenFile</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>ВыгрузитьМетаданныеВФайл</Action>
-		</Command>
-		<Command name="ОткрытьНастройкиОтправкиОтчетов" id="4">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки отправки отчетов</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open settings to send reports</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки отправки отчетов</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>CommonPicture.bitmobile_Почта</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>ОткрытьНастройкиОтправкиОтчетов</Action>
-		</Command>
-		<Command name="ОткрытьНастройкиСервера" id="2">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки сервера</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open server settings</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки сервера</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>CommonPicture.bitmobile_Сервер</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>ОткрытьНастройкиСервера</Action>
-		</Command>
-		<Command name="ОткрытьНастройкиКонфигурации" id="5">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки конфигурации</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open configuration settings</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть настройки конфигурации</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.ReportSettings</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
-			<Action>ОткрытьНастройкиКонфигурации</Action>
 		</Command>
 		<Command name="ОткрытьПолучателейОтчетов" id="8">
 			<Title>
 				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть получателей отчетов</v8:content>
+					<v8:lang>en</v8:lang>
+					<v8:content>Report recipients</v8:content>
 				</v8:item>
 				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Open report recipients</v8:content>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Получатели отчетов</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
@@ -1746,10 +1887,6 @@ FROM
 					<v8:content>Открыть получателей отчетов</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>CommonPicture.bitmobile_Клиент</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>ОткрытьПолучателейОтчетов</Action>
 		</Command>
 		<Command name="РассчитатьПорядокВыгрузки" id="9">
@@ -1769,10 +1906,6 @@ FROM
 					<v8:content>Рассчитать порядок выгрузки</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.SortListAsc</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>РассчитатьПорядокВыгрузки</Action>
 		</Command>
 		<Command name="СохранитьНастройкиВФайл" id="13">
@@ -1792,10 +1925,6 @@ FROM
 					<v8:content>Сохранить настройки в файл</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.SaveFile</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>СохранитьНастройкиВФайл</Action>
 			<Representation>TextPicture</Representation>
 		</Command>
@@ -1816,12 +1945,27 @@ FROM
 					<v8:content>Восстановить настройки из файла</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Picture>
-				<xr:Ref>StdPicture.OpenFile</xr:Ref>
-				<xr:LoadTransparent>true</xr:LoadTransparent>
-			</Picture>
 			<Action>ВосстановитьНастройкиИзФайла</Action>
 			<Representation>TextPicture</Representation>
+		</Command>
+		<Command name="СохранитьОбщиеНастройки" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Save general settings</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить общие настройки</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Сохранить общие настройки</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СохранитьОбщиеНастройки</Action>
 		</Command>
 	</Commands>
 </Form>

@@ -28,23 +28,13 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейСинхронизацииУдаленныхДанных</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.bitmobile_НастройкиСинхронизации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанные</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ПерейтиККарте</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИмяКонфигурации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ВерсияКонфигурации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ОтключитьПодпискиНаСобытия</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.bitmobile_СинхронизацияИНастройки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_СоответствиеПеречислений</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_КонтролируемыеИзмеренияРегистров</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Информация16</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Информация</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ГруппаЭлемент</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_ДобавитьНаКарту</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Клиент</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиОтправкиОтчетов</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиСервера</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonForm.bitmobile_НастройкиКонфигурации</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Сервер</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonPicture.bitmobile_Почта</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">5f92fb95-8447-4f23-b4cc-cf6d4c924930</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_АдресаЭлПочтыДляОтчетов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИспользоватьОтправкуОтчета</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_РазмерПрикрепляемогоФайла</xr:Item>
@@ -59,11 +49,9 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияЗапущена</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_IDВыгрузки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейЗагрузкиДанных</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Catalog.bitmobile_НастройкиМобильныхПриложений</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанныеПриЗагрузке</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ПротоколыПередачиФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПротоколПередачиФайлов</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеВыгружатьДопРеквизитыВТабличныхЧастях</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейСинхронизацииФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейСинхронизацииФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияФайловЗапущена</xr:Item>
@@ -79,6 +67,11 @@
 				<xr:Item xsi:type="xr:MDObjectRef">ScheduledJob.bitmobile_СинхронизацияСУчетнымиСистемами</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СрокХраненияЖурналаРегистрации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ХранилищеФайлов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ExchangePlan.bitmobile_ОбменСУчетнымиСистемами</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИспользуетсяSSLSMTP</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ДействияПриСинхронизации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_НаправленияСинхронизации</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

@@ -80,19 +80,18 @@ Procedure FillFileTable()
 	Query = New Query;
 	Query.Text = 
 		"SELECT ALLOWED
-		|	StorageAdditionalInformation.Object,
-		|	StorageAdditionalInformation.SyncDirection,
-		|	StorageAdditionalInformation.Action,
-		|	StorageAdditionalInformation.User,
-		|	StorageAdditionalInformation.FileName,
-		|	StorageAdditionalInformation.FullFileName,
-		|	StorageAdditionalInformation.Extension,
-		|	StorageAdditionalInformation.Storage,
-		|	StorageAdditionalInformation.Size
+		|	bitmobile_ХранилищеФайлов.Объект,
+		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+		|	bitmobile_ХранилищеФайлов.Действие,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.Хранилище,
+		|	bitmobile_ХранилищеФайлов.Размер
 		|FROM
-		|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
 		|WHERE
-		|	StorageAdditionalInformation.FileName IN(&FileNameArray)";
+		|	bitmobile_ХранилищеФайлов.ИмяФайла IN(&FileNameArray)";
 	
 	Query.SetParameter("FileNameArray", FileNameArray);
 	
@@ -100,14 +99,14 @@ Procedure FillFileTable()
 	
 	For Each Str In FileTableRegister Do  
 	
- 		BinaryDataOfFile = Str.Storage.Get();
+ 		BinaryDataOfFile = Str.Хранилище.Get();
 		
 		If ValueIsFilled(BinaryDataOfFile) Then 
 			
 			Ins					= FileTable.Add();
-			Ins.FileName		= Str.FileName;
+			Ins.FileName		= Str.ИмяФайла;
 			Ins.StorageAddress	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-			Ins.Extension		= Str.Extension;
+			Ins.Extension		= Str.Расширение;
 			
 		Else 
 			
@@ -115,16 +114,16 @@ Procedure FillFileTable()
 			
 				Try
 					
-					WebDAVFile = GetTempFileName(Str.Extension);
+					WebDAVFile = GetTempFileName(Str.Расширение);
 					
-					Connection.Get(Path + Str.FullFileName, WebDAVFile);
+					Connection.Get(Path + Str.ПолноеИмяФайла, WebDAVFile);
 					
 					BinaryDataOfFile = New BinaryData(WebDAVFile);
 					
 					Ins					= FileTable.Add();
-					Ins.FileName		= Str.FileName;
+					Ins.FileName		= Str.ИмяФайла;
 					Ins.StorageAddress	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-					Ins.Extension		= Str.Extension;
+					Ins.Extension		= Str.Расширение;
 					
 				Except
 				EndTry;

@@ -27,6 +27,7 @@
 			<Subsystem>DataProcessors</Subsystem>
 			<Subsystem>InformationRegisters</Subsystem>
 			<Subsystem>ExchangePlans</Subsystem>
+			<Subsystem>Catalogs</Subsystem>
 		</ChildObjects>
 	</Subsystem>
 </MetaDataObject>

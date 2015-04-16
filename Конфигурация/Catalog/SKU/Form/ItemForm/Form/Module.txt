@@ -22,24 +22,23 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	Query = New Query;
 	Query.Text = 
 		"SELECT ALLOWED TOP 1
-		|	StorageAdditionalInformation.Object,
-		|	StorageAdditionalInformation.SyncDirection,
-		|	StorageAdditionalInformation.Action,
-		|	StorageAdditionalInformation.User,
-		|	StorageAdditionalInformation.FileName,
-		|	StorageAdditionalInformation.FullFileName,
-		|	StorageAdditionalInformation.Extension,
-		|	StorageAdditionalInformation.Storage
+		|	bitmobile_ХранилищеФайлов.Объект,
+		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+		|	bitmobile_ХранилищеФайлов.Действие,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.Хранилище
 		|FROM
-		|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
 		|WHERE
-		|	StorageAdditionalInformation.Object = &ObjectRef
-		|	AND StorageAdditionalInformation.Action <> &DeleteAction
-		|	AND StorageAdditionalInformation.FileName = &FileName
-		|	AND StorageAdditionalInformation.SyncDirection = &SyncDirection";
+		|	bitmobile_ХранилищеФайлов.Объект = &ObjectRef
+		|	AND bitmobile_ХранилищеФайлов.Действие <> &DeleteAction
+		|	AND bitmobile_ХранилищеФайлов.ИмяФайла = &FileName
+		|	AND bitmobile_ХранилищеФайлов.НаправлениеСинхронизации = &SyncDirection";
 
-	Query.SetParameter("DeleteAction", Enums.SyncAction.DeleteFile);
-	Query.SetParameter("SyncDirection", Enums.SyncDirections.Shared);
+	Query.SetParameter("DeleteAction", Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл);
+	Query.SetParameter("SyncDirection", Enums.bitmobile_НаправленияСинхронизации.Shared);
 	Query.SetParameter("ObjectRef", Object.Ref);
 	Query.SetParameter("FileName", Object.DefaultPicture);
 	
@@ -49,7 +48,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 
 	If Records.Next() Then 
 		
-		PictureAddress = PutToTempStorage(Records.Storage.Get(), ThisForm.UUID);
+		PictureAddress = PutToTempStorage(Records.Хранилище.Get(), ThisForm.UUID);
 						
 	EndIf;	
 	
@@ -90,30 +89,30 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				
 				CheckFileSize = New File(TempFile);
 				
-				RecordManager 				= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-				RecordManager.Object 		= CurrentObject.Ref;
-				RecordManager.SyncDirection = Enums.SyncDirections.Shared;
-				RecordManager.Action 		= Enums.SyncAction.AddFile;
-				RecordManager.FileName 		= NewPictureName;
-				RecordManager.Extension 	= Lower(NewPictureExtension);
-				RecordManager.Storage 		= New ValueStorage(BinaryData);
-				RecordManager.Size			= CheckFileSize.Size();
-				RecordManager.FullFileName 	= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
-							
+				RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+				RecordManager.Объект					= CurrentObject.Ref;
+				RecordManager.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+				RecordManager.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+				RecordManager.ИмяФайла					= NewPictureName;
+				RecordManager.Расширение				= Lower(NewPictureExtension);
+				RecordManager.Хранилище					= New ValueStorage(BinaryData);
+				RecordManager.Размер					= CheckFileSize.Size();
+				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
+				
 				RecordManager.Write();
 				
 			ElsIf NewPictureType = "Private" Then 
 				
-				SelectionStructure = New Structure("FileName");
-				SelectionStructure.FileName = New UUID(NewPictureName);
+				SelectionStructure = New Structure("ИмяФайла");
+				SelectionStructure.ИмяФайла = New UUID(NewPictureName);
 				
-				Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+				Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
 				
 				If Selection.Next() Then 
 					
-					RecordManagerPrivate 				= InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-				
-				    FillPropertyValues(RecordManagerPrivate, Selection);
+					RecordManagerPrivate							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+					
+					FillPropertyValues(RecordManagerPrivate, Selection);
 					
 					RecordManagerPrivate.Read();
 					
@@ -123,23 +122,22 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					CheckFileSize = New File(TempFile);
 					
-					RecordManagerPrivate.SyncDirection 	= Enums.SyncDirections.Shared;
-					RecordManagerPrivate.Action 		= Enums.SyncAction.AddFile;
-					RecordManagerPrivate.User			= Catalogs.User.EmptyRef();
-					RecordManagerPrivate.Storage 		= New ValueStorage(BinaryData);
-					RecordManagerPrivate.Size			= CheckFileSize.Size();
-					RecordManagerPrivate.FullFileName 	= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
-								
+					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
+					RecordManagerPrivate.Размер						= CheckFileSize.Size();
+					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
+					
 					RecordManagerPrivate.Write();
 					
 				EndIf;
-												
+				
 			EndIf;
-														
+			
 		EndIf;
 		
 	EndIf;
-		
+	
 EndProcedure
 
 &AtServer

@@ -19,7 +19,6 @@
 			<Explanation/>
 			<Picture/>
 			<Content>
-				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_АдресаЭлПочтыДляОтчетов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанные</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ОбъектыСОшибками</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.DefaultValues</xr:Item>

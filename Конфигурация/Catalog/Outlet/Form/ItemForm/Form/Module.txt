@@ -94,32 +94,32 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					CheckFileSize = New File(TempFile);
 					
-					RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-					RecordManager.Object = CurrentObject.Ref;
-					RecordManager.SyncDirection = Enums.SyncDirections.Shared;
-					RecordManager.Action = Enums.SyncAction.AddFile;
-					RecordManager.FileName = New UUID(Row.Value);
-					RecordManager.Extension = Row.Extension;
-					RecordManager.Storage = New ValueStorage(BinaryData);
-					RecordManager.Size = CheckFileSize.Size();
-					RecordManager.FullFileName = "/shared/Catalog.Outlet/" + 
-						CurrentObject.Ref.UUID() + 
-						"/" + 
-						Row.Value + 
-						Lower(Row.Extension);
+					RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+					RecordManager.Объект					= CurrentObject.Ref;
+					RecordManager.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+					RecordManager.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+					RecordManager.ИмяФайла					= New UUID(Row.Value);
+					RecordManager.Расширение				= Row.Extension;
+					RecordManager.Хранилище					= New ValueStorage(BinaryData);
+					RecordManager.Размер					= CheckFileSize.Size();
+					RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
+																CurrentObject.Ref.UUID() + 
+																"/" + 
+																Row.Value + 
+																Lower(Row.Extension);
 						
 					RecordManager.Write();
 					
 				ElsIf Row.Type = "Private" Then
 					
-					SelectionStructure = New Structure("FileName");
-					SelectionStructure.FileName = New UUID(Row.Value);
+					SelectionStructure = New Structure("ИмяФайла");
+					SelectionStructure.ИмяФайла = New UUID(Row.Value);
 					
-					Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+					Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
 					
 					If Selection.Next() Then
 						
-						RecordManagerPrivate = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+						RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 						
 						FillPropertyValues(RecordManagerPrivate, Selection);
 						
@@ -131,16 +131,15 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 						
 						CheckFileSize = New File(TempFile);
 						
-						RecordManagerPrivate.SyncDirection = Enums.SyncDirections.Shared;
-						RecordManagerPrivate.Action = Enums.SyncAction.AddFile;
-						RecordManagerPrivate.User = Catalogs.User.EmptyRef();
-						RecordManagerPrivate.Storage = New ValueStorage(BinaryData);
-						RecordManagerPrivate.Size = CheckFileSize.Size();
-						RecordManagerPrivate.FullFileName = "/shared/Catalog.Outlet/" + 
-							CurrentObject.Ref.UUID() + 
-							"/" + 
-							Row.Value + 
-							Lower(Row.Extension);
+						RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+						RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+						RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
+						RecordManagerPrivate.Размер						= CheckFileSize.Size();
+						RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
+																			CurrentObject.Ref.UUID() + 
+																			"/" + 
+																			Row.Value + 
+																			Lower(Row.Extension);
 						
 						RecordManagerPrivate.Write();
 						
@@ -162,32 +161,32 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				
 				CheckFileSize = New File(TempFile);
 				
-				RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
-				RecordManager.Object = CurrentObject.Ref;
-				RecordManager.SyncDirection = Enums.SyncDirections.Shared;
-				RecordManager.Action = Enums.SyncAction.AddFile;
-				RecordManager.FileName = New UUID(Row.FileName);
-				RecordManager.Extension = Row.Extension;
-				RecordManager.Storage = New ValueStorage(BinaryData);
-				RecordManager.Size = CheckFileSize.Size();
-				RecordManager.FullFileName = "/shared/Catalog.Outlet/" + 
-					CurrentObject.Ref.UUID() + 
-					"/" + 
-					String(Row.FileName) + 
-					Lower(Row.Extension);
-					
+				RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+				RecordManager.Объект					= CurrentObject.Ref;
+				RecordManager.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+				RecordManager.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+				RecordManager.ИмяФайла					= New UUID(Row.FileName);
+				RecordManager.Расширение				= Row.Extension;
+				RecordManager.Хранилище					= New ValueStorage(BinaryData);
+				RecordManager.Размер					= CheckFileSize.Size();
+				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
+															CurrentObject.Ref.UUID() + 
+															"/" + 
+															String(Row.FileName) + 
+															Lower(Row.Extension);
+				
 				RecordManager.Write();
 				
 			ElsIf Row.Type = "Private" Then
 				
-				SelectionStructure = New Structure("FileName");
-				SelectionStructure.FileName = New UUID(Row.FileName);
+				SelectionStructure = New Structure("ИмяФайла");
+				SelectionStructure.ИмяФайла = New UUID(Row.FileName);
 				
-				Selection = InformationRegisters.StorageAdditionalInformation.Select(SelectionStructure);
+				Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
 				
 				If Selection.Next() Then
 					
-					RecordManagerPrivate = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+					RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 					
 					FillPropertyValues(RecordManagerPrivate, Selection);
 					
@@ -199,16 +198,15 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					CheckFileSize = New File(TempFile);
 					
-					RecordManagerPrivate.SyncDirection = Enums.SyncDirections.Shared;
-					RecordManagerPrivate.Action = Enums.SyncAction.AddFile;
-					RecordManagerPrivate.User = Catalogs.User.EmptyRef();
-					RecordManagerPrivate.Storage = New ValueStorage(BinaryData);
-					RecordManagerPrivate.Size = CheckFileSize.Size();
-					RecordManagerPrivate.FullFileName = "/shared/Catalog.Outlet/" + 
-						CurrentObject.Ref.UUID() + 
-						"/" + 
-						Row.FileName + 
-						Lower(Row.Extension);
+					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
+					RecordManagerPrivate.Размер						= CheckFileSize.Size();
+					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
+																		CurrentObject.Ref.UUID() + 
+																		"/" + 
+																		Row.FileName + 
+																		Lower(Row.Extension);
 					
 					RecordManagerPrivate.Write();
 				
@@ -418,19 +416,18 @@ Function GetFileTable()
 	// сведений с файлами.
 	Query = New Query(
 	"SELECT
-	|	StorageAdditionalInformation.Object,
-	|	StorageAdditionalInformation.SyncDirection,
-	|	StorageAdditionalInformation.Action,
-	|	StorageAdditionalInformation.User,
-	|	StorageAdditionalInformation.FileName,
-	|	StorageAdditionalInformation.FullFileName,
-	|	StorageAdditionalInformation.Extension,
-	|	StorageAdditionalInformation.Storage,
-	|	StorageAdditionalInformation.Size
+	|	bitmobile_ХранилищеФайлов.Объект,
+	|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+	|	bitmobile_ХранилищеФайлов.Действие,
+	|	bitmobile_ХранилищеФайлов.ИмяФайла,
+	|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+	|	bitmobile_ХранилищеФайлов.Расширение,
+	|	bitmobile_ХранилищеФайлов.Хранилище,
+	|	bitmobile_ХранилищеФайлов.Размер
 	|FROM
-	|	InformationRegister.StorageAdditionalInformation AS StorageAdditionalInformation
+	|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
 	|WHERE
-	|	StorageAdditionalInformation.Object = &Outlet");
+	|	bitmobile_ХранилищеФайлов.Объект = &Outlet");
 	
 	Query.SetParameter("Outlet", Object.Ref);
 	
@@ -453,7 +450,7 @@ Procedure FillPictureInformation(FileTable, Row, FileNameColumnName)
 			ShapshotUUID = New UUID(Row[FileNameColumnName]);
 			
 			// Ищем в таблице файлов уид из текущей строки
-			FileTableRow = FileTable.Find(ShapshotUUID, "FileName");
+			FileTableRow = FileTable.Find(ShapshotUUID, "ИмяФайла");
 			
 			// Если найден уид в таблице файлов
 			If Not FileTableRow = Undefined Then
@@ -478,13 +475,13 @@ Procedure FillPictureInformation(FileTable, Row, FileNameColumnName)
 				EndTry;
 				
 				// Забираем бинарные данные из таблицы файлов
-				BinaryDataOfFile = FileTableRow.Storage.Get();
+				BinaryDataOfFile = FileTableRow.Хранилище.Get();
 				
 				// Если бинарные данные есть
 				If ValueIsFilled(BinaryDataOfFile) Then
 					
-					Row.StorageAddress = PutToTempStorage(FileTableRow.Storage.Get(), ThisForm.UUID);
-					Row.Extension = FileTableRow.Extension;
+					Row.StorageAddress = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+					Row.Extension = FileTableRow.Расширение;
 					
 				// Если нет бинарных данных
 				Else
@@ -495,12 +492,12 @@ Procedure FillPictureInformation(FileTable, Row, FileNameColumnName)
 						// Пробуем забрать файл
 						Try
 							
-							WebDAVFile = GetTempFileName(FileTableRow.Extension);
+							WebDAVFile = GetTempFileName(FileTableRow.Расширение);
 							
-							Connection.Get(Path + FileTableRow.FullFileName, WebDAVFile);
+							Connection.Get(Path + FileTableRow.ПолноеИмяФайла, WebDAVFile);
 							
 							Row.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-							Row.Extension 		= FileTableRow.Extension;
+							Row.Extension 		= FileTableRow.Расширение;
 							
 						// Не получилось забрать файл
 						Except
