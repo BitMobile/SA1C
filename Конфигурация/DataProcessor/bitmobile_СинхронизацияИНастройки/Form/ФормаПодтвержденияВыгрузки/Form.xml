@@ -165,7 +165,7 @@
 		</UsualGroup>
 		<LabelDecoration name="Декорация1" id="5">
 			<Width>45</Width>
-			<TextColor>style:ПоясняющийТекст</TextColor>
+			<TextColor>style:FieldSelectionBackColor</TextColor>
 			<Title formatted="false">
 				<v8:item>
 					<v8:lang>ru</v8:lang>
