@@ -72,6 +72,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ДействияПриСинхронизации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_НаправленияСинхронизации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Role.Admin</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.УниверсальныйОбменДаннымиXML</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
