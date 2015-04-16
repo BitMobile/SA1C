@@ -34,7 +34,6 @@
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.bitmobile_СинхронизацияИНастройки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_СоответствиеПеречислений</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_КонтролируемыеИзмеренияРегистров</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">5f92fb95-8447-4f23-b4cc-cf6d4c924930</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_АдресаЭлПочтыДляОтчетов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИспользоватьОтправкуОтчета</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_РазмерПрикрепляемогоФайла</xr:Item>
@@ -72,6 +71,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ИспользуетсяSSLSMTP</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ДействияПриСинхронизации</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_НаправленияСинхронизации</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Role.Admin</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
