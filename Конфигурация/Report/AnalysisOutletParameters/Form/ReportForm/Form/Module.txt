@@ -2,6 +2,32 @@
 #Region CommonProceduresAndFunctions
 
 &AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	ReportObject			= FormDataToValue(Report, Type("ReportObject"));
+	DataCompositionSchema	= ReportObject.DataCompositionSchema;
+	DataSets				= DataCompositionSchema.DataSets;
+	DataSet					= DataSets[0];
+	
+	For Each DataSetField In DataSet.Fields Do 
+		
+		ParameterValue = DataSetField.EditParameters.Items.Find("ChoiceParameters").Value;
+		
+		For Each ChoiceParameter In ParameterValue Do
+			
+			Ins				= FieldsTable.Add();
+			Ins.Field		= DataSetField.Field;
+			Ins.ParamName	= ChoiceParameter.Name;
+			Ins.ParamValue	= ChoiceParameter.Value;
+			Ins.Type		= DataSetField.ValueType;
+			
+		EndDo;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
 Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 	
 	Password 	= Constants.bitmobile_Пароль.Get();
@@ -125,33 +151,6 @@ Function GetFields(Details)
 	
 EndFunction
 
-&AtServer
-Function GetFilter(DataCompositionField)
-	
-	ReportObject = FormDataToValue(Report, Type("ReportObject"));
-	DataCompositionSchema = ReportObject.DataCompositionSchema;
-	DataSets = DataCompositionSchema.DataSets;
-	DataSet = DataSets[0];
-	Field = DataSet.Fields.Find(DataCompositionField);
-		
-	Filter = New Map;
-	
-	If Not Field = Undefined Then
-	
-		ParameterValue = Field.EditParameters.Items.Find("ChoiceParameters").Value;
-		
-		For Each ChoiceParameter In ParameterValue Do
-			
-			Filter.Insert(ChoiceParameter.Name, ChoiceParameter.Value);
-			
-		EndDo;
-		
-	EndIf;
-	
-	Return Filter;
-	
-EndFunction
-
 #EndRegion
 
 #Region UserInterface
@@ -202,9 +201,30 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 			CurrentUserSetting.ComparisonType = DataCompositionComparisonType.NotInListByHierarchy Then
 			
 			Try
-			
-				Filter = GetFilter(CurrentSetting.LeftValue);
-				ValueType = CurrentUserSetting.RightValue.ValueType;
+				
+				ValueType = Undefined;
+				
+				FieldParameters = FieldsTable.FindRows(New Structure("Field", String(CurrentSetting.LeftValue)));
+				
+				Filter = New Map;
+				
+				For Each FieldParameter In FieldParameters Do
+					
+					If ValueType = Undefined And ValueIsFilled(FieldParameter.Type) Then 
+						
+						ValueType = FieldParameter.Type;
+						
+					EndIf;
+					
+					Filter.Insert(FieldParameter.ParamName, FieldParameter.ParamValue);
+					
+				EndDo;
+				
+				If ValueType = Undefined Then 
+					
+					ValueType = CurrentUserSetting.RightValue.ValueType;
+					
+				EndIf;
 				
 				FormParameters = New Structure;
 				
@@ -217,11 +237,11 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 					Form = GetForm("CommonForm.ValueListForm", FormParameters, Item, , WindowOpenVariant.SingleWindow);
 					
 					For Each Row In Filter Do
-							
-						NewRow = Form.Filter.Add();
-						NewRow.FilterName = Row.Key;
-						NewRow.Value = Row.Value;
-							
+						
+						NewRow				= Form.Filter.Add();
+						NewRow.FilterName	= Row.Key;
+						NewRow.Value		= Row.Value;
+						
 					EndDo;
 					
 					Form.ValueList.LoadValues(CurrentUserSetting.RightValue.UnloadValues());

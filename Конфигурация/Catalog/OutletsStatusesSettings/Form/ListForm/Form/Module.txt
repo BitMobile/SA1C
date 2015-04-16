@@ -1,4 +1,6 @@
 ﻿
+#Region CommonProceduresAndFunctions
+
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
@@ -26,21 +28,72 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
-&AtClient
-Procedure OutletStatusesAttributeOnChange(Item)
-	
-	CurrentData = Items.OutletStatuses.CurrentData;
-	SettingRef = CurrentData.Ref;
-	AttributeName = Item.Name;
-	ChangeStatus(SettingRef, AttributeName);
-	
-EndProcedure
-
 &AtServer
-Procedure ChangeStatus(SettingRef, AttributeName)
+Procedure ChangeStatus(SettingRef, AttributeName, ClearAll, SetVisible)
 	
 	SettingObject = SettingRef.GetObject();
+	
+	If AttributeName = "ShowOutletInMA" Then 
+		
+		If SettingObject.ShowOutletInMA Then 
+			
+			SettingObject.DoVisitInMA			= False;
+			SettingObject.CreateOrderInMA		= False;
+			SettingObject.FillQuestionnaireInMA	= False;
+			SettingObject.DoEncashmentInMA		= False;
+			
+			ClearAll = True;
+			
+		EndIf;
+		
+	Else 
+		
+		If Not SettingObject[AttributeName] And Not SettingObject.ShowOutletInMA Then 
+			
+			SettingObject.ShowOutletInMA = True;
+			
+			SetVisible = True;
+			
+		EndIf;
+		
+	EndIf;
+	
 	SettingObject[AttributeName] = NOT SettingObject[AttributeName];
+	
 	SettingObject.Write();
 	
 EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure OutletStatusesAttributeOnChange(Item)
+	
+	CurrentData		= Items.OutletStatuses.CurrentData;
+	SettingRef		= CurrentData.Ref;
+	AttributeName	= Item.Name;
+	ClearAll		= False;
+	SetVisible		= False;
+	
+	ChangeStatus(SettingRef, AttributeName, ClearAll, SetVisible);
+	
+	If SetVisible Then 
+		
+		CurrentData.ShowOutletInMA = True;
+		
+	EndIf;
+	
+	If ClearAll Then 
+		
+		CurrentData.DoVisitInMA				= False;
+		CurrentData.CreateOrderInMA			= False;
+		CurrentData.FillQuestionnaireInMA	= False;
+		CurrentData.DoEncashmentInMA		= False;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
