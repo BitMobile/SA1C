@@ -291,7 +291,7 @@
 			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
-			<DefaultObjectForm>Catalog.User.Form.ItemForm</DefaultObjectForm>
+			<DefaultObjectForm>Catalog.User.Form.ItemFоrm</DefaultObjectForm>
 			<DefaultFolderForm/>
 			<DefaultListForm>Catalog.User.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm>Catalog.User.Form.ChoiceForm</DefaultChoiceForm>
@@ -750,7 +750,7 @@
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
 			</Attribute>
-			<Form>ItemForm</Form>
+			<Form>ItemFоrm</Form>
 			<Form>ListForm</Form>
 			<Form>ChoiceForm</Form>
 		</ChildObjects>

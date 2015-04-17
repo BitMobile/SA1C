@@ -180,7 +180,7 @@
 			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
-			<DefaultObjectForm>Document.Order.Form.DocumentForm</DefaultObjectForm>
+			<DefaultObjectForm>Document.Order.Form.DocumentFоrm</DefaultObjectForm>
 			<DefaultListForm>Document.Order.Form.ListForm</DefaultListForm>
 			<DefaultChoiceForm/>
 			<AuxiliaryObjectForm/>
@@ -657,7 +657,7 @@
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
 			</Attribute>
-			<Form>DocumentForm</Form>
+			<Form>DocumentFоrm</Form>
 			<Form>ListForm</Form>
 			<TabularSection uuid="b9f6af58-bca6-4bc5-8d03-cfa98b982966">
 				<InternalInfo>
