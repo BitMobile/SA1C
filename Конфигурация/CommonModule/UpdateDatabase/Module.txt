@@ -1349,6 +1349,9 @@ Procedure UpdateForRelease_1_6_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update SKU questions'; ru = 'Обновление вопросов по номенклатуре'"));
 	ProcessPromoQuestion();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update questionnaires'; ru = 'Обновление анкет'"));
+	RewriteQuestionnaires();
+	
 EndProcedure
 
 Procedure ProcessPromoQuestion()
@@ -1476,6 +1479,28 @@ Procedure ProcessOutletsStatuses()
 		Record.Period	= CurrentDate();
 		
 		Record.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure RewriteQuestionnaires()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Questionnaire.Ref AS Questionnaire
+		|FROM
+		|	Document.Questionnaire AS Questionnaire";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		QuestionnaireObject = Selection.Questionnaire.GetObject();
+		QuestionnaireObject.Write();
 		
 	EndDo;
 	
