@@ -13,6 +13,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
 	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
 	
+	SKUFeaturesRegistration		= Constants.SKUFeaturesRegistration.Get();
+	
 EndProcedure
 
 &AtServer
@@ -59,6 +61,8 @@ Procedure SaveSettingsServer()
 	SnapshotSizeObject.NumericValue				= SnapshotSize;
 	
 	SnapshotSizeObject.Write();
+	
+	Constants.SKUFeaturesRegistration.Set(SKUFeaturesRegistration);
 	
 EndProcedure
 
