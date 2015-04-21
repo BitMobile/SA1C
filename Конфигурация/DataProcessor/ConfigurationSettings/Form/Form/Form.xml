@@ -217,11 +217,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Multistock</v8:content>
+					<v8:content>Multistock enable</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Многоскладской учет</v8:content>
+					<v8:content>Использовать многоскладской учет</v8:content>
 				</v8:item>
 			</Title>
 			<Type>
