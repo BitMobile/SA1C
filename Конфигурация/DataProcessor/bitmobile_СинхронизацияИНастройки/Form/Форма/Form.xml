@@ -1874,11 +1874,11 @@ FROM
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Report recipients</v8:content>
+					<v8:content>E-mail addresses for reports</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Получатели отчетов</v8:content>
+					<v8:content>Адреса эл.почты для отчетов</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
