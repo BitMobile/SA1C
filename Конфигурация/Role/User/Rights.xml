@@ -2719,17 +2719,6 @@ WHERE MobileAppPlanVisit.SR IN
 		</right>
 	</object>
 	<object>
-		<name>Catalog.bitmobile_НастройкиСинхронизации.Attribute.БлокироватьПриПолнойВыгрузкеДанных</name>
-		<right>
-			<name>View</name>
-			<value>false</value>
-		</right>
-		<right>
-			<name>Edit</name>
-			<value>false</value>
-		</right>
-	</object>
-	<object>
 		<name>Constant.bitmobile_ИспользуетсяSSLSMTP</name>
 		<right>
 			<name>Read</name>

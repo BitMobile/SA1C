@@ -319,14 +319,6 @@
 											<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
 											<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
 										</CheckBoxField>
-										<CheckBoxField name="БлокироватьПриПолнойВыгрузке" id="113">
-											<DataPath>Объект.БлокироватьПриПолнойВыгрузкеДанных</DataPath>
-											<TitleLocation>Left</TitleLocation>
-											<TitleHeight>2</TitleHeight>
-											<CheckBoxType>CheckBox</CheckBoxType>
-											<ContextMenu name="БлокироватьПриПолнойВыгрузкеКонтекстноеМеню" id="114"/>
-											<ExtendedTooltip name="БлокироватьПриПолнойВыгрузкеExtendedTooltip" id="217"/>
-										</CheckBoxField>
 									</ChildItems>
 								</UsualGroup>
 								<UsualGroup name="ГруппаФайлы" id="70">
