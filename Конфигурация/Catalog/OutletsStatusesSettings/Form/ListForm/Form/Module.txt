@@ -12,6 +12,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	|	OutletsStatusesSettings.CreateOrderInMA,
 	|	OutletsStatusesSettings.FillQuestionnaireInMA,
 	|	OutletsStatusesSettings.DoEncashmentInMA,
+	|	OutletsStatusesSettings.CreateReturnInMA,
 	|	OutletsStatusesSettings.Ref
 	|FROM
 	|	Catalog.OutletsStatusesSettings AS OutletsStatusesSettings");

@@ -1696,6 +1696,7 @@ Procedure ProcessOutletsStatusesSettings()
 	PotentialObject.CreateOrderInMA = False;
 	PotentialObject.FillQuestionnaireInMA = True;
 	PotentialObject.DoEncashmentInMA = False;
+	PotentialObject.CreateReturnInMA = False;
 	PotentialObject.Write();
 	
 	ActiveObject = Catalogs.OutletsStatusesSettings.Active.GetObject();
@@ -1705,6 +1706,7 @@ Procedure ProcessOutletsStatusesSettings()
 	ActiveObject.CreateOrderInMA = True;
 	ActiveObject.FillQuestionnaireInMA = True;
 	ActiveObject.DoEncashmentInMA = True;
+	ActiveObject.CreateReturnInMA = True;
 	ActiveObject.Write();
 	
 	ClosedObject = Catalogs.OutletsStatusesSettings.Closed.GetObject();
@@ -1714,6 +1716,7 @@ Procedure ProcessOutletsStatusesSettings()
 	ClosedObject.CreateOrderInMA = False;
 	ClosedObject.FillQuestionnaireInMA = False;
 	ClosedObject.DoEncashmentInMA = False;
+	ClosedObject.CreateReturnInMA = False;
 	ClosedObject.Write();
 	
 EndProcedure

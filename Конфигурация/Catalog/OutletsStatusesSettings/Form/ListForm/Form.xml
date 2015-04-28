@@ -122,6 +122,13 @@
 						<Event name="OnChange">OutletStatusesAttributeOnChange</Event>
 					</Events>
 				</CheckBoxField>
+				<CheckBoxField name="OutletStatusesCreateReturnInMA" id="40">
+					<DataPath>OutletStatuses.CreateReturnInMA</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="OutletStatusesCreateReturnInMAContextMenu" id="41"/>
+					<ExtendedTooltip name="OutletStatusesCreateReturnInMAExtendedTooltip" id="42"/>
+				</CheckBoxField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
@@ -244,6 +251,21 @@
 					</Title>
 					<Type>
 						<v8:Type>cfg:CatalogRef.OutletsStatusesSettings</v8:Type>
+					</Type>
+				</Column>
+				<Column name="CreateReturnInMA" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Create return in MA</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Создание возврата в МП</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
 					</Type>
 				</Column>
 			</Columns>
