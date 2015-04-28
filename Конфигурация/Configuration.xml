@@ -176,6 +176,7 @@
 			<ScheduledJob>bitmobile_ОчисткаЖурналаРегистрации</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
+			<FunctionalOption>Returns</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
 			<CommonCommand>HistoryTask</CommonCommand>
 			<CommonCommand>ShowRegularQuestions</CommonCommand>
@@ -206,6 +207,7 @@
 			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
 			<CommonCommand>ShowExchangePlans</CommonCommand>
 			<CommonCommand>ShowConfigurationSettings</CommonCommand>
+			<Constant>Returns</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
