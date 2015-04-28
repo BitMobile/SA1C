@@ -32,6 +32,12 @@
 						<Description>en = 'Order'; ru = 'Заказ'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="ad3c2893-57c2-4ca0-8182-5126113d69a7">
+						<Name>Document_Return</Name>
+						<Code>000000212</Code>
+						<Description>en = 'Return'; ru = 'Возврат'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 			<Item id="1bd89d57-de16-4227-a2db-488859be6362">

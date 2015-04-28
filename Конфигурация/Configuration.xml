@@ -290,6 +290,7 @@
 			<Document>Order</Document>
 			<Document>PriceList</Document>
 			<Document>Questionnaire</Document>
+			<Document>Return</Document>
 			<Document>Task</Document>
 			<Document>Visit</Document>
 			<Document>VisitPlan</Document>
