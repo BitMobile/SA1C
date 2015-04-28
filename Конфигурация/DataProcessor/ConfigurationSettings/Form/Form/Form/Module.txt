@@ -12,6 +12,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	PlanVisitEnabled			= Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
 	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
 	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
+	CreateReturnsEnabled		= Catalogs.MobileAppSettings.CreateReturnsEnabled.LogicValue;
 	
 	SKUFeaturesRegistration		= Constants.SKUFeaturesRegistration.Get();
 	
@@ -61,6 +62,11 @@ Procedure SaveSettingsServer()
 	SnapshotSizeObject.NumericValue				= SnapshotSize;
 	
 	SnapshotSizeObject.Write();
+	
+	CreateReturnsObject							= Catalogs.MobileAppSettings.CreateReturnsEnabled.GetObject();
+	CreateReturnsObject.LogicValue				= CreateReturnsEnabled;
+	
+	CreateReturnsObject.Write();
 	
 	Constants.SKUFeaturesRegistration.Set(SKUFeaturesRegistration);
 	

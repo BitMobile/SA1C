@@ -18,6 +18,12 @@
 		<Description>CoordinateControlEnabled</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="e3ae61ef-57d2-40a9-a9f6-c99ff10a8fb0">
+		<Name>CreateReturnsEnabled</Name>
+		<Code>000000009</Code>
+		<Description>CreateReturnsEnabled</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="78fe1747-9ab0-4a6d-b1eb-7f5b37c04762">
 		<Name>EmptyStockEnabled</Name>
 		<Code>000000004</Code>

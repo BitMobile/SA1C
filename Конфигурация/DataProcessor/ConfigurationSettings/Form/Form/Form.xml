@@ -74,6 +74,12 @@
 			<ContextMenu name="MultistockEnabledContextMenu" id="8"/>
 			<ExtendedTooltip name="MultistockEnabledExtendedTooltip" id="9"/>
 		</CheckBoxField>
+		<CheckBoxField name="CreateReturnsEnabled" id="39">
+			<DataPath>CreateReturnsEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="CreateReturnsEnabledContextMenu" id="40"/>
+			<ExtendedTooltip name="CreateReturnsEnabledExtendedTooltip" id="41"/>
+		</CheckBoxField>
 		<LabelDecoration name="Decoration2" id="4">
 			<HorizontalStretch>true</HorizontalStretch>
 			<Font ref="sys:DefaultGUIFont" height="10" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
@@ -283,6 +289,21 @@
 				<v8:item>
 					<v8:lang>en</v8:lang>
 					<v8:content>SKUFeatures registration</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="CreateReturnsEnabled" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Create returns enabled</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать возвраты</v8:content>
 				</v8:item>
 			</Title>
 			<Type>
