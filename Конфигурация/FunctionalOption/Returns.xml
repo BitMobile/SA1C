@@ -12,7 +12,9 @@
 			<Comment/>
 			<Location>Constant.Returns</Location>
 			<PrivilegedGetMode>true</PrivilegedGetMode>
-			<Content/>
+			<Content>
+				<xr:Object>Document.Return</xr:Object>
+			</Content>
 		</Properties>
 	</FunctionalOption>
 </MetaDataObject>
