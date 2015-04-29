@@ -1901,14 +1901,53 @@ WHERE MobileAppPlanVisit.SR IN
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>Returns FROM Document.Return AS Returns
+	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
+	ON Returns.Outlet = TerritoryOutlets.Outlet
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
+	AND Returns.SR IN 
+			(SELECT
+				TerritorySRs.SR
+			FROM 
+				Catalog.Territory.SRs AS TerritorySRs
+			WHERE TerritorySRs.Ref.Owner IN
+				(SELECT
+					ManagersOfRegions.Region
+				FROM
+					InformationRegister.ManagersOfRegions AS ManagersOfRegions
+				WHERE
+					ManagersOfRegions.Manager = &amp;CurrentUser))
+	AND TerritoryOutlets.Ref.Owner IN
+			(SELECT
+				ManagersOfRegions.Region
+			FROM
+				InformationRegister.ManagersOfRegions AS ManagersOfRegions
+			WHERE
+				ManagersOfRegions.Manager = &amp;CurrentUser)</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Number</field>
+				<field>Date</field>
+				<field>Posted</field>
+				<field>DeletionMark</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Return")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Document_Return")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Posting</name>
