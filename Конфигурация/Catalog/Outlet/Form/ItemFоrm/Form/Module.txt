@@ -60,6 +60,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	Items.GroupParameters.Visible = HasRightToReadOutletParameters();
+	
 	// Запомнить ранее введенные проверяемые данные
 	TempEmail		= Object.Email;
 	TempPhoneNumber	= Object.PhoneNumber;
@@ -82,48 +84,13 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then
 		
-		For Each Row In Object.Parameters Do
-			
-			If IsPicture(Row.Parameter) Then
+		If HasRightToReadOutletParameters() Then
+		
+			For Each Row In Object.Parameters Do
 				
-				If Row.Type = "New" Then
+				If IsPicture(Row.Parameter) Then
 					
-					TempFile = GetTempFileName(Row.Extension);
-					BinaryData = GetFromTempStorage(Row.StorageAddress);
-					BinaryData.Write(TempFile);
-					
-					CheckFileSize = New File(TempFile);
-					
-					RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
-					RecordManager.Объект					= CurrentObject.Ref;
-					RecordManager.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
-					RecordManager.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
-					RecordManager.ИмяФайла					= New UUID(Row.Value);
-					RecordManager.Расширение				= Row.Extension;
-					RecordManager.Хранилище					= New ValueStorage(BinaryData);
-					RecordManager.Размер					= CheckFileSize.Size();
-					RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
-																CurrentObject.Ref.UUID() + 
-																"/" + 
-																Row.Value + 
-																Lower(Row.Extension);
-						
-					RecordManager.Write();
-					
-				ElsIf Row.Type = "Private" Then
-					
-					SelectionStructure = New Structure("ИмяФайла");
-					SelectionStructure.ИмяФайла = New UUID(Row.Value);
-					
-					Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
-					
-					If Selection.Next() Then
-						
-						RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
-						
-						FillPropertyValues(RecordManagerPrivate, Selection);
-						
-						RecordManagerPrivate.Read();
+					If Row.Type = "New" Then
 						
 						TempFile = GetTempFileName(Row.Extension);
 						BinaryData = GetFromTempStorage(Row.StorageAddress);
@@ -131,25 +98,64 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 						
 						CheckFileSize = New File(TempFile);
 						
-						RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
-						RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
-						RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-						RecordManagerPrivate.Размер						= CheckFileSize.Size();
-						RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
-																			CurrentObject.Ref.UUID() + 
-																			"/" + 
-																			Row.Value + 
-																			Lower(Row.Extension);
+						RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+						RecordManager.Объект					= CurrentObject.Ref;
+						RecordManager.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+						RecordManager.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+						RecordManager.ИмяФайла					= New UUID(Row.Value);
+						RecordManager.Расширение				= Row.Extension;
+						RecordManager.Хранилище					= New ValueStorage(BinaryData);
+						RecordManager.Размер					= CheckFileSize.Size();
+						RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
+																	CurrentObject.Ref.UUID() + 
+																	"/" + 
+																	Row.Value + 
+																	Lower(Row.Extension);
+							
+						RecordManager.Write();
 						
-						RecordManagerPrivate.Write();
+					ElsIf Row.Type = "Private" Then
+						
+						SelectionStructure = New Structure("ИмяФайла");
+						SelectionStructure.ИмяФайла = New UUID(Row.Value);
+						
+						Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
+						
+						If Selection.Next() Then
+							
+							RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+							
+							FillPropertyValues(RecordManagerPrivate, Selection);
+							
+							RecordManagerPrivate.Read();
+							
+							TempFile = GetTempFileName(Row.Extension);
+							BinaryData = GetFromTempStorage(Row.StorageAddress);
+							BinaryData.Write(TempFile);
+							
+							CheckFileSize = New File(TempFile);
+							
+							RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+							RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+							RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
+							RecordManagerPrivate.Размер						= CheckFileSize.Size();
+							RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
+																				CurrentObject.Ref.UUID() + 
+																				"/" + 
+																				Row.Value + 
+																				Lower(Row.Extension);
+							
+							RecordManagerPrivate.Write();
+							
+						EndIf;
 						
 					EndIf;
 					
 				EndIf;
 				
-			EndIf;
-			
-		EndDo;
+			EndDo;
+		
+		EndIf;
 		
 		For Each Row In Object.Snapshots Do
 			
@@ -382,30 +388,34 @@ EndProcedure
 &AtServer
 Procedure FillParametersAdditionalInformation()
 	
-	FileTable = GetFileTable();
+	If HasRightToReadOutletParameters() Then
 	
-	// Для каждой строки из параметров данной торговой точки
-	For Each Row In Object.Parameters Do
+		FileTable = GetFileTable();
 		
-		// Если тип данных параметра текущей строки - фотоснимок
-		If IsPicture(Row.Parameter) Then
+		// Для каждой строки из параметров данной торговой точки
+		For Each Row In Object.Parameters Do
 			
-			If Not ValueIsFilled(Row.StorageAddress) And Not Row.IsPicture Then 
-			
-				FillPictureInformation(FileTable, Row, "Value");
-				Row.IsPicture = True;
+			// Если тип данных параметра текущей строки - фотоснимок
+			If IsPicture(Row.Parameter) Then
+				
+				If Not ValueIsFilled(Row.StorageAddress) And Not Row.IsPicture Then 
+				
+					FillPictureInformation(FileTable, Row, "Value");
+					Row.IsPicture = True;
+					
+				EndIf;
+				
+			// Если тип данных параметра данной строки - не фотоснимок
+			Else
+				
+				Row.Presentation = Row.Value;
+				Row.IsPicture = False;
 				
 			EndIf;
 			
-		// Если тип данных параметра данной строки - не фотоснимок
-		Else
-			
-			Row.Presentation = Row.Value;
-			Row.IsPicture = False;
-			
-		EndIf;
+		EndDo;
 		
-	EndDo;
+	EndIf;
 	
 EndProcedure
 
@@ -556,22 +566,9 @@ EndFunction
 &AtServerNoContext
 Function HasRightToReadOutletParameters()
 	
-	SetPrivilegedMode(True);
-	
 	Selection = Catalogs.RolesOfUsers.SRM.AccessRightsToSystemObjects.Find(Catalogs.SystemObjects.Catalog_OutletsParameters);
 	
-	Query = New Query(
-	"SELECT
-	|	RolesOfUsersAccessRightsToSystemObjects.Read
-	|FROM
-	|	Catalog.RolesOfUsers.AccessRightsToSystemObjects AS RolesOfUsersAccessRightsToSystemObjects
-	|WHERE
-	|	RolesOfUsersAccessRightsToSystemObjects.SystemObject = &SystemObject");
-	
-	Query.SetParameter("SystemObject", Catalogs.SystemObjects.Catalog_OutletsParameters);
-	Result = Query.Execute().Unload();
-	
-	SetPrivilegedMode(False);
+	Return ValueIsFilled(Selection);
 	
 EndFunction
 
