@@ -31,6 +31,22 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndDo;
 	
+	ParameterField = New DataCompositionParameter("Parameter");
+	
+	For Each ItemElement In Report.SettingsComposer.UserSettings.Items Do
+		
+		If TypeOf(ItemElement) = Type("DataCompositionSettingsParameterValue") Then 
+			
+			If ItemElement.Parameter = ParameterField Then
+				
+				ThisForm.ParameterUserSettingId = ItemElement.UserSettingID;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndDo;
+	
 EndProcedure
 
 &AtServerNoContext
@@ -91,8 +107,8 @@ Function GetOutletParameterStructure()
 	For Each ItemElement In Report.SettingsComposer.UserSettings.Items Do
 		
 		If TypeOf(ItemElement) = Type("DataCompositionSettingsParameterValue") Then 
-		
-			If ItemElement.Parameter = ParameterField Then 
+			
+			If ItemElement.UserSettingId = ThisForm.ParameterUserSettingId Then 
 				
 				If ValueIsFilled(ItemElement.Value) Then 
 					
