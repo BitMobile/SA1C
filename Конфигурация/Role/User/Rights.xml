@@ -1905,7 +1905,7 @@ WHERE MobileAppPlanVisit.SR IN
 				<condition>Returns FROM Document.Return AS Returns
 	INNER JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 	ON Returns.Outlet = TerritoryOutlets.Outlet
-WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
+WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Return")
 	AND Returns.SR IN 
 			(SELECT
 				TerritorySRs.SR

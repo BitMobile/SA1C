@@ -537,15 +537,41 @@ EndProcedure
 &AtServerNoContext
 Function IsPicture(Parameter)
 	
-	If Parameter.DataType = Enums.DataType.Snapshot Then 
+	If HasRightToReadOutletParameters() Then
 		
-		Return True;
-		
-	Else 
-		
-		Return False;
+		If Parameter.DataType = Enums.DataType.Snapshot Then 
+			
+			Return True;
+			
+		Else 
+			
+			Return False;
+			
+		EndIf;
 		
 	EndIf;
+	
+EndFunction
+
+&AtServerNoContext
+Function HasRightToReadOutletParameters()
+	
+	SetPrivilegedMode(True);
+	
+	Selection = Catalogs.RolesOfUsers.SRM.AccessRightsToSystemObjects.Find(Catalogs.SystemObjects.Catalog_OutletsParameters);
+	
+	Query = New Query(
+	"SELECT
+	|	RolesOfUsersAccessRightsToSystemObjects.Read
+	|FROM
+	|	Catalog.RolesOfUsers.AccessRightsToSystemObjects AS RolesOfUsersAccessRightsToSystemObjects
+	|WHERE
+	|	RolesOfUsersAccessRightsToSystemObjects.SystemObject = &SystemObject");
+	
+	Query.SetParameter("SystemObject", Catalogs.SystemObjects.Catalog_OutletsParameters);
+	Result = Query.Execute().Unload();
+	
+	SetPrivilegedMode(False);
 	
 EndFunction
 
