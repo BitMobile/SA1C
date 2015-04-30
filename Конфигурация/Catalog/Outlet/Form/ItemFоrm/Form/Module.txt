@@ -566,9 +566,12 @@ EndFunction
 &AtServerNoContext
 Function HasRightToReadOutletParameters()
 	
-	Selection = Catalogs.RolesOfUsers.SRM.AccessRightsToSystemObjects.Find(Catalogs.SystemObjects.Catalog_OutletsParameters);
+	Selection = SessionParameters.CurrentUser.RoleOfUser.AccessRightsToSystemObjects.Find(Catalogs.SystemObjects.Catalog_OutletsParameters);
 	
-	Return ValueIsFilled(Selection);
+	IsAdmin = NOT ValueIsFilled(SessionParameters.CurrentUser.RoleOfUser);
+	HasRightToReadParameters = ValueIsFilled(Selection);
+	
+	Return IsAdmin OR HasRightToReadParameters;
 	
 EndFunction
 
