@@ -576,6 +576,18 @@ FROM
 						</v8:item>
 					</dcsset:userSettingPresentation>
 				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Questionnaire</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>521c5801-2f83-45f1-b5e6-51eab2390ec2</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Outlet</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>d19755bb-49f8-44f7-b3ee-7a491ee429d2</dcsset:userSettingID>
+				</dcsset:item>
 				<dcsset:viewMode>Normal</dcsset:viewMode>
 			</dcsset:filter>
 			<dcsset:dataParameters>
