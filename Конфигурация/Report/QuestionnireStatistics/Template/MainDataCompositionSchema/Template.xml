@@ -242,12 +242,20 @@
 	VisitQuestions.Ref AS VisitRef,
 	VisitQuestions.Question,
 	VisitQuestions.Answer,
-	QuestionnaireQuestions.Ref AS Questionnaire
+	QuestionsInQuestionnairesSliceLast.Questionnaire
 INTO Questions
 FROM
 	Document.Visit.Questions AS VisitQuestions
-		LEFT JOIN Document.Questionnaire.Questions AS QuestionnaireQuestions
-		ON VisitQuestions.Question = QuestionnaireQuestions.Question
+		LEFT JOIN InformationRegister.QuestionsInQuestionnaires.SliceLast(, ) AS QuestionsInQuestionnairesSliceLast
+		ON VisitQuestions.Questionnaire = QuestionsInQuestionnairesSliceLast.Questionnaire
+			AND VisitQuestions.Question = QuestionsInQuestionnairesSliceLast.ChildQuestion
+WHERE
+	NOT QuestionsInQuestionnairesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	AND CASE
+			WHEN &amp;КонецПериода = DATETIME(1, 1, 1)
+				THEN TRUE
+			ELSE QuestionsInQuestionnairesSliceLast.Period &lt;= &amp;КонецПериода
+		END
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -326,11 +334,15 @@ FROM
 		<expression>Answer</expression>
 	</totalField>
 	<parameter>
-		<name>Период</name>
+		<name>Period1</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
 				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
 			</v8:item>
 		</title>
 		<valueType>
@@ -363,7 +375,7 @@ FROM
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаНачала</expression>
+		<expression>&amp;Period1.ДатаНачала</expression>
 	</parameter>
 	<parameter>
 		<name>КонецПериода</name>
@@ -385,7 +397,24 @@ FROM
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаОкончания</expression>
+		<expression>&amp;Period1.ДатаОкончания</expression>
+	</parameter>
+	<parameter>
+		<name>Period</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
 	</parameter>
 	<template>
 		<name>Макет1</name>
@@ -587,13 +616,13 @@ FROM
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:parameter>Period1</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
 						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
-					<dcsset:userSettingID>2a2b0e26-677d-46f1-831e-675cdaee0459</dcsset:userSettingID>
+					<dcsset:userSettingID>5cc6a942-d39a-497a-bfa9-5f291c5cad7f</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
