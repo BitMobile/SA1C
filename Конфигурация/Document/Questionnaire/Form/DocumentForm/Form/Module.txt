@@ -851,7 +851,7 @@ Procedure WriteQuestions(Cancel, Tree, DeletedTable, CurrentObject)
 			Manager.Obligatoriness	= DeletedElement.Obligatoriness;
 			Manager.Order			= IndOrder;
 			Manager.QuestionType	= DeletedElement.Question.Owner.Type;
-			Manager.Status			=  Enums.ValueTableRowStatuses.Deleted;
+			Manager.Status			= Enums.ValueTableRowStatuses.Deleted;
 			
 			Manager.Write();
 			

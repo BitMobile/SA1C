@@ -41,12 +41,12 @@ Procedure OnWrite(Cancel)
 				
 				RecordManager.Delete();
 				
-			EndIf;	
+			EndIf;
 			
 		EndDo;
-				
-	EndIf;
 		
+	EndIf;
+	
 EndProcedure
 
 

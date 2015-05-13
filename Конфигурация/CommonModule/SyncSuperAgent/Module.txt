@@ -435,12 +435,12 @@ Procedure ActualizePeriodicity() Export
 						
 						Write = True;
 						
-					EndIf;					
+					EndIf;
 					
 				EndIf;
 				
 			EndIf;
-
+			
 			If Write = True Then
 				
 				ResultRow = InformationRegisters.QuestionnairesSchedule.CreateRecordManager();
@@ -457,9 +457,9 @@ Procedure ActualizePeriodicity() Export
 					ResultRow.Date = CurrentDate;
 					ResultRow.BeginAnswerPeriod = BeginSchedulePeriod;
 					ResultRow.EndAnswerPeriod = EndSchedulePeriod;
-						
+					
 					ResultRow.Write();
-									
+					
 				EndIf;
 				
 			EndIf;
@@ -467,9 +467,8 @@ Procedure ActualizePeriodicity() Export
 			CurrentDate = CurrentDate + Day;
 			
 		EndDo;
-				
+		
 	EndDo;
-
 	
 EndProcedure
 

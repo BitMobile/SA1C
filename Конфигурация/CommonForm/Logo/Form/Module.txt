@@ -265,7 +265,7 @@ Procedure SetFilesSyncInfo(LastDate, LastStatus, IsDataProcessorNotification, Fi
 		Else 
 			
 			Items.FilesSync.TextColor = WebColors.Red;
-			FilesSync = NStr("en = 'no information'; ru = 'нет данных'");
+			FilesSync = NStr("en = 'No information'; ru = 'Нет данных'");
 							
 		EndIf;
 		
