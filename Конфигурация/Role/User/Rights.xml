@@ -4004,6 +4004,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
+		<name>Constant.SizeOfThumbnailPhotos</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Constant.bitmobile_СтатусПоследнейЗагрузкиДанных</name>
 		<right>
 			<name>Read</name>
@@ -4708,13 +4715,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<name>CommonForm.ДлительнаяОперация</name>
 		<right>
 			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>Constant.bitmobile_ПротоколПередачиФайлов</name>
-		<right>
-			<name>Read</name>
 			<value>true</value>
 		</right>
 	</object>

@@ -82,12 +82,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 			If NewPictureType = "New" Then 
 				
-				
-				TempFile 	= GetTempFileName(NewPictureExtension);
 				BinaryData	= GetFromTempStorage(PictureAddress);
-				BinaryData.Write(TempFile);
-				
-				CheckFileSize = New File(TempFile);
 				
 				RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 				RecordManager.Объект					= CurrentObject.Ref;
@@ -96,7 +91,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				RecordManager.ИмяФайла					= NewPictureName;
 				RecordManager.Расширение				= Lower(NewPictureExtension);
 				RecordManager.Хранилище					= New ValueStorage(BinaryData);
-				RecordManager.Размер					= CheckFileSize.Size();
 				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
 				
 				RecordManager.Write();
@@ -116,16 +110,11 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					RecordManagerPrivate.Read();
 					
-					TempFile 	= GetTempFileName(NewPictureExtension);
 					BinaryData	= GetFromTempStorage(PictureAddress);
-					BinaryData.Write(TempFile);
-					
-					CheckFileSize = New File(TempFile);
 					
 					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
 					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
 					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-					RecordManagerPrivate.Размер						= CheckFileSize.Size();
 					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
 					
 					RecordManagerPrivate.Write();

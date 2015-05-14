@@ -227,7 +227,7 @@
 									<ExtendedTooltip name="РасширениеExtendedTooltip" id="69"/>
 								</LabelField>
 								<LabelField name="Размер" id="70">
-									<DataPath>Список.Размер</DataPath>
+									<DataPath>1/15</DataPath>
 									<ContextMenu name="РазмерContextMenu" id="71"/>
 									<ExtendedTooltip name="РазмерExtendedTooltip" id="72"/>
 								</LabelField>

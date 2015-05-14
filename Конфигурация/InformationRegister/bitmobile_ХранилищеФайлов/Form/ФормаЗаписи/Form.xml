@@ -32,7 +32,7 @@
 			<ExtendedTooltip name="РасширениеExtendedTooltip" id="18"/>
 		</InputField>
 		<InputField name="Размер" id="19">
-			<DataPath>Record.Размер</DataPath>
+			<DataPath>1/0:d5620b69-1e1a-42de-9ec7-ed3248e05e08</DataPath>
 			<ContextMenu name="РазмерContextMenu" id="20"/>
 			<ExtendedTooltip name="РазмерExtendedTooltip" id="21"/>
 		</InputField>

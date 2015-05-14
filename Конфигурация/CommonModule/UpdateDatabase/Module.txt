@@ -311,14 +311,6 @@ Procedure FillConfigurationData()
 	
 	Constants.bitmobile_ИмяКонфигурации.Set(Metadata.Name);
 	
-	Protocol = Constants.bitmobile_ПротоколПередачиФайлов.Get();
-	
-	If Not ValueIsFilled(Protocol) Then 
-		
-		Constants.bitmobile_ПротоколПередачиФайлов.Set(Enums.bitmobile_ПротоколыПередачиФайлов.WebDAV);
-		
-	EndIf;
-	
 	AvailebleFileSize = Constants.bitmobile_ДопустимыйРазмерФайла.Get();
 	
 	If AvailebleFileSize = 0 Then 
@@ -1688,6 +1680,9 @@ Procedure UpdateForRelease_1_8_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update mobile application settings'; ru = 'Обновление настроек мобильного приложения'"));
 	ProcessCreateReturnsEnabledSetting();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'File processing'; ru = 'Обработка файлов'"));
+	ProcessFiles();
+	
 EndProcedure
 
 Procedure ProcessOutletsStatusesSettings()
@@ -1750,6 +1745,45 @@ Procedure ProcessCreateReturnsEnabledSetting()
 	SettingObject.DataType = Enums.DataType.Boolean;
 	SettingObject.LogicValue = True;
 	SettingObject.Write();
+	
+EndProcedure
+
+Procedure ProcessFiles()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	bitmobile_ХранилищеФайлов.Объект,
+		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+		|	bitmobile_ХранилищеФайлов.Действие,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.Хранилище
+		|FROM
+		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	FilesRecordset = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordSet();
+	
+	While Selection.Next() Do
+		
+		FileRecord = FilesRecordset.Add();
+		
+		FillPropertyValues(FileRecord, Selection);
+		
+		If Not Selection.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл Then  
+			
+			FileRecord.Действие = Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+			
+		EndIf;
+		
+	EndDo;
+	
+	FilesRecordset.Write();
 	
 EndProcedure
 

@@ -49,8 +49,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_IDВыгрузки</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейЗагрузкиДанных</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.bitmobile_ИзмененныеДанныеПриЗагрузке</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Enum.bitmobile_ПротоколыПередачиФайлов</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ПротоколПередачиФайлов</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">f2761a5f-8f3e-4f49-aea9-9ef1eef7b59d</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">ed3c5351-e37d-4413-aa80-881ad2f32145</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СтатусПоследнейСинхронизацииФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_ДатаПоследнейСинхронизацииФайлов</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Constant.bitmobile_СинхронизацияФайловЗапущена</xr:Item>

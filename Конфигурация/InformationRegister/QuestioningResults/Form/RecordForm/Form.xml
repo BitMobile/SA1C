@@ -292,6 +292,7 @@
 								<PictureField name="PictureAddress" id="121">
 									<DataPath>PictureAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
+									<PictureSize>AutoSize</PictureSize>
 									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
@@ -569,6 +570,7 @@
 										<PictureField name="PictureAddressSKUs" id="126">
 											<DataPath>PictureAddress</DataPath>
 											<TitleLocation>None</TitleLocation>
+											<PictureSize>AutoSize</PictureSize>
 											<NonselectedPictureText>
 												<v8:item>
 													<v8:lang>en</v8:lang>

@@ -92,11 +92,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					If Row.Type = "New" Then
 						
-						TempFile = GetTempFileName(Row.Extension);
 						BinaryData = GetFromTempStorage(Row.StorageAddress);
-						BinaryData.Write(TempFile);
-						
-						CheckFileSize = New File(TempFile);
 						
 						RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 						RecordManager.Объект					= CurrentObject.Ref;
@@ -105,7 +101,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 						RecordManager.ИмяФайла					= New UUID(Row.Value);
 						RecordManager.Расширение				= Row.Extension;
 						RecordManager.Хранилище					= New ValueStorage(BinaryData);
-						RecordManager.Размер					= CheckFileSize.Size();
 						RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
 																	CurrentObject.Ref.UUID() + 
 																	"/" + 
@@ -129,16 +124,11 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 							
 							RecordManagerPrivate.Read();
 							
-							TempFile = GetTempFileName(Row.Extension);
 							BinaryData = GetFromTempStorage(Row.StorageAddress);
-							BinaryData.Write(TempFile);
-							
-							CheckFileSize = New File(TempFile);
 							
 							RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
 							RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
 							RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-							RecordManagerPrivate.Размер						= CheckFileSize.Size();
 							RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
 																				CurrentObject.Ref.UUID() + 
 																				"/" + 
@@ -161,11 +151,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 			If Row.Type = "New" Then
 				
-				TempFile = GetTempFileName(Row.Extension);
 				BinaryData = GetFromTempStorage(Row.StorageAddress);
-				BinaryData.Write(TempFile);
-				
-				CheckFileSize = New File(TempFile);
 				
 				RecordManager							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 				RecordManager.Объект					= CurrentObject.Ref;
@@ -174,7 +160,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				RecordManager.ИмяФайла					= New UUID(Row.FileName);
 				RecordManager.Расширение				= Row.Extension;
 				RecordManager.Хранилище					= New ValueStorage(BinaryData);
-				RecordManager.Размер					= CheckFileSize.Size();
 				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + 
 															CurrentObject.Ref.UUID() + 
 															"/" + 
@@ -198,16 +183,11 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 					
 					RecordManagerPrivate.Read();
 					
-					TempFile = GetTempFileName(Row.Extension);
 					BinaryData = GetFromTempStorage(Row.StorageAddress);
-					BinaryData.Write(TempFile);
-					
-					CheckFileSize = New File(TempFile);
 					
 					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
 					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
 					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-					RecordManagerPrivate.Размер						= CheckFileSize.Size();
 					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
 																		CurrentObject.Ref.UUID() + 
 																		"/" + 
@@ -432,8 +412,7 @@ Function GetFileTable()
 	|	bitmobile_ХранилищеФайлов.ИмяФайла,
 	|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
 	|	bitmobile_ХранилищеФайлов.Расширение,
-	|	bitmobile_ХранилищеФайлов.Хранилище,
-	|	bitmobile_ХранилищеФайлов.Размер
+	|	bitmobile_ХранилищеФайлов.Хранилище
 	|FROM
 	|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
 	|WHERE

@@ -268,28 +268,6 @@
 											</Title>
 											<ExtendedTooltip name="СинхронизироватьФайлыРасширеннаяПодсказка" id="259"/>
 										</Button>
-										<Button name="ВыгрузитьВсеФайлы" id="44">
-											<Type>UsualButton</Type>
-											<UserVisible>
-												<xr:Common>true</xr:Common>
-												<xr:Value name="Role.Admin">true</xr:Value>
-												<xr:Value name="Role.User">true</xr:Value>
-											</UserVisible>
-											<Representation>PictureAndText</Representation>
-											<CommandName>Form.Command.ВыгрузитьВсеФайлы</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Title>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Выгрузить все файлы</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Upload all files</v8:content>
-												</v8:item>
-											</Title>
-											<ExtendedTooltip name="ВыгрузитьВсеФайлыРасширеннаяПодсказка" id="260"/>
-										</Button>
 										<Button name="СинхронизироватьУдаленныеДанные" id="53">
 											<Type>UsualButton</Type>
 											<UserVisible>
@@ -876,23 +854,6 @@
 											<ContextMenu name="Декорация3ContextMenu" id="448"/>
 											<ExtendedTooltip name="Декорация3ExtendedTooltip" id="449"/>
 										</LabelDecoration>
-										<InputField name="НаборКонстантbitmobile_ПротоколПередачиФайлов" id="390">
-											<DataPath>НаборКонстант.bitmobile_ПротоколПередачиФайлов</DataPath>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Transfer protocol</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Протокол передачи</v8:content>
-												</v8:item>
-											</Title>
-											<Width>25</Width>
-											<HorizontalStretch>false</HorizontalStretch>
-											<ContextMenu name="НаборКонстантbitmobile_ПротоколПередачиФайловContextMenu" id="391"/>
-											<ExtendedTooltip name="НаборКонстантbitmobile_ПротоколПередачиФайловExtendedTooltip" id="392"/>
-										</InputField>
 										<InputField name="НаборКонстантbitmobile_ДопустимыйРазмерФайла" id="393">
 											<DataPath>НаборКонстант.bitmobile_ДопустимыйРазмерФайла</DataPath>
 											<Title>
@@ -1762,29 +1723,6 @@ FROM
 				</v8:item>
 			</ToolTip>
 			<Action>СинхронизироватьФайлы</Action>
-		</Command>
-		<Command name="ВыгрузитьВсеФайлы" id="11">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Выгрузить все файлы</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Upload all files</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Upload all pictures</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Выгрузить все файлы</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>ВыгрузитьВсеФайлы</Action>
 		</Command>
 		<Command name="СинхронизироватьДанные" id="6">
 			<Title>

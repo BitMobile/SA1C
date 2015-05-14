@@ -209,6 +209,7 @@
 			<CommonCommand>ShowConfigurationSettings</CommonCommand>
 			<Constant>Returns</Constant>
 			<Constant>MultiStock</Constant>
+			<Constant>SizeOfThumbnailPhotos</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>
 			<Constant>НастройкиВыполненияРегламентныхЗаданий</Constant>
 			<Constant>bitmobile_Сервер</Constant>
@@ -237,7 +238,6 @@
 			<Constant>bitmobile_IDВыгрузки</Constant>
 			<Constant>bitmobile_КоличествоОбъектовВВыгрузке</Constant>
 			<Constant>bitmobile_ДопустимыйРазмерФайла</Constant>
-			<Constant>bitmobile_ПротоколПередачиФайлов</Constant>
 			<Constant>bitmobile_СтатусПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_ДатаПоследнейСинхронизацииФайлов</Constant>
 			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
@@ -321,7 +321,6 @@
 			<Enum>YearScheduleTypes</Enum>
 			<Enum>bitmobile_ДействияПриСинхронизации</Enum>
 			<Enum>bitmobile_НаправленияСинхронизации</Enum>
-			<Enum>bitmobile_ПротоколыПередачиФайлов</Enum>
 			<Report>AccountReceivable</Report>
 			<Report>AnalysisOutletParameters</Report>
 			<Report>BindingOutlets</Report>

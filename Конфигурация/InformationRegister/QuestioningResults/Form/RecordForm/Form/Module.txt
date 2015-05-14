@@ -86,8 +86,7 @@ Procedure FillFileTable()
 		|	bitmobile_ХранилищеФайлов.ИмяФайла,
 		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
 		|	bitmobile_ХранилищеФайлов.Расширение,
-		|	bitmobile_ХранилищеФайлов.Хранилище,
-		|	bitmobile_ХранилищеФайлов.Размер
+		|	bitmobile_ХранилищеФайлов.Хранилище
 		|FROM
 		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
 		|WHERE

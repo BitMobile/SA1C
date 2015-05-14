@@ -204,11 +204,6 @@
 									<ContextMenu name="РасширениеContextMenu" id="68"/>
 									<ExtendedTooltip name="РасширениеExtendedTooltip" id="69"/>
 								</LabelField>
-								<LabelField name="Размер" id="70">
-									<DataPath>Список.Размер</DataPath>
-									<ContextMenu name="РазмерContextMenu" id="71"/>
-									<ExtendedTooltip name="РазмерExtendedTooltip" id="72"/>
-								</LabelField>
 							</ChildItems>
 						</Table>
 					</ChildItems>

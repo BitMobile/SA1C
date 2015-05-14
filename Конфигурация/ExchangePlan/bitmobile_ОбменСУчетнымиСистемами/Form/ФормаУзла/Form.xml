@@ -158,32 +158,6 @@
 			</ToolTip>
 			<ExtendedTooltip name="СтраницыExtendedTooltip" id="25"/>
 			<ChildItems>
-				<Page name="СтраницаBitmobile" id="30">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Bitmobile Server</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Сервер bitmobile</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Страница bitmobile</v8:content>
-						</v8:item>
-					</ToolTip>
-					<ExtendedTooltip name="СтраницаBitmobileExtendedTooltip" id="31"/>
-					<ChildItems>
-						<InputField name="СерверBitmobile_Путь" id="46">
-							<DataPath>Объект.СерверBitmobile_Протокол</DataPath>
-							<ContextMenu name="СерверBitmobile_ПутьContextMenu" id="47"/>
-							<ExtendedTooltip name="СерверBitmobile_ПутьExtendedTooltip" id="48"/>
-						</InputField>
-					</ChildItems>
-				</Page>
 				<Page name="СтраницаFTP" id="26">
 					<Title>
 						<v8:item>

@@ -18,14 +18,14 @@ Function GetFilter(Ref ,SyncDirection)
 	ExtensionList.Add(".png");
 	
 	ActionList = New ValueList;
-	ActionList.Add(Enums.SyncAction.AddFile);
-	ActionList.Add(Enums.SyncAction.EmptyRef());
+	ActionList.Add(Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл);
+	ActionList.Add(Enums.bitmobile_ДействияПриСинхронизации.EmptyRef());
 	
 	Filter = Undefined;
 		
-	Filter = New Structure("Object, SyncDirection, Action, Extension", 
+	Filter = New Structure("Объект, НаправлениеСинхронизации, Действие, Расширение", 
 		Ref, 
-		GetEnumValueFromString("SyncDirections", SyncDirection),
+		GetEnumValueFromString("bitmobile_НаправленияСинхронизации", SyncDirection),
 		ActionList,
 		ExtensionList);
 		
@@ -36,13 +36,13 @@ EndFunction
 &AtServerNoContext
 Function GetRecordManagerStructure(RecordKey, FormOwnerUUID, Section)
 	
-	RecordManager = InformationRegisters.StorageAdditionalInformation.CreateRecordManager();
+	RecordManager = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 	
 	FillPropertyValues(RecordManager, RecordKey);
 	
 	RecordManager.Read();
 	
-	RecordManagerStructure = GetFieldsStructure(PutToTempStorage(RecordManager.Storage.Get(), FormOwnerUUID), RecordManager.FileName, RecordManager.Extension, Section);
+	RecordManagerStructure = GetFieldsStructure(PutToTempStorage(RecordManager.Хранилище.Get(), FormOwnerUUID), RecordManager.ИмяФайла, RecordManager.Расширение, Section);
 	
 	Return RecordManagerStructure;
 
@@ -140,7 +140,7 @@ Procedure PickFromPrivate(Command)
 	
 	Params = New Structure("Filter", Filter);
 	
-	OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromPrivateProcessing", ThisForm));
+	OpenForm("InformationRegister.bitmobile_ХранилищеФайлов.Form.ФормаВыбора", Params, , , , , New NotifyDescription("SelectPictureFromPrivateProcessing", ThisForm));
 	
 EndProcedure
 
@@ -182,7 +182,7 @@ Procedure PickFromShared(Command)
 	
 	Params = New Structure("Filter", Filter);
 	
-	OpenForm("InformationRegister.StorageAdditionalInformation.Form.SelectForm", Params, , , , , New NotifyDescription("SelectPictureFromSharedProcessing", ThisForm));
+	OpenForm("InformationRegister.bitmobile_ХранилищеФайлов.Form.ФормаВыбора", Params, , , , , New NotifyDescription("SelectPictureFromSharedProcessing", ThisForm));
 	
 EndProcedure
 
