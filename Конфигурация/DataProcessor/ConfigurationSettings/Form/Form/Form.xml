@@ -254,11 +254,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Size of snapshot created in mobile app</v8:content>
+					<v8:content>Size of snapshot created in mobile app (px)</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Размер снимка создаваемого в мобильном приложении</v8:content>
+					<v8:content>Размер снимка создаваемого в мобильном приложении (px)</v8:content>
 				</v8:item>
 			</Title>
 			<Type>
@@ -330,11 +330,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Size of thumbnail photos in interface</v8:content>
+					<v8:content>Size of thumbnail photos (for WebDAV, px)</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Размер миниатюр фотоснимков в интерфейсе</v8:content>
+					<v8:content>Размер миниатюр фотоснимков (для WebDAV, px)</v8:content>
 				</v8:item>
 			</Title>
 			<Type>

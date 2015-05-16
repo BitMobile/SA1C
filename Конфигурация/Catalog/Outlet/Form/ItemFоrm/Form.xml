@@ -674,20 +674,30 @@
 									<DataPath>PictureAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
 									<PictureSize>AutoSize</PictureSize>
+									<Zoomable>true</Zoomable>
 									<Hyperlink>true</Hyperlink>
 									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Add picture</v8:content>
+											<v8:content>Add snapshot</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Добавить изображение</v8:content>
+											<v8:content>Добавить фотоснимок</v8:content>
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="PictureAddressContextMenu" id="128"/>
+									<ContextMenu name="PictureAddressContextMenu" id="128">
+										<Autofill>false</Autofill>
+										<ChildItems>
+											<Button name="PictureAddressContextMenuOpenParameterSnapshot" id="329">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.OpenParameterSnapshot</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="PictureAddressContextMenuOpenParameterSnapshotExtendedTooltip" id="330"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
 									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="169"/>
 									<Events>
 										<Event name="Click">PictureAddressClick</Event>
@@ -803,20 +813,30 @@
 									<DataPath>OutletSnapshotAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
 									<PictureSize>AutoSize</PictureSize>
+									<Zoomable>true</Zoomable>
 									<Hyperlink>true</Hyperlink>
 									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>No picture</v8:content>
+											<v8:content>No snapshot</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Нет изображения</v8:content>
+											<v8:content>Нет фотоснимка</v8:content>
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-									<ContextMenu name="OutletSnapshotAddressContextMenu" id="306"/>
+									<ContextMenu name="OutletSnapshotAddressContextMenu" id="306">
+										<Autofill>false</Autofill>
+										<ChildItems>
+											<Button name="OutletSnapshotAddressContextMenuOpenSnapshot" id="331">
+												<Type>CommandBarButton</Type>
+												<CommandName>Form.Command.OpenSnapshot</CommandName>
+												<Parameter xsi:nil="true"/>
+												<ExtendedTooltip name="OutletSnapshotAddressContextMenuOpenSnapshotExtendedTooltip" id="332"/>
+											</Button>
+										</ChildItems>
+									</ContextMenu>
 									<ExtendedTooltip name="OutletSnapshotAddressExtendedTooltip" id="307"/>
 									<Events>
 										<Event name="Click">OutletSnapshotAddressClick</Event>
@@ -1080,6 +1100,22 @@
 			</Title>
 			<Type>
 				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ThumbnailSize" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Thumbnail size</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
 			</Type>
 		</Attribute>
 		<ConditionalAppearance>
@@ -1655,6 +1691,52 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>ClearValue</Action>
+		</Command>
+		<Command name="OpenParameterSnapshot" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open snapshot</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Открыть фотоснимок</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open parameter snapshot</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Magnifier</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>OpenParameterSnapshot</Action>
+		</Command>
+		<Command name="OpenSnapshot" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open snapshot</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Открыть фотоснимок</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open snapshot</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Magnifier</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>OpenSnapshot</Action>
 		</Command>
 	</Commands>
 	<Parameters>

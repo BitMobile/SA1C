@@ -1146,35 +1146,6 @@
 														</CheckBoxField>
 													</ChildItems>
 												</ColumnGroup>
-												<ColumnGroup name="ТаблицаНастроекГруппаФайлы" id="171">
-													<Title>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Таблица настроек группа файлы</v8:content>
-														</v8:item>
-													</Title>
-													<ToolTip>
-														<v8:item>
-															<v8:lang>ru</v8:lang>
-															<v8:content>Таблица настроек группа файлы</v8:content>
-														</v8:item>
-													</ToolTip>
-													<ExtendedTooltip name="ТаблицаНастроекГруппаФайлыРасширеннаяПодсказка" id="309"/>
-													<ChildItems>
-														<CheckBoxField name="ТаблицаНастроекВыгрузкаФайловShared" id="128">
-															<DataPath>ТаблицаНастроек.ВыгрузкаФайловShared</DataPath>
-															<CheckBoxType>Auto</CheckBoxType>
-															<ContextMenu name="ТаблицаНастроекВыгрузкаФайловSharedКонтекстноеМеню" id="129"/>
-															<ExtendedTooltip name="ТаблицаНастроекВыгрузкаФайловSharedРасширеннаяПодсказка" id="310"/>
-														</CheckBoxField>
-														<CheckBoxField name="ТаблицаНастроекЗагрузкаФайловPrivate" id="132">
-															<DataPath>ТаблицаНастроек.ЗагрузкаФайловPrivate</DataPath>
-															<CheckBoxType>Auto</CheckBoxType>
-															<ContextMenu name="ТаблицаНастроекЗагрузкаФайловPrivateКонтекстноеМеню" id="133"/>
-															<ExtendedTooltip name="ТаблицаНастроекЗагрузкаФайловPrivateРасширеннаяПодсказка" id="311"/>
-														</CheckBoxField>
-													</ChildItems>
-												</ColumnGroup>
 												<CheckBoxField name="ТаблицаНастроекПеремещатьPrivateВShared" id="355">
 													<DataPath>ТаблицаНастроек.ПеремещатьPrivateВShared</DataPath>
 													<TitleHeight>2</TitleHeight>
@@ -1391,8 +1362,6 @@
 	bitmobile_НастройкиСинхронизации.ОбъектКонфигурации AS ОбъектКонфигурации,
 	bitmobile_НастройкиСинхронизации.ВыгрузкаДанных AS ВыгрузкаДанных,
 	bitmobile_НастройкиСинхронизации.ЗагрузкаДанных AS ЗагрузкаДанных,
-	bitmobile_НастройкиСинхронизации.ВыгрузкаФайловShared AS ВыгрузкаФайловShared,
-	bitmobile_НастройкиСинхронизации.ЗагрузкаФайловPrivate AS ЗагрузкаФайловPrivate,
 	bitmobile_НастройкиСинхронизации.Description,
 	bitmobile_НастройкиСинхронизации.ПозицияВВыгрузке,
 	bitmobile_НастройкиСинхронизации.ПеремещатьPrivateВShared

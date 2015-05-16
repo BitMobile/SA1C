@@ -54,22 +54,11 @@ EndProcedure
 &AtServer
 Procedure FillFileTable()
 	
-	// Заполнить таблицу файлов
-	Password	= Constants.bitmobile_Пароль.Get();
-	Server		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path		= StrReplace(Path, "admin", "webdav");
-	Port		= Constants.bitmobile_Порт.Get();
+	ThumbnailSize = Constants.SizeOfThumbnailPhotos.Get();
 	
-	Try
+	Connection = CommonProcessors.GetConnectionToServer();
 	
-		Connection = New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
-		
-	Except
-		
-		Connection = Undefined;
-		
-	EndTry;
+	Path = CommonProcessors.GetWebDAVPathOnServer();
 	
 	FileNameArray = New Array; 
 	
@@ -115,7 +104,15 @@ Procedure FillFileTable()
 					
 					WebDAVFile = GetTempFileName(Str.Расширение);
 					
-					Connection.Get(Path + Str.ПолноеИмяФайла, WebDAVFile);
+					If ThumbnailSize > 0 Then 
+						
+						Connection.Get(Path + Lower(Str.ПолноеИмяФайла) + "?size=" + Format(ThumbnailSize, "NG=0"), WebDAVFile);
+						
+					Else 
+						
+						Connection.Get(Path + Lower(Str.ПолноеИмяФайла), WebDAVFile);
+						
+					EndIf;
 					
 					BinaryDataOfFile = New BinaryData(WebDAVFile);
 					
@@ -361,14 +358,14 @@ Procedure LoadSKUAnswers(SKU)
 					SnapShotUUID = New UUID(FoundedAnswers[0].Answer);
 					
 					If PictureExists(SnapShotUUID) Then
-					
-		            	ParentQuestionElement.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
-		            	ParentQuestionElement.SKUSnapShotUUID 	= FoundedAnswers[0].Answer;
+						
+						ParentQuestionElement.Answer 			= NStr("en = 'Snapshot'; ru = 'Фотоснимок'");
+						ParentQuestionElement.SKUSnapShotUUID 	= FoundedAnswers[0].Answer;
 						
 					Else
 						
 						ParentQuestionElement.Answer = NStr("en = ""Snapshot not found on server""; ru = ""Фотоснимок не найден на сервере""");
-											
+						
 					EndIf;
 					
 				Except
@@ -378,13 +375,13 @@ Procedure LoadSKUAnswers(SKU)
 				EndTry;
 				
 			Else 
-        
-	            ParentQuestionElement.Answer = FoundedAnswers[0].Answer;
-	            
+				
+				ParentQuestionElement.Answer = FoundedAnswers[0].Answer;
+				
 			EndIf;
 			
-		EndIf;	
-					
+		EndIf;
+		
 		ChildQuestionsTable = ParentQuestionElement.GetItems();
 		
 		For Each ChildQuestionElement In ChildQuestionsTable Do 
@@ -469,17 +466,41 @@ EndProcedure
 &AtClient
 Procedure OpenPicture(Command)
 	
-	FileName = Undefined;
-	
-	If ValueIsFilled(PictureAddress) Then 
+	If Items.GroupPages.CurrentPage = Items.GroupQuestions Then 
 		
-		FileName = "picture" + PictureExtension;
+		If Not Items.Questions.CurrentData = Undefined Then
+			
+			If ValueIsFilled(Items.Questions.CurrentData.SnapShotUUID) Then 
+				
+				SnapshotStructure = CommonProcessors.GetSnapshot(Items.Questions.CurrentData.SnapShotUUID, ThisForm.UUID, String(Record.Outlet));
+				
+				If Not SnapshotStructure = Undefined Then 
+				 
+					GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndIf;
 		
-	EndIf;
+	ElsIf Items.GroupPages.CurrentPage = Items.GroupSKUQuestions Then
 		
-	If ValueIsFilled(FileName) Then 
+		If Not Items.SKUQuestions.CurrentData = Undefined Then
+			
+			If ValueIsFilled(Items.SKUQuestions.CurrentData.SKUSnapShotUUID) Then 
 		
-		GetFile(PictureAddress, FileName, True);
+				SnapshotStructure = CommonProcessors.GetSnapshot(Items.SKUQuestions.CurrentData.SKUSnapShotUUID, ThisForm.UUID, String(Record.Outlet));
+				
+				If Not SnapshotStructure = Undefined Then 
+				 
+					GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndIf;
 		
 	EndIf;
 	

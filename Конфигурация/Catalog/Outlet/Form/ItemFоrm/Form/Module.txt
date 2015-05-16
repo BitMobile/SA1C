@@ -71,11 +71,19 @@ EndProcedure
 &AtServer
 Procedure OnReadAtServer(CurrentObject)
 	
+	ThumbnailSize = Constants.SizeOfThumbnailPhotos.Get();
+	
+	Connection = CommonProcessors.GetConnectionToServer();
+	
+	Path = CommonProcessors.GetWebDAVPathOnServer();
+	
+	FileTable = GetFileTable();
+	
 	FillTerritories();
 	
-	FillSnapshots();
+	FillSnapshots(Connection, Path, FileTable);
 	
-	FillParameters();
+	FillParameters(Connection, Path, FileTable);
 	
 EndProcedure
 
@@ -106,36 +114,44 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 																	"/" + 
 																	Row.Value + 
 																	Lower(Row.Extension);
-							
+						
 						RecordManager.Write();
 						
 					ElsIf Row.Type = "Private" Then
 						
-						SelectionStructure = New Structure("ИмяФайла");
-						SelectionStructure.ИмяФайла = New UUID(Row.Value);
+						RecordSetPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordSet();
+						RecordSetPrivate.Filter.ИмяФайла.Set(New UUID(Row.Value), True);
+						RecordSetPrivate.Filter.НаправлениеСинхронизации.Set(Enums.bitmobile_НаправленияСинхронизации.Private, True);
+						RecordSetPrivate.Filter.Объект.Set(CurrentObject.Ref, True);
 						
-						Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
+						RecordSetPrivate.Read();
 						
-						If Selection.Next() Then
+						If Not RecordSetPrivate.Count() = 0 Then
 							
-							RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+							RecordManagerShared = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 							
-							FillPropertyValues(RecordManagerPrivate, Selection);
-							
-							RecordManagerPrivate.Read();
+							FillPropertyValues(RecordManagerShared, RecordSetPrivate[0]);
 							
 							BinaryData = GetFromTempStorage(Row.StorageAddress);
 							
-							RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
-							RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
-							RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-							RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
+							RecordManagerShared.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+							RecordManagerShared.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+							RecordManagerShared.Хранилище					= New ValueStorage(BinaryData);
+							RecordManagerShared.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
 																				CurrentObject.Ref.UUID() + 
 																				"/" + 
 																				Row.Value + 
 																				Lower(Row.Extension);
 							
-							RecordManagerPrivate.Write();
+							RecordManagerShared.Write();
+							
+							For Each Record In RecordSetPrivate Do 
+								
+								Record.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+								
+							EndDo;
+							
+							RecordSetPrivate.Write();
 							
 						EndIf;
 						
@@ -170,32 +186,40 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				
 			ElsIf Row.Type = "Private" Then
 				
-				SelectionStructure = New Structure("ИмяФайла");
-				SelectionStructure.ИмяФайла = New UUID(Row.FileName);
+				RecordSetPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordSet();
+				RecordSetPrivate.Filter.ИмяФайла.Set(New UUID(Row.FileName), True);
+				RecordSetPrivate.Filter.НаправлениеСинхронизации.Set(Enums.bitmobile_НаправленияСинхронизации.Private, True);
+				RecordSetPrivate.Filter.Объект.Set(CurrentObject.Ref, True);
 				
-				Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
+				RecordSetPrivate.Read();
 				
-				If Selection.Next() Then
+				If Not RecordSetPrivate.Count() = 0 Then
 					
-					RecordManagerPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+					RecordManagerShared = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 					
-					FillPropertyValues(RecordManagerPrivate, Selection);
-					
-					RecordManagerPrivate.Read();
+					FillPropertyValues(RecordManagerShared, RecordSetPrivate[0]);
 					
 					BinaryData = GetFromTempStorage(Row.StorageAddress);
 					
-					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
-					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
-					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
+					RecordManagerShared.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+					RecordManagerShared.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+					RecordManagerShared.Хранилище					= New ValueStorage(BinaryData);
+					RecordManagerShared.ПолноеИмяФайла				= "/shared/Catalog.Outlet/" + 
 																		CurrentObject.Ref.UUID() + 
 																		"/" + 
 																		Row.FileName + 
 																		Lower(Row.Extension);
 					
-					RecordManagerPrivate.Write();
-				
+					RecordManagerShared.Write();
+					
+					For Each Record In RecordSetPrivate Do 
+						
+						Record.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+						
+					EndDo;
+					
+					RecordSetPrivate.Write();
+					
 				EndIf;
 				
 			EndIf;
@@ -215,9 +239,132 @@ EndProcedure
 &AtServer
 Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
-	FillParametersAdditionalInformation();
+	Connection = CommonProcessors.GetConnectionToServer();
 	
-	FillSnapshots();
+	Path = CommonProcessors.GetWebDAVPathOnServer();
+	
+	FileTable = GetFileTable();
+	
+	FillParametersAdditionalInformation(Connection, Path, FileTable);
+	
+	FillSnapshots(Connection, Path, FileTable);
+	
+EndProcedure
+
+&AtServer
+Function GetFileTable()
+	
+	// Выбираем все записи относящиеся к данной торговой точке из регистра 
+	// сведений с файлами.
+	Query = New Query(
+	"SELECT
+	|	bitmobile_ХранилищеФайлов.Объект,
+	|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+	|	bitmobile_ХранилищеФайлов.Действие,
+	|	bitmobile_ХранилищеФайлов.ИмяФайла,
+	|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+	|	bitmobile_ХранилищеФайлов.Расширение,
+	|	bitmobile_ХранилищеФайлов.Хранилище
+	|FROM
+	|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+	|WHERE
+	|	bitmobile_ХранилищеФайлов.Объект = &Outlet");
+	
+	Query.SetParameter("Outlet", Object.Ref);
+	
+	// Ложим результат запроса в таблицу файлов
+	FileTable = Query.Execute().Unload();
+	
+	Return FileTable;
+	
+EndFunction
+
+&AtServer
+Procedure FillPictureInformation(Connection, Path, FileTable, Row, FileNameColumnName)
+	
+	// Если значение параметра заполнено
+	If ValueIsFilled(Row[FileNameColumnName]) Then
+		
+		// Проверяем что значение текущего параметра - УИД
+		Try
+			
+			ShapshotUUID = New UUID(Row[FileNameColumnName]);
+			
+			// Ищем в таблице файлов уид из текущей строки
+			FileTableRow = FileTable.Find(ShapshotUUID, "ИмяФайла");
+			
+			// Если найден уид в таблице файлов
+			If Not FileTableRow = Undefined Then
+				
+				Row.Type = "Snapshot";
+				
+				// Забираем бинарные данные из таблицы файлов
+				BinaryDataOfFile = FileTableRow.Хранилище.Get();
+				
+				// Если бинарные данные есть
+				If ValueIsFilled(BinaryDataOfFile) Then
+					
+					Row.StorageAddress = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+					Row.Extension = FileTableRow.Расширение;
+					
+				// Если нет бинарных данных
+				Else
+					
+					// Если соединение было создано успешно
+					If Not Connection = Undefined Then
+						
+						// Пробуем забрать файл
+						Try
+							
+							WebDAVFile = GetTempFileName(FileTableRow.Расширение);
+							
+							If ThumbnailSize > 0 Then 
+								
+								Connection.Get(Path + Lower(FileTableRow.ПолноеИмяФайла) + "?size=" + Format(ThumbnailSize, "NG=0"), WebDAVFile);
+								
+							Else 
+								
+								Connection.Get(Path + Lower(FileTableRow.ПолноеИмяФайла), WebDAVFile);
+								
+							EndIf;
+							
+							BinaryDataOfFile = New BinaryData(WebDAVFile);
+							
+							Row.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+							Row.Extension 		= FileTableRow.Расширение;
+							
+						// Не получилось забрать файл
+						Except
+							
+							Row.Type = "WebDAVFailed";
+							
+						EndTry;
+						
+					EndIf;
+					
+				EndIf;
+				
+			// Если уид не найден
+			Else
+				
+				Row.Type = "NotFound";
+				
+			EndIf;
+			
+		// Если значение - не УИД, тогда мы не можем получить фотоснимок
+		Except
+			
+			Row.Type = "NotUID";
+			
+		EndTry;
+		
+		
+	// Если значение параметра не заполнено
+	Else
+		
+		Row.Type = "NoSnapshot";
+		
+	EndIf;
 	
 EndProcedure
 
@@ -260,13 +407,31 @@ EndFunction
 #Region Parameters
 
 &AtServer
-Procedure FillParameters()
+Procedure FillParameters(Val Connection = Undefined, Val Path = Undefined, Val FileTable = Undefined)
+	
+	If Connection = Undefined Then 
+		
+		Connection = CommonProcessors.GetConnectionToServer();
+		
+	EndIf;
+	
+	If FileTable = Undefined Then 
+		
+		FileTable = GetFileTable();
+		
+	EndIf;
+	
+	If Path = Undefined Then 
+		
+		Path = CommonProcessors.GetWebDAVPathOnServer();
+		
+	EndIf;
 	
 	NewParametersArray = GetNewParameters();
 	
 	AddNewParameters(NewParametersArray);
 	
-	FillParametersAdditionalInformation();
+	FillParametersAdditionalInformation(Connection, Path, FileTable);
 	
 EndProcedure
 
@@ -349,13 +514,11 @@ Function GetNewParameters()
 EndFunction
 
 &AtServer
-Procedure FillSnapshots()
-	
-	FileTable = GetFileTable();
+Procedure FillSnapshots(Connection, Path, FileTable)
 	
 	For Each Row In Object.Snapshots Do
 		
-		FillPictureInformation(FileTable, Row, "FileName");
+		FillPictureInformation(Connection, Path, FileTable, Row, "FileName");
 		
 	EndDo;
 	
@@ -366,12 +529,10 @@ EndProcedure
 #Region ParametersPictures
 
 &AtServer
-Procedure FillParametersAdditionalInformation()
+Procedure FillParametersAdditionalInformation(Connection, Path, FileTable)
 	
 	If HasRightToReadOutletParameters() Then
 	
-		FileTable = GetFileTable();
-		
 		// Для каждой строки из параметров данной торговой точки
 		For Each Row In Object.Parameters Do
 			
@@ -380,7 +541,7 @@ Procedure FillParametersAdditionalInformation()
 				
 				If Not ValueIsFilled(Row.StorageAddress) And Not Row.IsPicture Then 
 				
-					FillPictureInformation(FileTable, Row, "Value");
+					FillPictureInformation(Connection, Path, FileTable, Row, "Value");
 					Row.IsPicture = True;
 					
 				EndIf;
@@ -394,130 +555,6 @@ Procedure FillParametersAdditionalInformation()
 			EndIf;
 			
 		EndDo;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtServer
-Function GetFileTable()
-	
-	// Выбираем все записи относящиеся к данной торговой точке из регистра 
-	// сведений с файлами.
-	Query = New Query(
-	"SELECT
-	|	bitmobile_ХранилищеФайлов.Объект,
-	|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
-	|	bitmobile_ХранилищеФайлов.Действие,
-	|	bitmobile_ХранилищеФайлов.ИмяФайла,
-	|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
-	|	bitmobile_ХранилищеФайлов.Расширение,
-	|	bitmobile_ХранилищеФайлов.Хранилище
-	|FROM
-	|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
-	|WHERE
-	|	bitmobile_ХранилищеФайлов.Объект = &Outlet");
-	
-	Query.SetParameter("Outlet", Object.Ref);
-	
-	// Ложим результат запроса в таблицу файлов
-	FileTable = Query.Execute().Unload();
-	
-	Return FileTable;
-	
-EndFunction
-
-&AtServer
-Procedure FillPictureInformation(FileTable, Row, FileNameColumnName)
-	
-	// Если значение параметра заполнено
-	If ValueIsFilled(Row[FileNameColumnName]) Then
-		
-		// Проверяем что значение текущего параметра - УИД
-		Try
-			
-			ShapshotUUID = New UUID(Row[FileNameColumnName]);
-			
-			// Ищем в таблице файлов уид из текущей строки
-			FileTableRow = FileTable.Find(ShapshotUUID, "ИмяФайла");
-			
-			// Если найден уид в таблице файлов
-			If Not FileTableRow = Undefined Then
-				
-				Row.Type = "Snapshot";
-				
-				// Инициализация подключения
-				Password = Constants.bitmobile_Пароль.Get();
-				Server = StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-				Path = Constants.bitmobile_ПутьНаСервере.Get();
-				Path = StrReplace(Path, "admin", "webdav");
-				Port = Constants.bitmobile_Порт.Get();
-				
-				Try
-					
-					Connection = New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
-					
-				Except
-					
-					Connection = Undefined;
-					
-				EndTry;
-				
-				// Забираем бинарные данные из таблицы файлов
-				BinaryDataOfFile = FileTableRow.Хранилище.Get();
-				
-				// Если бинарные данные есть
-				If ValueIsFilled(BinaryDataOfFile) Then
-					
-					Row.StorageAddress = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-					Row.Extension = FileTableRow.Расширение;
-					
-				// Если нет бинарных данных
-				Else
-					
-					// Если соединение было создано успешно
-					If Not Connection = Undefined Then
-						
-						// Пробуем забрать файл
-						Try
-							
-							WebDAVFile = GetTempFileName(FileTableRow.Расширение);
-							
-							Connection.Get(Path + FileTableRow.ПолноеИмяФайла, WebDAVFile);
-							
-							Row.StorageAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
-							Row.Extension 		= FileTableRow.Расширение;
-							
-						// Не получилось забрать файл
-						Except
-							
-							Row.Type = "WebDAVFailed";
-							
-						EndTry;
-						
-					EndIf;
-					
-				EndIf;
-				
-			// Если уид не найден
-			Else
-				
-				Row.Type = "NotFound";
-				
-			EndIf;
-			
-		// Если значение - не УИД, тогда мы не можем получить фотоснимок
-		Except
-			
-			Row.Type = "NotUID";
-			
-		EndTry;
-		
-		
-	// Если значение параметра не заполнено
-	Else
-		
-		Row.Type = "NoSnapshot";
 		
 	EndIf;
 	
@@ -834,8 +871,8 @@ Procedure ParametersOnActivateRow(Item)
 	
 	Items.PictureAddress.Hyperlink = IsPicture;
 	Items.PictureAddress.NonselectedPictureText = ?(IsPicture, 
-		NStr("en = 'Add picture'; ru = 'Добавить изображение'"),
-		NStr("en = 'No picture'; ru = 'Нет изображения'"));
+		NStr("en = 'Add snapshot'; ru = 'Добавить фотоснимок'"),
+		NStr("en = 'No snapshot'; ru = 'Нет фотоснимка'"));
 	
 EndProcedure
 
@@ -969,6 +1006,27 @@ Procedure ClearValue(Command)
 		EndIf;
 		
 		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenParameterSnapshot(Command)
+	
+	If Not Items.Parameters.CurrentData = Undefined Then
+		
+		If Items.Parameters.CurrentData.IsPicture Then 
+			
+			SnapshotStructure = CommonProcessors.GetSnapshot(Items.Parameters.CurrentData.Value, ThisForm.UUID, Object.Description);
+			
+			If Not SnapshotStructure = Undefined Then 
+			 
+				GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+				
+			EndIf;
+			
+		EndIf;
 		
 	EndIf;
 	
@@ -1150,6 +1208,23 @@ Procedure SnapshotsSelection(Item, SelectedRow, Field, StandardProcessing)
 EndProcedure
 
 &AtClient
+Procedure OpenSnapshot(Command)
+	
+	If Not Items.Snapshots.CurrentData = Undefined Then 
+		
+		SnapshotStructure = CommonProcessors.GetSnapshot(Items.Snapshots.CurrentData.FileName, ThisForm.UUID, Object.Description);
+		
+		If Not SnapshotStructure = Undefined Then 
+			 
+			GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
 Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 	
 	StandardProcessing = False;
@@ -1158,7 +1233,7 @@ Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 		
 		If HaveEditParametersRight Then
 		
-			OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension", GetParametersAliases());
+			OpenPickPictureFromForm("Snapshots", "OutletSnapshotAddress", "OutletSnapshotExtension");
 			
 		EndIf;
 		

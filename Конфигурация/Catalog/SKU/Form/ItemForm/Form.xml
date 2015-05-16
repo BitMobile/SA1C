@@ -68,109 +68,51 @@
 							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="GroupPictureExtendedTooltip" id="62"/>
 							<ChildItems>
-								<UsualGroup name="GroupPictureButtons" id="43">
-									<Title>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group picture buttons</v8:content>
-										</v8:item>
-									</Title>
-									<ToolTip>
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Group picture buttons</v8:content>
-										</v8:item>
-									</ToolTip>
-									<Representation>None</Representation>
-									<ShowTitle>false</ShowTitle>
-									<ExtendedTooltip name="GroupPictureButtonsExtendedTooltip" id="63"/>
-									<ChildItems>
-										<Button name="ButtonEdit" id="44">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.EditPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Change</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Edit picture</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Изменить картинку</v8:content>
-												</v8:item>
-											</Title>
-											<ExtendedTooltip name="ButtonEditExtendedTooltip" id="64"/>
-										</Button>
-										<Button name="ButtonDelete" id="45">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.DeletePicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Delete</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Delete picture</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Удалить картинку</v8:content>
-												</v8:item>
-											</Title>
-											<ExtendedTooltip name="ButtonDeleteExtendedTooltip" id="65"/>
-										</Button>
-										<Button name="OpenPicture" id="46">
-											<Type>UsualButton</Type>
-											<Representation>Picture</Representation>
-											<CommandName>Form.Command.OpenPicture</CommandName>
-											<Parameter xsi:nil="true"/>
-											<Picture>
-												<xr:Ref>StdPicture.Magnifier</xr:Ref>
-												<xr:LoadTransparent>true</xr:LoadTransparent>
-											</Picture>
-											<Title>
-												<v8:item>
-													<v8:lang>en</v8:lang>
-													<v8:content>Open picture</v8:content>
-												</v8:item>
-												<v8:item>
-													<v8:lang>ru</v8:lang>
-													<v8:content>Открыть картинку</v8:content>
-												</v8:item>
-											</Title>
-											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
-										</Button>
-									</ChildItems>
-								</UsualGroup>
 								<PictureField name="PictureAddress" id="28">
 									<DataPath>PictureAddress</DataPath>
 									<TitleFont ref="sys:DefaultGUIFont" kind="WindowsFont"/>
 									<TitleLocation>None</TitleLocation>
 									<Height>6</Height>
 									<PictureSize>AutoSize</PictureSize>
+									<Zoomable>true</Zoomable>
 									<Hyperlink>true</Hyperlink>
 									<NonselectedPictureText>
 										<v8:item>
 											<v8:lang>en</v8:lang>
-											<v8:content>Add picture</v8:content>
+											<v8:content>Add snapshot</v8:content>
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Добавить картинку</v8:content>
+											<v8:content>Добавить фотоснимок</v8:content>
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<Font ref="sys:DefaultGUIFont" height="11" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
 									<ContextMenu name="PictureAddressContextMenu" id="29">
 										<Autofill>false</Autofill>
+										<ChildItems>
+											<Button name="OpenPicture" id="46">
+												<Type>CommandBarButton</Type>
+												<Representation>Picture</Representation>
+												<CommandName>Form.Command.OpenPicture</CommandName>
+												<Parameter xsi:nil="true"/>
+												<Picture>
+													<xr:Ref>StdPicture.Magnifier</xr:Ref>
+													<xr:LoadTransparent>true</xr:LoadTransparent>
+												</Picture>
+												<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
+											</Button>
+											<Button name="DeletePicture" id="45">
+												<Type>CommandBarButton</Type>
+												<Representation>Picture</Representation>
+												<CommandName>Form.Command.DeletePicture</CommandName>
+												<Parameter xsi:nil="true"/>
+												<Picture>
+													<xr:Ref>StdPicture.Delete</xr:Ref>
+													<xr:LoadTransparent>true</xr:LoadTransparent>
+												</Picture>
+												<ExtendedTooltip name="DeletePictureExtendedTooltip" id="65"/>
+											</Button>
+										</ChildItems>
 									</ContextMenu>
 									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="67"/>
 									<Events>
@@ -536,7 +478,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Delete picture</v8:content>
+					<v8:content>Delete snapshot</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Удалить фотоснимок</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
@@ -547,30 +493,15 @@
 			</ToolTip>
 			<Action>DeletePicture</Action>
 		</Command>
-		<Command name="EditPicture" id="2">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Edit picture</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Edit picture</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Action>EditPicture</Action>
-		</Command>
 		<Command name="OpenPicture" id="3">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
+					<v8:content>Open snapshot</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть картинку</v8:content>
+					<v8:content>Открыть фотоснимок</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>

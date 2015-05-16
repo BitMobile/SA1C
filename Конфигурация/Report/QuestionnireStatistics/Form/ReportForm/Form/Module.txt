@@ -30,21 +30,11 @@ EndProcedure
 &AtServer
 Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 	
-	Password 	= Constants.bitmobile_Пароль.Get();
-	Server 		= StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
-	Path 		= Constants.bitmobile_ПутьНаСервере.Get();
-	Path 		= StrReplace(Path, "admin", "webdav");
-	Port 		= Constants.bitmobile_Порт.Get();
+	ThumbnailSize = Constants.SizeOfThumbnailPhotos.Get();
 	
-	Try
+	Connection = CommonProcessors.GetConnectionToServer();
 	
-		Connection = New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
-		
-	Except
-		
-		Connection = Undefined;
-		
-	EndTry;
+	Path = CommonProcessors.GetWebDAVPathOnServer();
 	
 	Fields = GetFields(Details);
 	
@@ -60,21 +50,21 @@ Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 				
 				SnapshotUUID = New UUID(Value);
 				
-				SetPicture(SnapshotUUID, Connection, Path);
+				SetPicture(SnapshotUUID, Connection, Path, ThumbnailSize);
 				
 			Except
 				
-				ThisForm.PictureAddress = Undefined;
-				ThisForm.PictureExtension = Undefined;
-				ThisForm.PictureFilename = Undefined;
+				PictureAddress = Undefined;
+				PictureExtension = Undefined;
+				PictureFilename = Undefined;
 				
 			EndTry;
 			
 		Else
 			
-			ThisForm.PictureAddress = Undefined;
-			ThisForm.PictureExtension = Undefined;
-			ThisForm.PictureFilename = Undefined;
+			PictureAddress = Undefined;
+			PictureExtension = Undefined;
+			PictureFilename = Undefined;
 			
 		EndIf;
 		
@@ -83,7 +73,7 @@ Procedure ResultDetailProcessingServer(Details, StandardProcessing)
 EndProcedure
 
 &AtServer
-Procedure SetPicture(ID, Connection, Path)
+Procedure SetPicture(ID, Connection, Path, ThumbnailSize)
 	
 	Filter = New Structure;
 	Filter.Insert("ИмяФайла", ID);
@@ -96,9 +86,9 @@ Procedure SetPicture(ID, Connection, Path)
 		
 		If ValueIsFilled(BinaryDataOfFile) Then
 		
-			ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-			ThisForm.PictureExtension = Sel.Расширение;
-			ThisForm.PictureFilename = Sel.ИмяФайла;
+			PictureAddress = PutToTempStorage(BinaryDataOfFile);
+			PictureExtension = Sel.Расширение;
+			PictureFilename = Sel.ИмяФайла;
 			
 		Else 
 			
@@ -108,27 +98,35 @@ Procedure SetPicture(ID, Connection, Path)
 					
 					WebDAVFile = GetTempFileName(Sel.Расширение);
 					
-					Connection.Get(Path + Sel.ПолноеИмяФайла, WebDAVFile);
+					If ThumbnailSize > 0 Then 
+						
+						Connection.Get(Path + Lower(Sel.ПолноеИмяФайла) + "?size=" + Format(ThumbnailSize, "NG=0"), WebDAVFile);
+						
+					Else 
+						
+						Connection.Get(Path + Lower(Sel.ПолноеИмяФайла), WebDAVFile);
+						
+					EndIf;
 					
 					BinaryDataOfFile = New BinaryData(WebDAVFile);
 					
-					ThisForm.PictureAddress = PutToTempStorage(BinaryDataOfFile);
-					ThisForm.PictureExtension = Sel.Расширение;
-					ThisForm.PictureFilename = Sel.ИмяФайла;
+					PictureAddress = PutToTempStorage(BinaryDataOfFile);
+					PictureExtension = Sel.Расширение;
+					PictureFilename = Sel.ИмяФайла;
 					
 				Except
 					
-					ThisForm.PictureAddress = Undefined;
-					ThisForm.PictureExtension = Undefined;
-					ThisForm.PictureFilename = Undefined;
+					PictureAddress = Undefined;
+					PictureExtension = Undefined;
+					PictureFilename = Undefined;
 					
 				EndTry;
 				
 			Else 
 				
-				ThisForm.PictureAddress = Undefined;
-				ThisForm.PictureExtension = Undefined;
-				ThisForm.PictureFilename = Undefined;
+				PictureAddress = Undefined;
+				PictureExtension = Undefined;
+				PictureFilename = Undefined;
 				
 			EndIf;
 						
@@ -136,9 +134,9 @@ Procedure SetPicture(ID, Connection, Path)
 		
 	Else
 		
-		ThisForm.PictureAddress = Undefined;
-		ThisForm.PictureExtension = Undefined;
-		ThisForm.PictureFilename = Undefined;
+		PictureAddress = Undefined;
+		PictureExtension = Undefined;
+		PictureFilename = Undefined;
 		
 	EndIf;
 	
@@ -154,19 +152,6 @@ EndFunction
 #EndRegion
 
 #Region UserInterface
-
-&AtClient
-Procedure PictureAddressClick(Item, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	If ValueIsFilled(ThisForm.PictureFilename) Then
-		
-		GetFile(ThisForm.PictureAddress, PictureFilename + PictureExtension, True);
-		
-	EndIf;
-	
-EndProcedure
 
 &AtClient
 Procedure ResultDetailProcessing(Item, Details, StandardProcessing)
@@ -255,6 +240,23 @@ Procedure SettingsComposerUserSettingsTableValueStartChoice(Item, ChoiceData, St
 			
 		EndIf;
 			
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenSnapshot(Command)
+	
+	If ValueIsFilled(PictureFilename) Then 
+		
+		SnapshotStructure = CommonProcessors.GetSnapshot(PictureFilename, ThisForm.UUID, "Image");
+		
+		If Not SnapshotStructure = Undefined Then 
+			 
+			GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+			
+		EndIf;
+		
 	EndIf;
 	
 EndProcedure

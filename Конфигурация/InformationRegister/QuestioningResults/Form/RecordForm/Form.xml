@@ -303,6 +303,7 @@
 											<v8:content>Нет фотоснимка</v8:content>
 										</v8:item>
 									</NonselectedPictureText>
+									<TextColor>#C0C0C0</TextColor>
 									<ContextMenu name="PictureAddressContextMenu" id="122">
 										<Autofill>false</Autofill>
 										<ChildItems>
@@ -581,6 +582,7 @@
 													<v8:content>Нет фотоснимка</v8:content>
 												</v8:item>
 											</NonselectedPictureText>
+											<TextColor>#C0C0C0</TextColor>
 											<ContextMenu name="PictureAddressSKUsContextMenu" id="127">
 												<Autofill>false</Autofill>
 												<ChildItems>
@@ -950,11 +952,11 @@
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Open picture</v8:content>
+					<v8:content>Open snapshot</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Открыть файл</v8:content>
+					<v8:content>Открыть фотоснимок</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>

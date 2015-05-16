@@ -38,7 +38,6 @@
 						</v8:item>
 					</ToolTip>
 					<Width>28</Width>
-					<HorizontalStretch>false</HorizontalStretch>
 					<Representation>None</Representation>
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="ГруппаПредпросмотрExtendedTooltip" id="30"/>
@@ -114,13 +113,14 @@
 							<NonselectedPictureText>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>No image</v8:content>
+									<v8:content>No snapshot</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Нет изображения</v8:content>
+									<v8:content>Нет фотоснимка</v8:content>
 								</v8:item>
 							</NonselectedPictureText>
+							<TextColor>#C0C0C0</TextColor>
 							<ContextMenu name="ПредпросмотрContextMenu" id="23"/>
 							<ExtendedTooltip name="ПредпросмотрExtendedTooltip" id="34"/>
 						</PictureField>

@@ -42,7 +42,9 @@ Function GetRecordManagerStructure(RecordKey, FormOwnerUUID, Section)
 	
 	RecordManager.Read();
 	
-	RecordManagerStructure = GetFieldsStructure(PutToTempStorage(RecordManager.Хранилище.Get(), FormOwnerUUID), RecordManager.ИмяФайла, RecordManager.Расширение, Section);
+	SnapshotData = CommonProcessors.GetSnapshot(RecordManager.ИмяФайла, FormOwnerUUID, String(RecordManager.ИмяФайла));
+	
+	RecordManagerStructure = GetFieldsStructure(SnapshotData.SnapshotAddress, RecordManager.ИмяФайла, RecordManager.Расширение, Section);
 	
 	Return RecordManagerStructure;
 

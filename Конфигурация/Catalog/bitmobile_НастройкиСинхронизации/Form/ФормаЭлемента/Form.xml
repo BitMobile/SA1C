@@ -338,18 +338,6 @@
 									<ShowTitle>false</ShowTitle>
 									<ExtendedTooltip name="ГруппаФайлыExtendedTooltip" id="138"/>
 									<ChildItems>
-										<CheckBoxField name="ВыгрузкаФайловShared" id="64">
-											<DataPath>Объект.ВыгрузкаФайловShared</DataPath>
-											<CheckBoxType>CheckBox</CheckBoxType>
-											<ContextMenu name="ВыгрузкаФайловSharedКонтекстноеМеню" id="65"/>
-											<ExtendedTooltip name="ВыгрузкаФайловSharedExtendedTooltip" id="139"/>
-										</CheckBoxField>
-										<CheckBoxField name="ЗагрузкаФайловPrivate" id="66">
-											<DataPath>Объект.ЗагрузкаФайловPrivate</DataPath>
-											<CheckBoxType>CheckBox</CheckBoxType>
-											<ContextMenu name="ЗагрузкаФайловPrivateКонтекстноеМеню" id="67"/>
-											<ExtendedTooltip name="ЗагрузкаФайловPrivateExtendedTooltip" id="140"/>
-										</CheckBoxField>
 										<CheckBoxField name="ПеремещатьPrivateВShared" id="230">
 											<DataPath>Объект.ПеремещатьPrivateВShared</DataPath>
 											<TitleLocation>Left</TitleLocation>

@@ -88,6 +88,106 @@ Function StringToNumber(String) Export
 	
 EndFunction
 
+Function GetConnectionToServer() Export
+	
+	// Инициализация подключения
+	Password = Constants.bitmobile_Пароль.Get();
+	Server = StrReplace(Constants.bitmobile_Сервер.Get(), "localhost", "127.0.0.1");
+	Port = Constants.bitmobile_Порт.Get();
+	
+	Try
+		
+		Return New HTTPConnection(Server, ?(Port = 0, 80, Port), "admin", Password);
+		
+	Except
+		
+		Return Undefined;
+		
+	EndTry;
+	
+EndFunction
+
+Function GetWebDAVPathOnServer() Export
+	
+	Path = Constants.bitmobile_ПутьНаСервере.Get();
+	
+	Return StrReplace(Path, "admin/", "webdav");
+	
+EndFunction
+
+Function GetSnapshot(FileUUID, FormUUID, NameForFile) Export
+	
+	If ValueIsFilled(FileUUID) Then
+		
+		Try
+			
+			If TypeOf(FileUUID) = Type("String") Then 
+				
+				ShapshotUUID = New UUID(FileUUID);
+				
+			Else 
+				
+				ShapshotUUID = FileUUID;
+				
+			EndIf;
+			
+			// Ищем данные о файле
+			FileRow = InformationRegisters.bitmobile_ХранилищеФайлов.Select(New Structure("ИмяФайла", ShapshotUUID));
+			
+			// Если найден уид в таблице файлов
+			If FileRow.Next() Then
+				
+				Connection = CommonProcessors.GetConnectionToServer();
+				
+				Path = CommonProcessors.GetWebDAVPathOnServer();
+				
+				// Забираем бинарные данные из таблицы файлов
+				BinaryDataOfFile = FileRow.Хранилище.Get();
+				
+				// Если бинарные данные есть
+				If ValueIsFilled(BinaryDataOfFile) Then
+					
+					ReturnStructure = New Structure("SnapshotAddress, SnapshotName", PutToTempStorage(BinaryDataOfFile, FormUUID), NameForFile + FileRow.Расширение);
+					
+					Return ReturnStructure;
+					
+				// Если нет бинарных данных
+				Else
+					
+					// Если соединение было создано успешно
+					If Not Connection = Undefined Then
+						
+						// Пробуем забрать файл
+						Try
+							
+							WebDAVFile = GetTempFileName(FileRow.Расширение);
+							
+							Connection.Get(Path + FileRow.ПолноеИмяФайла, WebDAVFile);
+							
+							BinaryDataOfFile = New BinaryData(WebDAVFile);
+							
+							ReturnStructure = New Structure("SnapshotAddress, SnapshotName", PutToTempStorage(BinaryDataOfFile, FormUUID), NameForFile + FileRow.Расширение);
+							
+							Return ReturnStructure;
+							
+						Except
+						EndTry;
+						
+					EndIf;
+					
+				EndIf;
+				
+			EndIf;
+			
+		Except
+		EndTry;
+		
+	EndIf;
+	
+	Return Undefined;
+	
+EndFunction
+
 Procedure FillDefaultValues_DocumentBeforeWrite(Source, Cancel, WriteMode, PostingMode) Export
 	
 	If Source.DataExchange.Load Or Source.AdditionalProperties.Property("FillDefaultValues") Then 
@@ -201,4 +301,5 @@ Procedure FillDefaultValues(Source, IsBMLoad)
 	EndDo;
 	
 EndProcedure
+
 

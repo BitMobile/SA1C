@@ -19,42 +19,92 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	CheckBaseUnitAndMultiplier();
 	
-	Query = New Query;
-	Query.Text = 
-		"SELECT ALLOWED TOP 1
-		|	bitmobile_ХранилищеФайлов.Объект,
-		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
-		|	bitmobile_ХранилищеФайлов.Действие,
-		|	bitmobile_ХранилищеФайлов.ИмяФайла,
-		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
-		|	bitmobile_ХранилищеФайлов.Расширение,
-		|	bitmobile_ХранилищеФайлов.Хранилище
-		|FROM
-		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
-		|WHERE
-		|	bitmobile_ХранилищеФайлов.Объект = &ObjectRef
-		|	AND bitmobile_ХранилищеФайлов.Действие <> &DeleteAction
-		|	AND bitmobile_ХранилищеФайлов.ИмяФайла = &FileName
-		|	AND bitmobile_ХранилищеФайлов.НаправлениеСинхронизации = &SyncDirection";
-
-	Query.SetParameter("DeleteAction", Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл);
-	Query.SetParameter("SyncDirection", Enums.bitmobile_НаправленияСинхронизации.Shared);
-	Query.SetParameter("ObjectRef", Object.Ref);
-	Query.SetParameter("FileName", Object.DefaultPicture);
-	
-	Result = Query.Execute();
-
-	Records = Result.Select();
-
-	If Records.Next() Then 
+	If ValueIsFilled(Object.DefaultPicture) Then 	
 		
-		PictureAddress = PutToTempStorage(Records.Хранилище.Get(), ThisForm.UUID);
+		ThumbnailSize = Constants.SizeOfThumbnailPhotos.Get();
+		
+		Connection = CommonProcessors.GetConnectionToServer();
+		
+		Path = CommonProcessors.GetWebDAVPathOnServer();
+		
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED TOP 1
+			|	bitmobile_ХранилищеФайлов.Объект,
+			|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+			|	bitmobile_ХранилищеФайлов.Действие,
+			|	bitmobile_ХранилищеФайлов.ИмяФайла,
+			|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+			|	bitmobile_ХранилищеФайлов.Расширение,
+			|	bitmobile_ХранилищеФайлов.Хранилище
+			|FROM
+			|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+			|WHERE
+			|	bitmobile_ХранилищеФайлов.Объект = &ObjectRef
+			|	AND bitmobile_ХранилищеФайлов.Действие <> &DeleteAction
+			|	AND bitmobile_ХранилищеФайлов.ИмяФайла = &FileName
+			|	AND bitmobile_ХранилищеФайлов.НаправлениеСинхронизации = &SyncDirection";
+			
+		Query.SetParameter("DeleteAction", Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл);
+		Query.SetParameter("SyncDirection", Enums.bitmobile_НаправленияСинхронизации.Shared);
+		Query.SetParameter("ObjectRef", Object.Ref);
+		Query.SetParameter("FileName", Object.DefaultPicture);
+		
+		Result = Query.Execute();
+		
+		Records = Result.Select();
+		
+		If Records.Next() Then 
+			
+			// Забираем бинарные данные из таблицы файлов
+			BinaryDataOfFile = Records.Хранилище.Get();
+			
+			// Если бинарные данные есть
+			If ValueIsFilled(BinaryDataOfFile) Then
+				
+				PictureAddress = PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+				
+			// Если нет бинарных данных
+			Else
+				
+				// Если соединение было создано успешно
+				If Not Connection = Undefined Then
+					
+					// Пробуем забрать файл
+					Try
 						
-	EndIf;	
+						WebDAVFile = GetTempFileName(Records.Расширение);
+						
+						If ThumbnailSize > 0 Then 
+							
+							Connection.Get(Path + Lower(Records.ПолноеИмяФайла) + "?size=" + Format(ThumbnailSize, "NG=0"), WebDAVFile);
+							
+						Else 
+							
+							Connection.Get(Path + Lower(Records.ПолноеИмяФайла), WebDAVFile);
+							
+						EndIf;
+						
+						BinaryDataOfFile = New BinaryData(WebDAVFile);
+						
+						PictureAddress 	= PutToTempStorage(BinaryDataOfFile, ThisForm.UUID);
+						
+					// Не получилось забрать файл
+					Except
+						
+					EndTry;
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
 	
 	DefaultPictureName = Object.DefaultPicture;
 	DefaultPictureExtension = Object.DefaultPictureExtension;
-		
+	
 EndProcedure
 
 &AtServer
@@ -91,33 +141,49 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 				RecordManager.ИмяФайла					= NewPictureName;
 				RecordManager.Расширение				= Lower(NewPictureExtension);
 				RecordManager.Хранилище					= New ValueStorage(BinaryData);
-				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
+				RecordManager.ПолноеИмяФайла			= "/shared/Catalog.SKU/" + 
+															CurrentObject.Ref.UUID() + 
+															"/" + 
+															NewPictureName + 
+															Lower(NewPictureExtension);
 				
 				RecordManager.Write();
 				
 			ElsIf NewPictureType = "Private" Then 
 				
-				SelectionStructure = New Structure("ИмяФайла");
-				SelectionStructure.ИмяФайла = New UUID(NewPictureName);
+				RecordSetPrivate = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordSet();
+				RecordSetPrivate.Filter.ИмяФайла.Set(NewPictureName, True);
+				RecordSetPrivate.Filter.НаправлениеСинхронизации.Set(Enums.bitmobile_НаправленияСинхронизации.Private, True);
+				RecordSetPrivate.Filter.Объект.Set(CurrentObject.Ref, True);
 				
-				Selection = InformationRegisters.bitmobile_ХранилищеФайлов.Select(SelectionStructure);
+				RecordSetPrivate.Read();
 				
-				If Selection.Next() Then 
+				If Not RecordSetPrivate.Count() = 0 Then
 					
-					RecordManagerPrivate							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+					RecordManagerShared = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
 					
-					FillPropertyValues(RecordManagerPrivate, Selection);
+					FillPropertyValues(RecordManagerShared, RecordSetPrivate[0]);
 					
-					RecordManagerPrivate.Read();
+					BinaryData = GetFromTempStorage(PictureAddress);
 					
-					BinaryData	= GetFromTempStorage(PictureAddress);
+					RecordManagerShared.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+					RecordManagerShared.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+					RecordManagerShared.Хранилище					= New ValueStorage(BinaryData);
+					RecordManagerShared.ПолноеИмяФайла				= "/shared/Catalog.SKU/" + 
+																		CurrentObject.Ref.UUID() + 
+																		"/" + 
+																		NewPictureName + 
+																		Lower(NewPictureExtension);
 					
-					RecordManagerPrivate.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
-					RecordManagerPrivate.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
-					RecordManagerPrivate.Хранилище					= New ValueStorage(BinaryData);
-					RecordManagerPrivate.ПолноеИмяФайла				= "/shared/Catalog.SKU/" + CurrentObject.Ref.UUID() + "/" + NewPictureName + Lower(NewPictureExtension);
+					RecordManagerShared.Write();
 					
-					RecordManagerPrivate.Write();
+					For Each Record In RecordSetPrivate Do 
+						
+						Record.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+						
+					EndDo;
+					
+					RecordSetPrivate.Write();
 					
 				EndIf;
 				
@@ -280,13 +346,6 @@ EndProcedure
 #Region Pictures
 
 &AtClient
-Procedure EditPicture(Command)
-	
-	SelectPicture();
-	
-EndProcedure
-
-&AtClient
 Procedure DeletePicture(Command)
 	
 	NewPictureName 		= Undefined;
@@ -304,24 +363,29 @@ EndProcedure
 &AtClient
 Procedure OpenPicture(Command)
 	
-	FileName = Undefined;
-	
 	If ValueIsFilled(Object.DefaultPicture) Then 
 		
-		FileName = String(Object.DefaultPicture) + Object.DefaultPictureExtension;
+		SnapshotStructure = CommonProcessors.GetSnapshot(Object.DefaultPicture, ThisForm.UUID, Object.Description);
+		
+		If Not SnapshotStructure = Undefined Then 
+			
+			GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+			
+		EndIf;
+		
 		
 	ElsIf ValueIsFilled(NewPictureName) Then 
 		
-		FileName = String(NewPictureName) + NewPictureExtension;
+		SnapshotStructure = CommonProcessors.GetSnapshot(NewPictureName, ThisForm.UUID, Object.Description);
+		
+		If Not SnapshotStructure = Undefined Then 
+			
+			GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+			
+		EndIf;
 		
 	EndIf;
-		
-	If ValueIsFilled(FileName) Then 
-		
-		GetFile(PictureAddress, FileName, True);
-		
-	EndIf;
-		
+	
 EndProcedure
 
 &AtClient
@@ -330,7 +394,7 @@ Procedure PictureAddressClick(Item, StandardProcessing)
 	StandardProcessing = False;
 	
 	SelectPicture();
-				
+	
 EndProcedure
 
 &AtClient
