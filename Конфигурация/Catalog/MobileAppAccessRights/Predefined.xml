@@ -12,6 +12,12 @@
 		<Description>en = 'Access to mobile app'; ru = 'Доступ к мобильному приложению'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="b645b669-c153-4a02-80cf-e3fd24e911f9">
+		<Name>AccessToOrder</Name>
+		<Code>000000005</Code>
+		<Description>en = 'Access to order'; ru = 'Доступ к заказу'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="5c602579-8df9-4524-95e5-578a0a34a615">
 		<Name>EditParametersInOutlet</Name>
 		<Code>000000002</Code>
