@@ -1735,9 +1735,10 @@ WHERE
 			<ВыгрузкаДанных>true</ВыгрузкаДанных>
 			<ЗагрузкаДанных>false</ЗагрузкаДанных>
 			<ПеремещатьPrivateВShared>false</ПеремещатьPrivateВShared>
-			<ФильтрВBitmobile>T.[Id] IN (SELECT OP.[PriceList] AS PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.[Outlet]=OP.[Ref] JOIN [Catalog].[Territory_SRs] TT_ ON TT_.[Ref]=TO_.[Ref] WHERE TT_.[SR]=@UserId
+			<ФильтрВBitmobile>T.[Id] IN (SELECT OP.[PriceList] AS PriceList FROM [Catalog].[Outlet_Prices] OP JOIN [Catalog].[Territory_Outlets] TO_ ON TO_.[Outlet]=OP.[Ref] JOIN [Catalog].[Territory_SRs] TT_ ON TT_.[Ref]=TO_.[Ref] WHERE TT_.[SR]=@UserId AND @UserId IN (SELECT U.[Ref] FROM [Catalog].[User_UserRights] U WHERE U.[AccessRight] IN (SELECT ACR.[Id] FROM [Catalog].[MobileAppAccessRights] ACR WHERE ACR.[Code] = '000000005' OR ACR.[Code] = '000000006'))
 UNION
-SELECT P.[Id] AS PriceList FROM [Document].[PriceList] P WHERE P.[DefaultPriceList] = 1)</ФильтрВBitmobile>
+SELECT P.[Id] AS PriceList FROM [Document].[PriceList] P WHERE P.[DefaultPriceList] = 1 AND @UserId IN (SELECT U.[Ref] FROM [Catalog].[User_UserRights] U WHERE U.[AccessRight] IN (SELECT ACR.[Id] FROM [Catalog].[MobileAppAccessRights] ACR WHERE ACR.[Code] = '000000005' OR ACR.[Code] = '000000006'))
+)</ФильтрВBitmobile>
 			<ФильтрВКонфигурации>AQE1AAAAAAAAAO+7v3siIyIsM2M3MmZmNTYtN2UwNC00Mzg1LWJjMDMtOTJkNGJkNmMzNTFjLA0KezB9DQp9AAAAACkDAAAAAAAA77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxTZXR0aW5ncyB4bWxucz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhLWNvbXBvc2l0aW9uLXN5c3RlbS9zZXR0aW5ncyIgeG1sbnM6ZGNzY29yPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEtY29tcG9zaXRpb24tc3lzdGVtL2NvcmUiIHhtbG5zOnN0eWxlPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkvc3R5bGUiIHhtbG5zOnN5cz0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2ZvbnRzL3N5c3RlbSIgeG1sbnM6djg9Imh0dHA6Ly92OC4xYy5ydS84LjEvZGF0YS9jb3JlIiB4bWxuczp2OHVpPSJodHRwOi8vdjguMWMucnUvOC4xL2RhdGEvdWkiIHhtbG5zOndlYj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93ZWIiIHhtbG5zOndpbj0iaHR0cDovL3Y4LjFjLnJ1LzguMS9kYXRhL3VpL2NvbG9ycy93aW5kb3dzIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiPg0KCTxzZWxlY3Rpb24+DQoJCTxpdGVtIHhzaTp0eXBlPSJTZWxlY3RlZEl0ZW1GaWVsZCI+DQoJCQk8ZmllbGQ+0KHRgdGL0LvQutCwPC9maWVsZD4NCgkJPC9pdGVtPg0KCTwvc2VsZWN0aW9uPg0KCTxpdGVtIHhzaTp0eXBlPSJTdHJ1Y3R1cmVJdGVtR3JvdXAiPg0KCQk8c2VsZWN0aW9uPg0KCQkJPGl0ZW0geHNpOnR5cGU9IlNlbGVjdGVkSXRlbUF1dG8iLz4NCgkJPC9zZWxlY3Rpb24+DQoJPC9pdGVtPg0KPC9TZXR0aW5ncz4=</ФильтрВКонфигурации>
 			<ПозицияВВыгрузке>20</ПозицияВВыгрузке>
 			<РеквизитыШапки>
@@ -6154,6 +6155,10 @@ GROUP BY
 				<Record>
 					<ИмяРегистра>InformationRegister.AssortmentMatrixSKUs</ИмяРегистра>
 					<ИмяИзмерения>AssortmentMatrix</ИмяИзмерения>
+				</Record>
+				<Record>
+					<ИмяРегистра>InformationRegister.bitmobile_ХранилищеФайлов</ИмяРегистра>
+					<ИмяИзмерения>Объект</ИмяИзмерения>
 				</Record>
 				<Record>
 					<ИмяРегистра>InformationRegister.QuestionnairesSchedule</ИмяРегистра>
