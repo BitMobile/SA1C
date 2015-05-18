@@ -580,7 +580,6 @@ Procedure SetColumnsAvailability()
 	
 EndProcedure
 
-
 #EndRegion
 
 #EndRegion
