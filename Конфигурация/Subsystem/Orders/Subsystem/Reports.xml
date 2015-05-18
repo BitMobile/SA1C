@@ -21,6 +21,8 @@
 			<Content>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.Orders</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowOrders</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.Returns</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowReturns</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

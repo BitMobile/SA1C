@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.7.0.361</Version>
+			<Version>1.7.0.362</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -195,6 +195,7 @@
 			<CommonCommand>ShowVisitResults</CommonCommand>
 			<CommonCommand>ShowVisitsOnMap</CommonCommand>
 			<CommonCommand>ShowOrders</CommonCommand>
+			<CommonCommand>ShowReturns</CommonCommand>
 			<CommonCommand>ShowVisitsControl</CommonCommand>
 			<CommonCommand>ShowOutletPhotosReport</CommonCommand>
 			<CommonCommand>ShowSKUsStockInOutlet</CommonCommand>
@@ -334,6 +335,7 @@
 			<Report>PlanFactSKUStockReport</Report>
 			<Report>PriceMonitoring</Report>
 			<Report>PromoActionsReport</Report>
+			<Report>Returns</Report>
 			<Report>QuestionnireStatistics</Report>
 			<Report>ShelfSpaceShare</Report>
 			<Report>SKUChangeAnalysis</Report>

@@ -52,6 +52,12 @@
 						<Description>en = 'Orders report'; ru = 'Отчет по заказам'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="69194b64-0a2a-4c87-902f-59853766246f">
+						<Name>Report_Returns</Name>
+						<Code>000000213</Code>
+						<Description>en = 'Returns report'; ru = 'Отчет по возвратам'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 		</ChildItems>

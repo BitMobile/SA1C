@@ -356,6 +356,17 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
+		<name>Report.Returns</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>SessionParameter.CurrentUser</name>
 		<right>
 			<name>Get</name>
@@ -2212,6 +2223,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Return")
 	</object>
 	<object>
 		<name>Subsystem.Questioning.Subsystem.Reports</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>CommonCommand.ShowReturns</name>
 		<right>
 			<name>View</name>
 			<value>true</value>

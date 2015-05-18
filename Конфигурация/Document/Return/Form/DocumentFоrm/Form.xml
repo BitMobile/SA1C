@@ -273,6 +273,7 @@
 								</InputField>
 								<InputField name="SKUsDiscount" id="29">
 									<DataPath>Object.SKUs.Discount</DataPath>
+									<Visible>false</Visible>
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
@@ -292,6 +293,7 @@
 								</InputField>
 								<InputField name="SKUsTotal" id="31">
 									<DataPath>Object.SKUs.Total</DataPath>
+									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<HorizontalStretch>false</HorizontalStretch>
 									<ContextMenu name="SKUsTotalContextMenu" id="32"/>
