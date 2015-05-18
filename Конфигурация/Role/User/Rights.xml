@@ -2144,7 +2144,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Return")
 		</right>
 	</object>
 	<object>
-		<name>Constant.Returns</name>
+		<name>Constant.UseReturns</name>
 		<right>
 			<name>Read</name>
 			<value>true</value>

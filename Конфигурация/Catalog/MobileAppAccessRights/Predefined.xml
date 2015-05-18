@@ -18,6 +18,12 @@
 		<Description>en = 'Access to order'; ru = 'Доступ к заказу'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="4c87c60d-cb4d-465b-bda5-f54feee2ddac">
+		<Name>AccessToReturn</Name>
+		<Code>000000006</Code>
+		<Description>en = 'Access to return'; ru = 'Доступ к возврату'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="5c602579-8df9-4524-95e5-578a0a34a615">
 		<Name>EditParametersInOutlet</Name>
 		<Code>000000002</Code>

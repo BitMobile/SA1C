@@ -177,6 +177,8 @@
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<FunctionalOption>Returns</FunctionalOption>
+			<FunctionalOption>Orders</FunctionalOption>
+			<FunctionalOption>Encashments</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
 			<CommonCommand>HistoryTask</CommonCommand>
 			<CommonCommand>ShowRegularQuestions</CommonCommand>
@@ -208,7 +210,9 @@
 			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
 			<CommonCommand>ShowExchangePlans</CommonCommand>
 			<CommonCommand>ShowConfigurationSettings</CommonCommand>
-			<Constant>Returns</Constant>
+			<Constant>UseReturns</Constant>
+			<Constant>UseOrders</Constant>
+			<Constant>UseEncashments</Constant>
 			<Constant>MultiStock</Constant>
 			<Constant>SizeOfThumbnailPhotos</Constant>
 			<Constant>SKUFeaturesRegistration</Constant>

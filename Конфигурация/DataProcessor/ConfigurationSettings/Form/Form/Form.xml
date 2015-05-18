@@ -90,6 +90,18 @@
 			<ContextMenu name="MultistockEnabledContextMenu" id="8"/>
 			<ExtendedTooltip name="MultistockEnabledExtendedTooltip" id="9"/>
 		</CheckBoxField>
+		<CheckBoxField name="CreateEncashmentsEnabled" id="45">
+			<DataPath>CreateEncashmentsEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="CreateEncashmentsEnabledContextMenu" id="46"/>
+			<ExtendedTooltip name="CreateEncashmentsEnabledExtendedTooltip" id="47"/>
+		</CheckBoxField>
+		<CheckBoxField name="CreateOrdersEnabled" id="48">
+			<DataPath>CreateOrdersEnabled</DataPath>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="CreateOrdersEnabledContextMenu" id="49"/>
+			<ExtendedTooltip name="CreateOrdersEnabledExtendedTooltip" id="50"/>
+		</CheckBoxField>
 		<CheckBoxField name="CreateReturnsEnabled" id="39">
 			<DataPath>CreateReturnsEnabled</DataPath>
 			<CheckBoxType>Auto</CheckBoxType>
@@ -344,6 +356,36 @@
 					<v8:FractionDigits>0</v8:FractionDigits>
 					<v8:AllowedSign>Any</v8:AllowedSign>
 				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="CreateEncashmentsEnabled" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Create encashments enabled</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать инкассации</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="CreateOrdersEnabled" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Create orders enabled</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать заказы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
 			</Type>
 		</Attribute>
 	</Attributes>

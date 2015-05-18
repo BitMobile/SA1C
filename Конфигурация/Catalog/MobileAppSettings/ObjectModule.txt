@@ -1,14 +1,2 @@
 ﻿
-Procedure OnWrite(Cancel)
-	
-	If Not Cancel Then
-		
-		If ThisObject.Ref = Catalogs.MobileAppSettings.CreateReturnsEnabled Then
-			
-			Constants.Returns.Set(ThisObject.LogicValue);
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
+

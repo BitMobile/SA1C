@@ -211,6 +211,9 @@
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.Orders</Item>
+					</FunctionalOptions>
 				</Column>
 				<Column name="FillQuestionnaireInMA" id="5">
 					<Title>
@@ -241,6 +244,9 @@
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.Encashments</Item>
+					</FunctionalOptions>
 				</Column>
 				<Column name="Ref" id="7">
 					<Title>
@@ -267,6 +273,9 @@
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.Returns</Item>
+					</FunctionalOptions>
 				</Column>
 			</Columns>
 		</Attribute>

@@ -58,11 +58,44 @@ Function GetOtherRightsTable(CatalogName) Export
 	RightsTable.Columns.Add("AccessRightName");
 	RightsTable.Columns.Add("Use");
 	
+	If CatalogName = "MobileAppAccessRights" Then 
+		
+		UseReturns		= Constants.UseReturns.Get();
+		UseOrders		= Constants.UseOrders.Get();
+		UseEncashments	= Constants.UseEncashments.Get();
+		
+	Else 
+		
+		UseReturns		= True;
+		UseOrders		= True;
+		UseEncashments	= True;
+		
+	EndIf;
+	
 	If ValueIsFilled(CatalogName) Then 
 		
 		RightsSelection = Catalogs[CatalogName].Select( , , , "Code Asc");
 		
 		While RightsSelection.Next() Do 
+			
+			// Удалить права не соответвующие настройкам
+			If RightsSelection.Ref = Catalogs.MobileAppAccessRights.AccessToReturn And Not UseReturns Then 
+				
+				Continue;
+				
+			EndIf;
+			
+			If RightsSelection.Ref = Catalogs.MobileAppAccessRights.AccessToEncashment And Not UseEncashments Then 
+				
+				Continue;
+				
+			EndIf;
+			
+			If RightsSelection.Ref = Catalogs.MobileAppAccessRights.AccessToOrder And Not UseOrders Then 
+				
+				Continue;
+				
+			EndIf;
 			
 			Ins					= RightsTable.Add();
 			Ins.AccessRight		= RightsSelection.Ref;
@@ -72,7 +105,7 @@ Function GetOtherRightsTable(CatalogName) Export
 		EndDo;
 		
 	EndIf;
-		
+	
 	Return RightsTable;
 	
 EndFunction

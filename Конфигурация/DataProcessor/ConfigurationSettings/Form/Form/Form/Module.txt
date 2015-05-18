@@ -12,7 +12,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	PlanVisitEnabled			= Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
 	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
 	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
-	CreateReturnsEnabled		= Catalogs.MobileAppSettings.CreateReturnsEnabled.LogicValue;
+	
+	CreateReturnsEnabled		= Constants.UseReturns.Get();
+	CreateOrdersEnabled			= Constants.UseOrders.Get();
+	CreateEncashmentsEnabled	= Constants.UseEncashments.Get();
 	
 	SKUFeaturesRegistration		= Constants.SKUFeaturesRegistration.Get();
 	SizeOfThumbnailPhotos		= Constants.SizeOfThumbnailPhotos.Get();
@@ -64,13 +67,63 @@ Procedure SaveSettingsServer()
 	
 	SnapshotSizeObject.Write();
 	
-	CreateReturnsObject							= Catalogs.MobileAppSettings.CreateReturnsEnabled.GetObject();
-	CreateReturnsObject.LogicValue				= CreateReturnsEnabled;
-	
-	CreateReturnsObject.Write();
+	Constants.UseReturns.Set(CreateReturnsEnabled);
+	Constants.UseOrders.Set(CreateOrdersEnabled);
+	Constants.UseEncashments.Set(CreateEncashmentsEnabled);
 	
 	Constants.SKUFeaturesRegistration.Set(SKUFeaturesRegistration);
 	Constants.SizeOfThumbnailPhotos.Set(SizeOfThumbnailPhotos);
+	
+	If Not CreateReturnsEnabled Then 
+		
+		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToReturn);
+		
+	EndIf;
+	
+	If Not CreateOrdersEnabled Then 
+		
+		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToOrder);
+		
+	EndIf;
+	
+	If Not CreateEncashmentsEnabled Then 
+		
+		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToEncashment);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure DeleteAccessRightFromRole(AccessRight)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	RolesOfUsersMobileAppAccessRights.AccessRight,
+		|	RolesOfUsersMobileAppAccessRights.Ref AS RolesOfUser
+		|FROM
+		|	Catalog.RolesOfUsers.MobileAppAccessRights AS RolesOfUsersMobileAppAccessRights
+		|WHERE
+		|	RolesOfUsersMobileAppAccessRights.AccessRight = &AccessRight";
+	
+	Query.SetParameter("AccessRight", AccessRight);
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		RO_Object = Selection.RolesOfUser.GetObject();
+		
+		RowToDelete = RO_Object.MobileAppAccessRights.Find(AccessRight);
+		
+		RO_Object.MobileAppAccessRights.Delete(RowToDelete);
+		
+		RO_Object.Write();
+		
+	EndDo;
 	
 EndProcedure
 
@@ -84,6 +137,8 @@ Procedure SaveSettings(Command)
 	SaveSettingsServer();
 	
 	RefreshInterface();
+	
+	Notify("UserRoleWrite");
 	
 EndProcedure
 

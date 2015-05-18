@@ -69,6 +69,8 @@ EndProcedure
 &AtServer
 Procedure GetRolesOfUsersSystemObjectRights(RoleOfUsers)
 	
+	ValueToFormAttribute(Catalogs.RolesOfUsers.GetOtherRightsTable("MobileAppAccessRights"), "MobileAppAccessRights");
+	
 	If ValueIsFilled(RoleOfUsers) Then 
 		
 		RightsTable = RoleOfUsers.AccessRightsToSystemObjects;
