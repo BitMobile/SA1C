@@ -1677,8 +1677,8 @@ Procedure UpdateForRelease_1_8_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update user roles'; ru = 'Обновление ролей пользователей'"));
 	ProcessUserRights();
 	
-	WriteProtocol(LastState, Step, NStr("en = 'Update mobile application settings'; ru = 'Обновление настроек мобильного приложения'"));
-	ProcessCreateReturnsEnabledSetting();
+	WriteProtocol(LastState, Step, NStr("en = 'Update application settings'; ru = 'Обновление настроек приложения'"));
+	ProcessNewAccessSettings();
 	
 	WriteProtocol(LastState, Step, NStr("en = 'File processing'; ru = 'Обработка файлов'"));
 	ProcessFiles();
@@ -1739,12 +1739,11 @@ Procedure ProcessUserRights()
 	
 EndProcedure
 
-Procedure ProcessCreateReturnsEnabledSetting()
+Procedure ProcessNewAccessSettings()
 	
-	SettingObject = Catalogs.MobileAppSettings.CreateReturnsEnabled.GetObject();
-	SettingObject.DataType = Enums.DataType.Boolean;
-	SettingObject.LogicValue = True;
-	SettingObject.Write();
+	Constants.UseReturns.Set(True);
+    Constants.UseOrders.Set(True);
+    Constants.UseEncashments.Set(True);
 	
 EndProcedure
 
