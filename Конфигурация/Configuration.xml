@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.7.0.365</Version>
+			<Version>1.7.0.366</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -370,7 +370,6 @@
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
-			<InformationRegister>bitmobile_ИзмененныеДанныеПриЗагрузке</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>
