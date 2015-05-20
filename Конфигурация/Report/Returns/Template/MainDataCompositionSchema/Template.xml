@@ -231,7 +231,7 @@ FROM
 			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
 			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 		</value>
-		<useRestriction>false</useRestriction>
+		<useRestriction>true</useRestriction>
 	</parameter>
 	<parameter>
 		<name>DateEnd</name>
@@ -248,7 +248,8 @@ FROM
 			</v8:DateQualifiers>
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>false</useRestriction>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Period.EndDate</expression>
 	</parameter>
 	<parameter>
 		<name>DateStart</name>
@@ -266,6 +267,7 @@ FROM
 		</valueType>
 		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
 		<useRestriction>false</useRestriction>
+		<expression>&amp;Period.StartDate</expression>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -351,7 +353,9 @@ FROM
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">ThisWeek</v8:variant>
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>43477d19-0041-4dd0-91d2-a41c14102a77</dcsset:userSettingID>
 					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
