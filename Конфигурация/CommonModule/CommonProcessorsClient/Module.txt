@@ -73,6 +73,8 @@ Function ExecuteJSFunction(FunctionName, ParamArray) Export
 			Pattern	= ParamArray[0];
 			Str		= ParamArray[1];
 			
+			Str = StrReplace(Str, "'", "\'");
+			
 			StartPage.Items.Logo.document.getElementById("WebClientOperation").value = FunctionName + "(" + Pattern + ",'" + Str + "')";
 			StartPage.Items.Logo.document.getElementById("WebClient").click();
 			
