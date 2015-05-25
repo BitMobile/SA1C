@@ -12,12 +12,12 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	PlanVisitEnabled			= Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
 	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
 	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
+	SKUFeaturesRegistration		= Catalogs.MobileAppSettings.SKUFeaturesRegistration.LogicValue;
 	
 	CreateReturnsEnabled		= Constants.UseReturns.Get();
 	CreateOrdersEnabled			= Constants.UseOrders.Get();
 	CreateEncashmentsEnabled	= Constants.UseEncashments.Get();
 	
-	SKUFeaturesRegistration		= Constants.SKUFeaturesRegistration.Get();
 	SizeOfThumbnailPhotos		= Constants.SizeOfThumbnailPhotos.Get();
 	
 EndProcedure
@@ -45,6 +45,13 @@ Procedure SaveSettingsServer()
 	
 	EmptyStockEnabledObject.Write();
 	
+	SKUFeaturesRegistrationObject				= Catalogs.MobileAppSettings.SKUFeaturesRegistration.GetObject();
+	SKUFeaturesRegistrationObject.LogicValue	= SKUFeaturesRegistration;
+	
+	SKUFeaturesRegistrationObject.Write();
+	
+	Constants.SKUFeaturesRegistration.Set(SKUFeaturesRegistration);
+	
 	MultistockEnabledObject						= Catalogs.MobileAppSettings.MultistockEnabled.GetObject();
 	MultistockEnabledObject.LogicValue			= MultistockEnabled;
 	
@@ -71,7 +78,6 @@ Procedure SaveSettingsServer()
 	Constants.UseOrders.Set(CreateOrdersEnabled);
 	Constants.UseEncashments.Set(CreateEncashmentsEnabled);
 	
-	Constants.SKUFeaturesRegistration.Set(SKUFeaturesRegistration);
 	Constants.SizeOfThumbnailPhotos.Set(SizeOfThumbnailPhotos);
 	
 	If Not CreateReturnsEnabled Then 

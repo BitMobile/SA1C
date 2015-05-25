@@ -42,6 +42,12 @@
 		<Description>RecOrderEnabled</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="82b308a5-475a-4127-845e-b18c9ea02445">
+		<Name>SKUFeaturesRegistration</Name>
+		<Code>000000009</Code>
+		<Description>SKUFeaturesRegistration</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="05a932be-251a-4be6-8325-fc9ae11c7723">
 		<Name>SnapshotSize</Name>
 		<Code>000000008</Code>

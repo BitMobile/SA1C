@@ -33,22 +33,6 @@
 			<ContextMenu name="Decoration3ContextMenu" id="34"/>
 			<ExtendedTooltip name="Decoration3ExtendedTooltip" id="35"/>
 		</LabelDecoration>
-		<CheckBoxField name="SKUFeaturesRegistration" id="36">
-			<DataPath>SKUFeaturesRegistration</DataPath>
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SKU features enable</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Использовать характеристики номенклатуры</v8:content>
-				</v8:item>
-			</Title>
-			<CheckBoxType>Auto</CheckBoxType>
-			<ContextMenu name="SKUFeaturesRegistrationContextMenu" id="37"/>
-			<ExtendedTooltip name="SKUFeaturesRegistrationExtendedTooltip" id="38"/>
-		</CheckBoxField>
 		<InputField name="SizeOfThumbnailPhotos" id="42">
 			<DataPath>SizeOfThumbnailPhotos</DataPath>
 			<ToolTip>
@@ -84,6 +68,22 @@
 			<ContextMenu name="Decoration1ContextMenu" id="2"/>
 			<ExtendedTooltip name="Decoration1ExtendedTooltip" id="3"/>
 		</LabelDecoration>
+		<CheckBoxField name="SKUFeaturesRegistration" id="36">
+			<DataPath>SKUFeaturesRegistration</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU features enable</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать характеристики номенклатуры</v8:content>
+				</v8:item>
+			</Title>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="SKUFeaturesRegistrationContextMenu" id="37"/>
+			<ExtendedTooltip name="SKUFeaturesRegistrationExtendedTooltip" id="38"/>
+		</CheckBoxField>
 		<CheckBoxField name="MultistockEnabled" id="7">
 			<DataPath>MultistockEnabled</DataPath>
 			<CheckBoxType>Auto</CheckBoxType>
