@@ -637,6 +637,10 @@ Procedure ProcessMobileAppSettings()
 			
 			SettingObject.DataType = Enums.DataType.Integer;
 			
+		ElsIf Selection.Description = "SKUFeaturesRegistration" Then 
+			
+			SettingObject.DataType = Enums.DataType.Boolean;
+			
 		EndIf;
 		
 		SettingObject.Write();
