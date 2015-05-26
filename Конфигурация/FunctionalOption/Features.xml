@@ -18,6 +18,7 @@
 				<xr:Object>Catalog.SKUFeatures</xr:Object>
 				<xr:Object>Catalog.SKUProperties</xr:Object>
 				<xr:Object>Catalog.SKUPropertiesValues</xr:Object>
+				<xr:Object>Catalog.SKU.TabularSection.Stocks</xr:Object>
 			</Content>
 		</Properties>
 	</FunctionalOption>

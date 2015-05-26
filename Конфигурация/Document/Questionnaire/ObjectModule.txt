@@ -62,7 +62,7 @@ Procedure OnWrite(Cancel)
 			|WHERE
 			|	AnsweredQuestions.Questionaire = &Questionaire";
 		
-		Query.SetParameter("Questionnaire", Ref);
+		Query.SetParameter("Questionaire", Ref);
 		
 		QueryResult = Query.Execute();
 		

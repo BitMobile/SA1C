@@ -369,13 +369,6 @@
 								</InputField>
 							</ChildItems>
 						</Table>
-						<UsualGroup name="Group1" id="13">
-							<HorizontalStretch>false</HorizontalStretch>
-							<Group>Horizontal</Group>
-							<Representation>None</Representation>
-							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="Group1ExtendedTooltip" id="87"/>
-						</UsualGroup>
 					</ChildItems>
 				</Page>
 			</ChildItems>

@@ -17,6 +17,7 @@
 				<xr:Object>Catalog.SKU.TabularSection.Stocks.Attribute.Stock</xr:Object>
 				<xr:Object>Catalog.Territory.TabularSection.Stocks</xr:Object>
 				<xr:Object>Catalog.Stock</xr:Object>
+				<xr:Object>Catalog.SKU.TabularSection.Stocks</xr:Object>
 			</Content>
 		</Properties>
 	</FunctionalOption>

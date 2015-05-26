@@ -58,27 +58,6 @@ Function CheckEntity(Source, SourceRef) Export
 		QuestionnaireTable = New ValueTable;
 		QuestionnaireTable.Columns.Add("Questionnaire");
 		
-		// Получить таблицу файлов этой торговой точки
-		Query = New Query;
-		Query.Text = 
-			"SELECT
-			|	bitmobile_ХранилищеФайлов.Объект,
-			|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
-			|	bitmobile_ХранилищеФайлов.Действие,
-			|	bitmobile_ХранилищеФайлов.ИмяФайла,
-			|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
-			|	bitmobile_ХранилищеФайлов.Расширение,
-			|	bitmobile_ХранилищеФайлов.Хранилище,
-			|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
-			|FROM
-			|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
-			|WHERE
-			|	bitmobile_ХранилищеФайлов.Объект = &Outlet";
-		
-		Query.SetParameter("Outlet", Source.Outlet);
-		
-		OutletFiles = Query.Execute().Unload();
-		
 		For Each Str In Source.Questions Do 
 			
 			If ValueIsFilled(Str.Questionnaire) And ValueIsFilled(Str.AnswerDate) Then 
@@ -169,7 +148,7 @@ EndFunction
 
 #Region AnsweredQuestions 
 
-Function AddAnsweredQuestionsSnapshot(Connection, Path) Export 
+Function ProcessAnsweredQuestionsSnapshots(Connection, Path) Export 
 	
 	// Получить снимки которые можно удалить с сервера
 	Query = New Query;
@@ -182,15 +161,33 @@ Function AddAnsweredQuestionsSnapshot(Connection, Path) Export
 		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
 		|	bitmobile_ХранилищеФайлов.Расширение,
 		|	bitmobile_ХранилищеФайлов.Хранилище,
-		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован,
+		|	AnsweredQuestions.Snapshot
+		|INTO ProcessedFiles
 		|FROM
 		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
-		|		INNER JOIN InformationRegister.AnsweredQuestions AS AnsweredQuestions
-		|		ON bitmobile_ХранилищеФайлов.Объект <> AnsweredQuestions.Outlet
-		|			AND bitmobile_ХранилищеФайлов.ИмяФайла <> AnsweredQuestions.Snapshot
+		|		LEFT JOIN InformationRegister.AnsweredQuestions AS AnsweredQuestions
+		|		ON bitmobile_ХранилищеФайлов.Объект = AnsweredQuestions.Outlet
+		|			AND bitmobile_ХранилищеФайлов.ИмяФайла = AnsweredQuestions.Snapshot
 		|WHERE
 		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован = TRUE
-		|	AND VALUETYPE(bitmobile_ХранилищеФайлов.Объект) = TYPE(Catalog.Outlet)";
+		|	AND VALUETYPE(bitmobile_ХранилищеФайлов.Объект) = TYPE(Catalog.Outlet)
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	ProcessedFiles.Объект,
+		|	ProcessedFiles.НаправлениеСинхронизации,
+		|	ProcessedFiles.Действие,
+		|	ProcessedFiles.ИмяФайла,
+		|	ProcessedFiles.ПолноеИмяФайла,
+		|	ProcessedFiles.Расширение,
+		|	ProcessedFiles.Хранилище,
+		|	ProcessedFiles.ФайлЗаблокирован
+		|FROM
+		|	ProcessedFiles AS ProcessedFiles
+		|WHERE
+		|	ProcessedFiles.Snapshot IS NULL ";
 	
 	QueryResult = Query.Execute();
 	
@@ -202,9 +199,15 @@ Function AddAnsweredQuestionsSnapshot(Connection, Path) Export
 		
 		FillPropertyValues(RecordManagerDelete, Selection);
 		
-		RecordManagerDelete.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+		RecordManagerDelete.Read();
 		
-		RecordManagerDelete.Write();
+		If RecordManagerDelete.Selected() Then 
+			
+			RecordManagerDelete.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+			
+			RecordManagerDelete.Write();
+			
+		EndIf;
 		
 	EndDo;
 	

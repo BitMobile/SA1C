@@ -1762,7 +1762,8 @@ Procedure ProcessFiles()
 		|	bitmobile_ХранилищеФайлов.ИмяФайла,
 		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
 		|	bitmobile_ХранилищеФайлов.Расширение,
-		|	bitmobile_ХранилищеФайлов.Хранилище
+		|	bitmobile_ХранилищеФайлов.Хранилище,
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован,
 		|FROM
 		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов";
 	
@@ -1787,6 +1788,44 @@ Procedure ProcessFiles()
 	EndDo;
 	
 	FilesRecordset.Write();
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	AnsweredQuestions.Questionaire,
+		|	AnsweredQuestions.Outlet,
+		|	AnsweredQuestions.Question,
+		|	AnsweredQuestions.SKU,
+		|	AnsweredQuestions.Answer,
+		|	AnsweredQuestions.AnswerDate,
+		|	AnsweredQuestions.Visit,
+		|	AnsweredQuestions.UploadSnapshot,
+		|	AnsweredQuestions.Snapshot
+		|FROM
+		|	InformationRegister.AnsweredQuestions AS AnsweredQuestions
+		|WHERE
+		|	AnsweredQuestions.Question.AnswerType = VALUE(Enum.DataType.Snapshot)";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		If ValueIsFilled(Selection.Answer) Then
+			
+			RecordManager = InformationRegisters.AnsweredQuestions.CreateRecordManager();
+			
+			FillPropertyValues(RecordManager, Selection);
+			
+			RecordManager.UploadSnapshot	= True;
+			RecordManager.Snapshot			= New UUID(Selection.Answer);
+			
+			RecordManager.Write();
+			
+		EndIf;
+		
+	EndDo;
 	
 EndProcedure
 
