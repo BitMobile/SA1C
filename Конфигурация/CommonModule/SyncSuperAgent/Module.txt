@@ -53,11 +53,32 @@ Function CheckEntity(Source, SourceRef) Export
 				
 			EndDo;
 			
-		EndIf;	
+		EndIf;
 		
 		QuestionnaireTable = New ValueTable;
 		QuestionnaireTable.Columns.Add("Questionnaire");
-				
+		
+		// Получить таблицу файлов этой торговой точки
+		Query = New Query;
+		Query.Text = 
+			"SELECT
+			|	bitmobile_ХранилищеФайлов.Объект,
+			|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+			|	bitmobile_ХранилищеФайлов.Действие,
+			|	bitmobile_ХранилищеФайлов.ИмяФайла,
+			|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+			|	bitmobile_ХранилищеФайлов.Расширение,
+			|	bitmobile_ХранилищеФайлов.Хранилище,
+			|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
+			|FROM
+			|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+			|WHERE
+			|	bitmobile_ХранилищеФайлов.Объект = &Outlet";
+		
+		Query.SetParameter("Outlet", Source.Outlet);
+		
+		OutletFiles = Query.Execute().Unload();
+		
 		For Each Str In Source.Questions Do 
 			
 			If ValueIsFilled(Str.Questionnaire) And ValueIsFilled(Str.AnswerDate) Then 
@@ -75,12 +96,18 @@ Function CheckEntity(Source, SourceRef) Export
 					RecordManager.Answer 		= Str.Answer;
 					RecordManager.AnswerDate 	= Str.AnswerDate;
 					
+					If Str.Question.AnswerType = Enums.DataType.Snapshot And ValueIsFilled(Str.Answer) Then
+						
+						RecordManager.UploadSnapshot	= True;
+						RecordManager.Snapshot			= New UUID(Str.Answer);
+						
+					EndIf;
+					
 					RecordManager.Write();
 					
-				EndIf;	
+				EndIf;
 				
-				
-			EndIf;			
+			EndIf;
 			
 		EndDo;
 		
@@ -102,14 +129,20 @@ Function CheckEntity(Source, SourceRef) Export
 					RecordManager.Answer 		= Str.Answer;
 					RecordManager.AnswerDate 	= Str.AnswerDate;
 					
+					If Str.Question.AnswerType = Enums.DataType.Snapshot And ValueIsFilled(Str.Answer) Then
+						
+						RecordManager.UploadSnapshot	= True;
+						RecordManager.Snapshot			= New UUID(Str.Answer);
+						
+					EndIf;
+					
 					RecordManager.Write();
 					
-				EndIf;	
+				EndIf;
 				
-				
-			EndIf;			
+			EndIf;
 			
-		EndDo;			
+		EndDo;
 		
 		QuestionnaireTable.GroupBy("Questionnaire");
 		
@@ -125,11 +158,127 @@ Function CheckEntity(Source, SourceRef) Export
 			RecordManager.Write();
 			
 		EndDo;
-				
-	EndIf;	
+		
+	EndIf;
 	
-    Return Source;
+	Return Source;
+	
+EndFunction
 
+#EndRegion
+
+#Region AnsweredQuestions 
+
+Function AddAnsweredQuestionsSnapshot(Connection, Path) Export 
+	
+	// Получить снимки которые можно удалить с сервера
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	bitmobile_ХранилищеФайлов.Объект,
+		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+		|	bitmobile_ХранилищеФайлов.Действие,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.Хранилище,
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
+		|FROM
+		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+		|		INNER JOIN InformationRegister.AnsweredQuestions AS AnsweredQuestions
+		|		ON bitmobile_ХранилищеФайлов.Объект <> AnsweredQuestions.Outlet
+		|			AND bitmobile_ХранилищеФайлов.ИмяФайла <> AnsweredQuestions.Snapshot
+		|WHERE
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован = TRUE
+		|	AND VALUETYPE(bitmobile_ХранилищеФайлов.Объект) = TYPE(Catalog.Outlet)";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		RecordManagerDelete = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+		
+		FillPropertyValues(RecordManagerDelete, Selection);
+		
+		RecordManagerDelete.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+		
+		RecordManagerDelete.Write();
+		
+	EndDo;
+	
+	// Получить невыгруженные снимки ответов
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	AnsweredQuestions.Questionaire,
+		|	AnsweredQuestions.Outlet,
+		|	AnsweredQuestions.Question,
+		|	AnsweredQuestions.SKU,
+		|	AnsweredQuestions.Answer,
+		|	AnsweredQuestions.AnswerDate,
+		|	AnsweredQuestions.Visit,
+		|	AnsweredQuestions.UploadSnapshot,
+		|	AnsweredQuestions.Snapshot,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла
+		|FROM
+		|	InformationRegister.AnsweredQuestions AS AnsweredQuestions
+		|		LEFT JOIN InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+		|		ON AnsweredQuestions.Snapshot = bitmobile_ХранилищеФайлов.ИмяФайла
+		|			AND (bitmobile_ХранилищеФайлов.НаправлениеСинхронизации = VALUE(Enum.bitmobile_НаправленияСинхронизации.Private))
+		|WHERE
+		|	AnsweredQuestions.UploadSnapshot = TRUE";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		If ValueIsFilled(Selection.ИмяФайла) Then
+			
+			Try
+				
+				// Получить тело файла
+				TempFile = GetTempFileName(Selection.Расширение);
+				
+				Connection.Get(Path + Selection.ПолноеИмяФайла, TempFile);
+				
+				BinaryData = New BinaryData(TempFile);
+					
+				RecordManagerF							= InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+				RecordManagerF.Объект					= Selection.Outlet;
+				RecordManagerF.НаправлениеСинхронизации	= Enums.bitmobile_НаправленияСинхронизации.Shared;
+				RecordManagerF.Действие					= Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл;
+				RecordManagerF.ПолноеИмяФайла			= "/shared/Catalog.Outlet/" + Selection.Outlet.UUID() + 
+														  "/" + Selection.ИмяФайла + Lower(Selection.Расширение);
+				RecordManagerF.ИмяФайла					= Selection.ИмяФайла;
+				RecordManagerF.Расширение				= Selection.Расширение;
+				RecordManagerF.Хранилище				= New ValueStorage(BinaryData);
+				RecordManagerF.ФайлЗаблокирован			= True;
+				
+				RecordManagerF.Write();
+				
+				RecordManagerAQ = InformationRegisters.AnsweredQuestions.CreateRecordManager();
+				
+				FillPropertyValues(RecordManagerAQ, Selection);
+				
+				RecordManagerAQ.UploadSnapshot = False;
+				
+				RecordManagerAQ.Write();
+				
+			Except
+				
+				
+			EndTry;
+			
+		EndIf;
+		
+	EndDo;
+	
 EndFunction
 
 #EndRegion

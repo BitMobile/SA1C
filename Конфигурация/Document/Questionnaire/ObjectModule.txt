@@ -45,6 +45,45 @@ Procedure OnWrite(Cancel)
 			
 		EndDo;
 		
+		Query = New Query;
+		Query.Text = 
+			"SELECT ALLOWED
+			|	AnsweredQuestions.Questionaire,
+			|	AnsweredQuestions.Outlet,
+			|	AnsweredQuestions.Question,
+			|	AnsweredQuestions.SKU,
+			|	AnsweredQuestions.Answer,
+			|	AnsweredQuestions.AnswerDate,
+			|	AnsweredQuestions.Visit,
+			|	AnsweredQuestions.UploadSnapshot,
+			|	AnsweredQuestions.Snapshot
+			|FROM
+			|	InformationRegister.AnsweredQuestions AS AnsweredQuestions
+			|WHERE
+			|	AnsweredQuestions.Questionaire = &Questionaire";
+		
+		Query.SetParameter("Questionnaire", Ref);
+		
+		QueryResult = Query.Execute();
+		
+		Selection = QueryResult.Select();
+		
+		RecordManager = InformationRegisters.AnsweredQuestions.CreateRecordManager();
+		
+		While Selection.Next() Do
+			
+			FillPropertyValues(RecordManager, Selection);
+			
+			RecordManager.Read();
+			
+			If RecordManager.Selected() Then 
+				
+				RecordManager.Delete();
+				
+			EndIf;
+			
+		EndDo;
+		
 	EndIf;
 	
 EndProcedure
