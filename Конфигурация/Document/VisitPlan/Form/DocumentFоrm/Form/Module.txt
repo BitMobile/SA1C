@@ -68,6 +68,7 @@ Procedure FillValueTableOutlets()
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
 	|	SRsOutlets.Outlet AS Outlet,
+	|	SRsOutlets.Outlet.Address AS Address,
 	|	MAX(CASE
 	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 1
 	|				THEN TRUE
@@ -462,7 +463,7 @@ EndProcedure
 Procedure ValueTableOutletsOnActivateCell(Item)
 	
 	ItemName = Item.CurrentItem.Name;
-	Items.CreateTask.Enabled = ?(ItemName = "ValueTableOutlet", False, Not ThisForm["Attribute" + Right(Item.CurrentItem.Name, 1)]);
+	Items.CreateTask.Enabled = ?(ItemName = "ValueTableOutlet" OR ItemName = "ValueTableOutletsAddress", False, Not ThisForm["Attribute" + Right(Item.CurrentItem.Name, 1)]);
 	
 EndProcedure
 

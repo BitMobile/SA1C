@@ -402,6 +402,13 @@
 									<ContextMenu name="ValueTableOutletContextMenu" id="30"/>
 									<ExtendedTooltip name="ValueTableOutletExtendedTooltip" id="271"/>
 								</InputField>
+								<InputField name="ValueTableOutletsAddress" id="331">
+									<DataPath>ValueTableOutlets.Address</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ValueTableOutletsAddressContextMenu" id="332"/>
+									<ExtendedTooltip name="ValueTableOutletsAddressExtendedTooltip" id="333"/>
+								</InputField>
 								<ColumnGroup name="Group1" id="233">
 									<Title>
 										<v8:item>
@@ -929,6 +936,25 @@
 						<v8:DateQualifiers>
 							<v8:DateFractions>Time</v8:DateFractions>
 						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="Address" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Address</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Адрес</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
 					</Type>
 				</Column>
 			</Columns>
