@@ -4,7 +4,7 @@ Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
 	
 	If HaveRightToRead() Then 
 	
-		OpenForm("Report.QuestionnireStatistics.Form", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
+		OpenForm("Report.QuestionsOnSKUs.Form", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
 		
 	Else 
 		
@@ -23,7 +23,7 @@ Function HaveRightToRead()
 		
 	Else 
 		
-		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_QuestionnireStatistics);
+		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_QuestionsOnSKUs);
 		
 	EndIf;
 	

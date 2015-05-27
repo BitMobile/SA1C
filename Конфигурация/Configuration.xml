@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.7.0.370</Version>
+			<Version>1.7.0.371</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -181,35 +181,35 @@
 			<FunctionalOption>Encashments</FunctionalOption>
 			<CommonCommand>CreateTasks</CommonCommand>
 			<CommonCommand>HistoryTask</CommonCommand>
-			<CommonCommand>ShowRegularQuestions</CommonCommand>
-			<CommonCommand>ShowSyncAndSettings</CommonCommand>
-			<CommonCommand>ShowDeleteObjects</CommonCommand>
-			<CommonCommand>ShowScheduledJobs</CommonCommand>
-			<CommonCommand>ShowBindingOutlets</CommonCommand>
 			<CommonCommand>ShowAnalysisOutletParameters</CommonCommand>
-			<CommonCommand>ShowOutletsStatuses</CommonCommand>
-			<CommonCommand>ShowNumberOfOutlets</CommonCommand>
-			<CommonCommand>ShowQuestionnireStatistics</CommonCommand>
-			<CommonCommand>ShowSkuChangeAnalysis</CommonCommand>
-			<CommonCommand>ShowCompetitorsInTheOutlets</CommonCommand>
-			<CommonCommand>ShowVisitEfficiency</CommonCommand>
+			<CommonCommand>ShowAccountReceivableReport</CommonCommand>
+			<CommonCommand>ShowBindingOutlets</CommonCommand>
+			<CommonCommand>ShowConfigurationSettings</CommonCommand>
+			<CommonCommand>ShowDeleteObjects</CommonCommand>
 			<CommonCommand>ShowEncashment</CommonCommand>
+			<CommonCommand>ShowExchangePlans</CommonCommand>
+			<CommonCommand>ShowNumberOfOutlets</CommonCommand>
+			<CommonCommand>ShowOrders</CommonCommand>
+			<CommonCommand>ShowOutletsStatuses</CommonCommand>
+			<CommonCommand>ShowOutletPhotosReport</CommonCommand>
+			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
+			<CommonCommand>ShowPromoActionsReport</CommonCommand>
+			<CommonCommand>ShowPlanFactSKUStockReport</CommonCommand>
+			<CommonCommand>ShowPriceMonitoring</CommonCommand>
+			<CommonCommand>ShowRegularQuestions</CommonCommand>
+			<CommonCommand>ShowReturns</CommonCommand>
+			<CommonCommand>ShowQuestionsOnOutlets</CommonCommand>
+			<CommonCommand>ShowQuestionsOnSKUs</CommonCommand>
+			<CommonCommand>ShowSyncAndSettings</CommonCommand>
+			<CommonCommand>ShowScheduledJobs</CommonCommand>
+			<CommonCommand>ShowSKUChangeAnalysis</CommonCommand>
+			<CommonCommand>ShowSKUsStockInOutlet</CommonCommand>
+			<CommonCommand>ShowSKUQuestions</CommonCommand>
+			<CommonCommand>ShowShelfSpaceShare</CommonCommand>
+			<CommonCommand>ShowVisitEfficiency</CommonCommand>
 			<CommonCommand>ShowVisitResults</CommonCommand>
 			<CommonCommand>ShowVisitsOnMap</CommonCommand>
-			<CommonCommand>ShowOrders</CommonCommand>
-			<CommonCommand>ShowReturns</CommonCommand>
 			<CommonCommand>ShowVisitsControl</CommonCommand>
-			<CommonCommand>ShowOutletPhotosReport</CommonCommand>
-			<CommonCommand>ShowSKUsStockInOutlet</CommonCommand>
-			<CommonCommand>ShowPriceMonitoring</CommonCommand>
-			<CommonCommand>ShowShelfSpaceShare</CommonCommand>
-			<CommonCommand>ShowPromoActionsReport</CommonCommand>
-			<CommonCommand>ShowAccountReceivableReport</CommonCommand>
-			<CommonCommand>ShowPlanFactSKUStockReport</CommonCommand>
-			<CommonCommand>ShowSKUQuestions</CommonCommand>
-			<CommonCommand>ShowOutletAssortmentAvailability</CommonCommand>
-			<CommonCommand>ShowExchangePlans</CommonCommand>
-			<CommonCommand>ShowConfigurationSettings</CommonCommand>
 			<Constant>UseReturns</Constant>
 			<Constant>UseOrders</Constant>
 			<Constant>UseEncashments</Constant>
@@ -329,7 +329,6 @@
 			<Report>AccountReceivable</Report>
 			<Report>AnalysisOutletParameters</Report>
 			<Report>BindingOutlets</Report>
-			<Report>CompetitorsInTheOutlets</Report>
 			<Report>Encashment</Report>
 			<Report>NumberOfOutlets</Report>
 			<Report>Orders</Report>
@@ -340,7 +339,8 @@
 			<Report>PriceMonitoring</Report>
 			<Report>PromoActionsReport</Report>
 			<Report>Returns</Report>
-			<Report>QuestionnireStatistics</Report>
+			<Report>QuestionsOnSKUs</Report>
+			<Report>QuestionsOnOutlets</Report>
 			<Report>ShelfSpaceShare</Report>
 			<Report>SKUChangeAnalysis</Report>
 			<Report>SKUsStockInOutlet</Report>

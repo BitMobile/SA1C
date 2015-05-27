@@ -6,11 +6,6 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Command>
-		<Command name="Report.CompetitorsInTheOutlets.StandardCommand.Open">
-			<Visibility>
-				<xr:Common>false</xr:Common>
-			</Visibility>
-		</Command>
 		<Command name="Report.PriceMonitoring.StandardCommand.Open">
 			<Visibility>
 				<xr:Common>false</xr:Common>
@@ -26,7 +21,12 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Command>
-		<Command name="Report.QuestionnireStatistics.StandardCommand.Open">
+		<Command name="Report.QuestionsOnSKUs.StandardCommand.Open">
+			<Visibility>
+				<xr:Common>false</xr:Common>
+			</Visibility>
+		</Command>
+		<Command name="Report.QuestionsOnOutlets.StandardCommand.Open">
 			<Visibility>
 				<xr:Common>false</xr:Common>
 			</Visibility>

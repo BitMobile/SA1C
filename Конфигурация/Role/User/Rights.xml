@@ -249,6 +249,17 @@ WHERE TerritoryOutlets.Ref.Owner IN
 		</right>
 	</object>
 	<object>
+		<name>Report.QuestionsOnSKUs</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Constant.bitmobile_ПарольSMTP</name>
 		<right>
 			<name>Read</name>
@@ -634,7 +645,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>CommonCommand.ShowSkuChangeAnalysis</name>
+		<name>CommonCommand.ShowSKUChangeAnalysis</name>
 		<right>
 			<name>View</name>
 			<value>true</value>
@@ -2060,7 +2071,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Return")
 		</right>
 	</object>
 	<object>
-		<name>Report.QuestionnireStatistics</name>
+		<name>Report.QuestionsOnOutlets</name>
 		<right>
 			<name>Use</name>
 			<value>true</value>
@@ -3549,7 +3560,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
-		<name>CommonCommand.ShowCompetitorsInTheOutlets</name>
+		<name>CommonCommand.ShowQuestionsOnSKUs</name>
 		<right>
 			<name>View</name>
 			<value>true</value>
@@ -4172,17 +4183,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
-		<name>Report.CompetitorsInTheOutlets</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Report.AnalysisOutletParameters</name>
 		<right>
 			<name>Use</name>
@@ -4515,7 +4515,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		</right>
 	</object>
 	<object>
-		<name>CommonCommand.ShowQuestionnireStatistics</name>
+		<name>CommonCommand.ShowQuestionsOnOutlets</name>
 		<right>
 			<name>View</name>
 			<value>true</value>

@@ -19,12 +19,12 @@
 			<Explanation/>
 			<Picture/>
 			<Content>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.QuestionnireStatistics</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">Report.CompetitorsInTheOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.QuestionsOnOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">c7812be4-b5b9-425a-8759-0843be5b7212</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.SKUChangeAnalysis</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowQuestionnireStatistics</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSkuChangeAnalysis</xr:Item>
-				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowCompetitorsInTheOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowQuestionsOnOutlets</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSKUChangeAnalysis</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowQuestionsOnSKUs</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowSKUsStockInOutlet</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowPriceMonitoring</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowShelfSpaceShare</xr:Item>
@@ -35,6 +35,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.PromoActionsReport</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.ShelfSpaceShare</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.SKUsStockInOutlet</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.QuestionsOnSKUs</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

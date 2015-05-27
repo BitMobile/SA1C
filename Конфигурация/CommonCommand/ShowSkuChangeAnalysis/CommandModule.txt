@@ -4,7 +4,7 @@ Procedure CommandProcessing(CommandParameter, CommandExecuteParameters)
 	
 	If HaveRightToRead() Then 
 	
-		OpenForm("Report.SkuChangeAnalysis.Form", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
+		OpenForm("Report.SKUChangeAnalysis.Form", , CommandExecuteParameters.Source, CommandExecuteParameters.Uniqueness, CommandExecuteParameters.Window, CommandExecuteParameters.URL);
 		
 	Else 
 		
@@ -23,7 +23,7 @@ Function HaveRightToRead()
 		
 	Else 
 		
-		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_SkuChangeAnalysis);
+		Return Users.HaveRightToRead(Catalogs.SystemObjects.Report_SKUChangeAnalysis);
 		
 	EndIf;
 	

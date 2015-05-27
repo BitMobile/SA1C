@@ -234,12 +234,6 @@
 				<Description>en = 'Reports'; ru = 'Отчеты'</Description>
 				<IsFolder>true</IsFolder>
 				<ChildItems>
-					<Item id="44889c2f-64ac-4b8a-84f2-2c8601b6da6b">
-						<Name>Report_CompetitorsInTheOutlets</Name>
-						<Code>000000191</Code>
-						<Description>en = 'Competitor analysis in outlets'; ru = 'Анализ конкурентов в торговых точках'</Description>
-						<IsFolder>false</IsFolder>
-					</Item>
 					<Item id="4478d122-6765-4501-82c8-238f5475ccec">
 						<Name>Report_PriceMonitoring</Name>
 						<Code>000000201</Code>
@@ -253,9 +247,15 @@
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="1f74408b-9a3a-4ff6-a48e-a9825479e681">
-						<Name>Report_QuestionnireStatistics</Name>
+						<Name>Report_QuestionsOnOutlets</Name>
 						<Code>000000193</Code>
 						<Description>en = 'Report on questions in questionnaires (questions on outlets)'; ru = 'Отчет по вопросам анкет (вопросы по ТТ)'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
+					<Item id="44889c2f-64ac-4b8a-84f2-2c8601b6da6b">
+						<Name>Report_QuestionsOnSKUs</Name>
+						<Code>000000191</Code>
+						<Description>en = 'Report on questions in questionnaires (questions on SKUs)'; ru = 'Отчет по вопросам анкет (вопросы по номенклатуре)'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="d5497ec1-5e37-410f-b737-f096f08cf774">
@@ -265,9 +265,9 @@
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="1ddf906f-3ca9-48fc-b627-c27dcc539158">
-						<Name>Report_SkuChangeAnalysis</Name>
+						<Name>Report_SKUChangeAnalysis</Name>
 						<Code>000000192</Code>
-						<Description>en = 'Sku change in outlets analysis'; ru = 'Изменения товаров в торговых точках'</Description>
+						<Description>en = 'SKU change in outlets analysis'; ru = 'Изменения товаров в торговых точках'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="1e66f1a9-2ecc-48ef-a72b-4340c76c534a">
