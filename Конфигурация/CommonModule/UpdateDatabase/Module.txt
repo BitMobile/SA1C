@@ -1763,7 +1763,7 @@ Procedure ProcessFiles()
 		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
 		|	bitmobile_ХранилищеФайлов.Расширение,
 		|	bitmobile_ХранилищеФайлов.Хранилище,
-		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован,
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
 		|FROM
 		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов";
 	
