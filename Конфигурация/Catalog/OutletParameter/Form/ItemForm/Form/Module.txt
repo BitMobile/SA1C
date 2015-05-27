@@ -6,6 +6,8 @@ Procedure OnOpen(Cancel)
 		Items.ValueList.Visible = False;
 	EndIf;
 	
+	Items.EditableInMA.ReadOnly = Not Object.VisibleInMA;
+	
 EndProcedure
 
 &AtClient
@@ -80,6 +82,19 @@ Function GetValueList()
 	Return Enums.DataType.ValueList;
 	
 EndFunction
+
+&AtClient
+Procedure VisibleInMAOnChange(Item)
+	
+	If  NOT Object.VisibleInMA Then
+		
+		Object.EditableInMA = False;
+		
+	EndIf;
+	
+	Items.EditableInMA.ReadOnly = Not Object.VisibleInMA;
+	
+EndProcedure
 
 
 

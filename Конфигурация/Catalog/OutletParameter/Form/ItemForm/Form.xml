@@ -40,6 +40,9 @@
 					<CheckBoxType>Auto</CheckBoxType>
 					<ContextMenu name="VisibleInMAContextMenu" id="32"/>
 					<ExtendedTooltip name="VisibleInMAExtendedTooltip" id="33"/>
+					<Events>
+						<Event name="OnChange">VisibleInMAOnChange</Event>
+					</Events>
 				</CheckBoxField>
 				<CheckBoxField name="EditableInMA" id="34">
 					<DataPath>Object.EditableInMA</DataPath>

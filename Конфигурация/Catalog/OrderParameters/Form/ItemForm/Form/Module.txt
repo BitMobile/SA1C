@@ -22,7 +22,8 @@ EndFunction
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	Items.ValueList.Visible = NOT Object.ValueList.Count() = 0 
+	Items.ValueList.Visible = NOT Object.ValueList.Count() = 0;
+	Items.EditableInMA.ReadOnly = Not Object.VisibleInMA;
 	
 EndProcedure
 
@@ -63,3 +64,19 @@ Procedure DataTypeOnChange(Item)
 	EndIf;
 	
 EndProcedure
+
+&AtClient
+Procedure VisibleInMAOnChange(Item)
+	
+	If  NOT Object.VisibleInMA Then
+		
+		Object.EditableInMA = False;
+		
+	EndIf;
+	
+	Items.EditableInMA.ReadOnly = Not Object.VisibleInMA;
+	
+EndProcedure
+
+
+
