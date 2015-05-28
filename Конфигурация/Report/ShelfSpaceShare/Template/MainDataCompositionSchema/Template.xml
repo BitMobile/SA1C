@@ -103,20 +103,6 @@
 			</appearance>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>SKUGroupStock</dataPath>
-			<field>SKUGroupStock</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SKU Group stock</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Остаток по группе номенклатуры</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>AvgStock</dataPath>
 			<field>AvgStock</field>
 			<title xsi:type="v8:LocalStringType">
@@ -167,20 +153,6 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Значение параметра торговой точки</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>SKUGroup</dataPath>
-			<field>SKUGroup</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>SKU Group</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Группа номенклатуры</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -240,10 +212,62 @@
 				</dcscor:item>
 			</inputParameters>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>TrueCurrBrandStock</dataPath>
+			<field>TrueCurrBrandStock</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>True curr brand stock</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKUGroup</dataPath>
+			<field>SKUGroup</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU group</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа номенклатуры</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SKUGroupStock</dataPath>
+			<field>SKUGroupStock</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SKU group stock</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Остаток по группе номенклатуры</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT ALLOWED
-	Answers.Outlet,
-	Answers.SKU,
+		<query>SELECT
+	MAX(AnswersSliceLast.Period) AS Period,
+	AnswersSliceLast.SKU,
+	AnswersSliceLast.Outlet
+INTO MaxPeriodSKUs
+FROM
+	InformationRegister.Answers.SliceLast AS AnswersSliceLast
+
+GROUP BY
+	AnswersSliceLast.SKU,
+	AnswersSliceLast.Outlet
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT ALLOWED
+	Answers.Outlet AS Outlet,
+	Answers.SKU AS SKU,
 	AVG(CAST(Answers.Answer AS NUMBER)) AS AvgStock
 INTO Average
 FROM
@@ -257,52 +281,88 @@ WHERE
 GROUP BY
 	Answers.Outlet,
 	Answers.SKU
+
+INDEX BY
+	Outlet,
+	SKU
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	AnswersSliceLast.Outlet,
-	AnswersSliceLast.SKU,
-	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS Stock,
-	AnswersSliceLast.Visit.SR
+	AnswersSliceLast.Outlet AS Outlet,
+	AnswersSliceLast.SKU AS SKU,
+	CAST(AnswersSliceLast.Answer AS NUMBER) AS Stock,
+	AnswersSliceLast.Visit.SR AS VisitSR
 INTO AllBrands
 FROM
 	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+		INNER JOIN MaxPeriodSKUs AS MaxPeriodSKUs
+		ON AnswersSliceLast.SKU = MaxPeriodSKUs.SKU
+			AND AnswersSliceLast.Outlet = MaxPeriodSKUs.Outlet
+			AND AnswersSliceLast.Period = MaxPeriodSKUs.Period
 
-GROUP BY
-	AnswersSliceLast.SKU,
-	AnswersSliceLast.Outlet,
-	AnswersSliceLast.Visit.SR
+INDEX BY
+	Outlet,
+	SKU,
+	VisitSR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	AnswersSliceLast.Outlet,
-	AnswersSliceLast.SKU,
-	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS CurrentBrandStock
+	AnswersSliceLast.Outlet AS Outlet,
+	AnswersSliceLast.SKU AS SKU,
+	CAST(AnswersSliceLast.Answer AS NUMBER) AS CurrentBrandStock,
+	AnswersSliceLast.SKU.Brand AS SKUBrand
 INTO CurrentBrand
 FROM
 	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+		INNER JOIN MaxPeriodSKUs AS MaxPeriodSKUs
+		ON AnswersSliceLast.Outlet = MaxPeriodSKUs.Outlet
+			AND AnswersSliceLast.SKU = MaxPeriodSKUs.SKU
+			AND AnswersSliceLast.Period = MaxPeriodSKUs.Period
+
+INDEX BY
+	Outlet,
+	SKU,
+	SKUBrand
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT ALLOWED
+	AnswersSliceLast.Outlet AS Outlet,
+	AnswersSliceLast.SKU AS SKU,
+	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS TrueCurrBrandStock
+INTO TrueCurrBrand
+FROM
+	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+		INNER JOIN MaxPeriodSKUs AS MaxPeriodSKUs
+		ON AnswersSliceLast.SKU = MaxPeriodSKUs.SKU
+			AND AnswersSliceLast.Outlet = MaxPeriodSKUs.Outlet
+			AND AnswersSliceLast.Period = MaxPeriodSKUs.Period
 WHERE
 	AnswersSliceLast.SKU.Brand = &amp;Brand
 
 GROUP BY
 	AnswersSliceLast.Outlet,
 	AnswersSliceLast.SKU
+
+INDEX BY
+	Outlet,
+	SKU
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	AnswersSliceLast.Outlet,
-	AnswersSliceLast.SKU.Owner AS SKUGroup,
-	SUM(CAST(AnswersSliceLast.Answer AS NUMBER)) AS SKUGroupStock
+	AllBrands.Outlet,
+	SUM(AllBrands.Stock) AS SKUGroupStock,
+	AllBrands.SKU.Owner AS SKUGroup
 INTO SKUGroups
 FROM
-	InformationRegister.Answers.SliceLast({(&amp;Period)}, QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)) AS AnswersSliceLast
+	AllBrands AS AllBrands
 
 GROUP BY
-	AnswersSliceLast.SKU.Owner,
-	AnswersSliceLast.Outlet
+	AllBrands.SKU.Owner,
+	AllBrands.Outlet
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -311,20 +371,18 @@ SELECT ALLOWED
 	NestedSelect.Territory,
 	AllBrands.Outlet AS Outlet,
 	AllBrands.SKU.Brand,
-	SKUGroups.SKUGroup,
 	AllBrands.SKU AS SKU,
 	AllBrands.Stock,
 	CurrentBrand.CurrentBrandStock,
-	SKUGroups.SKUGroupStock,
 	0 AS Percent,
 	Average.AvgStock,
 	OutletParameters.Value,
-	AllBrands.VisitSR AS SR
+	AllBrands.VisitSR AS SR,
+	ISNULL(TrueCurrBrand.TrueCurrBrandStock, 0) AS TrueCurrBrandStock,
+	SKUGroups.SKUGroup,
+	SKUGroups.SKUGroupStock
 FROM
 	AllBrands AS AllBrands
-		LEFT JOIN SKUGroups AS SKUGroups
-		ON AllBrands.SKU.Owner = SKUGroups.SKUGroup
-			AND AllBrands.Outlet = SKUGroups.Outlet
 		LEFT JOIN Average AS Average
 		ON AllBrands.Outlet = Average.Outlet
 			AND AllBrands.SKU = Average.SKU
@@ -343,6 +401,13 @@ FROM
 		LEFT JOIN CurrentBrand AS CurrentBrand
 		ON AllBrands.Outlet = CurrentBrand.Outlet
 			AND AllBrands.SKU = CurrentBrand.SKU
+			AND AllBrands.SKU.Brand = CurrentBrand.SKUBrand
+		LEFT JOIN TrueCurrBrand AS TrueCurrBrand
+		ON AllBrands.Outlet = TrueCurrBrand.Outlet
+			AND AllBrands.SKU = TrueCurrBrand.SKU
+		LEFT JOIN SKUGroups AS SKUGroups
+		ON AllBrands.Outlet = SKUGroups.Outlet
+			AND AllBrands.SKU.Owner = SKUGroups.SKUGroup
 WHERE
 	OutletParameters.Parameter = &amp;Parameter</query>
 	</dataSet>
@@ -369,12 +434,17 @@ WHERE
 		<group>SKUGroup</group>
 	</totalField>
 	<totalField>
-		<dataPath>SKUGroupStock</dataPath>
-		<expression>SKUGroupStock</expression>
+		<dataPath>Percent</dataPath>
+		<expression>CASE WHEN EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") = 0 THEN 0 ELSE Sum(CurrentBrandStock) /  EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100 END</expression>
+		<group>SKUBrand</group>
+	</totalField>
+	<totalField>
+		<dataPath>AvgStock</dataPath>
+		<expression>Sum(AvgStock)</expression>
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
-		<expression>CASE WHEN EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") = 0 THEN 0 ELSE Sum(CurrentBrandStock) /  EvalExpression("Sum(Stock)", , "Группировка", "First", "Last") * 100 END</expression>
+		<expression>CASE WHEN Sum(Stock) = 0 THEN 0 ELSE Sum(TrueCurrBrandStock) / Sum(Stock) * 100 END</expression>
 		<group>Outlet</group>
 		<group>Region</group>
 		<group>Region Hierarchy</group>
@@ -382,8 +452,12 @@ WHERE
 		<group>Value</group>
 	</totalField>
 	<totalField>
-		<dataPath>AvgStock</dataPath>
-		<expression>Sum(AvgStock)</expression>
+		<dataPath>TrueCurrBrandStock</dataPath>
+		<expression>Sum(TrueCurrBrandStock)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>SKUGroupStock</dataPath>
+		<expression>SKUGroupStock</expression>
 	</totalField>
 	<parameter>
 		<name>Period</name>
@@ -407,25 +481,6 @@ WHERE
 		<useRestriction>false</useRestriction>
 	</parameter>
 	<parameter>
-		<name>Brand</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Brand</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Брэнд</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Brands</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>false</useRestriction>
-		<use>Always</use>
-	</parameter>
-	<parameter>
 		<name>Parameter</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
@@ -444,6 +499,25 @@ WHERE
 		<useRestriction>false</useRestriction>
 		<use>Always</use>
 	</parameter>
+	<parameter>
+		<name>Brand</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Brand</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Бренд</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.Brands</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<use>Always</use>
+	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
@@ -454,6 +528,16 @@ WHERE
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Stock</dcsset:field>
+					<dcsset:lwsTitle>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Facing</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Фейсинг</v8:content>
+						</v8:item>
+					</dcsset:lwsTitle>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Percent</dcsset:field>
@@ -465,7 +549,7 @@ WHERE
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>a353f62d-54f5-433d-ad5a-d61570280c96</dcsset:userSettingID>
+					<dcsset:userSettingID>db38fb71-241e-408d-b661-0aaf038c7b29</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -581,19 +665,32 @@ WHERE
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Brand</dcscor:parameter>
+					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>3aeaca11-c924-48c0-b49d-7998744fde31</dcsset:userSettingID>
+					<dcsset:userSettingID>74b6a6d5-0eaa-4238-8c36-573e5a7bc882</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>Parameter</dcscor:parameter>
+					<dcscor:parameter>Brand</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>245c03e7-11e0-4fc5-9320-ae650b218ea4</dcsset:userSettingID>
+					<dcsset:userSettingID>cdb320e3-71c5-4037-925b-d2762d6d2a15</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
