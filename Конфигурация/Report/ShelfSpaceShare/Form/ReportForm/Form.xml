@@ -37,6 +37,7 @@
 			</Title>
 			<VerticalStretch>false</VerticalStretch>
 			<Behavior>Collapsible</Behavior>
+			<Collapsed>true</Collapsed>
 			<ControlRepresentation>Picture</ControlRepresentation>
 			<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="4"/>
 			<ChildItems>
