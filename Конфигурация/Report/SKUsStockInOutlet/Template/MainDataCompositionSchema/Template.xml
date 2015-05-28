@@ -462,7 +462,7 @@ FROM
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>ece1603e-1f1f-47bf-a515-33c930af8c83</dcsset:userSettingID>
+					<dcsset:userSettingID>6f113efb-6229-40fb-a3aa-9e491fa6efcd</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -534,7 +534,7 @@ FROM
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DesignTimeValue">Catalog.OutletParameter.EmptyRef</dcscor:value>
-					<dcsset:userSettingID>981b2ff3-94ab-4004-9fcf-9ad53c8592ce</dcsset:userSettingID>
+					<dcsset:userSettingID>4efd7886-9286-47c5-a887-72c1dab3f175</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
@@ -543,8 +543,21 @@ FROM
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
 			</dcsset:order>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
