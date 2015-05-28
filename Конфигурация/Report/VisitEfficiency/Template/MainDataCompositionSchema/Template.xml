@@ -586,6 +586,7 @@ GROUP BY
 			</dcsset:order>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
