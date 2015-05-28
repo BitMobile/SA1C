@@ -734,6 +734,7 @@ FROM
 					<dcsset:filter/>
 					<dcsset:appearance>
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
 							<dcscor:parameter>MinimumWidth</dcscor:parameter>
 							<dcscor:value xsi:type="xs:decimal">20</dcscor:value>
 						</dcscor:item>
@@ -746,6 +747,7 @@ FROM
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
