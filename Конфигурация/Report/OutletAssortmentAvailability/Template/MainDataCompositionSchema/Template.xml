@@ -260,6 +260,16 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>VW</dataPath>
+			<field>VW</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>VW</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(AnswersSliceLast.Visit.Date, DAY) AS Day,
@@ -389,13 +399,32 @@ SELECT ALLOWED
 		ELSE 1
 	END AS BaseUnitQty,
 	Fact.SR
-INTO PlanFact
+INTO PrePlanFact
 FROM
 	Fact AS Fact
 		FULL JOIN PlanDates AS PlanDates
 		ON Fact.Outlet = PlanDates.Outlet
 			AND Fact.SKU = PlanDates.SKU
 			AND Fact.Day = PlanDates.Day
+;
+
+////////////////////////////////////////////////////////////////////////////////
+SELECT ALLOWED
+	PrePlanFact.Day,
+	PrePlanFact.Outlet,
+	PrePlanFact.SKU,
+	PrePlanFact.Answer,
+	PrePlanFact.BaseUnitQty,
+	PrePlanFact.SR
+INTO PlanFact
+FROM
+	PrePlanFact AS PrePlanFact
+WHERE
+	PrePlanFact.Outlet IN
+			(SELECT DISTINCT
+				Fact.Outlet
+			FROM
+				Fact)
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -446,6 +475,15 @@ GROUP BY
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
+SELECT DISTINCT
+	Fact.Outlet,
+	Fact.Day
+INTO FactOutletsDays
+FROM
+	Fact AS Fact
+;
+
+////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
 	ISNULL(PlanFactTerritory.Day, MAX(PlanFactTerritory.Day)) AS Day,
 	ISNULL(BEGINOFPERIOD(PlanFactTerritory.Day, MONTH), MAX(BEGINOFPERIOD(PlanFactTerritory.Day, MONTH))) AS Month,
@@ -472,9 +510,17 @@ SELECT ALLOWED
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
 	MAX(PlanFactTerritory.SR) AS SR,
-	PlanFactTerritory.Value
+	PlanFactTerritory.Value,
+	CASE
+		WHEN FactOutletsDays.Outlet IS NULL 
+			THEN 0
+		ELSE 1
+	END AS VW
 FROM
 	PlanFactTerritory AS PlanFactTerritory
+		LEFT JOIN FactOutletsDays AS FactOutletsDays
+		ON PlanFactTerritory.Day = FactOutletsDays.Day
+			AND PlanFactTerritory.Outlet = FactOutletsDays.Outlet
 
 GROUP BY
 	PlanFactTerritory.OutletDistributor,
@@ -487,7 +533,12 @@ GROUP BY
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
 	PlanFactTerritory.Value,
-	PlanFactTerritory.Day</query>
+	PlanFactTerritory.Day,
+	CASE
+		WHEN FactOutletsDays.Outlet IS NULL 
+			THEN 0
+		ELSE 1
+	END</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Fact</dataPath>
@@ -502,7 +553,7 @@ GROUP BY
 				<v8:content>Факт</v8:content>
 			</v8:item>
 		</title>
-		<presentationExpression>CASE WHEN ANSWER = 1 THEN "ДА" WHEN Answer = 0 THEN "НЕТ" END</presentationExpression>
+		<presentationExpression>CASE WHEN ANSWER = 1 THEN "ДА" WHEN Answer = 0 OR Answer IS NULL THEN "НЕТ" END</presentationExpression>
 	</calculatedField>
 	<calculatedField>
 		<dataPath>Plan</dataPath>
@@ -527,7 +578,7 @@ GROUP BY
 	</calculatedField>
 	<calculatedField>
 		<dataPath>Percent</dataPath>
-		<expression>Case when sum(PlanFactQty) = 0 then 0 else sum(PlanFactQty) / sum(BaseUnitQty) * 100 end</expression>
+		<expression>Case when sum(BaseUnitQty) = 0 then 0 else sum(PlanFactQty) / sum(BaseUnitQty) * 100 end</expression>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -581,6 +632,46 @@ GROUP BY
 			</dcscor:item>
 		</appearance>
 	</calculatedField>
+	<calculatedField>
+		<dataPath>OutletsCount</dataPath>
+		<expression>CASE WHEN VW = 1 THEN 1 ELSE 0 END</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Outlets count</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>ДопКолонка</dataPath>
+		<expression>""</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Доп колонка</v8:content>
+			</v8:item>
+		</title>
+		<useRestriction>
+			<condition>true</condition>
+			<order>true</order>
+		</useRestriction>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>PercentTotalDay</dataPath>
+		<expression/>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Percent total day</v8:content>
+			</v8:item>
+		</title>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Format</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">NFD=2</dcscor:value>
+			</dcscor:item>
+		</appearance>
+	</calculatedField>
 	<totalField>
 		<dataPath>Plan</dataPath>
 		<expression>Plan</expression>
@@ -594,6 +685,7 @@ GROUP BY
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>Percent</expression>
+		<group>Outlet</group>
 	</totalField>
 	<totalField>
 		<dataPath>PlanFactQty</dataPath>
@@ -605,11 +697,42 @@ GROUP BY
 	</totalField>
 	<totalField>
 		<dataPath>MonthPercent</dataPath>
-		<expression>Avg(MonthPercent)</expression>
+		<expression>Avg(ВычислитьВыражениеСГруппировкойМассив("Percent" , "Day", "VW &gt; 0"))</expression>
+		<group>Outlet</group>
+		<group>SKU</group>
 	</totalField>
 	<totalField>
 		<dataPath>BaseUnitQty</dataPath>
 		<expression>CASE WHEN BaseUnitQty IS NULL THEN 0 ELSE BaseUnitQty END</expression>
+	</totalField>
+	<totalField>
+		<dataPath>OutletsCount</dataPath>
+		<expression>Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet"))</expression>
+		<group>Region</group>
+		<group>Overall</group>
+	</totalField>
+	<totalField>
+		<dataPath>Percent</dataPath>
+		<expression>CASE WHEN Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet")) = 0 THEN 0 ELSE Sum(ВычислитьВыражениеСГруппировкойМассив("Percent" , "Outlet"))/Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet")) END</expression>
+		<group>Region</group>
+		<group>Overall</group>
+	</totalField>
+	<totalField>
+		<dataPath>Answer</dataPath>
+		<expression>Answer</expression>
+		<group>SKU</group>
+	</totalField>
+	<totalField>
+		<dataPath>VW</dataPath>
+		<expression>Max(VW)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>PercentTotalDay</dataPath>
+		<expression>Avg(ВычислитьВыражениеСГруппировкойМассив("Percent" , "Day", "VW &gt; 0"))</expression>
+	</totalField>
+	<totalField>
+		<dataPath>MonthPercent</dataPath>
+		<expression>Avg(ВычислитьВыражениеСГруппировкойМассив("Percent" , "Outlet", "VW &gt; 0"))</expression>
 	</totalField>
 	<parameter>
 		<name>Period</name>
@@ -768,7 +891,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>afd3c0fe-8e78-46c0-b8af-5f19de32482c</dcsset:userSettingID>
+					<dcsset:userSettingID>0596ff73-bda5-4d50-9c23-f388bfe24f08</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -840,13 +963,43 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>49a7853d-3fca-4e7b-b0f2-6cdbe116560b</dcsset:userSettingID>
+					<dcsset:userSettingID>7eeea5cc-8187-45a1-96a5-6b8c78a3d034</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">35</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
-					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+					<dcscor:parameter>HorizontalOverallPlacement</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>DataParametersOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FilterOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedLeft</dcscor:parameter>
@@ -874,6 +1027,65 @@ GROUP BY
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>ДопКолонка</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>ДопКолонка</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:use>false</dcsset:use>
+							<dcsset:field>Plan</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:use>false</dcsset:use>
+							<dcsset:field>Fact</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:use>false</dcsset:use>
+							<dcsset:field>Percent</dcsset:field>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>PercentTotalDay</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:conditionalAppearance>
+						<dcsset:item>
+							<dcsset:selection>
+								<dcsset:item>
+									<dcsset:field>ДопКолонка</dcsset:field>
+								</dcsset:item>
+							</dcsset:selection>
+							<dcsset:filter/>
+							<dcsset:appearance>
+								<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+									<dcscor:parameter>Text</dcscor:parameter>
+									<dcscor:value xsi:type="v8:LocalStringType">
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Total</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Итого</v8:content>
+										</v8:item>
+									</dcscor:value>
+								</dcscor:item>
+							</dcsset:appearance>
+						</dcsset:item>
+					</dcsset:conditionalAppearance>
 				</dcsset:column>
 				<dcsset:row>
 					<dcsset:groupItems>
@@ -1075,7 +1287,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>b67fd2a0-6507-45ac-8a2e-e55787d96e75</dcsset:userSettingID>
+					<dcsset:userSettingID>7664ac25-0d65-4217-a824-e54146223d10</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1147,11 +1359,12 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>63019dec-77f8-4c84-a874-5d6fabb3c8cc</dcsset:userSettingID>
+					<dcsset:userSettingID>3fc23cd2-1986-4886-bc6d-812e67d18ffa</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
 				<dcsset:item>
+					<dcsset:use>false</dcsset:use>
 					<dcsset:selection>
 						<dcsset:item>
 							<dcsset:field>MonthPercent</dcsset:field>
@@ -1171,11 +1384,34 @@ GROUP BY
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">35</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>DataParametersOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FilterOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedLeft</dcscor:parameter>
@@ -1404,7 +1640,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>e59859df-0ff5-4964-8f2c-61676f357a13</dcsset:userSettingID>
+					<dcsset:userSettingID>ac05cb37-81c2-491c-9f0f-fc13a887c25e</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1476,7 +1712,7 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>a53cb801-61d4-436d-a59d-1d4f8029c6a8</dcsset:userSettingID>
+					<dcsset:userSettingID>ee5c5e4a-3d50-47b2-a30c-1f754a57ae11</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
@@ -1500,11 +1736,34 @@ GROUP BY
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">35</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>DataParametersOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FilterOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedLeft</dcscor:parameter>
@@ -1733,7 +1992,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>836ebc3a-8cb7-4ebb-84b1-6f18a6d4a103</dcsset:userSettingID>
+					<dcsset:userSettingID>49dcea64-3fb2-4a2c-bd29-3da11dfc6e51</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1805,7 +2064,7 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>b857f5fd-bb98-442c-9f44-fa0a0ea0993b</dcsset:userSettingID>
+					<dcsset:userSettingID>8465dcab-eb21-41f2-9b34-4ffc6a6e1017</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
@@ -1829,11 +2088,34 @@ GROUP BY
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">35</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>DataParametersOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>FilterOutput</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:parameter>FixedLeft</dcscor:parameter>
