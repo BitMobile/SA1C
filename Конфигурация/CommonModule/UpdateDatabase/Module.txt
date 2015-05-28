@@ -1687,6 +1687,9 @@ Procedure UpdateForRelease_1_8_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'File processing'; ru = 'Обработка файлов'"));
 	ProcessFiles();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update visits'; ru = 'Обновление визитов'"));
+	ProcessRewriteAllVisits();
+	
 EndProcedure
 
 Procedure ProcessOutletsStatusesSettings()
@@ -1824,6 +1827,29 @@ Procedure ProcessFiles()
 			RecordManager.Write();
 			
 		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessRewriteAllVisits()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Visit.Ref
+		|FROM
+		|	Document.Visit AS Visit";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		VisitObject = Selection.Ref.GetObject();
+		
+		VisitObject.Write();
 		
 	EndDo;
 	

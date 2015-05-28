@@ -57,16 +57,16 @@ Procedure OnWrite(Cancel)
 	For Each Row In QueryResult Do
 		
 		DataType = Row.DataType;
-		Answer = Row.Answer;
+		TypedAnswer = Row.Answer;
 		
 		If DataType = Enums.DataType.Boolean Then
 			
-			TypedAnswer = ?(Answer = "Да" OR Answer = "Yes", True, False);
+			TypedAnswer = ?(TypedAnswer = "Да" OR TypedAnswer = "Yes", True, False);
 			
 		ElsIf DataType = Enums.DataType.Decimal 
 			OR DataType = Enums.DataType.Integer Then
 			
-			TypedAnswer = ?(Answer = "", 0, Number(Answer));
+			TypedAnswer = ?(TypedAnswer = "", 0, Number(TypedAnswer));
 			
 		EndIf;
 		
