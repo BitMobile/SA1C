@@ -121,6 +121,7 @@
 					<ContextMenu name="ResultContextMenu" id="30"/>
 					<ExtendedTooltip name="ResultExtendedTooltip" id="31"/>
 					<Events>
+						<Event name="OnActivateArea">ResultOnActivateArea</Event>
 						<Event name="DetailProcessing">ResultDetailProcessing</Event>
 					</Events>
 				</SpreadSheetDocumentField>
