@@ -318,9 +318,10 @@ FROM
 	Fact AS Fact
 		LEFT JOIN Plan AS Plan
 		ON Fact.Date &gt;= Plan.BeginDate
-			AND Fact.Date &lt;= Plan.EndDate
-			AND Fact.Outlet = Plan.Outlet
 			AND Fact.SKU = Plan.SKU
+			AND Fact.Outlet = Plan.Outlet
+			AND (Fact.Date &lt;= Plan.EndDate
+				OR Plan.EndDate = DATETIME(1, 1, 1))
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +382,8 @@ SELECT ALLOWED
 	PlanFactTerritory.Brand,
 	PlanFactTerritory.SKUGroup,
 	PlanFactTerritory.SKU,
-	PlanFactTerritory.Fact,
-	MAX(PlanFactTerritory.Plan) AS Plan,
+	ISNULL(PlanFactTerritory.Fact, 0) AS Fact,
+	MAX(ISNULL(PlanFactTerritory.Plan, 0)) AS Plan,
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
 	PlanFactTerritory.Value,
@@ -402,8 +403,8 @@ GROUP BY
 	PlanFactTerritory.Territory,
 	PlanFactTerritory.Region,
 	PlanFactTerritory.Value,
-	PlanFactTerritory.Fact,
-	PlanFactTerritory.SR</query>
+	PlanFactTerritory.SR,
+	ISNULL(PlanFactTerritory.Fact, 0)</query>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Fact</dataPath>
@@ -657,6 +658,12 @@ GROUP BY
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Percent</dcsset:field>
 				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Field1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Field2</dcsset:field>
+				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
@@ -664,7 +671,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>abf113e4-a6b5-4e97-8c41-ed2284cf1643</dcsset:userSettingID>
+					<dcsset:userSettingID>aa06cef7-6a81-406e-8ab5-00750bf5ddb5</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -730,18 +737,70 @@ GROUP BY
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
+					<dcscor:value xsi:type="v8:StandardPeriod">
+						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+					</dcscor:value>
 					<dcsset:userSettingID>b7a882cc-bb32-42cd-88fb-f7332f183b36</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>7c835610-7fbb-4016-96eb-3b3b4be30b66</dcsset:userSettingID>
+					<dcsset:userSettingID>c54a83ae-3366-4e93-971c-b3a4dc73c0db</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Region</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Territory</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Value</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletDistributor</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletClass</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletType</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Outlet</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Brand</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKUGroup</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKU</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
@@ -975,7 +1034,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>7dc9688c-9eae-408d-b161-d0d245a053ef</dcsset:userSettingID>
+					<dcsset:userSettingID>3f6aac7d-c1f3-4862-97c8-d1eef561c3cb</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1039,6 +1098,7 @@ GROUP BY
 					<dcsset:userSettingID>988e1214-155d-4748-ac55-8cee2b0df377</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
@@ -1051,11 +1111,59 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>78520f10-e3fb-41b4-b699-48d18ebfe68a</dcsset:userSettingID>
+					<dcsset:userSettingID>65a1377e-8771-4449-af67-9ea14d3e637a</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Region</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Territory</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Value</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletDistributor</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletClass</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletType</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Outlet</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Brand</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKUGroup</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKU</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
@@ -1289,7 +1397,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>dc752941-5636-410a-bbd2-e87f14f83c36</dcsset:userSettingID>
+					<dcsset:userSettingID>aaf63b56-90d3-4b94-9ef0-44925de98acc</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1353,6 +1461,7 @@ GROUP BY
 					<dcsset:userSettingID>988e1214-155d-4748-ac55-8cee2b0df377</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
@@ -1365,11 +1474,59 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>e43ce327-9a79-42b4-970a-175d86ee30d5</dcsset:userSettingID>
+					<dcsset:userSettingID>9f7d47a8-f159-4360-ad8d-9dfc423c2e8f</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Region</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Territory</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Value</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletDistributor</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletClass</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletType</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Outlet</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Brand</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKUGroup</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKU</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
@@ -1603,7 +1760,7 @@ GROUP BY
 					<dcsset:left xsi:type="dcscor:Field">Value</dcsset:left>
 					<dcsset:comparisonType>Contains</dcsset:comparisonType>
 					<dcsset:right xsi:type="xs:string"/>
-					<dcsset:userSettingID>dada07e0-a630-4a01-89ff-b9131f987f66</dcsset:userSettingID>
+					<dcsset:userSettingID>c9b8dac6-2c61-482d-841d-369dac44f8d4</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
@@ -1667,6 +1824,7 @@ GROUP BY
 					<dcsset:userSettingID>988e1214-155d-4748-ac55-8cee2b0df377</dcsset:userSettingID>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period1</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
 						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
@@ -1679,11 +1837,59 @@ GROUP BY
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Parameter</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>84feab5a-72e8-4b51-a22b-ff416051cfdc</dcsset:userSettingID>
+					<dcsset:userSettingID>20680f89-f57e-4231-a7dc-4b03eec49ad3</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Region</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Territory</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Value</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletDistributor</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletClass</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>OutletType</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Outlet</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Brand</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKUGroup</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKU</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MaximumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
