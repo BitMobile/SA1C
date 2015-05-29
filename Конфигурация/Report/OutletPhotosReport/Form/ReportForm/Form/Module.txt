@@ -171,8 +171,11 @@ Procedure ResultOnActivateAreaAtServer(DetailsArray)
 		For Each Field In Fields Do
 			
 			If Field.Field = "Answer" Then
+				
 				ResultDetailProcessingServer(Detail, true);
+				
 				Break;
+				
 			EndIf;
 			
 		EndDo;
@@ -400,17 +403,15 @@ Procedure OpenSnapshot(Command)
 EndProcedure
 
 &AtClient
-
-&AtClient
 Procedure ResultOnActivateArea(Item)
 	
 	If NOT Item.CurrentArea.Left - Item.CurrentArea.Right = 0 OR NOT Item.CurrentArea.Top - Item.CurrentArea.Bottom = 0 Then
 		Return;
 	EndIf;
 	
-	ThisForm.PictureAddress 	= Undefined;
-	ThisForm.PictureExtension 	= Undefined;
-	ThisForm.PictureFilename 	= Undefined;
+	PictureAddress 	= Undefined;
+	PictureExtension 	= Undefined;
+	PictureFilename 	= Undefined;
 		
 	If NOT Item.CurrentArea.Details = Undefined Then
 		
