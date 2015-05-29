@@ -387,14 +387,11 @@ FROM
 		ON AllBrands.Outlet = Average.Outlet
 			AND AllBrands.SKU = Average.SKU
 		LEFT JOIN (SELECT
-			MAX(TerritoryOutlets.Ref.Owner) AS Region,
-			MAX(TerritoryOutlets.Ref) AS Territory,
+			TerritoryOutlets.Ref.Owner AS Region,
+			TerritoryOutlets.Ref AS Territory,
 			TerritoryOutlets.Outlet AS Outlet
 		FROM
-			Catalog.Territory.Outlets AS TerritoryOutlets
-		
-		GROUP BY
-			TerritoryOutlets.Outlet) AS NestedSelect
+			Catalog.Territory.Outlets AS TerritoryOutlets) AS NestedSelect
 		ON AllBrands.Outlet = NestedSelect.Outlet
 		LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 		ON AllBrands.Outlet = OutletParameters.Ref

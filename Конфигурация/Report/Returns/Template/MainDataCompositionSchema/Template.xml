@@ -129,34 +129,6 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Return</dataPath>
 			<field>Return</field>
 			<title xsi:type="v8:LocalStringType">
@@ -184,25 +156,71 @@
 	ReturnSKUs.Ref.PriceList.Description,
 	ReturnSKUs.Ref.Commentary,
 	ReturnSKUs.Ref.Outlet.Type,
-	ReturnSKUs.Ref.Outlet.Class,
-	NestedSelect.Territory,
-	NestedSelect.Region
+	ReturnSKUs.Ref.Outlet.Class
 FROM
 	Document.Return.SKUs AS ReturnSKUs
-		LEFT JOIN (SELECT
-			MAX(TerritoryOutlets.Ref.Owner) AS Region,
-			MAX(TerritoryOutlets.Ref) AS Territory,
-			TerritoryOutlets.Outlet AS Outlet
-		FROM
-			Catalog.Territory.Outlets AS TerritoryOutlets
-		
-		GROUP BY
-			TerritoryOutlets.Outlet) AS NestedSelect
-		ON ReturnSKUs.Ref.Outlet = NestedSelect.Outlet
 {WHERE
 	(ReturnSKUs.Ref.Date &gt;= &amp;DateStart),
 	(ReturnSKUs.Ref.Date &lt;= &amp;DateEnd)}</query>
 	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet2</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Territory</dataPath>
+			<field>DS2Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Outlet</dataPath>
+			<field>DS2Outlet</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Region</dataPath>
+			<field>DS2Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	TerritoryOutlets.Ref.Owner AS DS2Region,
+	TerritoryOutlets.Outlet AS DS2Outlet,
+	TerritoryOutlets.Ref AS DS2Territory
+FROM
+	Catalog.Territory.Outlets AS TerritoryOutlets</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>Outlet</sourceExpression>
+		<destinationExpression>DS2Outlet</destinationExpression>
+	</dataSetLink>
 	<totalField>
 		<dataPath>Amount</dataPath>
 		<expression>Sum(Amount)</expression>
@@ -210,10 +228,6 @@ FROM
 	<totalField>
 		<dataPath>Qty</dataPath>
 		<expression>Sum(Qty)</expression>
-	</totalField>
-	<totalField>
-		<dataPath>Commentary</dataPath>
-		<expression>Commentary</expression>
 	</totalField>
 	<parameter>
 		<name>Period</name>
@@ -306,9 +320,6 @@ FROM
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Amount</dcsset:field>
 				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Commentary</dcsset:field>
-				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
@@ -337,13 +348,13 @@ FROM
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>a033e068-4a5f-483b-b57f-f2ecb2008327</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Region</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>415ee520-f853-46d3-8b1b-2e910295dadc</dcsset:userSettingID>
 				</dcsset:item>
@@ -366,8 +377,21 @@ FROM
 					</dcsset:userSettingPresentation>
 				</dcscor:item>
 			</dcsset:dataParameters>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>AppearanceTemplate</dcscor:parameter>
 					<dcscor:value xsi:type="xs:string">Antique</dcscor:value>
 				</dcscor:item>
@@ -424,6 +448,13 @@ FROM
 							</dcsset:item>
 							<dcsset:item xsi:type="dcsset:GroupItemField">
 								<dcsset:field>PriceListDescription</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Commentary</dcsset:field>
 								<dcsset:groupType>Items</dcsset:groupType>
 								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>

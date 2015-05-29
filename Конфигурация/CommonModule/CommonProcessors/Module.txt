@@ -76,7 +76,10 @@ Function StringToNumber(String) Export
 	
 	Try
 		
-		Result = Number(String);
+		Result = StrReplace(String, " ", "");
+		Result = StrReplace(Result, Chars.NBSp, "");
+		
+		Result = Number(Result);
 		
 	Except
 		

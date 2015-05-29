@@ -168,34 +168,6 @@
 				</dcscor:item>
 			</appearance>
 		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
-				</v8:item>
-			</title>
-		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	BEGINOFPERIOD(VisitPlanOutlets.Date, DAY) AS Date,
@@ -269,23 +241,9 @@ SELECT ALLOWED
 	SUM(ISNULL(Data.Unplanned, 0)) AS Unplanned,
 	SUM(ISNULL(Data.Visit, 0) + ISNULL(Data.Unplanned, 0)) AS VisitTotal,
 	SUM(ISNULL(Data.VisitWithOrder, 0)) AS VisitWithOrder,
-	SUM(ISNULL(Data.JustOrder, 0)) AS JustOrder,
-	NestedSelect.Ref AS Territory,
-	NestedSelect.Owner AS Region
+	SUM(ISNULL(Data.JustOrder, 0)) AS JustOrder
 FROM
 	Data AS Data
-		LEFT JOIN (SELECT
-			Data.SR AS SR,
-			MAX(TerritorySRs.Ref) AS Ref,
-			MAX(TerritorySRs.Ref.Owner) AS Owner
-		FROM
-			Data AS Data
-				LEFT JOIN Catalog.Territory.SRs AS TerritorySRs
-				ON Data.SR = TerritorySRs.SR
-		
-		GROUP BY
-			Data.SR) AS NestedSelect
-		ON Data.SR = NestedSelect.SR
 {WHERE
 	(Data.SR IN (&amp;SRList)),
 	(Data.Date &gt;= &amp;StartDate),
@@ -293,10 +251,56 @@ FROM
 
 GROUP BY
 	Data.Date,
-	Data.SR,
-	NestedSelect.Ref,
-	NestedSelect.Owner</query>
+	Data.SR</query>
 	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet2</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Territory</dataPath>
+			<field>DS2Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>SR</dataPath>
+			<field>SR</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Region</dataPath>
+			<field>DS2Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	TerritorySRs.Ref.Owner AS DS2Region,
+	TerritorySRs.Ref AS DS2Territory,
+	TerritorySRs.SR
+FROM
+	Catalog.Territory.SRs AS TerritorySRs</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>SR</sourceExpression>
+		<destinationExpression>SR</destinationExpression>
+	</dataSetLink>
 	<calculatedField>
 		<dataPath>VisitRate</dataPath>
 		<expression>CASE WHEN VISITPLAN = 0 then 0 else Visit/VisitPlan*100 end</expression>
@@ -416,6 +420,28 @@ GROUP BY
 		<expression>&amp;Period.EndDate</expression>
 	</parameter>
 	<parameter>
+		<name>Period</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>en</v8:lang>
+				<v8:content>Period</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+		</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<parameter>
 		<name>SRList</name>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
@@ -444,28 +470,6 @@ GROUP BY
 			</dcscor:item>
 		</inputParameters>
 		<use>Always</use>
-	</parameter>
-	<parameter>
-		<name>Period</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Period</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Период</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>v8:StandardPeriod</v8:Type>
-		</valueType>
-		<value xsi:type="v8:StandardPeriod">
-			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-		</value>
-		<useRestriction>false</useRestriction>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
@@ -506,13 +510,13 @@ GROUP BY
 			<dcsset:filter>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>8a8cdc35-4a42-45a6-af37-cbf8130b066e</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Region</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>c22aa276-2f88-47d8-bf01-a4e5a7f31ccd</dcsset:userSettingID>
 				</dcsset:item>
@@ -543,21 +547,6 @@ GROUP BY
 					</dcsset:userSettingPresentation>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>SRList</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>e7e74308-d182-439a-9603-aead21db8c3f</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>SR</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Торговый представитель</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
 					<dcscor:value xsi:type="v8:StandardPeriod">
@@ -577,6 +566,21 @@ GROUP BY
 						</v8:item>
 					</dcsset:userSettingPresentation>
 				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>SRList</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+					<dcsset:userSettingID>e7e74308-d182-439a-9603-aead21db8c3f</dcsset:userSettingID>
+					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SR</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Торговый представитель</v8:content>
+						</v8:item>
+					</dcsset:userSettingPresentation>
+				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
 				<dcsset:item xsi:type="dcsset:OrderItemField">
@@ -584,6 +588,18 @@ GROUP BY
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
 			</dcsset:order>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>

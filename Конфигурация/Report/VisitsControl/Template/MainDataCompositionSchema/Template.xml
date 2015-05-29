@@ -226,34 +226,6 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>OutletDistributor</dataPath>
 			<field>OutletDistributor</field>
 			<title xsi:type="v8:LocalStringType">
@@ -318,29 +290,6 @@ GROUP BY
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	VisitPlans.Date,
-	VisitPlans.SR,
-	VisitPlans.VisitPlansQty,
-	VisitPlans.Outlet,
-	VisitPlans.Ref,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region
-INTO VisitPlansTerritory
-FROM
-	VisitPlans AS VisitPlans
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON VisitPlans.Outlet = TerritoryOutlets.Outlet
-
-GROUP BY
-	VisitPlans.Date,
-	VisitPlans.Ref,
-	VisitPlans.Outlet,
-	VisitPlans.SR,
-	VisitPlans.VisitPlansQty
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
 	BEGINOFPERIOD(Visit.Date, DAY) AS Date,
 	Visit.Plan,
 	Visit.SR,
@@ -373,70 +322,41 @@ GROUP BY
 
 ////////////////////////////////////////////////////////////////////////////////
 SELECT ALLOWED
-	Visits.Date,
-	Visits.Plan,
-	Visits.SR,
-	Visits.PlannedVisitsQty,
-	Visits.UnplannedVisitsQty,
-	Visits.Outlet,
-	Visits.Ref,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region
-INTO VisitsTerritory
-FROM
-	Visits AS Visits
-		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON Visits.Outlet = TerritoryOutlets.Outlet
-
-GROUP BY
-	Visits.Date,
-	Visits.Plan,
-	Visits.SR,
-	Visits.PlannedVisitsQty,
-	Visits.UnplannedVisitsQty,
-	Visits.Outlet,
-	Visits.Ref
-;
-
-////////////////////////////////////////////////////////////////////////////////
-SELECT ALLOWED
-	ISNULL(VisitPlansTerritory.Date, VisitsTerritory.Date) AS Date,
-	ISNULL(VisitPlansTerritory.SR, VisitsTerritory.SR) AS SR,
-	ISNULL(VisitPlansTerritory.VisitPlansQty, 0) AS VisitPlansQty,
-	ISNULL(VisitsTerritory.PlannedVisitsQty, 0) AS PlannedVisitsQty,
-	ISNULL(VisitsTerritory.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
-	ISNULL(VisitPlansTerritory.Outlet, VisitsTerritory.Outlet) AS Outlet,
-	VisitsTerritory.Ref AS Visit,
-	VisitPlansTerritory.Date AS VisitPlanDate,
+	ISNULL(VisitPlans.Date, Visits.Date) AS Date,
+	ISNULL(VisitPlans.SR, Visits.SR) AS SR,
+	ISNULL(VisitPlans.VisitPlansQty, 0) AS VisitPlansQty,
+	ISNULL(Visits.PlannedVisitsQty, 0) AS PlannedVisitsQty,
+	ISNULL(Visits.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
+	ISNULL(VisitPlans.Outlet, Visits.Outlet) AS Outlet,
+	Visits.Ref AS Visit,
+	VisitPlans.Date AS VisitPlanDate,
 	CASE
-		WHEN VisitPlansTerritory.Ref IS NULL 
-				AND NOT VisitsTerritory.Ref IS NULL 
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 4
 					ELSE 5
 				END
-		WHEN NOT VisitPlansTerritory.Ref IS NULL 
-				AND NOT VisitsTerritory.Ref IS NULL 
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 2
 					ELSE 3
 				END
-		WHEN NOT VisitPlansTerritory.Ref IS NULL 
-				AND VisitsTerritory.Ref IS NULL 
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND Visits.Ref IS NULL 
 			THEN 1
 	END AS VisitType,
 	ISNULL(NestedSelect.PhotosQty, 0) AS PhotosQty,
 	0 AS Title,
-	VisitsTerritory.Date AS VisitDate,
-	VisitPlansTerritory.Ref AS VisitPlan,
-	ISNULL(VisitPlansTerritory.Territory, VisitsTerritory.Territory) AS Territory,
-	ISNULL(VisitPlansTerritory.Region, VisitsTerritory.Region) AS Region
+	Visits.Date AS VisitDate,
+	VisitPlans.Ref AS VisitPlan
 INTO VisitsPlanVisits
 FROM
-	VisitPlansTerritory AS VisitPlansTerritory
-		FULL JOIN VisitsTerritory AS VisitsTerritory
+	VisitPlans AS VisitPlans
+		FULL JOIN Visits AS Visits
 			LEFT JOIN (SELECT
 				VisitQuestions.Ref AS Ref,
 				COUNT(DISTINCT ISNULL(VisitQuestions.Question.AnswerType, 0)) AS PhotosQty
@@ -450,44 +370,42 @@ FROM
 			
 			GROUP BY
 				VisitQuestions.Ref) AS NestedSelect
-			ON VisitsTerritory.Ref = NestedSelect.Ref
-		ON VisitPlansTerritory.Ref = VisitsTerritory.Plan
-			AND VisitPlansTerritory.Date = VisitsTerritory.Date
-			AND VisitPlansTerritory.SR = VisitsTerritory.SR
-			AND VisitPlansTerritory.Outlet = VisitsTerritory.Outlet
+			ON Visits.Ref = NestedSelect.Ref
+		ON VisitPlans.Ref = Visits.Plan
+			AND VisitPlans.Date = Visits.Date
+			AND VisitPlans.SR = Visits.SR
+			AND VisitPlans.Outlet = Visits.Outlet
 
 GROUP BY
-	VisitsTerritory.Ref,
-	VisitPlansTerritory.Date,
-	VisitsTerritory.Date,
-	VisitPlansTerritory.Ref,
+	Visits.Ref,
+	VisitPlans.Date,
+	Visits.Date,
+	VisitPlans.Ref,
 	ISNULL(NestedSelect.PhotosQty, 0),
-	ISNULL(VisitPlansTerritory.SR, VisitsTerritory.SR),
-	ISNULL(VisitPlansTerritory.VisitPlansQty, 0),
-	ISNULL(VisitsTerritory.PlannedVisitsQty, 0),
-	ISNULL(VisitsTerritory.UnplannedVisitsQty, 0),
-	ISNULL(VisitPlansTerritory.Outlet, VisitsTerritory.Outlet),
+	ISNULL(VisitPlans.SR, Visits.SR),
+	ISNULL(VisitPlans.VisitPlansQty, 0),
+	ISNULL(Visits.PlannedVisitsQty, 0),
+	ISNULL(Visits.UnplannedVisitsQty, 0),
+	ISNULL(VisitPlans.Outlet, Visits.Outlet),
 	CASE
-		WHEN VisitPlansTerritory.Ref IS NULL 
-				AND NOT VisitsTerritory.Ref IS NULL 
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 4
 					ELSE 5
 				END
-		WHEN NOT VisitPlansTerritory.Ref IS NULL 
-				AND NOT VisitsTerritory.Ref IS NULL 
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
 			THEN CASE
 					WHEN NestedSelect.PhotosQty &gt; 0
 						THEN 2
 					ELSE 3
 				END
-		WHEN NOT VisitPlansTerritory.Ref IS NULL 
-				AND VisitsTerritory.Ref IS NULL 
+		WHEN NOT VisitPlans.Ref IS NULL 
+				AND Visits.Ref IS NULL 
 			THEN 1
-	END,
-	ISNULL(VisitPlansTerritory.Territory, VisitsTerritory.Territory),
-	ISNULL(VisitPlansTerritory.Region, VisitsTerritory.Region)
+	END
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -507,12 +425,68 @@ SELECT ALLOWED
 	VisitsPlanVisits.VisitPlan,
 	VisitsPlanVisits.Outlet.Distributor,
 	VisitsPlanVisits.Outlet.Class,
-	VisitsPlanVisits.Outlet.Type,
-	VisitsPlanVisits.Territory,
-	VisitsPlanVisits.Region
+	VisitsPlanVisits.Outlet.Type
 FROM
 	VisitsPlanVisits AS VisitsPlanVisits</query>
 	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet2</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Territory</dataPath>
+			<field>DS2Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Outlet</dataPath>
+			<field>DS2Outlet</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Region</dataPath>
+			<field>DS2Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	TerritoryOutlets.Ref.Owner AS DS2Region,
+	TerritoryOutlets.Outlet AS DS2Outlet,
+	TerritoryOutlets.Ref AS DS2Territory
+FROM
+	Catalog.Territory.Outlets AS TerritoryOutlets</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>Outlet</sourceExpression>
+		<destinationExpression>DS2Outlet</destinationExpression>
+	</dataSetLink>
 	<calculatedField>
 		<dataPath>Undone</dataPath>
 		<expression/>
@@ -737,13 +711,13 @@ End</expression>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Region</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>679453cf-9dac-4e76-a521-9aab38d26ef0</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>fc8ff9ae-b13b-4060-9974-1317c36cb5ce</dcsset:userSettingID>
 				</dcsset:item>
@@ -998,6 +972,16 @@ End</expression>
 					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
 					<dcsset:useInParameters>DontUse</dcsset:useInParameters>
 					<dcsset:useInFilter>DontUse</dcsset:useInFilter>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
 				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>

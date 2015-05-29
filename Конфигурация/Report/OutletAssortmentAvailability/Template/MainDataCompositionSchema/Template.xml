@@ -445,8 +445,8 @@ SELECT ALLOWED
 			THEN 1
 		ELSE 0
 	END AS PlanFactQty,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region,
+	TerritoryOutlets.Ref AS Territory,
+	TerritoryOutlets.Ref.Owner AS Region,
 	PlanFact.SR,
 	OutletParameters.Value
 INTO PlanFactTerritory
@@ -458,20 +458,6 @@ FROM
 		ON PlanFact.Outlet = OutletParameters.Ref
 WHERE
 	OutletParameters.Parameter = &amp;Parameter
-
-GROUP BY
-	PlanFact.Day,
-	PlanFact.Outlet,
-	PlanFact.SKU,
-	PlanFact.Outlet.Distributor,
-	PlanFact.Outlet.Class,
-	PlanFact.Outlet.Type,
-	PlanFact.SKU.Brand,
-	PlanFact.SKU.Owner,
-	PlanFact.Answer,
-	PlanFact.BaseUnitQty,
-	PlanFact.SR,
-	OutletParameters.Value
 ;
 
 ////////////////////////////////////////////////////////////////////////////////

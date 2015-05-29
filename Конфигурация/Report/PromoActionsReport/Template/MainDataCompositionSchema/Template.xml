@@ -376,10 +376,10 @@ FROM
 	Catalog.Territory.Outlets AS TerritoryOutlets</query>
 	</dataSet>
 	<dataSetLink>
-		<sourceDataSet>DataSet2</sourceDataSet>
-		<destinationDataSet>DataSet1</destinationDataSet>
-		<sourceExpression>DS2Outlet</sourceExpression>
-		<destinationExpression>Outlet</destinationExpression>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>Outlet</sourceExpression>
+		<destinationExpression>DS2Outlet</destinationExpression>
 	</dataSetLink>
 	<totalField>
 		<dataPath>Answer</dataPath>
@@ -673,6 +673,16 @@ FROM
 					</dcsset:appearance>
 					<dcsset:useInFieldsHeader>DontUse</dcsset:useInFieldsHeader>
 					<dcsset:useInHeader>DontUse</dcsset:useInHeader>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
 				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>

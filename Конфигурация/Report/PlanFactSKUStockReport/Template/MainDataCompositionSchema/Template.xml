@@ -336,8 +336,8 @@ SELECT ALLOWED
 	Result.SKU,
 	Result.Fact,
 	Result.Plan,
-	MAX(TerritoryOutlets.Ref) AS Territory,
-	MAX(TerritoryOutlets.Ref.Owner) AS Region,
+	TerritoryOutlets.Ref AS Territory,
+	TerritoryOutlets.Ref.Owner AS Region,
 	OutletParameters.Value,
 	Result.SR
 INTO PlanFactTerritory
@@ -349,20 +349,6 @@ FROM
 		ON Result.Outlet = OutletParameters.Ref
 {WHERE
 	(OutletParameters.Parameter = &amp;Parameter) AS Field1}
-
-GROUP BY
-	Result.SKU,
-	Result.Outlet,
-	Result.Date,
-	Result.Outlet.Distributor,
-	Result.Outlet.Class,
-	Result.Outlet.Type,
-	Result.SKU.Brand,
-	Result.SKU.Owner,
-	Result.Fact,
-	Result.Plan,
-	OutletParameters.Value,
-	Result.SR
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -753,6 +739,16 @@ GROUP BY
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>
 				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
 					<dcsset:selection>
 						<dcsset:item>
 							<dcsset:field>Region</dcsset:field>
@@ -788,10 +784,6 @@ GROUP BY
 					<dcsset:filter/>
 					<dcsset:appearance>
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-							<dcscor:parameter>Font</dcscor:parameter>
-							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-						</dcscor:item>
-						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>MaximumWidth</dcscor:parameter>
 							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
 						</dcscor:item>
@@ -818,6 +810,7 @@ GROUP BY
 					</dcscor:item>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>FixedTop</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
@@ -1010,6 +1003,18 @@ GROUP BY
 						</dcsset:item>
 					</dcsset:item>
 				</dcsset:row>
+				<dcsset:conditionalAppearance>
+					<dcsset:item>
+						<dcsset:selection/>
+						<dcsset:filter/>
+						<dcsset:appearance>
+							<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+								<dcscor:parameter>Font</dcscor:parameter>
+								<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+							</dcscor:item>
+						</dcsset:appearance>
+					</dcsset:item>
+				</dcsset:conditionalAppearance>
 			</dcsset:item>
 		</dcsset:settings>
 	</settingsVariant>
@@ -1160,12 +1165,18 @@ GROUP BY
 					<dcsset:filter/>
 					<dcsset:appearance>
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-							<dcscor:parameter>Font</dcscor:parameter>
-							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-						</dcscor:item>
-						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>MaximumWidth</dcscor:parameter>
 							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
@@ -1523,12 +1534,18 @@ GROUP BY
 					<dcsset:filter/>
 					<dcsset:appearance>
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-							<dcscor:parameter>Font</dcscor:parameter>
-							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-						</dcscor:item>
-						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>MaximumWidth</dcscor:parameter>
 							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
@@ -1886,12 +1903,18 @@ GROUP BY
 					<dcsset:filter/>
 					<dcsset:appearance>
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-							<dcscor:parameter>Font</dcscor:parameter>
-							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-						</dcscor:item>
-						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>MaximumWidth</dcscor:parameter>
 							<dcscor:value xsi:type="xs:decimal">30</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>

@@ -63,20 +63,6 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Territory</dataPath>
-			<field>Territory</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Territory</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Территория</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Outlet</dataPath>
 			<field>Outlet</field>
 			<title xsi:type="v8:LocalStringType">
@@ -87,20 +73,6 @@
 				<v8:item>
 					<v8:lang>ru</v8:lang>
 					<v8:content>Торговая точка</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Region</dataPath>
-			<field>Region</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Region</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Регион</v8:content>
 				</v8:item>
 			</title>
 		</field>
@@ -170,8 +142,6 @@
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	Visit.Date AS Date,
-	Territory.Owner AS Region,
-	TerritoryOutlets.Ref AS Territory,
 	AllOutlets.Distributor AS Distributor,
 	Visit.Outlet AS Outlet,
 	VisitQuestions.Answer AS Answer,
@@ -183,10 +153,6 @@ FROM
 	Document.Visit.Questions AS VisitQuestions
 		LEFT JOIN Document.Visit AS Visit
 			LEFT JOIN Catalog.Outlet AS AllOutlets
-				LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-					LEFT JOIN Catalog.Territory AS Territory
-					ON TerritoryOutlets.Ref = Territory.Ref
-				ON AllOutlets.Ref = TerritoryOutlets.Outlet
 				LEFT JOIN Catalog.Outlet.Parameters AS OutletParameters
 				ON AllOutlets.Ref = OutletParameters.Ref
 			ON Visit.Outlet = AllOutlets.Ref
@@ -200,8 +166,6 @@ WHERE
 
 GROUP BY
 	Visit.Date,
-	Territory.Owner,
-	TerritoryOutlets.Ref,
 	AllOutlets.Distributor,
 	Visit.Outlet,
 	VisitQuestions.Answer,
@@ -210,6 +174,64 @@ GROUP BY
 	Visit.SR,
 	OutletParameters.Value</query>
 	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>DataSet2</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Territory</dataPath>
+			<field>DS2Territory</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Territory</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Территория</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Outlet</dataPath>
+			<field>DS2Outlet</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlet</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Торговая точка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>DS2Region</dataPath>
+			<field>DS2Region</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Region</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регион</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>DataSource1</dataSource>
+		<query>SELECT
+	TerritoryOutlets.Ref.Owner AS DS2Region,
+	TerritoryOutlets.Outlet AS DS2Outlet,
+	TerritoryOutlets.Ref AS DS2Territory
+FROM
+	Catalog.Territory.Outlets AS TerritoryOutlets</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>DataSet1</sourceDataSet>
+		<destinationDataSet>DataSet2</destinationDataSet>
+		<sourceExpression>Outlet</sourceExpression>
+		<destinationExpression>DS2Outlet</destinationExpression>
+	</dataSetLink>
 	<parameter>
 		<name>EndDate</name>
 		<title xsi:type="v8:LocalStringType">
@@ -308,13 +330,13 @@ GROUP BY
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Region</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Region</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>707e7287-9fa0-443c-936a-726e9a219168</dcsset:userSettingID>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:FilterItemComparison">
 					<dcsset:use>false</dcsset:use>
-					<dcsset:left xsi:type="dcscor:Field">Territory</dcsset:left>
+					<dcsset:left xsi:type="dcscor:Field">DS2Territory</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>227ce8d4-174c-449d-8313-3c2bf7b2c7af</dcsset:userSettingID>
 				</dcsset:item>
@@ -373,6 +395,18 @@ GROUP BY
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
 			</dcsset:order>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection/>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Font</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 					<dcscor:use>false</dcscor:use>
