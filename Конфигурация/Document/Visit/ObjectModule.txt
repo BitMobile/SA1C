@@ -66,6 +66,9 @@ Procedure OnWrite(Cancel)
 		ElsIf DataType = Enums.DataType.Decimal 
 			OR DataType = Enums.DataType.Integer Then
 			
+			TypedAnswer = StrReplace(TypedAnswer, " ", "");
+			TypedAnswer = StrReplace(TypedAnswer, Chars.NBSp, "");
+			
 			TypedAnswer = ?(TypedAnswer = "", 0, Number(TypedAnswer));
 			
 		EndIf;
