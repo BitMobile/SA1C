@@ -40,9 +40,161 @@ Function GetReturnStructure(Value, TypesMap)
 	
 EndFunction
 
+&AtServer
+Procedure ResultDetailProcessingServer(Details, StandardProcessing)
+	
+	ThumbnailSize = Constants.SizeOfThumbnailPhotos.Get();
+	
+	Connection = CommonProcessors.GetConnectionToServer();
+	
+	Path = CommonProcessors.GetWebDAVPathOnServer();
+	
+	Fields = GetFields(Details);
+	
+	For Each Field In Fields Do
+		
+		If Field.Field = "Answer" Then
+			
+			StandardProcessing = False;
+			
+			Value = Field.Value;
+			
+			Try
+				
+				SnapshotUUID = New UUID(Value);
+				
+				SetPicture(SnapshotUUID, Connection, Path, ThumbnailSize);
+				
+			Except
+				
+				PictureAddress = Undefined;
+				PictureExtension = Undefined;
+				PictureFilename = Undefined;
+				
+			EndTry;
+			
+		Else
+			
+			PictureAddress = Undefined;
+			PictureExtension = Undefined;
+			PictureFilename = Undefined;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure SetPicture(ID, Connection, Path, ThumbnailSize)
+	
+	Filter = New Structure;
+	Filter.Insert("ИмяФайла", ID);
+	
+	Sel = InformationRegisters.bitmobile_ХранилищеФайлов.Select(Filter);
+	
+	If Sel.Next() Then
+		
+		BinaryDataOfFile = Sel.Хранилище.Get();
+		
+		If ValueIsFilled(BinaryDataOfFile) Then
+		
+			PictureAddress = PutToTempStorage(BinaryDataOfFile);
+			PictureExtension = Sel.Расширение;
+			PictureFilename = Sel.ИмяФайла;
+			
+		Else 
+			
+			If Not Connection = Undefined Then 
+			
+				Try
+					
+					WebDAVFile = GetTempFileName(Sel.Расширение);
+					
+					If ThumbnailSize > 0 Then 
+						
+						Connection.Get(Path + Lower(Sel.ПолноеИмяФайла) + "?size=" + Format(ThumbnailSize, "NG=0"), WebDAVFile);
+						
+					Else 
+						
+						Connection.Get(Path + Lower(Sel.ПолноеИмяФайла), WebDAVFile);
+						
+					EndIf;
+					
+					BinaryDataOfFile = New BinaryData(WebDAVFile);
+					
+					PictureAddress = PutToTempStorage(BinaryDataOfFile);
+					PictureExtension = Sel.Расширение;
+					PictureFilename = Sel.ИмяФайла;
+					
+				Except
+					
+					PictureAddress = Undefined;
+					PictureExtension = Undefined;
+					PictureFilename = Undefined;
+					
+				EndTry;
+				
+			Else 
+				
+				PictureAddress = Undefined;
+				PictureExtension = Undefined;
+				PictureFilename = Undefined;
+				
+			EndIf;
+						
+		EndIf;	
+		
+	Else
+		
+		PictureAddress = Undefined;
+		PictureExtension = Undefined;
+		PictureFilename = Undefined;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Function GetFields(Details)
+	
+	Return GetFromTempStorage(DetailsData).Items.Get(Details).GetFields();
+	
+EndFunction
+
+&AtServer
+Procedure ResultOnActivateAreaAtServer(DetailsArray)
+	
+	For Each Detail In DetailsArray Do
+		
+		Fields = GetFields(Detail);
+		
+		For Each Field In Fields Do
+			
+			If Field.Field = "Answer" Then
+				
+				ResultDetailProcessingServer(Detail, true);
+				
+				Break;
+				
+			EndIf;
+			
+		EndDo;
+		
+	EndDo;
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
+
+&AtClient
+Procedure ResultDetailProcessing(Item, Details, StandardProcessing)
+	
+	ResultDetailProcessingServer(Details, StandardProcessing);
+	
+EndProcedure
 
 &AtClient
 Function GetOutletParameterStructure()
@@ -231,6 +383,56 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 		Items.SettingsComposerUserSettingsTable.EndEditRow(False);
 		
 	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure OpenSnapshot(Command)
+	
+	If ValueIsFilled(PictureFilename) Then 
+		
+		SnapshotStructure = CommonProcessors.GetSnapshot(PictureFilename, ThisForm.UUID, "Image");
+		
+		If Not SnapshotStructure = Undefined Then 
+			 
+			GetFile(SnapshotStructure.SnapshotAddress, SnapshotStructure.SnapshotName, True);
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ResultOnActivateArea(Item)
+	
+	If NOT Item.CurrentArea.Left - Item.CurrentArea.Right = 0 OR NOT Item.CurrentArea.Top - Item.CurrentArea.Bottom = 0 Then
+		Return;
+	EndIf;
+	
+	PictureAddress 	= Undefined;
+	PictureExtension 	= Undefined;
+	PictureFilename 	= Undefined;
+		
+	If NOT Item.CurrentArea.Details = Undefined Then
+		
+		DetailsArray = New Array;
+		
+		SelItem = Item.CurrentArea;
+		
+		If NOT SelItem.Details = Undefined Then
+			
+			DetailsArray.Add(SelItem.Details);
+			
+		EndIf;
+		
+		If DetailsArray.Count() > 0 Then
+			
+			ResultOnActivateAreaAtServer(DetailsArray);
+			
+		EndIf;
+	
+	EndIf; 
 	
 EndProcedure
 

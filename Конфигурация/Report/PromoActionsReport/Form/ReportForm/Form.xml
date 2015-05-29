@@ -4,7 +4,7 @@
 	<ReportResult>Result</ReportResult>
 	<DetailsData>DetailsData</DetailsData>
 	<ReportFormType>Main</ReportFormType>
-	<VariantAppearance/>
+	<VariantAppearance>CurrentVariantDescription</VariantAppearance>
 	<AutoShowState>Auto</AutoShowState>
 	<AutoCommandBar name="FormCommandBar" id="-1">
 		<Autofill>false</Autofill>
@@ -14,7 +14,7 @@
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
-		<CommandBar name="MainCommandBar" id="1">
+		<CommandBar name="MainCommandBar" id="8">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -22,9 +22,9 @@
 				</v8:item>
 			</Title>
 			<CommandSource>Form</CommandSource>
-			<ExtendedTooltip name="MainCommandBarExtendedTooltip" id="2"/>
+			<ExtendedTooltip name="MainCommandBarExtendedTooltip" id="9"/>
 		</CommandBar>
-		<UsualGroup name="SettingsComposerUserSettings" id="3">
+		<UsualGroup name="SettingsComposerUserSettings" id="37">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -35,60 +35,126 @@
 					<v8:content>Пользовательские настройки</v8:content>
 				</v8:item>
 			</Title>
-			<VerticalStretch>false</VerticalStretch>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings composer user settings</v8:content>
+				</v8:item>
+			</ToolTip>
 			<Behavior>Collapsible</Behavior>
 			<Collapsed>true</Collapsed>
 			<ControlRepresentation>Picture</ControlRepresentation>
-			<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="4"/>
+			<ShowLeftMargin>false</ShowLeftMargin>
+			<ExtendedTooltip name="SettingsComposerUserSettingsExtendedTooltip" id="38"/>
 			<ChildItems>
-				<Table name="SettingsComposerUserSettingsTable" id="8">
+				<Table name="SettingsComposerUserSettingsTable" id="10">
 					<CommandBarLocation>None</CommandBarLocation>
 					<Autofill>true</Autofill>
+					<Header>false</Header>
+					<VerticalStretch>false</VerticalStretch>
 					<DataPath>Report.SettingsComposer.UserSettings</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Таблица пользовательских настроек</v8:content>
+						</v8:item>
+					</Title>
 					<CommandSet>
 						<ExcludedCommand>HierarchicalList</ExcludedCommand>
 						<ExcludedCommand>Tree</ExcludedCommand>
 						<ExcludedCommand>List</ExcludedCommand>
 					</CommandSet>
-					<ViewMode>All</ViewMode>
-					<ContextMenu name="SettingsComposerUserSettingsTableContextMenu" id="9"/>
-					<AutoCommandBar name="SettingsComposerUserSettingsTableCommandBar" id="10"/>
-					<ExtendedTooltip name="SettingsComposerUserSettingsTableExtendedTooltip" id="11"/>
-					<SearchStringAddition name="SettingsComposerUserSettingsTableSearchString" id="12">
+					<ViewMode>QuickAccess</ViewMode>
+					<ContextMenu name="SettingsComposerUserSettingsTableContextMenu" id="11"/>
+					<AutoCommandBar name="SettingsComposerUserSettingsTableCommandBar" id="12"/>
+					<ExtendedTooltip name="SettingsComposerUserSettingsTableExtendedTooltip" id="13"/>
+					<SearchStringAddition name="SettingsComposerUserSettingsTableSearchString" id="14">
 						<Source>
-							<lf:elementId>8</lf:elementId>
+							<lf:elementId>10</lf:elementId>
 							<lf:additionId>0</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsTableSearchStringContextMenu" id="15"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchStringExtendedTooltip" id="16"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchStringContextMenu" id="17"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchStringExtendedTooltip" id="18"/>
 					</SearchStringAddition>
-					<ViewStatusAddition name="SettingsComposerUserSettingsTableViewStatus" id="17">
+					<ViewStatusAddition name="SettingsComposerUserSettingsTableViewStatus" id="19">
 						<Source>
-							<lf:elementId>8</lf:elementId>
+							<lf:elementId>10</lf:elementId>
 							<lf:additionId>1</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsTableViewStatusContextMenu" id="20"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsTableViewStatusExtendedTooltip" id="21"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableViewStatusContextMenu" id="22"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableViewStatusExtendedTooltip" id="23"/>
 					</ViewStatusAddition>
-					<SearchControlAddition name="SettingsComposerUserSettingsTableSearchControl" id="22">
+					<SearchControlAddition name="SettingsComposerUserSettingsTableSearchControl" id="24">
 						<Source>
-							<lf:elementId>8</lf:elementId>
+							<lf:elementId>10</lf:elementId>
 							<lf:additionId>2</lf:additionId>
 						</Source>
-						<ContextMenu name="SettingsComposerUserSettingsTableSearchControlContextMenu" id="25"/>
-						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchControlExtendedTooltip" id="26"/>
+						<ContextMenu name="SettingsComposerUserSettingsTableSearchControlContextMenu" id="27"/>
+						<ExtendedTooltip name="SettingsComposerUserSettingsTableSearchControlExtendedTooltip" id="28"/>
 					</SearchControlAddition>
 				</Table>
 			</ChildItems>
 		</UsualGroup>
-		<SpreadSheetDocumentField name="Result" id="5">
-			<DataPath>Result</DataPath>
-			<DefaultItem>true</DefaultItem>
-			<TitleLocation>None</TitleLocation>
-			<Width>100</Width>
-			<ContextMenu name="ResultContextMenu" id="6"/>
-			<ExtendedTooltip name="ResultExtendedTooltip" id="7"/>
-		</SpreadSheetDocumentField>
+		<UsualGroup name="GroupResult" id="32">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group result</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Group result</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="GroupResultExtendedTooltip" id="33"/>
+			<ChildItems>
+				<SpreadSheetDocumentField name="Result" id="29">
+					<DataPath>Result</DataPath>
+					<DefaultItem>true</DefaultItem>
+					<TitleLocation>None</TitleLocation>
+					<Width>70</Width>
+					<ContextMenu name="ResultContextMenu" id="30"/>
+					<ExtendedTooltip name="ResultExtendedTooltip" id="31"/>
+					<Events>
+						<Event name="OnActivateArea">ResultOnActivateArea</Event>
+					</Events>
+				</SpreadSheetDocumentField>
+				<PictureField name="PictureAddress" id="34">
+					<DataPath>PictureAddress</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<PictureSize>AutoSize</PictureSize>
+					<NonselectedPictureText>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>No picture</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Нет фотоснимка</v8:content>
+						</v8:item>
+					</NonselectedPictureText>
+					<TextColor>#C0C0C0</TextColor>
+					<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+					<ContextMenu name="PictureAddressContextMenu" id="35">
+						<Autofill>false</Autofill>
+						<ChildItems>
+							<Button name="PictureAddressContextMenuOpenSnapshot" id="39">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.OpenSnapshot</CommandName>
+								<Parameter xsi:nil="true"/>
+								<ExtendedTooltip name="PictureAddressContextMenuOpenSnapshotExtendedTooltip" id="40"/>
+							</Button>
+						</ChildItems>
+					</ContextMenu>
+					<ExtendedTooltip name="PictureAddressExtendedTooltip" id="36"/>
+				</PictureField>
+			</ChildItems>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Report" id="1">
@@ -97,7 +163,22 @@
 			</Type>
 			<MainAttribute>true</MainAttribute>
 		</Attribute>
-		<Attribute name="Result" id="2">
+		<Attribute name="CurrentVariantDescription" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Вариант отчета</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="Result" id="3">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -108,7 +189,7 @@
 				<v8:Type xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet">mxl:SpreadsheetDocument</v8:Type>
 			</Type>
 		</Attribute>
-		<Attribute name="DetailsData" id="3">
+		<Attribute name="DetailsData" id="4">
 			<Type>
 				<v8:Type>xs:string</v8:Type>
 				<v8:StringQualifiers>
@@ -117,7 +198,52 @@
 				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
-		<Attribute name="FieldsTable" id="4">
+		<Attribute name="PictureAddress" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picture address</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="PictureExtension" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picture extension</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="PictureFilename" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picture filename</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="FieldsTable" id="8">
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -167,4 +293,29 @@
 			</Columns>
 		</Attribute>
 	</Attributes>
+	<Commands>
+		<Command name="OpenSnapshot" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open snapshot</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Открыть фотоснимок</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Open snapshot</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Magnifier</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>OpenSnapshot</Action>
+		</Command>
+	</Commands>
 </Form>
