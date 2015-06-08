@@ -301,9 +301,9 @@
 			<SearchStringModeOnInputByString>Begin</SearchStringModeOnInputByString>
 			<FullTextSearchOnInputByString>DontUse</FullTextSearchOnInputByString>
 			<ChoiceDataGetModeOnInputByString>Directly</ChoiceDataGetModeOnInputByString>
-			<DefaultObjectForm/>
+			<DefaultObjectForm>Catalog.Distributor.Form.ItemForm</DefaultObjectForm>
 			<DefaultFolderForm/>
-			<DefaultListForm>Catalog.Distributor.Form.ListForm</DefaultListForm>
+			<DefaultListForm/>
 			<DefaultChoiceForm/>
 			<DefaultFolderChoiceForm/>
 			<AuxiliaryObjectForm/>
@@ -325,12 +325,12 @@
 			<ExtendedObjectPresentation/>
 			<ListPresentation>
 				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Дистрибьюторы</v8:content>
+					<v8:lang>en</v8:lang>
+					<v8:content>Partners</v8:content>
 				</v8:item>
 				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Distributors</v8:content>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Партнеры</v8:content>
 				</v8:item>
 			</ListPresentation>
 			<ExtendedListPresentation/>
@@ -339,7 +339,7 @@
 			<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 		</Properties>
 		<ChildObjects>
-			<Form>ListForm</Form>
+			<Form>ItemForm</Form>
 		</ChildObjects>
 	</Catalog>
 </MetaDataObject>
