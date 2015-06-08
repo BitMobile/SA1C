@@ -1,4 +1,7 @@
 ﻿
+&AtClient
+Var OldPartner;
+
 #Region CommonProceduresAndFunctions
 
 &AtServer
@@ -65,6 +68,9 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	// Запомнить ранее введенные проверяемые данные
 	TempEmail		= Object.Email;
 	TempPhoneNumber	= Object.PhoneNumber;
+	
+	FillContractors();
+
 	
 EndProcedure
 
@@ -231,6 +237,9 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		WriteTerritory(CurrentObject);
 		
 		SetPrivilegedMode(False);
+		
+		WriteContractors();
+
 		
 	EndIf;
 	
@@ -689,6 +698,144 @@ EndProcedure
 
 #EndRegion
 
+#Region Contractors
+
+&AtServer
+Procedure FillContractors()
+	
+	If ValueIsFilled(ThisForm.Object.Distributor) Then
+		
+		Query = New Query(
+		"SELECT
+		|	PartnersContractorsSliceLast.Contractor,
+		|	PartnersContractorsSliceLast.Default
+		|FROM
+		|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
+		|WHERE
+		|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)");
+		
+		Query.SetParameter("Partner", ThisForm.Object.Distributor);
+		
+		Result = Query.Execute().Unload();
+		
+	Else
+		
+		Query = New Query(
+		"SELECT
+		|	OutletsContractorsSliceLast.Contractor,
+		|	OutletsContractorsSliceLast.Default
+		|FROM
+		|	InformationRegister.OutletsContractors.SliceLast(, Outlet = &Outlet) AS OutletsContractorsSliceLast
+		|WHERE
+		|	OutletsContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)");
+		
+		Query.SetParameter("Outlet", ThisForm.Object.Ref);
+		
+		Result = Query.Execute().Unload();
+		
+	EndIf;
+	
+	ThisForm.ContractorsList.Load(Result);
+	
+EndProcedure
+
+&AtServer
+Procedure WriteContractors()
+	
+	If Not ValueIsFilled(ThisForm.Object.Distributor) Then
+		
+		Query = New Query(
+		"SELECT
+		|	FormContractors.Contractor,
+		|	FormContractors.Default
+		|INTO FormContractors
+		|FROM
+		|	&FormContractors AS FormContractors
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	OutletsContractorsSliceLast.Contractor,
+		|	OutletsContractorsSliceLast.Default
+		|INTO RegisterContractors
+		|FROM
+		|	InformationRegister.OutletsContractors.SliceLast(, ) AS OutletsContractorsSliceLast
+		|WHERE
+		|	OutletsContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	FormContractors.Contractor AS FormContractor,
+		|	FormContractors.Default AS FormDefault,
+		|	RegisterContractors.Contractor AS RegisterContractor,
+		|	RegisterContractors.Default AS RegisterDefault
+		|INTO Difference
+		|FROM
+		|	FormContractors AS FormContractors
+		|		FULL JOIN RegisterContractors AS RegisterContractors
+		|		ON FormContractors.Contractor = RegisterContractors.Contractor
+		|WHERE
+		|	(FormContractors.Contractor IS NULL 
+		|				AND FormContractors.Default IS NULL 
+		|			OR RegisterContractors.Contractor IS NULL 
+		|				AND RegisterContractors.Default IS NULL 
+		|			OR NOT FormContractors.Default = RegisterContractors.Default)
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	&CurrentDate AS Period,
+		|	&Outlet AS Outlet,
+		|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
+		|	ISNULL(Difference.FormDefault, Difference.RegisterDefault) AS Default,
+		|	CASE
+		|		WHEN Difference.FormContractor IS NULL 
+		|				AND Difference.FormDefault IS NULL 
+		|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
+		|		WHEN Difference.RegisterContractor IS NULL 
+		|				AND Difference.RegisterDefault IS NULL 
+		|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
+		|		WHEN NOT Difference.FormDefault = Difference.RegisterDefault
+		|			THEN VALUE(Enum.ValueTableRowStatuses.Modified)
+		|	END AS Status
+		|FROM
+		|	Difference AS Difference");
+		
+	Else
+		
+		Query = New Query(
+		"SELECT
+		|	&CurrentDate AS Period,
+		|	&Outlet AS Outlet,
+		|	OutletsContractorsSliceLast.Contractor AS Contractor,
+		|	OutletsContractorsSliceLast.Default AS Default,
+		|	VALUE(Enum.ValueTableRowStatuses.Deleted) AS Status
+		|FROM
+		|	InformationRegister.OutletsContractors.SliceLast(, Outlet = &Outlet) AS OutletsContractorsSliceLast
+		|WHERE
+		|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)");
+		
+	EndIf;
+	
+	Query.SetParameter("FormContractors", ThisForm.ContractorsList.Unload());
+	Query.SetParameter("Outlet", ThisForm.Object.Ref);
+	Query.SetParameter("CurrentDate", CurrentDate());
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.OutletsContractors.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
 #EndRegion
 
 #Region UserInterface
@@ -697,6 +844,14 @@ EndProcedure
 Procedure OnOpen(Cancel)
 	
 	OutletStatusOnChange(Undefined);
+	
+	IsPartnerFilled = ValueIsFilled(ThisForm.Object.Distributor);
+	Items.AddContractor.Enabled = Not IsPartnerFilled;
+	Items.DeleteContractor.Enabled = Not IsPartnerFilled;
+	
+	OldContractor = ThisForm.Object.Distributor;
+	
+	SetContractorsButtonsAvailability();
 	
 EndProcedure
 
@@ -1238,6 +1393,140 @@ Procedure OutletSnapshotAddressClick(Item, StandardProcessing)
 		EndIf;
 		
 	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Contractors
+
+&AtClient
+Procedure DistributorOnChange(Item)
+	
+	If NOT ThisForm.ContractorsList.Count() = 0 Then
+		
+		ShowQueryBox(New NotifyDescription("ProcessDistributorChange", ThisForm),
+										   NStr("en = 'Value table ""Contractors"" well be changed. Continue?'; ru = 'Табличная часть ""Контрагенты"" будет изменена. Продолжить?'"),
+										   QuestionDialogMode.YesNo,
+										   ,
+										   DialogReturnCode.Yes,
+										   NStr("en = 'Continue?'; ru = 'Продолжить?'"));
+										   
+	Else
+		
+		SetContractorsButtonsAvailability();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ContractorsListChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	
+	FilterParameters = New Structure("Contractor", SelectedValue);
+	ContractorExists = ThisForm.ContractorsList.FindRows(FilterParameters).Count();
+	
+	If NOT ContractorExists Then
+		
+		FirstItem = ThisForm.ContractorsList.Count() = 0;
+		NewContractorRow = ThisForm.ContractorsList.Add();
+		NewContractorRow.Contractor = SelectedValue;
+		NewContractorRow.Default = FirstItem;
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ContractorsListDefaultOnChange(Item)
+		
+	CurrentData = Items.ContractorsList.CurrentData;
+	IsNotDefaultAfterChange = CurrentData.Default;
+	ThisRowIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
+	ThisRow = ThisForm.ContractorsList.Get(ThisRowIndex);
+	
+	If IsNotDefaultAfterChange Then
+		
+		For Each Row In ThisForm.ContractorsList Do
+			
+			Row.Default = ThisForm.ContractorsList.IndexOf(Row) = ThisRowIndex;
+			
+		EndDo;
+		
+	Else
+		
+		ThisRow.Default = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SetContractorsButtonsAvailability()
+	
+	IsPartnerFilled = ValueIsFilled(ThisForm.Object.Distributor);
+	Items.AddContractor.Enabled = Not IsPartnerFilled;
+	Items.DeleteContractor.Enabled = Not IsPartnerFilled;
+	Items.ContractorsListDefault.ReadOnly = IsPartnerFilled;
+	
+EndProcedure
+
+&AtClient
+Procedure DeleteContractor(Command)
+	
+	CurrentData = Items.ContractorsList.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		CurrentDataIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
+		ThisForm.ContractorsList.Delete(CurrentDataIndex);
+		Modified = True;
+		
+	EndIf;
+	
+	If ThisForm.ContractorsList.Count() Then
+		
+		FilterParameters = New Structure("Default", True);
+		NoDefault = NOT ThisForm.ContractorsList.FindRows(FilterParameters).Count();
+		
+		If NoDefault Then
+			
+			ThisForm.ContractorsList[0].Default = True;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure AddContractor(Command)
+	
+	ChoiceForm = GetForm("Catalog.Contractors.ChoiceForm", , Items.ContractorsList);
+	
+	ChoiceForm.CloseOnChoice = False;
+	
+	OpenForm(ChoiceForm);
+	
+EndProcedure
+
+&AtClient
+Procedure ProcessDistributorChange(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		FillContractors();
+		
+		OldPartner = ThisForm.Object.Distributor;
+		
+	ElsIf Result = DialogReturnCode.No Then
+		
+		ThisForm.Object.Distributor = OldPartner;
+		
+	EndIf;
+	
+	SetContractorsButtonsAvailability();
 	
 EndProcedure
 
