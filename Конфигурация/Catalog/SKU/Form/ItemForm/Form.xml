@@ -63,11 +63,49 @@
 							<Width>32</Width>
 							<Height>6</Height>
 							<HorizontalStretch>false</HorizontalStretch>
-							<Group>Horizontal</Group>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="GroupPictureExtendedTooltip" id="62"/>
 							<ChildItems>
+								<CommandBar name="GroupPictureCommands" id="112">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group picture commands</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group picture commands</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ExtendedTooltip name="GroupPictureCommandsExtendedTooltip" id="113"/>
+									<ChildItems>
+										<Button name="OpenPicture" id="46">
+											<Type>CommandBarButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.OpenPicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.Magnifier</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
+										</Button>
+										<Button name="DeletePicture" id="45">
+											<Type>CommandBarButton</Type>
+											<Representation>Picture</Representation>
+											<CommandName>Form.Command.DeletePicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<Picture>
+												<xr:Ref>StdPicture.Delete</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<ExtendedTooltip name="DeletePictureExtendedTooltip" id="65"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
 								<PictureField name="PictureAddress" id="28">
 									<DataPath>PictureAddress</DataPath>
 									<TitleFont ref="sys:DefaultGUIFont" kind="WindowsFont"/>
@@ -87,33 +125,7 @@
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<ContextMenu name="PictureAddressContextMenu" id="29">
-										<Autofill>false</Autofill>
-										<ChildItems>
-											<Button name="OpenPicture" id="46">
-												<Type>CommandBarButton</Type>
-												<Representation>Picture</Representation>
-												<CommandName>Form.Command.OpenPicture</CommandName>
-												<Parameter xsi:nil="true"/>
-												<Picture>
-													<xr:Ref>StdPicture.Magnifier</xr:Ref>
-													<xr:LoadTransparent>true</xr:LoadTransparent>
-												</Picture>
-												<ExtendedTooltip name="OpenPictureExtendedTooltip" id="66"/>
-											</Button>
-											<Button name="DeletePicture" id="45">
-												<Type>CommandBarButton</Type>
-												<Representation>Picture</Representation>
-												<CommandName>Form.Command.DeletePicture</CommandName>
-												<Parameter xsi:nil="true"/>
-												<Picture>
-													<xr:Ref>StdPicture.Delete</xr:Ref>
-													<xr:LoadTransparent>true</xr:LoadTransparent>
-												</Picture>
-												<ExtendedTooltip name="DeletePictureExtendedTooltip" id="65"/>
-											</Button>
-										</ChildItems>
-									</ContextMenu>
+									<ContextMenu name="PictureAddressContextMenu" id="29"/>
 									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="67"/>
 									<Events>
 										<Event name="Click">PictureAddressClick</Event>

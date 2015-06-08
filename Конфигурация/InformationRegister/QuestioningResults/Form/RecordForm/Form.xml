@@ -282,13 +282,35 @@
 								</v8:item>
 							</ToolTip>
 							<Height>10</Height>
-							<Group>Horizontal</Group>
 							<Behavior>Collapsible</Behavior>
 							<ControlRepresentation>Picture</ControlRepresentation>
 							<Representation>None</Representation>
 							<ShowLeftMargin>false</ShowLeftMargin>
 							<ExtendedTooltip name="GroupPreviewExtendedTooltip" id="147"/>
 							<ChildItems>
+								<CommandBar name="PictureAddressCommands" id="152">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Picture address commands</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Picture address commands</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ExtendedTooltip name="PictureAddressCommandsExtendedTooltip" id="153"/>
+									<ChildItems>
+										<Button name="OpenPicture" id="124">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.OpenPicture</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="OpenPictureExtendedTooltip" id="125"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
 								<PictureField name="PictureAddress" id="121">
 									<DataPath>PictureAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
@@ -304,17 +326,7 @@
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<ContextMenu name="PictureAddressContextMenu" id="122">
-										<Autofill>false</Autofill>
-										<ChildItems>
-											<Button name="OpenPicture" id="124">
-												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.OpenPicture</CommandName>
-												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="OpenPictureExtendedTooltip" id="125"/>
-											</Button>
-										</ChildItems>
-									</ContextMenu>
+									<ContextMenu name="PictureAddressContextMenu" id="122"/>
 									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="123"/>
 								</PictureField>
 							</ChildItems>
@@ -561,13 +573,35 @@
 										</v8:item>
 									</ToolTip>
 									<Height>10</Height>
-									<Group>Horizontal</Group>
 									<Behavior>Collapsible</Behavior>
 									<ControlRepresentation>Picture</ControlRepresentation>
 									<Representation>None</Representation>
 									<ShowLeftMargin>false</ShowLeftMargin>
 									<ExtendedTooltip name="GroupSKUQuestionsPreviewExtendedTooltip" id="151"/>
 									<ChildItems>
+										<CommandBar name="GroupPictureAddressSKUsCommands" id="154">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group picture address SKUs commands</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group picture address SKUs commands</v8:content>
+												</v8:item>
+											</ToolTip>
+											<ExtendedTooltip name="GroupPictureAddressSKUsCommandsExtendedTooltip" id="155"/>
+											<ChildItems>
+												<Button name="OpenPictureSKUs" id="129">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Command.OpenPicture</CommandName>
+													<Parameter xsi:nil="true"/>
+													<ExtendedTooltip name="OpenPictureSKUsExtendedTooltip" id="130"/>
+												</Button>
+											</ChildItems>
+										</CommandBar>
 										<PictureField name="PictureAddressSKUs" id="126">
 											<DataPath>PictureAddress</DataPath>
 											<TitleLocation>None</TitleLocation>
@@ -583,17 +617,7 @@
 												</v8:item>
 											</NonselectedPictureText>
 											<TextColor>#C0C0C0</TextColor>
-											<ContextMenu name="PictureAddressSKUsContextMenu" id="127">
-												<Autofill>false</Autofill>
-												<ChildItems>
-													<Button name="OpenPictureSKUs" id="129">
-														<Type>CommandBarButton</Type>
-														<CommandName>Form.Command.OpenPicture</CommandName>
-														<Parameter xsi:nil="true"/>
-														<ExtendedTooltip name="OpenPictureSKUsExtendedTooltip" id="130"/>
-													</Button>
-												</ChildItems>
-											</ContextMenu>
+											<ContextMenu name="PictureAddressSKUsContextMenu" id="127"/>
 											<ExtendedTooltip name="PictureAddressSKUsExtendedTooltip" id="128"/>
 										</PictureField>
 									</ChildItems>

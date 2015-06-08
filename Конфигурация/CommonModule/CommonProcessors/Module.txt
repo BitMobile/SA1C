@@ -122,6 +122,9 @@ Function GetSnapshot(FileUUID, FormUUID, NameForFile) Export
 	
 	If ValueIsFilled(FileUUID) Then
 		
+		// Убрать запрещенные символы из имени файла
+		NameForFile = PrepareFileName(NameForFile);
+		
 		Try
 			
 			If TypeOf(FileUUID) = Type("String") Then 
@@ -188,6 +191,22 @@ Function GetSnapshot(FileUUID, FormUUID, NameForFile) Export
 	EndIf;
 	
 	Return Undefined;
+	
+EndFunction
+
+Function PrepareFileName(FileName)
+	
+	FileName = StrReplace(FileName, "/", "");
+	FileName = StrReplace(FileName, "\", "");
+	FileName = StrReplace(FileName, "|", "");
+	FileName = StrReplace(FileName, ":", "");
+	FileName = StrReplace(FileName, "*", "");
+	FileName = StrReplace(FileName, """", "");
+	FileName = StrReplace(FileName, "<", "");
+	FileName = StrReplace(FileName, ">", "");
+	FileName = StrReplace(FileName, "?", "");
+	
+	Return FileName;
 	
 EndFunction
 

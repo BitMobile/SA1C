@@ -149,6 +149,21 @@ Function GetFields(Details)
 	
 EndFunction
 
+&AtServer
+Procedure ResultOnActivateAreaAtServer(DetailsArray)
+	
+	For Each Detail In DetailsArray Do
+		
+		Fields = GetFields(Detail);
+		
+		If Fields[0].Field = "Value" Then
+			ResultDetailProcessingServer(Detail, true);
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
@@ -257,6 +272,31 @@ Procedure OpenSnapshot(Command)
 			
 		EndIf;
 		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ResultOnActivateArea(Item)
+	
+	If NOT Item.CurrentArea.Left - Item.CurrentArea.Right = 0 OR NOT Item.CurrentArea.Top - Item.CurrentArea.Bottom = 0 Then
+		Return;
+	EndIf;
+	
+	ThisForm.PictureAddress = Undefined;
+	ThisForm.PictureExtension = Undefined;
+	ThisForm.PictureFilename = Undefined;
+	
+	If NOT Item.CurrentArea.Details = Undefined Then
+				
+		DetailsArray = New Array;
+		
+		DetailsArray.Add(Item.CurrentArea.Details);
+		
+		If DetailsArray.Count() > 0 Then
+			ResultOnActivateAreaAtServer(DetailsArray);
+		EndIf;
+	
 	EndIf;
 	
 EndProcedure

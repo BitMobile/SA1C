@@ -124,35 +124,67 @@
 						<Event name="OnActivateArea">ResultOnActivateArea</Event>
 					</Events>
 				</SpreadSheetDocumentField>
-				<PictureField name="PictureAddress" id="34">
-					<DataPath>PictureAddress</DataPath>
-					<TitleLocation>None</TitleLocation>
-					<PictureSize>AutoSize</PictureSize>
-					<NonselectedPictureText>
+				<UsualGroup name="GroupPictureAddress" id="41">
+					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>No picture</v8:content>
+							<v8:content>Group picture address</v8:content>
 						</v8:item>
+					</Title>
+					<ToolTip>
 						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Нет фотоснимка</v8:content>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group picture address</v8:content>
 						</v8:item>
-					</NonselectedPictureText>
-					<TextColor>#C0C0C0</TextColor>
-					<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-					<ContextMenu name="PictureAddressContextMenu" id="35">
-						<Autofill>false</Autofill>
-						<ChildItems>
-							<Button name="PictureAddressContextMenuOpenSnapshot" id="39">
-								<Type>CommandBarButton</Type>
-								<CommandName>Form.Command.OpenSnapshot</CommandName>
-								<Parameter xsi:nil="true"/>
-								<ExtendedTooltip name="PictureAddressContextMenuOpenSnapshotExtendedTooltip" id="40"/>
-							</Button>
-						</ChildItems>
-					</ContextMenu>
-					<ExtendedTooltip name="PictureAddressExtendedTooltip" id="36"/>
-				</PictureField>
+					</ToolTip>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="GroupPictureAddressExtendedTooltip" id="42"/>
+					<ChildItems>
+						<CommandBar name="GroupPictureAddressCommands" id="43">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group picture address commands</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group picture address commands</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="GroupPictureAddressCommandsExtendedTooltip" id="44"/>
+							<ChildItems>
+								<Button name="PictureAddressContextMenuOpenSnapshot" id="39">
+									<Type>CommandBarButton</Type>
+									<CommandName>Form.Command.OpenSnapshot</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="PictureAddressContextMenuOpenSnapshotExtendedTooltip" id="40"/>
+								</Button>
+							</ChildItems>
+						</CommandBar>
+						<PictureField name="PictureAddress" id="34">
+							<DataPath>PictureAddress</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<PictureSize>AutoSize</PictureSize>
+							<NonselectedPictureText>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>No picture</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Нет фотоснимка</v8:content>
+								</v8:item>
+							</NonselectedPictureText>
+							<TextColor>#C0C0C0</TextColor>
+							<Font ref="sys:DefaultGUIFont" kind="WindowsFont"/>
+							<ContextMenu name="PictureAddressContextMenu" id="35"/>
+							<ExtendedTooltip name="PictureAddressExtendedTooltip" id="36"/>
+						</PictureField>
+					</ChildItems>
+				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
 	</ChildItems>

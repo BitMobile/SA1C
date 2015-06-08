@@ -666,10 +666,33 @@
 									<v8:content>Preview</v8:content>
 								</v8:item>
 							</ToolTip>
-							<Group>Horizontal</Group>
 							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="PreviewExtendedTooltip" id="168"/>
 							<ChildItems>
+								<CommandBar name="GroupParametersSnapshotCommands" id="335">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group parameters snapshot commands</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group parameters snapshot commands</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ExtendedTooltip name="GroupParametersSnapshotCommandsExtendedTooltip" id="336"/>
+									<ChildItems>
+										<Button name="PictureAddressContextMenuOpenParameterSnapshot" id="329">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.OpenParameterSnapshot</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="PictureAddressContextMenuOpenParameterSnapshotExtendedTooltip" id="330"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
 								<PictureField name="PictureAddress" id="127">
 									<DataPath>PictureAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
@@ -687,17 +710,7 @@
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<ContextMenu name="PictureAddressContextMenu" id="128">
-										<Autofill>false</Autofill>
-										<ChildItems>
-											<Button name="PictureAddressContextMenuOpenParameterSnapshot" id="329">
-												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.OpenParameterSnapshot</CommandName>
-												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="PictureAddressContextMenuOpenParameterSnapshotExtendedTooltip" id="330"/>
-											</Button>
-										</ChildItems>
-									</ContextMenu>
+									<ContextMenu name="PictureAddressContextMenu" id="128"/>
 									<ExtendedTooltip name="PictureAddressExtendedTooltip" id="169"/>
 									<Events>
 										<Event name="Click">PictureAddressClick</Event>
@@ -805,10 +818,33 @@
 									<v8:content>Group outlet snapshots preview</v8:content>
 								</v8:item>
 							</ToolTip>
-							<Group>Horizontal</Group>
 							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
 							<ExtendedTooltip name="GroupOutletSnapshotsPreviewExtendedTooltip" id="309"/>
 							<ChildItems>
+								<CommandBar name="GroupSnapshotCommands" id="333">
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group snapshot commands</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group snapshot commands</v8:content>
+										</v8:item>
+									</ToolTip>
+									<ExtendedTooltip name="GroupSnapshotCommandsExtendedTooltip" id="334"/>
+									<ChildItems>
+										<Button name="OutletSnapshotAddressContextMenuOpenSnapshot" id="331">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.OpenSnapshot</CommandName>
+											<Parameter xsi:nil="true"/>
+											<ExtendedTooltip name="OutletSnapshotAddressContextMenuOpenSnapshotExtendedTooltip" id="332"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
 								<PictureField name="OutletSnapshotAddress" id="305">
 									<DataPath>OutletSnapshotAddress</DataPath>
 									<TitleLocation>None</TitleLocation>
@@ -826,17 +862,7 @@
 										</v8:item>
 									</NonselectedPictureText>
 									<TextColor>#C0C0C0</TextColor>
-									<ContextMenu name="OutletSnapshotAddressContextMenu" id="306">
-										<Autofill>false</Autofill>
-										<ChildItems>
-											<Button name="OutletSnapshotAddressContextMenuOpenSnapshot" id="331">
-												<Type>CommandBarButton</Type>
-												<CommandName>Form.Command.OpenSnapshot</CommandName>
-												<Parameter xsi:nil="true"/>
-												<ExtendedTooltip name="OutletSnapshotAddressContextMenuOpenSnapshotExtendedTooltip" id="332"/>
-											</Button>
-										</ChildItems>
-									</ContextMenu>
+									<ContextMenu name="OutletSnapshotAddressContextMenu" id="306"/>
 									<ExtendedTooltip name="OutletSnapshotAddressExtendedTooltip" id="307"/>
 									<Events>
 										<Event name="Click">OutletSnapshotAddressClick</Event>
@@ -1714,6 +1740,7 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>OpenParameterSnapshot</Action>
+			<Representation>Picture</Representation>
 		</Command>
 		<Command name="OpenSnapshot" id="3">
 			<Title>
@@ -1737,6 +1764,7 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>OpenSnapshot</Action>
+			<Representation>Picture</Representation>
 		</Command>
 	</Commands>
 	<Parameters>
