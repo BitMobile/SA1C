@@ -245,7 +245,6 @@ SELECT ALLOWED
 FROM
 	Data AS Data
 {WHERE
-	(Data.SR IN (&amp;SRList)),
 	(Data.Date &gt;= &amp;StartDate),
 	(Data.Date &lt;= &amp;EndDate)}
 
@@ -322,13 +321,13 @@ FROM
 			</dcscor:item>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:parameter>Format</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">NFD=0; NZ=0</dcscor:value>
+				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
 			</dcscor:item>
 		</appearance>
 	</calculatedField>
 	<calculatedField>
 		<dataPath>OrderRate</dataPath>
-		<expression>CASE WHEN UNPLANNED + VISIT = 0 THEN 0 ELSE (VisitWithOrder)/(Unplanned+Visit)*100 END</expression>
+		<expression>CASE WHEN UNPLANNED + VISIT = 0 THEN 0 ELSE VisitWithOrder/(Unplanned+Visit)*100 END</expression>
 		<title xsi:type="v8:LocalStringType">
 			<v8:item>
 				<v8:lang>en</v8:lang>
@@ -347,7 +346,7 @@ FROM
 			</dcscor:item>
 			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 				<dcscor:parameter>Format</dcscor:parameter>
-				<dcscor:value xsi:type="xs:string">NFD=0; NZ=0</dcscor:value>
+				<dcscor:value xsi:type="xs:string">NFD=2; NZ=0</dcscor:value>
 			</dcscor:item>
 		</appearance>
 	</calculatedField>
@@ -377,11 +376,13 @@ FROM
 	</totalField>
 	<totalField>
 		<dataPath>OrderRate</dataPath>
-		<expression>Avg(OrderRate)</expression>
+		<expression>CASE WHEN Sum(Unplanned) + Sum(Visit) = 0 THEN 0 ELSE  (Sum(VisitWithOrder))/(Sum(Unplanned)+Sum(Visit))*100 END </expression>
+		<group>SR</group>
 	</totalField>
 	<totalField>
 		<dataPath>VisitRate</dataPath>
-		<expression>Avg(VisitRate)</expression>
+		<expression>CASE WHEN Sum(VisitPlan) = 0 THEN 0 ELSE Sum(Visit)/Sum(VisitPlan)*100 END</expression>
+		<group>SR</group>
 	</totalField>
 	<parameter>
 		<name>StartDate</name>
@@ -441,36 +442,6 @@ FROM
 		</value>
 		<useRestriction>false</useRestriction>
 	</parameter>
-	<parameter>
-		<name>SRList</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>SR</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Торговый представитель</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.User</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>false</useRestriction>
-		<inputParameters>
-			<dcscor:item>
-				<dcscor:parameter>ChoiceParameters</dcscor:parameter>
-				<dcscor:value xsi:type="dcscor:ChoiceParameters">
-					<dcscor:item>
-						<dcscor:choiceParameter>Role</dcscor:choiceParameter>
-						<dcscor:value xsi:type="xs:string">SR</dcscor:value>
-					</dcscor:item>
-				</dcscor:value>
-			</dcscor:item>
-		</inputParameters>
-		<use>Always</use>
-	</parameter>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>
 		<dcsset:presentation xsi:type="xs:string">Default</dcsset:presentation>
@@ -478,9 +449,6 @@ FROM
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Date</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>SR</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>VisitPlan</dcsset:field>
@@ -520,6 +488,12 @@ FROM
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>c22aa276-2f88-47d8-bf01-a4e5a7f31ccd</dcsset:userSettingID>
 				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">SR</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>c8234d53-416f-4515-92d1-0b5ef77d4896</dcsset:userSettingID>
+				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
@@ -547,39 +521,9 @@ FROM
 					</dcsset:userSettingPresentation>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>Period</dcscor:parameter>
-					<dcscor:value xsi:type="v8:StandardPeriod">
-						<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
-						<v8:startDate>0001-01-01T00:00:00</v8:startDate>
-						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
-					</dcscor:value>
-					<dcsset:userSettingID>f58299a7-0d59-414a-a3d4-e7fe138ae3ec</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Period</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Период</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>SRList</dcscor:parameter>
 					<dcscor:value xsi:nil="true"/>
 					<dcsset:userSettingID>e7e74308-d182-439a-9603-aead21db8c3f</dcsset:userSettingID>
-					<dcsset:userSettingPresentation xsi:type="v8:LocalStringType">
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>SR</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Торговый представитель</v8:content>
-						</v8:item>
-					</dcsset:userSettingPresentation>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:order>
@@ -617,12 +561,29 @@ FROM
 				</dcscor:item>
 			</dcsset:outputParameters>
 			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>SR</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
 				<dcsset:order>
 					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 				</dcsset:order>
 				<dcsset:selection>
 					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:item>
 			</dcsset:item>
 		</dcsset:settings>
 	</settingsVariant>
