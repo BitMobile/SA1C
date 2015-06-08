@@ -106,6 +106,11 @@
 							<ContextMenu name="VisitContextMenu" id="14"/>
 							<ExtendedTooltip name="VisitРасширеннаяПодсказка" id="57"/>
 						</InputField>
+						<InputField name="Contractor" id="124">
+							<DataPath>Object.Contractor</DataPath>
+							<ContextMenu name="ContractorContextMenu" id="125"/>
+							<ExtendedTooltip name="ContractorExtendedTooltip" id="126"/>
+						</InputField>
 						<InputField name="PriceList" id="44">
 							<DataPath>Object.PriceList</DataPath>
 							<ContextMenu name="PriceListContextMenu" id="45"/>
