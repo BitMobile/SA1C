@@ -28,6 +28,26 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	ThisForm.YearNumber = Format(Year(Object.Year), "NG=");
 	
+	CDate = CurrentDate();
+	
+	If CDate > Object.DateTo Then 
+		
+		// Заблокировать редактирование года, недели и кнопки заполнения/очистки если неделя уже прошла
+		Items.SR.Enabled					= False;
+		Items.Year.Enabled					= False;
+		Items.WeekChooserWeekNumber.Enabled	= False;
+		Items.Clear.Enabled					= False;
+		Items.FillTableUsing.Enabled		= False;
+		
+	ElsIf CDate > BegOfDay(Object.DateFrom) And CDate < EndOfDay(Object.DateTo) And ValueIsFilled(Object.Ref) Then 
+		
+		// Заблокировать редактирование года, недели если неделя текущая
+		Items.SR.Enabled					= False;
+		Items.Year.Enabled					= False;
+		Items.WeekChooserWeekNumber.Enabled	= False;
+		
+	EndIf;
+	
 EndProcedure
 
 &AtServer
@@ -153,21 +173,41 @@ EndProcedure
 &AtServer
 Procedure FillOutletsUsing(VisitPlan)
 	
+	DeleteOutletsRows();
+	
 	Query = New Query(
 	"SELECT ALLOWED
 	|	VisitPlanOutlets.Outlet,
 	|	DATEADD(&DateFrom, SECOND, (WEEKDAY(VisitPlanOutlets.Date) - 1) * 60 * 60 * 24 + SECOND(VisitPlanOutlets.Date) + 60 * MINUTE(VisitPlanOutlets.Date) + 60 * 60 * HOUR(VisitPlanOutlets.Date)) AS Date
+	|INTO TempTable
 	|FROM
 	|	Document.VisitPlan.Outlets AS VisitPlanOutlets
 	|WHERE
-	|	VisitPlanOutlets.Ref = &VisitPlan");
+	|	VisitPlanOutlets.Ref = &VisitPlan
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	TempTable.Outlet,
+	|	TempTable.Date
+	|FROM
+	|	TempTable AS TempTable
+	|WHERE
+	|	TempTable.Date >= &CurrentDate");
 	
 	Query.SetParameter("VisitPlan", VisitPlan);
 	Query.SetParameter("DateFrom", Object.DateFrom);
+	Query.SetParameter("CurrentDate", BegOfDay(CurrentDate()));
 	
-	QueryResult = Query.Execute().Unload();
+	QueryResult = Query.Execute();
 	
-	Object.Outlets.Load(QueryResult);
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		FillPropertyValues(Object.Outlets.Add(), Selection);
+		
+	EndDo;
 	
 	FillValueTableOutlets();
 	
@@ -264,15 +304,37 @@ Procedure FillWeekNumbers()
 	
 EndProcedure
 
-&AtClient
-Procedure RecountOutlets()
+&AtServer
+Procedure DeleteOutletsRows()
 	
-	For Each Row In Object.Outlets Do
+	CDate = BegOfDay(CurrentDate());
+	
+	ClearArray = New Array;
+	
+	For Each OutletStr In Object.Outlets Do 
 		
-		OldDate = Row.Date;
-		Row.Date = Object.DateFrom + (WeekDay(OldDate) - 1) * 60 * 60 * 24 + Hour(OldDate) * 60 * 60 + Minute(OldDate) * 60 + Second(OldDate);
+		If OutletStr.Date >= CDate Then 
+			
+			ClearArray.Add(OutletStr);
+			
+		EndIf;
 		
 	EndDo;
+	
+	For Each ClearStr In ClearArray Do 
+		
+		Object.Outlets.Delete(ClearStr);
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure ClearOutlets()
+	
+	DeleteOutletsRows();
+	
+	FillValueTableOutlets();
 	
 EndProcedure
 
@@ -353,6 +415,18 @@ Procedure ChoiceProcessing(SelectedValue, ChoiceSource)
 		FillOutletsUsing(SelectedValue);
 		
 	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure RecountOutlets()
+	
+	For Each Row In Object.Outlets Do
+		
+		OldDate = Row.Date;
+		Row.Date = Object.DateFrom + (WeekDay(OldDate) - 1) * 60 * 60 * 24 + Hour(OldDate) * 60 * 60 + Minute(OldDate) * 60 + Second(OldDate);
+		
+	EndDo;
 	
 EndProcedure
 
@@ -547,14 +621,6 @@ EndProcedure
 #EndRegion
 
 #Region Helpers
-
-&AtClient
-Procedure ClearOutlets()
-	
-	Object.Outlets.Clear();
-	FillValueTableOutlets();
-	
-EndProcedure
 
 &AtClient
 Procedure ProcessWeekNumberAndYearChange()
