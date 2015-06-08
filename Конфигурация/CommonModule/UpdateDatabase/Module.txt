@@ -80,6 +80,8 @@ Function StartUpdate() Export
 			VersionListForThisRelease.Add("1.6.T");
 			VersionListForThisRelease.Add("1.7.0");
 			VersionListForThisRelease.Add("1.7.T");
+			VersionListForThisRelease.Add("1.8.0");
+			VersionListForThisRelease.Add("1.8.T");
 			
 			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
 				
@@ -160,6 +162,17 @@ Function StartUpdate() Export
 					UserMessage.Message();
 					
 					UpdateForRelease_1_8_0(LastState, Step);
+					
+				EndIf;
+				
+				If CurrentVersion = "1.8.0" OR CurrentVersion = "1.8.T" Then
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_9_0(LastState, Step);
 					
 				EndIf;
 				
@@ -1850,6 +1863,65 @@ Procedure ProcessRewriteAllVisits()
 		VisitObject = Selection.Ref.GetObject();
 		
 		VisitObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Release_1_9_0
+
+Procedure UpdateForRelease_1_9_0(LastState, Step)
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update contractors'; ru = 'Обновление контрагентов'"));
+	ProcessContractors();
+	
+EndProcedure
+
+Procedure ProcessContractors()
+	
+	Selection = Catalogs.Outlet.Select();
+	
+	While Selection.Next() Do
+		
+		OutletObject = Selection.GetObject();
+		OutletObject.Distributor = Catalogs.Distributor.EmptyRef();
+		
+		If ValueIsFilled(Selection.INN) Then
+			
+			ContractorRef = Catalogs.Contractors.FindByAttribute("INN", Selection.INN);
+			
+			If ContractorRef = Catalogs.Contractors.EmptyRef() Then
+				
+				ContractorObject = Catalogs.Contractors.CreateItem();
+				
+			Else
+				
+				ContractorObject = ContractorRef.GetObject();
+				
+			EndIf;
+			
+		Else
+			
+			ContractorObject = Catalogs.Contractors.CreateItem();
+			
+		EndIf;
+		
+		FillPropertyValues(ContractorObject, Selection, "Email, INN, KPP, LegalAddress, LegalName, OwnershipType, PhoneNumber, WebSite");
+		ContractorObject.Description = ?(ValueIsFilled(Selection.LegalName), Selection.LegalName, Selection.Description);
+		
+		ContractorObject.Write();
+		OutletObject.Write();
+		
+		RecordManager = InformationRegisters.OutletsContractors.CreateRecordManager();
+		RecordManager.Period = CurrentDate();
+		RecordManager.Contractor = ContractorObject.Ref;
+		RecordManager.Outlet = OutletObject.Ref;
+		RecordManager.Default = True;
+		RecordManager.Status = Enums.ValueTableRowStatuses.Added;
+		
+		RecordManager.Write();
 		
 	EndDo;
 	
