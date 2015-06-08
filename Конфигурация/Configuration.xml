@@ -371,6 +371,7 @@
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
+			<InformationRegister>PartnersContractors</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>
