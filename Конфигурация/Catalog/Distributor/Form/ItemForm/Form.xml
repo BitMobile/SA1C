@@ -23,6 +23,7 @@
 		<Table name="Contractors" id="7">
 			<Representation>List</Representation>
 			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
 			<AutoInsertNewRow>true</AutoInsertNewRow>
 			<EnableStartDrag>true</EnableStartDrag>
 			<EnableDrag>true</EnableDrag>
@@ -87,7 +88,6 @@
 			</SearchControlAddition>
 			<Events>
 				<Event name="ChoiceProcessing">ContractorsChoiceProcessing</Event>
-				<Event name="AfterDeleteRow">ContractorsAfterDeleteRow</Event>
 			</Events>
 			<ChildItems>
 				<InputField name="ContractorsContractor" id="26">

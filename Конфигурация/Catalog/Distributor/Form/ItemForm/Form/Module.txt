@@ -129,24 +129,6 @@ Procedure ContractorsDefaultOnChange(Item)
 EndProcedure
 
 &AtClient
-Procedure ContractorsAfterDeleteRow(Item)
-	
-	If ThisForm.Contractors.Count() Then
-		
-		FilterParameters = New Structure("Default", True);
-		NoDefault = NOT ThisForm.Contractors.FindRows(FilterParameters).Count();
-		
-		If NoDefault Then
-			
-			ThisForm.Contractors[0].Default = True;
-			
-		EndIf;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
 Procedure ContractorsChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
 	FilterParameters = New Structure("Contractor", SelectedValue);
