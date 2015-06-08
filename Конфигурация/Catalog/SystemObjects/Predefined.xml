@@ -74,12 +74,6 @@
 				<Description>en = 'Catalogs'; ru = 'Справочники'</Description>
 				<IsFolder>true</IsFolder>
 				<ChildItems>
-					<Item id="ee4e3789-c6db-491e-94e4-32487db848c9">
-						<Name>Catalog_Distributors</Name>
-						<Code>000000141</Code>
-						<Description>en = 'Distributors'; ru = 'Дистрибьюторы'</Description>
-						<IsFolder>false</IsFolder>
-					</Item>
 					<Item id="dc544566-05db-4ba0-a330-2c06f660242e">
 						<Name>Catalog_AssortmentMatrix</Name>
 						<Code>000000140</Code>
@@ -120,6 +114,12 @@
 						<Name>Catalog_Outlets</Name>
 						<Code>000000146</Code>
 						<Description>en = 'Outlets'; ru = 'Торговые точки'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
+					<Item id="ee4e3789-c6db-491e-94e4-32487db848c9">
+						<Name>Catalog_Distributors</Name>
+						<Code>000000141</Code>
+						<Description>en = 'Partners'; ru = 'Партнеры'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
 					<Item id="6a1ab065-7716-4dd7-bc51-b7afe00f8f2c">

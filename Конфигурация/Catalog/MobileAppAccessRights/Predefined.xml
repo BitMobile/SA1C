@@ -24,6 +24,12 @@
 		<Description>en = 'Access to return'; ru = 'Доступ к возврату'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="d84d080b-3338-446a-bc9b-9cfb462672cd">
+		<Name>EditContractorsAttributes</Name>
+		<Code>000000007</Code>
+		<Description>en = 'Edit contractors attributes'; ru = 'Редактирование реквизитов контрагентов'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="5c602579-8df9-4524-95e5-578a0a34a615">
 		<Name>EditParametersInOutlet</Name>
 		<Code>000000002</Code>
