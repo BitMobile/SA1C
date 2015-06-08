@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<ChildItems>
+		<UsualGroup name="DescriptionCodeGroup" id="34">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Description code group</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Description code group</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<ExtendedTooltip name="DescriptionCodeGroupExtendedTooltip" id="35"/>
+			<ChildItems>
+				<InputField name="Description" id="4">
+					<DataPath>Object.Description</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="DescriptionContextMenu" id="5"/>
+					<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
+				</InputField>
+				<InputField name="Code" id="1">
+					<DataPath>Object.Code</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="CodeContextMenu" id="2"/>
+					<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<InputField name="LegalName" id="22">
+			<DataPath>Object.LegalName</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="LegalNameContextMenu" id="23"/>
+			<ExtendedTooltip name="LegalNameExtendedTooltip" id="24"/>
+		</InputField>
+		<InputField name="LegalAddress" id="19">
+			<DataPath>Object.LegalAddress</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="LegalAddressContextMenu" id="20"/>
+			<ExtendedTooltip name="LegalAddressExtendedTooltip" id="21"/>
+		</InputField>
+		<InputField name="OwnershipType" id="25">
+			<DataPath>Object.OwnershipType</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="OwnershipTypeContextMenu" id="26"/>
+			<ExtendedTooltip name="OwnershipTypeExtendedTooltip" id="27"/>
+		</InputField>
+		<InputField name="INN" id="13">
+			<DataPath>Object.INN</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="INNContextMenu" id="14"/>
+			<ExtendedTooltip name="INNExtendedTooltip" id="15"/>
+		</InputField>
+		<InputField name="KPP" id="16">
+			<DataPath>Object.KPP</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="KPPContextMenu" id="17"/>
+			<ExtendedTooltip name="KPPExtendedTooltip" id="18"/>
+		</InputField>
+		<InputField name="PhoneNumber" id="28">
+			<DataPath>Object.PhoneNumber</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="PhoneNumberContextMenu" id="29"/>
+			<ExtendedTooltip name="PhoneNumberExtendedTooltip" id="30"/>
+		</InputField>
+		<InputField name="Email" id="10">
+			<DataPath>Object.Email</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="EmailContextMenu" id="11"/>
+			<ExtendedTooltip name="EmailExtendedTooltip" id="12"/>
+		</InputField>
+		<InputField name="WebSite" id="31">
+			<DataPath>Object.WebSite</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="WebSiteContextMenu" id="32"/>
+			<ExtendedTooltip name="WebSiteExtendedTooltip" id="33"/>
+		</InputField>
+		<InputField name="Commentary" id="7">
+			<DataPath>Object.Commentary</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="CommentaryContextMenu" id="8"/>
+			<ExtendedTooltip name="CommentaryExtendedTooltip" id="9"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Object" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.Contractors</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+</Form>
