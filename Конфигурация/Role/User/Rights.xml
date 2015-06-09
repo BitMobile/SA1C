@@ -659,6 +659,21 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.PartnersContractors</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации.TabularSection.ТабличныеЧасти.Attribute.ТабличнаяЧастьОбъектаКонфигурации</name>
 		<right>
 			<name>View</name>
@@ -794,6 +809,36 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.ObjectsContacts</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.OutletsContractors</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
 		</right>
 	</object>
 	<object>
@@ -1281,6 +1326,45 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 		<name>Constant.SKUFeaturesRegistration</name>
 		<right>
 			<name>Read</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.ContactPersons</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveInsert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveSetDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveClearDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InputByString</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -4844,6 +4928,45 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.Contractors</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveInsert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Edit</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveSetDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveClearDeletionMark</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InputByString</name>
+			<value>true</value>
 		</right>
 	</object>
 	<object>

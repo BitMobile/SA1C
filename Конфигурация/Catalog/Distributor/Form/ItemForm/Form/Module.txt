@@ -8,6 +8,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillContactList();
 	
+	HandleContactsAdditionalAccessRights();
+	
 EndProcedure
 
 &AtServer
@@ -206,6 +208,19 @@ Procedure WriteContactList()
 		RecordManager.Write();
 		
 	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure HandleContactsAdditionalAccessRights()
+	
+	CurrentUser = SessionParameters.CurrentUser;
+	EditContactsAccessRight = Catalogs.AdditionalAccessRights.EditPartnerContacts;
+	IsAdmin = Not ValueIsFilled(CurrentUser.RoleOfUser);
+	HasRightToEditContacts = Not CurrentUser.RoleOfUser.AdditionalAccessRights.Find(EditContactsAccessRight) = Undefined;
+	EnableContactEdit = IsAdmin OR HasRightToEditContacts;
+	Items.ContactListAddContact.Enabled = EnableContactEdit;
+	Items.ContactListDeleteContact.Enabled = EnableContactEdit;
 	
 EndProcedure
 
