@@ -30,10 +30,22 @@
 		<Description>en = 'Edit contractors attributes'; ru = 'Редактирование реквизитов контрагентов'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="3bfcfa40-65c9-470c-b5f0-991cd12395d9">
+		<Name>EditOutletContacts</Name>
+		<Code>000000008</Code>
+		<Description>en = 'Edit outlet contacts'; ru = 'Редактирование контактов торговых точек'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="5c602579-8df9-4524-95e5-578a0a34a615">
 		<Name>EditParametersInOutlet</Name>
 		<Code>000000002</Code>
 		<Description>en = 'Edit parameters in outlet'; ru = 'Редактирование параметров в торговой точке'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="69eaabd8-83a3-40bd-bd2d-932053d8e1ed">
+		<Name>EditPartnerContacts</Name>
+		<Code>000000009</Code>
+		<Description>en = 'Edit partner contacts'; ru = 'Редактирование контактов партнеров'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="88673410-6d62-4c65-ab64-016f6012803f">
