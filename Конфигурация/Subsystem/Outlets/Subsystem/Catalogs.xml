@@ -30,6 +30,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.OutletsPrimaryParametersSettings</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.OutletsStatusesSettings</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Catalog.Contractors</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Catalog.ContactPersons</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
