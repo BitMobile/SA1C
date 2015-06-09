@@ -262,6 +262,7 @@
 			<Catalog>AdditionalAccessRights</Catalog>
 			<Catalog>AssortmentMatrix</Catalog>
 			<Catalog>Brands</Catalog>
+			<Catalog>ContactPersons</Catalog>
 			<Catalog>Contractors</Catalog>
 			<Catalog>Distributor</Catalog>
 			<Catalog>MobileAppAccessRights</Catalog>
@@ -291,7 +292,6 @@
 			<Catalog>UnitsOfMeasure</Catalog>
 			<Catalog>User</Catalog>
 			<Catalog>bitmobile_НастройкиСинхронизации</Catalog>
-			<Catalog>ContactPersons</Catalog>
 			<Document>AccountReceivable</Document>
 			<Document>Encashment</Document>
 			<Document>Guestbook</Document>
