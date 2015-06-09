@@ -74,6 +74,12 @@
 				<Description>en = 'Catalogs'; ru = 'Справочники'</Description>
 				<IsFolder>true</IsFolder>
 				<ChildItems>
+					<Item id="a72543eb-a83d-4fa1-8152-4961e2f6d3bf">
+						<Name>Catalog_ContactPersons</Name>
+						<Code>000000214</Code>
+						<Description>en = 'Contact persons'; ru = 'Контактные лица'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 					<Item id="dc544566-05db-4ba0-a330-2c06f660242e">
 						<Name>Catalog_AssortmentMatrix</Name>
 						<Code>000000140</Code>
