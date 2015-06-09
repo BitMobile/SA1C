@@ -1334,14 +1334,28 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_ContactPersons")</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Description</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ContactPersons")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_ContactPersons")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -4935,14 +4949,28 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Contractors")</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Description</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Contractors")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_Contractors")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
