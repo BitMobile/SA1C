@@ -70,7 +70,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	TempPhoneNumber	= Object.PhoneNumber;
 	
 	FillContractors();
-
+	
+	FillContactList();
 	
 EndProcedure
 
@@ -239,7 +240,8 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		SetPrivilegedMode(False);
 		
 		WriteContractors();
-
+		
+		WriteContacts();
 		
 	EndIf;
 	
@@ -836,6 +838,93 @@ EndProcedure
 
 #EndRegion
 
+#Region ContactList
+
+&AtServer
+Procedure FillContactList()
+	
+	Query = New Query(
+	"SELECT
+	|	ObjectsContacts.ContactPerson AS Contact
+	|FROM
+	|	InformationRegister.ObjectsContacts AS ObjectsContacts
+	|WHERE
+	|	ObjectsContacts.Object = &Object
+	|	AND ObjectsContacts.NotActual = FALSE");
+	
+	Query.SetParameter("Object", Object.Ref);
+	
+	Result = Query.Execute().Unload();
+	
+	ThisForm.ContactList.Load(Result);
+	
+EndProcedure
+
+&AtServer
+Procedure WriteContacts()
+	
+	Query = New Query(
+	"SELECT
+	|	FormContacts.Contact
+	|INTO FormContacts
+	|FROM
+	|	&FormContacts AS FormContacts
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	ObjectsContacts.ContactPerson
+	|INTO RegisterContacts
+	|FROM
+	|	InformationRegister.ObjectsContacts AS ObjectsContacts
+	|WHERE
+	|	ObjectsContacts.Object = &Object
+	|	AND ObjectsContacts.NotActual = FALSE
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	FormContacts.Contact AS FormContact,
+	|	RegisterContacts.ContactPerson AS RegisterContact
+	|INTO Difference
+	|FROM
+	|	FormContacts AS FormContacts
+	|		FULL JOIN RegisterContacts AS RegisterContacts
+	|		ON FormContacts.Contact = RegisterContacts.ContactPerson
+	|WHERE
+	|	(FormContacts.Contact IS NULL 
+	|			OR RegisterContacts.ContactPerson IS NULL )
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	&Object AS Object,
+	|	ISNULL(Difference.FormContact, Difference.RegisterContact) AS ContactPerson,
+	|	CASE
+	|		WHEN Difference.FormContact IS NULL 
+	|			THEN TRUE
+	|		ELSE FALSE
+	|	END AS NotActual
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("FormContacts", ThisForm.ContactList.Unload());
+	Query.SetParameter("Object", ThisForm.Object.Ref);
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.ObjectsContacts.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
 #EndRegion
 
 #Region UserInterface
@@ -958,6 +1047,10 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	If EventName = "OutletParameterCreated" Then
 		
 		FillParameters();
+		
+	Elsif EventName = "Update" Then
+		
+		ThisForm.Items.ContactList.Refresh();
 		
 	EndIf;
 	
@@ -1527,6 +1620,65 @@ Procedure ProcessDistributorChange(Result, Parameters) Export
 	EndIf;
 	
 	SetContractorsButtonsAvailability();
+	
+EndProcedure
+
+#EndRegion
+
+#Region ContactList
+
+&AtClient
+Procedure AddContact(Command)
+	
+	ChoiceForm = GetForm("Catalog.ContactPersons.ChoiceForm", , Items.ContactList);
+	
+	ChoiceForm.CloseOnChoice = False;
+	
+	OpenForm(ChoiceForm);
+	
+EndProcedure
+
+&AtClient
+Procedure ContactListChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	
+	FilterParameters = New Structure("Contact", SelectedValue);
+	ContactExists = ThisForm.ContactList.FindRows(FilterParameters).Count();
+	
+	If Not ContactExists Then
+		
+		NewContactRow = ThisForm.ContactList.Add();
+		NewContactRow.Contact = SelectedValue;
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure DeleteContact(Command)
+	
+	CurrentData = Items.ContactList.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		CurrentDataIndex = ThisForm.ContactList.IndexOf(CurrentData);
+		ThisForm.ContactList.Delete(CurrentDataIndex);
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ContactListSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	CurrentData = Items.ContactList.CurrentData;
+	
+	If NOT CurrentData = Undefined Then
+		
+		OpenForm("Catalog.ContactPersons.ObjectForm", New Structure("Key", CurrentData.Contact), ThisForm);
+		
+	EndIf;
 	
 EndProcedure
 
