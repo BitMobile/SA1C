@@ -4,6 +4,30 @@
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
+	FillContractors();
+	
+	FillContactList();
+	
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not Cancel Then
+		
+		WriteContractors();
+		
+		WriteContactList();
+		
+	EndIf;
+	
+EndProcedure
+
+#Region Contractors
+
+&AtServer
+Procedure FillContractors()
+	
 	Query = New Query(
 	"SELECT
 	|	PartnersContractorsSliceLast.Contractor,
@@ -22,89 +46,185 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 EndProcedure
 
 &AtServer
-Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+Procedure WriteContractors()
 	
-	If Not Cancel Then
+	Query = New Query(
+	"SELECT
+	|	FormContractors.Contractor,
+	|	FormContractors.Default
+	|INTO FormContractors
+	|FROM
+	|	&FormContractors AS FormContractors
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	PartnersContractorsSliceLast.Contractor,
+	|	PartnersContractorsSliceLast.Default
+	|INTO RegisterContractors
+	|FROM
+	|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
+	|WHERE
+	|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	FormContractors.Contractor AS FormContractor,
+	|	FormContractors.Default AS FormDefault,
+	|	RegisterContractors.Contractor AS RegisterContractor,
+	|	RegisterContractors.Default AS RegisterDefault
+	|INTO Difference
+	|FROM
+	|	FormContractors AS FormContractors
+	|		FULL JOIN RegisterContractors AS RegisterContractors
+	|		ON FormContractors.Contractor = RegisterContractors.Contractor
+	|WHERE
+	|	(FormContractors.Contractor IS NULL 
+	|				AND FormContractors.Default IS NULL 
+	|			OR RegisterContractors.Contractor IS NULL 
+	|				AND RegisterContractors.Default IS NULL 
+	|			OR NOT FormContractors.Default = RegisterContractors.Default)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	&CurrentDate AS Period,
+	|	&Partner AS Partner,
+	|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
+	|	ISNULL(Difference.FormDefault, Difference.RegisterDefault) AS Default,
+	|	CASE
+	|		WHEN Difference.FormContractor IS NULL 
+	|				AND Difference.FormDefault IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|		WHEN Difference.RegisterContractor IS NULL 
+	|				AND Difference.RegisterDefault IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
+	|		WHEN NOT Difference.FormDefault = Difference.RegisterDefault
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Modified)
+	|	END AS Status
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("FormContractors", ThisForm.Contractors.Unload());
+	Query.SetParameter("Partner", ThisForm.Object.Ref);
+	Query.SetParameter("CurrentDate", CurrentDate());
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
 		
-		Query = New Query(
-		"SELECT
-		|	FormContractors.Contractor,
-		|	FormContractors.Default
-		|INTO FormContractors
-		|FROM
-		|	&FormContractors AS FormContractors
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
-		|	PartnersContractorsSliceLast.Contractor,
-		|	PartnersContractorsSliceLast.Default
-		|INTO RegisterContractors
-		|FROM
-		|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
-		|WHERE
-		|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
-		|	FormContractors.Contractor AS FormContractor,
-		|	FormContractors.Default AS FormDefault,
-		|	RegisterContractors.Contractor AS RegisterContractor,
-		|	RegisterContractors.Default AS RegisterDefault
-		|INTO Difference
-		|FROM
-		|	FormContractors AS FormContractors
-		|		FULL JOIN RegisterContractors AS RegisterContractors
-		|		ON FormContractors.Contractor = RegisterContractors.Contractor
-		|WHERE
-		|	(FormContractors.Contractor IS NULL 
-		|				AND FormContractors.Default IS NULL 
-		|			OR RegisterContractors.Contractor IS NULL 
-		|				AND RegisterContractors.Default IS NULL 
-		|			OR NOT FormContractors.Default = RegisterContractors.Default)
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
-		|	&CurrentDate AS Period,
-		|	&Partner AS Partner,
-		|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
-		|	ISNULL(Difference.FormDefault, Difference.RegisterDefault) AS Default,
-		|	CASE
-		|		WHEN Difference.FormContractor IS NULL 
-		|				AND Difference.FormDefault IS NULL 
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
-		|		WHEN Difference.RegisterContractor IS NULL 
-		|				AND Difference.RegisterDefault IS NULL 
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
-		|		WHEN NOT Difference.FormDefault = Difference.RegisterDefault
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Modified)
-		|	END AS Status
-		|FROM
-		|	Difference AS Difference");
+		RecordManager = InformationRegisters.PartnersContractors.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
 		
-		Query.SetParameter("FormContractors", ThisForm.Contractors.Unload());
-		Query.SetParameter("Partner", ThisForm.Object.Ref);
-		Query.SetParameter("CurrentDate", CurrentDate());
-		
-		Result = Query.Execute().Unload();
-		
-		For Each Row In Result Do
-			
-			RecordManager = InformationRegisters.PartnersContractors.CreateRecordManager();
-			FillPropertyValues(RecordManager, Row);
-			RecordManager.Write();
-			
-		EndDo;
-		
-	EndIf;
+	EndDo;
 	
 EndProcedure
 
 #EndRegion
 
+#Region ContactList
+
+&AtServer
+Procedure FillContactList()
+	
+	Query = New Query(
+	"SELECT
+	|	ObjectsContacts.ContactPerson AS Contact
+	|FROM
+	|	InformationRegister.ObjectsContacts AS ObjectsContacts
+	|WHERE
+	|	ObjectsContacts.Object = &Object
+	|	AND ObjectsContacts.NotActual = FALSE");
+	
+	Query.SetParameter("Object", Object.Ref);
+	
+	Result = Query.Execute().Unload();
+	
+	ThisForm.ContactList.Load(Result);
+	
+EndProcedure
+
+&AtServer
+Procedure WriteContactList()
+	
+	Query = New Query(
+	"SELECT
+	|	FormContacts.Contact
+	|INTO FormContacts
+	|FROM
+	|	&FormContacts AS FormContacts
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	ObjectsContacts.ContactPerson
+	|INTO RegisterContacts
+	|FROM
+	|	InformationRegister.ObjectsContacts AS ObjectsContacts
+	|WHERE
+	|	ObjectsContacts.Object = &Object
+	|	AND ObjectsContacts.NotActual = FALSE
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	FormContacts.Contact AS FormContact,
+	|	RegisterContacts.ContactPerson AS RegisterContact
+	|INTO Difference
+	|FROM
+	|	FormContacts AS FormContacts
+	|		FULL JOIN RegisterContacts AS RegisterContacts
+	|		ON FormContacts.Contact = RegisterContacts.ContactPerson
+	|WHERE
+	|	(FormContacts.Contact IS NULL 
+	|			OR RegisterContacts.ContactPerson IS NULL )
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	&Object AS Object,
+	|	ISNULL(Difference.FormContact, Difference.RegisterContact) AS ContactPerson,
+	|	CASE
+	|		WHEN Difference.FormContact IS NULL 
+	|			THEN TRUE
+	|		ELSE FALSE
+	|	END AS NotActual
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("FormContacts", ThisForm.ContactList.Unload());
+	Query.SetParameter("Object", ThisForm.Object.Ref);
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.ObjectsContacts.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+#EndRegion
+
 #Region UserInterface
+
+&AtClient
+Procedure NotificationProcessing(EventName, Parameter, Source)
+	
+	If EventName = "Update" Then
+		
+		ThisForm.Items.ContactList.Refresh();
+		
+	EndIf;
+	
+EndProcedure
 
 #Region Contractors
 
@@ -152,6 +272,39 @@ EndProcedure
 
 #EndRegion
 
+#Region ContactList
+
+&AtClient
+Procedure ContactListSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	CurrentData = Items.ContactList.CurrentData;
+	
+	If NOT CurrentData = Undefined Then
+		
+		OpenForm("Catalog.ContactPersons.ObjectForm", New Structure("Key", CurrentData.Contact), ThisForm);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ContactListChoiceProcessing(Item, SelectedValue, StandardProcessing)
+	
+	FilterParameters = New Structure("Contact", SelectedValue);
+	ContactExists = ThisForm.ContactList.FindRows(FilterParameters).Count();
+	
+	If Not ContactExists Then
+		
+		NewContactRow = ThisForm.ContactList.Add();
+		NewContactRow.Contact = SelectedValue;
+		Modified = True;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
 #Region Commands
 
 &AtClient
@@ -188,6 +341,32 @@ Procedure RemoveContractor(Command)
 			ThisForm.Contractors[0].Default = True;
 			
 		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure AddContact(Command)
+	
+	ChoiceForm = GetForm("Catalog.ContactPersons.ChoiceForm", , Items.ContactList);
+	
+	ChoiceForm.CloseOnChoice = False;
+	
+	OpenForm(ChoiceForm);
+	
+EndProcedure
+
+&AtClient
+Procedure DeleteContact(Command)
+	
+	CurrentData = Items.ContactList.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		CurrentDataIndex = ThisForm.ContactList.IndexOf(CurrentData);
+		ThisForm.ContactList.Delete(CurrentDataIndex);
+		Modified = True;
 		
 	EndIf;
 	

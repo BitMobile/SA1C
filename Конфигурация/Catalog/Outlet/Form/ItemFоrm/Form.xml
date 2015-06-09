@@ -432,18 +432,21 @@
 								</InputField>
 								<InputField name="ContactListContactPosition" id="390">
 									<DataPath>ContactList.Contact.Position</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="ContactListContactPositionContextMenu" id="391"/>
 									<ExtendedTooltip name="ContactListContactPositionExtendedTooltip" id="392"/>
 								</InputField>
 								<InputField name="ContactListContactPhoneNumber" id="393">
 									<DataPath>ContactList.Contact.PhoneNumber</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="ContactListContactPhoneNumberContextMenu" id="394"/>
 									<ExtendedTooltip name="ContactListContactPhoneNumberExtendedTooltip" id="395"/>
 								</InputField>
 								<InputField name="ContactListContactEmail" id="396">
 									<DataPath>ContactList.Contact.Email</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="ContactListContactEmailContextMenu" id="397"/>
 									<ExtendedTooltip name="ContactListContactEmailExtendedTooltip" id="398"/>
