@@ -1877,6 +1877,9 @@ Procedure UpdateForRelease_1_9_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update contractors'; ru = 'Обновление контрагентов'"));
 	ProcessContractors();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update contacts'; ru = 'Обновление контактов'"));
+	ProcessContacts();
+	
 EndProcedure
 
 Procedure ProcessContractors()
@@ -1922,6 +1925,31 @@ Procedure ProcessContractors()
 		RecordManager.Status = Enums.ValueTableRowStatuses.Added;
 		
 		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessContacts()
+	
+	Selection = Catalogs.Outlet.Select();
+	
+	While Selection.Next() Do
+		
+		For Each Row In Selection.Contacts Do
+			
+			ContactObject = Catalogs.ContactPersons.CreateItem();
+			FillPropertyValues(ContactObject, Row, "Position, PhoneNumber, Email");
+			ContactObject.Description = ?(ValueIsFilled(TrimAll(Row.ContactName)), Row.ContactName, Selection.Description);
+			ContactObject.Write();
+			
+			RecordManager = InformationRegisters.ObjectsContacts.CreateRecordManager();
+			RecordManager.ContactPerson = ContactObject.Ref;
+			RecordManager.Object = Selection.Ref;
+			RecordManager.NotActual = Row.NotActual;
+			RecordManager.Write();
+			
+		EndDo;
 		
 	EndDo;
 	
