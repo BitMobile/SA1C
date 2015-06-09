@@ -140,6 +140,12 @@
 						<Description>en = 'Territories'; ru = 'Территории'</Description>
 						<IsFolder>false</IsFolder>
 					</Item>
+					<Item id="96a6c143-9f48-4cbc-a262-be76766ba0d1">
+						<Name>Catalog_Contractors</Name>
+						<Code>000000215</Code>
+						<Description>en = 'Сontractors'; ru = 'Контрагенты'</Description>
+						<IsFolder>false</IsFolder>
+					</Item>
 				</ChildItems>
 			</Item>
 			<Item id="0f89d18f-b79b-46cb-a32a-fb8916ea4328">
