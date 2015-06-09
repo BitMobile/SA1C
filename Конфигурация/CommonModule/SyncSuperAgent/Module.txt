@@ -476,7 +476,7 @@ Procedure ActualizePeriodicity() Export
 				ElsIf YearScheduleType = Enums.YearScheduleTypes.Last Then
 					
 					EndPeriod = DayOfYear(EndOfYear(CurrentDate));
-					BeginPeriod = EndPeriod - GetYearFirstLastNumber(Schedule);
+					BeginPeriod = EndPeriod - GetYearFirstLastNumber(Schedule) + 1;
 					
 				ElsIf YearScheduleType = Enums.YearScheduleTypes.Period Then
 					
