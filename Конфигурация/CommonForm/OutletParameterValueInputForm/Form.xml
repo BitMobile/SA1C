@@ -91,6 +91,7 @@
 			<TitleLocation>None</TitleLocation>
 			<Width>30</Width>
 			<ChoiceButton>true</ChoiceButton>
+			<TextEdit>false</TextEdit>
 			<ContextMenu name="BooleanContextMenu" id="21"/>
 			<ExtendedTooltip name="BooleanExtendedTooltip" id="24"/>
 			<Events>
