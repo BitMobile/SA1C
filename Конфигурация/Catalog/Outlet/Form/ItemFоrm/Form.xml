@@ -613,6 +613,7 @@
 								<InputField name="PricesPriceList" id="86">
 									<DataPath>Object.Prices.PriceList</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<ChoiceButtonRepresentation>ShowInDropListAndInInputField</ChoiceButtonRepresentation>
 									<ContextMenu name="PricesPriceListContextMenu" id="87"/>
 									<ExtendedTooltip name="PricesPriceListExtendedTooltip" id="177"/>
 									<Events>
