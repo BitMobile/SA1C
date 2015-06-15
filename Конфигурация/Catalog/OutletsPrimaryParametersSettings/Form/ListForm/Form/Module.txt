@@ -1,9 +1,11 @@
 ﻿
+#Region CommonProceduresAndFunctions
+
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	OutletsPrimaryParametersSettings.Ref,
 	|	OutletsPrimaryParametersSettings.Description,
 	|	OutletsPrimaryParametersSettings.EditableInMA
@@ -22,15 +24,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
-&AtClient
-Procedure OutletPrimaryParametersEditableInMAOnChange(Item)
-	
-	CurrentData = Items.OutletPrimaryParameters.CurrentData;
-	ParameterRef = CurrentData.Ref;
-	ChangeParameter(ParameterRef);
-	
-EndProcedure
-
+&AtServer
 Procedure ChangeParameter(ParameterRef)
 	
 	ParameterObject = ParameterRef.GetObject();
@@ -38,4 +32,29 @@ Procedure ChangeParameter(ParameterRef)
 	ParameterObject.Write();
 	
 EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
+&AtClient
+Procedure OutletPrimaryParametersEditableInMAOnChange(Item)
+	
+	Try
+	
+		CurrentData = Items.OutletPrimaryParameters.CurrentData;
+		ParameterRef = CurrentData.Ref;
+		ChangeParameter(ParameterRef);
+	
+	Except 
+		
+		Items.OutletPrimaryParameters.CurrentData.EditableInMA = Not Items.OutletPrimaryParameters.CurrentData.EditableInMA;
+		
+	EndTry;
+	
+EndProcedure
+
+#EndRegion
+
+
 

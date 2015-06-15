@@ -47,14 +47,28 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsStatusesSettings")</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Description</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsStatusesSettings")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsStatusesSettings")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -3407,14 +3421,28 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OutletsPrimaryParametersSettings")</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Description</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsPrimaryParametersSettings")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OutletsPrimaryParametersSettings")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -4738,14 +4766,28 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		<right>
 			<name>Read</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_OrderParameters")</condition>
+			</restrictionByCondition>
+			<restrictionByCondition>
+				<field>Ref</field>
+				<field>Description</field>
+				<condition>WHERE TRUE</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Insert</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OrderParameters")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>Update</name>
 			<value>true</value>
+			<restrictionByCondition>
+				<condition>WHERE #HaveRightToEdit("Catalog.SystemObjects.Catalog_OrderParameters")</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>

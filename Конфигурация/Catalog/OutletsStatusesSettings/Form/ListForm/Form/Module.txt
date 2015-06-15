@@ -5,7 +5,7 @@
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	OutletsStatusesSettings.Description,
 	|	OutletsStatusesSettings.ShowOutletInMA,
 	|	OutletsStatusesSettings.DoVisitInMA,
@@ -73,29 +73,37 @@ EndProcedure
 &AtClient
 Procedure OutletStatusesAttributeOnChange(Item)
 	
-	CurrentData		= Items.OutletStatuses.CurrentData;
-	SettingRef		= CurrentData.Ref;
-	AttributeName	= Item.Name;
-	ClearAll		= False;
-	SetVisible		= False;
-	
-	ChangeStatus(SettingRef, AttributeName, ClearAll, SetVisible);
-	
-	If SetVisible Then 
+	Try
 		
-		CurrentData.ShowOutletInMA = True;
+		CurrentData		= Items.OutletStatuses.CurrentData;
+		SettingRef		= CurrentData.Ref;
+		AttributeName	= Item.Name;
+		ClearAll		= False;
+		SetVisible		= False;
 		
-	EndIf;
-	
-	If ClearAll Then 
+		ChangeStatus(SettingRef, AttributeName, ClearAll, SetVisible);
 		
-		CurrentData.DoVisitInMA				= False;
-		CurrentData.CreateOrderInMA			= False;
-		CurrentData.FillQuestionnaireInMA	= False;
-		CurrentData.DoEncashmentInMA		= False;
-		CurrentData.CreateReturnInMA		= False;
+		If SetVisible Then 
+			
+			CurrentData.ShowOutletInMA = True;
+			
+		EndIf;
 		
-	EndIf;
+		If ClearAll Then 
+			
+			CurrentData.DoVisitInMA				= False;
+			CurrentData.CreateOrderInMA			= False;
+			CurrentData.FillQuestionnaireInMA	= False;
+			CurrentData.DoEncashmentInMA		= False;
+			CurrentData.CreateReturnInMA		= False;
+			
+		EndIf;
+		
+	Except
+		
+		Items.OutletStatuses.CurrentData[Item.Name] = Not Items.OutletStatuses.CurrentData[Item.Name];
+		
+	EndTry;
 	
 EndProcedure
 
