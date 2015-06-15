@@ -1521,6 +1521,7 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Outlets")
 				<field>Ref</field>
 				<field>Description</field>
 				<field>Class</field>
+				<field>Distributor</field>
 				<field>Type</field>
 				<condition>WHERE TRUE</condition>
 			</restrictionByCondition>
