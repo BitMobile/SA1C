@@ -258,6 +258,8 @@
 INTO MaxPeriodSKUs
 FROM
 	InformationRegister.Answers.SliceLast AS AnswersSliceLast
+WHERE
+	AnswersSliceLast.QuestionAssignment = VALUE(Enum.SKUQuestions.Facing)
 
 GROUP BY
 	AnswersSliceLast.SKU,
