@@ -1143,7 +1143,7 @@ EndProcedure
 &AtClient
 Procedure ParametersSelection(Item, SelectedRow, Field, StandardProcessing)
 	
-	If Item.CurrentItem = Items.ParametersPresentation Then
+	If Item.CurrentItem = Items.ParametersPresentation OR Item.CurrentItem = Items.ParametersParameter Then
 		
 		StandardProcessing = False;
 		
