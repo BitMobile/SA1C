@@ -29,6 +29,8 @@ Function GetRightsValueTree() Export
 	|	FALSE AS MarkForDeletion
 	|FROM
 	|	Catalog.SystemObjects AS SystemObjects
+	|WHERE
+	|	SystemObjects.DeletionMark = FALSE
 	|
 	|ORDER BY
 	|	SystemObject HIERARCHY

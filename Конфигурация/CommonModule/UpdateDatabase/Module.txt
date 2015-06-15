@@ -249,6 +249,9 @@ Procedure UpdateForAllReleases(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update mobile apps settings'; ru = 'Обновление настроек мобильных приложений'"));  
 	ProcessMobileAppSettings();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update system objects'; ru = 'Обновление объектов системы'"));  
+	ProcessSystemObjects();
+	
 EndProcedure
 
 Procedure ProcessPredefinedRoles()
@@ -423,6 +426,68 @@ Procedure FillInProcessing()
 		
 	EndDo;
 		
+EndProcedure
+
+Procedure ProcessSystemObjects()
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	RolesOfUsers.Ref AS Role
+		|FROM
+		|	Catalog.RolesOfUsers AS RolesOfUsers";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		RoleOfUserObject = Selection.Role.GetObject();
+		
+		DeletedRows = New Array;
+		
+		For Each SORow In RoleOfUserObject.AccessRightsToSystemObjects Do 
+			
+			If SORow.SystemObject.DeletionMark Then 
+				
+				DeletedRows.Add(SORow);
+				
+			EndIf;
+			
+		EndDo;
+		
+		For Each DRow In DeletedRows Do 
+			
+			RoleOfUserObject.AccessRightsToSystemObjects.Delete(DRow);
+			
+		EndDo;
+		
+		RoleOfUserObject.Write();
+		
+	EndDo;
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	SystemObjects.Ref AS SObject
+		|FROM
+		|	Catalog.SystemObjects AS SystemObjects
+		|WHERE
+		|	SystemObjects.DeletionMark = TRUE";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		DeleteObject = Selection.SObject.GetObject();
+		
+		DeleteObject.Delete();
+		
+	EndDo;
+	
 EndProcedure
 
 Procedure ProcessUsers()
