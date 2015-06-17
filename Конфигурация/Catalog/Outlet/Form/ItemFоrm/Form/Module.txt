@@ -419,7 +419,7 @@ EndFunction
 &AtServer 
 Function NotFilledCorrectly()
 	
-	Return NOT HasTerritories() OR NOT ClosingCauseFilledWhenOutletClosed();
+	Return NOT HasTerritories() OR ClosingCauseFilledWhenOutletClosed();
 	
 EndFunction
 
