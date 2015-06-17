@@ -686,6 +686,32 @@ WHERE
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>AvgStock</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>TrueCurrBrandStock</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>CurrentBrandStock</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>SKUGroupStock</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>Stock</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>MinimumWidth</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">20</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
