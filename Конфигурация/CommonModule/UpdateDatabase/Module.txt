@@ -474,7 +474,10 @@ Procedure ProcessSystemObjects()
 		|FROM
 		|	Catalog.SystemObjects AS SystemObjects
 		|WHERE
-		|	SystemObjects.DeletionMark = TRUE";
+		|	SystemObjects.DeletionMark = TRUE
+		|
+		|ORDER BY
+		|	SystemObjects.IsFolder";
 	
 	QueryResult = Query.Execute();
 	
