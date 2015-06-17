@@ -400,7 +400,7 @@ Function IsClosed(Status)
 EndFunction
 
 &AtServer
-Function CheckStatus()
+Function ClosingCauseFilledWhenOutletClosed()
 	
 	If Object.OutletStatus=Enums.OutletStatus.Closed And Object.ClosingCause=Enums.ClosingCause.EmptyRef() Then
 		
@@ -413,6 +413,13 @@ Function CheckStatus()
 		Return False;
 		
 	EndIf;
+	
+EndFunction
+
+&AtServer 
+Function NotFilledCorrectly()
+	
+	Return NOT HasTerritories() OR NOT ClosingCauseFilledWhenOutletClosed();
 	
 EndFunction
 
@@ -701,6 +708,30 @@ Procedure DeleteTerritories(CurrObject)
 	
 EndProcedure
 
+&AtServer
+Function HasTerritories() 
+	
+	If Not IsInRole("Admin") Then
+	
+		If ThisForm.TerritoriesList.Count() > 0 Then
+			
+			Return True;
+			
+		Else
+			
+			Message(Nstr("en = 'You cannot write outlet without territories'; ru = 'Нельзя записывать торговую точку без территорий'"));
+			Return False;
+			
+		EndIf;
+		
+	Else
+		
+		Return True;
+		
+	EndIf;
+	
+EndFunction
+
 #EndRegion
 
 #Region Contractors
@@ -963,63 +994,23 @@ EndProcedure
 &AtClient
 Procedure BeforeWrite(Cancel, WriteParameters)
 	
-	Cancel = CheckStatus();
+	Cancel = NotFilledCorrectly();
 	
-	// Выполнить валидацию телефонного номера
-	If ValueIsFilled(Object.PhoneNumber) Then 
+	If Not Cancel Then
 		
-		ParamArray = New Array;
-		ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
-		ParamArray.Add(Object.PhoneNumber);
-		
-		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+		// Выполнить валидацию телефонного номера
+		If ValueIsFilled(Object.PhoneNumber) Then 
 			
-			Cancel = True;
+			ParamArray = New Array;
+			ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+			ParamArray.Add(Object.PhoneNumber);
 			
-			UserMessage			= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number""'; ru = 'Неверное значение в поле ""Телефонный номер""'");
-			
-			UserMessage.Message();
-			
-		EndIf;
-		
-	EndIf;
-	
-	// Выполнить валидацию почты
-	If ValueIsFilled(Object.Email) Then
-		
-		ParamArray = New Array;
-		ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
-		ParamArray.Add(Object.Email);
-		
-		If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
-			
-			Cancel = True;
-			
-			UserMessage			= New UserMessage;
-			UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
-			
-			UserMessage.Message();
-			
-		EndIf;
-		
-	EndIf;
-	
-	// Выполнить валидацию контактов
-	For Each ContactItem In Object.Contacts Do 
-		
-		If ValueIsFilled(ContactItem.PhoneNumber) Then
-		
-			ParamArrayPhone = New Array;
-			ParamArrayPhone.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
-			ParamArrayPhone.Add(ContactItem.PhoneNumber);
-			
-			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayPhone) Then 
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
 				
 				Cancel = True;
 				
 				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Телефон"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number""'; ru = 'Неверное значение в поле ""Телефонный номер""'");
 				
 				UserMessage.Message();
 				
@@ -1027,18 +1018,19 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 			
 		EndIf;
 		
-		If ValueIsFilled(ContactItem.Email) Then
-		
-			ParamArrayEmail = New Array;
-			ParamArrayEmail.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
-			ParamArrayEmail.Add(ContactItem.Email);
+		// Выполнить валидацию почты
+		If ValueIsFilled(Object.Email) Then
 			
-			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayEmail) Then 
+			ParamArray = New Array;
+			ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
+			ParamArray.Add(Object.Email);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
 				
 				Cancel = True;
 				
 				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'Incorrect value in the ""E-mail"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Электронная почта"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+				UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
 				
 				UserMessage.Message();
 				
@@ -1046,7 +1038,50 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 			
 		EndIf;
 		
-	EndDo;
+		// Выполнить валидацию контактов
+		For Each ContactItem In Object.Contacts Do 
+			
+			If ValueIsFilled(ContactItem.PhoneNumber) Then
+			
+				ParamArrayPhone = New Array;
+				ParamArrayPhone.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+				ParamArrayPhone.Add(ContactItem.PhoneNumber);
+				
+				If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayPhone) Then 
+					
+					Cancel = True;
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Телефон"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+					
+					UserMessage.Message();
+					
+				EndIf;
+				
+			EndIf;
+			
+			If ValueIsFilled(ContactItem.Email) Then
+			
+				ParamArrayEmail = New Array;
+				ParamArrayEmail.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
+				ParamArrayEmail.Add(ContactItem.Email);
+				
+				If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArrayEmail) Then 
+					
+					Cancel = True;
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Incorrect value in the ""E-mail"". Line number " + ContactItem.LineNumber + " in the table ""Contacts"".'; ru = 'Неверное значение в поле ""Электронная почта"". Строка №" + ContactItem.LineNumber + " табличной части ""Контакты"".'");
+					
+					UserMessage.Message();
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndDo;
+	
+	EndIf;
 	
 EndProcedure
 
