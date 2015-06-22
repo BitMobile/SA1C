@@ -1,0 +1,228 @@
+﻿
+#Region UserInterface
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+	
+	If Not Cancel Then
+		
+		// Выполнить валидацию телефонного номера
+		If ValueIsFilled(Object.PhoneNumber) Then 
+			
+			ParamArray = New Array;
+			ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+			ParamArray.Add(Object.PhoneNumber);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number""'; ru = 'Неверное значение в поле ""Телефонный номер""'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+		// Выполнить валидацию почты
+		If ValueIsFilled(Object.Email) Then
+			
+			ParamArray = New Array;
+			ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
+			ParamArray.Add(Object.Email);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+		// Выполнить валидацию ИНН
+		If ValueIsFilled(Object.INN) Then 
+			
+			INN			= TrimAll(Object.INN);
+			INN_Lenght	= StrLen(INN);
+			
+			If Not INN_Lenght = 10 And Not INN_Lenght = 12 Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'INN  shall consist of 10 or 12 digits'; ru = 'ИНН должен состоять из 10 или 12 цифр'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+			If Not СтроковыеФункцииКлиентСервер.ТолькоЦифрыВСтроке(INN) And Not Cancel Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'INN shall consist only of digits'; ru = 'ИНН должен состоять только из цифр'");
+				
+				UserMessage.Message();
+				
+			КонецЕсли;
+			
+			If Not Cancel Then
+				
+				If INN_Lenght = 10 Then
+					
+					ControlSum = 0;
+					
+					For N = 1 To 9 Do 
+						
+						If N = 1 Then
+							Multiplier = 2;
+						ElsIf N = 2 Then
+							Multiplier = 4;
+						ElsIf N = 3 Then
+							Multiplier = 10;
+						ElsIf N = 4 Then
+							Multiplier = 3;
+						ElsIf N = 5 Then
+							Multiplier = 5;
+						ElsIf N = 6 Then
+							Multiplier = 9;
+						ElsIf N = 7 Then
+							Multiplier = 4;
+						ElsIf N = 8 Then
+							Multiplier = 6;
+						ElsIf N = 9 Then
+							Multiplier = 8;
+						EndIf;
+						
+						Digit = Number(Mid(INN, N, 1));
+						
+						ControlSum = ControlSum + Digit * Multiplier;
+						
+					EndDo;
+					
+					CheckDigit = (ControlSum %11) %10;
+					
+					If Not CheckDigit = Number(Mid(INN, 10, 1)) Тогда
+						
+						Cancel = True;
+						
+						UserMessage			= New UserMessage;
+						UserMessage.Text	= NStr("en = 'The control number for the INN does not coincide with the calculated'; ru = 'Контрольное число для ИНН не совпадает с рассчитанным'");
+						
+						UserMessage.Message();
+						
+					EndIf;
+					
+				Else 
+					
+					ControlSum11 = 0;
+					ControlSum12 = 0;
+					
+					For N = 1 To 11 Do 
+					
+						// Расчет множителя для 11-го и 12-го разрядов
+						If N = 1 Then
+							Multiplier11 = 7;
+							Multiplier12 = 3;
+						ElsIf N = 2 Then
+							Multiplier11 = 2;
+							Multiplier12 = 7;
+						ElsIf N = 3 Then
+							Multiplier11 = 4;
+							Multiplier12 = 2;
+						ElsIf N = 4 Then
+							Multiplier11 = 10;
+							Multiplier12 = 4;
+						ElsIf N = 5 Then
+							Multiplier11 = 3;
+							Multiplier12 = 10;
+						ElsIf N = 6 Then
+							Multiplier11 = 5;
+							Multiplier12 = 3;
+						ElsIf N = 7 Then
+							Multiplier11 = 9;
+							Multiplier12 = 5;
+						ElsIf N = 8 Then
+							Multiplier11 = 4;
+							Multiplier12 = 9;
+						ElsIf N = 9 Then
+							Multiplier11 = 6;
+							Multiplier12 = 4;
+						ElsIf N = 10 Then
+							Multiplier11 = 8;
+							Multiplier12 = 6;
+						ElsIf N = 11 Then
+							Multiplier11 = 0;
+							Multiplier12 = 8;
+						EndIf;
+						
+						Digit = Number(Mid(INN, N, 1));
+						
+						ControlSum11 = ControlSum11 + Digit * Multiplier11;
+						ControlSum12 = ControlSum12 + Digit * Multiplier12;
+						
+					EndDo;
+					
+					CheckDigit11 = (ControlSum11 %11) %10;
+					CheckDigit12 = (ControlSum12 %11) %10;
+					
+					If Not CheckDigit11 = Number(Mid(INN,11,1)) Or Not CheckDigit12 = Number(Mid(INN,12,1)) Then 
+						
+						Cancel = True;
+						
+						UserMessage			= New UserMessage;
+						UserMessage.Text	= NStr("en = 'The control number for the INN does not coincide with the calculated'; ru = 'Контрольное число для ИНН не совпадает с рассчитанным'");
+						
+						UserMessage.Message();
+						
+					EndIf;
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndIf;
+		
+		// Выполнить валидацию КПП
+		If ValueIsFilled(Object.KPP) Then 
+			
+			KPP			= TrimAll(Object.KPP);
+			KPP_Lenght	= StrLen(KPP);
+			
+			If Not KPP_Lenght = 9 Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'KPP shall consist of 9 digits'; ru = 'КПП должен состоять из 9 цифр'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+			If Not СтроковыеФункцииКлиентСервер.ТолькоЦифрыВСтроке(KPP) And Not Cancel Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'KPP shall consist only of digits'; ru = 'КПП должен состоять только из цифр'");
+				
+				UserMessage.Message();
+				
+			КонецЕсли;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion

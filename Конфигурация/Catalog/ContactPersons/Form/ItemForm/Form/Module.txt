@@ -1,7 +1,60 @@
 ﻿
+#Region UserInterface
+
+&AtClient
+Procedure BeforeWrite(Cancel, WriteParameters)
+	
+	If Not Cancel Then
+		
+		// Выполнить валидацию телефонного номера
+		If ValueIsFilled(Object.PhoneNumber) Then 
+			
+			ParamArray = New Array;
+			ParamArray.Add("/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/");
+			ParamArray.Add(Object.PhoneNumber);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the ""Phone number""'; ru = 'Неверное значение в поле ""Телефонный номер""'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+		// Выполнить валидацию почты
+		If ValueIsFilled(Object.Email) Then
+			
+			ParamArray = New Array;
+			ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
+			ParamArray.Add(Object.Email);
+			
+			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
+				
+				Cancel = True;
+				
+				UserMessage			= New UserMessage;
+				UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
+				
+				UserMessage.Message();
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
 &AtClient
 Procedure AfterWrite(WriteParameters)
 	
 	Notify("Update");
 	
 EndProcedure
+
+#EndRegion

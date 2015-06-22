@@ -3,37 +3,22 @@
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="BeforeWrite">BeforeWrite</Event>
+	</Events>
 	<ChildItems>
-		<UsualGroup name="DescriptionCodeGroup" id="34">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Description code group</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Description code group</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Group>Horizontal</Group>
-			<ExtendedTooltip name="DescriptionCodeGroupExtendedTooltip" id="35"/>
-			<ChildItems>
-				<InputField name="Description" id="4">
-					<DataPath>Object.Description</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="DescriptionContextMenu" id="5"/>
-					<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
-				</InputField>
-				<InputField name="Code" id="1">
-					<DataPath>Object.Code</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="CodeContextMenu" id="2"/>
-					<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
-				</InputField>
-			</ChildItems>
-		</UsualGroup>
+		<InputField name="Code" id="1">
+			<DataPath>Object.Code</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="CodeContextMenu" id="2"/>
+			<ExtendedTooltip name="CodeExtendedTooltip" id="3"/>
+		</InputField>
+		<InputField name="Description" id="4">
+			<DataPath>Object.Description</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<ContextMenu name="DescriptionContextMenu" id="5"/>
+			<ExtendedTooltip name="DescriptionExtendedTooltip" id="6"/>
+		</InputField>
 		<InputField name="LegalName" id="22">
 			<DataPath>Object.LegalName</DataPath>
 			<EditMode>EnterOnInput</EditMode>
@@ -55,12 +40,14 @@
 		<InputField name="INN" id="13">
 			<DataPath>Object.INN</DataPath>
 			<EditMode>EnterOnInput</EditMode>
+			<HorizontalStretch>false</HorizontalStretch>
 			<ContextMenu name="INNContextMenu" id="14"/>
 			<ExtendedTooltip name="INNExtendedTooltip" id="15"/>
 		</InputField>
 		<InputField name="KPP" id="16">
 			<DataPath>Object.KPP</DataPath>
 			<EditMode>EnterOnInput</EditMode>
+			<HorizontalStretch>false</HorizontalStretch>
 			<ContextMenu name="KPPContextMenu" id="17"/>
 			<ExtendedTooltip name="KPPExtendedTooltip" id="18"/>
 		</InputField>
@@ -84,7 +71,10 @@
 		</InputField>
 		<InputField name="Commentary" id="7">
 			<DataPath>Object.Commentary</DataPath>
+			<TitleLocation>Left</TitleLocation>
 			<EditMode>EnterOnInput</EditMode>
+			<Height>2</Height>
+			<MultiLine>true</MultiLine>
 			<ContextMenu name="CommentaryContextMenu" id="8"/>
 			<ExtendedTooltip name="CommentaryExtendedTooltip" id="9"/>
 		</InputField>
