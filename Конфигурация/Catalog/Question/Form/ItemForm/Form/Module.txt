@@ -8,6 +8,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 		ThisForm.ReadOnly = True;
 		
+		Items.Owner.Enabled = False;
+		
 	Else 
 		
 		Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
