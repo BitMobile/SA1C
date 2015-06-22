@@ -1390,6 +1390,18 @@ Procedure SelectPictureProcessing(Result, AdditionalParameter) Export
 		
 		Items[AdditionalParameter.FormTableName].EndEditRow(True);
 		
+		If AdditionalParameter.FormTableName = "Snapshots" Then 
+		
+			ObjectRow = Object[AdditionalParameter.FormTableName].FindByID(AdditionalParameter.RowId);
+			
+			If Not ObjectRow = Undefined Then 
+				
+				Object.Snapshots.Delete(ObjectRow);
+				
+			EndIf;
+			
+		EndIf;
+		
 	EndIf;
 	
 EndProcedure
