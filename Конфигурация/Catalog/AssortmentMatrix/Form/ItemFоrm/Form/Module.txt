@@ -716,6 +716,15 @@ Procedure PeriodsBeginDateOnChange(Item)
 			QueryText = NStr("en = 'Current period begin date cannot be earlier or equal to previous row begin period.'; 
 				|ru = 'Начало периода текущей строки не может быть раньше или таким же как начало периода предыдущей строки.'");
 			
+		ElsIf CurrentData.EndDate < CurrentData.BeginDate Then
+			
+			//Buttons.Add("Latest", NStr("en = 'Latest'; ru = 'Самую позднюю возможную'"));
+			//Buttons.Add("Earliest", NStr("en = 'Earliest'; ru = 'Самую раннюю возможную'"));
+			//
+			//Params.Insert("Latest", CurrentData.EndDate);
+			//Params.Insert("Earliest", NextDay(PreviousData.EndDate));
+			
+			QueryText = "ReturnPrevDate";
 			
 		//ElsIf PreviousData.EndDate >= CurrentData.BeginDate Then
 		//	
@@ -756,7 +765,12 @@ Procedure PeriodsBeginDateOnChange(Item)
 		
 	EndIf;
 	
-	If Not QueryText = "" Then
+	If QueryText = "ReturnPrevDate" Then
+		
+		CurrentData.BeginDate = OldBeginDate;
+		Message(NStr("en = 'Current period begin date can''t be later than current period end date.'; ru = 'Дата начала текущего периода не может быть позже чем дата конца текущего периода.'"));
+		
+	ElsIf Not QueryText = "" Then
 		
 		Question = NStr("en = ' What date set as current row begin period?'; ru = ' Какую дату установить началом периода?'");
 		
