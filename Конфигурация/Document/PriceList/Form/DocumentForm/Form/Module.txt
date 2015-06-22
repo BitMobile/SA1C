@@ -1,24 +1,36 @@
 ﻿
+#Region CommonProcedureAndFunctions
+
 &AtServer
 Procedure FillSKUServer()
-
+	
+	FormObject = FormDataToValue(Object, Type("DocumentObject.PriceList"));
+	
 	Query = New Query;
-    Query.Text = 
-    "SELECT ALLOWED
-    |   SKU.Ref
-    |FROM
-    |   Catalog.SKU AS SKU";
-    Result = Query.Execute().Unload();
-    
-    For Each Value In Result Do
-    
-    	NewRow = Object.Prices.Add();
-        NewRow.SKU = Value.Ref;
-    
-    EndDo;
-    
-
+	Query.Text = 
+		"SELECT ALLOWED
+		|	SKU.Ref
+		|FROM
+		|	Catalog.SKU AS SKU
+		|WHERE
+		|	NOT SKU.Ref IN (&SKUArray)";
+		
+	Query.SetParameter("SKUArray", FormObject.Prices.UnloadColumn("SKU"));
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Value In Result Do
+		
+		NewRow = Object.Prices.Add();
+		NewRow.SKU = Value.Ref;
+		
+	EndDo;
+	
 EndProcedure
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure FillSKU(Command)
@@ -39,7 +51,7 @@ Procedure SKUSKUOnChange(Item)
     
 EndProcedure
 
-
+#EndRegion
 
 
 
