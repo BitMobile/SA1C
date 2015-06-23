@@ -1309,7 +1309,11 @@ Procedure SelectPictureProcessing(Result, AdditionalParameter) Export
 			
 			If Not ObjectRow = Undefined Then 
 				
-				Object.Snapshots.Delete(ObjectRow);
+				If Not ValueIsFilled(ObjectRow.FileName) Then 
+					
+					Object.Snapshots.Delete(ObjectRow);
+					
+				EndIf;
 				
 			EndIf;
 			
