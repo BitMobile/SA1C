@@ -8,6 +8,36 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillContactList();
 	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	ObjectsRegionsSliceLast.Region AS Region
+	|INTO AddedRegions
+	|FROM
+	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Partner) AS ObjectsRegionsSliceLast
+	|WHERE
+	|	ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	CatalogRegion.Ref AS Region,
+	|	CASE
+	|		WHEN AddedRegions.Region IS NULL 
+	|			THEN FALSE
+	|		ELSE TRUE
+	|	END AS Use
+	|FROM
+	|	Catalog.Region AS CatalogRegion
+	|		LEFT JOIN AddedRegions AS AddedRegions
+	|		ON CatalogRegion.Ref = AddedRegions.Region
+	|
+	|ORDER BY
+	|	Region HIERARCHY");
+	Query.SetParameter("Partner", ThisForm.Object.Ref);
+	Result = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
+	
+	ValueToFormAttribute(Result, "Regions");
+	
 	HandleContactsAdditionalAccessRights();
 	
 EndProcedure
@@ -21,7 +51,39 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		WriteContactList();
 		
+		AddedRegions = New Array;
+		
+		For Each Child In ThisForm.Regions.GetItems() Do
+			
+			ProcessRegions(Child, AddedRegions);
+			
+		EndDo;
+		
+		For Each Region In AddedRegions Do
+			Message(Region);
+		EndDo;
+		
+		
 	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure ProcessRegions(Parent, AddedRegions)
+	
+	If Parent.Use = 1 Then
+		
+		AddedRegions.Add(Parent.Region);
+		
+	EndIf;
+	
+	Children = Parent.GetItems();
+	
+	For Each Child In Children Do
+		
+		ProcessRegions(Child, AddedRegions);
+		
+	EndDo;
 	
 EndProcedure
 
@@ -231,6 +293,19 @@ EndProcedure
 #Region UserInterface
 
 &AtClient
+Procedure OnOpen(Cancel)
+	
+	Children = ThisForm.Regions.GetItems();
+	
+	For Each Child In Children Do
+		
+		FillTree(Child);
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
 Procedure NotificationProcessing(EventName, Parameter, Source)
 	
 	If EventName = "Update" Then
@@ -315,6 +390,103 @@ Procedure ContactListChoiceProcessing(Item, SelectedValue, StandardProcessing)
 		Modified = True;
 		
 	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Regions
+
+&AtClient
+Procedure FillTree(Row)
+	
+	Children = Row.GetItems();
+	
+	If Children.Count() = 0 Then
+		
+		SetStates(Row, Row.Use);
+		SetParents(Row);
+		
+	Else
+		
+		For Each Child In Children Do
+			
+			FillTree(Child);
+			
+		EndDo;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure RegionsUseOnChange(Item)
+	
+	CurrentRowId = Items.Regions.CurrentRow;
+	
+	If NOT CurrentRowId = Undefined Then
+		
+		Row = ThisForm.Regions.FindByID(CurrentRowId);
+		
+		If Row.Use = 2 Then
+			
+			Row.Use = 0;
+			
+		EndIf;
+		
+		SetStates(Row, Row.Use);
+		
+		SetParents(Row);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SetStates(Row, FlagValue)
+	
+	Children= Row.GetItems();
+	
+	For Each Child In Children Do
+		
+		Child.Use = FlagValue;
+		SetStates(Child, Child.Use);
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
+Function IsSetForAll(Row)
+	
+	Neighbours = Row.GetParent().GetItems();
+	
+	For Each Neighbour In Neighbours Do
+		
+		If Neighbour.Use <> Row.Use Then
+			
+			Return False;
+			
+		EndIf;
+			
+	EndDo;
+	
+	Return True;
+	
+EndFunction
+
+&AtClient
+Procedure SetParents(Row)
+	
+	Parent = Row.GetParent();
+	
+	While Parent <> Undefined Do
+		
+		Parent.Use = ?(IsSetForAll(Row), Row.Use, 2);
+		Row = Parent;
+		Parent = Row.GetParent();
+		
+	EndDo;
 	
 EndProcedure
 

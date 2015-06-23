@@ -5,6 +5,7 @@
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
 	<Events>
 		<Event name="NotificationProcessing">NotificationProcessing</Event>
+		<Event name="OnOpen">OnOpen</Event>
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 		<Event name="OnWriteAtServer">OnWriteAtServer</Event>
 	</Events>
@@ -259,6 +260,85 @@
 						</Table>
 					</ChildItems>
 				</Page>
+				<Page name="GroupRegionsTerritories" id="115">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Regions and Territories</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Регионы и территории</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group regions territories</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="GroupRegionsTerritoriesExtendedTooltip" id="116"/>
+					<ChildItems>
+						<Table name="Regions" id="117">
+							<Representation>Tree</Representation>
+							<CommandBarLocation>None</CommandBarLocation>
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
+							<RowSelectionMode>Row</RowSelectionMode>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Regions</DataPath>
+							<ContextMenu name="RegionsContextMenu" id="118"/>
+							<AutoCommandBar name="RegionsCommandBar" id="119"/>
+							<ExtendedTooltip name="RegionsExtendedTooltip" id="120"/>
+							<SearchStringAddition name="RegionsSearchString" id="121">
+								<Source>
+									<lf:elementId>117</lf:elementId>
+									<lf:additionId>0</lf:additionId>
+								</Source>
+								<ContextMenu name="RegionsSearchStringContextMenu" id="124"/>
+								<ExtendedTooltip name="RegionsSearchStringExtendedTooltip" id="125"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="RegionsViewStatus" id="126">
+								<Source>
+									<lf:elementId>117</lf:elementId>
+									<lf:additionId>1</lf:additionId>
+								</Source>
+								<ContextMenu name="RegionsViewStatusContextMenu" id="129"/>
+								<ExtendedTooltip name="RegionsViewStatusExtendedTooltip" id="130"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="RegionsSearchControl" id="131">
+								<Source>
+									<lf:elementId>117</lf:elementId>
+									<lf:additionId>2</lf:additionId>
+								</Source>
+								<ContextMenu name="RegionsSearchControlContextMenu" id="134"/>
+								<ExtendedTooltip name="RegionsSearchControlExtendedTooltip" id="135"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<InputField name="RegionsRegion" id="136">
+									<DataPath>Regions.Region</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="RegionsRegionContextMenu" id="137"/>
+									<ExtendedTooltip name="RegionsRegionExtendedTooltip" id="138"/>
+								</InputField>
+								<CheckBoxField name="RegionsUse" id="139">
+									<DataPath>Regions.Use</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<EditMode>EnterOnInput</EditMode>
+									<ThreeState>true</ThreeState>
+									<ContextMenu name="RegionsUseContextMenu" id="140"/>
+									<ExtendedTooltip name="RegionsUseExtendedTooltip" id="141"/>
+									<Events>
+										<Event name="OnChange">RegionsUseOnChange</Event>
+									</Events>
+								</CheckBoxField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
 			</ChildItems>
 		</Pages>
 	</ChildItems>
@@ -343,6 +423,50 @@
 					</Title>
 					<Type>
 						<v8:Type>cfg:CatalogRef.ContactPersons</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="Regions" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Regions</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTree</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Region" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Region</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Регион</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Region</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Use" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Use</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
 					</Type>
 				</Column>
 			</Columns>
