@@ -277,121 +277,197 @@
 							<v8:content>Group regions territories</v8:content>
 						</v8:item>
 					</ToolTip>
-					<Group>Horizontal</Group>
 					<ExtendedTooltip name="GroupRegionsTerritoriesExtendedTooltip" id="116"/>
 					<ChildItems>
-						<Table name="Regions" id="117">
-							<Representation>Tree</Representation>
-							<CommandBarLocation>None</CommandBarLocation>
-							<ChangeRowSet>false</ChangeRowSet>
-							<ChangeRowOrder>false</ChangeRowOrder>
-							<RowSelectionMode>Row</RowSelectionMode>
-							<AutoInsertNewRow>true</AutoInsertNewRow>
-							<InitialTreeView>ExpandAllLevels</InitialTreeView>
-							<EnableStartDrag>true</EnableStartDrag>
-							<EnableDrag>true</EnableDrag>
-							<DataPath>Regions</DataPath>
-							<ContextMenu name="RegionsContextMenu" id="118"/>
-							<AutoCommandBar name="RegionsCommandBar" id="119"/>
-							<ExtendedTooltip name="RegionsExtendedTooltip" id="120"/>
-							<SearchStringAddition name="RegionsSearchString" id="121">
-								<Source>
-									<lf:elementId>117</lf:elementId>
-									<lf:additionId>0</lf:additionId>
-								</Source>
-								<ContextMenu name="RegionsSearchStringContextMenu" id="124"/>
-								<ExtendedTooltip name="RegionsSearchStringExtendedTooltip" id="125"/>
-							</SearchStringAddition>
-							<ViewStatusAddition name="RegionsViewStatus" id="126">
-								<Source>
-									<lf:elementId>117</lf:elementId>
-									<lf:additionId>1</lf:additionId>
-								</Source>
-								<ContextMenu name="RegionsViewStatusContextMenu" id="129"/>
-								<ExtendedTooltip name="RegionsViewStatusExtendedTooltip" id="130"/>
-							</ViewStatusAddition>
-							<SearchControlAddition name="RegionsSearchControl" id="131">
-								<Source>
-									<lf:elementId>117</lf:elementId>
-									<lf:additionId>2</lf:additionId>
-								</Source>
-								<ContextMenu name="RegionsSearchControlContextMenu" id="134"/>
-								<ExtendedTooltip name="RegionsSearchControlExtendedTooltip" id="135"/>
-							</SearchControlAddition>
-							<Events>
-								<Event name="BeforeCollapse">RegionsBeforeCollapse</Event>
-							</Events>
+						<CommandBar name="GroupTerritoriesCommandPanel" id="167">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group territories command panel</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group territories command panel</v8:content>
+								</v8:item>
+							</ToolTip>
+							<HorizontalLocation>Right</HorizontalLocation>
+							<ExtendedTooltip name="GroupTerritoriesCommandPanelExtendedTooltip" id="168"/>
 							<ChildItems>
-								<InputField name="RegionsRegion" id="136">
-									<DataPath>Regions.Region</DataPath>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="RegionsRegionContextMenu" id="137"/>
-									<ExtendedTooltip name="RegionsRegionExtendedTooltip" id="138"/>
-								</InputField>
-								<CheckBoxField name="RegionsUse" id="139">
-									<DataPath>Regions.Use</DataPath>
-									<TitleLocation>None</TitleLocation>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="RegionsUseContextMenu" id="140"/>
-									<ExtendedTooltip name="RegionsUseExtendedTooltip" id="141"/>
-								</CheckBoxField>
+								<Button name="ShowAllTerritories" id="177">
+									<Type>CommandBarButton</Type>
+									<CommandName>Form.Command.ShowAllTerritories</CommandName>
+									<Parameter xsi:nil="true"/>
+									<ExtendedTooltip name="ShowAllTerritoriesExtendedTooltip" id="178"/>
+								</Button>
+								<Button name="UncheckAllTerritories" id="175">
+									<Type>CommandBarButton</Type>
+									<Representation>Picture</Representation>
+									<CommandName>Form.Command.UncheckAllTerritories</CommandName>
+									<Parameter xsi:nil="true"/>
+									<Picture>
+										<xr:Ref>StdPicture.UncheckAll</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="UncheckAllTerritoriesExtendedTooltip" id="176"/>
+								</Button>
+								<Button name="CheckAllTerritories" id="173">
+									<Type>CommandBarButton</Type>
+									<Representation>Picture</Representation>
+									<CommandName>Form.Command.CheckAllTerritories</CommandName>
+									<Parameter xsi:nil="true"/>
+									<Picture>
+										<xr:Ref>StdPicture.CheckAll</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</Picture>
+									<ExtendedTooltip name="CheckAllTerritoriesExtendedTooltip" id="174"/>
+								</Button>
 							</ChildItems>
-						</Table>
-						<Table name="Territories" id="142">
-							<Representation>List</Representation>
-							<CommandBarLocation>None</CommandBarLocation>
-							<ChangeRowSet>false</ChangeRowSet>
-							<ChangeRowOrder>false</ChangeRowOrder>
-							<AutoInsertNewRow>true</AutoInsertNewRow>
-							<EnableStartDrag>true</EnableStartDrag>
-							<EnableDrag>true</EnableDrag>
-							<DataPath>Territories</DataPath>
-							<RowFilter xsi:nil="true"/>
-							<ContextMenu name="TerritoriesContextMenu" id="143"/>
-							<AutoCommandBar name="TerritoriesCommandBar" id="144"/>
-							<ExtendedTooltip name="TerritoriesExtendedTooltip" id="145"/>
-							<SearchStringAddition name="TerritoriesSearchString" id="146">
-								<Source>
-									<lf:elementId>142</lf:elementId>
-									<lf:additionId>0</lf:additionId>
-								</Source>
-								<ContextMenu name="TerritoriesSearchStringContextMenu" id="149"/>
-								<ExtendedTooltip name="TerritoriesSearchStringExtendedTooltip" id="150"/>
-							</SearchStringAddition>
-							<ViewStatusAddition name="TerritoriesViewStatus" id="151">
-								<Source>
-									<lf:elementId>142</lf:elementId>
-									<lf:additionId>1</lf:additionId>
-								</Source>
-								<ContextMenu name="TerritoriesViewStatusContextMenu" id="154"/>
-								<ExtendedTooltip name="TerritoriesViewStatusExtendedTooltip" id="155"/>
-							</ViewStatusAddition>
-							<SearchControlAddition name="TerritoriesSearchControl" id="156">
-								<Source>
-									<lf:elementId>142</lf:elementId>
-									<lf:additionId>2</lf:additionId>
-								</Source>
-								<ContextMenu name="TerritoriesSearchControlContextMenu" id="159"/>
-								<ExtendedTooltip name="TerritoriesSearchControlExtendedTooltip" id="160"/>
-							</SearchControlAddition>
+						</CommandBar>
+						<UsualGroup name="GroupRegionsTerritoriesTables" id="171">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group regions territories tables</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Group regions territories tables</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="GroupRegionsTerritoriesTablesExtendedTooltip" id="172"/>
 							<ChildItems>
-								<InputField name="TerritoriesTerritory" id="161">
-									<DataPath>Territories.Territory</DataPath>
-									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="TerritoriesTerritoryContextMenu" id="162"/>
-									<ExtendedTooltip name="TerritoriesTerritoryExtendedTooltip" id="163"/>
-								</InputField>
-								<CheckBoxField name="TerritoriesUse" id="164">
-									<DataPath>Territories.Use</DataPath>
-									<TitleLocation>None</TitleLocation>
-									<EditMode>EnterOnInput</EditMode>
-									<CheckBoxType>Auto</CheckBoxType>
-									<ContextMenu name="TerritoriesUseContextMenu" id="165"/>
-									<ExtendedTooltip name="TerritoriesUseExtendedTooltip" id="166"/>
-								</CheckBoxField>
+								<Table name="Regions" id="117">
+									<Representation>Tree</Representation>
+									<CommandBarLocation>None</CommandBarLocation>
+									<ChangeRowSet>false</ChangeRowSet>
+									<ChangeRowOrder>false</ChangeRowOrder>
+									<RowSelectionMode>Row</RowSelectionMode>
+									<AutoInsertNewRow>true</AutoInsertNewRow>
+									<InitialTreeView>ExpandAllLevels</InitialTreeView>
+									<EnableStartDrag>true</EnableStartDrag>
+									<EnableDrag>true</EnableDrag>
+									<DataPath>Regions</DataPath>
+									<ContextMenu name="RegionsContextMenu" id="118"/>
+									<AutoCommandBar name="RegionsCommandBar" id="119"/>
+									<ExtendedTooltip name="RegionsExtendedTooltip" id="120"/>
+									<SearchStringAddition name="RegionsSearchString" id="121">
+										<Source>
+											<lf:elementId>117</lf:elementId>
+											<lf:additionId>0</lf:additionId>
+										</Source>
+										<ContextMenu name="RegionsSearchStringContextMenu" id="124"/>
+										<ExtendedTooltip name="RegionsSearchStringExtendedTooltip" id="125"/>
+									</SearchStringAddition>
+									<ViewStatusAddition name="RegionsViewStatus" id="126">
+										<Source>
+											<lf:elementId>117</lf:elementId>
+											<lf:additionId>1</lf:additionId>
+										</Source>
+										<ContextMenu name="RegionsViewStatusContextMenu" id="129"/>
+										<ExtendedTooltip name="RegionsViewStatusExtendedTooltip" id="130"/>
+									</ViewStatusAddition>
+									<SearchControlAddition name="RegionsSearchControl" id="131">
+										<Source>
+											<lf:elementId>117</lf:elementId>
+											<lf:additionId>2</lf:additionId>
+										</Source>
+										<ContextMenu name="RegionsSearchControlContextMenu" id="134"/>
+										<ExtendedTooltip name="RegionsSearchControlExtendedTooltip" id="135"/>
+									</SearchControlAddition>
+									<Events>
+										<Event name="OnActivateRow">RegionsOnActivateRow</Event>
+										<Event name="BeforeCollapse">RegionsBeforeCollapse</Event>
+									</Events>
+									<ChildItems>
+										<InputField name="RegionsRegion" id="136">
+											<DataPath>Regions.Region</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="RegionsRegionContextMenu" id="137"/>
+											<ExtendedTooltip name="RegionsRegionExtendedTooltip" id="138"/>
+										</InputField>
+										<CheckBoxField name="RegionsUse" id="139">
+											<DataPath>Regions.Use</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="RegionsUseContextMenu" id="140"/>
+											<ExtendedTooltip name="RegionsUseExtendedTooltip" id="141"/>
+											<Events>
+												<Event name="OnChange">RegionsUseOnChange</Event>
+											</Events>
+										</CheckBoxField>
+									</ChildItems>
+								</Table>
+								<Table name="Territories" id="142">
+									<Representation>List</Representation>
+									<CommandBarLocation>None</CommandBarLocation>
+									<ChangeRowSet>false</ChangeRowSet>
+									<ChangeRowOrder>false</ChangeRowOrder>
+									<AutoInsertNewRow>true</AutoInsertNewRow>
+									<EnableStartDrag>true</EnableStartDrag>
+									<EnableDrag>true</EnableDrag>
+									<DataPath>Territories</DataPath>
+									<RowFilter xsi:nil="true"/>
+									<ContextMenu name="TerritoriesContextMenu" id="143"/>
+									<AutoCommandBar name="TerritoriesCommandBar" id="144"/>
+									<ExtendedTooltip name="TerritoriesExtendedTooltip" id="145"/>
+									<SearchStringAddition name="TerritoriesSearchString" id="146">
+										<Source>
+											<lf:elementId>142</lf:elementId>
+											<lf:additionId>0</lf:additionId>
+										</Source>
+										<ContextMenu name="TerritoriesSearchStringContextMenu" id="149"/>
+										<ExtendedTooltip name="TerritoriesSearchStringExtendedTooltip" id="150"/>
+									</SearchStringAddition>
+									<ViewStatusAddition name="TerritoriesViewStatus" id="151">
+										<Source>
+											<lf:elementId>142</lf:elementId>
+											<lf:additionId>1</lf:additionId>
+										</Source>
+										<ContextMenu name="TerritoriesViewStatusContextMenu" id="154"/>
+										<ExtendedTooltip name="TerritoriesViewStatusExtendedTooltip" id="155"/>
+									</ViewStatusAddition>
+									<SearchControlAddition name="TerritoriesSearchControl" id="156">
+										<Source>
+											<lf:elementId>142</lf:elementId>
+											<lf:additionId>2</lf:additionId>
+										</Source>
+										<ContextMenu name="TerritoriesSearchControlContextMenu" id="159"/>
+										<ExtendedTooltip name="TerritoriesSearchControlExtendedTooltip" id="160"/>
+									</SearchControlAddition>
+									<ChildItems>
+										<InputField name="TerritoriesRegion" id="179">
+											<DataPath>Territories.Region</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TerritoriesRegionContextMenu" id="180"/>
+											<ExtendedTooltip name="TerritoriesRegionExtendedTooltip" id="181"/>
+										</InputField>
+										<InputField name="TerritoriesTerritory" id="161">
+											<DataPath>Territories.Territory</DataPath>
+											<ReadOnly>true</ReadOnly>
+											<EditMode>EnterOnInput</EditMode>
+											<ContextMenu name="TerritoriesTerritoryContextMenu" id="162"/>
+											<ExtendedTooltip name="TerritoriesTerritoryExtendedTooltip" id="163"/>
+										</InputField>
+										<CheckBoxField name="TerritoriesUse" id="164">
+											<DataPath>Territories.Use</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<EditMode>EnterOnInput</EditMode>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="TerritoriesUseContextMenu" id="165"/>
+											<ExtendedTooltip name="TerritoriesUseExtendedTooltip" id="166"/>
+										</CheckBoxField>
+									</ChildItems>
+								</Table>
 							</ChildItems>
-						</Table>
+						</UsualGroup>
 					</ChildItems>
 				</Page>
 			</ChildItems>
@@ -492,6 +568,7 @@
 			<Type>
 				<v8:Type>v8:ValueTree</v8:Type>
 			</Type>
+			<SavedData>true</SavedData>
 			<Columns>
 				<Column name="Region" id="1">
 					<Title>
@@ -531,6 +608,7 @@
 			<Type>
 				<v8:Type>v8:ValueTable</v8:Type>
 			</Type>
+			<SavedData>true</SavedData>
 			<Columns>
 				<Column name="Territory" id="1">
 					<Title>
@@ -558,8 +636,52 @@
 						<v8:Type>xs:boolean</v8:Type>
 					</Type>
 				</Column>
+				<Column name="Region" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Region</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Region</v8:Type>
+					</Type>
+				</Column>
 			</Columns>
 		</Attribute>
+		<Attribute name="CurrentRegion" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Current region</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Region</v8:Type>
+			</Type>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>TerritoriesUse</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">Regions.Use</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">false</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ReadOnly</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
 	</Attributes>
 	<Commands>
 		<Command name="AddContractor" id="1">
@@ -633,6 +755,55 @@
 				</v8:item>
 			</ToolTip>
 			<Action>DeleteContact</Action>
+		</Command>
+		<Command name="CheckAllTerritories" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Check all territories</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Check all territories</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>CheckAllTerritories</Action>
+		</Command>
+		<Command name="UncheckAllTerritories" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Uncheck all territories</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Uncheck all territories</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>UncheckAllTerritories</Action>
+		</Command>
+		<Command name="ShowAllTerritories" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Show all territories</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать все</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Show all territories</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ShowAllTerritories</Action>
 		</Command>
 	</Commands>
 </Form>
