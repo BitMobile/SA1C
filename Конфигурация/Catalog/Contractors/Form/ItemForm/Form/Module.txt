@@ -1,4 +1,319 @@
 ﻿
+#Region CommonProceduresAndFunctions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	FillRegions();
+	
+	FillTerritories();
+	
+	SetConditionalAppearence();
+	
+EndProcedure
+
+&AtServer
+Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not Cancel Then
+		
+		WriteRegions();
+		
+		WriteTerritories();
+		
+	EndIf;
+	
+EndProcedure
+
+#Region Regions
+
+&AtServer
+Procedure FillRegions()
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	ObjectsRegionsSliceLast.Region AS Region
+	|INTO AddedRegions
+	|FROM
+	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Contractor) AS ObjectsRegionsSliceLast
+	|WHERE
+	|	ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	CatalogRegion.Ref AS Region,
+	|	CASE
+	|		WHEN AddedRegions.Region IS NULL 
+	|			THEN FALSE
+	|		ELSE TRUE
+	|	END AS Use
+	|FROM
+	|	Catalog.Region AS CatalogRegion
+	|		LEFT JOIN AddedRegions AS AddedRegions
+	|		ON CatalogRegion.Ref = AddedRegions.Region
+	|
+	|ORDER BY
+	|	Region HIERARCHY");
+	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	Result = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
+	
+	ValueToFormAttribute(Result, "Regions");
+	
+EndProcedure
+
+&AtServer
+Procedure WriteRegions()
+	
+	FormRegions = New ValueTable;
+	FormRegions.Columns.Add("Region", New TypeDescription("CatalogRef.Region"));
+	
+	For Each Child In ThisForm.Regions.GetItems() Do
+		
+		ProcessRegions(Child, FormRegions);
+		
+	EndDo;
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	FormRegions.Region AS FormRegion
+	|INTO FormRegions
+	|FROM
+	|	&FormRegions AS FormRegions
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	ObjectsRegionsSliceLast.Region AS RegisterRegion
+	|INTO RegisterRegions
+	|FROM
+	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Contractor) AS ObjectsRegionsSliceLast
+	|WHERE
+	|	NOT ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	FormRegions.FormRegion,
+	|	RegisterRegions.RegisterRegion
+	|INTO Difference
+	|FROM
+	|	FormRegions AS FormRegions
+	|		FULL JOIN RegisterRegions AS RegisterRegions
+	|		ON FormRegions.FormRegion = RegisterRegions.RegisterRegion
+	|WHERE
+	|	(FormRegions.FormRegion IS NULL 
+	|			OR RegisterRegions.RegisterRegion IS NULL )
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	&CurrentDate AS Period,
+	|	&Contractor AS Object,
+	|	ISNULL(Difference.FormRegion, Difference.RegisterRegion) AS Region,
+	|	CASE
+	|		WHEN Difference.FormRegion IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|		WHEN Difference.RegisterRegion IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
+	|	END AS Status
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("CurrentDate", CurrentDate());
+	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	Query.SetParameter("FormRegions", FormRegions);
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.ObjectsRegions.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure ProcessRegions(Parent, FormRegions)
+	
+	If Parent.Use = 1 Then
+		
+		Row = FormRegions.Add();
+		Row.Region = Parent.Region;
+		
+	EndIf;
+	
+	Children = Parent.GetItems();
+	
+	For Each Child In Children Do
+		
+		ProcessRegions(Child, FormRegions);
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Territories
+
+&AtServer
+Procedure FillTerritories()
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	ObjectsTerritoriesSliceLast.Territory
+	|INTO SavedTerritories
+	|FROM
+	|	InformationRegister.ObjectsTerritories.SliceLast(, Object = &Contractor) AS ObjectsTerritoriesSliceLast
+	|WHERE
+	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	CatalogTerritory.Owner AS Region,
+	|	CatalogTerritory.Ref AS Territory,
+	|	CASE
+	|		WHEN SavedTerritories.Territory IS NULL 
+	|			THEN FALSE
+	|		ELSE TRUE
+	|	END AS Use
+	|FROM
+	|	Catalog.Territory AS CatalogTerritory
+	|		LEFT JOIN SavedTerritories AS SavedTerritories
+	|		ON CatalogTerritory.Ref = SavedTerritories.Territory
+	|
+	|ORDER BY
+	|	Region
+	|AUTOORDER");
+	
+	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	
+	Result = Query.Execute().Unload();
+	
+	ThisForm.Territories.Load(Result);
+	
+EndProcedure
+
+&AtServer
+Procedure WriteTerritories()
+	
+	Filter = New Structure;
+	Filter.Insert("Use", True);
+	UsedTerritories = ThisForm.Territories.FindRows(Filter);
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	FormTerritories.Territory AS FormTerritory
+	|INTO FormTerritories
+	|FROM
+	|	&FormTerritories AS FormTerritories
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	ObjectsTerritoriesSliceLast.Territory AS RegisterTerritory
+	|INTO RegisterTerritories
+	|FROM
+	|	InformationRegister.ObjectsTerritories.SliceLast(, Object = &Contractor) AS ObjectsTerritoriesSliceLast
+	|WHERE
+	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	FormTerritories.FormTerritory,
+	|	RegisterTerritories.RegisterTerritory
+	|INTO Difference
+	|FROM
+	|	FormTerritories AS FormTerritories
+	|		FULL JOIN RegisterTerritories AS RegisterTerritories
+	|		ON FormTerritories.FormTerritory = RegisterTerritories.RegisterTerritory
+	|WHERE
+	|	(FormTerritories.FormTerritory IS NULL 
+	|			OR RegisterTerritories.RegisterTerritory IS NULL )
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	&CurrentDate AS Period,
+	|	&Contractor AS Object,
+	|	ISNULL(Difference.FormTerritory, Difference.RegisterTerritory) AS Territory,
+	|	CASE
+	|		WHEN Difference.FormTerritory IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|		WHEN Difference.RegisterTerritory IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
+	|	END AS Status
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("CurrentDate", CurrentDate());
+	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	Query.SetParameter("FormTerritories", ThisForm.Territories.Unload(UsedTerritories));
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.ObjectsTerritories.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+&AtServer
+Procedure SetConditionalAppearence()
+	
+	// Green color for territories with current selected region
+	CA = ThisForm.ConditionalAppearance;
+	CAItem = CA.Items.Add();
+	
+	Field = CAItem.Fields.Items.Add();
+	Field.Field = New DataCompositionField("TerritoriesRegion");
+	Field.Use = True;
+	
+	Field = CAItem.Fields.Items.Add();
+	Field.Field = New DataCompositionField("TerritoriesTerritory");
+	Field.Use = True;
+	
+	Field = CAItem.Fields.Items.Add();
+	Field.Field = New DataCompositionField("TerritoriesUse");
+	Field.Use = True;
+	
+	FilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	FilterItem.LeftValue = New DataCompositionField("Territories.Region");
+	FilterItem.ComparisonType = DataCompositionComparisonType.Equal;
+	FilterItem.RightValue = New DataCompositionField("CurrentRegion");
+	
+	CAItem.Appearance.SetParameterValue("BackColor", WebColors.PaleGreen);
+	
+	// Block use of territories that are not in current selected region
+	CAItem = CA.Items.Add();
+	
+	Field = CAItem.Fields.Items.Add();
+	Field.Field = New DataCompositionField("TerritoriesUse");
+	Field.Use = True;
+	
+	FilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	FilterItem.LeftValue = New DataCompositionField("Territories.Region");
+	FilterItem.ComparisonType = DataCompositionComparisonType.NotEqual;
+	FilterItem.RightValue = New DataCompositionField("CurrentRegion");
+	
+	CAItem.Appearance.SetParameterValue("ReadOnly", True);
+	
+EndProcedure
+
+#EndRegion
+
 #Region UserInterface
 
 &AtClient
@@ -224,5 +539,128 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 	EndIf;
 	
 EndProcedure
+
+#Region Regions
+
+&AtClient
+Procedure RegionsBeforeCollapse(Item, Row, Cancel)
+	
+	Cancel = True;
+	
+EndProcedure
+
+&AtClient
+Procedure RegionsOnActivateRow(Item)
+	
+	CurrentData = ThisForm.Items.Regions.CurrentData;
+	
+	CurrentRegion = ?(CurrentData = Undefined, Undefined, CurrentData.Region);
+	
+	Filter = New FixedStructure("Region", CurrentRegion);
+	ThisForm.Items.Territories.RowFilter = ?(ThisForm.Items.ShowAllTerritories.Check, Undefined, Filter);
+	
+	ThisForm.CurrentRegion = CurrentRegion;
+	
+	ThisForm.Items.Territories.Refresh();
+	
+EndProcedure
+
+&AtClient
+Procedure RegionsUseOnChange(Item)
+	
+	CurrentData = ThisForm.Items.Regions.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		If Not CurrentData.Use Then
+		
+			Filter = New Structure;
+			Filter.Insert("Region", CurrentData.Region);
+			
+			TerritoriesRows = ThisForm.Territories.FindRows(Filter);
+			
+			For Each Row In TerritoriesRows Do
+				
+				Row.Use = False;
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+	
+	ThisForm.Items.Territories.Refresh();
+	
+EndProcedure
+
+#EndRegion
+
+#Region Territories
+
+&AtClient
+Procedure CheckTerritories(Value)
+	
+	CurrentData = ThisForm.Items.Regions.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		If CurrentData.Use Then
+		
+			Filter = New Structure;
+			Filter.Insert("Region", CurrentData.Region);
+			
+			Rows = ThisForm.Territories.FindRows(Filter);
+			
+			For Each Row In Rows Do
+				
+				Row.Use = Value;
+				Modified = True;
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Commands
+
+&AtClient
+Procedure CheckAllTerritories(Command)
+	
+	CheckTerritories(True);
+	
+EndProcedure
+
+&AtClient
+Procedure UncheckAllTerritories(Command)
+	
+	CheckTerritories(False);
+	
+EndProcedure
+
+&AtClient
+Procedure ShowAllTerritories(Command)
+	
+	ThisForm.Items.ShowAllTerritories.Check = Not ThisForm.Items.ShowAllTerritories.Check;
+	ShowAll = ThisForm.Items.ShowAllTerritories.Check;
+	CurrentData = ThisForm.Items.Regions.CurrentData;
+	RegionSelected = Not CurrentData = Undefined;
+	ThisForm.Items.Territories.RowFilter = ?(ShowAll AND RegionSelected, Undefined, New FixedStructure("Region", ThisForm.Items.Regions.CurrentData.Region));
+	
+	CurrentData = ThisForm.Items.Regions.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		CurrentRegion = CurrentData.Region;
+		
+	EndIf;
+	
+EndProcedure
+
+#EndRegion
 
 #EndRegion
