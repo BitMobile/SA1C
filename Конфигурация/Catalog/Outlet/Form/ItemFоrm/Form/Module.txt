@@ -1662,6 +1662,47 @@ Procedure ContactListSelection(Item, SelectedRow, Field, StandardProcessing)
 	
 EndProcedure
 
+&AtClient
+Procedure DistributorStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	ChoiceData = GetPartners(ThisForm.Object.Ref);
+	
+EndProcedure
+
+&AtServerNoContext
+Function GetPartners(Outlet)
+	
+	Query = New Query(
+	"SELECT ALLOWED DISTINCT
+	|	ObjectsTerritoriesSliceLast.Object AS Partner
+	|FROM
+	|	Catalog.Territory.Outlets AS TerritoryOutlets
+	|		LEFT JOIN InformationRegister.ObjectsTerritories.SliceLast(, ) AS ObjectsTerritoriesSliceLast
+	|		ON TerritoryOutlets.Ref = ObjectsTerritoriesSliceLast.Territory
+	|WHERE
+	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	AND TerritoryOutlets.Outlet = &Outlet
+	|
+	|ORDER BY
+	|	Partner
+	|AUTOORDER");
+	Query.SetParameter("Outlet", Outlet);
+	Result = Query.Execute().Unload();
+	
+	ChoiceData = New ValueList;
+	
+	For Each Row In Result Do
+		
+		ChoiceData.Add(Row.Partner);
+		
+	EndDo;
+	
+	Return ChoiceData;
+	
+EndFunction
+
 #EndRegion
 
 #EndRegion

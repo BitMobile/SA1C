@@ -134,6 +134,7 @@
 							<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
 							<Events>
 								<Event name="OnChange">DistributorOnChange</Event>
+								<Event name="StartChoice">DistributorStartChoice</Event>
 							</Events>
 						</InputField>
 						<InputField name="Address" id="13">
