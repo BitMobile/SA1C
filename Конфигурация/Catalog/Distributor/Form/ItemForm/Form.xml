@@ -388,6 +388,7 @@
 									<ChildItems>
 										<InputField name="RegionsRegion" id="136">
 											<DataPath>Regions.Region</DataPath>
+											<ReadOnly>true</ReadOnly>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="RegionsRegionContextMenu" id="137"/>
 											<ExtendedTooltip name="RegionsRegionExtendedTooltip" id="138"/>
@@ -445,6 +446,7 @@
 									<ChildItems>
 										<InputField name="TerritoriesRegion" id="179">
 											<DataPath>Territories.Region</DataPath>
+											<ReadOnly>true</ReadOnly>
 											<EditMode>EnterOnInput</EditMode>
 											<ContextMenu name="TerritoriesRegionContextMenu" id="180"/>
 											<ExtendedTooltip name="TerritoriesRegionExtendedTooltip" id="181"/>
