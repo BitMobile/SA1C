@@ -8,36 +8,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillContactList();
 	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	ObjectsRegionsSliceLast.Region AS Region
-	|INTO AddedRegions
-	|FROM
-	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Partner) AS ObjectsRegionsSliceLast
-	|WHERE
-	|	ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	CatalogRegion.Ref AS Region,
-	|	CASE
-	|		WHEN AddedRegions.Region IS NULL 
-	|			THEN FALSE
-	|		ELSE TRUE
-	|	END AS Use
-	|FROM
-	|	Catalog.Region AS CatalogRegion
-	|		LEFT JOIN AddedRegions AS AddedRegions
-	|		ON CatalogRegion.Ref = AddedRegions.Region
-	|
-	|ORDER BY
-	|	Region HIERARCHY");
-	Query.SetParameter("Partner", ThisForm.Object.Ref);
-	Result = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
-	
-	ValueToFormAttribute(Result, "Regions");
-	
+	FillRegions();
+
 	HandleContactsAdditionalAccessRights();
 	
 EndProcedure
@@ -51,39 +23,9 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		WriteContactList();
 		
-		AddedRegions = New Array;
-		
-		For Each Child In ThisForm.Regions.GetItems() Do
-			
-			ProcessRegions(Child, AddedRegions);
-			
-		EndDo;
-		
-		For Each Region In AddedRegions Do
-			Message(Region);
-		EndDo;
-		
+		WriteRegions();
 		
 	EndIf;
-	
-EndProcedure
-
-&AtServer
-Procedure ProcessRegions(Parent, AddedRegions)
-	
-	If Parent.Use = 1 Then
-		
-		AddedRegions.Add(Parent.Region);
-		
-	EndIf;
-	
-	Children = Parent.GetItems();
-	
-	For Each Child In Children Do
-		
-		ProcessRegions(Child, AddedRegions);
-		
-	EndDo;
 	
 EndProcedure
 
@@ -288,22 +230,142 @@ EndProcedure
 
 #EndRegion
 
-#EndRegion
+#Region Regions
 
-#Region UserInterface
+&AtServer
+Procedure FillRegions()
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	ObjectsRegionsSliceLast.Region AS Region
+	|INTO AddedRegions
+	|FROM
+	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Partner) AS ObjectsRegionsSliceLast
+	|WHERE
+	|	ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	CatalogRegion.Ref AS Region,
+	|	CASE
+	|		WHEN AddedRegions.Region IS NULL 
+	|			THEN FALSE
+	|		ELSE TRUE
+	|	END AS Use
+	|FROM
+	|	Catalog.Region AS CatalogRegion
+	|		LEFT JOIN AddedRegions AS AddedRegions
+	|		ON CatalogRegion.Ref = AddedRegions.Region
+	|
+	|ORDER BY
+	|	Region HIERARCHY");
+	Query.SetParameter("Partner", ThisForm.Object.Ref);
+	Result = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
+	
+	ValueToFormAttribute(Result, "Regions");
+	
+EndProcedure
 
-&AtClient
-Procedure OnOpen(Cancel)
+&AtServer
+Procedure WriteRegions()
 	
-	Children = ThisForm.Regions.GetItems();
+	FormRegions = New ValueTable;
+	FormRegions.Columns.Add("Region", New TypeDescription("CatalogRef.Region"));
 	
-	For Each Child In Children Do
+	For Each Child In ThisForm.Regions.GetItems() Do
 		
-		FillTree(Child);
+		ProcessRegions(Child, FormRegions);
+		
+	EndDo;
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	FormRegions.Region AS FormRegion
+	|INTO FormRegions
+	|FROM
+	|	&FormRegions AS FormRegions
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	ObjectsRegionsSliceLast.Region AS RegisterRegion
+	|INTO RegisterRegions
+	|FROM
+	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Partner) AS ObjectsRegionsSliceLast
+	|WHERE
+	|	NOT ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	FormRegions.FormRegion,
+	|	RegisterRegions.RegisterRegion
+	|INTO Difference
+	|FROM
+	|	FormRegions AS FormRegions
+	|		FULL JOIN RegisterRegions AS RegisterRegions
+	|		ON FormRegions.FormRegion = RegisterRegions.RegisterRegion
+	|WHERE
+	|	(FormRegions.FormRegion IS NULL 
+	|			OR RegisterRegions.RegisterRegion IS NULL )
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	&CurrentDate AS Period,
+	|	&Partner AS Object,
+	|	ISNULL(Difference.FormRegion, Difference.RegisterRegion) AS Region,
+	|	CASE
+	|		WHEN Difference.FormRegion IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|		WHEN Difference.RegisterRegion IS NULL 
+	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
+	|	END AS Status
+	|FROM
+	|	Difference AS Difference");
+	
+	Query.SetParameter("CurrentDate", CurrentDate());
+	Query.SetParameter("Partner", ThisForm.Object.Ref);
+	Query.SetParameter("FormRegions", FormRegions);
+	
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.ObjectsRegions.CreateRecordManager();
+		FillPropertyValues(RecordManager, Row);
+		RecordManager.Write();
 		
 	EndDo;
 	
 EndProcedure
+
+&AtServer
+Procedure ProcessRegions(Parent, FormRegions)
+	
+	If Parent.Use = 1 Then
+		
+		Row = FormRegions.Add();
+		Row.Region = Parent.Region;
+		
+	EndIf;
+	
+	Children = Parent.GetItems();
+	
+	For Each Child In Children Do
+		
+		ProcessRegions(Child, FormRegions);
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+#EndRegion
+
+#Region UserInterface
 
 &AtClient
 Procedure NotificationProcessing(EventName, Parameter, Source)
@@ -397,99 +459,6 @@ EndProcedure
 
 #Region Regions
 
-&AtClient
-Procedure FillTree(Row)
-	
-	Children = Row.GetItems();
-	
-	If Children.Count() = 0 Then
-		
-		SetStates(Row, Row.Use);
-		SetParents(Row);
-		
-	Else
-		
-		For Each Child In Children Do
-			
-			FillTree(Child);
-			
-		EndDo;
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure RegionsUseOnChange(Item)
-	
-	CurrentRowId = Items.Regions.CurrentRow;
-	
-	If NOT CurrentRowId = Undefined Then
-		
-		Row = ThisForm.Regions.FindByID(CurrentRowId);
-		
-		If Row.Use = 2 Then
-			
-			Row.Use = 0;
-			
-		EndIf;
-		
-		SetStates(Row, Row.Use);
-		
-		SetParents(Row);
-		
-	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure SetStates(Row, FlagValue)
-	
-	Children= Row.GetItems();
-	
-	For Each Child In Children Do
-		
-		Child.Use = FlagValue;
-		SetStates(Child, Child.Use);
-		
-	EndDo;
-	
-EndProcedure
-
-&AtClient
-Function IsSetForAll(Row)
-	
-	Neighbours = Row.GetParent().GetItems();
-	
-	For Each Neighbour In Neighbours Do
-		
-		If Neighbour.Use <> Row.Use Then
-			
-			Return False;
-			
-		EndIf;
-			
-	EndDo;
-	
-	Return True;
-	
-EndFunction
-
-&AtClient
-Procedure SetParents(Row)
-	
-	Parent = Row.GetParent();
-	
-	While Parent <> Undefined Do
-		
-		Parent.Use = ?(IsSetForAll(Row), Row.Use, 2);
-		Row = Parent;
-		Parent = Row.GetParent();
-		
-	EndDo;
-	
-EndProcedure
-
 #EndRegion
 
 #Region Commands
@@ -556,6 +525,13 @@ Procedure DeleteContact(Command)
 		Modified = True;
 		
 	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure RegionsBeforeCollapse(Item, Row, Cancel)
+	
+	Cancel = True;
 	
 EndProcedure
 
