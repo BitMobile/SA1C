@@ -12,19 +12,6 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
-&AtServer
-Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
-	
-	If Not Cancel Then
-		
-		WriteRegions();
-		
-		WriteTerritories();
-		
-	EndIf;
-	
-EndProcedure
-
 #Region Regions
 
 &AtServer
@@ -32,127 +19,34 @@ Procedure FillRegions()
 	
 	Query = New Query(
 	"SELECT ALLOWED
-	|	ObjectsRegionsSliceLast.Region AS Region
-	|INTO AddedRegions
+	|	ContractorsRegions.Region
+	|INTO SavedRegions
 	|FROM
-	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Contractor) AS ObjectsRegionsSliceLast
+	|	Catalog.Contractors.Regions AS ContractorsRegions
 	|WHERE
-	|	ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Added)
+	|	ContractorsRegions.Ref = &Ref
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	CatalogRegion.Ref AS Region,
+	|	RegionCatalog.Ref AS Region,
 	|	CASE
-	|		WHEN AddedRegions.Region IS NULL 
+	|		WHEN SavedRegions.Region IS NULL 
 	|			THEN FALSE
 	|		ELSE TRUE
-	|	END AS Use
+	|	END AS USE
 	|FROM
-	|	Catalog.Region AS CatalogRegion
-	|		LEFT JOIN AddedRegions AS AddedRegions
-	|		ON CatalogRegion.Ref = AddedRegions.Region
+	|	Catalog.Region AS RegionCatalog
+	|		LEFT JOIN SavedRegions AS SavedRegions
+	|		ON RegionCatalog.Ref = SavedRegions.Region
 	|
 	|ORDER BY
-	|	Region HIERARCHY");
-	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	|	Region HIERARCHY
+	|AUTOORDER");
+	Query.SetParameter("Ref", ThisForm.Object.Ref);
 	Result = Query.Execute().Unload(QueryResultIteration.ByGroupsWithHierarchy);
 	
 	ValueToFormAttribute(Result, "Regions");
-	
-EndProcedure
-
-&AtServer
-Procedure WriteRegions()
-	
-	FormRegions = New ValueTable;
-	FormRegions.Columns.Add("Region", New TypeDescription("CatalogRef.Region"));
-	
-	For Each Child In ThisForm.Regions.GetItems() Do
-		
-		ProcessRegions(Child, FormRegions);
-		
-	EndDo;
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	FormRegions.Region AS FormRegion
-	|INTO FormRegions
-	|FROM
-	|	&FormRegions AS FormRegions
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	ObjectsRegionsSliceLast.Region AS RegisterRegion
-	|INTO RegisterRegions
-	|FROM
-	|	InformationRegister.ObjectsRegions.SliceLast(, Object = &Contractor) AS ObjectsRegionsSliceLast
-	|WHERE
-	|	NOT ObjectsRegionsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	FormRegions.FormRegion,
-	|	RegisterRegions.RegisterRegion
-	|INTO Difference
-	|FROM
-	|	FormRegions AS FormRegions
-	|		FULL JOIN RegisterRegions AS RegisterRegions
-	|		ON FormRegions.FormRegion = RegisterRegions.RegisterRegion
-	|WHERE
-	|	(FormRegions.FormRegion IS NULL 
-	|			OR RegisterRegions.RegisterRegion IS NULL )
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	&CurrentDate AS Period,
-	|	&Contractor AS Object,
-	|	ISNULL(Difference.FormRegion, Difference.RegisterRegion) AS Region,
-	|	CASE
-	|		WHEN Difference.FormRegion IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|		WHEN Difference.RegisterRegion IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
-	|	END AS Status
-	|FROM
-	|	Difference AS Difference");
-	
-	Query.SetParameter("CurrentDate", CurrentDate());
-	Query.SetParameter("Contractor", ThisForm.Object.Ref);
-	Query.SetParameter("FormRegions", FormRegions);
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		RecordManager = InformationRegisters.ObjectsRegions.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
-		RecordManager.Write();
-		
-	EndDo;
-	
-EndProcedure
-
-&AtServer
-Procedure ProcessRegions(Parent, FormRegions)
-	
-	If Parent.Use = 1 Then
-		
-		Row = FormRegions.Add();
-		Row.Region = Parent.Region;
-		
-	EndIf;
-	
-	Children = Parent.GetItems();
-	
-	For Each Child In Children Do
-		
-		ProcessRegions(Child, FormRegions);
-		
-	EndDo;
 	
 EndProcedure
 
@@ -165,106 +59,37 @@ Procedure FillTerritories()
 	
 	Query = New Query(
 	"SELECT ALLOWED
-	|	ObjectsTerritoriesSliceLast.Territory
+	|	ContractorsTerritories.Territory
 	|INTO SavedTerritories
 	|FROM
-	|	InformationRegister.ObjectsTerritories.SliceLast(, Object = &Contractor) AS ObjectsTerritoriesSliceLast
+	|	Catalog.Contractors.Territories AS ContractorsTerritories
 	|WHERE
-	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	ContractorsTerritories.Ref = &Ref
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	CatalogTerritory.Owner AS Region,
-	|	CatalogTerritory.Ref AS Territory,
+	|	TerritoryCatalog.Owner AS Region,
+	|	TerritoryCatalog.Ref AS Territory,
 	|	CASE
 	|		WHEN SavedTerritories.Territory IS NULL 
 	|			THEN FALSE
 	|		ELSE TRUE
 	|	END AS Use
 	|FROM
-	|	Catalog.Territory AS CatalogTerritory
+	|	Catalog.Territory AS TerritoryCatalog
 	|		LEFT JOIN SavedTerritories AS SavedTerritories
-	|		ON CatalogTerritory.Ref = SavedTerritories.Territory
+	|		ON TerritoryCatalog.Ref = SavedTerritories.Territory
 	|
 	|ORDER BY
 	|	Region
 	|AUTOORDER");
 	
-	Query.SetParameter("Contractor", ThisForm.Object.Ref);
+	Query.SetParameter("Ref", ThisForm.Object.Ref);
 	
 	Result = Query.Execute().Unload();
 	
 	ThisForm.Territories.Load(Result);
-	
-EndProcedure
-
-&AtServer
-Procedure WriteTerritories()
-	
-	Filter = New Structure;
-	Filter.Insert("Use", True);
-	UsedTerritories = ThisForm.Territories.FindRows(Filter);
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	FormTerritories.Territory AS FormTerritory
-	|INTO FormTerritories
-	|FROM
-	|	&FormTerritories AS FormTerritories
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	ObjectsTerritoriesSliceLast.Territory AS RegisterTerritory
-	|INTO RegisterTerritories
-	|FROM
-	|	InformationRegister.ObjectsTerritories.SliceLast(, Object = &Contractor) AS ObjectsTerritoriesSliceLast
-	|WHERE
-	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	FormTerritories.FormTerritory,
-	|	RegisterTerritories.RegisterTerritory
-	|INTO Difference
-	|FROM
-	|	FormTerritories AS FormTerritories
-	|		FULL JOIN RegisterTerritories AS RegisterTerritories
-	|		ON FormTerritories.FormTerritory = RegisterTerritories.RegisterTerritory
-	|WHERE
-	|	(FormTerritories.FormTerritory IS NULL 
-	|			OR RegisterTerritories.RegisterTerritory IS NULL )
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	&CurrentDate AS Period,
-	|	&Contractor AS Object,
-	|	ISNULL(Difference.FormTerritory, Difference.RegisterTerritory) AS Territory,
-	|	CASE
-	|		WHEN Difference.FormTerritory IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|		WHEN Difference.RegisterTerritory IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
-	|	END AS Status
-	|FROM
-	|	Difference AS Difference");
-	
-	Query.SetParameter("CurrentDate", CurrentDate());
-	Query.SetParameter("Contractor", ThisForm.Object.Ref);
-	Query.SetParameter("FormTerritories", ThisForm.Territories.Unload(UsedTerritories));
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		RecordManager = InformationRegisters.ObjectsTerritories.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
-		RecordManager.Write();
-		
-	EndDo;
 	
 EndProcedure
 
@@ -585,6 +410,19 @@ Procedure RegionsUseOnChange(Item)
 				
 			EndDo;
 			
+			Filter = New Structure("Region", CurrentData.Region);
+			RowsToDelete = ThisForm.Object.Regions.FindRows(Filter);
+			For Each Row In RowsToDelete Do
+				
+				ThisForm.Object.Regions.Delete(Row);
+				
+			EndDo;
+			
+		Else
+			
+			NewRow = ThisForm.Object.Regions.Add();
+			NewRow.Region = CurrentData.Region;
+			
 		EndIf;
 		
 	EndIf;
@@ -615,6 +453,58 @@ Procedure CheckTerritories(Value)
 				
 				Row.Use = Value;
 				Modified = True;
+				
+				Filter = New Structure("Territory", Row.Territory);
+				
+				If Value = True Then
+				
+					If ThisForm.Object.Territories.FindRows(Filter).Count() = 0 Then
+						
+						NewRow = ThisForm.Object.Territories.Add();
+						NewRow.Territory = Row.Territory;
+						
+					EndIf;
+					
+				Else
+					
+					RowsToDelete = ThisForm.Object.Territories.FindRows(Filter);
+					
+					For Each RowToDelete In RowsToDelete Do
+						
+						ThisForm.Object.Territories.Delete(RowToDelete);
+						
+					EndDo;
+					
+				EndIf;
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure TerritoriesUseOnChange(Item)
+	
+	CurrentData = ThisForm.Items.Territories.CurrentData;
+	
+	If Not CurrentData = Undefined Then
+		
+		If CurrentData.Use Then
+			
+			NewRow = ThisForm.Object.Territories.Add();
+			NewRow.Territory = CurrentData.Territory;
+			
+		Else
+			
+			Filter = New Structure("Territory", CurrentData.Territory);
+			RowsToDelete = ThisForm.Object.Territories.FindRows(Filter);
+			
+			For Each Row In RowsToDelete Do
+				
+				ThisForm.Object.Territories.Delete(Row);
 				
 			EndDo;
 			
