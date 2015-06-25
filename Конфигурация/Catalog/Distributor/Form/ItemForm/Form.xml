@@ -465,6 +465,9 @@
 											<CheckBoxType>Auto</CheckBoxType>
 											<ContextMenu name="TerritoriesUseContextMenu" id="165"/>
 											<ExtendedTooltip name="TerritoriesUseExtendedTooltip" id="166"/>
+											<Events>
+												<Event name="OnChange">TerritoriesUseOnChange</Event>
+											</Events>
 										</CheckBoxField>
 									</ChildItems>
 								</Table>
