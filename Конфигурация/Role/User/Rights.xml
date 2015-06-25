@@ -1023,28 +1023,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Order")
 		</right>
 	</object>
 	<object>
-		<name>InformationRegister.ObjectsRegions</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-			<restrictionByCondition>
-				<condition>ObjectsRegions FROM InformationRegister.ObjectsRegions AS ObjectsRegions
-	LEFT JOIN InformationRegister.ManagersOfRegions AS ManagersOfRegions
-	ON ObjectsRegions.Region = ManagersOfRegions.Region
-WHERE ManagersOfRegions.Manager = &amp;CurrentUser
-	AND NOT ManagersOfRegions.Region IS NULL </condition>
-			</restrictionByCondition>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>InformationRegister.bitmobile_ХранилищеФайлов</name>
 		<right>
 			<name>Read</name>
@@ -4752,28 +4730,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		</right>
 		<right>
 			<name>Update</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>InformationRegister.ObjectsTerritories</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-			<restrictionByCondition>
-				<condition>ObjectsTerritories FROM InformationRegister.ObjectsTerritories AS ObjectsTerritories
-	LEFT JOIN InformationRegister.ManagersOfRegions AS ManagersOfRegions
-	ON ObjectsTerritories.Territory.Owner = ManagersOfRegions.Region
-WHERE ManagersOfRegions.Manager = &amp;CurrentUser
-	AND NOT ManagersOfRegions.Region IS NULL </condition>
-			</restrictionByCondition>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>

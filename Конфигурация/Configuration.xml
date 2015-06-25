@@ -361,8 +361,6 @@
 			<InformationRegister>AssortmentMatrixOutlets</InformationRegister>
 			<InformationRegister>DefaultValues</InformationRegister>
 			<InformationRegister>ObjectsContacts</InformationRegister>
-			<InformationRegister>ObjectsRegions</InformationRegister>
-			<InformationRegister>ObjectsTerritories</InformationRegister>
 			<InformationRegister>OutletsContractors</InformationRegister>
 			<InformationRegister>OutletStatusHistory</InformationRegister>
 			<InformationRegister>PartnersContractors</InformationRegister>
