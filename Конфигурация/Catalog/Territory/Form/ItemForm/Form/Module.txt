@@ -245,6 +245,37 @@ Procedure SKUGroupsOnChange(Item)
 	
 EndProcedure
 
+&AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not CurrentObject.Owner =ThisForm.Object.Owner Then
+	
+		Query = New Query(
+		"SELECT
+		|	DistributorTerritories.Ref
+		|FROM
+		|	Catalog.Distributor.Territories AS DistributorTerritories
+		|
+		|UNION ALL
+		|
+		|SELECT
+		|	ContractorsTerritories.Ref
+		|FROM
+		|	Catalog.Contractors.Territories AS ContractorsTerritories");
+		
+		Result = Query.Execute().Unload();
+		Cancel = Result.Count();
+		
+		If Cancel Then
+			
+			Message(NStr("en = 'You cannot change region of territory that has link with partner or contractor'; ru = 'Нельзя изменять регион территории к которой привязаны партнеры или контрагенты.'"));
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
 #EndRegion
 
 
