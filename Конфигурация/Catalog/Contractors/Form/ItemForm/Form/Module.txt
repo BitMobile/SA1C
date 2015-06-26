@@ -17,7 +17,7 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then
 		
-		If IsInRole("Admin") Then
+		If Not IsInRole("Admin") Then
 		
 			If ThisForm.Object.Regions.Count() = 0 Then
 				
