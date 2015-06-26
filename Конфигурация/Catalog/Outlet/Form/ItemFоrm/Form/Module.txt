@@ -656,7 +656,7 @@ EndFunction
 Function GetTerritoriesArray()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	TerritoryOutlets.Ref AS Territory
 	|FROM
 	|	Catalog.Territory.Outlets AS TerritoryOutlets
@@ -769,7 +769,7 @@ Procedure FillContractors()
 	If ValueIsFilled(ThisForm.Object.Distributor) Then
 		
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	PartnersContractorsSliceLast.Contractor,
 		|	PartnersContractorsSliceLast.Default
 		|FROM
@@ -784,7 +784,7 @@ Procedure FillContractors()
 	Else
 		
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	OutletsContractorsSliceLast.Contractor,
 		|	OutletsContractorsSliceLast.Default
 		|FROM
@@ -808,7 +808,7 @@ Procedure WriteContractors()
 	If Not ValueIsFilled(ThisForm.Object.Distributor) Then
 		
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	FormContractors.Contractor,
 		|	FormContractors.Default
 		|INTO FormContractors
@@ -817,7 +817,7 @@ Procedure WriteContractors()
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	OutletsContractorsSliceLast.Contractor,
 		|	OutletsContractorsSliceLast.Default
 		|INTO RegisterContractors
@@ -828,7 +828,7 @@ Procedure WriteContractors()
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	FormContractors.Contractor AS FormContractor,
 		|	FormContractors.Default AS FormDefault,
 		|	RegisterContractors.Contractor AS RegisterContractor,
@@ -847,7 +847,7 @@ Procedure WriteContractors()
 		|;
 		|
 		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT
+		|SELECT ALLOWED
 		|	&CurrentDate AS Period,
 		|	&Outlet AS Outlet,
 		|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
@@ -868,7 +868,7 @@ Procedure WriteContractors()
 	Else
 		
 		Query = New Query(
-		"SELECT
+		"SELECT ALLOWED
 		|	&CurrentDate AS Period,
 		|	&Outlet AS Outlet,
 		|	OutletsContractorsSliceLast.Contractor AS Contractor,
@@ -927,7 +927,7 @@ EndFunction
 Function GetAvailableContractors()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormContractors.Contractor
 	|INTO FormContractors
 	|FROM
@@ -993,7 +993,7 @@ EndFunction
 Procedure FillContactList()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	ObjectsContacts.ContactPerson AS Contact
 	|FROM
 	|	InformationRegister.ObjectsContacts AS ObjectsContacts
@@ -1013,7 +1013,7 @@ EndProcedure
 Procedure WriteContacts()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormContacts.Contact
 	|INTO FormContacts
 	|FROM
@@ -1021,7 +1021,7 @@ Procedure WriteContacts()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	ObjectsContacts.ContactPerson
 	|INTO RegisterContacts
 	|FROM
@@ -1032,7 +1032,7 @@ Procedure WriteContacts()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FormContacts.Contact AS FormContact,
 	|	RegisterContacts.ContactPerson AS RegisterContact
 	|INTO Difference
@@ -1046,7 +1046,7 @@ Procedure WriteContacts()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&Object AS Object,
 	|	ISNULL(Difference.FormContact, Difference.RegisterContact) AS ContactPerson,
 	|	CASE

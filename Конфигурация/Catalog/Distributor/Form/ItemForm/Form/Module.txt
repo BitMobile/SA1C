@@ -37,7 +37,7 @@ EndProcedure
 Procedure FillContractors()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	PartnersContractorsSliceLast.Contractor,
 	|	PartnersContractorsSliceLast.Default
 	|FROM
@@ -57,7 +57,7 @@ EndProcedure
 Procedure WriteContractors()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormContractors.Contractor,
 	|	FormContractors.Default
 	|INTO FormContractors
@@ -66,7 +66,7 @@ Procedure WriteContractors()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWEd
 	|	PartnersContractorsSliceLast.Contractor,
 	|	PartnersContractorsSliceLast.Default
 	|INTO RegisterContractors
@@ -77,7 +77,7 @@ Procedure WriteContractors()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FormContractors.Contractor AS FormContractor,
 	|	FormContractors.Default AS FormDefault,
 	|	RegisterContractors.Contractor AS RegisterContractor,
@@ -96,7 +96,7 @@ Procedure WriteContractors()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&CurrentDate AS Period,
 	|	&Partner AS Partner,
 	|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
@@ -162,7 +162,7 @@ EndFunction
 Function GetAvailableContractors()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormContractors.Contractor
 	|INTO FormContractors
 	|FROM
@@ -228,7 +228,7 @@ EndFunction
 Procedure FillContactList()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	ObjectsContacts.ContactPerson AS Contact
 	|FROM
 	|	InformationRegister.ObjectsContacts AS ObjectsContacts
@@ -248,7 +248,7 @@ EndProcedure
 Procedure WriteContactList()
 	
 	Query = New Query(
-	"SELECT
+	"SELECT ALLOWED
 	|	FormContacts.Contact
 	|INTO FormContacts
 	|FROM
@@ -256,7 +256,7 @@ Procedure WriteContactList()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	ObjectsContacts.ContactPerson
 	|INTO RegisterContacts
 	|FROM
@@ -267,7 +267,7 @@ Procedure WriteContactList()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	FormContacts.Contact AS FormContact,
 	|	RegisterContacts.ContactPerson AS RegisterContact
 	|INTO Difference
@@ -281,7 +281,7 @@ Procedure WriteContactList()
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT
+	|SELECT ALLOWED
 	|	&Object AS Object,
 	|	ISNULL(Difference.FormContact, Difference.RegisterContact) AS ContactPerson,
 	|	CASE
