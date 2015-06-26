@@ -334,10 +334,10 @@ Procedure SetConditionalAppearence()
 	Field.Field = New DataCompositionField("TerritoriesUse");
 	Field.Use = True;
 	
-	FilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	FilterItem.LeftValue = New DataCompositionField("Territories.Region");
-	FilterItem.ComparisonType = DataCompositionComparisonType.Equal;
-	FilterItem.RightValue = New DataCompositionField("CurrentRegion");
+	RegionsFilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	RegionsFilterItem.LeftValue = New DataCompositionField("Territories.Region");
+	RegionsFilterItem.ComparisonType = DataCompositionComparisonType.Equal;
+	RegionsFilterItem.RightValue = New DataCompositionField("CurrentRegion");
 	
 	CAItem.Appearance.SetParameterValue("BackColor", WebColors.PaleGreen);
 	
@@ -348,10 +348,10 @@ Procedure SetConditionalAppearence()
 	Field.Field = New DataCompositionField("TerritoriesUse");
 	Field.Use = True;
 	
-	FilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
-	FilterItem.LeftValue = New DataCompositionField("Territories.Region");
-	FilterItem.ComparisonType = DataCompositionComparisonType.NotEqual;
-	FilterItem.RightValue = New DataCompositionField("CurrentRegion");
+	RegionsFilterItem = CAItem.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	RegionsFilterItem.LeftValue = New DataCompositionField("Territories.Region");
+	RegionsFilterItem.ComparisonType = DataCompositionComparisonType.NotEqual;
+	RegionsFilterItem.RightValue = New DataCompositionField("CurrentRegion");
 	
 	CAItem.Appearance.SetParameterValue("ReadOnly", True);
 	
@@ -608,12 +608,59 @@ EndProcedure
 Procedure AddContractor(Command)
 	
 	ChoiceForm = GetForm("Catalog.Contractors.ChoiceForm", , Items.Contractors);
+	Filter = ChoiceForm.List.Filter;
 	
+	RegionsFilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
+	RegionsFilterItem.LeftValue = New DataCompositionField("Ref.Regions.Region");
+	RegionsFilterItem.Use 				= True;
+	RegionsFilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	RegionsFilterItem.ComparisonType	= DataCompositionComparisonType.InList;
+	RegionsFilterItem.RightValue		= GetRegions();
+	ChoiceForm.CloseOnChoice = False;
+	
+	TerritoriesFilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
+	TerritoriesFilterItem.LeftValue = New DataCompositionField("Ref.Territories.Territory");
+	TerritoriesFilterItem.Use 				= True;
+	TerritoriesFilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	TerritoriesFilterItem.ComparisonType	= DataCompositionComparisonType.InList;
+	TerritoriesFilterItem.RightValue		= GetTerritories();
 	ChoiceForm.CloseOnChoice = False;
 	
 	OpenForm(ChoiceForm);
 	
 EndProcedure
+
+&AtServer
+Function GetTerritories()
+	
+	TerritoriesVT = ThisForm.Object.Territories.Unload(, "Territory");
+	TerritoriesArray = New Array;
+	
+	For Each Row In TerritoriesVT Do
+		
+		TerritoriesArray.Add(Row.Territory);
+		
+	EndDo;
+	
+	Return TerritoriesArray;
+	
+EndFunction
+
+&AtServer
+Function GetRegions()
+	
+	RegionsVT = ThisForm.Object.Regions.Unload(, "Region");
+	RegionsArray = New Array;
+	
+	For Each Row In RegionsVT Do
+		
+		RegionsArray.Add(Row.Region);
+		
+	EndDo;
+	
+	Return RegionsArray;
+	
+EndFunction
 
 &AtClient
 Procedure RemoveContractor(Command)
