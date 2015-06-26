@@ -653,6 +653,33 @@ Function GetTerritories()
 EndFunction
 
 &AtServer
+Function GetTerritoriesArray()
+	
+	Query = New Query(
+	"SELECT
+	|	TerritoryOutlets.Ref AS Territory
+	|FROM
+	|	Catalog.Territory.Outlets AS TerritoryOutlets
+	|		FULL JOIN Catalog.Contractors.Territories AS ContractorsTerritories
+	|		ON TerritoryOutlets.Ref = ContractorsTerritories.Territory
+	|WHERE
+	|	TerritoryOutlets.Outlet = &Outlet");
+	
+	Query.SetParameter("Outlet", ThisForm.Object.Ref);
+	TerritoriesVT = Query.Execute().Unload();
+	TerritoriesArray = New Array;
+	
+	For Each Row In TerritoriesVT Do
+		
+		TerritoriesArray.Add(Row.Territory);
+		
+	EndDo;
+	
+	Return TerritoriesArray;
+	
+EndFunction
+
+&AtServer
 Procedure WriteTerritory(CurrObject)
 	
 	WrittenTerritories = GetTerritories().Unload();
@@ -869,6 +896,94 @@ Procedure WriteContractors()
 	EndDo;
 	
 EndProcedure
+
+&AtServer
+Function GetFilters()
+	
+	FiltersArray = New Array;
+	FiltersArray.Add(GetFilter("Ref.Territories.Territory", GetTerritoriesArray()));
+	FiltersArray.Add(GetFilter("Ref", GetAvailableContractors()));
+	
+	Return FiltersArray;
+	
+EndFunction
+
+&AtServer
+Function GetFilter(FieldName, List)
+	
+	Filter = New DataCompositionFilter;
+	FilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
+	FilterItem.LeftValue = New DataCompositionField(FieldName);
+	FilterItem.Use 				= True;
+	FilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	FilterItem.ComparisonType	= DataCompositionComparisonType.InList;
+	FilterItem.RightValue		= List;
+	
+	Return FilterItem;
+	
+EndFunction
+
+&AtServer
+Function GetAvailableContractors()
+	
+	Query = New Query(
+	"SELECT
+	|	FormContractors.Contractor
+	|INTO FormContractors
+	|FROM
+	|	&FormContractors AS FormContractors
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	PartnersContractorsSliceLast.Contractor
+	|INTO PartnersContractors
+	|FROM
+	|	InformationRegister.PartnersContractors.SliceLast AS PartnersContractorsSliceLast
+	|WHERE
+	|	NOT PartnersContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	OutletsContractorsSliceLast.Contractor
+	|INTO OutletsContractors
+	|FROM
+	|	InformationRegister.OutletsContractors.SliceLast AS OutletsContractorsSliceLast
+	|WHERE
+	|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	Contractors.Ref AS Contractor
+	|FROM
+	|	Catalog.Contractors AS Contractors
+	|		LEFT JOIN OutletsContractors AS OutletsContractors
+	|		ON Contractors.Ref = OutletsContractors.Contractor
+	|		LEFT JOIN PartnersContractors AS PartnersContractors
+	|		ON Contractors.Ref = PartnersContractors.Contractor
+	|		LEFT JOIN FormContractors AS FormContractors
+	|		ON Contractors.Ref = FormContractors.Contractor
+	|WHERE
+	|	OutletsContractors.Contractor IS NULL 
+	|	AND PartnersContractors.Contractor IS NULL 
+	|	AND FormContractors.Contractor IS NULL ");
+	
+	Query.SetParameter("FormContractors", ThisForm.ContractorsList.Unload(, "Contractor"));
+	Result = Query.Execute().Unload();
+	
+	AvailableContractors = New Array;
+	
+	For Each Row In Result Do
+		
+		AvailableContractors.Add(Row.Contractor);
+		
+	EndDo;
+	
+	Return AvailableContractors;
+	
+EndFunction
 
 #EndRegion
 
@@ -1577,6 +1692,16 @@ EndProcedure
 Procedure AddContractor(Command)
 	
 	ChoiceForm = GetForm("Catalog.Contractors.ChoiceForm", , Items.ContractorsList);
+	Filter = ChoiceForm.List.Filter;
+	
+	FilterItems = GetFilters();
+	
+	For Each FilterItem In FilterItems Do
+		
+		NewRow = Filter.Items.Add(Type("DataCompositionFilterItem"));
+		FillPropertyValues(NewRow, FilterItem);
+		
+	EndDo;
 	
 	ChoiceForm.CloseOnChoice = False;
 	

@@ -201,7 +201,22 @@ WHERE TerritoryOutlets.Ref.Owner IN
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Distributors")</condition>
+				<condition>Distributor FROM Catalog.Distributor AS Distributor
+	LEFT JOIN InformationRegister.ManagersOfRegions AS ManagersOfRegions
+	ON Distributor.Regions.Region = ManagersOfRegions.Region
+WHERE ManagersOfRegions.Manager = &amp;CurrentUser
+	AND TRUE IN
+			(SELECT TOP 1
+				TRUE
+			FROM
+				Catalog.User AS User
+					INNER JOIN Catalog.RolesOfUsers.AccessRightsToSystemObjects AS RolesOfUsersAccessRightsToSystemObjects
+					ON
+						User.RoleOfUser = RolesOfUsersAccessRightsToSystemObjects.Ref
+			WHERE
+				RolesOfUsersAccessRightsToSystemObjects.SystemObject = VALUE(Catalog.SystemObjects.Catalog_Distributors)
+				AND RolesOfUsersAccessRightsToSystemObjects.Read = TRUE
+				AND User.Ref = &amp;CurrentUser)</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>
@@ -4993,7 +5008,22 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>WHERE #HaveRightToRead("Catalog.SystemObjects.Catalog_Contractors")</condition>
+				<condition>Contractors FROM Catalog.Contractors AS Contractors
+	LEFT JOIN InformationRegister.ManagersOfRegions AS ManagersOfRegions
+	ON Contractors.Regions.Region = ManagersOfRegions.Region
+WHERE TRUE IN
+			(SELECT TOP 1
+				TRUE
+			FROM
+				Catalog.User AS User
+					INNER JOIN Catalog.RolesOfUsers.AccessRightsToSystemObjects AS RolesOfUsersAccessRightsToSystemObjects
+					ON
+						User.RoleOfUser = RolesOfUsersAccessRightsToSystemObjects.Ref
+			WHERE
+				RolesOfUsersAccessRightsToSystemObjects.SystemObject = VALUE(Catalog.SystemObjects.Catalog_Contractors)
+				AND RolesOfUsersAccessRightsToSystemObjects.Read = TRUE
+				AND User.Ref = &amp;CurrentUser)
+	AND ManagersOfRegions.Manager = &amp;CurrentUser</condition>
 			</restrictionByCondition>
 			<restrictionByCondition>
 				<field>Ref</field>

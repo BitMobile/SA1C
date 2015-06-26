@@ -130,6 +130,96 @@ Procedure WriteContractors()
 	
 EndProcedure
 
+&AtServer
+Function GetFilters()
+	
+	FiltersArray = New Array;
+	
+	FiltersArray.Add(GetFilter("Ref.Regions.Region", GetRegions()));
+	FiltersArray.Add(GetFilter("Ref.Territories.Territory", GetTerritories()));
+	FiltersArray.Add(GetFilter("Ref", GetAvailableContractors()));
+	
+	Return FiltersArray;
+	
+EndFunction
+
+&AtServer
+Function GetFilter(FieldName, List)
+	
+	Filter = New DataCompositionFilter;
+	FilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
+	FilterItem.LeftValue = New DataCompositionField(FieldName);
+	FilterItem.Use 				= True;
+	FilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
+	FilterItem.ComparisonType	= DataCompositionComparisonType.InList;
+	FilterItem.RightValue		= List;
+	
+	Return FilterItem;
+	
+EndFunction
+
+&AtServer
+Function GetAvailableContractors()
+	
+	Query = New Query(
+	"SELECT
+	|	FormContractors.Contractor
+	|INTO FormContractors
+	|FROM
+	|	&FormContractors AS FormContractors
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	PartnersContractorsSliceLast.Contractor
+	|INTO PartnersContractors
+	|FROM
+	|	InformationRegister.PartnersContractors.SliceLast AS PartnersContractorsSliceLast
+	|WHERE
+	|	NOT PartnersContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	OutletsContractorsSliceLast.Contractor
+	|INTO OutletsContractors
+	|FROM
+	|	InformationRegister.OutletsContractors.SliceLast AS OutletsContractorsSliceLast
+	|WHERE
+	|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED
+	|	Contractors.Ref AS Contractor
+	|FROM
+	|	Catalog.Contractors AS Contractors
+	|		LEFT JOIN OutletsContractors AS OutletsContractors
+	|		ON Contractors.Ref = OutletsContractors.Contractor
+	|		LEFT JOIN PartnersContractors AS PartnersContractors
+	|		ON Contractors.Ref = PartnersContractors.Contractor
+	|		LEFT JOIN FormContractors AS FormContractors
+	|		ON Contractors.Ref = FormContractors.Contractor
+	|WHERE
+	|	OutletsContractors.Contractor IS NULL 
+	|	AND PartnersContractors.Contractor IS NULL 
+	|	AND FormContractors.Contractor IS NULL ");
+	
+	Query.SetParameter("FormContractors", ThisForm.Contractors.Unload(, "Contractor"));
+	Result = Query.Execute().Unload();
+	
+	AvailableContractors = New Array;
+	
+	For Each Row In Result Do
+		
+		AvailableContractors.Add(Row.Contractor);
+		
+	EndDo;
+	
+	Return AvailableContractors;
+	
+EndFunction
+
 #EndRegion
 
 #Region ContactList
@@ -610,20 +700,15 @@ Procedure AddContractor(Command)
 	ChoiceForm = GetForm("Catalog.Contractors.ChoiceForm", , Items.Contractors);
 	Filter = ChoiceForm.List.Filter;
 	
-	RegionsFilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
-	RegionsFilterItem.LeftValue = New DataCompositionField("Ref.Regions.Region");
-	RegionsFilterItem.Use 				= True;
-	RegionsFilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-	RegionsFilterItem.ComparisonType	= DataCompositionComparisonType.InList;
-	RegionsFilterItem.RightValue		= GetRegions();
-	ChoiceForm.CloseOnChoice = False;
+	FilterItems = GetFilters();
 	
-	TerritoriesFilterItem = Filter.Items.Add(Type("DataCompositionFilterItem"));
-	TerritoriesFilterItem.LeftValue = New DataCompositionField("Ref.Territories.Territory");
-	TerritoriesFilterItem.Use 				= True;
-	TerritoriesFilterItem.ViewMode			= DataCompositionSettingsItemViewMode.Inaccessible;
-	TerritoriesFilterItem.ComparisonType	= DataCompositionComparisonType.InList;
-	TerritoriesFilterItem.RightValue		= GetTerritories();
+	For Each FilterItem In FilterItems Do
+		
+		NewRow = Filter.Items.Add(Type("DataCompositionFilterItem"));
+		FillPropertyValues(NewRow, FilterItem);
+		
+	EndDo;
+	
 	ChoiceForm.CloseOnChoice = False;
 	
 	OpenForm(ChoiceForm);
