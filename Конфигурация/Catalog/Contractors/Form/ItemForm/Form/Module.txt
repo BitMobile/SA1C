@@ -12,6 +12,33 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
+&AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If Not Cancel Then
+		
+		If IsInRole("Admin") Then
+		
+			If ThisForm.Object.Regions.Count() = 0 Then
+				
+				Message(NStr("en = 'You cannot write contractor with empty list of regions.'; ru = 'Нельзя записывать контрагента с пустым списком регионов.'"));
+				Cancel = True;
+				
+			EndIf;
+			
+			If ThisForm.Object.Territories.Count() = 0 Then
+				
+				Message(NStr("en = 'You cannot write contractor with empty list of territories.'; ru = 'Нельзя записывать контрагента с пустым списком территорий.'"));
+				Cancel = True;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
 #Region Regions
 
 &AtServer
