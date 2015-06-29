@@ -359,6 +359,13 @@
 													<ContextMenu name="OutletsOutletContextMenu" id="293"/>
 													<ExtendedTooltip name="OutletsOutletExtendedTooltip" id="294"/>
 												</InputField>
+												<InputField name="OutletsOutletDistributor" id="501">
+													<DataPath>Outlets.Outlet.Distributor</DataPath>
+													<ReadOnly>true</ReadOnly>
+													<EditMode>EnterOnInput</EditMode>
+													<ContextMenu name="OutletsOutletDistributorContextMenu" id="502"/>
+													<ExtendedTooltip name="OutletsOutletDistributorExtendedTooltip" id="503"/>
+												</InputField>
 												<InputField name="OutletsOutletClass" id="295">
 													<DataPath>Outlets.Outlet.Class</DataPath>
 													<ReadOnly>true</ReadOnly>
@@ -1019,19 +1026,20 @@
 	Outlets.Class,
 	Outlets.Type,
 	TerritoryOutlets.Ref AS Territory,
-	TerritoryOutlets.Ref.Owner AS Region
+	TerritoryOutlets.Ref.Owner AS Region,
+	Outlets.Distributor AS Distributor
 FROM
 	Catalog.Outlet AS Outlets
 		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 		ON Outlets.Ref = TerritoryOutlets.Outlet
-
 
 GROUP BY
 	Outlets.Ref,
 	Outlets.Class,
 	Outlets.Type,
 	TerritoryOutlets.Ref,
-	TerritoryOutlets.Ref.Owner</QueryText>
+	TerritoryOutlets.Ref.Owner,
+	Outlets.Distributor</QueryText>
 				<MainTable>Catalog.Outlet</MainTable>
 				<ListSettings>
 					<dcsset:filter>

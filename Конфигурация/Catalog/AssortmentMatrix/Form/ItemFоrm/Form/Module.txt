@@ -262,6 +262,10 @@ EndFunction
 &AtServer
 Procedure FillOutletsSelectFilters()
 
+	PartnerFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	PartnerFilter.LeftValue = New DataCompositionField("Distributor");
+	PartnerFilter.Use = False;
+
 	ClassFilter = OutletsSelect.Filter.Items.Add(Type("DataCompositionFilterItem"));
 	ClassFilter.LeftValue = New DataCompositionField("Class");
 	ClassFilter.Use = False;
