@@ -425,7 +425,19 @@ Procedure FillInProcessing()
 		EndIf;
 		
 	EndDo;
-		
+	
+	PotentialObject = Catalogs.OutletsStatusesSettings.Potential.GetObject();
+	PotentialObject.Status = Enums.OutletStatus.Potential;
+	PotentialObject.Write();
+	
+	ActiveObject = Catalogs.OutletsStatusesSettings.Active.GetObject();
+	ActiveObject.Status = Enums.OutletStatus.Active;
+	ActiveObject.Write();
+	
+	ClosedObject = Catalogs.OutletsStatusesSettings.Closed.GetObject();
+	ClosedObject.Status = Enums.OutletStatus.Closed;
+	ClosedObject.Write();
+	
 EndProcedure
 
 Procedure ProcessSystemObjects()
