@@ -248,7 +248,7 @@ EndProcedure
 &AtServer
 Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
-	If Not CurrentObject.Owner =ThisForm.Object.Owner Then
+	If Not CurrentObject.Owner =ThisForm.Object.Ref.Owner Then
 	
 		Query = New Query(
 		"SELECT
