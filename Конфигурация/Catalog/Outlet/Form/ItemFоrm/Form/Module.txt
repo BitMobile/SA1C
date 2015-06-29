@@ -1801,14 +1801,13 @@ Function GetPartners(Outlet)
 	
 	Query = New Query(
 	"SELECT ALLOWED DISTINCT
-	|	ObjectsTerritoriesSliceLast.Object AS Partner
+	|	DistributorTerritories.Ref AS Partner
 	|FROM
 	|	Catalog.Territory.Outlets AS TerritoryOutlets
-	|		LEFT JOIN InformationRegister.ObjectsTerritories.SliceLast(, ) AS ObjectsTerritoriesSliceLast
-	|		ON TerritoryOutlets.Ref = ObjectsTerritoriesSliceLast.Territory
+	|		LEFT JOIN Catalog.Distributor.Territories AS DistributorTerritories
+	|		ON TerritoryOutlets.Ref = DistributorTerritories.Territory
 	|WHERE
-	|	NOT ObjectsTerritoriesSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|	AND TerritoryOutlets.Outlet = &Outlet
+	|	TerritoryOutlets.Outlet = &Outlet
 	|
 	|ORDER BY
 	|	Partner
