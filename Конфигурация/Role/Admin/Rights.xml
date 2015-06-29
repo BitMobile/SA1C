@@ -406,6 +406,17 @@
 		</right>
 	</object>
 	<object>
+		<name>Catalog.ContactPersons</name>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>InteractiveDeletePredefinedData</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.Region</name>
 		<right>
 			<name>InteractiveDelete</name>
@@ -1005,6 +1016,17 @@
 	</object>
 	<object>
 		<name>Catalog.Stock</name>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>false</value>
+		</right>
+		<right>
+			<name>InteractiveDeletePredefinedData</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.Contractors</name>
 		<right>
 			<name>InteractiveDelete</name>
 			<value>false</value>
