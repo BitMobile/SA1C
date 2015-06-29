@@ -3,7 +3,7 @@
 	<Item id="9567dcfa-172b-4553-8aa5-25a825831592">
 		<Name>EditOutletContacts</Name>
 		<Code>000000002</Code>
-		<Description>en = 'Edit outlet contacts'; ru = 'Редактирование контактов торговых точек'</Description>
+		<Description>en = 'Edit outlet contacts list'; ru = 'Редактирование списка контактов торговых точек'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="24433ca9-cce6-44b4-b4aa-b078f8bb5979">
@@ -15,7 +15,7 @@
 	<Item id="5d222ba2-b056-4255-849f-230e8de6dbf8">
 		<Name>EditPartnerContacts</Name>
 		<Code>000000003</Code>
-		<Description>en = 'Edit partner contacts'; ru = 'Редактирование контактов партнеров'</Description>
+		<Description>en = 'Edit partner contacts list'; ru = 'Редактирование списка контактов партнеров'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 </PredefinedData>
