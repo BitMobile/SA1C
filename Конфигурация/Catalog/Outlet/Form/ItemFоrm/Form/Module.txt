@@ -1603,6 +1603,8 @@ Procedure DistributorOnChange(Item)
 	Else
 		
 		SetContractorsButtonsAvailability();
+		FillContractors();
+		Modified = True;
 		
 	EndIf;
 	
