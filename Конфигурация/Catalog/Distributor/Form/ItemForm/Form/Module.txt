@@ -603,7 +603,7 @@ Procedure RegionsUseOnChange(Item)
 		
 	EndIf;
 	
-	ThisForm.Items.Territories.Refresh();
+	ThisForm.RefreshDataRepresentation();
 	
 EndProcedure
 
