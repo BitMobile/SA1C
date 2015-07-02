@@ -2016,6 +2016,8 @@ Procedure ProcessContacts()
 	
 	While Selection.Next() Do
 		
+		OutletObject = Selection.GetObject();
+		
 		For Each Row In Selection.Contacts Do
 			
 			ContactObject = Catalogs.ContactPersons.CreateItem();
@@ -2023,13 +2025,13 @@ Procedure ProcessContacts()
 			ContactObject.Description = ?(ValueIsFilled(TrimAll(Row.ContactName)), Row.ContactName, Selection.Description);
 			ContactObject.Write();
 			
-			RecordManager = InformationRegisters.ObjectsContacts.CreateRecordManager();
-			RecordManager.ContactPerson = ContactObject.Ref;
-			RecordManager.Object = Selection.Ref;
-			RecordManager.NotActual = Row.NotActual;
-			RecordManager.Write();
+			NewRow = OutletObject.ContactPersons.Add();
+			NewRow.ContactPerson = ContactObject.Ref;
+			NewRow.NotActual = Row.NotActual;
 			
 		EndDo;
+		
+		OutletObject.Write();
 		
 	EndDo;
 	
