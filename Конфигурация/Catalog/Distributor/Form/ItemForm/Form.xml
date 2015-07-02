@@ -167,95 +167,101 @@
 					</ToolTip>
 					<ExtendedTooltip name="GroupContactsExtendedTooltip" id="39"/>
 					<ChildItems>
-						<Table name="ContactList" id="64">
-							<Representation>List</Representation>
+						<Table name="ContactList" id="182">
 							<ChangeRowSet>false</ChangeRowSet>
 							<ChangeRowOrder>false</ChangeRowOrder>
-							<RowSelectionMode>Row</RowSelectionMode>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
-							<DataPath>ContactList</DataPath>
+							<DataPath>Object.Contacts</DataPath>
 							<RowFilter xsi:nil="true"/>
-							<ContextMenu name="ContactListContextMenu" id="65"/>
-							<AutoCommandBar name="ContactListCommandBar" id="66">
+							<ContextMenu name="ContactListContextMenu" id="183"/>
+							<AutoCommandBar name="ContactListCommandBar" id="184">
 								<ChildItems>
-									<Button name="ContactListAddContact" id="111">
+									<Button name="ContactListAddContact" id="238">
 										<Type>CommandBarButton</Type>
 										<CommandName>Form.Command.AddContact</CommandName>
 										<Parameter xsi:nil="true"/>
-										<ExtendedTooltip name="ContactListAddContactExtendedTooltip" id="112"/>
+										<ExtendedTooltip name="ContactListAddContactExtendedTooltip" id="239"/>
 									</Button>
-									<Button name="ContactListDeleteContact" id="113">
+									<Button name="ContactListDeleteContact" id="240">
 										<Type>CommandBarButton</Type>
+										<Representation>Picture</Representation>
 										<CommandName>Form.Command.DeleteContact</CommandName>
 										<Parameter xsi:nil="true"/>
 										<Picture>
 											<xr:Ref>StdPicture.Delete</xr:Ref>
 											<xr:LoadTransparent>true</xr:LoadTransparent>
 										</Picture>
-										<ExtendedTooltip name="ContactListDeleteContactExtendedTooltip" id="114"/>
+										<ExtendedTooltip name="ContactListDeleteContactExtendedTooltip" id="241"/>
 									</Button>
 								</ChildItems>
 							</AutoCommandBar>
-							<ExtendedTooltip name="ContactListExtendedTooltip" id="67"/>
-							<SearchStringAddition name="ContactListSearchString" id="68">
+							<ExtendedTooltip name="ContactListExtendedTooltip" id="185"/>
+							<SearchStringAddition name="ContactListSearchString" id="186">
 								<Source>
-									<lf:elementId>64</lf:elementId>
+									<lf:elementId>182</lf:elementId>
 									<lf:additionId>0</lf:additionId>
 								</Source>
-								<ContextMenu name="ContactListSearchStringContextMenu" id="71"/>
-								<ExtendedTooltip name="ContactListSearchStringExtendedTooltip" id="72"/>
+								<ContextMenu name="ContactListSearchStringContextMenu" id="189"/>
+								<ExtendedTooltip name="ContactListSearchStringExtendedTooltip" id="190"/>
 							</SearchStringAddition>
-							<ViewStatusAddition name="ContactListViewStatus" id="73">
+							<ViewStatusAddition name="ContactListViewStatus" id="191">
 								<Source>
-									<lf:elementId>64</lf:elementId>
+									<lf:elementId>182</lf:elementId>
 									<lf:additionId>1</lf:additionId>
 								</Source>
-								<ContextMenu name="ContactListViewStatusContextMenu" id="76"/>
-								<ExtendedTooltip name="ContactListViewStatusExtendedTooltip" id="77"/>
+								<ContextMenu name="ContactListViewStatusContextMenu" id="194"/>
+								<ExtendedTooltip name="ContactListViewStatusExtendedTooltip" id="195"/>
 							</ViewStatusAddition>
-							<SearchControlAddition name="ContactListSearchControl" id="78">
+							<SearchControlAddition name="ContactListSearchControl" id="196">
 								<Source>
-									<lf:elementId>64</lf:elementId>
+									<lf:elementId>182</lf:elementId>
 									<lf:additionId>2</lf:additionId>
 								</Source>
-								<ContextMenu name="ContactListSearchControlContextMenu" id="81"/>
-								<ExtendedTooltip name="ContactListSearchControlExtendedTooltip" id="82"/>
+								<ContextMenu name="ContactListSearchControlContextMenu" id="199"/>
+								<ExtendedTooltip name="ContactListSearchControlExtendedTooltip" id="200"/>
 							</SearchControlAddition>
 							<Events>
 								<Event name="Selection">ContactListSelection</Event>
 								<Event name="ChoiceProcessing">ContactListChoiceProcessing</Event>
 							</Events>
 							<ChildItems>
-								<InputField name="ContactListContact" id="99">
-									<DataPath>ContactList.Contact</DataPath>
+								<InputField name="ContactListContact" id="223">
+									<DataPath>Object.Contacts.Contact</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="ContactListContactContextMenu" id="100"/>
-									<ExtendedTooltip name="ContactListContactExtendedTooltip" id="101"/>
+									<ContextMenu name="ContactListContactContextMenu" id="224"/>
+									<ExtendedTooltip name="ContactListContactExtendedTooltip" id="225"/>
 								</InputField>
-								<InputField name="ContactListContactPosition" id="102">
-									<DataPath>ContactList.Contact.Position</DataPath>
+								<LabelField name="ContactListContactPosition" id="226">
+									<DataPath>Object.Contacts.Contact.Position</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="ContactListContactPositionContextMenu" id="103"/>
-									<ExtendedTooltip name="ContactListContactPositionExtendedTooltip" id="104"/>
-								</InputField>
-								<InputField name="ContactListContactPhoneNumber" id="105">
-									<DataPath>ContactList.Contact.PhoneNumber</DataPath>
+									<ContextMenu name="ContactListContactPositionContextMenu" id="227"/>
+									<ExtendedTooltip name="ContactListContactPositionExtendedTooltip" id="228"/>
+								</LabelField>
+								<LabelField name="ContactListContactPhoneNumber" id="229">
+									<DataPath>Object.Contacts.Contact.PhoneNumber</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="ContactListContactPhoneNumberContextMenu" id="106"/>
-									<ExtendedTooltip name="ContactListContactPhoneNumberExtendedTooltip" id="107"/>
-								</InputField>
-								<InputField name="ContactListContactEmail" id="108">
-									<DataPath>ContactList.Contact.Email</DataPath>
+									<ContextMenu name="ContactListContactPhoneNumberContextMenu" id="230"/>
+									<ExtendedTooltip name="ContactListContactPhoneNumberExtendedTooltip" id="231"/>
+								</LabelField>
+								<LabelField name="ContactListContactEmail" id="232">
+									<DataPath>Object.Contacts.Contact.Email</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
-									<ContextMenu name="ContactListContactEmailContextMenu" id="109"/>
-									<ExtendedTooltip name="ContactListContactEmailExtendedTooltip" id="110"/>
-								</InputField>
+									<ContextMenu name="ContactListContactEmailContextMenu" id="233"/>
+									<ExtendedTooltip name="ContactListContactEmailExtendedTooltip" id="234"/>
+								</LabelField>
+								<CheckBoxField name="ContactListNotActual" id="235">
+									<DataPath>Object.Contacts.NotActual</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ContactListNotActualContextMenu" id="236"/>
+									<ExtendedTooltip name="ContactListNotActualExtendedTooltip" id="237"/>
+								</CheckBoxField>
 							</ChildItems>
 						</Table>
 					</ChildItems>
@@ -526,39 +532,6 @@
 					</Title>
 					<Type>
 						<v8:Type>xs:boolean</v8:Type>
-					</Type>
-				</Column>
-			</Columns>
-		</Attribute>
-		<Attribute name="ContactList" id="3">
-			<Title>
-				<v8:item>
-					<v8:lang>en</v8:lang>
-					<v8:content>Contacts</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Контакты</v8:content>
-				</v8:item>
-			</Title>
-			<Type>
-				<v8:Type>v8:ValueTable</v8:Type>
-			</Type>
-			<SavedData>true</SavedData>
-			<Columns>
-				<Column name="Contact" id="1">
-					<Title>
-						<v8:item>
-							<v8:lang>en</v8:lang>
-							<v8:content>Contact person</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Контактное лицо</v8:content>
-						</v8:item>
-					</Title>
-					<Type>
-						<v8:Type>cfg:CatalogRef.ContactPersons</v8:Type>
 					</Type>
 				</Column>
 			</Columns>
