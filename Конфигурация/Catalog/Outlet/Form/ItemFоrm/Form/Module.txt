@@ -71,10 +71,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillContractors();
 	
-	FillContactList();
-	
 	HandleContactsAdditionalAccessRights();
-
 	
 EndProcedure
 
@@ -243,8 +240,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		SetPrivilegedMode(False);
 		
 		WriteContractors();
-		
-		WriteContacts();
 		
 	EndIf;
 	
@@ -990,89 +985,6 @@ EndFunction
 #Region ContactList
 
 &AtServer
-Procedure FillContactList()
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	ObjectsContacts.ContactPerson AS Contact
-	|FROM
-	|	InformationRegister.ObjectsContacts AS ObjectsContacts
-	|WHERE
-	|	ObjectsContacts.Object = &Object
-	|	AND ObjectsContacts.NotActual = FALSE");
-	
-	Query.SetParameter("Object", Object.Ref);
-	
-	Result = Query.Execute().Unload();
-	
-	ThisForm.ContactList.Load(Result);
-	
-EndProcedure
-
-&AtServer
-Procedure WriteContacts()
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	FormContacts.Contact
-	|INTO FormContacts
-	|FROM
-	|	&FormContacts AS FormContacts
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	ObjectsContacts.ContactPerson
-	|INTO RegisterContacts
-	|FROM
-	|	InformationRegister.ObjectsContacts AS ObjectsContacts
-	|WHERE
-	|	ObjectsContacts.Object = &Object
-	|	AND ObjectsContacts.NotActual = FALSE
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	FormContacts.Contact AS FormContact,
-	|	RegisterContacts.ContactPerson AS RegisterContact
-	|INTO Difference
-	|FROM
-	|	FormContacts AS FormContacts
-	|		FULL JOIN RegisterContacts AS RegisterContacts
-	|		ON FormContacts.Contact = RegisterContacts.ContactPerson
-	|WHERE
-	|	(FormContacts.Contact IS NULL 
-	|			OR RegisterContacts.ContactPerson IS NULL )
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	&Object AS Object,
-	|	ISNULL(Difference.FormContact, Difference.RegisterContact) AS ContactPerson,
-	|	CASE
-	|		WHEN Difference.FormContact IS NULL 
-	|			THEN TRUE
-	|		ELSE FALSE
-	|	END AS NotActual
-	|FROM
-	|	Difference AS Difference");
-	
-	Query.SetParameter("FormContacts", ThisForm.ContactList.Unload());
-	Query.SetParameter("Object", ThisForm.Object.Ref);
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		RecordManager = InformationRegisters.ObjectsContacts.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
-		RecordManager.Write();
-		
-	EndDo;
-	
-EndProcedure
-
-&AtServer
 Procedure HandleContactsAdditionalAccessRights()
 	
 	CurrentUser = SessionParameters.CurrentUser;
@@ -1748,13 +1660,13 @@ EndProcedure
 &AtClient
 Procedure ContactListChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
-	FilterParameters = New Structure("Contact", SelectedValue);
-	ContactExists = ThisForm.ContactList.FindRows(FilterParameters).Count();
+	FilterParameters = New Structure("ContactPerson", SelectedValue);
+	ContactExists = ThisForm.Object.ContactPersons.FindRows(FilterParameters).Count();
 	
 	If Not ContactExists Then
 		
-		NewContactRow = ThisForm.ContactList.Add();
-		NewContactRow.Contact = SelectedValue;
+		NewContactRow = ThisForm.Object.ContactPersons.Add();
+		NewContactRow.ContactPerson = SelectedValue;
 		Modified = True;
 		
 	EndIf;
@@ -1768,8 +1680,8 @@ Procedure DeleteContact(Command)
 	
 	If Not CurrentData = Undefined Then
 		
-		CurrentDataIndex = ThisForm.ContactList.IndexOf(CurrentData);
-		ThisForm.ContactList.Delete(CurrentDataIndex);
+		CurrentDataIndex = ThisForm.Object.ContactPersons.IndexOf(CurrentData);
+		ThisForm.Object.ContactPersons.Delete(CurrentDataIndex);
 		Modified = True;
 		
 	EndIf;
@@ -1783,7 +1695,7 @@ Procedure ContactListSelection(Item, SelectedRow, Field, StandardProcessing)
 	
 	If NOT CurrentData = Undefined Then
 		
-		OpenForm("Catalog.ContactPersons.ObjectForm", New Structure("Key", CurrentData.Contact), ThisForm);
+		OpenForm("Catalog.ContactPersons.ObjectForm", New Structure("Key", CurrentData.ContactPerson), ThisForm);
 		
 	EndIf;
 	
