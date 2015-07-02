@@ -2034,6 +2034,7 @@ Procedure ProcessContractors()
 		
 		ContractorRow = OutletObject.ContractorsList.Add();
 		ContractorRow.Contractor = ContractorObject.Ref;
+		ContractorRow.Default = True;
 		
 		OutletObject.Write();
 		
