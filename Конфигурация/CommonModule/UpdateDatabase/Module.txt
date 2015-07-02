@@ -1994,17 +1994,48 @@ Procedure ProcessContractors()
 		FillPropertyValues(ContractorObject, Selection, "Email, INN, KPP, LegalAddress, LegalName, OwnershipType, PhoneNumber, WebSite");
 		ContractorObject.Description = ?(ValueIsFilled(Selection.LegalName), Selection.LegalName, Selection.Description);
 		
+		Query = New Query(
+		"SELECT
+		|	TerritoryOutlets.Ref AS Territory
+		|FROM
+		|	Catalog.Territory.Outlets AS TerritoryOutlets
+		|WHERE
+		|	TerritoryOutlets.Outlet = &Outlet");
+		Query.SetParameter("Outlet", OutletObject.Ref);
+		Result = Query.Execute().Unload();
+		
+		For Each Row In Result Do
+			
+			TerritoryExists = NOT ContractorObject.Territories.Find(Row.Territory) = Undefined;
+			
+			If Not TerritoryExists Then
+				
+				TerritoryRow = ContractorObject.Territories.Add();
+				TerritoryRow.Territory = Row.Territory;
+				
+			EndIf;
+			
+		EndDo;
+		
+		For Each TerritoryRow In ContractorObject.Territories Do
+			
+			RegionExists = Not ContractorObject.Regions.Find(Row.Territory.Owner) = Undefined;
+			
+			If Not RegionExists Then
+				
+				RegionRow = ContractorObject.Regions.Add();
+				RegionRow.Region = TerritoryRow.Territory.Owner;
+				
+			EndIf;
+			
+		EndDo;
+		
 		ContractorObject.Write();
+		
+		ContractorRow = OutletObject.ContractorsList.Add();
+		ContractorRow.Contractor = ContractorObject.Ref;
+		
 		OutletObject.Write();
-		
-		RecordManager = InformationRegisters.OutletsContractors.CreateRecordManager();
-		RecordManager.Period = CurrentDate();
-		RecordManager.Contractor = ContractorObject.Ref;
-		RecordManager.Outlet = OutletObject.Ref;
-		RecordManager.Default = True;
-		RecordManager.Status = Enums.ValueTableRowStatuses.Added;
-		
-		RecordManager.Write();
 		
 	EndDo;
 	
