@@ -688,21 +688,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		</right>
 	</object>
 	<object>
-		<name>InformationRegister.PartnersContractors</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>Catalog.bitmobile_НастройкиСинхронизации.TabularSection.ТабличныеЧасти.Attribute.ТабличнаяЧастьОбъектаКонфигурации</name>
 		<right>
 			<name>View</name>
@@ -838,21 +823,6 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_AccountReceivable")
 		<right>
 			<name>Edit</name>
 			<value>false</value>
-		</right>
-	</object>
-	<object>
-		<name>InformationRegister.OutletsContractors</name>
-		<right>
-			<name>Read</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>Update</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
 		</right>
 	</object>
 	<object>

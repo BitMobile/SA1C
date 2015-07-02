@@ -239,8 +239,6 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		SetPrivilegedMode(False);
 		
-		WriteContractors();
-		
 	EndIf;
 	
 EndProcedure
@@ -768,9 +766,7 @@ Procedure FillContractors()
 		|	PartnersContractorsSliceLast.Contractor,
 		|	PartnersContractorsSliceLast.Default
 		|FROM
-		|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
-		|WHERE
-		|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)");
+		|	Catalog.Distributor.Contractors AS PartnersContractorsSliceLast");
 		
 		Query.SetParameter("Partner", ThisForm.Object.Distributor);
 		
@@ -780,12 +776,10 @@ Procedure FillContractors()
 		
 		Query = New Query(
 		"SELECT ALLOWED
-		|	OutletsContractorsSliceLast.Contractor,
-		|	OutletsContractorsSliceLast.Default
+		|	OutletsContractors.Contractor,
+		|	OutletsContractors.Default
 		|FROM
-		|	InformationRegister.OutletsContractors.SliceLast(, Outlet = &Outlet) AS OutletsContractorsSliceLast
-		|WHERE
-		|	OutletsContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)");
+		|	Catalog.Outlet.ContractorsList AS OutletsContractors");
 		
 		Query.SetParameter("Outlet", ThisForm.Object.Ref);
 		
@@ -793,102 +787,7 @@ Procedure FillContractors()
 		
 	EndIf;
 	
-	ThisForm.ContractorsList.Load(Result);
-	
-EndProcedure
-
-&AtServer
-Procedure WriteContractors()
-	
-	If Not ValueIsFilled(ThisForm.Object.Distributor) Then
-		
-		Query = New Query(
-		"SELECT ALLOWED
-		|	FormContractors.Contractor,
-		|	FormContractors.Default
-		|INTO FormContractors
-		|FROM
-		|	&FormContractors AS FormContractors
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT ALLOWED
-		|	OutletsContractorsSliceLast.Contractor,
-		|	OutletsContractorsSliceLast.Default
-		|INTO RegisterContractors
-		|FROM
-		|	InformationRegister.OutletsContractors.SliceLast(, ) AS OutletsContractorsSliceLast
-		|WHERE
-		|	OutletsContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT ALLOWED
-		|	FormContractors.Contractor AS FormContractor,
-		|	FormContractors.Default AS FormDefault,
-		|	RegisterContractors.Contractor AS RegisterContractor,
-		|	RegisterContractors.Default AS RegisterDefault
-		|INTO Difference
-		|FROM
-		|	FormContractors AS FormContractors
-		|		FULL JOIN RegisterContractors AS RegisterContractors
-		|		ON FormContractors.Contractor = RegisterContractors.Contractor
-		|WHERE
-		|	(FormContractors.Contractor IS NULL 
-		|				AND FormContractors.Default IS NULL 
-		|			OR RegisterContractors.Contractor IS NULL 
-		|				AND RegisterContractors.Default IS NULL 
-		|			OR NOT FormContractors.Default = RegisterContractors.Default)
-		|;
-		|
-		|////////////////////////////////////////////////////////////////////////////////
-		|SELECT ALLOWED
-		|	&CurrentDate AS Period,
-		|	&Outlet AS Outlet,
-		|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
-		|	ISNULL(Difference.FormDefault, Difference.RegisterDefault) AS Default,
-		|	CASE
-		|		WHEN Difference.FormContractor IS NULL 
-		|				AND Difference.FormDefault IS NULL 
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
-		|		WHEN Difference.RegisterContractor IS NULL 
-		|				AND Difference.RegisterDefault IS NULL 
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
-		|		WHEN NOT Difference.FormDefault = Difference.RegisterDefault
-		|			THEN VALUE(Enum.ValueTableRowStatuses.Modified)
-		|	END AS Status
-		|FROM
-		|	Difference AS Difference");
-		
-	Else
-		
-		Query = New Query(
-		"SELECT ALLOWED
-		|	&CurrentDate AS Period,
-		|	&Outlet AS Outlet,
-		|	OutletsContractorsSliceLast.Contractor AS Contractor,
-		|	OutletsContractorsSliceLast.Default AS Default,
-		|	VALUE(Enum.ValueTableRowStatuses.Deleted) AS Status
-		|FROM
-		|	InformationRegister.OutletsContractors.SliceLast(, Outlet = &Outlet) AS OutletsContractorsSliceLast
-		|WHERE
-		|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)");
-		
-	EndIf;
-	
-	Query.SetParameter("FormContractors", ThisForm.ContractorsList.Unload());
-	Query.SetParameter("Outlet", ThisForm.Object.Ref);
-	Query.SetParameter("CurrentDate", CurrentDate());
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		RecordManager = InformationRegisters.OutletsContractors.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
-		RecordManager.Write();
-		
-	EndDo;
+	ThisForm.Object.ContractorsList.Load(Result);
 	
 EndProcedure
 
@@ -931,22 +830,18 @@ Function GetAvailableContractors()
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	PartnersContractorsSliceLast.Contractor
+	|	PartnersContractors.Contractor
 	|INTO PartnersContractors
 	|FROM
-	|	InformationRegister.PartnersContractors.SliceLast AS PartnersContractorsSliceLast
-	|WHERE
-	|	NOT PartnersContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	Catalog.Distributor.Contractors AS PartnersContractors
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	OutletsContractorsSliceLast.Contractor
+	|	OutletsContractors.Contractor
 	|INTO OutletsContractors
 	|FROM
-	|	InformationRegister.OutletsContractors.SliceLast AS OutletsContractorsSliceLast
-	|WHERE
-	|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	Catalog.Outlet.ContractorsList AS OutletsContractors
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
@@ -965,7 +860,7 @@ Function GetAvailableContractors()
 	|	AND PartnersContractors.Contractor IS NULL 
 	|	AND FormContractors.Contractor IS NULL ");
 	
-	Query.SetParameter("FormContractors", ThisForm.ContractorsList.Unload(, "Contractor"));
+	Query.SetParameter("FormContractors", ThisForm.Object.ContractorsList.Unload(, "Contractor"));
 	Result = Query.Execute().Unload();
 	
 	AvailableContractors = New Array;
@@ -1503,7 +1398,7 @@ EndProcedure
 &AtClient
 Procedure DistributorOnChange(Item)
 	
-	If NOT ThisForm.ContractorsList.Count() = 0 Then
+	If NOT ThisForm.Object.ContractorsList.Count() = 0 Then
 		
 		ShowQueryBox(New NotifyDescription("ProcessDistributorChange", ThisForm),
 										   NStr("en = 'Value table ""Contractors"" well be changed. Continue?'; ru = 'Табличная часть ""Контрагенты"" будет изменена. Продолжить?'"),
@@ -1526,12 +1421,12 @@ EndProcedure
 Procedure ContractorsListChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
 	FilterParameters = New Structure("Contractor", SelectedValue);
-	ContractorExists = ThisForm.ContractorsList.FindRows(FilterParameters).Count();
+	ContractorExists = ThisForm.Object.ContractorsList.FindRows(FilterParameters).Count();
 	
 	If NOT ContractorExists Then
 		
-		FirstItem = ThisForm.ContractorsList.Count() = 0;
-		NewContractorRow = ThisForm.ContractorsList.Add();
+		FirstItem = ThisForm.Object.ContractorsList.Count() = 0;
+		NewContractorRow = ThisForm.Object.ContractorsList.Add();
 		NewContractorRow.Contractor = SelectedValue;
 		NewContractorRow.Default = FirstItem;
 		Modified = True;
@@ -1581,20 +1476,20 @@ Procedure DeleteContractor(Command)
 	
 	If Not CurrentData = Undefined Then
 		
-		CurrentDataIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
-		ThisForm.ContractorsList.Delete(CurrentDataIndex);
+		CurrentDataIndex = ThisForm.Object.ContractorsList.IndexOf(CurrentData);
+		ThisForm.Object.ContractorsList.Delete(CurrentDataIndex);
 		Modified = True;
 		
 	EndIf;
 	
-	If ThisForm.ContractorsList.Count() Then
+	If ThisForm.Object.ContractorsList.Count() Then
 		
 		FilterParameters = New Structure("Default", True);
-		NoDefault = NOT ThisForm.ContractorsList.FindRows(FilterParameters).Count();
+		NoDefault = NOT ThisForm.Object.ContractorsList.FindRows(FilterParameters).Count();
 		
 		If NoDefault Then
 			
-			ThisForm.ContractorsList[0].Default = True;
+			ThisForm.Object.ContractorsList[0].Default = True;
 			
 		EndIf;
 		

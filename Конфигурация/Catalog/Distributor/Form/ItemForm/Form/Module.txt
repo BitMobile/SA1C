@@ -4,8 +4,6 @@
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	FillContractors();
-	
 	FillRegions();
 	
 	FillTerritories();
@@ -16,115 +14,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
-&AtServer
-Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
-	
-	If Not Cancel Then
-		
-		WriteContractors();
-		
-	EndIf;
-	
-EndProcedure
-
 #Region Contractors
-
-&AtServer
-Procedure FillContractors()
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	PartnersContractorsSliceLast.Contractor,
-	|	PartnersContractorsSliceLast.Default
-	|FROM
-	|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
-	|WHERE
-	|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)");
-	
-	Query.SetParameter("Partner", ThisForm.Object.Ref);
-	
-	Result = Query.Execute().Unload();
-	
-	ThisForm.Contractors.Load(Result);
-	
-EndProcedure
-
-&AtServer
-Procedure WriteContractors()
-	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	FormContractors.Contractor,
-	|	FormContractors.Default
-	|INTO FormContractors
-	|FROM
-	|	&FormContractors AS FormContractors
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWEd
-	|	PartnersContractorsSliceLast.Contractor,
-	|	PartnersContractorsSliceLast.Default
-	|INTO RegisterContractors
-	|FROM
-	|	InformationRegister.PartnersContractors.SliceLast(, Partner = &Partner) AS PartnersContractorsSliceLast
-	|WHERE
-	|	PartnersContractorsSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	FormContractors.Contractor AS FormContractor,
-	|	FormContractors.Default AS FormDefault,
-	|	RegisterContractors.Contractor AS RegisterContractor,
-	|	RegisterContractors.Default AS RegisterDefault
-	|INTO Difference
-	|FROM
-	|	FormContractors AS FormContractors
-	|		FULL JOIN RegisterContractors AS RegisterContractors
-	|		ON FormContractors.Contractor = RegisterContractors.Contractor
-	|WHERE
-	|	(FormContractors.Contractor IS NULL 
-	|				AND FormContractors.Default IS NULL 
-	|			OR RegisterContractors.Contractor IS NULL 
-	|				AND RegisterContractors.Default IS NULL 
-	|			OR NOT FormContractors.Default = RegisterContractors.Default)
-	|;
-	|
-	|////////////////////////////////////////////////////////////////////////////////
-	|SELECT ALLOWED
-	|	&CurrentDate AS Period,
-	|	&Partner AS Partner,
-	|	ISNULL(Difference.FormContractor, Difference.RegisterContractor) AS Contractor,
-	|	ISNULL(Difference.FormDefault, Difference.RegisterDefault) AS Default,
-	|	CASE
-	|		WHEN Difference.FormContractor IS NULL 
-	|				AND Difference.FormDefault IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Deleted)
-	|		WHEN Difference.RegisterContractor IS NULL 
-	|				AND Difference.RegisterDefault IS NULL 
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Added)
-	|		WHEN NOT Difference.FormDefault = Difference.RegisterDefault
-	|			THEN VALUE(Enum.ValueTableRowStatuses.Modified)
-	|	END AS Status
-	|FROM
-	|	Difference AS Difference");
-	
-	Query.SetParameter("FormContractors", ThisForm.Contractors.Unload());
-	Query.SetParameter("Partner", ThisForm.Object.Ref);
-	Query.SetParameter("CurrentDate", CurrentDate());
-	
-	Result = Query.Execute().Unload();
-	
-	For Each Row In Result Do
-		
-		RecordManager = InformationRegisters.PartnersContractors.CreateRecordManager();
-		FillPropertyValues(RecordManager, Row);
-		RecordManager.Write();
-		
-	EndDo;
-	
-EndProcedure
 
 &AtServer
 Function GetFilters()
@@ -167,22 +57,18 @@ Function GetAvailableContractors()
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	PartnersContractorsSliceLast.Contractor
+	|	PartnersContractors.Contractor
 	|INTO PartnersContractors
 	|FROM
-	|	InformationRegister.PartnersContractors.SliceLast AS PartnersContractorsSliceLast
-	|WHERE
-	|	NOT PartnersContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	Catalog.Distributor.Contractors AS PartnersContractors
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
 	|SELECT ALLOWED
-	|	OutletsContractorsSliceLast.Contractor
+	|	OutletsContractors.Contractor
 	|INTO OutletsContractors
 	|FROM
-	|	InformationRegister.OutletsContractors.SliceLast AS OutletsContractorsSliceLast
-	|WHERE
-	|	NOT OutletsContractorsSliceLast.Status = VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	Catalog.Outlet.ContractorsList AS OutletsContractors
 	|;
 	|
 	|////////////////////////////////////////////////////////////////////////////////
@@ -201,7 +87,7 @@ Function GetAvailableContractors()
 	|	AND PartnersContractors.Contractor IS NULL 
 	|	AND FormContractors.Contractor IS NULL ");
 	
-	Query.SetParameter("FormContractors", ThisForm.Contractors.Unload(, "Contractor"));
+	Query.SetParameter("FormContractors", ThisForm.Object.Contractors.Unload(, "Contractor"));
 	Result = Query.Execute().Unload();
 	
 	AvailableContractors = New Array;
@@ -382,14 +268,14 @@ Procedure ContractorsDefaultOnChange(Item)
 	
 	CurrentData = Items.Contractors.CurrentData;
 	IsNotDefaultAfterChange = CurrentData.Default;
-	ThisRowIndex = ThisForm.Contractors.IndexOf(CurrentData);
-	ThisRow = ThisForm.Contractors.Get(ThisRowIndex);
+	ThisRowIndex = ThisForm.Object.Contractors.IndexOf(CurrentData);
+	ThisRow = ThisForm.Object.Contractors.Get(ThisRowIndex);
 	
 	If IsNotDefaultAfterChange Then
 		
-		For Each Row In ThisForm.Contractors Do
+		For Each Row In ThisForm.Object.Contractors Do
 			
-			Row.Default = ThisForm.Contractors.IndexOf(Row) = ThisRowIndex;
+			Row.Default = ThisForm.Object.Contractors.IndexOf(Row) = ThisRowIndex;
 			
 		EndDo;
 		
@@ -405,12 +291,12 @@ EndProcedure
 Procedure ContractorsChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
 	FilterParameters = New Structure("Contractor", SelectedValue);
-	ContractorExists = ThisForm.Contractors.FindRows(FilterParameters).Count();
+	ContractorExists = ThisForm.Object.Contractors.FindRows(FilterParameters).Count();
 	
 	If NOT ContractorExists Then
 		
-		FirstItem = ThisForm.Contractors.Count() = 0;
-		NewContractorRow = ThisForm.Contractors.Add();
+		FirstItem = ThisForm.Object.Contractors.Count() = 0;
+		NewContractorRow = ThisForm.Object.Contractors.Add();
 		NewContractorRow.Contractor = SelectedValue;
 		NewContractorRow.Default = FirstItem;
 		Modified = True;
@@ -667,20 +553,20 @@ Procedure RemoveContractor(Command)
 	
 	If Not CurrentData = Undefined Then
 		
-		CurrentDataIndex = ThisForm.Contractors.IndexOf(CurrentData);
-		ThisForm.Contractors.Delete(CurrentDataIndex);
+		CurrentDataIndex = ThisForm.Object.Contractors.IndexOf(CurrentData);
+		ThisForm.Object.Contractors.Delete(CurrentDataIndex);
 		Modified = True;
 		
 	EndIf;
 	
-	If ThisForm.Contractors.Count() Then
+	If ThisForm.Object.Contractors.Count() Then
 		
 		FilterParameters = New Structure("Default", True);
-		NoDefault = NOT ThisForm.Contractors.FindRows(FilterParameters).Count();
+		NoDefault = NOT ThisForm.Object.Contractors.FindRows(FilterParameters).Count();
 		
 		If NoDefault Then
 			
-			ThisForm.Contractors[0].Default = True;
+			ThisForm.Object.Contractors[0].Default = True;
 			
 		EndIf;
 		
