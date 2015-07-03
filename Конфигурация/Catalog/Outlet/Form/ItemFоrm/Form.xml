@@ -130,6 +130,7 @@
 						<InputField name="Distributor" id="11">
 							<DataPath>Object.Distributor</DataPath>
 							<EditMode>EnterOnInput</EditMode>
+							<ListChoiceMode>true</ListChoiceMode>
 							<ContextMenu name="DistributorContextMenu" id="12"/>
 							<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
 							<Events>
