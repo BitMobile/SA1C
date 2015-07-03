@@ -27,7 +27,7 @@
 	<Item id="3ad19132-b854-4472-9200-433bcd4bab37">
 		<Name>Distributor</Name>
 		<Code>000000006</Code>
-		<Description>en = 'Distributor'; ru = 'Дистрибьютор'</Description>
+		<Description>en = 'Partner'; ru = 'Партнер'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="bd226959-a002-4fa0-b7f0-8158ebe66501">
