@@ -779,7 +779,9 @@ Procedure FillContractors()
 		|	OutletsContractors.Contractor,
 		|	OutletsContractors.Default
 		|FROM
-		|	Catalog.Outlet.ContractorsList AS OutletsContractors");
+		|	Catalog.Outlet.ContractorsList AS OutletsContractors
+		|WHERE
+		|	OutletsContractors.Ref = &Outlet");
 		
 		Query.SetParameter("Outlet", ThisForm.Object.Ref);
 		
