@@ -766,7 +766,9 @@ Procedure FillContractors()
 		|	PartnersContractorsSliceLast.Contractor,
 		|	PartnersContractorsSliceLast.Default
 		|FROM
-		|	Catalog.Distributor.Contractors AS PartnersContractorsSliceLast");
+		|	Catalog.Distributor.Contractors AS PartnersContractorsSliceLast
+		|WHERE
+		|	PartnersContractorsSliceLast.Ref = &Partner");
 		
 		Query.SetParameter("Partner", ThisForm.Object.Distributor);
 		
