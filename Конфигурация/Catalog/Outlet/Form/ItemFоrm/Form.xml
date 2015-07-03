@@ -339,6 +339,9 @@
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="ContractorsListDefaultContextMenu" id="439"/>
 									<ExtendedTooltip name="ContractorsListDefaultExtendedTooltip" id="440"/>
+									<Events>
+										<Event name="OnChange">ContractorsListDefaultOnChange</Event>
+									</Events>
 								</CheckBoxField>
 							</ChildItems>
 						</Table>
