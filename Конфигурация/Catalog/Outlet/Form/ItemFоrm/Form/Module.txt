@@ -1444,14 +1444,14 @@ Procedure ContractorsListDefaultOnChange(Item)
 		
 	CurrentData = Items.ContractorsList.CurrentData;
 	IsNotDefaultAfterChange = CurrentData.Default;
-	ThisRowIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
-	ThisRow = ThisForm.ContractorsList.Get(ThisRowIndex);
+	ThisRowIndex = ThisForm.Object.ContractorsList.IndexOf(CurrentData);
+	ThisRow = ThisForm.Object.ContractorsList.Get(ThisRowIndex);
 	
 	If IsNotDefaultAfterChange Then
 		
-		For Each Row In ThisForm.ContractorsList Do
+		For Each Row In ThisForm.Object.ContractorsList Do
 			
-			Row.Default = ThisForm.ContractorsList.IndexOf(Row) = ThisRowIndex;
+			Row.Default = ThisForm.Object.ContractorsList.IndexOf(Row) = ThisRowIndex;
 			
 		EndDo;
 		
