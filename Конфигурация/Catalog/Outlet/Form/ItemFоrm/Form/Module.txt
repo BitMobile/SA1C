@@ -73,6 +73,12 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	HandleContactsAdditionalAccessRights();
 	
+	Parameter = New ChoiceParameter("Outlet", ThisForm.Object.Ref);
+	Array = New Array;
+	Array.Add(Parameter);
+	NewParameters = New FixedArray(Array);
+	ThisForm.Items.Distributor.ChoiceParameters = NewParameters;
+	
 EndProcedure
 
 &AtServer
@@ -1597,15 +1603,6 @@ Procedure ContactListSelection(Item, SelectedRow, Field, StandardProcessing)
 		OpenForm("Catalog.ContactPersons.ObjectForm", New Structure("Key", CurrentData.ContactPerson), ThisForm);
 		
 	EndIf;
-	
-EndProcedure
-
-&AtClient
-Procedure DistributorStartChoice(Item, ChoiceData, StandardProcessing)
-	
-	StandardProcessing = False;
-	
-	ChoiceData = GetPartners(ThisForm.Object.Ref);
 	
 EndProcedure
 

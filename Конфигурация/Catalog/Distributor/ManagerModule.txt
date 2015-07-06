@@ -1,0 +1,38 @@
+﻿
+Procedure ChoiceDataGetProcessing(ChoiceData, Parameters, StandardProcessing)
+	
+	If Parameters.Property("Outlet") Then
+		
+		StandardProcessing = False;
+		Outlet = Parameters.Outlet;
+		ChoiceData = New ValueList;
+		
+		If NOT Outlet = Catalogs.Outlet.EmptyRef() Then
+			
+			Query = New Query(
+			"SELECT ALLOWED DISTINCT
+			|	DistributorTerritories.Ref AS Partner
+			|FROM
+			|	Catalog.Territory.Outlets AS TerritoryOutlets
+			|		LEFT JOIN Catalog.Distributor.Territories AS DistributorTerritories
+			|		ON TerritoryOutlets.Ref = DistributorTerritories.Territory
+			|WHERE
+			|	TerritoryOutlets.Outlet = &Outlet
+			|
+			|ORDER BY
+			|	Partner
+			|AUTOORDER");
+			Query.SetParameter("Outlet", Outlet);
+			Result = Query.Execute().Unload();
+			
+			For Each Row In Result Do
+				
+				ChoiceData.Add(Row.Partner);
+				
+			EndDo;
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure

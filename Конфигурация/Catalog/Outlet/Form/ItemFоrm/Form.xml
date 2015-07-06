@@ -130,12 +130,20 @@
 						<InputField name="Distributor" id="11">
 							<DataPath>Object.Distributor</DataPath>
 							<EditMode>EnterOnInput</EditMode>
+							<ChooseType>false</ChooseType>
 							<TextEdit>false</TextEdit>
+							<ChoiceParameters>
+								<app:item name="Outlet">
+									<app:value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation/>
+										<Value xsi:type="xs:string">Object.Ref</Value>
+									</app:value>
+								</app:item>
+							</ChoiceParameters>
 							<ContextMenu name="DistributorContextMenu" id="12"/>
 							<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
 							<Events>
 								<Event name="OnChange">DistributorOnChange</Event>
-								<Event name="StartChoice">DistributorStartChoice</Event>
 							</Events>
 						</InputField>
 						<InputField name="Address" id="13">
