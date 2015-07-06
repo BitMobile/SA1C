@@ -117,6 +117,7 @@
 							<ChildItems>
 								<InputField name="ContractorsContractor" id="264">
 									<DataPath>Object.Contractors.Contractor</DataPath>
+									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="ContractorsContractorContextMenu" id="265"/>
 									<ExtendedTooltip name="ContractorsContractorExtendedTooltip" id="266"/>
