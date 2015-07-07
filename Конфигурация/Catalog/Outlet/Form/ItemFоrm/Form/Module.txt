@@ -780,24 +780,25 @@ Procedure FillContractors()
 		
 		Result = Query.Execute().Unload();
 		
+		ThisForm.Object.ContractorsList.Load(Result);
+		
 	Else
 		
-		Query = New Query(
-		"SELECT ALLOWED
-		|	OutletsContractors.Contractor,
-		|	OutletsContractors.Default
-		|FROM
-		|	Catalog.Outlet.ContractorsList AS OutletsContractors
-		|WHERE
-		|	OutletsContractors.Ref = &Outlet");
 		
-		Query.SetParameter("Outlet", ThisForm.Object.Ref);
-		
-		Result = Query.Execute().Unload();
+	//	Query = New Query(
+	//	"SELECT ALLOWED
+	//	|	OutletsContractors.Contractor,
+	//	|	OutletsContractors.Default
+	//	|FROM
+	//	|	Catalog.Outlet.ContractorsList AS OutletsContractors
+	//	|WHERE
+	//	|	OutletsContractors.Ref = &Outlet");
+	//	
+	//	Query.SetParameter("Outlet", ThisForm.Object.Ref);
+	//	
+	//	Result = Query.Execute().Unload();
 		
 	EndIf;
-	
-	ThisForm.Object.ContractorsList.Load(Result);
 	
 EndProcedure
 
@@ -1532,6 +1533,8 @@ EndProcedure
 Procedure ProcessDistributorChange(Result, Parameters) Export
 	
 	If Result = DialogReturnCode.Yes Then
+		
+		ThisForm.Object.ContractorsList.Clear();
 		
 		FillContractors();
 		
