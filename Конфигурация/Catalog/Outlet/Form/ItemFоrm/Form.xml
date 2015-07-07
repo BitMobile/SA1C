@@ -132,14 +132,6 @@
 							<EditMode>EnterOnInput</EditMode>
 							<ChooseType>false</ChooseType>
 							<TextEdit>false</TextEdit>
-							<ChoiceParameters>
-								<app:item name="Outlet">
-									<app:value xsi:type="FormChoiceListDesTimeValue">
-										<Presentation/>
-										<Value xsi:type="xs:string">Object.Ref</Value>
-									</app:value>
-								</app:item>
-							</ChoiceParameters>
 							<ContextMenu name="DistributorContextMenu" id="12"/>
 							<ExtendedTooltip name="DistributorExtendedTooltip" id="153"/>
 							<Events>

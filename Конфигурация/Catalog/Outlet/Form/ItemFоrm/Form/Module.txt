@@ -262,6 +262,12 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
 	FillSnapshots(Connection, Path, FileTable);
 	
+	Parameter = New ChoiceParameter("Outlet", ThisForm.Object.Ref);
+	Array = New Array;
+	Array.Add(Parameter);
+	NewParameters = New FixedArray(Array);
+	ThisForm.Items.Distributor.ChoiceParameters = NewParameters;
+	
 EndProcedure
 
 &AtServer
