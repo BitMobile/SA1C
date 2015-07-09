@@ -1753,40 +1753,44 @@ EndProcedure
 &AtClient
 Procedure EndDateOnChange(Item)
 	
-	// Если новая дата конца действия анкеты раньше даты начала действия анкеты
-	// Ставим новую дату конца действия анкеты равной датей начала действия анкеты
-	Object.EndDate = ?(EndOfDay(Object.EndDate) >= EndOfDay(Object.BeginDate),
-						Object.EndDate, 
-						Object.BeginDate);
+	If ValueIsFilled(Object.EndDate) Then
 	
-	
-	// Если новая дата окончания действия анкеты меньше чем текущая дата
-	If EndOfDay(Object.EndDate) < EndOfDay(CurrentDate()) Then
+		// Если новая дата конца действия анкеты раньше даты начала действия анкеты
+		// Ставим новую дату конца действия анкеты равной датей начала действия анкеты
+		Object.EndDate = ?(EndOfDay(Object.EndDate) >= EndOfDay(Object.BeginDate),
+							Object.EndDate, 
+							Object.BeginDate);
 		
-		// Устанавливаем дату окончания действия анкеты равной текущей дате
-		Object.EndDate = CurrentDate();
 		
-		// Если анкета активна
-		If StatusIs("Active") Then
+		// Если новая дата окончания действия анкеты меньше чем текущая дата
+		If EndOfDay(Object.EndDate) < EndOfDay(CurrentDate()) Then
 			
-			// Спрашиваем у пользователя хочет ли он сменить статус анкеты на "Неактивна".
-			// Если да, то меняем статус, записываем документ.
-			// Если нет, то оставляем статус старым, дату конца периода действия анкеты
-			// устанавливаем равной старой дате (та что записана в объекте).
-			ShowQueryBox(New NotifyDescription("ChangeEndDateInActiveStatus", ThisForm),
-						NStr("en = 'New end period date of questionnaire is before current date. 
-							|Status will be automatically set to value ""Inactive"". End period date 
-							|of questionnaire will be set to current date.
-							|Questionnaire will be rewritten and blocked for changing. 
-							|Continue?'; ru = 'Новая дата конца действия анкеты меньше чем текущая дата. 
-							|Статус будет автоматически установлен в значение ""Неактивна"", Дата конца 
-							|действия анкеты будет установлена соответствующей текущей дате.
-							|Анкета будет перезаписана и заблокирована для изменения. Продолжить?'"),
-						QuestionDialogMode.YesNo,
-						0,
-						DialogReturnCode.No,
-						NStr("en = 'Change status to ""Inactive""?'; 
-								|ru = 'Изменить статус на ""Неактивна""?'"));
+			// Устанавливаем дату окончания действия анкеты равной текущей дате
+			Object.EndDate = CurrentDate();
+			
+			// Если анкета активна
+			If StatusIs("Active") Then
+				
+				// Спрашиваем у пользователя хочет ли он сменить статус анкеты на "Неактивна".
+				// Если да, то меняем статус, записываем документ.
+				// Если нет, то оставляем статус старым, дату конца периода действия анкеты
+				// устанавливаем равной старой дате (та что записана в объекте).
+				ShowQueryBox(New NotifyDescription("ChangeEndDateInActiveStatus", ThisForm),
+							NStr("en = 'New end period date of questionnaire is before current date. 
+								|Status will be automatically set to value ""Inactive"". End period date 
+								|of questionnaire will be set to current date.
+								|Questionnaire will be rewritten and blocked for changing. 
+								|Continue?'; ru = 'Новая дата конца действия анкеты меньше чем текущая дата. 
+								|Статус будет автоматически установлен в значение ""Неактивна"", Дата конца 
+								|действия анкеты будет установлена соответствующей текущей дате.
+								|Анкета будет перезаписана и заблокирована для изменения. Продолжить?'"),
+							QuestionDialogMode.YesNo,
+							0,
+							DialogReturnCode.No,
+							NStr("en = 'Change status to ""Inactive""?'; 
+									|ru = 'Изменить статус на ""Неактивна""?'"));
+				
+			EndIf;
 			
 		EndIf;
 		
