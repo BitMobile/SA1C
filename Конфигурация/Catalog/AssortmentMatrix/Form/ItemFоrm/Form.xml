@@ -480,6 +480,13 @@
 													<ContextMenu name="OutletsOutlet1ContextMenu" id="431"/>
 													<ExtendedTooltip name="OutletsOutlet1ExtendedTooltip" id="432"/>
 												</InputField>
+												<InputField name="OutletsOutletDistributor1" id="504">
+													<DataPath>Outlets.Outlet.Distributor</DataPath>
+													<ReadOnly>true</ReadOnly>
+													<EditMode>EnterOnInput</EditMode>
+													<ContextMenu name="OutletsOutletDistributor1ContextMenu" id="505"/>
+													<ExtendedTooltip name="OutletsOutletDistributor1ExtendedTooltip" id="506"/>
+												</InputField>
 												<InputField name="OutletsOutletClass1" id="433">
 													<DataPath>Outlets.Outlet.Class</DataPath>
 													<ReadOnly>true</ReadOnly>
@@ -732,6 +739,11 @@
 																	</Title>
 																	<ContextMenu name="OutletsSelectOutletContextMenu" id="395"/>
 																	<ExtendedTooltip name="OutletsSelectOutletExtendedTooltip" id="396"/>
+																</LabelField>
+																<LabelField name="OutletsSelectDistributor" id="507">
+																	<DataPath>OutletsSelect.Distributor</DataPath>
+																	<ContextMenu name="OutletsSelectDistributorContextMenu" id="508"/>
+																	<ExtendedTooltip name="OutletsSelectDistributorExtendedTooltip" id="509"/>
 																</LabelField>
 																<LabelField name="OutletsSelectClass" id="391">
 																	<DataPath>OutletsSelect.Class</DataPath>
