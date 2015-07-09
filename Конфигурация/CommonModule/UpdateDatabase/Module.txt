@@ -252,6 +252,9 @@ Procedure UpdateForAllReleases(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update system objects'; ru = 'Обновление объектов системы'"));  
 	ProcessSystemObjects();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update information register ""Default values""'; ru = 'Обновление регистра сведений ""Значения по умолчанию""'"));
+	CommonProcessors.FillDefaultValuesInformationRegister();
+	
 EndProcedure
 
 Procedure ProcessPredefinedRoles()
