@@ -102,6 +102,21 @@ Procedure OnReadAtServer(CurrentObject)
 EndProcedure
 
 &AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If NOT ValueIsFilled(ThisForm.Object.Distributor) Then
+		
+		CurrentObject.ContractorsList.Load(ThisForm.ContractorsList.Unload());
+		
+	Else
+		
+		CurrentObject.ContractorsList.Clear();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
 Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 	If Not Cancel Then
@@ -787,25 +802,24 @@ Procedure FillContractors()
 		
 		Result = Query.Execute().Unload();
 		
-		ThisForm.Object.ContractorsList.Load(Result);
-		
 	Else
 		
+		Query = New Query(
+		"SELECT ALLOWED
+		|	OutletsContractors.Contractor,
+		|	OutletsContractors.Default
+		|FROM
+		|	Catalog.Outlet.ContractorsList AS OutletsContractors
+		|WHERE
+		|	OutletsContractors.Ref = &Outlet");
 		
-	//	Query = New Query(
-	//	"SELECT ALLOWED
-	//	|	OutletsContractors.Contractor,
-	//	|	OutletsContractors.Default
-	//	|FROM
-	//	|	Catalog.Outlet.ContractorsList AS OutletsContractors
-	//	|WHERE
-	//	|	OutletsContractors.Ref = &Outlet");
-	//	
-	//	Query.SetParameter("Outlet", ThisForm.Object.Ref);
-	//	
-	//	Result = Query.Execute().Unload();
+		Query.SetParameter("Outlet", ThisForm.Object.Ref);
+		
+		Result = Query.Execute().Unload();
 		
 	EndIf;
+	
+	ThisForm.ContractorsList.Load(Result);
 	
 EndProcedure
 
@@ -878,7 +892,7 @@ Function GetAvailableContractors()
 	|	AND PartnersContractors.Contractor IS NULL 
 	|	AND FormContractors.Contractor IS NULL ");
 	
-	Query.SetParameter("FormContractors", ThisForm.Object.ContractorsList.Unload(, "Contractor"));
+	Query.SetParameter("FormContractors", ThisForm.ContractorsList.Unload(, "Contractor"));
 	Result = Query.Execute().Unload();
 	
 	AvailableContractors = New Array;
@@ -1441,12 +1455,12 @@ EndProcedure
 Procedure ContractorsListChoiceProcessing(Item, SelectedValue, StandardProcessing)
 	
 	FilterParameters = New Structure("Contractor", SelectedValue);
-	ContractorExists = ThisForm.Object.ContractorsList.FindRows(FilterParameters).Count();
+	ContractorExists = ThisForm.ContractorsList.FindRows(FilterParameters).Count();
 	
 	If NOT ContractorExists Then
 		
-		FirstItem = ThisForm.Object.ContractorsList.Count() = 0;
-		NewContractorRow = ThisForm.Object.ContractorsList.Add();
+		FirstItem = ThisForm.ContractorsList.Count() = 0;
+		NewContractorRow = ThisForm.ContractorsList.Add();
 		NewContractorRow.Contractor = SelectedValue;
 		NewContractorRow.Default = FirstItem;
 		Modified = True;
@@ -1460,14 +1474,14 @@ Procedure ContractorsListDefaultOnChange(Item)
 		
 	CurrentData = Items.ContractorsList.CurrentData;
 	IsNotDefaultAfterChange = CurrentData.Default;
-	ThisRowIndex = ThisForm.Object.ContractorsList.IndexOf(CurrentData);
-	ThisRow = ThisForm.Object.ContractorsList.Get(ThisRowIndex);
+	ThisRowIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
+	ThisRow = ThisForm.ContractorsList.Get(ThisRowIndex);
 	
 	If IsNotDefaultAfterChange Then
 		
-		For Each Row In ThisForm.Object.ContractorsList Do
+		For Each Row In ThisForm.ContractorsList Do
 			
-			Row.Default = ThisForm.Object.ContractorsList.IndexOf(Row) = ThisRowIndex;
+			Row.Default = ThisForm.ContractorsList.IndexOf(Row) = ThisRowIndex;
 			
 		EndDo;
 		
@@ -1496,20 +1510,20 @@ Procedure DeleteContractor(Command)
 	
 	If Not CurrentData = Undefined Then
 		
-		CurrentDataIndex = ThisForm.Object.ContractorsList.IndexOf(CurrentData);
-		ThisForm.Object.ContractorsList.Delete(CurrentDataIndex);
+		CurrentDataIndex = ThisForm.ContractorsList.IndexOf(CurrentData);
+		ThisForm.ContractorsList.Delete(CurrentDataIndex);
 		Modified = True;
 		
 	EndIf;
 	
-	If ThisForm.Object.ContractorsList.Count() Then
+	If ThisForm.ContractorsList.Count() Then
 		
 		FilterParameters = New Structure("Default", True);
-		NoDefault = NOT ThisForm.Object.ContractorsList.FindRows(FilterParameters).Count();
+		NoDefault = NOT ThisForm.ContractorsList.FindRows(FilterParameters).Count();
 		
 		If NoDefault Then
 			
-			ThisForm.Object.ContractorsList[0].Default = True;
+			ThisForm.ContractorsList[0].Default = True;
 			
 		EndIf;
 		
@@ -1543,7 +1557,7 @@ Procedure ProcessDistributorChange(Result, Parameters) Export
 	
 	If Result = DialogReturnCode.Yes Then
 		
-		ThisForm.Object.ContractorsList.Clear();
+		ThisForm.ContractorsList.Clear();
 		
 		FillContractors();
 		
