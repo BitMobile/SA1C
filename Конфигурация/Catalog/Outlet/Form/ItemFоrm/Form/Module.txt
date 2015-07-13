@@ -929,6 +929,12 @@ Procedure OnOpen(Cancel)
 	
 	SetContractorsButtonsAvailability();
 	
+	For Each Row In ThisForm.Object.ContactPersons Do
+		
+		ThisForm.RepresentDataChange(Row.ContactPerson, DataChangeType.Update);
+		
+	EndDo;
+	
 EndProcedure
 
 &AtClient
