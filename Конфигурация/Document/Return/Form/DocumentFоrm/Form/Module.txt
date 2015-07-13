@@ -17,6 +17,7 @@ Procedure OnOpenServer()
 		Items.Longitude.ReadOnly	= True;
 		Items.Commentary.ReadOnly	= True;
 		Items.SKUs.ReadOnly			= True;
+		Items.Contractor.ReadOnly	= True;
 		
 	EndIf;
 
