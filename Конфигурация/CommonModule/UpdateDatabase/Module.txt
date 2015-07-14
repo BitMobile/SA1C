@@ -1963,6 +1963,9 @@ Procedure UpdateForRelease_1_9_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update contacts'; ru = 'Обновление контактов'"));
 	ProcessContacts();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update territories'; ru = 'Обновление территорий'"));
+	ProcessTerritoriesOutletsAndStocks();
+	
 EndProcedure
 
 Procedure ProcessContractors()
@@ -2067,6 +2070,42 @@ Procedure ProcessContacts()
 		EndDo;
 		
 		OutletObject.Write();
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessTerritoriesOutletsAndStocks()
+	
+	Selection = Catalogs.Territory.Select();
+	
+	While Selection.Next() Do
+		
+		TerritoryObject = Selection.GetObject();
+		
+		EmptyOutletStructure = New Structure;
+		EmptyOutletStructure.Insert("Outlet", Catalogs.Outlet.EmptyRef());
+		EmptyOutletRows = TerritoryObject.Outlets.FindRows(EmptyOutletStructure);
+		
+		For Each EmptyOutletRow In EmptyOutletRows Do
+			
+			EmptyOutletRowIndex = TerritoryObject.Outlets.IndexOf(EmptyOutletRow);
+			TerritoryObject.Outlets.Delete(EmptyOutletRowIndex);
+			
+		EndDo;
+		
+		EmptyStockStructure = New Structure;
+		EmptyStockStructure.Insert("Stock", Catalogs.Stock.EmptyRef());
+		EmptyStockRows = TerritoryObject.Stocks.FindRows(EmptyStockStructure);
+		
+		For Each EmptyStockRow In EmptyStockRows Do
+			
+			EmptyStockRowIndex = TerritoryObject.Stocks.IndexOf(EmptyStockRow);
+			TerritoryObject.Outlets.Delete(EmptyStockRowIndex);
+			
+		EndDo;
+		
+		TerritoryObject.Write();
 		
 	EndDo;
 	
