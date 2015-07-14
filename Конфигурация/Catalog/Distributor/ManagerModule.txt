@@ -1,37 +1,31 @@
 ﻿
 Procedure ChoiceDataGetProcessing(ChoiceData, Parameters, StandardProcessing)
 	
-	If Parameters.Property("Outlet") Then
+	If Parameters.Property("Territories") Then
 		
 		StandardProcessing = False;
-		Outlet = Parameters.Outlet;
+		Territories = Parameters.Territories;
 		ChoiceData = New ValueList;
+			
+		Query = New Query(
+		"SELECT ALLOWED DISTINCT
+		|	DistributorTerritories.Ref AS Partner
+		|FROM
+		|	Catalog.Distributor.Territories AS DistributorTerritories
+		|WHERE
+		|	DistributorTerritories.Territory IN(&Territories)
+		|
+		|ORDER BY
+		|	Partner
+		|AUTOORDER");
+		Query.SetParameter("Territories", Territories);
+		Result = Query.Execute().Unload();
 		
-		If NOT Outlet = Catalogs.Outlet.EmptyRef() Then
+		For Each Row In Result Do
 			
-			Query = New Query(
-			"SELECT ALLOWED DISTINCT
-			|	DistributorTerritories.Ref AS Partner
-			|FROM
-			|	Catalog.Territory.Outlets AS TerritoryOutlets
-			|		LEFT JOIN Catalog.Distributor.Territories AS DistributorTerritories
-			|		ON TerritoryOutlets.Ref = DistributorTerritories.Territory
-			|WHERE
-			|	TerritoryOutlets.Outlet = &Outlet
-			|
-			|ORDER BY
-			|	Partner
-			|AUTOORDER");
-			Query.SetParameter("Outlet", Outlet);
-			Result = Query.Execute().Unload();
+			ChoiceData.Add(Row.Partner);
 			
-			For Each Row In Result Do
-				
-				ChoiceData.Add(Row.Partner);
-				
-			EndDo;
-			
-		EndIf;
+		EndDo;
 		
 	EndIf;
 	

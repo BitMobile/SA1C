@@ -74,11 +74,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	HandleContactsAdditionalAccessRights();
 	
-	Parameter = New ChoiceParameter("Outlet", ThisForm.Object.Ref);
-	Array = New Array;
-	Array.Add(Parameter);
-	NewParameters = New FixedArray(Array);
-	ThisForm.Items.Distributor.ChoiceParameters = NewParameters;
+	ChangeDistributorChoiceParameters();
 	
 EndProcedure
 
@@ -278,9 +274,16 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
 	FillSnapshots(Connection, Path, FileTable);
 	
-	Parameter = New ChoiceParameter("Outlet", ThisForm.Object.Ref);
+	ChangeDistributorChoiceParameters();
+	
+EndProcedure
+
+&AtServer
+Procedure ChangeDistributorChoiceParameters()
+	
 	Array = New Array;
-	Array.Add(Parameter);
+	TerritoriesParameter = New ChoiceParameter("Territories", GetTerritoriesArray());
+	Array.Add(TerritoriesParameter);
 	NewParameters = New FixedArray(Array);
 	ThisForm.Items.Distributor.ChoiceParameters = NewParameters;
 	
@@ -676,23 +679,25 @@ EndFunction
 &AtServer
 Function GetTerritoriesArray()
 	
-	Query = New Query(
-	"SELECT ALLOWED
-	|	TerritoryOutlets.Ref AS Territory
-	|FROM
-	|	Catalog.Territory.Outlets AS TerritoryOutlets
-	|		FULL JOIN Catalog.Contractors.Territories AS ContractorsTerritories
-	|		ON TerritoryOutlets.Ref = ContractorsTerritories.Territory
-	|WHERE
-	|	TerritoryOutlets.Outlet = &Outlet");
+	//Query = New Query(
+	//"SELECT ALLOWED
+	//|	TerritoryOutlets.Ref AS Territory
+	//|FROM
+	//|	Catalog.Territory.Outlets AS TerritoryOutlets
+	//|		FULL JOIN Catalog.Contractors.Territories AS ContractorsTerritories
+	//|		ON TerritoryOutlets.Ref = ContractorsTerritories.Territory
+	//|WHERE
+	//|	TerritoryOutlets.Outlet = &Outlet");
+	//
+	//Query.SetParameter("Outlet", ThisForm.Object.Ref);
+	//TerritoriesVT = Query.Execute().Unload();
 	
-	Query.SetParameter("Outlet", ThisForm.Object.Ref);
-	TerritoriesVT = Query.Execute().Unload();
+	TerritoriesVT = ThisForm.TerritoriesList.Unload();
 	TerritoriesArray = New Array;
 	
 	For Each Row In TerritoriesVT Do
 		
-		TerritoriesArray.Add(Row.Territory);
+		TerritoriesArray.Add(Row.Value);
 		
 	EndDo;
 	
@@ -1305,6 +1310,50 @@ Procedure TerritoriesListValueOnChange(Item)
 	If FoundRows.count() > 1 Then
 		
 		Message(NStr("en = ""This territory is already listed""; ru = ""Выбранная территория уже есть в списке"""));
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure TerritoriesListOnChange(Item)
+	
+	CheckPartner();
+	SetContractorsButtonsAvailability();
+	
+EndProcedure
+
+&AtServer
+Procedure CheckPartner()
+	
+	ChangeDistributorChoiceParameters();
+	
+	Query = New Query(
+	"SELECT
+	|	DistributorTerritories.Territory
+	|FROM
+	|	Catalog.Distributor.Territories AS DistributorTerritories
+	|WHERE
+	|	DistributorTerritories.Territory IN(&Territories)");
+	Query.SetParameter("Territories", GetTerritoriesArray());
+	Result = Query.Execute().Unload();
+	
+	If Result.Count() = 0 Then
+		
+		Message(NStr("en = 'Partner is cleared.'; ru = 'Партнер очищен.'"));
+		ThisForm.Object.Distributor = Undefined;
+		FillContractors();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure DistributorStartChoice(Item, ChoiceData, StandardProcessing)
+	
+	If ThisForm.TerritoriesList.Count() = 0 Then
+		
+		Message(NStr("en = 'Choose territories before choosing partner'; ru = 'Выберите территории перед тем как выбирать партнера.'"));
 		
 	EndIf;
 	
