@@ -30,7 +30,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 		If ValueIsFilled(Object.Email) Then
 			
 			ParamArray = New Array;
-			ParamArray.Add("/^([A-za-z0-9_-]+\.)*[A-za-z0-9_-]+@[A-za-z0-9_-]+(\.[A-za-z0-9_-]+)*\.[A-za-z]{2,6}$/");
+			ParamArray.Add("/^([а-яА-ЯёЁa-zA-Z0-9_-]+\.)*[а-яА-ЯёЁa-zA-Z0-9_-]+@[а-яА-ЯёЁa-zA-Z0-9_-]+(\.[а-яА-ЯёЁa-zA-Z0-9_-]+)*\.[а-яА-ЯёЁa-zA-Z]{2,6}$/");
 			ParamArray.Add(Object.Email);
 			
 			If Not CommonProcessorsClient.ExecuteJSFunction("checkRegExp", ParamArray) Then 
