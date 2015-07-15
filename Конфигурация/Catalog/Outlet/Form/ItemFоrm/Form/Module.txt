@@ -1340,9 +1340,13 @@ Procedure CheckPartner()
 	
 	If Result.Count() = 0 Then
 		
-		Message(NStr("en = 'Partner is cleared.'; ru = 'Партнер очищен.'"));
-		ThisForm.Object.Distributor = Undefined;
-		FillContractors();
+		If ValueIsFilled(ThisForm.Object.Distributor) Then
+			
+			Message(NStr("en = 'Partner is cleared.'; ru = 'Партнер очищен.'"));
+			ThisForm.Object.Distributor = Undefined;
+			FillContractors();
+			
+		EndIf;
 		
 	EndIf;
 	
