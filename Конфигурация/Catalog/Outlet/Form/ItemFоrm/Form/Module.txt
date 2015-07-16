@@ -2,6 +2,9 @@
 &AtClient
 Var OldPartner;
 
+&AtClient
+Var OldTerritories;
+
 #Region CommonProceduresAndFunctions
 
 &AtServer
@@ -785,6 +788,80 @@ Function HasTerritories()
 	
 EndFunction
 
+&AtServer
+Function PartnerNotInTerritories()
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	DistributorTerritories.Territory
+	|FROM
+	|	Catalog.Distributor.Territories AS DistributorTerritories
+	|WHERE
+	|	DistributorTerritories.Territory IN(&Territories)");
+	Query.SetParameter("Territories", GetTerritoriesArray());
+	Result = Query.Execute().Unload();
+	
+	Return Result.Count() = 0;
+	
+EndFunction
+
+&AtServer
+Function GetNewContractorsList()
+	
+	Query = New Query(
+	"SELECT ALLOWED
+	|	Contractors.Contractor,
+	|	Contractors.Default
+	|INTO FormContractors
+	|FROM
+	|	&Contractors AS Contractors
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT ALLOWED DISTINCT
+	|	ContractorsTerritories.Ref AS Contractor,
+	|	FormContractors.Default
+	|FROM
+	|	Catalog.Contractors.Territories AS ContractorsTerritories,
+	|	FormContractors AS FormContractors
+	|WHERE
+	|	ContractorsTerritories.Ref IN (FormContractors.Contractor)
+	|	AND ContractorsTerritories.Territory IN(&Territories)");
+	Query.SetParameter("Contractors", ThisForm.ContractorsList.Unload());
+	Query.SetParameter("Territories", GetTerritoriesArray());
+	Result = Query.Execute().Unload();
+	
+	Contractors= New Array;
+	Default = 0;
+	Counter = 0;
+	
+	For Each Row In Result Do
+		
+		Contractors.Add(Row.Contractor);
+		
+		If Row.Default Then
+			
+			Default = Counter;
+			
+		EndIf;
+		
+		Counter = Counter + 1;
+		
+	EndDo;
+	
+	FilterParameters = New Structure;
+	FilterParameters.Insert("Default", True);
+	DefaultRows = Result.FindRows(FilterParameters);
+	
+	Structure = New Structure;
+	Structure.Insert("Contractors", Contractors);
+	Structure.Insert("HasDefault", DefaultRows.Count() > 0);
+	Structure.Insert("Default", Default);
+	
+	Return Structure;
+	
+EndFunction
+
 #EndRegion
 
 #Region Contractors
@@ -1318,35 +1395,122 @@ EndProcedure
 &AtClient
 Procedure TerritoriesListOnChange(Item)
 	
-	CheckPartner();
+	ChangeDistributorChoiceParameters();
 	SetContractorsButtonsAvailability();
 	
 EndProcedure
 
-&AtServer
-Procedure CheckPartner()
+&AtClient
+Procedure TerritoriesListBeforeDeleteRow(Item, Cancel)
 	
-	ChangeDistributorChoiceParameters();
+	OldTerritories = New Array;
 	
-	Query = New Query(
-	"SELECT
-	|	DistributorTerritories.Territory
-	|FROM
-	|	Catalog.Distributor.Territories AS DistributorTerritories
-	|WHERE
-	|	DistributorTerritories.Territory IN(&Territories)");
-	Query.SetParameter("Territories", GetTerritoriesArray());
-	Result = Query.Execute().Unload();
-	
-	If Result.Count() = 0 Then
+	For Each Row In ThisForm.TerritoriesList Do
 		
-		If ValueIsFilled(ThisForm.Object.Distributor) Then
+		OldTerritories.Add(Row.Value);
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
+Procedure TerritoriesListAfterDeleteRow(Item)
+	
+	If ValueIsFilled(ThisForm.Object.Distributor) Then
+		
+		OldPartner = ThisForm.Object.Distributor;
+		
+		If PartnerNotInTerritories() Then
 			
-			Message(NStr("en = 'Partner is cleared.'; ru = 'Партнер очищен.'"));
-			ThisForm.Object.Distributor = Undefined;
-			FillContractors();
+			ShowQueryBox(New NotifyDescription("ProcessDistributorOnTerritoriesChange", ThisForm),
+						 NStr("en = 'Partner will be cleared. Continue?'; ru = 'Партнер будет очищен. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 ,
+						 ,
+						 NStr("en = 'Continue?'; ru = 'Продолжить?'"));
+						 
+		EndIf;
+		
+	Else
+		
+		NewContractors = GetNewContractorsList();
+		
+		If NewContractors.Contractors.Count() < ThisForm.ContractorsList.Count() Then
+			
+			ShowQueryBox(New NotifyDescription("ProcessContractorsOnTerritoriesChange", ThisForm, NewContractors),
+						 NStr("en = 'Contractors list will be changed. Continue?'; ru = 'Список контрагентов будет изменен. Продолжить?'"),
+						 QuestionDialogMode.YesNo,
+						 ,
+						 ,
+						 NStr("en = 'Continue?'; ru = 'Продолжить?'"));
 			
 		EndIf;
+		
+		
+		
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Function ProcessDistributorOnTerritoriesChange(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		OldPartner = ThisForm.Object.Distributor;
+		ThisForm.Object.Distributor = Undefined;
+		FillContractors();
+		
+	Else
+		
+		RestoreOldTerritories();
+		
+	EndIf;
+	
+EndFunction
+
+&AtClient
+Procedure RestoreOldTerritories()
+	
+	ThisForm.TerritoriesList.Clear();
+	
+	For Each Territory In OldTerritories Do
+		
+		NewRow = ThisForm.TerritoriesList.Add();
+		NewRow.Value = Territory;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
+Procedure ProcessContractorsOnTerritoriesChange(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		Contractors = Parameters.Contractors;
+		HasDefault = Parameters.HasDefault;
+		Default = Parameters.Default;
+		ThisForm.ContractorsList.Clear();
+		
+		If Contractors.Count() > 0 Then
+			
+			For Each Contractor In Contractors Do
+				
+				NewRow = ThisForm.ContractorsList.Add();
+				NewRow.Contractor = Contractor;
+				
+			EndDo;
+			
+			DefaultRowIndex = ?(HasDefault, Default, 0);
+			ThisForm.ContractorsList[DefaultRowIndex].Default = True;
+			
+		EndIf;
+		
+	Else
+		
+		RestoreOldTerritories();
 		
 	EndIf;
 	

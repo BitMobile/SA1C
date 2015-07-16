@@ -532,6 +532,8 @@
 								<ExtendedTooltip name="TerritoriesListSearchControlExtendedTooltip" id="213"/>
 							</SearchControlAddition>
 							<Events>
+								<Event name="BeforeDeleteRow">TerritoriesListBeforeDeleteRow</Event>
+								<Event name="AfterDeleteRow">TerritoriesListAfterDeleteRow</Event>
 								<Event name="OnChange">TerritoriesListOnChange</Event>
 							</Events>
 							<ChildItems>

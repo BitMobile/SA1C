@@ -437,6 +437,9 @@
 										<ContextMenu name="TerritoriesSearchControlContextMenu" id="159"/>
 										<ExtendedTooltip name="TerritoriesSearchControlExtendedTooltip" id="160"/>
 									</SearchControlAddition>
+									<Events>
+										<Event name="BeforeRowChange">TerritoriesBeforeRowChange</Event>
+									</Events>
 									<ChildItems>
 										<InputField name="TerritoriesRegion" id="179">
 											<DataPath>Territories.Region</DataPath>

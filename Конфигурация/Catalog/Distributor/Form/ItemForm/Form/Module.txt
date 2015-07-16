@@ -1,4 +1,7 @@
 ﻿
+&AtClient
+Var OldTerritories;
+
 #Region CommonProceduresAndFunctions
 
 &AtServer
@@ -99,6 +102,79 @@ Function GetAvailableContractors()
 	EndDo;
 	
 	Return AvailableContractors;
+	
+EndFunction
+
+&AtServer
+Function GetNewContractorsList()
+	
+	Query = New Query(
+	"SELECT ALLOWED DISTINCT
+	|	FormContractors.Contractor,
+	|	FormContractors.Default
+	|INTO FormContractors
+	|FROM
+	|	&FormContractors AS FormContractors
+	|;
+	|
+	|////////////////////////////////////////////////////////////////////////////////
+	|SELECT
+	|	ContractorsTerritories.Ref AS Contractor,
+	|	FormContractors.Default
+	|FROM
+	|	FormContractors AS FormContractors
+	|		LEFT JOIN Catalog.Contractors.Territories AS ContractorsTerritories
+	|		ON FormContractors.Contractor = ContractorsTerritories.Ref
+	|WHERE
+	|	ContractorsTerritories.Ref IN (FormContractors.Contractor)
+	|	AND ContractorsTerritories.Territory IN(&Territories)");
+	Query.SetParameter("FormContractors", ThisForm.Object.Contractors.Unload());
+	Query.SetParameter("Territories", GetTerritoriesArray());
+	Result = Query.Execute().Unload();
+	
+	Contractors = New Array;
+	Default = 0;
+	Counter = 0;
+	
+	For Each Row In Result Do
+		
+		Contractors.Add(Row.Contractor);
+		
+		If Row.Default Then
+			
+			Default = Counter;
+			
+		EndIf;
+		
+		Counter = Counter + 1;
+		
+	EndDo;
+	
+	FilterParameters = New Structure;
+	FilterParameters.Insert("Default", True);
+	DefaultRows = Result.FindRows(FilterParameters);
+	
+	Structure = New Structure;
+	Structure.Insert("Contractors", Contractors);
+	Structure.Insert("HasDefault", DefaultRows.Count() > 0);
+	Structure.Insert("Default", Default);
+	
+	Return Structure;
+	
+EndFunction
+
+&AtServer
+Function GetTerritoriesArray()
+	
+	TerritoriesArray = New Array;
+	
+	For Each Row In ThisForm.Object.Territories Do
+		
+		TerritoriesArray.Add(Row.Territory);
+		
+	EndDo;
+	
+	Return TerritoriesArray;
 	
 EndFunction
 
@@ -373,15 +449,29 @@ Procedure RegionsUseOnChange(Item)
 	If Not CurrentData = Undefined Then
 		
 		If Not CurrentData.Use Then
-		
+			
 			Filter = New Structure;
 			Filter.Insert("Region", CurrentData.Region);
+			
+			OldTerritories = New Array;
+			For Each TerritoryRow In ThisForm.Object.Territories Do
+				
+				OldTerritories.Add(TerritoryRow.Territory);
+				
+			EndDo;
 			
 			TerritoriesRows = ThisForm.Territories.FindRows(Filter);
 			
 			For Each Row In TerritoriesRows Do
 				
 				Row.Use = False;
+				Filter = New Structure("Territory", Row.Territory);
+				TerritoryRows = ThisForm.Object.Territories.FindRows(Filter);
+				For Each TerritoryRow In TerritoryRows Do
+					
+					ThisForm.Object.Territories.Delete(TerritoryRow);
+					
+				EndDo;
 				
 			EndDo;
 			
@@ -392,6 +482,8 @@ Procedure RegionsUseOnChange(Item)
 				ThisForm.Object.Regions.Delete(Row);
 				
 			EndDo;
+			
+			ProcessTerritoriesChange("Regions");
 			
 		Else
 			
@@ -482,6 +574,86 @@ Procedure TerritoriesUseOnChange(Item)
 				ThisForm.Object.Territories.Delete(Row);
 				
 			EndDo;
+			
+			ProcessTerritoriesChange();
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ProcessTerritoriesChange(Regions = Undefined)
+	
+	NewContractors = GetNewContractorsList();
+	
+	If Not Regions = Undefined Then
+		
+		NewContractors.Insert("Regions", True);
+		
+	EndIf;
+	
+	If NewContractors.Contractors.Count() < ThisForm.Object.Contractors.Count() Then
+		
+		ShowQueryBox(New NotifyDescription("ProcessContractorsOnTerritoriesChange", ThisForm, NewContractors),
+					 NStr("en = 'Contractors list will be changed. Continue?'; ru = 'Список контрагентов будет изменен. Продолжить?'"),
+					 QuestionDialogMode.YesNo,
+					 ,
+					 ,
+					 NStr("en = 'Continue?'; ru = 'Продолжить?'"));
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ProcessContractorsOnTerritoriesChange(Result, Parameters) Export
+	
+	If Result = DialogReturnCode.Yes Then
+		
+		Contractors = Parameters.Contractors;
+		HasDefault = Parameters.HasDefault;
+		Default = Parameters.Default;
+		
+		ThisForm.Object.Contractors.Clear();
+		
+		If Contractors.Count() > 0 Then
+			
+			For Each Contractor In Contractors Do
+				
+				NewRow = ThisForm.Object.Contractors.Add();
+				NewRow.Contractor = Contractor;
+				
+			EndDo;
+			
+			DefaultRowIndex = ?(HasDefault, Default, 0);
+			ThisForm.Object.Contractors[DefaultRowIndex].Default = True;
+			
+		EndIf;
+			
+	Else
+		
+		If Parameters.Property("Regions") Then
+			
+			ThisForm.Object.Territories.Clear();
+			
+			For Each Territory In OldTerritories Do
+				
+				NewTerritoryRow = ThisForm.Object.Territories.Add();
+				NewTerritoryRow.Territory = Territory;
+				
+			EndDo;
+			
+			FillTerritories();
+			
+			ThisForm.Items.Regions.CurrentData.Use = True;
+			RegionsRow = ThisForm.Object.Regions.Add();
+			RegionsRow.Region = ThisForm.Items.Regions.CurrentData.Region;
+			
+		Else
+			
+			ThisForm.Items.Territories.CurrentData.Use = True;
 			
 		EndIf;
 		
