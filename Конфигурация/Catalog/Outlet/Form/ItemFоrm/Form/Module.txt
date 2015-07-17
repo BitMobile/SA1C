@@ -61,6 +61,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	ThisForm.Items.ContactPersonsNotActual.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditOutletContacts);
+	
 	If Not ValueIsFilled(Object.Ref) Then
 		
 		Object.OutletStatus = Enums.OutletStatus.Potential;

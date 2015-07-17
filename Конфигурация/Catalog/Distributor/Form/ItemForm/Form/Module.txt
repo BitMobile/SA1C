@@ -192,6 +192,7 @@ Procedure HandleContactsAdditionalAccessRights()
 	EnableContactEdit = IsAdmin OR HasRightToEditContacts;
 	Items.ContactListAddContact.Enabled = EnableContactEdit;
 	Items.ContactListDeleteContact.Enabled = EnableContactEdit;
+	Items.ContactListNotActual.ReadOnly = Not EnableContactEdit;
 	
 EndProcedure
 
