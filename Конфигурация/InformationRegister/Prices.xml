@@ -112,18 +112,22 @@
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
 			</Resource>
-			<Dimension uuid="5868efbf-cac8-400b-9c6b-0ecb974ff492">
+			<Dimension uuid="f4345282-8734-4d27-bc4e-f1893781b0a5">
 				<Properties>
-					<Name>SKU</Name>
+					<Name>PriceList</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>SKU</v8:content>
+							<v8:content>Price list</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прайс-лист</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
-						<v8:Type>cfg:CatalogRef.SKU</v8:Type>
+						<v8:Type>cfg:DocumentRef.PriceList</v8:Type>
 					</Type>
 					<PasswordMode>false</PasswordMode>
 					<Format/>
@@ -153,22 +157,18 @@
 					<FullTextSearch>Use</FullTextSearch>
 				</Properties>
 			</Dimension>
-			<Dimension uuid="f4345282-8734-4d27-bc4e-f1893781b0a5">
+			<Dimension uuid="5868efbf-cac8-400b-9c6b-0ecb974ff492">
 				<Properties>
-					<Name>PriceList</Name>
+					<Name>SKU</Name>
 					<Synonym>
 						<v8:item>
 							<v8:lang>en</v8:lang>
-							<v8:content>Price list</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Прайс-лист</v8:content>
+							<v8:content>SKU</v8:content>
 						</v8:item>
 					</Synonym>
 					<Comment/>
 					<Type>
-						<v8:Type>cfg:DocumentRef.PriceList</v8:Type>
+						<v8:Type>cfg:CatalogRef.SKU</v8:Type>
 					</Type>
 					<PasswordMode>false</PasswordMode>
 					<Format/>
