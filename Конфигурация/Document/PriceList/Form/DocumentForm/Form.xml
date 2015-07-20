@@ -5,6 +5,11 @@
 	<UsePostingMode>Auto</UsePostingMode>
 	<RepostOnWrite>true</RepostOnWrite>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="AfterWriteAtServer">AfterWriteAtServer</Event>
+		<Event name="BeforeWriteAtServer">BeforeWriteAtServer</Event>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
 	<ChildItems>
 		<UsualGroup name="GroupNumberDate" id="15">
 			<Title>
@@ -61,25 +66,26 @@
 			<ContextMenu name="DefaultPriceListContextMenu" id="21"/>
 			<ExtendedTooltip name="DefaultPriceListРасширеннаяПодсказка" id="26"/>
 		</CheckBoxField>
-		<Table name="SKU" id="5">
+		<Table name="Prices" id="44">
 			<Representation>List</Representation>
 			<AutoInsertNewRow>true</AutoInsertNewRow>
 			<EnableStartDrag>true</EnableStartDrag>
 			<EnableDrag>true</EnableDrag>
-			<DataPath>Object.Prices</DataPath>
-			<SearchStringLocation>None</SearchStringLocation>
-			<ViewStatusLocation>None</ViewStatusLocation>
-			<SearchControlLocation>None</SearchControlLocation>
+			<DataPath>Prices</DataPath>
 			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="SKUContextMenu" id="6"/>
-			<AutoCommandBar name="SKUCommandBar" id="7">
+			<ContextMenu name="PricesContextMenu" id="45"/>
+			<AutoCommandBar name="PricesCommandBar" id="46">
 				<ChildItems>
 					<Button name="SKUDelete" id="42">
 						<Type>CommandBarButton</Type>
 						<Representation>Picture</Representation>
 						<OnlyInAllActions>true</OnlyInAllActions>
-						<CommandName>Form.Item.SKU.StandardCommand.Delete</CommandName>
+						<CommandName>Form.Command.DeleteSKU</CommandName>
 						<Parameter xsi:nil="true"/>
+						<Picture>
+							<xr:Ref>StdPicture.Delete</xr:Ref>
+							<xr:LoadTransparent>true</xr:LoadTransparent>
+						</Picture>
 						<ExtendedTooltip name="SKUDeleteExtendedTooltip" id="43"/>
 					</Button>
 					<Button name="FillSKU" id="14">
@@ -90,57 +96,43 @@
 					</Button>
 				</ChildItems>
 			</AutoCommandBar>
-			<ExtendedTooltip name="SKUРасширеннаяПодсказка" id="28"/>
-			<SearchStringAddition name="SKUСтрокаПоиска" id="29">
+			<ExtendedTooltip name="PricesExtendedTooltip" id="47"/>
+			<SearchStringAddition name="PricesSearchString" id="48">
 				<Source>
-					<lf:elementId>5</lf:elementId>
+					<lf:elementId>44</lf:elementId>
 					<lf:additionId>0</lf:additionId>
 				</Source>
-				<ContextMenu name="SKUСтрокаПоискаКонтекстноеМеню" id="30"/>
-				<ExtendedTooltip name="SKUСтрокаПоискаРасширеннаяПодсказка" id="31"/>
+				<ContextMenu name="PricesSearchStringContextMenu" id="51"/>
+				<ExtendedTooltip name="PricesSearchStringExtendedTooltip" id="52"/>
 			</SearchStringAddition>
-			<ViewStatusAddition name="SKUСостояниеПросмотра" id="32">
+			<ViewStatusAddition name="PricesViewStatus" id="53">
 				<Source>
-					<lf:elementId>5</lf:elementId>
+					<lf:elementId>44</lf:elementId>
 					<lf:additionId>1</lf:additionId>
 				</Source>
-				<ContextMenu name="SKUСостояниеПросмотраКонтекстноеМеню" id="33"/>
-				<ExtendedTooltip name="SKUСостояниеПросмотраРасширеннаяПодсказка" id="34"/>
+				<ContextMenu name="PricesViewStatusContextMenu" id="56"/>
+				<ExtendedTooltip name="PricesViewStatusExtendedTooltip" id="57"/>
 			</ViewStatusAddition>
-			<SearchControlAddition name="SKUУправлениеПоиском" id="35">
+			<SearchControlAddition name="PricesSearchControl" id="58">
 				<Source>
-					<lf:elementId>5</lf:elementId>
+					<lf:elementId>44</lf:elementId>
 					<lf:additionId>2</lf:additionId>
 				</Source>
-				<ContextMenu name="SKUУправлениеПоискомКонтекстноеМеню" id="36"/>
-				<ExtendedTooltip name="SKUУправлениеПоискомРасширеннаяПодсказка" id="37"/>
+				<ContextMenu name="PricesSearchControlContextMenu" id="61"/>
+				<ExtendedTooltip name="PricesSearchControlExtendedTooltip" id="62"/>
 			</SearchControlAddition>
 			<ChildItems>
-				<LabelField name="SKULineNumber" id="8">
-					<DataPath>Object.Prices.LineNumber</DataPath>
+				<InputField name="PricesSKU" id="66">
+					<DataPath>Prices.SKU</DataPath>
 					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="SKULineNumberContextMenu" id="9"/>
-					<ExtendedTooltip name="SKULineNumberРасширеннаяПодсказка" id="38"/>
-				</LabelField>
-				<InputField name="SKUSKU" id="10">
-					<DataPath>Object.Prices.SKU</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="SKUSKUContextMenu" id="11"/>
-					<ExtendedTooltip name="SKUSKUРасширеннаяПодсказка" id="39"/>
-					<Events>
-						<Event name="OnChange">SKUSKUOnChange</Event>
-					</Events>
+					<ContextMenu name="PricesSKUContextMenu" id="67"/>
+					<ExtendedTooltip name="PricesSKUExtendedTooltip" id="68"/>
 				</InputField>
-				<InputField name="SKUPrice" id="12">
-					<DataPath>Object.Prices.Price</DataPath>
+				<InputField name="PricesPrice" id="63">
+					<DataPath>Prices.Price</DataPath>
 					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="SKUPriceContextMenu" id="13"/>
-					<ExtendedTooltip name="SKUPriceРасширеннаяПодсказка" id="40"/>
-				</InputField>
-				<InputField name="SKUStock" id="16">
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="SKUStockContextMenu" id="17"/>
-					<ExtendedTooltip name="SKUStockРасширеннаяПодсказка" id="41"/>
+					<ContextMenu name="PricesPriceContextMenu" id="64"/>
+					<ExtendedTooltip name="PricesPriceExtendedTooltip" id="65"/>
 				</InputField>
 			</ChildItems>
 		</Table>
@@ -155,6 +147,55 @@
 			<UseAlways>
 				<Field>Object.RegisterRecords</Field>
 			</UseAlways>
+		</Attribute>
+		<Attribute name="Prices" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Prices</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<Columns>
+				<Column name="Price" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Price</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Цена</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="SKU" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>SKU</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.SKU</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
 		</Attribute>
 	</Attributes>
 	<Commands>
@@ -176,6 +217,21 @@
 				</v8:item>
 			</ToolTip>
 			<Action>FillSKU</Action>
+		</Command>
+		<Command name="DeleteSKU" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Delete SKU</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Delete SKU</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>DeleteSKU</Action>
 		</Command>
 	</Commands>
 </Form>

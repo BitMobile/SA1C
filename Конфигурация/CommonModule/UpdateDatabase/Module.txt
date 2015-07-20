@@ -1966,6 +1966,9 @@ Procedure UpdateForRelease_1_9_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update territories'; ru = 'Обновление территорий'"));
 	ProcessTerritoriesOutletsAndStocks();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update pricelists'; ru = 'Обновление прайс-листов'"));
+	ProcessPriceLists();
+	
 EndProcedure
 
 Procedure ProcessContractors()
@@ -2108,6 +2111,26 @@ Procedure ProcessTerritoriesOutletsAndStocks()
 		TerritoryObject.Write();
 		
 	EndDo;
+	
+EndProcedure
+
+Procedure ProcessPriceLists()
+	
+	Query = New Query(
+	"SELECT
+	|	PriceListPrices.Ref AS PriceList,
+	|	PriceListPrices.SKU,
+	|	MAX(PriceListPrices.Price) AS Price
+	|FROM
+	|	Document.PriceList.Prices AS PriceListPrices
+	|
+	|GROUP BY
+	|	PriceListPrices.Ref,
+	|	PriceListPrices.SKU");
+	PricesVT = Query.Execute().Unload();
+	RecordSet = InformationRegisters.Prices.CreateRecordSet();
+	RecordSet.Load(PricesVT);
+	RecordSet.Write();
 	
 EndProcedure
 
