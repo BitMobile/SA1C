@@ -84,17 +84,29 @@ Procedure SaveSettingsServer()
 		
 		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToReturn);
 		
+	Else 
+		
+		AddAccessRightToRole(Catalogs.MobileAppAccessRights.AccessToReturn);
+		
 	EndIf;
 	
 	If Not CreateOrdersEnabled Then 
 		
 		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToOrder);
 		
+	Else 
+		
+		AddAccessRightToRole(Catalogs.MobileAppAccessRights.AccessToOrder);
+		
 	EndIf;
 	
 	If Not CreateEncashmentsEnabled Then 
 		
 		DeleteAccessRightFromRole(Catalogs.MobileAppAccessRights.AccessToEncashment);
+		
+	Else 
+		
+		AddAccessRightToRole(Catalogs.MobileAppAccessRights.AccessToEncashment);
 		
 	EndIf;
 	
@@ -105,7 +117,7 @@ Procedure DeleteAccessRightFromRole(AccessRight)
 	
 	Query = New Query;
 	Query.Text = 
-		"SELECT
+		"SELECT DISTINCT
 		|	RolesOfUsersMobileAppAccessRights.AccessRight,
 		|	RolesOfUsersMobileAppAccessRights.Ref AS RolesOfUser
 		|FROM
@@ -128,6 +140,57 @@ Procedure DeleteAccessRightFromRole(AccessRight)
 		RO_Object.MobileAppAccessRights.Delete(RowToDelete);
 		
 		RO_Object.Write();
+		
+		RightName = NStr(AccessRight.Description);
+		
+		UserMessage			= New UserMessage;
+		UserMessage.Text	= NStr("en = 'For user roles """ + RO_Object.Description + """ turned off the right """ + RightName +"""'; ru = 'Для роли пользователей """ + RO_Object.Description + """ отключено право """ + RightName +"""'");
+		
+		UserMessage.Message();
+		
+	EndDo;
+	
+EndProcedure
+
+&AtServer
+Procedure AddAccessRightToRole(AccessRight)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT DISTINCT
+		|	RolesOfUsersMobileAppAccessRights.Ref AS RolesOfUser
+		|FROM
+		|	Catalog.RolesOfUsers.MobileAppAccessRights AS RolesOfUsersMobileAppAccessRights
+		|WHERE
+		|	RolesOfUsersMobileAppAccessRights.AccessRight = &AccessRight";
+	
+	Query.SetParameter("AccessRight", Catalogs.MobileAppAccessRights.AccessToMobileApp);
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		RO_Object = Selection.RolesOfUser.GetObject();
+		
+		RowWithRight = RO_Object.MobileAppAccessRights.Find(AccessRight);
+		
+		If RowWithRight = Undefined Then 
+			
+			Ins				= RO_Object.MobileAppAccessRights.Add();
+			Ins.AccessRight	= AccessRight;
+			
+			RO_Object.Write();
+			
+			RightName = NStr(AccessRight.Description);
+			
+			UserMessage			= New UserMessage;
+			UserMessage.Text	= NStr("en = 'For user roles """ + RO_Object.Description + """ including the right """ + RightName +"""'; ru = 'Для роли пользователей """ + RO_Object.Description + """ включено право """ + RightName +"""'");
+			
+			UserMessage.Message();
+			
+		EndIf;
 		
 	EndDo;
 	
