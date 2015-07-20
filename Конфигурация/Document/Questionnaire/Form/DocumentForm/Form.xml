@@ -456,6 +456,7 @@
 								</InputField>
 								<InputField name="SelectorsValue" id="60">
 									<DataPath>Selectors.Value</DataPath>
+									<HorizontalAlign>Left</HorizontalAlign>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
 									<ChoiceButton>true</ChoiceButton>
