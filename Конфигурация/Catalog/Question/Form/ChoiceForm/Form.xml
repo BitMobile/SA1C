@@ -3,6 +3,9 @@
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<VerticalScroll>useIfNecessary</VerticalScroll>
 	<AutoCommandBar name="FormCommandBar" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
+	</Events>
 	<ChildItems>
 		<UsualGroup name="ListSettingsComposerUserSettings" id="26">
 			<Title>
@@ -126,4 +129,11 @@
 			</Settings>
 		</Attribute>
 	</Attributes>
+	<Parameters>
+		<Parameter name="QuestionType">
+			<Type>
+				<v8:Type>cfg:EnumRef.QuestionGroupTypes</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
 </Form>
