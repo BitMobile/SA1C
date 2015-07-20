@@ -205,7 +205,7 @@ Procedure BeforeWrite(Cancel, WriteParameters)
 				Cancel = True;
 				
 				UserMessage			= New UserMessage;
-				UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""Электронная почта""'");
+				UserMessage.Text	= NStr("en = 'Incorrect value in the field ""E-mail""'; ru = 'Неверное значение в поле ""E-mail""'");
 				
 				UserMessage.Message();
 				
