@@ -324,7 +324,6 @@ Procedure FillDefaultValues(Source, IsBMLoad)
 	
 EndProcedure
 
-&AtServer
 Procedure FillDefaultValuesInformationRegister() Export
 	
 	// Save old data
@@ -505,3 +504,130 @@ Function GetTypeName(mType)
 	EndIf;
 	
 EndFunction
+
+Procedure CheckSnapshots(Source, Cancel) Export
+	
+	If TypeOf(Source) = Type("CatalogObject.Outlet") Then 
+		
+		FilesArray = New Array;
+		
+		// Получить массив актуальных файлов для ТТ
+		For Each StrParameter In Source.Parameters Do 
+			
+			If StrParameter.Parameter.DataType = Enums.DataType.Snapshot And ValueIsFilled(StrParameter.Value) Then 
+				
+				Try
+					
+					SnapshotUUID = New UUID(StrParameter.Value);
+					
+					FilesArray.Add(SnapshotUUID);
+					
+				Except
+					
+				EndTry;
+				
+			EndIf;
+			
+		EndDo;
+		
+		For Each StrSnapshot In Source.Snapshots Do 
+			
+			If ValueIsFilled(StrSnapshot.FileName) Then 
+				
+				Try
+					
+					SnapshotUUID = New UUID(StrSnapshot.FileName);
+					
+					FilesArray.Add(SnapshotUUID);
+					
+				Except
+					
+				EndTry;
+				
+			EndIf;
+			
+		EndDo;
+		
+		DeleteIncorrectFiles(Source.Ref, FilesArray);
+		
+	ElsIf TypeOf(Source) = Type("CatalogObject.SKU") Then
+		
+		FilesArray = New Array;
+		
+		If ValueIsFilled(Source.DefaultPicture) Then 
+			
+			FilesArray.Add(Source.DefaultPicture);
+			
+		EndIf;
+		
+		DeleteIncorrectFiles(Source.Ref, FilesArray); 
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure DeleteIncorrectFiles(Ref, CorrectFilesArray)
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	bitmobile_ХранилищеФайлов.Объект,
+		|	bitmobile_ХранилищеФайлов.НаправлениеСинхронизации,
+		|	bitmobile_ХранилищеФайлов.Действие,
+		|	bitmobile_ХранилищеФайлов.ИмяФайла,
+		|	bitmobile_ХранилищеФайлов.ПолноеИмяФайла,
+		|	bitmobile_ХранилищеФайлов.Расширение,
+		|	bitmobile_ХранилищеФайлов.Хранилище,
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован
+		|FROM
+		|	InformationRegister.bitmobile_ХранилищеФайлов AS bitmobile_ХранилищеФайлов
+		|WHERE
+		|	bitmobile_ХранилищеФайлов.ФайлЗаблокирован = FALSE
+		|	AND bitmobile_ХранилищеФайлов.Объект = &Ref
+		|	AND NOT bitmobile_ХранилищеФайлов.ИмяФайла IN (&CorrectFilesArray)";
+	
+	Query.SetParameter("CorrectFilesArray", CorrectFilesArray);
+	Query.SetParameter("Ref", Ref);
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		If Selection.Действие = Enums.bitmobile_ДействияПриСинхронизации.EmptyRef() Then 
+			
+			RecordManager = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+			
+			FillPropertyValues(RecordManager, Selection);
+			
+			RecordManager.Read();
+		
+			If RecordManager.Selected() Then
+				
+				RecordManager.Действие = Enums.bitmobile_ДействияПриСинхронизации.УдалитьФайл;
+				
+				RecordManager.Write();
+				
+			EndIf;
+			
+		ElsIf Selection.Действие = Enums.bitmobile_ДействияПриСинхронизации.ДобавитьФайл Then
+			
+			RecordManager = InformationRegisters.bitmobile_ХранилищеФайлов.CreateRecordManager();
+			
+			FillPropertyValues(RecordManager, Selection);
+			
+			RecordManager.Read();
+			
+			If RecordManager.Selected() Then
+				
+				RecordManager.Delete();
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
