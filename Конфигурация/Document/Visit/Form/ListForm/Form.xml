@@ -120,6 +120,7 @@
 				</LabelField>
 				<LabelField name="Status" id="32">
 					<DataPath>List.Status</DataPath>
+					<Visible>false</Visible>
 					<ContextMenu name="StatusContextMenu" id="33"/>
 					<ExtendedTooltip name="StatusExtendedTooltip" id="34"/>
 				</LabelField>

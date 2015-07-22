@@ -77,6 +77,7 @@
 								</InputField>
 								<InputField name="Status" id="9">
 									<DataPath>Object.Status</DataPath>
+									<Visible>false</Visible>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="StatusContextMenu" id="10"/>
