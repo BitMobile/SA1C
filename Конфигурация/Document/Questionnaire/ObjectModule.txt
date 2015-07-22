@@ -1,10 +1,4 @@
 ﻿
-Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
-	
-	SRs.Load(Documents.Questionnaire.SelectSRs(Selectors.Unload(), Selectors.Unload(New Structure("Selector", "Catalog_Positions"))));
-		
-EndProcedure
-
 Procedure OnWrite(Cancel)
 	
 	If Status = Enums.QuestionnareStatus.Inactive Then 

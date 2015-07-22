@@ -387,6 +387,61 @@ EndProcedure
 
 #EndRegion
 
+#Region CalculateSRs
+
+Procedure CheckSRsInQuestionnaire() Export 
+	
+	Query = New Query;
+	Query.Text = 
+		"SELECT
+		|	Questionnaire.Ref AS Questionnaire
+		|FROM
+		|	Document.Questionnaire AS Questionnaire
+		|WHERE
+		|	Questionnaire.Status = VALUE(Enum.QuestionnareStatus.Active)";
+	
+	QueryResult = Query.Execute();
+	
+	Selection = QueryResult.Select();
+	
+	While Selection.Next() Do
+		
+		CurrentSRs	= Documents.Questionnaire.SelectSRs(Selection.Questionnaire.Selectors.Unload(), Selection.Questionnaire.Selectors.Unload(New Structure("Selector", "Catalog_Positions")));
+		DocSRs		= Selection.Questionnaire.SRs.Unload();
+		
+		If Not CountOfDifference(DocSRs, CurrentSRs) = 0 Then 
+			
+			QuestObject = Selection.Questionnaire.GetObject();
+			
+			QuestObject.SRs.Load(CurrentSRs);
+			
+			QuestObject.Write();
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+Function CountOfDifference(DocSRs, CurrentSRs)
+	
+	TableAllRecords = DocSRs.Copy();
+	
+	For Each Str In CurrentSRs Do FillPropertyValues(TableAllRecords.Add(), Str) EndDo;
+	
+	TableAllRecords.Columns.Add("Count", New TypeDescription("Number"));
+	TableAllRecords.FillValues(1, "Count");
+	
+	TableAllRecords.GroupBy("SR", "Count");
+	
+	Result = TableAllRecords.Copy(New Structure("Count", 1));
+	
+	Return Result.Count();
+	
+EndFunction
+
+#EndRegion 
+
 #Region CalculatePeriodicity
 
 Procedure ActualizePeriodicity() Export

@@ -1750,7 +1750,8 @@
 			// Блок обработчиков выполняемых перед выгрузкой данных
 			SyncSuperAgent.SetStatusOfQuestionnaires();
 			SyncSuperAgent.SetStatusOfAssortmentMatrix(CurrentDate());
-			SyncSuperAgent.ActualizePeriodicity();	
+			SyncSuperAgent.ActualizePeriodicity();
+			SyncSuperAgent.CheckSRsInQuestionnaire();
 			// Конец блока обработчиков выполняемых перед выгрузкой данных
 			
 			ТаблицаОбъектов = ПолучитьВсеОбъектыСогласноНастроек(ТаблицаНастроек, ТаблицаСвязанныхДанных, ВыбраннаяНастройка, ТекстВидОбъекта);

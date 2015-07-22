@@ -496,13 +496,13 @@
 									<ExtendedTooltip name="Decoration1ExtendedTooltip" id="393"/>
 								</LabelDecoration>
 								<InputField name="SRsSelected" id="503">
-									<DataPath>Object.SRsSelected</DataPath>
+									<DataPath>SRsSelected</DataPath>
 									<TextEdit>false</TextEdit>
 									<ContextMenu name="SRsSelectedContextMenu" id="504"/>
 									<ExtendedTooltip name="SRsSelectedExtendedTooltip" id="505"/>
 								</InputField>
 								<InputField name="OutletsSelected" id="73">
-									<DataPath>Object.OutletsSelected</DataPath>
+									<DataPath>OutletsSelected</DataPath>
 									<Format>
 										<v8:item>
 											<v8:lang>en</v8:lang>
@@ -1983,6 +1983,46 @@
 					</Type>
 				</Column>
 			</Columns>
+		</Attribute>
+		<Attribute name="OutletsSelected" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Outlets selected</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отобрано торговых точек</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>5</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="SRsSelected" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>SRs selected</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отобрано торговых представителей</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>5</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
 		</Attribute>
 		<ConditionalAppearance>
 			<dcsset:item>

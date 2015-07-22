@@ -1,158 +1,238 @@
 ﻿
-Function SelectOutlets(sourceTable) Export 
+Function SelectOutlets(SourceTable) Export 
 	
-	outletParametersMap = CreateOutletParametersMap();
+	SetPrivilegedMode(True);
 	
-	query = New Query();
+	OutletParametersMap = CreateOutletParametersMap();
+	
+	Query = New Query();
+	
+	// Убрать селекторы по позициям
+	RowsToDelete = SourceTable.FindRows(New Structure("Selector", "Catalog_Positions"));
+	
+	For Each r In RowsToDelete Do
 		
-	//clearPositions
-	rowsToDelete = sourceTable.FindRows(new Structure("Selector", "Catalog_Positions"));
-	For Each r In rowsToDelete Do
-		sourceTable.Delete(r);    	    
-	EndDo;    
+		SourceTable.Delete(r);
 		
-	//sort out sourceTable
-	newSourseTable = sourceTable.Copy();
-	
-	f = new Structure("Selector", "Catalog_OutletParameter");
-	outletParametersTable = sourceTable.Copy(f);
-	
-	rowsToDelete = newSourseTable.FindRows(new Structure("Selector", "Catalog_OutletParameter"));
-	For Each r In rowsToDelete Do
-		newSourseTable.Delete(r);			
 	EndDo;
+	
+	NewSourceTable = SourceTable.Copy();
+	
+	OutletParametersTable = SourceTable.Copy(New Structure("Selector", "Catalog_OutletParameter"));
+	
+	RowsToDelete = NewSourceTable.FindRows(New Structure("Selector", "Catalog_OutletParameter"));
+	
+	For Each Str In RowsToDelete Do
 		
-	f2 = new Structure("Selector", "Catalog_Territory");
-	f3 = new Structure("Selector", "Catalog_Region");
-	territoryTable = newSourseTable.Copy(f2);
-	regionTable = newSourseTable.Copy(f3);
-	For Each r In regionTable Do
-		n = territoryTable.Add();
-		n.Selector = r.Selector;    
-		n.ComparisonType = r.ComparisonType;
-		n.Value = r.Value
+		NewSourceTable.Delete(Str);
+		
 	EndDo;
 	
-	rowsToDelete = newSourseTable.FindRows(new Structure("Selector", "Catalog_Territory"));
-	For Each r In rowsToDelete Do
-		newSourseTable.Delete(r);			
-	EndDo;
-	rowsToDelete = newSourseTable.FindRows(new Structure("Selector", "Catalog_Region"));
-	For Each r In rowsToDelete Do
-		newSourseTable.Delete(r);			
+	TerritoryTable	= NewSourceTable.Copy(New Structure("Selector", "Catalog_Territory"));
+	RegionTable		= NewSourceTable.Copy(new Structure("Selector", "Catalog_Region"));
+	
+	For Each Str In RegionTable Do
+		
+		Ins					= TerritoryTable.Add();
+		Ins.Selector		= Str.Selector;
+		Ins.ComparisonType	= Str.ComparisonType;
+		Ins.Value			= Str.Value;
+		
 	EndDo;
 	
-	sourceTable = newSourseTable;
-	 	
-	//upgrade query string with Outlet_Parameters
-	parametersString = "";
+	RowsToDelete = NewSourceTable.FindRows(new Structure("Selector", "Catalog_Territory"));
+	
+	For Each Str In RowsToDelete Do
+		
+		NewSourceTable.Delete(Str);
+		
+	EndDo;
+	
+	RowsToDelete = NewSourceTable.FindRows(new Structure("Selector", "Catalog_Region"));
+	
+	For Each Str In RowsToDelete Do
+		
+		NewSourceTable.Delete(Str);
+		
+	EndDo;
+	
+	SourceTable = NewSourceTable;
+	
+	// Outlet_Parameters
+	ParametersString = "";
+	
 	i = 0;
-	skip = False;
-	For Each selector In outletParametersTable Do
-		If NOT skip Then
-			parametersString = parametersString + CreateQueryString(i);
-			query.SetParameter(String("Parameter"+i), selector.AdditionalParameter);
-			If selector.ComparisonType <> Enums.ComparisonType.InList Then
-				parametersString = parametersString + "= &Value"+i+" ";                
-				query.SetParameter(String("Value"+i), selector.Value);                                 
+	
+	Skip = False;
+	
+	For Each Selector In OutletParametersTable Do
+		
+		If Not Skip Then
+			
+			ParametersString = ParametersString + CreateQueryString(i);
+			
+			Query.SetParameter(String("Parameter"+i), Selector.AdditionalParameter);
+			
+			If Selector.ComparisonType <> Enums.ComparisonType.InList Then
+				
+				ParametersString = ParametersString + "= &Value"+ i +" ";
+				
+				Query.SetParameter(String("Value" + i), Selector.Value);
+				
 			Else 
-				parametersString = parametersString + " IN(";
-				filter = new Structure("AdditionalParameter, ComparisonType", selector.AdditionalParameter, Enums.ComparisonType.InList);
-				listTable = outletParametersTable.FindRows(filter);
+				
+				ParametersString = ParametersString + " IN(";
+				
+				ListTable = OutletParametersTable.FindRows(New Structure("AdditionalParameter, ComparisonType", Selector.AdditionalParameter, Enums.ComparisonType.InList));
+				
 				c = 1;
-				For Each listItem In listTable Do
-					parametersString = parametersString + String(" &Value" + String(i) + String(c)) + ?(c <> listTable.Count(), ", ", ") ");
-					query.SetParameter(String("Value" + String(i) + String(c)), listItem.Value);                                    
-					c = c+1;
+				
+				For Each ListItem In ListTable Do
+					
+					ParametersString = ParametersString + String(" &Value" + String(i) + String(c)) + ?(c <> ListTable.Count(), ", ", ") ");
+					
+					Query.SetParameter(String("Value" + String(i) + String(c)), ListItem.Value);
+					
+					c = c + 1;
+					
 				EndDo;
-				endOfList = listItem;
-				skip = True;
+				
+				EndOfList = ListItem;
+				
+				Skip = True;
+				
 			EndIf;
+			
 		EndIf; 
 		
-		if selector = endOfList Then
-			skip = False;
+		if Selector = EndOfList Then
+			
+			Skip = False;
+			
 		EndIf;
 		
 		i = i + 1;
+		
 	EndDo;
-	 	
-	//upgrade query string with Territories
-	territoriesString = "";
-	skip = False;
-	For Each selector In territoryTable Do
-		If NOT skip Then
-			territoriesString = territoriesString + " INNER JOIN Catalog.Territory.Outlets AS T"+ i + 
-			" ON O.Ref = T"+i+".Outlet AND T"+i+".Ref";            
-			If selector.ComparisonType <> Enums.ComparisonType.InList Then
+	
+	// Territories
+	TerritoriesString = "";
+	
+	Skip = False;
+	
+	For Each Selector In TerritoryTable Do
+		
+		If Not Skip Then
+			
+			TerritoriesString = TerritoriesString + " INNER JOIN Catalog.Territory.Outlets AS T" + i + 
+													" ON O.Ref = T" + i + ".Outlet AND T"+i+".Ref";
+			
+			If Selector.ComparisonType <> Enums.ComparisonType.InList Then
 				
-				If selector.ComparisonType = Enums.ComparisonType.Equal Then  
+				If Selector.ComparisonType = Enums.ComparisonType.Equal Then  
 					
-					territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", "=&parameter" + i,  ".Owner IN HIERARCHY(&parameter"+i+") ");                
+					TerritoriesString = TerritoriesString + ?(Selector.Selector = "Catalog_Territory", "=&parameter" + i, ".Owner IN HIERARCHY(&parameter" + i + ") ");
 					
 				Else 
 					
-					territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", "<>&parameter" + i,  ".Owner NOT IN HIERARCHY(&parameter"+i+") ");
+					TerritoriesString = TerritoriesString + ?(Selector.Selector = "Catalog_Territory", "<>&parameter" + i, ".Owner NOT IN HIERARCHY(&parameter" + i + ") ");
 					
-				EndIf;	
+				EndIf;
 				
-				query.SetParameter(String("parameter"+i), selector.Value);
+				Query.SetParameter(String("parameter" + i), Selector.Value);
+				
 			Else 
-				territoriesString = territoriesString + ?(selector.Selector = "Catalog_Territory", " IN(", ".Owner IN HIERARCHY(");
-				filter = new Structure("Selector, ComparisonType", selector.Selector, Enums.ComparisonType.InList);
-				listTable = territoryTable.FindRows(filter);
+				
+				TerritoriesString = TerritoriesString + ?(Selector.Selector = "Catalog_Territory", " IN(", ".Owner IN HIERARCHY(");
+				
+				ListTable = TerritoryTable.FindRows(new Structure("Selector, ComparisonType", Selector.Selector, Enums.ComparisonType.InList));
+				
 				c = 1;
-				For Each listItem In listTable Do
-					territoriesString = territoriesString + String(" &parameter" + String(i) + String(c)) + ?(c <> listTable.Count(), ", ", ") ");
-					query.SetParameter(String("parameter" + String(i) + String(c)), listItem.Value);                                    
-					c = c+1;
+				
+				For Each ListItem In ListTable Do
+					
+					TerritoriesString = TerritoriesString + String(" &parameter" + String(i) + String(c)) + ?(c <> ListTable.Count(), ", ", ") ");
+					
+					Query.SetParameter(String("parameter" + String(i) + String(c)), ListItem.Value);
+					
+					c = c + 1;
+					
 				EndDo;
-				endOfList = listItem;
-				skip = True;
+				
+				EndOfList = ListItem;
+				
+				Skip = True;
+				
 			EndIf;
+			
 		EndIf; 
 		
-		if selector = endOfList Then
-			skip = False;
+		if Selector = EndOfList Then
+			
+			Skip = False;
+			
 		EndIf;
 		
 		i = i + 1;
-	EndDo;
 		
-	//upgrade query string
-	string = ?(sourceTable.Count()>0, " WHERE ", "");
+	EndDo;
+	
+	string = ?(SourceTable.Count() > 0, " WHERE ", "");
 	
 	j = 1;
-	skip = False;
-	For Each selector In sourceTable Do
-		If NOT skip Then
-			string = string + " O." + outletParametersMap.Get(selector.Selector);
-			If selector.ComparisonType <> Enums.ComparisonType.InList Then
-				c = ?(selector.ComparisonType = Enums.ComparisonType.Equal, " = ", " <> ");
-				string = string + c + String(" &parameter" + i);
-				query.SetParameter(String("parameter" + i), selector.Value);       	        
+	
+	Skip = False;
+	
+	For Each Selector In SourceTable Do
+		
+		If Not Skip Then
+			
+			String = String + " O." + outletParametersMap.Get(Selector.Selector);
+			
+			If Selector.ComparisonType <> Enums.ComparisonType.InList Then
+				
+				c = ?(Selector.ComparisonType = Enums.ComparisonType.Equal, " = ", " <> ");
+				
+				String = String + c + String(" &parameter" + i);
+				
+				Query.SetParameter(String("parameter" + i), Selector.Value);
+				
 			Else
-				filter = new Structure("Selector, ComparisonType", selector.Selector, Enums.ComparisonType.InList);
-				listTable = sourceTable.FindRows(filter);
-				string = string + " IN( ";
+				
+				ListTable = SourceTable.FindRows(New Structure("Selector, ComparisonType", Selector.Selector, Enums.ComparisonType.InList));
+				
+				String = String + " IN( ";
+				
 				c = 1;
-				For Each listItem In listTable Do
-					string = string + String(" &parameter" + i + String(c)) + ?(c <> listTable.Count(), ", ", ") ");
-					query.SetParameter(String("parameter" + i + String(c)), listItem.Value);                                    
-					c = c+1;
+				
+				For Each ListItem In ListTable Do
+					
+					String = String + String(" &parameter" + i + String(c)) + ?(c <> ListTable.Count(), ", ", ") ");
+					
+					Query.SetParameter(String("parameter" + i + String(c)), ListItem.Value);
+					
+					c = c + 1;
+					
 				EndDo;
 				
-				endOfList = listItem;
-				skip = True;
+				EndOfList = ListItem;
+				
+				Skip = True;
+				
 			EndIf;
+			
 		EndIf;
 		
-		if selector = endOfList Then
-			skip = False;
+		if Selector = EndOfList Then
+			
+			Skip = False;
+			
 		EndIf;
 		
-		If (j)<>sourceTable.Count() AND skip = False Then
-			string = string + " AND "        	        
+		If j <> SourceTable.Count() AND Skip = False Then
+			
+			String = String + " AND ";
+			
 		EndIf;
 		
 		i = i + 1;
@@ -162,18 +242,18 @@ Function SelectOutlets(sourceTable) Export
 	
 	Try
 		
-		query.Text="SELECT ALLOWED DISTINCT O.Ref FROM Catalog.Outlet AS O " + parametersString + territoriesString + string;
+		Query.Text="SELECT ALLOWED DISTINCT O.Ref FROM Catalog.Outlet AS O " + ParametersString + TerritoriesString + String;
 		
-		result = query.Execute().Unload(); 
+		Result = Query.Execute().Unload(); 
 		
-		Return result;
+		Return Result;
 		
 	Except
 		
-		result = New ValueTable;
-		result.Columns.Add("Ref");
+		Result = New ValueTable;
+		Result.Columns.Add("Ref");
 		
-		Return result;
+		Return Result;
 		
 	EndTry;
 	
@@ -295,6 +375,8 @@ Function SelectPositions(Positions) Export
 EndFunction
 
 Function SelectSRs(SelectorsList, PositionList) Export 
+	
+	SetPrivilegedMode(True);
 	
 	PositionsEquals = PositionList.Find(Enums.ComparisonType.Equal, "ComparisonType");
 	PositionsInList = PositionList.Find(Enums.ComparisonType.InList, "ComparisonType");

@@ -86,6 +86,9 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	// Разблокировать/заблокировать элементы в зависимости от статуса
 	DisableFormElements();
 	
+	// Заполнить значения об отобранных ТТ и торговых представителях
+	SetOutletsSRsSelected();
+	
 EndProcedure
 
 &AtServer
@@ -1441,13 +1444,13 @@ Function WriteSRow(Item, ListItem, SelectorsTable)
 EndFunction
 
 &AtServer
-Procedure SetOutletsSelected()
+Procedure SetOutletsSRsSelected()
 	
 	TempSelectorsTable = CreateSelectorsTable();
 	
-	Object.OutletsSelected = Documents.Questionnaire.SelectOutlets(TempSelectorsTable.Copy()).Count();
+	OutletsSelected = Documents.Questionnaire.SelectOutlets(TempSelectorsTable.Copy()).Count();
 	
-	Object.SRsSelected = Documents.Questionnaire.SelectSRs(TempSelectorsTable, TempSelectorsTable.Copy(New Structure("Selector", "Catalog_Positions"))).Count();
+	SRsSelected = Documents.Questionnaire.SelectSRs(TempSelectorsTable, TempSelectorsTable.Copy(New Structure("Selector", "Catalog_Positions"))).Count();
 	
 EndProcedure
 
@@ -1526,7 +1529,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	If EventName = "QuestionnaireForm" + String(ThisForm.UUID) Then
 		
 		Selectors[Parameter.StringNumber].Value = Parameter.Str;
-		SetOutletsSelected();
+		SetOutletsSRsSelected();
 		
 	EndIf;
 	
@@ -1546,7 +1549,7 @@ Procedure NotificationProcessing(EventName, Parameter, Source)
 	If EventName = "ValueListOk" + String(ThisForm.UUID) Then
 		
 		Selectors[Parameter.StringNumber].Value = Parameter.List;
-		SetOutletsSelected();
+		SetOutletsSRsSelected();
 		
 	EndIf;
 	
@@ -1856,14 +1859,14 @@ EndProcedure
 &AtClient
 Procedure SelectorsTableOnChange(Item)
 	
-	SetOutletsSelected();
+	SetOutletsSRsSelected();
 	
 EndProcedure
 
 &AtClient
 Procedure SelectOutlets(Command)
 	
-	SetOutletsSelected();
+	SetOutletsSRsSelected();
 	
 EndProcedure
 

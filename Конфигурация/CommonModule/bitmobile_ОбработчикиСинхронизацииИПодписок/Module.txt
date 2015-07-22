@@ -232,7 +232,8 @@
 			
 			SyncSuperAgent.SetStatusOfQuestionnaires();
 			SyncSuperAgent.SetStatusOfAssortmentMatrix(CurrentDate());
-			SyncSuperAgent.ActualizePeriodicity();	
+			SyncSuperAgent.ActualizePeriodicity();
+			SyncSuperAgent.CheckSRsInQuestionnaire();
 			
 			УстановитьПривилегированныйРежим(Ложь);
 			
