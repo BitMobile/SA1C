@@ -47,7 +47,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.8.0.441</Version>
+			<Version>1.8.0.442</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -342,6 +342,7 @@
 			<Report>PriceMonitoring</Report>
 			<Report>PromoActionsReport</Report>
 			<Report>Returns</Report>
+			<Report>QuestionnairesOutletsLinking</Report>
 			<Report>QuestionsOnSKUs</Report>
 			<Report>QuestionsOnOutlets</Report>
 			<Report>ShelfSpaceShare</Report>
