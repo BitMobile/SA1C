@@ -257,14 +257,19 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			|	DistributorTerritories.Ref
 			|FROM
 			|	Catalog.Distributor.Territories AS DistributorTerritories
+			|WHERE
+			|	DistributorTerritories.Territory = &Territory
 			|
 			|UNION ALL
 			|
 			|SELECT
 			|	ContractorsTerritories.Ref
 			|FROM
-			|	Catalog.Contractors.Territories AS ContractorsTerritories");
+			|	Catalog.Contractors.Territories AS ContractorsTerritories
+			|WHERE
+			|	ContractorsTerritories.Territory = &Territory");
 			
+			Query.SetParameter("Territory", CurrentObject.Ref);
 			Result = Query.Execute().Unload();
 			Cancel = Result.Count();
 			
