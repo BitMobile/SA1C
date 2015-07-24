@@ -17,6 +17,65 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 EndProcedure
 
+&AtServer
+Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
+	
+	If ValueIsFilled(CurrentObject.Ref) Then
+	
+		Query = New Query(
+		"SELECT
+		|	ObjectTerritories.Territory
+		|INTO ObjectTerritories
+		|FROM
+		|	&ObjectTerritories AS ObjectTerritories
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT DISTINCT
+		|	TerritoryOutlets.Ref AS Territory,
+		|	OutletCatalog.Ref AS Outlet
+		|INTO OutletTerritories
+		|FROM
+		|	Catalog.Territory.Outlets AS TerritoryOutlets
+		|		LEFT JOIN Catalog.Outlet AS OutletCatalog
+		|		ON TerritoryOutlets.Outlet = OutletCatalog.Ref
+		|WHERE
+		|	OutletCatalog.Distributor = &Distributor
+		|;
+		|
+		|////////////////////////////////////////////////////////////////////////////////
+		|SELECT
+		|	OutletTerritories.Outlet,
+		|	COUNT(DISTINCT OutletTerritories.Territory) AS OutletTerritory,
+		|	COUNT(DISTINCT ObjectTerritories.Territory) AS PartnerTerritory
+		|FROM
+		|	OutletTerritories AS OutletTerritories
+		|		LEFT JOIN ObjectTerritories AS ObjectTerritories
+		|		ON OutletTerritories.Territory = ObjectTerritories.Territory
+		|
+		|GROUP BY
+		|	OutletTerritories.Outlet
+		|
+		|HAVING
+		|	COUNT(ObjectTerritories.Territory) = 0");
+		
+		Query.SetParameter("ObjectTerritories", CurrentObject.Territories.Unload());
+		Query.SetParameter("Distributor", CurrentObject.Ref);
+		Result = Query.Execute().Unload();
+		
+		Cancel = Result.Count() > 0;
+		
+		If Cancel Then
+			
+			Message(NStr("ru = 'Нельзя записывать партнера пока есть хотя бы одна торговая точка в которой присутствует этот партнер и список территорий этой торговой точки не соответствует ни одной территории из нового списка территорий этого партнера.'"));
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+
 #Region Contractors
 
 &AtServer
