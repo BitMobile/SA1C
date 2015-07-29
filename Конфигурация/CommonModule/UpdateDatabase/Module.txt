@@ -81,6 +81,7 @@ Function StartUpdate() Export
 			VersionListForThisRelease.Add("1.7.0");
 			VersionListForThisRelease.Add("1.7.T");
 			VersionListForThisRelease.Add("1.8.0");
+			VersionListForThisRelease.Add("1.8.1");
 			VersionListForThisRelease.Add("1.8.T");
 			
 			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
@@ -123,6 +124,20 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_7_0(LastState, Step);
 					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.8.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_8_0(LastState, Step);
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_9_0(LastState, Step);
+					
 				EndIf;
 				
 				If CurrentVersion = "1.4.0" Or CurrentVersion = "1.5.0" Or CurrentVersion = "1.5.1" Then 
@@ -141,6 +156,20 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_7_0(LastState, Step);
 					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.8.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_8_0(LastState, Step);
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_9_0(LastState, Step);
+					
 				EndIf;
 				
 				If CurrentVersion = "1.6.0" Or CurrentVersion = "1.6.T" Then 
@@ -151,6 +180,20 @@ Function StartUpdate() Export
 					UserMessage.Message();
 					
 					UpdateForRelease_1_7_0(LastState, Step);
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.8.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_8_0(LastState, Step);
+					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_9_0(LastState, Step);
 					
 				EndIf;
 				
@@ -163,9 +206,16 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_8_0(LastState, Step);
 					
+					UserMessage			= New UserMessage;
+					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_9_0(LastState, Step);
+					
 				EndIf;
 				
-				If CurrentVersion = "1.8.0" OR CurrentVersion = "1.8.T" Then
+				If CurrentVersion = "1.8.0" OR CurrentVersion = "1.8.1" OR CurrentVersion = "1.8.T" Then
 					
 					UserMessage			= New UserMessage;
 					UserMessage.Text	= NStr("en = 'Version 1.9.0'; ru = 'Версия 1.8.0'");
