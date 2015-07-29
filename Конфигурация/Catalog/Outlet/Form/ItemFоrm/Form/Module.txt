@@ -13,7 +13,7 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	PredefinedItems = New Map;
 	PredefinedItems.Insert("Catalog.OutletType", "Type");
 	PredefinedItems.Insert("Catalog.OutletClass", "Class");
-	PredefinedItems.Insert("Catalog.Distributor", "Distributor");
+	//PredefinedItems.Insert("Catalog.Distributor", "Distributor");
 	PredefinedItems.Insert("Document.PriceList", "Prices");
 	
 	ItemsCollection = CommonProcessors.GetPredefinedItems(PredefinedItems);
