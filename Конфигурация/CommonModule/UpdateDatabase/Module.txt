@@ -425,7 +425,7 @@ Procedure FillInProcessing()
 	EntityElements = AddInValueTable(EntityElements, "OutletClass", NStr("en = 'Default class'; ru = 'Основной класс'"));
 	EntityElements = AddInValueTable(EntityElements, "Region", NStr("en = 'Default region'; ru = 'Основной регион'"));
 	EntityElements = AddInValueTable(EntityElements, "Territory", NStr("en = 'Default territory'; ru = 'Основная территория'"));
-	EntityElements = AddInValueTable(EntityElements, "Distributor", NStr("en = 'Default distributor'; ru = 'Основной дистрибьютор'"));
+	//EntityElements = AddInValueTable(EntityElements, "Distributor", NStr("en = 'Default distributor'; ru = 'Основной дистрибьютор'"));
 	EntityElements = AddInValueTable(EntityElements, "SKUGroup", NStr("en = 'Default group'; ru = 'Основная группа'"));
 	EntityElements = AddInValueTable(EntityElements, "Brands", NStr("en = 'Default brand'; ru = 'Основной бренд'"));
 	EntityElements = AddInValueTable(EntityElements, "UnitsOfMeasure", NStr("en = 'pcs.'; ru = 'шт.'"));
