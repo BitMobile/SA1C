@@ -787,6 +787,10 @@ Procedure ProcessMobileAppSettings()
 			
 			SettingObject.DataType = Enums.DataType.Boolean;
 			
+		ElsIf Selection.Description = "UserCoordinatesActualityTime" Then
+			
+			SettingObject.DataType = Enums.DataType.Integer;
+			
 		EndIf;
 		
 		SettingObject.Write();
@@ -2019,6 +2023,9 @@ Procedure UpdateForRelease_1_9_0(LastState, Step)
 	WriteProtocol(LastState, Step, NStr("en = 'Update pricelists'; ru = 'Обновление прайс-листов'"));
 	ProcessPriceLists();
 	
+	WriteProtocol(LastState, Step, NStr("en = 'Update mobile app settings'; ru = 'Обновление настроек мобильного приложения'"));
+	ProcessUserCoordinatesActualityTime();
+	
 EndProcedure
 
 Procedure ProcessContractors()
@@ -2181,6 +2188,14 @@ Procedure ProcessPriceLists()
 	RecordSet = InformationRegisters.Prices.CreateRecordSet();
 	RecordSet.Load(PricesVT);
 	RecordSet.Write();
+	
+EndProcedure
+
+Procedure ProcessUserCoordinatesActualityTime()
+	
+	SettingObject = Catalogs.MobileAppSettings.UserCoordinatesActualityTime.GetObject();
+	SettingObject.NumericValue = 5;
+	SettingObject.Write();
 	
 EndProcedure
 

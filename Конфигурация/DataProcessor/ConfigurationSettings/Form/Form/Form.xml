@@ -179,6 +179,11 @@
 			<ContextMenu name="SnapshotSizeContextMenu" id="29"/>
 			<ExtendedTooltip name="SnapshotSizeExtendedTooltip" id="30"/>
 		</InputField>
+		<InputField name="UserCoordinatesActualityTime" id="51">
+			<DataPath>UserCoordinatesActualityTime</DataPath>
+			<ContextMenu name="UserCoordinatesActualityTimeContextMenu" id="52"/>
+			<ExtendedTooltip name="UserCoordinatesActualityTimeExtendedTooltip" id="53"/>
+		</InputField>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Object" id="1">
@@ -386,6 +391,26 @@
 			</Title>
 			<Type>
 				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="UserCoordinatesActualityTime" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>User coordinates actuality time (in minutes)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Время актуальности координат пользователя (в минутах)</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
 			</Type>
 		</Attribute>
 	</Attributes>

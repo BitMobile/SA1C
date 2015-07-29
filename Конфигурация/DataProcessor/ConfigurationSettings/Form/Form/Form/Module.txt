@@ -4,15 +4,16 @@
 &AtServer
 Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
-	ControlOrderReasonEnabled	= Catalogs.MobileAppSettings.ControlOrderReasonEnabled.LogicValue;
-	ControlVisitReasonEnabled	= Catalogs.MobileAppSettings.ControlVisitReasonEnabled.LogicValue;
-	CoordinateControlEnabled	= Catalogs.MobileAppSettings.CoordinateControlEnabled.LogicValue;
-	EmptyStockEnabled			= Catalogs.MobileAppSettings.EmptyStockEnabled.LogicValue;
-	MultistockEnabled			= Catalogs.MobileAppSettings.MultistockEnabled.LogicValue;
-	PlanVisitEnabled			= Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
-	RecOrderEnabled				= Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
-	SnapshotSize				= Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
-	SKUFeaturesRegistration		= Catalogs.MobileAppSettings.SKUFeaturesRegistration.LogicValue;
+	ControlOrderReasonEnabled	 = Catalogs.MobileAppSettings.ControlOrderReasonEnabled.LogicValue;
+	ControlVisitReasonEnabled	 = Catalogs.MobileAppSettings.ControlVisitReasonEnabled.LogicValue;
+	CoordinateControlEnabled	 = Catalogs.MobileAppSettings.CoordinateControlEnabled.LogicValue;
+	EmptyStockEnabled			 = Catalogs.MobileAppSettings.EmptyStockEnabled.LogicValue;
+	MultistockEnabled			 = Catalogs.MobileAppSettings.MultistockEnabled.LogicValue;
+	PlanVisitEnabled			 = Catalogs.MobileAppSettings.PlanVisitEnabled.LogicValue;
+	RecOrderEnabled				 = Catalogs.MobileAppSettings.RecOrderEnabled.LogicValue;
+	SnapshotSize				 = Catalogs.MobileAppSettings.SnapshotSize.NumericValue;
+	SKUFeaturesRegistration		 = Catalogs.MobileAppSettings.SKUFeaturesRegistration.LogicValue;
+	UserCoordinatesActualityTime = Catalogs.MobileAppSettings.UserCoordinatesActualityTime.NumericValue;
 	
 	CreateReturnsEnabled		= Constants.UseReturns.Get();
 	CreateOrdersEnabled			= Constants.UseOrders.Get();
