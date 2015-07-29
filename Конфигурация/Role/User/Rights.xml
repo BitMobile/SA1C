@@ -3477,6 +3477,13 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 		</right>
 	</object>
 	<object>
+		<name>CommonForm.ValueListForm</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>CommonCommand.ShowPromoActionsReport</name>
 		<right>
 			<name>View</name>
