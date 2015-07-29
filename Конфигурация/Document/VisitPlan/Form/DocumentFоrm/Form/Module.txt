@@ -465,6 +465,7 @@ Procedure SROnChange(Item)
 	FillValueTableOutlets();
 	FillWeekNumbers();
 	ClearOutlets();
+	WeekChooserOnActivateCell(Items.WeekChooser);
 	
 EndProcedure
 
@@ -544,10 +545,14 @@ EndProcedure
 &AtClient
 Procedure WeekChooserOnActivateCell(Item)
 	
-	Modified = ?(Modified, True, NOT Item.CurrentData.WeekNumber = ObjectWeekNumber);
-	ObjectWeekNumber = Item.CurrentData.WeekNumber;
-	
-	ProcessWeekNumberAndYearChange();
+	If Not Item.CurrentData = Undefined Then
+		
+		Modified = ?(Modified, True, NOT Item.CurrentData.WeekNumber = ObjectWeekNumber);
+		ObjectWeekNumber = Item.CurrentData.WeekNumber;
+		
+		ProcessWeekNumberAndYearChange();
+		
+	EndIf;
 	
 EndProcedure
 
