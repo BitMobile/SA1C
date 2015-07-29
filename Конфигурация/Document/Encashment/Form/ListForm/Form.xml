@@ -108,6 +108,11 @@
 					<ContextMenu name="CommentaryContextMenu" id="38"/>
 					<ExtendedTooltip name="CommentaryExtendedTooltip" id="39"/>
 				</LabelField>
+				<LabelField name="EncashmentAmount" id="42">
+					<DataPath>List.EncashmentAmount</DataPath>
+					<ContextMenu name="EncashmentAmountContextMenu" id="43"/>
+					<ExtendedTooltip name="EncashmentAmountExtendedTooltip" id="44"/>
+				</LabelField>
 			</ChildItems>
 		</Table>
 	</ChildItems>
