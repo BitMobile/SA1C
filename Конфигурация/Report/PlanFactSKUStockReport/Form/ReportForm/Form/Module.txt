@@ -36,7 +36,7 @@ EndProcedure
 &AtServerNoContext
 Function GetReturnStructure(Value, TypesMap)
 	
-	Return New Structure("OutletParameter, DataType", Value, TypesMap.Get(String(Value.DataType)));
+	Return New Structure("OutletParameter, DataType", Value, TypesMap.Get(?(TypeOf(Value) = Type("StandardPeriod"), "StandardPeriod", String(Value.DataType))));
 	
 EndFunction
 
