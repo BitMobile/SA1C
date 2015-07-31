@@ -181,6 +181,17 @@
 		</InputField>
 		<InputField name="UserCoordinatesActualityTime" id="51">
 			<DataPath>UserCoordinatesActualityTime</DataPath>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>0 - Disabled</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>0 - Отключено</v8:content>
+				</v8:item>
+			</ToolTip>
+			<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
 			<ContextMenu name="UserCoordinatesActualityTimeContextMenu" id="52"/>
 			<ExtendedTooltip name="UserCoordinatesActualityTimeExtendedTooltip" id="53"/>
 		</InputField>

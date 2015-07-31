@@ -75,6 +75,11 @@ Procedure SaveSettingsServer()
 	
 	SnapshotSizeObject.Write();
 	
+	UserCoordinatesActualityTimeObject = Catalogs.MobileAppSettings.UserCoordinatesActualityTime.GetObject();
+	UserCoordinatesActualityTimeObject.NumericValue = UserCoordinatesActualityTime;
+	
+	UserCoordinatesActualityTimeObject.Write();
+	
 	Constants.UseReturns.Set(CreateReturnsEnabled);
 	Constants.UseOrders.Set(CreateOrdersEnabled);
 	Constants.UseEncashments.Set(CreateEncashmentsEnabled);
