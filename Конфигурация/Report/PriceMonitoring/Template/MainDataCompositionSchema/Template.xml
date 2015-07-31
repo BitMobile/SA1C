@@ -263,7 +263,7 @@ FROM
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	TerritoryOutlets.Ref.Owner AS DS2Region,
 	TerritoryOutlets.Outlet AS DS2Outlet,
 	TerritoryOutlets.Ref AS DS2Territory

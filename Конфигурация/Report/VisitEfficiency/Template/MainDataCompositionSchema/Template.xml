@@ -287,7 +287,7 @@ GROUP BY
 			</title>
 		</field>
 		<dataSource>DataSource1</dataSource>
-		<query>SELECT
+		<query>SELECT ALLOWED
 	TerritorySRs.Ref.Owner AS DS2Region,
 	TerritorySRs.Ref AS DS2Territory,
 	TerritorySRs.SR
