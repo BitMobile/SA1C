@@ -840,7 +840,9 @@ Procedure PeriodsEndDateOnChange(Item)
 			Buttons.Add("Earliest", NStr("en = 'Earlist'; ru = 'Самую раннюю возможную'"));
 			Buttons.Add("Latest", NStr("en = 'Latest'; ru = 'Самую позднюю возможную'"));
 			
-			Params.Insert("Earliest", CurrentDate());
+			Earliest = ?(CurrentData.BeginDate >= CurrentDate(), CurrentData.BeginDate, CurrentDate());
+			
+			Params.Insert("Earliest", Earliest);
 			Params.Insert("Latest", PrevDay(NextData.BeginDate));
 			
 			QueryText = NStr("en = 'Current row end date cannot be empty.'; 
