@@ -118,6 +118,8 @@ FROM
 		ON Territory.Ref = TerritorySRs.Ref
 		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
 		ON Territory.Ref = TerritoryOutlets.Ref
+		LEFT JOIN Catalog.Region AS Region
+		ON Territory.Owner = Region.Ref
 
 GROUP BY
 	TerritorySRs.SR,

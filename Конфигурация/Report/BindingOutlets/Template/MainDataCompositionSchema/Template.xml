@@ -41,7 +41,9 @@
 FROM
 	Catalog.Outlet AS Outlets
 		LEFT JOIN Catalog.Territory.Outlets AS TerritoryOutlets
-		ON Outlets.Ref = TerritoryOutlets.Outlet</query>
+		ON Outlets.Ref = TerritoryOutlets.Outlet
+		LEFT JOIN Enum.OutletStatus AS OutletStatuses
+		ON Outlets.OutletStatus = OutletStatuses.Ref</query>
 	</dataSet>
 	<settingsVariant>
 		<dcsset:name>Default</dcsset:name>

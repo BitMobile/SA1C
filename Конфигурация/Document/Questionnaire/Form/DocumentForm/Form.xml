@@ -459,9 +459,10 @@
 									<HorizontalAlign>Left</HorizontalAlign>
 									<EditMode>EnterOnInput</EditMode>
 									<Width>1</Width>
-									<ChoiceButton>true</ChoiceButton>
+									<ChoiceButtonRepresentation>ShowInInputField</ChoiceButtonRepresentation>
 									<QuickChoice>false</QuickChoice>
 									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ChooseType>false</ChooseType>
 									<TextEdit>false</TextEdit>
 									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
 									<ContextMenu name="SelectorsValueContextMenu" id="61"/>

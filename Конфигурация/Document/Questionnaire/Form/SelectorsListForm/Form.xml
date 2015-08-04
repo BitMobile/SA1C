@@ -71,7 +71,7 @@
 				<InputField name="ValuesValueRow" id="10">
 					<DataPath>Values.ValueRow</DataPath>
 					<EditMode>EnterOnInput</EditMode>
-					<ChoiceButton>true</ChoiceButton>
+					<ChoiceButtonRepresentation>ShowInInputField</ChoiceButtonRepresentation>
 					<AutoMarkIncomplete>true</AutoMarkIncomplete>
 					<TextEdit>false</TextEdit>
 					<ContextMenu name="ValuesValueRowContextMenu" id="11"/>
