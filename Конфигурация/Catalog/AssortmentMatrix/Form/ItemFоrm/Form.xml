@@ -626,46 +626,45 @@
 															<ShowLeftMargin>false</ShowLeftMargin>
 															<ExtendedTooltip name="GroupOutletsSelectFilterExtendedTooltip" id="457"/>
 															<ChildItems>
-																<Table name="OutletsSelectFilter" id="458">
+																<Table name="OutletsSelectFilter" id="529">
 																	<Representation>Tree</Representation>
 																	<CommandBarLocation>None</CommandBarLocation>
 																	<Autofill>true</Autofill>
 																	<ChangeRowSet>false</ChangeRowSet>
 																	<ChangeRowOrder>false</ChangeRowOrder>
-																	<Height>7</Height>
 																	<InitialTreeView>ExpandAllLevels</InitialTreeView>
 																	<VerticalStretch>false</VerticalStretch>
 																	<EnableStartDrag>true</EnableStartDrag>
 																	<EnableDrag>true</EnableDrag>
-																	<DataPath>OutletsSelect.Filter</DataPath>
+																	<DataPath>OutletsSelect.SettingsComposer.FixedSettings.Filter</DataPath>
 																	<ViewMode>All</ViewMode>
 																	<SettingsNamedItemDetailedRepresentation>false</SettingsNamedItemDetailedRepresentation>
-																	<ContextMenu name="OutletsSelectFilterContextMenu" id="459"/>
-																	<AutoCommandBar name="OutletsSelectFilterCommandBar" id="460"/>
-																	<ExtendedTooltip name="OutletsSelectFilterExtendedTooltip" id="461"/>
-																	<SearchStringAddition name="OutletsSelectFilterSearchString" id="462">
+																	<ContextMenu name="OutletsSelectFilterContextMenu" id="530"/>
+																	<AutoCommandBar name="OutletsSelectFilterCommandBar" id="531"/>
+																	<ExtendedTooltip name="OutletsSelectFilterExtendedTooltip" id="532"/>
+																	<SearchStringAddition name="OutletsSelectFilterSearchString" id="533">
 																		<Source>
-																			<lf:elementId>458</lf:elementId>
+																			<lf:elementId>529</lf:elementId>
 																			<lf:additionId>0</lf:additionId>
 																		</Source>
-																		<ContextMenu name="OutletsSelectFilterSearchStringContextMenu" id="465"/>
-																		<ExtendedTooltip name="OutletsSelectFilterSearchStringExtendedTooltip" id="466"/>
+																		<ContextMenu name="OutletsSelectFilterSearchStringContextMenu" id="536"/>
+																		<ExtendedTooltip name="OutletsSelectFilterSearchStringExtendedTooltip" id="537"/>
 																	</SearchStringAddition>
-																	<ViewStatusAddition name="OutletsSelectFilterViewStatus" id="467">
+																	<ViewStatusAddition name="OutletsSelectFilterViewStatus" id="538">
 																		<Source>
-																			<lf:elementId>458</lf:elementId>
+																			<lf:elementId>529</lf:elementId>
 																			<lf:additionId>1</lf:additionId>
 																		</Source>
-																		<ContextMenu name="OutletsSelectFilterViewStatusContextMenu" id="470"/>
-																		<ExtendedTooltip name="OutletsSelectFilterViewStatusExtendedTooltip" id="471"/>
+																		<ContextMenu name="OutletsSelectFilterViewStatusContextMenu" id="541"/>
+																		<ExtendedTooltip name="OutletsSelectFilterViewStatusExtendedTooltip" id="542"/>
 																	</ViewStatusAddition>
-																	<SearchControlAddition name="OutletsSelectFilterSearchControl" id="472">
+																	<SearchControlAddition name="OutletsSelectFilterSearchControl" id="543">
 																		<Source>
-																			<lf:elementId>458</lf:elementId>
+																			<lf:elementId>529</lf:elementId>
 																			<lf:additionId>2</lf:additionId>
 																		</Source>
-																		<ContextMenu name="OutletsSelectFilterSearchControlContextMenu" id="475"/>
-																		<ExtendedTooltip name="OutletsSelectFilterSearchControlExtendedTooltip" id="476"/>
+																		<ContextMenu name="OutletsSelectFilterSearchControlContextMenu" id="546"/>
+																		<ExtendedTooltip name="OutletsSelectFilterSearchControlExtendedTooltip" id="547"/>
 																	</SearchControlAddition>
 																</Table>
 															</ChildItems>
