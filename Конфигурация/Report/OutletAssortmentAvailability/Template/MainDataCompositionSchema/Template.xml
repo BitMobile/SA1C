@@ -629,20 +629,6 @@ GROUP BY
 		</title>
 	</calculatedField>
 	<calculatedField>
-		<dataPath>ДопКолонка</dataPath>
-		<expression>""</expression>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>en</v8:lang>
-				<v8:content>Доп колонка</v8:content>
-			</v8:item>
-		</title>
-		<useRestriction>
-			<condition>true</condition>
-			<order>true</order>
-		</useRestriction>
-	</calculatedField>
-	<calculatedField>
 		<dataPath>PercentTotalDay</dataPath>
 		<expression/>
 		<title xsi:type="v8:LocalStringType">
@@ -998,35 +984,23 @@ GROUP BY
 			</dcsset:conditionalAppearance>
 			<dcsset:outputParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>HorizontalOverallPlacement</dcscor:parameter>
 					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
-					<dcscor:parameter>ChartType</dcscor:parameter>
-					<dcscor:value xsi:type="v8ui:ChartType">Column3D</dcscor:value>
-					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-						<dcscor:parameter>ChartType.Font</dcscor:parameter>
-						<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" kind="WindowsFont"/>
-					</dcscor:item>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>DataParametersOutput</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>FilterOutput</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>FixedLeft</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:use>false</dcscor:use>
 					<dcscor:parameter>FixedTop</dcscor:parameter>
 					<dcscor:value xsi:type="dcsset:DataCompositionFixation">DontUse</dcscor:value>
 				</dcscor:item>
@@ -1048,65 +1022,6 @@ GROUP BY
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 					</dcsset:selection>
-				</dcsset:column>
-				<dcsset:column>
-					<dcsset:groupItems>
-						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>ДопКолонка</dcsset:field>
-							<dcsset:groupType>Items</dcsset:groupType>
-							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
-							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
-							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
-						</dcsset:item>
-					</dcsset:groupItems>
-					<dcsset:order>
-						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
-					</dcsset:order>
-					<dcsset:selection>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>ДопКолонка</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:use>false</dcsset:use>
-							<dcsset:field>Plan</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:use>false</dcsset:use>
-							<dcsset:field>Fact</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:use>false</dcsset:use>
-							<dcsset:field>Percent</dcsset:field>
-						</dcsset:item>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>PercentTotalDay</dcsset:field>
-						</dcsset:item>
-					</dcsset:selection>
-					<dcsset:conditionalAppearance>
-						<dcsset:item>
-							<dcsset:selection>
-								<dcsset:item>
-									<dcsset:field>ДопКолонка</dcsset:field>
-								</dcsset:item>
-							</dcsset:selection>
-							<dcsset:filter/>
-							<dcsset:appearance>
-								<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-									<dcscor:parameter>Text</dcscor:parameter>
-									<dcscor:value xsi:type="v8:LocalStringType">
-										<v8:item>
-											<v8:lang>en</v8:lang>
-											<v8:content>Total</v8:content>
-										</v8:item>
-										<v8:item>
-											<v8:lang>ru</v8:lang>
-											<v8:content>Итого</v8:content>
-										</v8:item>
-									</dcscor:value>
-								</dcscor:item>
-							</dcsset:appearance>
-						</dcsset:item>
-					</dcsset:conditionalAppearance>
 				</dcsset:column>
 				<dcsset:row>
 					<dcsset:groupItems>
@@ -1297,6 +1212,9 @@ GROUP BY
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Fact</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>MonthPercent</dcsset:field>
@@ -1652,6 +1570,9 @@ GROUP BY
 					<dcsset:field>Plan</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Fact</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>MonthPercent</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
@@ -2002,6 +1923,9 @@ GROUP BY
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Plan</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Fact</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>MonthPercent</dcsset:field>
