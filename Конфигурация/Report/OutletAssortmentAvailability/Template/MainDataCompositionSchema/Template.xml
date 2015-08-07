@@ -680,14 +680,10 @@ GROUP BY
 	<totalField>
 		<dataPath>OutletsCount</dataPath>
 		<expression>Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet"))</expression>
-		<group>Region</group>
-		<group>Overall</group>
 	</totalField>
 	<totalField>
 		<dataPath>Percent</dataPath>
 		<expression>CASE WHEN Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet")) = 0 THEN 0 ELSE Sum(ВычислитьВыражениеСГруппировкойМассив("Percent" , "Outlet"))/Sum(ВычислитьВыражениеСГруппировкойМассив("OutletsCount" , "Outlet")) END</expression>
-		<group>Region</group>
-		<group>Overall</group>
 	</totalField>
 	<totalField>
 		<dataPath>Answer</dataPath>
