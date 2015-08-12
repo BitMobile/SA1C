@@ -107,12 +107,21 @@ Procedure OwnerOnChangeAtServer()
 	
 EndProcedure
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	If Not IsValueList() Then
 		

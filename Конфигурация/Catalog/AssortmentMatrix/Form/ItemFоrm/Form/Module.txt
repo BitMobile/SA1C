@@ -508,12 +508,21 @@ Function PrevDay(Date = Undefined)
 	
 EndFunction
 
+&AtServer
+Function OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndFunction // ()
+
 #EndRegion
 
 #Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	For Each Period In Object.Periods Do
 		

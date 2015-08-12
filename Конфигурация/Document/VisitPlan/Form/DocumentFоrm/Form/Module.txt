@@ -396,12 +396,21 @@ Function BeginOfWeekInYear(WeekNumber, YearDate)
 	
 EndFunction
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Number.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditDocumentNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	SetColumnsAvailability();
 	

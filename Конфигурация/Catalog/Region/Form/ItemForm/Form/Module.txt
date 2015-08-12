@@ -17,4 +17,16 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 	
 EndProcedure
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 #EndRegion
+
+&AtClient
+Procedure OnOpen(Cancel)
+	OnOpenAtServer();
+EndProcedure

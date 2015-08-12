@@ -32,6 +32,13 @@ Function GetRecordKey(KeyData)
 	
 EndFunction
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Number.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditDocumentNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
@@ -56,6 +63,11 @@ Procedure TempQuestionairesSelection(Item, SelectedRow, Field, StandardProcessin
 		
 	EndIf;
 	
+EndProcedure
+
+&AtClient
+Procedure OnOpen(Cancel)
+	OnOpenAtServer();
 EndProcedure
 
 #EndRegion

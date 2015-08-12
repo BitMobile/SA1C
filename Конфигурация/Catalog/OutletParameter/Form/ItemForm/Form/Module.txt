@@ -1,6 +1,15 @@
 ﻿
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	If Object.ValueList.Count() = 0 Then
 		Items.ValueList.Visible = False;

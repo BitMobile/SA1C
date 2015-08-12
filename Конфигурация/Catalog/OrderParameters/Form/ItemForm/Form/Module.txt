@@ -19,8 +19,18 @@ Function  DataTypeOnChangeServer()
 	
 EndFunction
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
+
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	Items.ValueList.Visible = NOT Object.ValueList.Count() = 0;
 	Items.EditableInMA.ReadOnly = Not Object.VisibleInMA;

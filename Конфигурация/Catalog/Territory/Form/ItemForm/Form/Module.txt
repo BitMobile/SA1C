@@ -156,12 +156,21 @@ Function ItsFolder(Value)
 		
 EndFunction
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
 
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OnOpenAtServer();
 	
 	SKUGroupsOnChange(Items.SKUGroups);
 	

@@ -241,6 +241,13 @@ Function GetConstant()
 EndFunction // ()
 
 &AtServer
+Function OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndFunction // ()
+
+&AtServer
 Function ChangePackAvailable(mPack)
 	
 	If ValueIsFilled(Object.Ref) Then 
@@ -306,7 +313,8 @@ EndFunction
 &AtClient
 Procedure OnOpen(Cancel)
 	
-	Items.Stock.ReadOnly = GetConstant();
+	OnOpenAtServer();	
+	Items.Stock.ReadOnly 	= 	GetConstant();
 	
 EndProcedure
 

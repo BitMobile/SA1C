@@ -175,6 +175,13 @@ Procedure AfterWrite(WriteParameters)
 	
 EndProcedure
 
+&AtServer
+Procedure OpenAtServer()
+	
+	Items.Number.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditDocumentNumbers);
+	
+EndProcedure
+
 #Region Status
 
 &AtServer
@@ -1505,6 +1512,8 @@ EndProcedure
 
 &AtClient
 Procedure OnOpen(Cancel)
+	
+	OpenAtServer();
 	
 	FillAvailableStatuses(Object.Status);
 	

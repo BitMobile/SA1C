@@ -292,8 +292,12 @@ EndFunction
 
 Function HaveAdditionalRight(Right) Export 
 	
+	CurrentPrivilegedMode = PrivilegedMode();
+	SetPrivilegedMode(True);
+	
 	If SessionParameters.CurrentUser.Role = "Admin" Then 
 		
+		SetPrivilegedMode(CurrentPrivilegedMode);
 		Return True;
 		
 	Else 
@@ -314,6 +318,8 @@ Function HaveAdditionalRight(Right) Export
 		Query.SetParameter("Right", Right);
 		
 		QueryResult = Query.Execute();
+		
+		SetPrivilegedMode(CurrentPrivilegedMode);
 		
 		If QueryResult.IsEmpty() Then 
 			

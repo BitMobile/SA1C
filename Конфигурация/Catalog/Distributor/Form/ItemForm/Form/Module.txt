@@ -382,6 +382,13 @@ Procedure SetConditionalAppearence()
 	
 EndProcedure
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
@@ -866,5 +873,10 @@ Procedure ShowAllTerritories(Command)
 EndProcedure
 
 #EndRegion
+
+&AtClient
+Procedure OnOpen(Cancel)
+	OnOpenAtServer();
+EndProcedure
 
 #EndRegion

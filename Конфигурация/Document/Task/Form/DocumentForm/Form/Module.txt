@@ -38,7 +38,9 @@ EndProcedure
 Procedure OnOpenServer()
 
 	Object.StatusTask = Enums.StatusTask.Planned;
-
+	
+	Items.Number.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditDocumentNumbers);
+	
 EndProcedure
 
 

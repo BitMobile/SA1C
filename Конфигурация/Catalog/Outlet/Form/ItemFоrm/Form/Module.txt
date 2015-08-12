@@ -1010,6 +1010,13 @@ EndProcedure
 
 #EndRegion
 
+&AtServer
+Procedure OnOpenAtServer()
+	
+	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	
+EndProcedure
+
 #EndRegion
 
 #Region UserInterface
@@ -1018,6 +1025,8 @@ EndProcedure
 Procedure OnOpen(Cancel)
 	
 	OutletStatusOnChange(Undefined);
+	
+	OnOpenAtServer();
 	
 	IsPartnerFilled = ValueIsFilled(ThisForm.Object.Distributor);
 	Items.AddContractor.Enabled = Not IsPartnerFilled;
