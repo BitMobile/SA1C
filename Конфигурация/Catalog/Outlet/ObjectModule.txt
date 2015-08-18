@@ -16,7 +16,7 @@ Procedure BeforeWrite(Cancel)
 	
 	For Each StrParameter In Parameters Do 
 		
-		If Not ValueIsFilled(StrParameter.Value) Then
+		If Not ValueIsFilled(StrParameter.Value) OR StrParameter.Value = "—" OR StrParameter.Value = "—??"  Then
 			
 			RemoveProperty = True;
 			
