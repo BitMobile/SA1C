@@ -28,11 +28,11 @@
 			<Synonym>
 				<v8:item>
 					<v8:lang>en</v8:lang>
-					<v8:content>Order parameters</v8:content>
+					<v8:content>Orders and returns parameters</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Параметры заказа</v8:content>
+					<v8:content>Параметры заказов и возвратов</v8:content>
 				</v8:item>
 			</Synonym>
 			<Comment/>
