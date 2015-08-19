@@ -18,6 +18,21 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	Query = New Query(
+	"SELECT
+	|	QuestionsInQuestionnaires.Questionnaire
+	|FROM
+	|	InformationRegister.QuestionsInQuestionnaires AS QuestionsInQuestionnaires
+	|WHERE
+	|	QuestionsInQuestionnaires.ChildQuestion = &ChildQuestion");
+	Query.SetParameter("ChildQuestion", ThisForm.Object.Ref);
+	Result = Query.Execute().Unload();
+	InQuestionnaires = Result.Count() > 0;
+	
+	ThisForm.Items.AnswerType.ReadOnly = InQuestionnaires;
+	ThisForm.Items.ValueList.ReadOnly = InQuestionnaires;
+	ThisForm.Items.Decoration1.Visible = InQuestionnaires;
+	
 EndProcedure
 
 &AtServer
@@ -25,7 +40,63 @@ Procedure AfterWriteAtServer(CurrentObject, WriteParameters)
 	
 	Items.Owner.Enabled = Not ValueIsFilled(Object.Ref);
 	
+	SetPrivilegedMode(True);
+	
+	Query = New Query(
+	"SELECT DISTINCT
+	|	QuestionsInQuestionnairesSliceLast.Questionnaire
+	|FROM
+	|	InformationRegister.QuestionsInQuestionnaires.SliceLast AS QuestionsInQuestionnairesSliceLast
+	|WHERE
+	|	QuestionsInQuestionnairesSliceLast.Status <> VALUE(Enum.ValueTableRowStatuses.Deleted)
+	|	AND QuestionsInQuestionnairesSliceLast.ChildQuestion = &Question");
+	Query.SetParameter("Question", ThisForm.Object.Ref);
+	Result = Query.Execute().Unload();
+	
+	For Each Row In Result Do
+		
+		RecordManager = InformationRegisters.bitmobile_ИзмененныеДанные.CreateRecordManager();
+		RecordManager.Ссылка = Row.Questionnaire;
+		RecordManager.Порядок = FindSetting();
+		RecordManager.Write();
+		
+	EndDo;
+	
+	SetPrivilegedMode(False);
+	
 EndProcedure
+
+&AtServer
+Function FindSetting()
+	
+	Запрос = Новый Запрос;
+	Запрос.Текст = 
+		"ВЫБРАТЬ РАЗРЕШЕННЫЕ
+		|	bitmobile_НастройкиСинхронизации.Ссылка КАК Ссылка
+		|ИЗ
+		|	Справочник.bitmobile_НастройкиСинхронизации КАК bitmobile_НастройкиСинхронизации
+		|ГДЕ
+		|	bitmobile_НастройкиСинхронизации.ПометкаУдаления = ЛОЖЬ
+		|	И bitmobile_НастройкиСинхронизации.ВыгрузкаДанных = ИСТИНА
+		|	И bitmobile_НастройкиСинхронизации.ОбъектКонфигурации = &ИмяМетаданного";
+	
+	Запрос.УстановитьПараметр("ИмяМетаданного", Metadata.Documents.Questionnaire.FullName());
+	
+	Результат = Запрос.Выполнить();
+	
+	Выборка = Результат.Выбрать();
+	
+	Если Выборка.Следующий() Тогда
+		
+		Возврат Выборка.Ссылка;
+		
+	Иначе 
+		
+		Возврат Неопределено;
+		
+	КонецЕсли;
+	
+EndFunction
 
 &AtClient
 Procedure BeforeWrite(Cancel, WriteParameters)
