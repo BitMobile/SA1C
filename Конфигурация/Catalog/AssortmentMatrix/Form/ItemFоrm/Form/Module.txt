@@ -1112,15 +1112,7 @@ EndProcedure
 &AtClient
 Procedure AddOutletFromSelect(Command)
 	
-	OutletsArray = New Array;
-	
-	If Not Items.OutletsSelect.CurrentData = Undefined Then
-		
-		OutletsArray.Add(Items.OutletsSelect.CurrentData.Outlet);
-		
-	EndIf;
-	
-	AddToOutletsVT(OutletsArray);
+	AddToOutletsVT(ThisForm.Items.OutletsSelect.SelectedRows);
 	
 EndProcedure
 

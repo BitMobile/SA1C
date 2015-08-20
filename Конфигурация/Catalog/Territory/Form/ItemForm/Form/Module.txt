@@ -40,6 +40,10 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 	
 	FillSKUGroups();
 	
+	ChangeOutletsSelectQuery();
+	
+	FillOutletsSelectFilters();
+	
 EndProcedure
 
 &AtServer
@@ -163,6 +167,130 @@ Procedure OnOpenAtServer()
 	
 EndProcedure
 
+&AtServer
+Procedure ChangeOutletsSelectQuery()
+	
+	QuerySchema = New QuerySchema;
+	QuerySchema.SetQueryText(OutletsSelect.QueryText);
+	
+	QuerySchema.QueryBatch[0].Columns[3].Alias = NStr("en = 'Territory'; ru = 'Территория'");
+	QuerySchema.QueryBatch[0].Columns[4].Alias = NStr("en = 'Region'; ru = 'Регион'");
+	
+	OutletsSelect.QueryText = QuerySchema.GetQueryText();
+	
+EndProcedure
+
+&AtServer
+Procedure FillOutletsSelectFilters()
+
+	PartnerFilter = OutletsSelect.SettingsComposer.FixedSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	PartnerFilter.LeftValue = New DataCompositionField("Distributor");
+	PartnerFilter.Use = False;
+
+	ClassFilter = OutletsSelect.SettingsComposer.FixedSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	ClassFilter.LeftValue = New DataCompositionField("Class");
+	ClassFilter.Use = False;
+
+	TypeFilter = OutletsSelect.SettingsComposer.FixedSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	TypeFilter.LeftValue = New DataCompositionField("Type");
+	TypeFilter.Use = False;
+
+	TerritoryFilter = OutletsSelect.SettingsComposer.FixedSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	TerritoryFilter.LeftValue = New DataCompositionField(NStr("en = 'Territory'; ru = 'Территория'"));
+	TerritoryFilter.Use = False;
+
+	RegionFilter = OutletsSelect.SettingsComposer.FixedSettings.Filter.Items.Add(Type("DataCompositionFilterItem"));
+	RegionFilter.LeftValue = New DataCompositionField(NStr("en = 'Region'; ru = 'Регион'"));
+	RegionFilter.Use = False;
+
+EndProcedure
+
+&AtServer
+Function GetOutletsArrayFromDynamicList()
+	
+	DCS = New DataCompositionSchema;
+	
+	DataSource = DCS.DataSources.Add();
+	DataSource.Name = "DataSource1";
+	DataSource.DataSourceType = "Local";
+	DataSource.ConnectionString = "";
+	
+	DataSet = DCS.DataSets.Add(Type("DataCompositionSchemaDataSetQuery"));
+	DataSet.Name = "DataSet1";
+	
+	DataSet.Query = OutletsSelect.QueryText;
+	DataSet.DataSource = "DataSource1";
+	DataSet.AutoFillAvailableFields = True;
+	
+	DCG = DCS.DefaultSettings.Structure.Add(Type("DataCompositionGroup"));
+	DCG.Selection.Items.Add(Type("DataCompositionAutoSelectedField"));
+	DCG.Use = True;
+	
+	FieldsArray = New Array;
+	FieldsArray.Add("Outlet");
+	
+	For Each FieldName In FieldsArray Do
+		
+		NewField = DataSet.Fields.Add(Type("DataCompositionSchemaDataSetField"));
+		NewField.Field = FieldName;
+		NewField.DataPath = FieldName;
+		NewField.Title = FieldName;
+		
+		ChoiceField = DCS.DefaultSettings.Selection.Items.Add(Type("DataCompositionSelectedField"));
+		ChoiceField.Field = New DataCompositionField(FieldName);
+		ChoiceField.Use = True;
+		
+	EndDo;
+	
+	FillDataCompositionSchemeFilters(DCS, OutletsSelect.Filter.Items);
+	
+	DCTC = New DataCompositionTemplateComposer;
+	Template = DCTC.Execute(DCS, 
+							DCS.DefaultSettings,
+							,
+							,
+							Type("DataCompositionValueCollectionTemplateGenerator"));
+	
+	
+	DCP = New DataCompositionProcessor;
+	DCP.Initialize(Template);
+	
+	OutletsVT = New ValueTable;
+	
+	DCRVCOP = New DataCompositionResultValueCollectionOutputProcessor;
+	DCRVCOP.SetObject(OutletsVT);
+	DCRVCOP.Output(DCP);
+	
+	Return OutletsVT.UnloadColumn("Outlet");
+	
+EndFunction
+
+&AtServerNoContext
+Procedure FillDataCompositionSchemeFilters(DCS, Elements, Parent = Undefined)
+	
+	For Each Element In Elements Do
+		
+		If Parent = Undefined Then
+			
+			FilterElement = DCS.DefaultSettings.Filter.Items.Add(Type(Element));
+			
+		Else
+			
+			FilterElement = Parent.Items.Add(Type(Element));
+			
+		EndIf;
+		
+		FillPropertyValues(FilterElement, Element);
+		
+		If TypeOf(Element) = Type("DataCompositionFilterItemGroup") Then
+			
+			FillDataCompositionSchemeFilters(DCS, Element.Items, FilterElement);
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
 #EndRegion
 
 #Region UserInterface
@@ -290,6 +418,114 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 			
 		EndIf;
 		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure ToogleOutletsSelect(Command)
+	
+	IsSelectHidden = Items.GroupOutletsPages.CurrentPage = Items.GroupOutletsNoSelect;
+	
+	CurrentFormTable = ?(IsSelectHidden, "Outlets", "Outlets1");
+	NextFormTable = ?(IsSelectHidden, "Outlets1", "Outlets");
+	
+	Items[NextFormTable].CurrentRow = Items[CurrentFormTable].CurrentRow;
+	
+	Items.GroupOutletsPages.CurrentPage = ?(IsSelectHidden, Items.GroupOutletsWithSelect, Items.GroupOutletsNoSelect);
+	
+	ThisForm.CurrentItem = Items[NextFormTable];
+	
+EndProcedure
+
+&AtClient
+Procedure AddOutletFromSelect(Command)
+	
+	AddToOutletsVT(ThisForm.Items.OutletsSelect2.SelectedRows);
+	
+EndProcedure
+
+&AtClient
+Procedure AddToOutletsVT(OutletsArray)
+	
+	For Each Outlet In OutletsArray Do
+		
+		FilterParameters = New Structure;
+		FilterParameters.Insert("Outlet", Outlet);
+		
+		If ThisForm.Object.Outlets.FindRows(FilterParameters).Count() = 0 Then
+			
+			NewOutletRow = ThisForm.Object.Outlets.Add();
+			NewOutletRow.Outlet = Outlet;
+			
+			Modified = True;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
+Procedure AddAllOutletsFromSelect(Command)
+	
+	OutletsArray = GetOutletsArrayFromDynamicList();
+	
+	AddToOutletsVT(OutletsArray);
+	
+EndProcedure
+
+&AtClient
+Procedure RemoveAllOutlets(Command)
+	
+	CurrentItem = ?(Items.GroupOutletsPages.CurrentPage = Items.GroupOutletsNoSelect, Items.Outlets, Items.Outlets1);
+	
+	Rows = ThisForm.Object.Outlets.FindRows(New Structure(CurrentItem.RowFilter));
+	
+	For Each Row In Rows Do
+		
+		Index = ThisForm.Object.Outlets.IndexOf(Row);
+		ThisForm.Object.Outlets.Delete(Index);
+		
+		Modified = True;
+		
+	EndDo;
+	
+EndProcedure
+
+&AtClient
+Procedure RemoveOutlet(Command)
+	
+	CurrentItem = ?(Items.GroupOutletsPages.CurrentPage = Items.GroupOutletsNoSelect, Items.Outlets, Items.Outlets1);
+	
+	If Not CurrentItem.CurrentData = Undefined Then
+		
+		
+		Index = ThisForm.Object.Outlets.IndexOf(CurrentItem.CurrentData);
+		ThisForm.Object.Outlets.Delete(Index);
+		
+		Modified = True;
+		
+		
+	EndIf;
+	
+EndProcedure
+
+
+&AtClient
+Procedure OutletsSelect2Selection(Item, SelectedRow, Field, StandardProcessing)
+	
+	StandardProcessing = False;
+	
+	If Not Item.CurrentData = Undefined Then
+	
+		CurrentOutlet = Item.CurrentData.Outlet;
+		
+		OutletsArray = New Array;
+		OutletsArray.Add(CurrentOutlet);
+		
+		AddToOutletsVT(OutletsArray);
+	
 	EndIf;
 	
 EndProcedure
