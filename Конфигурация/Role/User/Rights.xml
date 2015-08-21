@@ -4141,33 +4141,18 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Task")
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>VisitPlan WHERE #HaveRightToRead("Catalog.SystemObjects.Document_VisitPlan")
-	AND (VisitPlan.Owner IN
-				(SELECT
-					TerritorySRs.SR
-				FROM
-					Catalog.Territory.SRs AS TerritorySRs
-				WHERE
-					TerritorySRs.Ref.Owner IN
-						(SELECT
-							ManagersOfRegions.Region
-						FROM
-							InformationRegister.ManagersOfRegions AS ManagersOfRegions
-						WHERE
-							ManagersOfRegions.Manager = &amp;CurrentUser))
-			OR VisitPlan.Owner IN
-				(SELECT
-					RegionManagers.Manager
-				FROM
-					Catalog.Region.Managers AS RegionManagers
-				WHERE
-					RegionManagers.Ref IN
-						(SELECT
-							ManagersOfRegions.Region
-						FROM
-							InformationRegister.ManagersOfRegions AS ManagersOfRegions
-						WHERE
-							ManagersOfRegions.Manager = &amp;CurrentUser)))
+				<condition>VisitPlan WHERE TRUE IN
+			(SELECT TOP 1
+				TRUE
+			FROM
+				Catalog.User AS User
+					INNER JOIN Catalog.RolesOfUsers.AccessRightsToSystemObjects AS RolesOfUsersAccessRightsToSystemObjects
+					ON
+						User.RoleOfUser = RolesOfUsersAccessRightsToSystemObjects.Ref
+			WHERE
+				RolesOfUsersAccessRightsToSystemObjects.SystemObject = VALUE(Catalog.SystemObjects.Document_VisitPlan)
+				AND RolesOfUsersAccessRightsToSystemObjects.Read = TRUE
+				AND User.Ref = &amp;CurrentUser)
 	AND VisitPlan.SR IN
 			(SELECT
 				TerritorySRs.SR
