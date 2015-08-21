@@ -451,6 +451,26 @@
 											<DataPath>ValueTableOutlets.Time1</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ValueTableOutletsTime1ContextMenu" id="238"/>
 											<ExtendedTooltip name="ValueTableOutletsTime1ExtendedTooltip" id="274"/>
 											<Events>
@@ -501,6 +521,26 @@
 											<DataPath>ValueTableOutlets.Time2</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ValueTableOutletsTime2ContextMenu" id="240"/>
 											<ExtendedTooltip name="ValueTableOutletsTime2ExtendedTooltip" id="277"/>
 											<Events>
@@ -551,6 +591,26 @@
 											<DataPath>ValueTableOutlets.Time3</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ValueTableOutletsTime3ContextMenu" id="243"/>
 											<ExtendedTooltip name="ValueTableOutletsTime3ExtendedTooltip" id="280"/>
 											<Events>
@@ -601,6 +661,26 @@
 											<DataPath>ValueTableOutlets.Time4</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ValueTableOutletsTime4ContextMenu" id="246"/>
 											<ExtendedTooltip name="ValueTableOutletsTime4ExtendedTooltip" id="283"/>
 											<Events>
@@ -651,6 +731,26 @@
 											<DataPath>ValueTableOutlets.Time5</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ValueTableOutletsTime5ContextMenu" id="249"/>
 											<ExtendedTooltip name="ValueTableOutletsTime5ExtendedTooltip" id="286"/>
 											<Events>
@@ -701,6 +801,26 @@
 											<DataPath>ValueTableOutlets.Time6</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<BackColor>#F5CCCC</BackColor>
 											<ContextMenu name="ValueTableOutletsTime6ContextMenu" id="252"/>
 											<ExtendedTooltip name="ValueTableOutletsTime6ExtendedTooltip" id="289"/>
@@ -752,6 +872,26 @@
 											<DataPath>ValueTableOutlets.Time7</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
+											<Format>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</Format>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>DF=HH:mm</v8:content>
+												</v8:item>
+											</EditFormat>
 											<BackColor>#F5CCCC</BackColor>
 											<ContextMenu name="ValueTableOutletsTime7ContextMenu" id="255"/>
 											<ExtendedTooltip name="ValueTableOutletsTime7ExtendedTooltip" id="292"/>
