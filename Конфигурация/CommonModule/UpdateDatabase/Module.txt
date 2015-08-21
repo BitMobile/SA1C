@@ -468,8 +468,11 @@ Procedure FillInProcessing()
 			
 			If Entity.Key = "Region" Then
 				
+				Manager = Catalogs.User.FindByAttribute("RoleOfUser", Catalogs.RolesOfUsers.SRM);
+				
 				Ins			= NewObject.Managers.Add();
-				Ins.Manager	= Catalogs.User.FindByAttribute("Role", "SRM");
+				Ins.Manager	= Manager;
+				NewObject.Manager = Manager;
 				
 			EndIf;
 			
