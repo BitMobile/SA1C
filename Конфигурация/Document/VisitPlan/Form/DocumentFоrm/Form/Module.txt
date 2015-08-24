@@ -151,14 +151,23 @@ Procedure FillValueTableOutlets()
 	|	MAX(CASE
 	|			WHEN WEEKDAY(VisitPlanOutlets.Date) = 7
 	|				THEN VisitPlanOutlets.Date
-	|		END) AS Time7
+	|		END) AS Time7,
+	|	SRsOutlets.Outlet.Distributor AS Distributor,
+	|	SRsOutlets.Outlet.Class AS Class,
+	|	SRsOutlets.Outlet.Type AS Type,
+	|	SRsOutlets.Outlet.Description AS Description
 	|FROM
 	|	SRsOutlets AS SRsOutlets
 	|		LEFT JOIN VisitPlanOutlets AS VisitPlanOutlets
 	|		ON SRsOutlets.Outlet = VisitPlanOutlets.Outlet
 	|
 	|GROUP BY
-	|	SRsOutlets.Outlet
+	|	SRsOutlets.Outlet,
+	|	SRsOutlets.Outlet.Address,
+	|	SRsOutlets.Outlet.Distributor,
+	|	SRsOutlets.Outlet.Class,
+	|	SRsOutlets.Outlet.Type,
+	|	SRsOutlets.Outlet.Description
 	|AUTOORDER");
 	
 	Query.SetParameter("VisitPlanOutlets", Object.Outlets.Unload());
@@ -565,6 +574,34 @@ Procedure WeekChooserOnActivateCell(Item)
 	
 EndProcedure
 
+&AtClient
+Procedure DistributorFilterOnChange(Item)
+	
+	SetRowFilter("Distributor");
+	
+EndProcedure
+
+&AtClient
+Procedure ClassFilterOnChange(Item)
+	
+	SetRowFilter("Class");
+	
+EndProcedure
+
+&AtClient
+Procedure TypeFilterOnChange(Item)
+	
+	SetRowFilter("Type");
+	
+EndProcedure
+
+&AtClient
+Procedure DescriptionFilterEditTextChange(Item, Text, StandardProcessing)
+	
+	SetRowFilter("Description", Text);
+	
+EndProcedure
+
 #EndRegion
 
 #Region Commands
@@ -632,6 +669,18 @@ Procedure CreateTask(Command)
 	
 EndProcedure
 
+&AtClient
+Procedure ClearFilters(Command)
+	
+	ThisForm.DescriptionFilter = Undefined;
+	ThisForm.DistributorFilter = Undefined;
+	ThisForm.ClassFilter = Undefined;
+	ThisForm.TypeFilter = Undefined;
+	
+	ThisForm.Items.ValueTableOutlets.RowFilter = Undefined;
+	
+EndProcedure
+
 #EndRegion
 
 #Region Helpers
@@ -659,6 +708,42 @@ Procedure SetColumnsAvailability()
 		
 	EndDo;
 	
+EndProcedure
+
+&AtClient
+Procedure SetRowFilter(AttributeName, SearchText = Undefined)
+	
+	If ThisForm.Items.ValueTableOutlets.RowFilter = Undefined Then
+		
+		FilterStructure = New Structure;
+		
+	Else
+		
+		FilterStructure = New Structure(ThisForm.Items.ValueTableOutlets.RowFilter);
+		
+	EndIf;
+	
+	ProcessFilterStructure(FilterStructure, AttributeName, ?(AttributeName = "Description", SearchText, ThisForm[AttributeName + "Filter"]));
+	
+	Filter = ?(FilterStructure.Count() > 0, New FixedStructure(FilterStructure), Undefined);
+	
+	ThisForm.Items.ValueTableOutlets.RowFilter = Filter;
+	
+EndProcedure
+
+&AtClient
+Procedure ProcessFilterStructure(Structure, AttributeName, Value)
+	
+	If ValueIsFilled(Value) Then
+		
+		Structure.Insert(AttributeName, Value);
+		
+	Else
+		
+		Structure.Delete(AttributeName);
+		
+	EndIf;
+
 EndProcedure
 
 #EndRegion

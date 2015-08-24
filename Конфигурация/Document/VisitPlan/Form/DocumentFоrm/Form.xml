@@ -208,6 +208,12 @@
 							<Parameter xsi:nil="true"/>
 							<ExtendedTooltip name="CreateTaskExtendedTooltip" id="269"/>
 						</Button>
+						<Button name="ClearFilters" id="348">
+							<Type>UsualButton</Type>
+							<CommandName>Form.Command.ClearFilters</CommandName>
+							<Parameter xsi:nil="true"/>
+							<ExtendedTooltip name="ClearFiltersExtendedTooltip" id="349"/>
+						</Button>
 					</ChildItems>
 				</UsualGroup>
 			</ChildItems>
@@ -325,11 +331,84 @@
 					</ChildItems>
 				</UsualGroup>
 				<UsualGroup name="Group8" id="327">
-					<Group>Horizontal</Group>
 					<Representation>None</Representation>
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="Group8ExtendedTooltip" id="328"/>
 					<ChildItems>
+						<UsualGroup name="Group10" id="343">
+							<Title>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Filters</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Отборы</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Filters</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Отборы</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ToolTipRepresentation>ShowLeft</ToolTipRepresentation>
+							<Group>Horizontal</Group>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Group10ExtendedTooltip" id="344"/>
+							<ChildItems>
+								<InputField name="DescriptionFilter" id="345">
+									<DataPath>DescriptionFilter</DataPath>
+									<ContextMenu name="DescriptionFilterContextMenu" id="346"/>
+									<ExtendedTooltip name="DescriptionFilterExtendedTooltip" id="347"/>
+									<Events>
+										<Event name="EditTextChange">DescriptionFilterEditTextChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="DistributorFilter" id="334">
+									<DataPath>DistributorFilter</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Partner</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Партнер</v8:content>
+										</v8:item>
+									</Title>
+									<ClearButton>true</ClearButton>
+									<ContextMenu name="DistributorFilterContextMenu" id="335"/>
+									<ExtendedTooltip name="DistributorFilterExtendedTooltip" id="336"/>
+									<Events>
+										<Event name="OnChange">DistributorFilterOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="ClassFilter" id="337">
+									<DataPath>ClassFilter</DataPath>
+									<ClearButton>true</ClearButton>
+									<ContextMenu name="ClassFilterContextMenu" id="338"/>
+									<ExtendedTooltip name="ClassFilterExtendedTooltip" id="339"/>
+									<Events>
+										<Event name="OnChange">ClassFilterOnChange</Event>
+									</Events>
+								</InputField>
+								<InputField name="TypeFilter" id="340">
+									<DataPath>TypeFilter</DataPath>
+									<ClearButton>true</ClearButton>
+									<ContextMenu name="TypeFilterContextMenu" id="341"/>
+									<ExtendedTooltip name="TypeFilterExtendedTooltip" id="342"/>
+									<Events>
+										<Event name="OnChange">TypeFilterOnChange</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
 						<Table name="ValueTableOutlets" id="26">
 							<Representation>List</Representation>
 							<CommandBarLocation>None</CommandBarLocation>
@@ -1097,6 +1176,54 @@
 						</v8:StringQualifiers>
 					</Type>
 				</Column>
+				<Column name="Distributor" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Distributor</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Distributor</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Class" id="11">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Class</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.OutletClass</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Type" id="12">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Type</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.OutletType</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Description" id="13">
+					<Title>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Description</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>100</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
 			</Columns>
 		</Attribute>
 		<Attribute name="ПредыдущаяДатаНачалаПериода" id="2">
@@ -1293,6 +1420,67 @@
 				<v8:DateQualifiers>
 					<v8:DateFractions>Date</v8:DateFractions>
 				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="DistributorFilter" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Distributor filter</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Distributor</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ClassFilter" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Class
+</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Класс</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.OutletClass</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="TypeFilter" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Type</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.OutletType</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="DescriptionFilter" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Description</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Наименование</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
 			</Type>
 		</Attribute>
 		<ConditionalAppearance>
@@ -1814,6 +2002,25 @@
 				</v8:item>
 			</ToolTip>
 			<Action>CreateTask</Action>
+		</Command>
+		<Command name="ClearFilters" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear filters</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить отборы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Clear filters</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ClearFilters</Action>
 		</Command>
 	</Commands>
 </Form>
