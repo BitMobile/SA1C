@@ -12,7 +12,7 @@ Procedure BeforeWrite(Cancel, WriteMode, PostingMode)
 	
 	For Each StrParameter In Parameters Do 
 		
-		If Not ValueIsFilled(StrParameter.Value) OR StrParameter.Value = "—" Then
+		If Not ValueIsFilled(StrParameter.Value) OR StrParameter.Value = "—" OR StrParameter.Value = "—??"Then
 			
 			RemoveProperty = True;
 			
