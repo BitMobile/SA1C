@@ -7,6 +7,6 @@ EndProcedure
 &AtServer
 Procedure OnOpenAtServer()
 	
-	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	Items.Code.ReadOnly 	= 	Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
 	
 EndProcedure

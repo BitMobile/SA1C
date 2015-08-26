@@ -511,7 +511,7 @@ EndFunction
 &AtServer
 Function OnOpenAtServer()
 	
-	Items.Code.ReadOnly 	= 	Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
+	Items.Code.ReadOnly 	= 	Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditCatalogNumbers);
 	
 EndFunction // ()
 
