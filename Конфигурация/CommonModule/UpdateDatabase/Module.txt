@@ -555,7 +555,11 @@ Procedure ProcessSystemObjects()
 		
 		DeleteObject = Selection.SObject.GetObject();
 		
-		DeleteObject.Delete();
+		If DeleteObject Then
+			
+			DeleteObject.Delete();
+			
+		EndIf;
 		
 	EndDo;
 	
