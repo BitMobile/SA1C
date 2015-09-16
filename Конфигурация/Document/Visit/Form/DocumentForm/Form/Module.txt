@@ -23,6 +23,8 @@ Procedure OnCreateAtServer(Cancel, StandardProcessing)
 		
 	EndIf;
 	
+	ThisForm.Items.TaskResult.ReadOnly = True;
+	
 EndProcedure
 
 &AtServerNoContext
