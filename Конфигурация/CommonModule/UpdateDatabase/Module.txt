@@ -83,6 +83,8 @@ Function StartUpdate() Export
 			VersionListForThisRelease.Add("1.8.0");
 			VersionListForThisRelease.Add("1.8.1");
 			VersionListForThisRelease.Add("1.8.T");
+			VersionListForThisRelease.Add("1.9.0");
+			VersionListForThisRelease.Add("1.9.T");
 			
 			If Not VersionListForThisRelease.FindByValue(CurrentVersion) = Undefined Then 
 				
@@ -170,6 +172,13 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_9_0(LastState, Step);
 					
+					UserMessage = New UserMessage;
+					UserMessage.Text = NStr("en = 'Version 1.10.0'; ru = 'Версия 1.10.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_10_0(LastState, Step);
+					
 				EndIf;
 				
 				If CurrentVersion = "1.6.0" Or CurrentVersion = "1.6.T" Then 
@@ -195,6 +204,13 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_9_0(LastState, Step);
 					
+					UserMessage = New UserMessage;
+					UserMessage.Text = NStr("en = 'Version 1.10.0'; ru = 'Версия 1.10.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_10_0(LastState, Step);
+					
 				EndIf;
 				
 				If CurrentVersion = "1.7.0" OR CurrentVersion = "1.7.T" Then
@@ -213,6 +229,13 @@ Function StartUpdate() Export
 					
 					UpdateForRelease_1_9_0(LastState, Step);
 					
+					UserMessage = New UserMessage;
+					UserMessage.Text = NStr("en = 'Version 1.10.0'; ru = 'Версия 1.10.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_10_0(LastState, Step);
+					
 				EndIf;
 				
 				If CurrentVersion = "1.8.0" OR CurrentVersion = "1.8.1" OR CurrentVersion = "1.8.T" Then
@@ -223,6 +246,24 @@ Function StartUpdate() Export
 					UserMessage.Message();
 					
 					UpdateForRelease_1_9_0(LastState, Step);
+					
+					UserMessage = New UserMessage;
+					UserMessage.Text = NStr("en = 'Version 1.10.0'; ru = 'Версия 1.10.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_10_0(LastState, Step);
+					
+				EndIf;
+				
+				If CurrentVersion = "1.9.0" OR CurrentVersion = "1.9.T" Then
+					
+					UserMessage = New UserMessage;
+					UserMessage.Text = NStr("en = 'Version 1.10.0'; ru = 'Версия 1.10.0'");
+					
+					UserMessage.Message();
+					
+					UpdateForRelease_1_10_0(LastState, Step);
 					
 				EndIf;
 				
@@ -2199,6 +2240,27 @@ Procedure ProcessUserCoordinatesActualityTime()
 	SettingObject = Catalogs.MobileAppSettings.UserCoordinatesActualityTime.GetObject();
 	SettingObject.NumericValue = 5;
 	SettingObject.Write();
+	
+EndProcedure
+
+#EndRegion
+
+#Region Release_1_10_0
+
+Procedure UpdateForRelease_1_10_0(LastState, Step)
+	
+	WriteProtocol(LastState, Step, NStr("en = 'Update mobile application access rights'; ru = 'Обновление прав в мобильном приложении'"));
+	ProcessMobileAppAccessRights();
+	
+EndProcedure
+
+Procedure ProcessMobileAppAccessRights()
+	
+	SRRoleRef = Catalogs.RolesOfUsers.SR;
+	SRRoleObject = SRRoleRef.GetObject();
+	MobileAppAccessRight = SRRoleObject.MobileAppAccessRights.Add();
+	MobileAppAccessRight.AccessRight = Catalogs.MobileAppAccessRights.PercentDiscount;
+	SRRoleObject.Write();
 	
 EndProcedure
 

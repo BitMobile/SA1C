@@ -24,6 +24,12 @@
 		<Description>en = 'Access to return'; ru = 'Доступ к возврату'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="ed4bffd8-241f-4764-89e7-e43e844fe46d">
+		<Name>AmountDiscount</Name>
+		<Code>000000011</Code>
+		<Description>en = 'Amount discounts'; ru = 'Установка суммовой скидки в заказе'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="d84d080b-3338-446a-bc9b-9cfb462672cd">
 		<Name>EditContractorsAttributes</Name>
 		<Code>000000007</Code>
@@ -46,6 +52,18 @@
 		<Name>EditPartnerContacts</Name>
 		<Code>000000009</Code>
 		<Description>en = 'Edit partner contacts'; ru = 'Редактирование контактов партнеров'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="f90ea737-8341-40c1-8d12-77c8948a21d7">
+		<Name>NewTotalDiscount</Name>
+		<Code>000000012</Code>
+		<Description>en = 'New total discounts'; ru = 'Установка новой суммы в заказе'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
+	<Item id="08b4a690-6021-43b4-ba14-c870ea1ef6a7">
+		<Name>PercentDiscount</Name>
+		<Code>000000010</Code>
+		<Description>en = 'Percent discounts'; ru='Установка процентной скидки в заказе'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="88673410-6d62-4c65-ab64-016f6012803f">
