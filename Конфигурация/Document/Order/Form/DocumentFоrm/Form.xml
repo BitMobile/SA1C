@@ -300,6 +300,12 @@
 										<Event name="OnChange">SKUsDiscountOnChange</Event>
 									</Events>
 								</InputField>
+								<InputField name="SKUsPercentDiscount" id="127">
+									<DataPath>Object.SKUs.PercentDiscount</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="SKUsPercentDiscountContextMenu" id="128"/>
+									<ExtendedTooltip name="SKUsPercentDiscountExtendedTooltip" id="129"/>
+								</InputField>
 								<InputField name="SKUsTotal" id="31">
 									<DataPath>Object.SKUs.Total</DataPath>
 									<EditMode>EnterOnInput</EditMode>
