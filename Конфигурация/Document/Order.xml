@@ -1095,15 +1095,15 @@
 					</Attribute>
 					<Attribute uuid="c2968f53-1b63-4066-8b76-3ad8ec67561c">
 						<Properties>
-							<Name>PercentDiscount</Name>
+							<Name>TotalDiscount</Name>
 							<Synonym>
 								<v8:item>
 									<v8:lang>en</v8:lang>
-									<v8:content>Percent discount</v8:content>
+									<v8:content>Total discount</v8:content>
 								</v8:item>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Скидка/Наценка %</v8:content>
+									<v8:content>Скидка/Наценка</v8:content>
 								</v8:item>
 							</Synonym>
 							<Comment/>
