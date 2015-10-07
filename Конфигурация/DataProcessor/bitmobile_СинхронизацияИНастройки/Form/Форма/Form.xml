@@ -206,6 +206,48 @@
 											<ContextMenu name="ДатаПоследнейСинхронизацииУдаленныхДанныхКонтекстноеМеню" id="57"/>
 											<ExtendedTooltip name="ДатаПоследнейСинхронизацииУдаленныхДанныхРасширеннаяПодсказка" id="254"/>
 										</LabelField>
+										<UsualGroup name="ГруппаНесинхронизированные" id="481">
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Группа несинхронизированные</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Группа несинхронизированные</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Group>Horizontal</Group>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаНесинхронизированныеExtendedTooltip" id="482"/>
+											<ChildItems>
+												<LabelField name="НесинхронизированныхОбъектов" id="478">
+													<DataPath>НесинхронизированныхОбъектов</DataPath>
+													<Format>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>NZ=0</v8:content>
+														</v8:item>
+													</Format>
+													<ContextMenu name="НесинхронизированныхОбъектовContextMenu" id="479"/>
+													<ExtendedTooltip name="НесинхронизированныхОбъектовExtendedTooltip" id="480"/>
+												</LabelField>
+												<Button name="ОбновитьКоличествоНесинхронизированных" id="483">
+													<Type>UsualButton</Type>
+													<Representation>Picture</Representation>
+													<CommandName>Form.Command.ОбновитьКоличествоНесинхронизированных</CommandName>
+													<Parameter xsi:nil="true"/>
+													<Picture>
+														<xr:Ref>StdPicture.Refresh</xr:Ref>
+														<xr:LoadTransparent>true</xr:LoadTransparent>
+													</Picture>
+													<ExtendedTooltip name="ОбновитьКоличествоНесинхронизированныхExtendedTooltip" id="484"/>
+												</Button>
+											</ChildItems>
+										</UsualGroup>
 									</ChildItems>
 								</UsualGroup>
 								<UsualGroup name="ГруппаКнопки" id="46">
@@ -1644,6 +1686,26 @@ FROM
 			</Type>
 			<MainAttribute>true</MainAttribute>
 		</Attribute>
+		<Attribute name="НесинхронизированныхОбъектов" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Unsynced objects</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Несинхронизированных объектов</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="ЗагрузитьНастройкиПоУмолчанию" id="7">
@@ -1873,6 +1935,25 @@ FROM
 				</v8:item>
 			</ToolTip>
 			<Action>СохранитьОбщиеНастройки</Action>
+		</Command>
+		<Command name="ОбновитьКоличествоНесинхронизированных" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Update unsynced count</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить количество несинхронизированных</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Обновить количество несинхронизированных</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОбновитьКоличествоНесинхронизированных</Action>
 		</Command>
 	</Commands>
 </Form>
