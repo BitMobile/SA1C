@@ -325,8 +325,18 @@ SELECT ALLOWED
 	ISNULL(VisitPlans.Date, Visits.Date) AS Date,
 	ISNULL(VisitPlans.SR, Visits.SR) AS SR,
 	ISNULL(VisitPlans.VisitPlansQty, 0) AS VisitPlansQty,
-	ISNULL(Visits.PlannedVisitsQty, 0) AS PlannedVisitsQty,
-	ISNULL(Visits.UnplannedVisitsQty, 0) AS UnplannedVisitsQty,
+	CASE
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN 0
+		ELSE ISNULL(Visits.PlannedVisitsQty, 0)
+	END AS PlannedVisitsQty,
+	CASE
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN 1
+		ELSE ISNULL(Visits.UnplannedVisitsQty, 0)
+	END AS UnplannedVisitsQty,
 	ISNULL(VisitPlans.Outlet, Visits.Outlet) AS Outlet,
 	Visits.Ref AS Visit,
 	VisitPlans.Date AS VisitPlanDate,
@@ -384,8 +394,18 @@ GROUP BY
 	ISNULL(NestedSelect.PhotosQty, 0),
 	ISNULL(VisitPlans.SR, Visits.SR),
 	ISNULL(VisitPlans.VisitPlansQty, 0),
-	ISNULL(Visits.PlannedVisitsQty, 0),
-	ISNULL(Visits.UnplannedVisitsQty, 0),
+	CASE
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN 0
+		ELSE ISNULL(Visits.PlannedVisitsQty, 0)
+	END,
+	CASE
+		WHEN VisitPlans.Ref IS NULL 
+				AND NOT Visits.Ref IS NULL 
+			THEN 1
+		ELSE ISNULL(Visits.UnplannedVisitsQty, 0)
+	END,
 	ISNULL(VisitPlans.Outlet, Visits.Outlet),
 	CASE
 		WHEN VisitPlans.Ref IS NULL 
