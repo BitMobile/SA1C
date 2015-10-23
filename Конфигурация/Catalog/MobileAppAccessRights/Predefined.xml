@@ -57,7 +57,7 @@
 	<Item id="f90ea737-8341-40c1-8d12-77c8948a21d7">
 		<Name>NewTotalDiscount</Name>
 		<Code>000000012</Code>
-		<Description>en = 'New total discounts'; ru = 'Установка новой суммы в заказе'</Description>
+		<Description>en = 'New total discounts'; ru = 'Установка новой цены в заказе/возврате'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="08b4a690-6021-43b4-ba14-c870ea1ef6a7">
