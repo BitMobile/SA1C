@@ -278,7 +278,6 @@
 								</InputField>
 								<InputField name="SKUsDiscount" id="29">
 									<DataPath>Object.SKUs.Discount</DataPath>
-									<Visible>false</Visible>
 									<Title>
 										<v8:item>
 											<v8:lang>en</v8:lang>
@@ -286,7 +285,7 @@
 										</v8:item>
 										<v8:item>
 											<v8:lang>ru</v8:lang>
-											<v8:content>Скидка/Наценка</v8:content>
+											<v8:content>Скидка/Наценка %</v8:content>
 										</v8:item>
 									</Title>
 									<EditMode>EnterOnInput</EditMode>
@@ -298,7 +297,6 @@
 								</InputField>
 								<InputField name="SKUsTotal" id="31">
 									<DataPath>Object.SKUs.Total</DataPath>
-									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<HorizontalStretch>false</HorizontalStretch>
 									<ContextMenu name="SKUsTotalContextMenu" id="32"/>
