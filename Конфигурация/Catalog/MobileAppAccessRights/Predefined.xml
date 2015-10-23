@@ -27,7 +27,7 @@
 	<Item id="ed4bffd8-241f-4764-89e7-e43e844fe46d">
 		<Name>AmountDiscount</Name>
 		<Code>000000011</Code>
-		<Description>en = 'Amount discounts'; ru = 'Установка суммовой скидки в заказе'</Description>
+		<Description>en = 'Amount discounts'; ru = 'Установка суммовой скидки в заказе/возврате'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="d84d080b-3338-446a-bc9b-9cfb462672cd">
@@ -63,7 +63,7 @@
 	<Item id="08b4a690-6021-43b4-ba14-c870ea1ef6a7">
 		<Name>PercentDiscount</Name>
 		<Code>000000010</Code>
-		<Description>en = 'Percent discounts'; ru='Установка процентной скидки в заказе'</Description>
+		<Description>en = 'Percent discounts'; ru='Установка процентной скидки в заказе/возврате'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
 	<Item id="88673410-6d62-4c65-ab64-016f6012803f">
