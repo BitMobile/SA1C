@@ -2082,72 +2082,76 @@ Procedure ProcessContractors()
 		OutletObject = Selection.GetObject();
 		OutletObject.Distributor = Catalogs.Distributor.EmptyRef();
 		
-		If ValueIsFilled(Selection.INN) Then
-			
-			ContractorRef = Catalogs.Contractors.FindByAttribute("INN", Selection.INN);
-			
-			If ContractorRef = Catalogs.Contractors.EmptyRef() Then
+		If OutletObject.ContractorsList.Count() = 0 Then
+		
+			If ValueIsFilled(Selection.INN) Then
 				
-				ContractorObject = Catalogs.Contractors.CreateItem();
+				ContractorRef = Catalogs.Contractors.FindByAttribute("INN", Selection.INN);
+				
+				If ContractorRef = Catalogs.Contractors.EmptyRef() Then
+					
+					ContractorObject = Catalogs.Contractors.CreateItem();
+					
+				Else
+					
+					ContractorObject = ContractorRef.GetObject();
+					
+				EndIf;
 				
 			Else
 				
-				ContractorObject = ContractorRef.GetObject();
+				ContractorObject = Catalogs.Contractors.CreateItem();
 				
 			EndIf;
 			
-		Else
+			FillPropertyValues(ContractorObject, Selection, "Email, INN, KPP, LegalAddress, LegalName, OwnershipType, PhoneNumber, WebSite");
+			ContractorObject.Description = ?(ValueIsFilled(Selection.LegalName), Selection.LegalName, Selection.Description);
 			
-			ContractorObject = Catalogs.Contractors.CreateItem();
+			Query = New Query(
+			"SELECT
+			|	TerritoryOutlets.Ref AS Territory
+			|FROM
+			|	Catalog.Territory.Outlets AS TerritoryOutlets
+			|WHERE
+			|	TerritoryOutlets.Outlet = &Outlet");
+			Query.SetParameter("Outlet", OutletObject.Ref);
+			Result = Query.Execute().Unload();
+			
+			For Each Row In Result Do
+				
+				TerritoryExists = NOT ContractorObject.Territories.Find(Row.Territory) = Undefined;
+				
+				If Not TerritoryExists Then
+					
+					TerritoryRow = ContractorObject.Territories.Add();
+					TerritoryRow.Territory = Row.Territory;
+					
+				EndIf;
+				
+			EndDo;
+			
+			For Each TerritoryRow In ContractorObject.Territories Do
+				
+				RegionExists = Not ContractorObject.Regions.Find(Row.Territory.Owner) = Undefined;
+				
+				If Not RegionExists Then
+					
+					RegionRow = ContractorObject.Regions.Add();
+					RegionRow.Region = TerritoryRow.Territory.Owner;
+					
+				EndIf;
+				
+			EndDo;
+			
+			ContractorObject.Write();
+			
+			ContractorRow = OutletObject.ContractorsList.Add();
+			ContractorRow.Contractor = ContractorObject.Ref;
+			ContractorRow.Default = True;
+			
+			OutletObject.Write();
 			
 		EndIf;
-		
-		FillPropertyValues(ContractorObject, Selection, "Email, INN, KPP, LegalAddress, LegalName, OwnershipType, PhoneNumber, WebSite");
-		ContractorObject.Description = ?(ValueIsFilled(Selection.LegalName), Selection.LegalName, Selection.Description);
-		
-		Query = New Query(
-		"SELECT
-		|	TerritoryOutlets.Ref AS Territory
-		|FROM
-		|	Catalog.Territory.Outlets AS TerritoryOutlets
-		|WHERE
-		|	TerritoryOutlets.Outlet = &Outlet");
-		Query.SetParameter("Outlet", OutletObject.Ref);
-		Result = Query.Execute().Unload();
-		
-		For Each Row In Result Do
-			
-			TerritoryExists = NOT ContractorObject.Territories.Find(Row.Territory) = Undefined;
-			
-			If Not TerritoryExists Then
-				
-				TerritoryRow = ContractorObject.Territories.Add();
-				TerritoryRow.Territory = Row.Territory;
-				
-			EndIf;
-			
-		EndDo;
-		
-		For Each TerritoryRow In ContractorObject.Territories Do
-			
-			RegionExists = Not ContractorObject.Regions.Find(Row.Territory.Owner) = Undefined;
-			
-			If Not RegionExists Then
-				
-				RegionRow = ContractorObject.Regions.Add();
-				RegionRow.Region = TerritoryRow.Territory.Owner;
-				
-			EndIf;
-			
-		EndDo;
-		
-		ContractorObject.Write();
-		
-		ContractorRow = OutletObject.ContractorsList.Add();
-		ContractorRow.Contractor = ContractorObject.Ref;
-		ContractorRow.Default = True;
-		
-		OutletObject.Write();
 		
 	EndDo;
 	
