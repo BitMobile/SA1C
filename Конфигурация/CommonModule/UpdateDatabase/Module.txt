@@ -480,28 +480,31 @@ Procedure FillInProcessing()
 			
 			If Entity.Key = "User" Then
 				
-				NewObject.Description		= "sr";
-				NewObject.RoleOfUser		= Catalogs.RolesOfUsers.SR;
-				NewObject.UserName			= "sr";
-				NewObject.Password			= "sr";
-				NewObject.InterfaceLanguage	= Metadata.Languages.Русский.Name;
-				
-				NewObject.Write();
-				
-				NewObject = Catalogs[Entity.Key].CreateItem();
-				
 				NewObject.Description		= "srm";
 				NewObject.RoleOfUser		= Catalogs.RolesOfUsers.SRM;
 				NewObject.UserName			= "srm";
 				NewObject.Password			= "srm";
 				NewObject.InterfaceLanguage	= Metadata.Languages.Русский.Name;
 				
+				NewObject.Write();
+				
+				SRMRef = NewObject.Ref;
+				
+				NewObject = Catalogs[Entity.Key].CreateItem();
+				
+				NewObject.Description		= "sr";
+				NewObject.RoleOfUser		= Catalogs.RolesOfUsers.SR;
+				NewObject.UserName			= "sr";
+				NewObject.Password			= "sr";
+				NewObject.InterfaceLanguage	= Metadata.Languages.Русский.Name;
+				NewObject.Manager = SRMRef;
+				
 			EndIf;
 			
 			If Entity.Key = "Territory" Then
 				
 				Ins		= NewObject.SRs.Add();
-				Ins.SR	= Catalogs.User.FindByAttribute("Role", "SR");
+				Ins.SR	= Catalogs.User.FindByDescription("sr", True);
 				
 				NewObject.Owner = Catalogs.Region.FindByCode("000000001");
 				
@@ -1603,8 +1606,6 @@ Procedure ProcessTerritories()
 	While Selection.Next() Do 
 		
 		TerritoryObject = Selection.Territory.GetObject();
-		
-		TerritoryObject.SRs.Clear();
 		
 		If ValueIsFilled(Selection.SR) Then 
 			
