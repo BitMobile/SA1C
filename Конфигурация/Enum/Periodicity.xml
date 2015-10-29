@@ -91,6 +91,7 @@
 			<ListPresentation/>
 			<ExtendedListPresentation/>
 			<Explanation/>
+			<ChoiceHistoryOnInput>Auto</ChoiceHistoryOnInput>
 		</Properties>
 		<ChildObjects>
 			<EnumValue uuid="707d0d84-5f8f-48c3-9537-0f0234a9583d">

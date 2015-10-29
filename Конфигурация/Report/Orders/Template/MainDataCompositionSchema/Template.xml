@@ -142,6 +142,10 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Total</dataPath>
+			<field>Total</field>
+		</field>
 		<dataSource>DataSource1</dataSource>
 		<query>SELECT ALLOWED
 	OrderSKUs.Ref.SR,
@@ -156,7 +160,8 @@
 	OrderSKUs.Ref.PriceList.Description,
 	OrderSKUs.Ref.Commentary,
 	OrderSKUs.Ref.Outlet.Type,
-	OrderSKUs.Ref.Outlet.Class
+	OrderSKUs.Ref.Outlet.Class,
+	OrderSKUs.Total
 FROM
 	Document.Order.SKUs AS OrderSKUs
 {WHERE
@@ -318,6 +323,9 @@ FROM
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Amount</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Total</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>

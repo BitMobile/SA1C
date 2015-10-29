@@ -74,6 +74,7 @@
 			</ChildItems>
 		</UsualGroup>
 	</ChildItems>
+	<Attributes/>
 	<Commands>
 		<Command name="PickFromDisk" id="1">
 			<Title>

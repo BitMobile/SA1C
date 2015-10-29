@@ -1788,7 +1788,6 @@
 				<Field>Объект.ПарольИнформационнойБазыДляПодключения</Field>
 			</Save>
 			<Columns>
-				<AdditionalColumns table="Объект.ТаблицаПравилКонвертации"/>
 				<AdditionalColumns table="Объект.ТаблицаНастройкиПараметров">
 					<Column name="Наименование" id="1">
 						<Title>
@@ -1882,6 +1881,7 @@
 						</Type>
 					</Column>
 				</AdditionalColumns>
+				<AdditionalColumns table="Объект.ТаблицаПравилКонвертации"/>
 			</Columns>
 		</Attribute>
 		<Attribute name="ПрямаяВыгрузка" id="2">

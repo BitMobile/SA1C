@@ -870,6 +870,7 @@
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
 											<CheckBoxType>Auto</CheckBoxType>
+											<BackColor>#F5CCCC</BackColor>
 											<ContextMenu name="ValueTableDateBoolean6ContextMenu" id="42"/>
 											<ExtendedTooltip name="ValueTableDateBoolean6ExtendedTooltip" id="288"/>
 											<Events>
@@ -941,6 +942,7 @@
 											<EditMode>EnterOnInput</EditMode>
 											<ShowInHeader>false</ShowInHeader>
 											<CheckBoxType>Auto</CheckBoxType>
+											<BackColor>#F5CCCC</BackColor>
 											<ContextMenu name="ValueTableDateBoolean7ContextMenu" id="44"/>
 											<ExtendedTooltip name="ValueTableDateBoolean7ExtendedTooltip" id="291"/>
 											<Events>

@@ -309,6 +309,16 @@
 											<DataPath>Объект.ВыгрузкаДанных</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<CheckBoxType>CheckBox</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ВыгрузкаКонтекстноеМеню" id="8"/>
 											<ExtendedTooltip name="ВыгрузкаExtendedTooltip" id="136"/>
 										</CheckBoxField>
@@ -316,6 +326,16 @@
 											<DataPath>Объект.ЗагрузкаДанных</DataPath>
 											<EditMode>EnterOnInput</EditMode>
 											<CheckBoxType>CheckBox</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ЗагрузкаКонтекстноеМеню" id="10"/>
 											<ExtendedTooltip name="ЗагрузкаExtendedTooltip" id="137"/>
 										</CheckBoxField>
@@ -343,6 +363,16 @@
 											<TitleLocation>Left</TitleLocation>
 											<TitleHeight>2</TitleHeight>
 											<CheckBoxType>CheckBox</CheckBoxType>
+											<EditFormat>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>BF=No; BT=Yes</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>BF=Нет; BT=Да</v8:content>
+												</v8:item>
+											</EditFormat>
 											<ContextMenu name="ПеремещатьPrivateВSharedContextMenu" id="231"/>
 											<ExtendedTooltip name="ПеремещатьPrivateВSharedExtendedTooltip" id="232"/>
 										</CheckBoxField>
