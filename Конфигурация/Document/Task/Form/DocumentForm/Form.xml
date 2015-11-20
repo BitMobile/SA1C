@@ -93,6 +93,7 @@
 					<DataPath>Object.TextTask</DataPath>
 					<TitleLocation>Left</TitleLocation>
 					<Height>3</Height>
+					<MultiLine>true</MultiLine>
 					<ContextMenu name="TextTaskContextMenu" id="54"/>
 					<ExtendedTooltip name="TextTaskExtendedTooltip" id="55"/>
 				</InputField>
@@ -136,6 +137,7 @@
 					<DataPath>Object.Result</DataPath>
 					<TitleLocation>Left</TitleLocation>
 					<Height>3</Height>
+					<MultiLine>true</MultiLine>
 					<ContextMenu name="ResultContextMenu" id="60"/>
 					<ExtendedTooltip name="ResultExtendedTooltip" id="61"/>
 				</InputField>

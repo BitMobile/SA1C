@@ -94,6 +94,11 @@
 					<ContextMenu name="NumberContextMenu" id="26"/>
 					<ExtendedTooltip name="NumberExtendedTooltip" id="27"/>
 				</LabelField>
+				<LabelField name="Outlet" id="81">
+					<DataPath>List.Outlet</DataPath>
+					<ContextMenu name="OutletContextMenu" id="82"/>
+					<ExtendedTooltip name="OutletExtendedTooltip" id="83"/>
+				</LabelField>
 				<LabelField name="TextTask" id="37">
 					<DataPath>List.TextTask</DataPath>
 					<ContextMenu name="TextTaskContextMenu" id="38"/>
