@@ -160,6 +160,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="GroupTasks" id="67">
+					<Visible>false</Visible>
 					<Title>
 						<v8:item>
 							<v8:lang>en</v8:lang>
@@ -184,7 +185,7 @@
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
-							<DataPath>Object.Task</DataPath>
+							<DataPath>Object.deprecated_Task</DataPath>
 							<SearchStringLocation>None</SearchStringLocation>
 							<ViewStatusLocation>None</ViewStatusLocation>
 							<SearchControlLocation>None</SearchControlLocation>
@@ -220,20 +221,20 @@
 							</SearchControlAddition>
 							<ChildItems>
 								<LabelField name="TaskLineNumber" id="71">
-									<DataPath>Object.Task.LineNumber</DataPath>
+									<DataPath>Object.deprecated_Task.LineNumber</DataPath>
 									<Visible>false</Visible>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="TaskLineNumberContextMenu" id="72"/>
 									<ExtendedTooltip name="TaskLineNumberExtendedTooltip" id="168"/>
 								</LabelField>
 								<InputField name="TaskTextTask" id="73">
-									<DataPath>Object.Task.TextTask</DataPath>
+									<DataPath>Object.deprecated_Task.TextTask</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="TaskTextTaskContextMenu" id="74"/>
 									<ExtendedTooltip name="TaskTextTaskExtendedTooltip" id="169"/>
 								</InputField>
 								<CheckBoxField name="TaskResult" id="75">
-									<DataPath>Object.Task.Result</DataPath>
+									<DataPath>Object.deprecated_Task.Result</DataPath>
 									<ReadOnly>true</ReadOnly>
 									<EditMode>EnterOnInput</EditMode>
 									<CheckBoxType>Auto</CheckBoxType>
