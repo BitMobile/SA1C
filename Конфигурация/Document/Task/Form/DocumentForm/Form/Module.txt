@@ -1,32 +1,32 @@
 ﻿
-&AtServer
-Procedure OnCreateAtServer(Cancel, StandardProcessing)
-	
-	Если Object.Ref.IsEmpty() Тогда 
-		
-		Query = new Query;
-		Query.Text = 
-		"SELECT ALLOWED TOP 1
-		|	Task.Territory,
-		|	Task.Outlet,
-		|	Task.StatusTask,
-		|	Task.TextTask,
-		|	Task.VisitPlan,
-		|	Task.PlanDate,
-		|	Task.Result
-        |FROM
-		|	Document.Task AS Task"; 
-		
-		Таб = Query.Execute().Unload();
-		НайденноеСвоство = "";
-		Для каждого Строка Из Таб.Columns Цикл
-			Параметры.Свойство(Строка.Name,НайденноеСвоство);
-			Object[Строка.Name] = НайденноеСвоство;
-		КонецЦикла;	
-		
-	КонецЕсли; 
-	
-EndProcedure
+//&AtServer
+//Procedure OnCreateAtServer(Cancel, StandardProcessing)
+//	
+//	Если Object.Ref.IsEmpty() Тогда 
+//		
+//		Query = new Query;
+//		Query.Text = 
+//		"SELECT ALLOWED TOP 1
+//		|	Task.Territory,
+//		|	Task.Outlet,
+//		|	Task.StatusTask,
+//		|	Task.TextTask,
+//		|	Task.VisitPlan,
+//		|	Task.PlanDate,
+//		|	Task.Result
+//        |FROM
+//		|	Document.Task AS Task"; 
+//		
+//		Таб = Query.Execute().Unload();
+//		НайденноеСвоство = "";
+//		Для каждого Строка Из Таб.Columns Цикл
+//			Параметры.Свойство(Строка.Name,НайденноеСвоство);
+//			Object[Строка.Name] = НайденноеСвоство;
+//		КонецЦикла;	
+//		
+//	КонецЕсли; 
+//	
+//EndProcedure
 
 &AtClient
 Procedure OnOpen(Cancel)
@@ -37,7 +37,10 @@ EndProcedure
 
 Procedure OnOpenServer()
 
-	Object.StatusTask = Enums.StatusTask.Planned;
+	//Object.StatusTask = Enums.StatusTask.Planned;
+	
+	Object.Status = False;
+	Object.Responsible = SessionParameters.CurrentUser;
 	
 	Items.Number.ReadOnly = Not Users.HaveAdditionalRight(Catalogs.AdditionalAccessRights.EditDocumentNumbers);
 	

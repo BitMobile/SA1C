@@ -77,6 +77,12 @@
 				<ExtendedTooltip name="ListSearchControlExtendedTooltip" id="21"/>
 			</SearchControlAddition>
 			<ChildItems>
+				<CheckBoxField name="Status" id="54">
+					<DataPath>List.Status</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="StatusContextMenu" id="55"/>
+					<ExtendedTooltip name="StatusExtendedTooltip" id="56"/>
+				</CheckBoxField>
 				<LabelField name="Date" id="22">
 					<DataPath>List.Date</DataPath>
 					<DefaultItem>true</DefaultItem>
@@ -88,45 +94,51 @@
 					<ContextMenu name="NumberContextMenu" id="26"/>
 					<ExtendedTooltip name="NumberExtendedTooltip" id="27"/>
 				</LabelField>
-				<LabelField name="Territory" id="28">
-					<DataPath>List.Territory</DataPath>
-					<ContextMenu name="TerritoryContextMenu" id="29"/>
-					<ExtendedTooltip name="TerritoryExtendedTooltip" id="30"/>
-				</LabelField>
-				<LabelField name="Outlet" id="31">
-					<DataPath>List.Outlet</DataPath>
-					<ContextMenu name="OutletContextMenu" id="32"/>
-					<ExtendedTooltip name="OutletExtendedTooltip" id="33"/>
-				</LabelField>
-				<LabelField name="StatusTask" id="34">
-					<DataPath>List.StatusTask</DataPath>
-					<ContextMenu name="StatusTaskContextMenu" id="35"/>
-					<ExtendedTooltip name="StatusTaskExtendedTooltip" id="36"/>
-				</LabelField>
 				<LabelField name="TextTask" id="37">
 					<DataPath>List.TextTask</DataPath>
 					<ContextMenu name="TextTaskContextMenu" id="38"/>
 					<ExtendedTooltip name="TextTaskExtendedTooltip" id="39"/>
 				</LabelField>
-				<LabelField name="VisitPlan" id="40">
-					<DataPath>List.VisitPlan</DataPath>
-					<ContextMenu name="VisitPlanContextMenu" id="41"/>
-					<ExtendedTooltip name="VisitPlanExtendedTooltip" id="42"/>
+				<LabelField name="StartPlanDate" id="60">
+					<DataPath>List.StartPlanDate</DataPath>
+					<ContextMenu name="StartPlanDateContextMenu" id="61"/>
+					<ExtendedTooltip name="StartPlanDateExtendedTooltip" id="62"/>
 				</LabelField>
-				<LabelField name="PlanDate" id="43">
-					<DataPath>List.PlanDate</DataPath>
-					<ContextMenu name="PlanDateContextMenu" id="44"/>
-					<ExtendedTooltip name="PlanDateExtendedTooltip" id="45"/>
+				<InputField name="EndPlanDate" id="57">
+					<DataPath>List.EndPlanDate</DataPath>
+					<ContextMenu name="EndPlanDateContextMenu" id="58"/>
+					<ExtendedTooltip name="EndPlanDateExtendedTooltip" id="59"/>
+				</InputField>
+				<LabelField name="PlanExecutor" id="63">
+					<DataPath>List.PlanExecutor</DataPath>
+					<ContextMenu name="PlanExecutorContextMenu" id="64"/>
+					<ExtendedTooltip name="PlanExecutorExtendedTooltip" id="65"/>
 				</LabelField>
-				<LabelField name="Result" id="46">
+				<CheckBoxField name="CreatedAtMA" id="66">
+					<DataPath>List.CreatedAtMA</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="CreatedAtMAContextMenu" id="67"/>
+					<ExtendedTooltip name="CreatedAtMAExtendedTooltip" id="68"/>
+				</CheckBoxField>
+				<LabelField name="ExecutionDate" id="69">
+					<DataPath>List.ExecutionDate</DataPath>
+					<ContextMenu name="ExecutionDateContextMenu" id="70"/>
+					<ExtendedTooltip name="ExecutionDateExtendedTooltip" id="71"/>
+				</LabelField>
+				<LabelField name="FactExecutor" id="72">
+					<DataPath>List.FactExecutor</DataPath>
+					<ContextMenu name="FactExecutorContextMenu" id="73"/>
+					<ExtendedTooltip name="FactExecutorExtendedTooltip" id="74"/>
+				</LabelField>
+				<LabelField name="Result" id="75">
 					<DataPath>List.Result</DataPath>
-					<ContextMenu name="ResultContextMenu" id="47"/>
-					<ExtendedTooltip name="ResultExtendedTooltip" id="48"/>
+					<ContextMenu name="ResultContextMenu" id="76"/>
+					<ExtendedTooltip name="ResultExtendedTooltip" id="77"/>
 				</LabelField>
-				<LabelField name="Target" id="49">
-					<DataPath>List.Target</DataPath>
-					<ContextMenu name="TargetContextMenu" id="50"/>
-					<ExtendedTooltip name="TargetExtendedTooltip" id="51"/>
+				<LabelField name="Responsible" id="78">
+					<DataPath>List.Responsible</DataPath>
+					<ContextMenu name="ResponsibleContextMenu" id="79"/>
+					<ExtendedTooltip name="ResponsibleExtendedTooltip" id="80"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
