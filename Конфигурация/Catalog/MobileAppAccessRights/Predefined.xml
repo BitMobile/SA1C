@@ -54,6 +54,12 @@
 		<Description>en = 'Edit partner contacts'; ru = 'Редактирование контактов партнеров'</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="6d40cec0-703f-4cb8-b2b8-55dbf5a6dab4">
+		<Name>EditTasksWithoutVisit</Name>
+		<Code>000000013</Code>
+		<Description>en = 'Edit tasks without visit'; ru = 'Выполнять задачи вне визита'</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="f90ea737-8341-40c1-8d12-77c8948a21d7">
 		<Name>NewTotalDiscount</Name>
 		<Code>000000012</Code>
