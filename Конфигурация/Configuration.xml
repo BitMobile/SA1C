@@ -48,7 +48,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.10.0.497</Version>
+			<Version>1.10.0.498</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -238,6 +238,7 @@
 			<Constant>bitmobile_ПользовательSMTP</Constant>
 			<Constant>bitmobile_ПарольSMTP</Constant>
 			<Constant>bitmobile_АутентификацияSMTP</Constant>
+			<Constant>bitmobile_ИспользуетсяHTTPS</Constant>
 			<Constant>bitmobile_ИспользуетсяSSLSMTP</Constant>
 			<Constant>bitmobile_ПрикреплятьФайлДанных</Constant>
 			<Constant>bitmobile_РазмерПрикрепляемогоФайла</Constant>
