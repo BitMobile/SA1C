@@ -416,6 +416,22 @@
 											<ContextMenu name="НаборКонстантbitmobile_СерверContextMenu" id="367"/>
 											<ExtendedTooltip name="НаборКонстантbitmobile_СерверExtendedTooltip" id="368"/>
 										</InputField>
+										<CheckBoxField name="bitmobile_ИспользуетсяHTTPS" id="485">
+											<DataPath>НаборКонстант.bitmobile_ИспользуетсяHTTPS</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Use HTTPS</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Использовать HTTPS</v8:content>
+												</v8:item>
+											</Title>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="bitmobile_ИспользуетсяHTTPSContextMenu" id="486"/>
+											<ExtendedTooltip name="bitmobile_ИспользуетсяHTTPSExtendedTooltip" id="487"/>
+										</CheckBoxField>
 										<InputField name="НаборКонстантbitmobile_Порт" id="369">
 											<DataPath>НаборКонстант.bitmobile_Порт</DataPath>
 											<Title>
@@ -431,11 +447,11 @@
 											<ToolTip>
 												<v8:item>
 													<v8:lang>en</v8:lang>
-													<v8:content>0 - Using port "80"</v8:content>
+													<v8:content>0 - Using port "80 (443 for HTTPS)"</v8:content>
 												</v8:item>
 												<v8:item>
 													<v8:lang>ru</v8:lang>
-													<v8:content>0 - Используется порт "80"</v8:content>
+													<v8:content>0 - Используется порт "80 (443 для HTTPS)"</v8:content>
 												</v8:item>
 											</ToolTip>
 											<ToolTipRepresentation>ShowRight</ToolTipRepresentation>
