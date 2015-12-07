@@ -54,6 +54,12 @@
 		<Description>SnapshotSize</Description>
 		<IsFolder>false</IsFolder>
 	</Item>
+	<Item id="7a8f3f35-1064-4af8-bf57-e6937485dec2">
+		<Name>UseAutoFillForRecOrder</Name>
+		<Code>000000011</Code>
+		<Description>UseAutoFillForRecOrder</Description>
+		<IsFolder>false</IsFolder>
+	</Item>
 	<Item id="d7a4fe02-7db5-4f75-b698-25a1b0b742f4">
 		<Name>UserCoordinatesActualityTime</Name>
 		<Code>000000010</Code>
