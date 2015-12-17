@@ -60,7 +60,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		|	SKUGroupTerritories.Territory = &Ref
 		|	AND NOT SKUGroupTerritories.Ref IN (&SGArray)";
 	
-	Query.SetParameter("Ref", Object.Ref);
+	Query.SetParameter("Ref", CurrentObject.Ref);
 	Query.SetParameter("SGArray", SKUGroups.Unload().UnloadColumn("SKUGroup"));
 	
 	QueryResult = Query.Execute();
@@ -71,7 +71,7 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		GroupObject = Selection.SKUGroup.GetObject();
 		
-		FoundString = GroupObject.Territories.Find(Object.Ref);
+		FoundString = GroupObject.Territories.Find(CurrentObject.Ref);
 		
 		If Not FoundString = Undefined Then 
 			
@@ -87,12 +87,12 @@ Procedure OnWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		GroupObject = Row.SKUGroup.GetObject();
 		
-		FoundString = GroupObject.Territories.Find(Object.Ref);
+		FoundString = GroupObject.Territories.Find(CurrentObject.Ref);
 		
 		If FoundString = Undefined Then 
 			
 			NewRow							= GroupObject.Territories.Add();
-			NewRow.Territory				= Object.Ref;
+			NewRow.Territory				= CurrentObject.Ref;
 			NewRow.LineNumberInTerritory	= Row.LineNumber;
 			
 		Else 
