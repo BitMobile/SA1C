@@ -99,6 +99,14 @@
 				</InputField>
 				<InputField name="PlanExecutor" id="50">
 					<DataPath>Object.PlanExecutor</DataPath>
+					<ChoiceParameters>
+						<app:item name="Filter.Role">
+							<app:value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xs:string">SR</Value>
+							</app:value>
+						</app:item>
+					</ChoiceParameters>
 					<ContextMenu name="PlanExecutorContextMenu" id="51"/>
 					<ExtendedTooltip name="PlanExecutorExtendedTooltip" id="52"/>
 				</InputField>
