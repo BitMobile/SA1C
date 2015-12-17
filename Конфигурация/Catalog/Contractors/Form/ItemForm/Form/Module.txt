@@ -63,7 +63,15 @@ Procedure BeforeWriteAtServer(Cancel, CurrentObject, WriteParameters)
 		
 		If Cancel Then
 			
-			Message(NStr("ru = 'Нельзя записывать контрагента пока есть хотя бы одна торговая точка в которой присутствует этот контрагент и список территорий этой торговой точки не соответствует ни одной территории из нового списка территорий этого контрагента.'"));
+			OutletsRow = Chars.LF;
+			
+			For Each Row In Result Do
+				
+				OutletsRow = OutletsRow + Row.Outlet + Chars.LF;
+				
+			EndDo;
+			
+			Message("Невозможно записать изменения, так как ни одна территория контрагента не совпадает с территориями следующих торговых точек: " + OutletsRow);
 			
 		EndIf;
 		
