@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<CommandBarLocation>None</CommandBarLocation>
+	<CommandSet>
+		<ExcludedCommand>Generate</ExcludedCommand>
+	</CommandSet>
 	<ReportResult>Result</ReportResult>
 	<DetailsData>DetailsData</DetailsData>
 	<ReportFormType>Main</ReportFormType>
@@ -14,7 +17,105 @@
 		<Event name="OnCreateAtServer">OnCreateAtServer</Event>
 	</Events>
 	<ChildItems>
+		<CommandBar name="Group1" id="47">
+			<ExtendedTooltip name="Group1ExtendedTooltip" id="48"/>
+			<ChildItems>
+				<Button name="FormShape" id="45">
+					<Type>CommandBarButton</Type>
+					<DefaultButton>true</DefaultButton>
+					<OnlyInAllActions>true</OnlyInAllActions>
+					<CommandName>Form.Command.Shape</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="FormShapeExtendedTooltip" id="46"/>
+				</Button>
+				<Button name="LoadVariant" id="51">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>true</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.LoadVariant</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="LoadVariantExtendedTooltip" id="52"/>
+				</Button>
+				<Button name="SaveVariant" id="57">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.SaveVariant</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="SaveVariantExtendedTooltip" id="58"/>
+				</Button>
+				<Button name="ChangeVariant" id="53">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.ChangeVariant</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ChangeVariantExtendedTooltip" id="54"/>
+				</Button>
+				<Button name="ReportSettings" id="49">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.ReportSettings</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="ReportSettingsExtendedTooltip" id="50"/>
+				</Button>
+				<Button name="LoadReportSettings" id="59">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.LoadReportSettings</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="LoadReportSettingsExtendedTooltip" id="60"/>
+				</Button>
+				<Button name="SaveReportSettings" id="61">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.SaveReportSettings</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="SaveReportSettingsExtendedTooltip" id="62"/>
+				</Button>
+				<Button name="StandardSettings" id="63">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>true</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.StandardSettings</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="StandardSettingsExtendedTooltip" id="64"/>
+				</Button>
+				<Button name="NewWindow" id="65">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.NewWindow</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="NewWindowExtendedTooltip" id="66"/>
+				</Button>
+				<Button name="Save" id="67">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.Save</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="SaveExtendedTooltip" id="68"/>
+				</Button>
+				<Button name="Print" id="69">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.Print</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="PrintExtendedTooltip" id="70"/>
+				</Button>
+				<Button name="CustomizeForm" id="71">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.CustomizeForm</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="CustomizeFormExtendedTooltip" id="72"/>
+				</Button>
+				<Button name="Help" id="73">
+					<Type>CommandBarButton</Type>
+					<OnlyInAllActions>false</OnlyInAllActions>
+					<CommandName>Form.StandardCommand.Help</CommandName>
+					<Parameter xsi:nil="true"/>
+					<ExtendedTooltip name="HelpExtendedTooltip" id="74"/>
+				</Button>
+			</ChildItems>
+		</CommandBar>
 		<CommandBar name="MainCommandBar" id="8">
+			<Visible>false</Visible>
 			<Title>
 				<v8:item>
 					<v8:lang>en</v8:lang>
@@ -115,7 +216,6 @@
 			<ChildItems>
 				<SpreadSheetDocumentField name="Result" id="29">
 					<DataPath>Result</DataPath>
-					<DefaultItem>true</DefaultItem>
 					<TitleLocation>None</TitleLocation>
 					<Width>70</Width>
 					<ContextMenu name="ResultContextMenu" id="30"/>
@@ -349,6 +449,26 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>OpenSnapshot</Action>
+		</Command>
+		<Command name="Shape" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Shape</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформировать
+</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Shape</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Shape</Action>
 		</Command>
 	</Commands>
 </Form>

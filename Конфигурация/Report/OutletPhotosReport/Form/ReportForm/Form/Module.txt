@@ -435,6 +435,17 @@ Procedure ResultOnActivateArea(Item)
 	
 EndProcedure
 
+&AtClient
+Procedure Shape(Command)
+	
+	PictureAddress = Undefined;
+	PictureExtension 	= Undefined;
+	PictureFilename 	= Undefined;
+	
+	ComposeResult();
+	
+EndProcedure
+
 #EndRegion
 
 TypesMap = new Map();
