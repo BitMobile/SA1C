@@ -4593,6 +4593,17 @@ WHERE #HaveRightToRead("Catalog.SystemObjects.Document_Visit")
 		</right>
 	</object>
 	<object>
+		<name>Report.VisitMonitoring</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Constant.bitmobile_СинхронизацияЗапущена</name>
 		<right>
 			<name>Read</name>

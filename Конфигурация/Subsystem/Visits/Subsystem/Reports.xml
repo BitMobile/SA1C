@@ -31,6 +31,8 @@
 				<xr:Item xsi:type="xr:MDObjectRef">Report.AccountReceivable</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowAccountReceivableReport</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitsControl</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">Report.VisitMonitoring</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowVisitsMonitoring</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>

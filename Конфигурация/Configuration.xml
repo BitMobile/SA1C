@@ -48,7 +48,7 @@
 			<ScriptVariant>English</ScriptVariant>
 			<DefaultRoles/>
 			<Vendor>FirstBit</Vendor>
-			<Version>1.10.0.508</Version>
+			<Version>1.10.0.509</Version>
 			<UpdateCatalogAddress/>
 			<IncludeHelpInContents>false</IncludeHelpInContents>
 			<UseManagedFormInOrdinaryApplication>false</UseManagedFormInOrdinaryApplication>
@@ -220,6 +220,7 @@
 			<CommonCommand>ShowVisitResults</CommonCommand>
 			<CommonCommand>ShowVisitsOnMap</CommonCommand>
 			<CommonCommand>ShowVisitsControl</CommonCommand>
+			<CommonCommand>ShowVisitsMonitoring</CommonCommand>
 			<Constant>UseReturns</Constant>
 			<Constant>UseOrders</Constant>
 			<Constant>UseEncashments</Constant>
@@ -361,6 +362,7 @@
 			<Report>VisitEfficiency</Report>
 			<Report>VisitResults</Report>
 			<Report>VisitsControl</Report>
+			<Report>VisitMonitoring</Report>
 			<DataProcessor>ConfigurationSettings</DataProcessor>
 			<DataProcessor>VisitsOnMap</DataProcessor>
 			<DataProcessor>РегламентныеИФоновыеЗадания</DataProcessor>

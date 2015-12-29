@@ -16,6 +16,11 @@
 				<xr:Common>false</xr:Common>
 			</Visibility>
 		</Command>
+		<Command name="Report.VisitMonitoring.StandardCommand.Open">
+			<Visibility>
+				<xr:Common>false</xr:Common>
+			</Visibility>
+		</Command>
 		<Command name="Report.VisitResults.StandardCommand.Open">
 			<Visibility>
 				<xr:Common>false</xr:Common>
