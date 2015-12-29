@@ -184,6 +184,7 @@
 			<ScheduledJob>bitmobile_СинхронизацияФайлов</ScheduledJob>
 			<ScheduledJob>bitmobile_СинхронизацияСУчетнымиСистемами</ScheduledJob>
 			<ScheduledJob>bitmobile_ОчисткаЖурналаРегистрации</ScheduledJob>
+			<ScheduledJob>ExchangeDataUT11</ScheduledJob>
 			<FunctionalOption>Features</FunctionalOption>
 			<FunctionalOption>Stocks</FunctionalOption>
 			<FunctionalOption>Returns</FunctionalOption>
@@ -260,6 +261,7 @@
 			<Constant>bitmobile_СинхронизацияФайловЗапущена</Constant>
 			<Constant>bitmobile_НеЗаписыватьСобытияСинхронизацииВЖурнал</Constant>
 			<Constant>bitmobile_СрокХраненияЖурналаРегистрации</Constant>
+			<Constant>bitmobile_НастройкиОбмена</Constant>
 			<CommonForm>CommonReportForm</CommonForm>
 			<CommonForm>ChooseFromListForm</CommonForm>
 			<CommonForm>DoQueryBox</CommonForm>
@@ -369,6 +371,7 @@
 			<DataProcessor>УдалениеПомеченныхОбъектов</DataProcessor>
 			<DataProcessor>УниверсальныйОбменДаннымиXML</DataProcessor>
 			<DataProcessor>bitmobile_СинхронизацияИНастройки</DataProcessor>
+			<DataProcessor>bitmobile_DataExchanger</DataProcessor>
 			<InformationRegister>Answers</InformationRegister>
 			<InformationRegister>AnsweredQuestions</InformationRegister>
 			<InformationRegister>AssortmentMatrixSKUs</InformationRegister>
@@ -387,6 +390,7 @@
 			<InformationRegister>bitmobile_ИзмененныеДанные</InformationRegister>
 			<InformationRegister>bitmobile_ОбъектыСОшибками</InformationRegister>
 			<InformationRegister>bitmobile_СоответствиеПеречислений</InformationRegister>
+			<InformationRegister>bitmobile_ВнешниеИдентификаторыОбъектов</InformationRegister>
 		</ChildObjects>
 	</Configuration>
 </MetaDataObject>

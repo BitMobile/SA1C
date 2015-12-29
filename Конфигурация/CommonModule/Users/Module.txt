@@ -242,7 +242,7 @@ Function CreateUser(Parameters) Export
 	ProcessedUser.RunMode					= ClientRunMode.ManagedApplication;
 	ProcessedUser.StandardAuthentication	= True;
 	
-	ProcessedUser.Name						= Parameters.UserName;
+	ProcessedUser.Name						= Parameters.FullName;
 	ProcessedUser.FullName					= Parameters.FullName;
 	ProcessedUser.Language					= Metadata.Languages.Find(Parameters.InterfaceLanguage);
 	ProcessedUser.Password					= Parameters.Password;

@@ -1,0 +1,1938 @@
+﻿
+#Region Vars
+
+Var Catalog;
+Var AccumulationRegister;
+Var InformationRegister;
+
+Var Brands;
+Var PriceLists;
+Var SKUs;
+Var SKUGroups;
+Var Packs;
+Var Units;
+Var Prices;
+Var Stocks;
+Var Outlets;
+Var Agreements;
+Var UpdatedSKUStocks;
+Var UsersCat;
+
+Var EmptyRefString;
+
+#EndRegion
+
+Procedure LoadSettings()
+	
+	FillPropertyValues(ThisObject, DataProcessors.bitmobile_DataExchanger.GetSettings());
+	
+EndProcedure
+
+Procedure GetChanges() Export
+	
+	LoadSettings();
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	If Not Connection = Undefined Then
+		
+		ObjectArrays = GetObjectArrays(Connection);
+		
+		Try
+			
+			BeginTransaction();
+			
+			For Each Unit In ObjectArrays.Get(Units) Do
+				
+				WriteUnit(Unit);
+				
+			EndDo;
+			
+			For Each Stock In ObjectArrays.Get(Stocks) Do
+				
+				WriteStocks(Stock);
+				
+			EndDo;
+			
+			For Each Pack In ObjectArrays.Get(Packs) Do
+				
+				WritePack(Pack);
+				
+			EndDo;
+			
+			For Each Brand In ObjectArrays.Get(Brands) Do
+				
+				WriteBrand(Brand);
+				
+			EndDo;
+			
+			SKUGroupsArray = ObjectArrays.Get(SKUGroups);
+			SKUGroupsTree = GetSKUGroupsTree(SKUGroupsArray);
+			WriteSKUGroups(SKUGroupsTree);
+			PacksMap = GetPacks();
+			SKUObjectStructures = ObjectArrays.Get(SKUs);
+			For Each SKUObjectStructure In SKUObjectStructures Do
+				
+				WriteSKU(SKUObjectStructure, SKUGroupsTree, PacksMap);
+				
+			EndDo;
+			
+			SKUStocksVT = ObjectArrays.Get(UpdatedSKUStocks + "VT");
+			SKUStocksArray = ObjectArrays.Get(UpdatedSKUStocks);
+			For Each ChangedSKUStock In SKUStocksArray Do
+				
+				WriteSKUStocks(ChangedSKUStock, SKUStocksVT);
+				
+			EndDo;
+			
+			PriceListsArray = ObjectArrays.Get(PriceLists);
+			
+			For Each PriceListStructure In PriceListsArray Do
+				
+				WritePriceList(PriceListStructure);
+				
+			EndDo;
+			
+			WritePrices(ObjectArrays);
+			
+			TerritorySelection = Catalogs.Territory.Select();
+			
+			If TerritorySelection.Next() Then
+				
+				TerritoryRef = TerritorySelection.Ref;
+				TerritoryObject = TerritorySelection.GetObject();
+				
+			EndIf;
+			
+			WriteOutlets(ObjectArrays, TerritoryObject);
+			
+			WritePriceListsToOutlets(ObjectArrays);
+			
+			WriteUsers(ObjectArrays, TerritoryObject);
+			
+			CommitTransaction();
+			
+			SendSuccessMessageServer();
+			
+		Except
+			
+			Message(ErrorInfo());
+			Message(ErrorDescription());
+			
+			RollbackTransaction();
+			
+		EndTry;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure SendChanges() Export
+	
+	ThisNode = ExchangePlans.bitmobile_ОбменСУчетнымиСистемами.FindByCode("УТ11");
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	Headers = New Map;
+	Headers.Insert("1C_OData_DataLoadMode", true);
+	
+	If Not Connection = Undefined Then
+		
+		OrderSelectionFilter = New Array;
+		OrderSelectionFilter.Add(Metadata.Documents.Order);
+		
+		ChangedOrdersSelection = ExchangePlans.SelectChanges(ThisNode, 0, OrderSelectionFilter);
+		
+		While ChangedOrdersSelection.Next() Do
+			
+			Query = New Query(
+			"SELECT
+			|	bitmobile_ВнешниеИдентификаторыОбъектов.Object,
+			|	bitmobile_ВнешниеИдентификаторыОбъектов.ExternalID
+			|FROM
+			|	InformationRegister.bitmobile_ВнешниеИдентификаторыОбъектов AS bitmobile_ВнешниеИдентификаторыОбъектов
+			|WHERE
+			|	(CAST(bitmobile_ВнешниеИдентификаторыОбъектов.Object AS Document.Order)) = &Object");
+			Query.SetParameter("Object", ChangedOrdersSelection.Get().Ref);
+			Result = Query.Execute().Unload();
+			
+			If Result.Count() = 0 Then
+				
+				SendPostOrder(Connection, Headers, ChangedOrdersSelection.Get());
+				
+			Else
+				
+				SendPatchOrder(Connection, Headers, ChangedOrdersSelection.Get(), Result[0].ExternalID);
+				
+			EndIf;
+			
+		EndDo;
+		
+		ReturnSelectionFilter = New Array;
+		ReturnSelectionFilter.Add(Metadata.Documents.Return);
+		ChangedReturnsSelection = ExchangePlans.SelectChanges(ThisNode, 0, ReturnSelectionFilter);
+		
+		While ChangedReturnsSelection.Next() Do
+			
+			Query = New Query(
+			"SELECT
+			|	bitmobile_ВнешниеИдентификаторыОбъектов.Object,
+			|	bitmobile_ВнешниеИдентификаторыОбъектов.ExternalID
+			|FROM
+			|	InformationRegister.bitmobile_ВнешниеИдентификаторыОбъектов AS bitmobile_ВнешниеИдентификаторыОбъектов
+			|WHERE
+			|	(CAST(bitmobile_ВнешниеИдентификаторыОбъектов.Object AS Document.Return)) = &Object");
+			Query.SetParameter("Object", ChangedReturnsSelection.Get().Ref);
+			Result = Query.Execute().Unload();
+			
+			If Result.Count() = 0 Then
+				
+				SendPostReturn(Connection, Headers, ChangedReturnsSelection.Get());
+				
+			Else
+				
+				SendPatchReturn(Connection, Headers, ChangedReturnsSelection.Get(), Result[0].ExternalID);
+				
+			EndIf;
+			
+		EndDo;
+		
+		ExchangePlans.DeleteChangeRecords(ThisNode);
+		
+	EndIf;
+	
+EndProcedure
+
+#Region HTTP
+
+Function GetResponseBody(Response)
+
+	Body = Response.GetBodyAsString();
+	
+	Return Body;
+	
+EndFunction
+
+Function GetResponse(Connection, Request)
+	
+	Result = Connection.Post(Request);
+	
+	Return Result;
+	
+EndFunction
+
+Function GetSelectChangesRequest()
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/SelectChanges?DataExchangePoint='" + ThisObject.CurrentExchangePlanNodeId + "'&MessageNo=" + "0");
+	
+	Return Request;
+	
+EndFunction
+
+Procedure SendSuccessMessageServer()
+	
+	FillPropertyValues(ThisObject, DataProcessors.bitmobile_DataExchanger.GetSettings());
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	If Not Connection = Undefined Then
+		
+		Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/NotifyChangesReceived?DataExchangePoint='" + ThisObject.CurrentExchangePlanNodeId + "'&MessageNo=" + ThisObject.MessageNo);
+		
+		Result = Connection.Post(Request);
+		
+		If Result.StatusCode = 200 Then
+			
+			ThisObject.MessageNo = ThisObject.MessageNo + 1;
+			
+			Settings = DataProcessors.bitmobile_DataExchanger.GetEmptySettingsStructure();
+			FillPropertyValues(Settings, ThisObject);
+			DataProcessors.bitmobile_DataExchanger.SetSettings(Settings);
+			
+		EndIf;
+		
+	EndIf;
+
+EndProcedure
+
+#EndRegion
+
+#Region XML
+
+Function GetXMLDocumentFromRequest(Connection, Request)
+	
+	Response = GetResponse(Connection, Request);
+	Body = GetResponseBody(Response);
+	
+	FileName = GetTempFileName(".xml");
+	FileText = New TextDocument;
+	FileText.SetText(Body);
+	FileText.Write(FileName);
+	
+	Doc = GetXMLReaderFromString(Body);
+	
+	Return Doc;
+	
+EndFunction
+
+Function GetXMLReaderFromString(Body)
+	
+	// Чтение результата запроса в XML
+	XMLReader = New XMLReader;
+	XMLReader.SetString(Body);
+	
+	DOMBuilder = New DOMBuilder;
+	Doc = DOMBuilder.Read(XMLReader);
+	Return Doc;
+	
+EndFunction
+
+Function GetObjectArrays(Connection)
+	
+	ObjectPropertyNames = GetPropertyNamesMap();
+	ObjectArrays = GetEmptyObjectArrays();
+	
+	XMLDocument = GetXMLDocumentFromRequest(Connection, GetSelectChangesRequest());
+	Entries = XMLDocument.GetElementByTagName("entry");
+	
+	For Each Entry In Entries Do
+		
+		CategoryNode = Entry.GetElementByTagName("category")[0];
+		Term = CategoryNode.GetAttributeNode("term").NodeValue;
+		
+		FoundPropertyNames = ObjectPropertyNames.Get(Term);
+		PropertyNames = ?(FoundPropertyNames = Undefined, New Array, FoundPropertyNames);
+		
+		PropertiesNodes = Entry.GetElementByTagName("properties");
+		
+		If Left(Term, StrLen(Catalog)) = Catalog Or Left(Term, StrLen(InformationRegister)) = InformationRegister Then
+			
+			ObjectStructure = GetObjectStructure(PropertiesNodes, PropertyNames, Term);
+			ObjectArray = ObjectArrays.Get(ObjectStructure.Term);
+			ObjectArray.Add(ObjectStructure);
+			
+		EndIf;
+		
+	EndDo;
+	
+	GetAllSKUStocks(Connection, ObjectArrays);
+	
+	GetAgreements(Connection, ObjectArrays);
+	
+	Return ObjectArrays;
+	
+EndFunction
+
+Procedure GetAgreements(Connection, ObjectArrays)
+	
+	AgreementsArray = ObjectArrays.Get(Agreements);
+	
+	AgreementsVT = New ValueTable;
+	AgreementsVT.Columns.Add("Ref_Key");
+	AgreementsVT.Columns.Add("Контрагент_Key");
+	AgreementsVT.Columns.Add("ВидЦен_Key");
+	
+	For Each AgreementStructure In AgreementsArray Do
+		
+		AgreementRow = AgreementsVT.Add();
+		FillPropertyValues(AgreementRow, AgreementStructure);
+		
+	EndDo;
+	
+	AgreementsVT.GroupBy("Контрагент_Key");
+	EmptyContractorRow = AgreementsVT.Find(EmptyRefString);
+	
+	If Not EmptyContractorRow = Undefined Then
+		AgreementsVT.Delete(EmptyContractorRow);
+	EndIf;
+	
+	AgreementsArray = AgreementsVT.UnloadColumn("Контрагент_Key");
+	
+	ObjectArrays.Insert("UpdatedOutletsPricesArray", AgreementsArray);
+	
+	AgreementsStructuresArray = New Array;
+	
+	For Each Agreement In AgreementsArray Do
+		
+		Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/Catalog_СоглашенияСКлиентами?$filter=Контрагент_Key eq guid'" + Agreement + "' and ВидЦен_Key ne guid'" + EmptyRefString + "'&$select=Контрагент_Key,ВидЦен_Key");
+		Response = Connection.Get(Request);
+		Body = Response.GetBodyAsString();
+		
+		AgreementXML = GetXMLReaderFromString(Body);
+		
+		EntryNodes = AgreementXML.GetElementByTagName("entry");
+		
+		For Each EntryNode In EntryNodes Do
+			
+			PropertyNodes = EntryNode.GetElementByTagName("properties");
+			ObjectStructure = GetObjectStructure(PropertyNodes, GetAgreementsPropertyNames(), Agreements);
+			AgreementsStructuresArray.Add(ObjectStructure);
+			
+		EndDo;
+		
+	EndDo;
+	
+	ObjectArrays.Insert(Agreements, AgreementsStructuresArray);
+
+EndProcedure
+
+Procedure GetAllSKUStocks(Connection, ObjectArrays)
+	
+	StatusCode = 0;
+	
+	Query = New Query(
+	"SELECT
+	|	SKU.Ref
+	|FROM
+	|	Catalog.SKU AS SKU");
+	Result = Query.Execute().Unload();
+	Result.Columns.Add("Ref_Key");
+	
+	For Each AllSKUsRow In Result Do
+		
+		AllSKUsRow.Ref_Key = AllSKUsRow.Ref.UUID();
+		
+	EndDo;
+	
+	AllSKUs = Result.UnloadColumn("Ref_Key");
+	
+	ChangedSKUs = ObjectArrays.Get(SKUs);
+	
+	For Each ChangedSKU In ChangedSKUS Do
+		
+		FoundSKURef = AllSKUs.Find(Catalogs.SKU.GetRef(New UUID(ChangedSKU.Ref_Key)));
+		
+		If FoundSKURef = Undefined Then
+			
+			AllSKUs.Add(ChangedSKU.Ref_Key);
+			
+		EndIf;
+		
+	EndDo;
+	
+	SKUStocksArray = New Array;
+	
+	ObjectArrays.Insert(UpdatedSKUStocks, AllSKUs);
+	UpdatedSKUStocksArray = AllSKUs;
+	
+	SKUStocksVT = New ValueTable;
+	SKUStocksVT.Columns.Add("Номенклатура_Key");
+	SKUStocksVT.Columns.Add("Склад_Key");
+	SKUStocksVT.Columns.Add("ВНаличииBalance");
+	
+	If UpdatedSKUStocksArray.Count() > 0 Then
+		
+		FirstElement = 0;
+		Offset = UpdatedSKUStocksArray.Count() - 1;
+		GetSKUStocks(Connection, UpdatedSKUStocksArray, SKUStocksArray, FirstElement, Offset);
+		
+		For Each SKUStock In SKUStocksArray Do
+			
+			NewRow = SKUStocksVT.Add();
+			FillPropertyValues(NewRow, SKUStock, "Номенклатура_Key, Склад_Key");
+			NewRow.ВНаличииBalance = Number(SKUStock.ВНаличииBalance);
+			
+		EndDo;
+		
+	EndIf;
+	
+	SKUStocksVT.GroupBy("Номенклатура_Key, Склад_Key", "ВНаличииBalance");
+	ObjectArrays.Insert(UpdatedSKUStocks + "VT", SKUStocksVT);
+
+EndProcedure
+
+Procedure GetSKUStocks(Connection, UpdatedSKUStocksArray, SKUStocksArray, FirstElement, Offset)
+	
+	LastElement = ?(FirstElement + Offset > UpdatedSKUStocksArray.Count() - 1, UpdatedSKUStocksArray.Count() - 1, FirstElement + Offset);
+	
+	If Not (FirstElement >= UpdatedSKUStocksArray.Count()) Then
+		
+		FilterString = GetFilterString(UpdatedSKUStocksArray, FirstElement, LastElement);
+		Request = GetStocksRequest(FilterString);
+		Response = Connection.Get(Request);
+		StatusCode = Response.StatusCode;
+		
+		If StatusCode = 200 Then
+			
+			Doc = GetXMLReaderFromString(Response.GetBodyAsString());
+			ElementNodes = Doc.GetElementByTagName("element");
+			
+			For Each ElementNode In ElementNodes Do
+			
+				ObjectStructure = New Structure;
+				ProcessElementNode(ElementNode, ObjectStructure);
+				SKUStocksArray.Add(ObjectStructure);
+				
+			EndDo;
+			
+			FirstElement = FirstElement + Offset + 1;
+			
+			If Not Offset = 0 Then
+				
+				GetSkuStocks(Connection, UpdatedSKUStocksArray, SKUStocksArray, FirstElement, Offset);
+				
+			EndIf;
+			
+		Else
+			
+			Offset = Round(Offset / 2);
+			GetSKUStocks(Connection, UpdatedSKUStocksArray, SKUStocksArray, FirstElement, Offset);
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Function GetStocksRequest(FilterString)
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/AccumulationRegister_СвободныеОстатки/Balance()?$filter=" + FilterString);
+	
+	Return Request;
+	
+EndFunction
+
+Function GetFilterString(UpdatedSKUStocksArray, FirstElement, Offset)
+	
+	FilterString = "";
+	
+	For Index = FirstElement To Offset Do
+		
+		FilterString = FilterString + "Номенклатура_Key eq guid'" + UpdatedSKUStocksArray[Index] + "' or ";
+		
+	EndDo;
+	
+	FilterString = Left(FilterString, StrLen(FilterString) - 4);
+	
+	Return FilterString;
+	
+EndFunction
+
+Function GetObjectStructure(PropertiesNodes, PropertyNames, Term)
+	
+	ObjectStructure = New Structure;
+	ObjectStructure.Insert("Term", Term);
+	
+	If Left(Term, StrLen(Catalog)) = Catalog Then
+		
+		GetCatalogObjectStructure(ObjectStructure, PropertiesNodes, PropertyNames);
+		
+	ElsIf Left(Term, StrLen(AccumulationRegister)) = AccumulationRegister Or Left(Term, StrLen(InformationRegister)) = InformationRegister Then
+		
+		GetAccumulationRegisterObjectStructure(ObjectStructure, PropertiesNodes);
+		
+	EndIf;
+	
+	Return ObjectStructure;
+	
+EndFunction
+
+Procedure GetAccumulationRegisterObjectStructure(ObjectStructure, PropertiesNodes)
+	
+	For Each PropertiesNode In PropertiesNodes Do
+		
+		ElementsNodes = PropertiesNode.GetElementByTagName("element");
+		
+		For Each ElementNode In ElementsNodes Do
+			
+			ProcessElementNode(ElementNode, ObjectStructure);
+			
+		EndDo;
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessElementNode(ElementNode, ObjectStructure)
+	
+	For Each Property In ElementNode.ChildNodes Do
+		
+		ObjectStructure.Insert(Property.LocalName, Property.TextContent);
+		
+	EndDo;
+
+EndProcedure
+
+Procedure GetCatalogObjectStructure(ObjectStructure, PropertiesNodes, PropertyNames)
+	
+	For Each PropertiesNode In PropertiesNodes Do
+		
+		For Each Property In PropertiesNode.ChildNodes Do
+			
+			If Not PropertyNames.Find(Property.LocalName) = Undefined Then
+				
+				ObjectStructure.Insert(Property.LocalName, Property.TextContent);
+				
+				If ObjectStructure.Term = SKUs And Property.LocalName = "IsFolder" And Property.TextContent = "true" Then
+					
+					ObjectStructure.Term = SKUGroups;
+					
+				EndIf;
+				
+				If ObjectStructure.Term = Outlets And Property.LocalName = "КонтактнаяИнформация" Then
+					
+					Elements = Property.GetElementByTagName("element");
+					
+					For Each Element In Elements Do
+						
+						TypeNodes = Element.GetElementByTagName("Тип");
+						
+						If TypeNodes.Count() > 0 Then
+							
+							If TypeNodes[0].TextContent = "Адрес" Then
+								
+								PresentationNodes = Element.GetElementByTagName("Представление");
+								
+								If PresentationNodes.Count() > 0 Then
+									
+									ObjectStructure.Insert("КонтактнаяИнформация", PresentationNodes[0].TextContent);
+									
+								EndIf;
+								
+							EndIf;
+							
+						EndIf;
+						
+					EndDo;
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndDo;
+		
+	EndDo;
+	
+EndProcedure
+
+#EndRegion
+
+#Region Mappings
+
+Function GetEmptyObjectArrays()
+	
+	ObjectArrays = New Map();
+	ObjectArrays.Insert(SKUGroups, New Array);
+	ObjectArrays.Insert(SKUs, New Array);
+	ObjectArrays.Insert(Brands, New Array);
+	ObjectArrays.Insert(Packs, New Array);
+	ObjectArrays.Insert(Units, New Array);
+	ObjectArrays.Insert(PriceLists, New Array);
+	ObjectArrays.Insert(Stocks, New Array);
+	ObjectArrays.Insert(Outlets, New Array);
+	ObjectArrays.Insert(Agreements, New Array);
+	ObjectArrays.Insert(UpdatedSKUStocks, GetEmptyUpdatedSKUStocks());
+	ObjectArrays.Insert(Prices, New Array);
+	ObjectArrays.Insert(UsersCat, New Array);
+	
+	Return ObjectArrays;
+	
+EndFunction
+
+Function GetEmptyUpdatedSKUStocks()
+	
+	UpdatedSKUStocksVT = New ValueTable;
+	UpdatedSKUStocksVT.Columns.Add("SKU");
+	
+	Return UpdatedSKUStocksVT;
+	
+EndFunction
+
+Function GetPropertyNamesMap()
+	
+	PropertyNamesMap = New Map;
+	PropertyNamesMap.Insert("StandardODATA.Catalog_Номенклатура", GetSKUPropertyNames());
+	PropertyNamesMap.Insert("StandardODATA.Catalog_ЕдиницыИзмерения", GetUnitPropertyNames());
+	PropertyNamesMap.Insert("StandardODATA.Catalog_УпаковкиНоменклатуры", GetPackPropertyNames());
+	PropertyNamesMap.Insert("StandardODATA.Catalog_Склады", GetStockPropertyNames());
+	PropertyNamesMap.Insert("StandardODATA.Catalog_Марки", GetBrandPropertyNames());
+	PropertyNamesMap.Insert(PriceLists, GetPriceListsPropertyNames());
+	PropertyNamesMap.Insert(Outlets, GetOutletsPropertyNames());
+	PropertyNamesMap.Insert("StandardODATA.AccumulationRegister_СвободныеОстатки", GetUpdatedSKUStocksPropertyNames());
+	PropertyNamesMap.Insert(Prices, GetPricesPropertyNames());
+	PropertyNamesMap.Insert(Agreements, GetAgreementsPropertyNames());
+	PropertyNamesMap.Insert(UsersCat, GetUsersPropertyNames());
+	
+	Return PropertyNamesMap;
+	
+EndFunction
+
+Function GetUsersPropertyNames()
+	
+	UsersPropertyNames = New Array;
+	UsersPropertyNames.Add("Ref_Key");
+	UsersPropertyNames.Add("Description");
+	
+	Return UsersPropertyNames;
+	
+EndFunction
+
+Function GetAgreementsPropertyNames()
+	
+	AgreementsPropertyNames = New Array;
+	AgreementsPropertyNames.Add("Ref_Key");
+	AgreementsPropertyNames.Add("ВидЦен_Key");
+	AgreementsPropertyNames.Add("Контрагент_Key");
+	
+	Return AgreementsPropertyNames;
+	
+EndFunction
+
+Function GetOutletsPropertyNames()
+	
+	OutletsPropertyNames = New Array;
+	OutletsPropertyNames.Add("Ref_Key");
+	OutletsPropertyNames.Add("Description");
+	OutletsPropertyNames.Add("КонтактнаяИнформация");
+	OutletsPropertyNames.Add("НаименованиеПолное");
+	OutletsPropertyNames.Add("ИНН");
+	OutletsPropertyNames.Add("КПП");
+	OutletsPropertyNames.Add("ЮридическоеФизическоеЛицо");
+	
+	Return OutletsPropertyNames;
+	
+EndFunction
+
+Function GetPricesPropertyNames()
+	
+	PricesPropertyNames = New Array;
+	PricesPropertyNames.Add("Ref_Key");
+	PricesPropertyNames.Add("ВидЦены_Key");
+	PricesPropertyNames.Add("Цена");
+	PricesPropertyNames.Add("Упаковка_Key");
+	
+	Return PricesPropertyNames;
+	
+EndFunction
+
+Function GetPriceListsPropertyNames()
+	
+	PriceListsPropertyNames = New Array;
+	PriceListsPropertyNames.Add("Ref_Key");
+	PriceListsPropertyNames.Add("Description");
+	
+	Return PriceListsPropertyNames;
+	
+EndFunction
+
+Function GetStockPropertyNames()
+	
+	StocksPropertyNames = New Array;
+	StocksPropertyNames.Add("Ref_Key");
+	StocksPropertyNames.Add("Description");
+	StocksPropertyNames.Add("IsFolder");
+	
+	Return StocksPropertyNames;
+	
+EndFunction
+
+Function GetUnitPropertyNames()
+	
+	UnitsPropertyNames = New Array;
+	UnitsPropertyNames.Add("Ref_Key");
+	UnitsPropertyNames.Add("Description");
+	UnitsPropertyNames.Add("НаименованиеПолное");
+	
+	Return UnitsPropertyNames;
+	
+EndFunction
+
+Function GetPackPropertyNames()
+	
+	PackPropertyNames = New Array;
+	PackPropertyNames.Add("Ref_Key");
+	PackPropertyNames.Add("Description");
+	PackPropertyNames.Add("Owner");
+	PackPropertyNames.Add("Коэффициент");
+	
+	Return PackPropertyNames;
+	
+EndFunction
+
+Function GetSKUPropertyNames()
+	
+	SKUPropertyNames = New Array;
+	SKUPropertyNames.Add("Ref_Key");
+	SKUPropertyNames.Add("Description");
+	SKUPropertyNames.Add("IsFolder");
+	SKUPropertyNames.Add("Parent_Key");
+	SKUPropertyNames.Add("Марка_Key");
+	SKUPropertyNames.Add("НаборУпаковок_Key");
+	SKUPropertyNames.Add("ЕдиницаИзмерения_Key");
+	
+	Return SKUPropertyNames;
+	
+EndFunction
+
+Function GetBrandPropertyNames()
+	
+	BrandPropertyNames = New Array;
+	BrandPropertyNames.Add("Ref_Key");
+	BrandPropertyNames.Add("Description");
+	
+	Return BrandPropertyNames;
+	
+EndFunction
+
+Function GetUpdatedSKUStocksPropertyNames()
+	
+	UpdatedSKUStockNames = New Array;
+	UpdatedSKUStockNames.Add("Номенклатура_Key");
+	
+	Return UpdatedSKUStockNames;
+	
+EndFunction
+
+#EndRegion
+
+#Region WriteObjects
+
+Procedure WriteBrand(Brand)
+	
+	BrandObject = GetCatalogObject("Brands", Brand.Ref_Key);
+	
+	BrandObject.Description = Brand.Description;
+	
+	If Not BrandObject.Ref.Description = Brand.Description Then
+		
+		BrandObject.Write();
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WritePack(Pack)
+	
+	PackRef = Catalogs.UnitsOfMeasure.FindByDescription(Pack.Description);
+	
+	If PackRef = Catalogs.UnitsOfMeasure.EmptyRef() Then
+		
+		PackObject = Catalogs.UnitsOfMeasure.CreateItem();
+		
+	Else
+		
+		PackObject = PackRef.GetObject();
+		
+		Query = New Query(
+		"SELECT
+		|	SKUPacking.Ref
+		|FROM
+		|	Catalog.SKU.Packing AS SKUPacking
+		|WHERE
+		|	SKUPacking.Pack = &Pack");
+		Query.SetParameter("Pack", PackRef);
+		Result = Query.Execute().Unload();
+		
+		For Each SKURow In Result Do
+			
+			SKUObject = SKURow.Ref.GetObject();
+			FoundRow = SKUObject.Packing.Find(PackObject.Ref);
+			FoundRow.Multiplier = Pack.Коэффициент;
+			
+			If Not Pack.Коэффициент = FoundRow.Multiplier Then
+				
+				SKUObject.Write();
+				
+			EndIf;
+			
+		EndDo;
+		
+	EndIf;
+	
+	PackObject.Description = Pack.Description;
+	PackObject.FullDescription = Pack.Description;
+	
+	If Not Pack.Description = PackObject.Ref.Description Then
+		
+		PackObject.Write();
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WriteStocks(Stock)
+	
+	StockObject = GetCatalogObject("Stock", Stock.Ref_Key);
+	
+	StockObject.Description = Stock.Description;
+	
+	If Not Stock.Description = StockObject.Ref.Description Then
+		
+		StockObject.Write();
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WriteUnit(Unit)
+	
+	UnitObject = GetCatalogObject("UnitsOfMeasure", Unit.Ref_Key);
+	
+	UnitObject.Description = Unit.Description;
+	UnitObject.FullDescription = Unit.НаименованиеПолное;
+	
+	If Not Unit.Description = UnitObject.Ref.Description Then
+		
+		UnitObject.Write();
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WriteSKUGroups(SKUGroupsTree)
+	
+	For Each Row In SKUGroupsTree.Rows Do
+		
+		ProcessSKUGroupsTree(Row);
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure ProcessSKUGroupsTree(SKUGroupsTreeRow, Parent = False)
+	
+	SKUGroupRef = Catalogs.SKUGroup.GetRef(New UUID(SKUGroupsTreeRow.Ref_Key));
+	SKUGroupObject = SKUGroupRef.GetObject();
+	
+	If SKUGroupObject = Undefined Then
+		
+		If SKUGroupsTreeRow.Rows.Count() = 0 Then
+			
+			SKUGroupObject = Catalogs.SKUGroup.CreateItem();
+			
+		Else
+			
+			SKUGroupObject = Catalogs.SKUGroup.CreateFolder();
+			
+		EndIf;
+		
+		SKUGroupObject.SetNewObjectRef(SKUGroupRef);
+		
+	EndIf;
+	
+	SKUGroupObject.Description = SKUGroupsTreeRow.Description;
+	NewParent = ?(Parent, Catalogs.SKUGroup.GetRef(New UUID(SKUGroupsTreeRow.Parent_Key)), Catalogs.SKUGroup.EmptyRef());
+	SKUGroupObject.Parent = NewParent;
+	
+	If Not (SKUGroupObject.Ref.Description = SKUGroupsTreeRow.Description 
+		And SKUGroupObject.Ref.Parent = NewParent) Then
+		
+		SKUGroupObject.Write();
+		
+	EndIf;
+	
+	For Each Row In SKUGroupsTreeRow.Rows Do
+		
+		ProcessSKUGroupsTree(Row, True);
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure WriteSKU(SKUObjectStructure, SKUGroupsTree, PacksMap)
+	
+	SKUGroupsRows = SKUGroupsTree.Rows.FindRows(New Structure("Ref_Key", SKUObjectStructure.Parent_Key));
+	
+	SKUGroupRef = Catalogs.SKUGroup.GetRef(New UUID(SKUObjectStructure.Parent_Key));
+	SKUGroupObject = SKUGroupRef.GetObject();
+	
+	If Not SKUGroupObject = Undefined And Not SKUGroupObject.IsFolder Then
+		
+		NeedsWrite = False;
+		
+		SKUObject = GetCatalogObject("SKU", SKUObjectStructure.Ref_Key);
+		
+		SKUObject.Description = SKUObjectStructure.Description;
+		SKUObject.Owner = SKUGroupRef;
+		
+		BrandRef = Catalogs.Brands.GetRef(New UUID(SKUObjectStructure.Марка_Key));
+		NewBrand = ?(BrandRef = Catalogs.Brands.EmptyRef(), Catalogs.Brands.DefaultBrand, BrandRef);
+		SKUObject.Brand = NewBrand;
+		
+		UnitRef = GetUnitRef(SKUObjectStructure.ЕдиницаИзмерения_Key);
+		
+		SKUObject.BaseUnit = UnitRef;
+		
+		FoundPacks = PacksMap.Get(SKUObjectStructure.НаборУпаковок_Key);
+		
+		If Not FoundPacks = Undefined Then
+		
+			For Each Pack In FoundPacks Do
+				
+				NewRow = SKUObject.Packing.Add();
+				NewRow.Pack = Pack.Pack_Ref;
+				
+				If Not NewRow.Multiplier = Pack.Коэффициент Then
+					
+					NewRow.Multiplier = Pack.Коэффициент;
+					NeedsWrite = True;
+					
+				EndIf;
+				
+			EndDo;
+			
+		EndIf;
+		
+		If Not (SKUObject.Ref.Description = SKUObjectStructure.Description
+			And  SKUObject.Ref.Owner = SKUGroupRef
+			And SKUObject.Ref.BaseUnit= UnitRef
+			And SKUObject.Ref.Brand = NewBrand
+			And Not NeedsWrite) Then
+				
+				SKUObject.Write();
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WriteSKUStocks(ChangedSKUStock, SKUStocksVT)
+	
+	SKURef = Catalogs.SKU.GetRef(New UUID(ChangedSKUStock));
+	SKUObject = SKURef.GetObject();
+	
+	If Not SKUObject = Undefined Then
+		
+		NeedsWrite = False;
+		
+		FilterParameters = New Structure;
+		FilterParameters.Insert("Номенклатура_Key", ChangedSKUStock);
+		FoundRows = SKUStocksVT.FindRows(FilterParameters);
+		
+		For Each FoundRow In FoundRows Do
+			
+			StockRef = Catalogs.Stock.GetRef(New UUID(FoundRow.Склад_Key));
+			StockObject = StockRef.GetObject();
+			
+			If Not StockObject = Undefined Then
+				
+				ExistingRow = SKUObject.Stocks.Find(StockRef);
+				NewRow = ?(ExistingRow = Undefined, SKUObject.Stocks.Add(), ExistingRow);
+				
+				If Not NewRow.Stock = StockRef Then
+					
+					NeedsWrite = True;
+					NewRow.Stock = StockRef;
+					
+				EndIf;
+				
+				If Not NewRow.StockValue = FoundRow.ВНаличииBalance Then
+					
+					NeedsWrite = True;
+					NewRow.StockValue = FoundRow.ВНаличииBalance;
+					
+				EndIf;
+				
+				
+			EndIf;
+			
+		EndDo;
+		
+		If NeedsWrite Then
+			
+			SKUObject.Write();
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure WritePrices(ObjectArrays)
+	
+	PricesVT = New ValueTable;
+	PricesVT.Columns.Add("Period");
+	PricesVT.Columns.Add("ВидЦены_Key");
+	PricesVT.Columns.Add("Номенклатура_Key");
+	PricesVT.Columns.Add("Цена");
+	PricesVT.Columns.Add("Упаковка_Key");
+	
+	For Each PriceStructure In ObjectArrays.Get(Prices) Do
+		
+		NewRow = PricesVT.Add();
+		FillPropertyValues(NewRow, PriceStructure, , "Цена");
+		NewRow.Цена = Number(PriceStructure.Цена);
+		
+	EndDo;
+	
+	PricesVT.Sort("ВидЦены_Key, Номенклатура_Key Возр, Period Возр");
+	
+	For Each Price In PricesVT Do
+		
+		PriceListRef = Documents.PriceList.GetRef(New UUID(Price.ВидЦены_Key));
+		
+		SKURef = Catalogs.SKU.GetRef(New UUID(Price.Номенклатура_Key));
+		PackRef = Catalogs.UnitsOfMeasure.GetRef(New UUID(Price.Упаковка_Key));
+		PackingRow = SKURef.Packing.Find(PackRef);
+		Factor = ?(PackingRow = Undefined, 1, PackingRow.Multiplier);
+		
+		Try
+			
+			SKUObject = SKURef.GetObject();
+			
+		Except
+			
+			SKUObject = Undefined;
+			
+		EndTry;
+		
+		If Not SKUObject = Undefined Then
+			
+			RecordManager = InformationRegisters.Prices.CreateRecordManager();
+			RecordManager.Period = PriceListRef.Date;
+			RecordManager.PriceList = PriceListRef;
+			RecordManager.SKU = SKURef;
+			RecordManager.Price = Price.Цена / Factor;
+			
+			Query = New Query(
+			"SELECT
+			|	Prices.Price
+			|FROM
+			|	InformationRegister.Prices AS Prices
+			|WHERE
+			|	Prices.PriceList = &PriceList
+			|	AND Prices.SKU = &SKU");
+			Query.SetParameter("PriceList", PriceListRef);
+			Query.SetParameter("SKU", SKURef);
+			Result = Query.Execute().Unload();
+			
+			IsNewPrice = Result.Count() = 0;
+			
+			If IsNewPrice Then
+				
+				RecordManager.Write();
+				
+			Else
+				
+				If Not Result[0].Price = RecordManager.Price Then
+					
+					RecordManager.Write();
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndDo;
+	
+EndProcedure
+
+Procedure WriteOutlets(ObjectArrays, TerritoryObject)
+	
+	TerritoryRef = TerritoryObject.Ref;
+	
+	ClassSelection = Catalogs.OutletClass.Select();
+	
+	If ClassSelection.Next() Then
+		
+		ClassRef = ClassSelection.Ref;
+		
+	EndIf;
+	
+	TypeSelection = Catalogs.OutletType.Select();
+	
+	If TypeSelection.Next() Then
+		
+		TypeRef = TypeSelection.Ref;
+		
+	EndIf;
+	
+	RegionSelection = Catalogs.Region.Select();
+	
+	If RegionSelection.Next() Then
+		
+		RegionRef = RegionSelection.Ref;
+		
+	EndIf;
+	
+	For Each OutletStructure In ObjectArrays.Get(Outlets) Do
+		
+		If Not OutletStructure.КонтактнаяИнформация = "" Then
+			
+			ContractorObject = GetCatalogObject("Contractors", OutletStructure.Ref_Key);
+			ContractorObject.Description = OutletStructure.Description;
+			ContractorObject.LegalName = OutletStructure.НаименованиеПолное;
+			ContractorObject.INN = OutletStructure.ИНН;
+			ContractorObject.KPP = OutletStructure.КПП;
+			NewOwnerShipType = ?(OutletStructure.ЮридическоеФизическоеЛицо = "ЮридическоеЛицо", Enums.OwnershipType.OOO, Enums.OwnershipType.IP);
+			ContractorObject.OwnershipType = NewOwnerShipType;
+			
+			NeedsWrite = False;
+			
+			If ContractorObject.Regions.Count() = 0 Then
+				
+				RegionRow = ContractorObject.Regions.Add();
+				RegionRow.Region = RegionRef;
+				NeedsWrite = True;
+				
+			EndIf;
+			
+			If ContractorObject.Territories.Count() = 0 Then
+				
+				TerritoryRow = ContractorObject.Territories.Add();
+				TerritoryRow.Territory = TerritoryRef;
+				NeedsWrite = True;
+				
+			EndIf;
+			
+			If Not (ContractorObject.Ref.Description = OutletStructure.Description
+				And ContractorObject.Ref.LegalName = OutletStructure.НаименованиеПолное
+				And ContractorObject.Ref.INN = OutletStructure.ИНН
+				And ContractorObject.Ref.KPP = OutletStructure.КПП
+				And ContractorObject.Ref.OwnershipType = NewOwnershipType
+				And Not NeedsWrite) Then
+				
+				ContractorObject.Write();
+				
+			EndIf;
+			
+			OutletObject = GetCatalogObject("Outlet", OutletStructure.Ref_Key);
+			OutletObject.Description = OutletStructure.Description;
+			
+			If OutletObject.Ref.Class = Catalogs.OutletClass.EmptyRef() Then
+				
+				OutletObject.Class = ClassRef;
+				
+			EndIf;
+			
+			If OutletObject.Ref.Type = Catalogs.OutletType.EmptyRef() Then
+				
+				OutletObject.Type = TypeRef;
+				
+			EndIf;
+			
+			If OutletObject.Ref.OutletStatus = Enums.OutletStatus.EmptyRef() Then
+				
+				OutletObject.OutletStatus = Enums.OutletStatus.Active;
+				
+			EndIf;
+			
+			OutletObject.Address = OutletStructure.КонтактнаяИнформация;
+			
+			If OutletObject.ContractorsList.Count() = 0 Then
+				
+				ContractorRow = OutletObject.ContractorsList.Add();
+				ContractorRow.Contractor = ContractorObject.Ref;
+				ContractorRow.Default = True;
+				
+			EndIf;
+			
+			If Not (OutletObject.Ref.Description = OutletStructure.Description
+				And OutletObject.Ref.Address = OutletStructure.КонтактнаяИнформация) Then
+				
+				OutletObject.Write();
+				
+			EndIf;
+			
+			If TerritoryObject.Outlets.Find(OutletObject.Ref) = Undefined Then
+				
+				OutletInTerritoryRow = TerritoryObject.Outlets.Add();
+				OutletInTerritoryRow.Outlet = OutletObject.Ref;
+				
+			EndIf;
+			
+		EndIf;
+		
+	EndDo;
+	
+	TerritoryObject.Write();
+	
+EndProcedure
+
+Procedure WriteUsers(ObjectArrays, TerritoryObject)
+	
+	UsersObjectsArray = ObjectArrays.Get(UsersCat);
+	
+	For Each UserStructure In UsersObjectsArray Do
+		
+		UserObj = GetCatalogObject("User", UserStructure.Ref_Key);
+		
+		UserObj.Description = UserStructure.Description;
+		
+		If UserObj.RoleOfUser = Catalogs.RolesOfUsers.EmptyRef() Then
+			
+			UserObj.RoleOfUser = Catalogs.RolesOfUsers.SR;
+			
+		EndIf;
+		
+		If Not ValueIsFilled(UserObj.Role) Then
+			
+			UserObj.Role = "SR";
+			
+		EndIf;
+		
+		If Not ValueIsFilled(UserObj.InterfaceLanguage) Then
+			
+			UserObj.InterfaceLanguage = "Русский";
+			
+		EndIf;
+		
+		If Not UserObj.Ref.Description = UserStructure.Description Then
+			
+			UserObj.Write();
+			
+		EndIf;
+		
+		If TerritoryObject.SRs.Find(UserObj.Ref) = Undefined Then
+			
+			NewUserRow = TerritoryObject.SRs.Add();
+			NewUserRow.SR = UserObj.Ref;
+			TerritoryObject.Write();
+			
+		EndIf;
+		
+	EndDo;
+
+EndProcedure
+
+Procedure WritePriceListsToOutlets(ObjectArrays)
+	
+	Var AgreementElement, AgreementRow, AgreementsArray, AgreementsValueTable, NewPriceListRow, OutletObj, OutletRef, PriceList, PriceListRef, PriceListsArray, UpdatedOutlet, UpdatedOutlets;
+	
+	UpdatedOutlets = ObjectArrays.Get("UpdatedOutletsPricesArray");
+	AgreementsValueTable = New ValueTable;
+	AgreementsValueTable.Columns.Add("Контрагент_Key");
+	AgreementsValueTable.Columns.Add("ВидЦен_Key");
+	
+	AgreementsArray = ObjectArrays.Get(Agreements);
+	
+	For Each AgreementElement In AgreementsArray Do
+		
+		AgreementRow = AgreementsValueTable.Add();
+		FillPropertyValues(AgreementRow, AgreementElement);
+		
+	EndDo;
+	
+	For Each UpdatedOutlet In UpdatedOutlets Do
+		
+		OutletRef = Catalogs.Outlet.GetRef(New UUID(UpdatedOutlet));
+		OutletObj = OutletRef.GetObject();
+		
+		If Not OutletObj = Undefined Then
+			
+			PriceListsArray = AgreementsValueTable.FindRows(New Structure("Контрагент_Key", UpdatedOutlet));
+			
+			If Not PriceListsArray.Count() = 0 Then
+				
+				OutletObj.Prices.Clear();
+				
+				For Each PriceList In PriceListsArray Do
+					
+					PriceListRef = Documents.PriceList.GetRef(New UUID(PriceList.ВидЦен_Key));
+					NewPriceListRow = OutletObj.Prices.Add();
+					NewPriceListRow.PriceList = PriceListRef;
+					
+				EndDo;
+				
+				
+				OutletObj.Write();
+				
+			EndIf;
+			
+			
+		EndIf;
+		
+	EndDo;
+
+EndProcedure
+
+Procedure WritePriceList(PriceListStructure)
+	
+	PriceListObject = GetDocumentObject("PriceList", PriceListStructure.Ref_Key);
+	PriceListObject.Description = PriceListStructure.Description;
+	
+	If Not PriceListObject.Ref.Description = PriceListStructure.Description Then
+		
+		PriceListObject.Write();
+		
+	EndIf;
+
+EndProcedure
+
+Function GetSKUGroupsTree(SKUGroupsArray)
+	
+	ParentsGUIDs = New Array;
+	ParentsGUIDs.Add("00000000-0000-0000-0000-000000000000");
+	
+	SKUGroupsCopy = CopyArray(SKUGroupsArray);
+	
+	SKUGroupsTree = New ValueTree;
+	SKUGroupsTree.Columns.Add("Ref_Key");
+	SKUGroupsTree.Columns.Add("Parent_Key");
+	SKUGroupsTree.Columns.Add("Description");
+	
+	While SKUGroupsCopy.Count() Do
+		
+		For Each Element In SKUGroupsCopy Do
+			
+			If Not ParentsGUIDs.Find(Element.Parent_Key) = Undefined Then
+				
+				ParentsGUIDs.Add(Element.Ref_Key);
+				FoundIndex = SKUGroupsArray.Find(Element);
+				
+				If FoundIndex <> Undefined Then
+					
+					SKUGroupsArray.Delete(FoundIndex);
+					
+				EndIf;
+				
+				Parents = SKUGroupsTree.Rows.FindRows(New Structure("Ref_Key", Element.Parent_Key), True);
+				
+				If Parents.Count() = 0 Then
+					
+					NewRow = SKUGroupsTree.Rows.Add();
+					
+				Else
+					
+					NewRow = Parents[0].Rows.Add();
+					
+				EndIf;
+				
+				FillPropertyValues(NewRow, Element);
+				
+			EndIf;
+			
+		EndDo;
+		
+		SKUGroupsCopy = CopyArray(SKUGroupsArray);
+		
+	EndDo;
+	Return SKUGroupsTree;
+
+EndFunction
+
+Function GetPacks()
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	Map = New Map;
+	
+	If Not Connection = Undefined Then
+	
+		Request = New HTTPRequest("/" + ThisObject.PublicationName + "/odata/standard.odata/Catalog_УпаковкиНоменклатуры");
+		Result = Connection.Get(Request);
+		Body = Result.GetBodyAsString();
+		
+		PacksPropertyNames = New Array;
+		PacksPropertyNames.Add("Ref_Key");
+		PacksPropertyNames.Add("Owner");
+		PacksPropertyNames.Add("Owner_Type");
+		PacksPropertyNames.Add("Description");
+		PacksPropertyNames.Add("Коэффициент");
+		
+		XMLReader = New XMLReader;
+		XMLReader.SetString(Body);
+		
+		DOMBuilder = New DOMBuilder;
+		Doc = DOMBuilder.Read(XMLReader);
+		
+		Entries = Doc.GetElementByTagName("entry");
+		
+		PacksArray = New Array;
+		
+		For Each Entry In Entries Do
+			
+			PropertyNodes = Entry.GetElementByTagName("properties");
+			
+			Structure = New Structure;
+			
+			For Each PropertyNode In PropertyNodes Do
+				
+				For Each Property In PropertyNode.ChildNodes Do
+					
+					If Not PacksPropertyNames.Find(Property.LocalName) = Undefined Then
+						
+						Structure.Insert(Property.LocalName, Property.TextContent);
+						
+					EndIf;
+					
+				EndDo;
+				
+			EndDo;
+			
+			PacksArray.Add(Structure);
+			
+		EndDo;
+		
+		For Each Pack In PacksArray Do
+			
+			FoundPack = Catalogs.UnitsOfMeasure.FindByDescription(Pack.Description, True);
+			
+			If FoundPack = Catalogs.UnitsOfMeasure.EmptyRef() Then
+				
+				PackObject = Catalogs.UnitsOfMeasure.CreateItem();
+				PackObject.Description = Pack.Description;
+				PackObject.FullDescription = Pack.Description;
+				
+				If Not PackObject.Description = Pack.Description Then
+					
+					PackObject.Write();
+					FoundPack = PackObject.Ref;
+					
+				EndIf;
+				
+			EndIf;
+			
+			Pack.Insert("Pack_Ref", FoundPack);
+			
+		EndDo;
+		
+		For Each Pack In PacksArray Do
+			
+			OwnerPacks = Map.Get(Pack.Owner);
+			
+			If OwnerPacks = Undefined Then
+				
+				OwnerPacks = New Array;
+				
+			EndIf;
+			
+			OwnerPacks.Add(Pack);
+			
+			Map.Insert(Pack.Owner, OwnerPacks);
+			
+		EndDo;
+		
+	EndIf;
+	
+	Return Map;
+	
+EndFunction
+
+Function GetUnitRef(UUID)
+	
+	UnitRef = Catalogs.UnitsOfMeasure.GetRef(New UUID(UUID));
+	
+	Try
+		
+		UnitRef.GetObject();
+		
+	Except
+		
+		Selection = Catalogs.UnitsOfMeasure.Select();
+		
+		If Selection.Next() Then
+			
+			UnitRef = Selection.Ref;
+			
+		EndIf;
+		
+	EndTry;
+	Return UnitRef;
+
+EndFunction
+
+Function GetCatalogObject(CatalogName, UUID)
+	
+	Ref = Catalogs[CatalogName].GetRef(New UUID(UUID));
+	Obj = Ref.GetObject();
+	
+	If Obj = Undefined Then
+		
+		Obj = Catalogs[CatalogName].CreateItem();
+		Obj.SetNewObjectRef(Ref);
+		
+	EndIf;
+	
+	Return Obj;
+	
+EndFunction
+
+Function GetDocumentObject(DocumentName, UUID)
+	
+	Ref = Documents[DocumentName].GetRef(New UUID(UUID));
+	Obj = Ref.GetObject();
+	
+	If Obj = Undefined Then
+		
+		Obj = Documents[DocumentName].CreateDocument();
+		Obj.SetNewObjectRef(Ref);
+		Obj.Date = CurrentDate();
+		
+	EndIf;
+	
+	Return Obj;
+	
+EndFunction
+
+#EndRegion
+
+#Region SendObjects
+
+Procedure SendPatchOrder(Connection, Headers, OrderSelection, ExternalID)
+	
+	Path = GetTempFileName(".xml");
+	
+	WriteOrder(OrderSelection, Path);
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/Document_ЗаказКлиента(guid'" + String(ExternalID) + "')", Headers);
+	Request.SetBodyFileName(Path);
+	Result = Connection.Patch(Request);
+	
+EndProcedure
+
+Procedure SendPatchReturn(Connection, Headers, ReturnSelection, ExternalID)
+	
+	Path = GetTempFileName(".xml");
+	
+	WriteReturn(ReturnSelection, Path);
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/Document_ВозвратТоваровОтКлиента", Headers);
+	Request.SetBodyFileName(Path);
+	Result = Connection.Patch(Request);
+	
+EndProcedure
+
+Procedure SendPostOrder(Connection, Headers, OrderSelection)
+	
+	Path = GetTempFileName(".xml");
+	
+	WriteOrder(OrderSelection, Path);
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/Document_ЗаказКлиента", Headers);
+	Request.SetBodyFileName(Path);
+	Result = Connection.Post(Request);
+	
+	If Result.StatusCode = 201 Then
+		
+		Body = Result.GetBodyAsString();
+		
+		XMLReader = New XMLReader;
+		XMLReader.SetString(Body);
+		
+		DOMBuilder = New DOMBuilder;
+		Doc = DOMBuilder.Read(XMLReader);
+		
+		IdNodes = Doc.GetElementByTagName("Ref_Key");
+		
+		If IdNodes.Count() > 0 Then
+			
+			IdNode = IdNodes[0];
+			Id = New UUID(IdNode.TextContent);
+			
+			RecordManager = InformationRegisters.bitmobile_ВнешниеИдентификаторыОбъектов.CreateRecordManager();
+			RecordManager.Object = OrderSelection.Ref;
+			RecordManager.ExternalID = Id;
+			RecordManager.Write();
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+Procedure SendPostReturn(Connection, Headers, ReturnSelection)
+	
+	Path = GetTempFileName(".xml");
+	
+	WriteReturn(ReturnSelection, Path);
+	
+	Request = New HTTPRequest(ThisObject.PublicationName + "/odata/standard.odata/Document_ВозвратТоваровОтКлиента", Headers);
+	Request.SetBodyFileName(Path);
+	Result = Connection.Post(Request);
+	
+	If Result.StatusCode = 201 Then
+		
+		Body = Result.GetBodyAsString();
+		
+		XMLReader = New XMLReader;
+		XMLReader.SetString(Body);
+		
+		DOMBuilder = New DOMBuilder;
+		Doc = DOMBuilder.Read(XMLReader);
+		
+		IdNodes = Doc.GetElementByTagName("Ref_Key");
+		
+		If IdNodes.Count() > 0 Then
+			
+			IdNode = IdNodes[0];
+			Id = New UUID(IdNode.TextContent);
+			
+			RecordManager = InformationRegisters.bitmobile_ВнешниеИдентификаторыОбъектов.CreateRecordManager();
+			RecordManager.Object = ReturnSelection.Ref;
+			RecordManager.ExternalID = Id;
+			RecordManager.Write();
+			
+		EndIf;
+		
+	EndIf;
+
+EndProcedure
+
+Procedure WriteReturn(ReturnSelection, Path)
+	
+	UUID = ReturnSelection.Ref.UUID();
+	Date = ReturnSelection.Date;
+	ContractorUUID = ReturnSelection.Outlet.UUID();
+	ResponsibleUUID = ReturnSelection.SR.UUID();
+	ReturnDate = ReturnSelection.ReturnDate;
+	StockUUID = ReturnSelection.Stock.UUID();
+	
+	XMLWriter = New XMLWriter;
+	XMLWriter.OpenFile(Path);
+	XMLWriter.WriteXMLDeclaration();
+	XMLWriter.WriteStartElement("entry");
+	
+	XMLWriter.WriteStartElement("category");
+	XMLWriter.WriteAttribute("term", "StandardODATA.Document_ВозвратТоваровОтКлиента");
+	XMLWriter.WriteAttribute("scheme", "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme");
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("updated");
+	XMLWriter.WriteText(Format(Date, "DF=yyyy-MM-ddTHH:mm:ss"));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("content");
+	XMLWriter.WriteAttribute("type", "application/xml");
+	
+	XMLWriter.WriteStartElement("m:properties");
+	XMLWriter.WriteNamespaceMapping("d", "http://schemas.microsoft.com/ado/2007/08/dataservices");
+	XMLWriter.WriteNamespaceMapping("m", "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+	
+	XMLWriter.WriteStartElement("d:Date");
+	XMLWriter.WriteText(Format(Date, "DF=yyyy-MM-ddTHH:mm:ss"));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Контрагент_Key");
+	XMLWriter.WriteText(String(ContractorUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Склад_Key");
+	XMLWriter.WriteText(String(StockUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Товары");
+	XMLWriter.WriteAttribute("m:type", "Collection(StandardODATA.Document_ВозвратТоваровОтКлиента_Товары_RowType)");
+	
+	For Each Row In ReturnSelection.SKUs Do
+		
+		If Row.Units = Row.SKU.BaseUnit Then
+			Multiplier = 1;
+		Else
+			If Row.SKU.Packing.Find(Row.Units) = Undefined Then
+				Multiplier = 1;
+			Else
+				Multiplier = Row.SKU.Packing.Find(Row.Units).Multiplier;
+			EndIf;
+		EndIf;
+		
+		XMLWriter.WriteStartElement("d:element");
+		XMLWriter.WriteAttribute("m:type", "StandardODATA.Document_ВозватТоваровОтКлиента_Товары_RowType");
+		
+		XMLWriter.WriteStartElement("d:LineNumber");
+		XMLWriter.WriteText(Format(Row.LineNumber, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Номенклатура_Key");
+		XMLWriter.WriteText(String(Row.SKU.UUID()));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Количество");
+		XMLWriter.WriteText(Format(Row.Qty * Multiplier, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:КоличествоУпаковок");
+		XMLWriter.WriteText(Format(Row.Qty, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Цена");
+		XMLWriter.WriteText(Format(Row.Price, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Сумма");
+		XMLWriter.WriteText(Format(Row.Amount, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		// element
+		XMLWriter.WriteEndElement();
+		
+	EndDo;
+	
+	// Товары
+	XMLWriter.WriteEndElement();
+	
+	// properties
+	XMLWriter.WriteEndElement();
+	
+	// content
+	XMLWriter.WriteEndElement();
+	
+	// entry
+	XMLWriter.WriteEndElement();
+	XMLWriter.Close();
+	
+EndProcedure
+
+Procedure WriteOrder(OrderSelection, Path)
+	
+	UUID = OrderSelection.Ref.UUID();
+	Date = OrderSelection.Date;
+	ContractorUUID = OrderSelection.Outlet.UUID();
+	ResponsibleUUID = OrderSelection.SR.UUID();
+	DeliveryDate = OrderSelection.DeliveryDate;
+	StockUUID = OrderSelection.Stock.UUID();
+	
+	XMLWriter = New XMLWriter;
+	XMLWriter.OpenFile(Path);
+	XMLWriter.WriteXMLDeclaration();
+	XMLWriter.WriteStartElement("entry");
+	
+	XMLWriter.WriteStartElement("category");
+	XMLWriter.WriteAttribute("term", "StandardODATA.Document_ЗаказКлиента");
+	XMLWriter.WriteAttribute("scheme", "http://schemas.microsoft.com/ado/2007/08/dataservices/scheme");
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("updated");
+	XMLWriter.WriteText(Format(Date, "DF=yyyy-MM-ddTHH:mm:ss"));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("content");
+	XMLWriter.WriteAttribute("type", "application/xml");
+	
+	XMLWriter.WriteStartElement("m:properties");
+	XMLWriter.WriteNamespaceMapping("d", "http://schemas.microsoft.com/ado/2007/08/dataservices");
+	XMLWriter.WriteNamespaceMapping("m", "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+	
+	XMLWriter.WriteStartElement("d:Date");
+	XMLWriter.WriteText(Format(Date, "DF=yyyy-MM-ddTHH:mm:ss"));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Контрагент_Key");
+	XMLWriter.WriteText(String(ContractorUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Ответственный_Key");
+	XMLWriter.WriteText(String(ResponsibleUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:ЖелаемаяДатаОтгрузки");
+	XMLWriter.WriteText(Format(DeliveryDate, "DF=yyyy-MM-ddTHH:mm:ss"));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Склад_Key");
+	XMLWriter.WriteText(String(StockUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Автор");
+	XMLWriter.WriteText(String(ResponsibleUUID));
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Автор_Type");
+	XMLWriter.WriteText("StandardODATA.Catalog_Пользователи");
+	XMLWriter.WriteEndElement();
+	
+	XMLWriter.WriteStartElement("d:Товары");
+	XMLWriter.WriteAttribute("m:type", "Collection(StandardODATA.Document_ЗаказКлиента_Товары_RowType)");
+	
+	For Each Row In OrderSelection.SKUs Do
+		
+		If Row.Units = Row.SKU.BaseUnit Then
+			Multiplier = 1;
+		Else
+			If Row.SKU.Packing.Find(Row.Units) = Undefined Then
+				Multiplier = 1;
+			Else
+				Multiplier = Row.SKU.Packing.Find(Row.Units).Multiplier;
+			EndIf;
+		EndIf;
+		
+		XMLWriter.WriteStartElement("d:element");
+		XMLWriter.WriteAttribute("m:type", "StandardODATA.Document_ЗаказКлиента_Товары_RowType");
+		
+		XMLWriter.WriteStartElement("d:LineNumber");
+		XMLWriter.WriteText(Format(Row.LineNumber, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Номенклатура_Key");
+		XMLWriter.WriteText(String(Row.SKU.UUID()));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Количество");
+		XMLWriter.WriteText(Format(Row.Qty * Multiplier, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:КоличествоУпаковок");
+		XMLWriter.WriteText(Format(Row.Qty, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Цена");
+		XMLWriter.WriteText(Format(Row.Price, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:ПроцентРучнойСкидки");
+		XMLWriter.WriteText(Format(-Row.Discount, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:СуммаРучнойСкидки");
+		XMLWriter.WriteText(Format(Row.Price * Row.Qty * -Row.Discount / 100, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		XMLWriter.WriteStartElement("d:Сумма");
+		XMLWriter.WriteText(Format(Row.Amount, "NG=0"));
+		XMLWriter.WriteEndElement();
+		
+		
+		// element
+		XMLWriter.WriteEndElement();
+		
+	EndDo;
+	
+	// Товары
+	XMLWriter.WriteEndElement();
+	
+	// properties
+	XMLWriter.WriteEndElement();
+	
+	// content
+	XMLWriter.WriteEndElement();
+	
+	// entry
+	XMLWriter.WriteEndElement();
+	XMLWriter.Close();
+
+EndProcedure
+
+#EndRegion
+
+#Region Helpers
+
+Function CopyArray(ArrayFrom) 
+	
+	ArrayTo = New Array;
+	
+	For Each Element In ArrayFrom Do
+		
+		ArrayTo.Add(Element);
+		
+	EndDo;
+	
+	Return ArrayTo;
+	
+EndFunction
+
+#EndRegion
+
+#Region Init
+
+AccumulationRegister = "StandardODATA.AccumulationRegister";
+InformationRegister = "StandardODATA.InformationRegister";
+Catalog = "StandardODATA.Catalog";
+
+Brands = Catalog + "_Марки";
+PriceLists = Catalog + "_ВидыЦен";
+SKUs = Catalog + "_Номенклатура";
+SKUGroups = Catalog + "_Номенклатура" + "Folder";
+Packs = Catalog + "_УпаковкиНоменклатуры";
+Units = Catalog + "_ЕдиницыИзмерения";
+Stocks = Catalog + "_Склады";
+Outlets = Catalog + "_Контрагенты";
+Prices = InformationRegister + "_ЦеныНоменклатуры";
+Agreements = Catalog + "_СоглашенияСКлиентами";
+UpdatedSKUStocks = AccumulationRegister + "_СвободныеОстатки";
+UsersCat = Catalog + "_Пользователи";
+
+EmptyRefString = "00000000-0000-0000-0000-000000000000";
+
+#EndRegion

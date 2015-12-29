@@ -1,0 +1,358 @@
+﻿
+#Region CommonProceduresAndFunctions
+
+&AtServer
+Procedure OnCreateAtServer(Cancel, StandardProcessing)
+	
+	FillPropertyValues(Object, DataProcessors.bitmobile_DataExchanger.GetSettings());
+	
+EndProcedure
+
+&AtServer
+Procedure SaveSettingsServer()
+	
+	SettingsStructure = DataProcessors.bitmobile_DataExchanger.GetEmptySettingsStructure();
+	
+	FillPropertyValues(SettingsStructure, Object);
+	
+	DataProcessors.bitmobile_DataExchanger.SetSettings(SettingsStructure);
+	
+EndProcedure
+
+&AtServer
+Procedure CheckConnectionServer()
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	If Not Connection = Undefined Then
+		
+		Try
+		
+			Request = New HttpRequest(Object.PublicationName + "/odata/standard.odata");
+			Result = Connection.Get(Request);
+			
+			Object.StatusCode = Result.StatusCode;
+			
+			If Object.StatusCode = 200 Then
+				
+				ThisForm.ConnectionStatus = NStr("en = 'Connection success'; ru = 'Соединение успешно'");
+				
+			Else
+				
+				ThisForm.ConnectionStatus = NStr("en = 'Connection failed'; ru = 'Ошибка соединения'");
+				
+			EndIf;
+			
+		Except
+			
+			Object.StatusCode = 1;
+			
+		EndTry;
+		
+	Else
+		
+		Object.StatusCode = 0;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure SendSuccessMessageServer()
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	If Not Connection = Undefined Then
+		
+		Request = New HTTPRequest(Object.PublicationName + "/odata/standard.odata/NotifyChangesReceived?DataExchangePoint='" + Object.CurrentExchangePlanNodeId + "'&MessageNo=" + Object.MessageNo);
+		
+		Result = Connection.Post(Request);
+		
+		If Result.StatusCode = 200 Then
+			
+			Object.MessageNo = Object.MessageNo + 1;
+			SaveSettingsServer();
+			
+		EndIf;
+		
+	EndIf;
+
+EndProcedure
+
+&AtServer
+Procedure GetExchangePlanNodesAtServer()
+	
+	ThisForm.Items.ExchangePlanError.Title = "";
+	
+	Connection = DataProcessors.bitmobile_DataExchanger.GetConnection();
+	
+	If Not Connection = Undefined Then
+		
+		Request = New HTTPRequest(Object.PublicationName + "/odata/standard.odata/ExchangePlan_" + Object.ExchangePlanName);
+		Result = Connection.Get(Request);
+		
+		If Result.StatusCode = 200 Then
+			
+			Body = Result.GetBodyAsString();
+			
+			XMLReader = New XMLReader;
+			XMLReader.SetString(Body);
+			
+			Entries = New Array;
+			
+			While XMLReader.Read() Do
+				
+				If XMLReader.NodeType = XMLNodeType.StartElement AND XMLReader.Name = "entry" Then
+					
+					Entry = New Map;
+					ReadEntry(XMLReader, Entry);
+					Entries.Add(Entry);
+					
+				EndIf;
+				
+			EndDo;
+			
+			For Each Entry in Entries Do
+				
+				ExchangePlanRow = ExchangePlansVT.Add();
+				ExchangePlanRow.Id = Entry["id"];
+				ExchangePlanRow.Ref_Key = Entry["d:Ref_Key"];
+				ExchangePlanRow.Description = Entry["d:Description"];
+				
+			EndDo;
+			
+		Else
+			
+			ThisForm.Items.ExchangePlanError.Title = NStr("en = 'Error'; ru = 'Ошибка'");
+			
+		EndIf;
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Procedure ReadEntry(XMLReader, Entry)
+	
+	XMLReader.Read();
+	
+	If Not (XMLReader.NodeType = XMLNodeType.EndElement AND XMLReader.Name = "entry") Then
+		
+		If XMLReader.NodeType = XMLNodeType.StartElement Then
+			
+			EntryKey = XMLReader.Name;
+			XMLReader.Read();
+			EntryValue = XMLReader.Value;
+			Entry.Insert(EntryKey, EntryValue);
+			
+		EndIf;
+			
+		ReadEntry(XMLReader, Entry);
+		
+	EndIf;
+	
+EndProcedure
+
+&AtServer
+Function GetObject(ObjectName, UUID)
+	
+	ObjectRef = Catalogs[ObjectName].GetRef(New UUID(UUID));
+	Obj = ObjectRef.GetObject();
+	
+	If Obj = Undefined Then
+		
+		Obj = Catalogs[ObjectName].CreateItem();
+		Obj.SetNewCode(ObjectRef);
+		
+	EndIf;
+	
+	Return Obj;
+	
+EndFunction
+
+&AtServer
+Procedure GetChangesServer() 
+	
+	FormAttributeToValue("Object").GetChanges();
+	
+EndProcedure
+
+#EndRegion
+
+#Region UserInterface
+
+#Region Commands
+
+&AtClient
+Procedure CheckConnection(Command)
+	
+	CheckConnectionServer();
+	
+EndProcedure
+
+&AtClient
+Procedure GetChanges(Command)
+	
+	GetChangesServer();
+	
+EndProcedure
+
+&AtClient
+Procedure GetExchangePlanNodes(Command)
+	
+	ExchangePlansVT.Clear();
+	
+	If CheckExchangePlanSettingsFilling() Then
+		
+		GetExchangePlanNodesAtServer();
+		
+	EndIf;
+	
+EndProcedure
+
+&AtClient
+Procedure SaveSettings(Command)
+	
+	SaveSettingsServer();
+	
+EndProcedure
+
+#EndRegion
+
+&AtClient
+Procedure ExchangePlansSelection(Item, SelectedRow, Field, StandardProcessing)
+	
+	CurrentRow = ExchangePlansVT.FindByID(SelectedRow);
+	
+	Object.CurrentExchangePlanNodeId = CurrentRow.Id;
+	Object.CurrentExchangePlanNodeRefKey = CurrentRow.Ref_Key;
+	Object.CurrentExchangePlanNodeDescription = CurrentRow.Description;
+	
+EndProcedure
+
+&AtClient
+Procedure OnClose()
+	
+	SaveSettingsServer();
+	
+EndProcedure
+
+&AtClient
+Function CheckExchangePlanSettingsFilling()
+	
+	FilledRight = True;
+	
+	If Not ValueIsFilled(Object.ExchangePlanName) Then
+		
+		FilledRight = False;
+		Message(NStr("ru = 'Имя плана обменов должно быть заполнено'; en = 'Exchange plan name must be filled'"));
+		
+	EndIf;
+	
+	Return FilledRight;
+	
+EndFunction
+
+&AtClient
+Procedure DeleteExchangedData(Command)
+	
+	DeleteExchangedDataAtServer();
+	
+EndProcedure
+
+&AtServer
+Procedure DeleteExchangedDataAtServer()
+	
+	RecordSet = InformationRegisters.bitmobile_ИзмененныеДанные.CreateRecordSet();
+	RecordSet.Write();
+	
+	Structure = New Structure;
+	Structure.Insert("Brands", "Catalog");
+	Structure.Insert( "SKUGroup","Catalog");
+	Structure.Insert("UnitsOfMeasure", "Catalog");
+	Structure.Insert("SKU", "Catalog");
+	Structure.Insert("Stock", "Catalog");
+	Structure.Insert("Outlet", "Catalog");
+	Structure.Insert("PriceList", "Document");
+	Structure.Insert("User", "Catalog");
+	Structure.Insert("Contractors", "Catalog");
+	
+	For Each KeyValue In Structure Do
+		
+		Query = New Query(
+		"SELECT
+		|	Obj.Ref
+		|FROM
+		|	" + KeyValue.Value + "." + KeyValue.Key + " AS Obj");
+		
+		Result = Query.Execute().Unload();
+		
+		For Each Row In Result Do
+			
+			Obj = Row.Ref.GetObject();
+			
+			If Not Obj = Undefined Then
+				
+				If KeyValue.Value = "Catalog" Then
+					
+					If Not Obj.Predefined And Not Obj.Description = "шт." And Not Obj.Description = "SR" And Not Obj.Description = "SRM" And Not Obj.Description = "Admin" Then
+						
+						Obj.Delete();
+						
+					EndIf;
+					
+				Else
+					
+					Obj.Delete();
+					
+				EndIf;
+				
+			EndIf;
+			
+		EndDo;
+		
+	EndDo;
+	
+	TerritoriesSelection = Catalogs.Territory.Select();
+	
+	While TerritoriesSelection.Next() Do
+		
+		TerritoryObj = TerritoriesSelection.GetObject();
+		TerritoryObj.SRs.Clear();
+		TerritoryObj.Outlets.Clear();
+		TerritoryObj.Write();
+		
+	EndDo;
+	
+	IBUsers = InfoBaseUsers.GetUsers();
+	
+	For Each IBUser In IBUsers Do
+		
+		If Not IBUser.Name = "SR" And Not IBUser.Name = "SRM" And Not IBUser.Name = "Admin" Then
+			
+			IBUser.Delete();
+			
+		EndIf;
+		
+	EndDo;
+	
+	RecordSet = InformationRegisters.Prices.CreateRecordSet();
+	RecordSet.Write();
+	
+EndProcedure
+
+&AtClient
+Procedure SendChanges(Command)
+	
+	SendChangesServer();
+	
+EndProcedure
+
+&AtServer
+Procedure SendChangesServer()
+	
+	FormAttributeToValue("Object").SendChanges();
+	
+EndProcedure
+
+#EndRegion
