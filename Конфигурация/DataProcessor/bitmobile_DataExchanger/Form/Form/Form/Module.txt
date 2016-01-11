@@ -17,6 +17,8 @@ Procedure SaveSettingsServer()
 	
 	DataProcessors.bitmobile_DataExchanger.SetSettings(SettingsStructure);
 	
+	Modified = False;
+	
 EndProcedure
 
 &AtServer
@@ -33,16 +35,6 @@ Procedure CheckConnectionServer()
 			
 			Object.StatusCode = Result.StatusCode;
 			
-			If Object.StatusCode = 200 Then
-				
-				ThisForm.ConnectionStatus = NStr("en = 'Connection success'; ru = 'Соединение успешно'");
-				
-			Else
-				
-				ThisForm.ConnectionStatus = NStr("en = 'Connection failed'; ru = 'Ошибка соединения'");
-				
-			EndIf;
-			
 		Except
 			
 			Object.StatusCode = 1;
@@ -54,6 +46,16 @@ Procedure CheckConnectionServer()
 		Object.StatusCode = 0;
 		
 	EndIf;
+	
+	If Object.StatusCode = 200 Then
+		
+		ThisForm.ConnectionStatus = NStr("en = 'Connection success'; ru = 'Соединение успешно'");
+		
+	Else
+		
+		ThisForm.ConnectionStatus = NStr("en = 'Connection failed'; ru = 'Ошибка соединения'");
+		
+		EndIf;
 	
 EndProcedure
 
@@ -186,6 +188,7 @@ EndProcedure
 &AtClient
 Procedure CheckConnection(Command)
 	
+	SaveSettingsServer();
 	CheckConnectionServer();
 	
 EndProcedure
@@ -193,6 +196,7 @@ EndProcedure
 &AtClient
 Procedure GetChanges(Command)
 	
+	SaveSettingsServer();
 	GetChangesServer();
 	
 EndProcedure
@@ -344,6 +348,7 @@ EndProcedure
 &AtClient
 Procedure SendChanges(Command)
 	
+	SaveSettingsServer();
 	SendChangesServer();
 	
 EndProcedure

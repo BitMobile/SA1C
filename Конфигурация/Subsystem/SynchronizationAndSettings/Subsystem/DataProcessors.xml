@@ -27,6 +27,7 @@
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.РегламентныеИФоновыеЗадания</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.ConfigurationSettings</xr:Item>
 				<xr:Item xsi:type="xr:MDObjectRef">CommonCommand.ShowConfigurationSettings</xr:Item>
+				<xr:Item xsi:type="xr:MDObjectRef">DataProcessor.bitmobile_DataExchanger</xr:Item>
 			</Content>
 		</Properties>
 		<ChildObjects/>
